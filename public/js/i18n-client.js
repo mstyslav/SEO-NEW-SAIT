@@ -1,6 +1,6 @@
 (() => {
   const params = new URLSearchParams(location.search);
-  const pathLocale = location.pathname.match(/^\/(ru|en|de)(?=\/|$)/)?.[1];
+  const pathLocale = location.pathname.match(/^\/(uk|ru|en|de)(?=\/|$)/)?.[1];
   const locale = pathLocale || params.get('lang') || localStorage.getItem('spaceGlassLocale') || 'uk';
   localStorage.setItem('spaceGlassLocale', locale);
 

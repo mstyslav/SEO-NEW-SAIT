@@ -4,14 +4,32 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description: string;
+  locale?: import('../i18n/helpers').Locale;
+  image?: string;
+  schemaType?: 'Organization' | 'WebSite';
 }
 
-const { title, description, locale = 'uk' } = Astro.props;
+const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'Organization' } = Astro.props;
 
-import { localeFromPath, normalizeLocale, stripLocale, localizedPath } from '../i18n/helpers';
+import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales } from '../i18n/helpers';
 
 const resolvedLocale = normalizeLocale(locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
 const basePath = stripLocale(Astro.url.pathname);
+const origin = Astro.site ?? Astro.url.origin;
+const canonical = new URL(localizedPath(basePath, resolvedLocale), origin);
+const socialImage = new URL(image, origin);
+const localeNames = { uk: 'uk_UA', ru: 'ru_UA', en: 'en_US', de: 'de_DE' } as const;
+const skipLinks = { uk: 'Перейти до змісту', ru: 'Перейти к содержанию', en: 'Skip to content', de: 'Zum Inhalt springen' } as const;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': schemaType,
+  name: 'Space Glass',
+  url: canonical.href,
+  description,
+  inLanguage: resolvedLocale,
+  logo: new URL('/images/space-glass-logo.png', origin).href,
+  image: socialImage.href
+};
 ---
 <!doctype html>
 <html lang={resolvedLocale}>
@@ -20,16 +38,29 @@ const basePath = stripLocale(Astro.url.pathname);
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#ffffff" />
-    <link rel="canonical" href={new URL(localizedPath(basePath, resolvedLocale), Astro.site ?? Astro.url.origin)} />
+    <title>{title}</title>
+    <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="uk" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />
     <link rel="alternate" hreflang="ru" href={new URL(localizedPath(basePath, 'ru'), Astro.site ?? Astro.url.origin)} />
     <link rel="alternate" hreflang="en" href={new URL(localizedPath(basePath, 'en'), Astro.site ?? Astro.url.origin)} />
     <link rel="alternate" hreflang="de" href={new URL(localizedPath(basePath, 'de'), Astro.site ?? Astro.url.origin)} />
     <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />
-
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Space Glass" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:locale" content={localeNames[resolvedLocale]} />
+    {supportedLocales.filter((item) => item !== resolvedLocale).map((item) => <meta property="og:locale:alternate" content={localeNames[item]} />)}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
   <body>
-    <a class="skip-link" href="#main">Перейти до змісту</a>
+    <a class="skip-link" href="#main">{skipLinks[resolvedLocale]}</a>
     <slot />
       <script src="/js/i18n-client.js" defer></script>
   </body>
