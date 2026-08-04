@@ -6,12 +6,15 @@ interface Props {
   description: string;
   locale?: import('../i18n/helpers').Locale;
   image?: string;
-  schemaType?: 'Organization' | 'WebSite';
+  schemaType?: 'Organization' | 'WebSite' | 'WebPage' | 'CollectionPage' | 'AboutPage' | 'ContactPage' | 'Service' | 'Article' | 'CreativeWork';
+  structuredData?: import('../seo/schema').JsonLdObject | import('../seo/schema').JsonLdObject[];
 }
 
-const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'Organization' } = Astro.props;
+
+const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [] } = Astro.props;
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales } from '../i18n/helpers';
+import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
 
 const resolvedLocale = normalizeLocale(locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
 const basePath = stripLocale(Astro.url.pathname);
@@ -20,16 +23,21 @@ const canonical = new URL(localizedPath(basePath, resolvedLocale), origin);
 const socialImage = new URL(image, origin);
 const localeNames = { uk: 'uk_UA', ru: 'ru_UA', en: 'en_US', de: 'de_DE' } as const;
 const skipLinks = { uk: 'Перейти до змісту', ru: 'Перейти к содержанию', en: 'Skip to content', de: 'Zum Inhalt springen' } as const;
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': schemaType,
-  name: 'Space Glass',
-  url: canonical.href,
+const pageSchema = webPageSchema({
+  canonical: canonical.href,
+  title,
   description,
-  inLanguage: resolvedLocale,
-  logo: new URL('/images/space-glass-logo.png', origin).href,
-  image: socialImage.href
-};
+  image: socialImage.href,
+  language: resolvedLocale,
+  type: schemaType
+});
+const extraStructuredData = Array.isArray(structuredData) ? structuredData : [structuredData];
+const schema = jsonLdGraph([
+  organizationSchema(origin),
+  websiteSchema(origin, resolvedLocale),
+  pageSchema,
+  ...extraStructuredData
+]);
 ---
 <!doctype html>
 <html lang={resolvedLocale}>
