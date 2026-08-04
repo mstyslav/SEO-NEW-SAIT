@@ -1,0 +1,9 @@
+---
+interface Link { title: string; href: string; description?: string; }
+interface Props { title: string; links: Link[]; eyebrow?: string; }
+const { title, links, eyebrow = 'Дізнайтеся більше' } = Astro.props;
+---
+<section class="related-links" aria-labelledby="related-links-title">
+  <div class="related-links__heading"><p class="eyebrow">{eyebrow}</p><h2 id="related-links-title">{title}</h2></div>
+  <div class="related-links__grid">{links.map((link) => <article><h3><a href={link.href}>{link.title}</a></h3>{link.description && <p>{link.description}</p>}<a href={link.href} aria-label={`Докладніше: ${link.title}`}>Докладніше →</a></article>)}</div>
+</section>

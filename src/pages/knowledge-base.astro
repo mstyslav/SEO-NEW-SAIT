@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+const articles = [
+  { title: 'Яке скло краще обрати', href: '/knowledge/yake-sklo-krashche/', description: 'Порівнюємо загартоване скло, триплекс та декоративні варіанти.' },
+  { title: 'Проєктування скляних конструкцій', href: '/services/proektuvannya/', description: 'Що враховують інженери до запуску конструкції у виробництво.' },
+  { title: 'Професійний монтаж', href: '/services/montazh/', description: 'Як підготувати об’єкт і з чого складається процес встановлення.' },
+  { title: 'Реалізовані проєкти', href: '/projects/', description: 'Практичні приклади матеріалів, вузлів і готових рішень.' }
+];
+---
+<BaseLayout title="База знань про скло та конструкції — Space Glass" description="Експертні статті Space Glass про вибір скла, проєктування, монтаж, догляд і безпечну експлуатацію скляних конструкцій.">
+  <div class="sg-page-shell"><Header/><main id="main">
+    <section class="inner-hero"><div class="inner-hero__copy"><p class="eyebrow">Експертний центр</p><h1>База знань про скло</h1><p class="lead">Практичні матеріали для власників житла, дизайнерів, архітекторів і будівельних команд.</p><a class="button button--mint" href="#articles">Переглянути матеріали</a></div><div class="inner-hero__visual"><span>ЗНАННЯ</span></div></section>
+    <div id="articles"><RelatedLinks title="Корисні статті та ресурси" links={articles} eyebrow="Матеріали" /></div>
+    <section class="inner-section"><div class="inner-section__heading"><p class="eyebrow">Навігація</p><h2>Від вибору матеріалу до експлуатації</h2></div><div class="inner-card-grid"><article class="inner-card"><span>01</span><h3>Матеріали</h3><p>Властивості скла, профілів і фурнітури.</p></article><article class="inner-card"><span>02</span><h3>Технології</h3><p>Проєктування, обробка, кріплення та монтаж.</p></article><article class="inner-card"><span>03</span><h3>Догляд</h3><p>Рекомендації для довгої та безпечної експлуатації.</p></article></div></section>
+  </main><Footer/></div>
+</BaseLayout>

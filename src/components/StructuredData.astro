@@ -1,0 +1,37 @@
+---
+import { localeFromPath, normalizeLocale } from '../i18n/helpers';
+
+interface Props { title: string; description: string; image?: string; locale?: string; schemaType?: 'WebPage' | 'Service'; }
+const { title, description, image = '/images/space-glass-brand-logo.jpg' } = Astro.props;
+const locale = normalizeLocale(Astro.props.locale ?? localeFromPath(Astro.url.pathname));
+const origin = Astro.site ?? Astro.url.origin;
+const url = new URL(Astro.url.pathname, origin).href;
+const imageUrl = new URL(image, origin).href;
+const organizationId = new URL('/#organization', origin).href;
+const websiteId = new URL('/#website', origin).href;
+const segments = Astro.url.pathname.split('/').filter(Boolean).filter((part) => !['uk', 'ru', 'en', 'de'].includes(part));
+const labels: Record<string, string> = { services: 'Послуги', cities: 'Міста', city: 'Міста', projects: 'Проєкти', knowledge: 'База знань', 'knowledge-base': 'База знань' };
+const breadcrumbItems = [{ '@type': 'ListItem', position: 1, name: 'Головна', item: new URL('/', origin).href }];
+segments.forEach((segment, index) => {
+  const path = `/${segments.slice(0, index + 1).join('/')}/`;
+  breadcrumbItems.push({ '@type': 'ListItem', position: index + 2, name: index === segments.length - 1 ? title.replace(/ — Space Glass$/, '') : (labels[segment] ?? segment.replaceAll('-', ' ')), item: new URL(path, origin).href });
+});
+const isService = Astro.props.schemaType === 'Service' || Astro.url.pathname.includes('/services/') || ['/dushovi-kabiny/', '/sklyani-perehorodky/', '/sklyani-dveri/', '/sklyani-ohorozhi/', '/dzerkala/', '/arkhitekturni-systemy/'].some((path) => Astro.url.pathname.endsWith(path));
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': ['Organization', 'LocalBusiness'], '@id': organizationId, name: 'Space Glass', url: new URL('/', origin).href,
+    logo: { '@type': 'ImageObject', '@id': new URL('/#logo', origin).href, url: imageUrl, contentUrl: imageUrl, caption: 'Space Glass' },
+    image: { '@id': new URL('/#logo', origin).href }, email: 'info@space-glass.com.ua', telephone: '+380734251400',
+    address: { '@type': 'PostalAddress', addressLocality: 'Київ', addressRegion: 'Київська область', addressCountry: 'UA' },
+    contactPoint: { '@type': 'ContactPoint', telephone: '+380734251400', contactType: 'customer service', areaServed: ['UA', 'EU'], availableLanguage: ['uk', 'ru', 'en', 'de'] },
+    sameAs: ['https://www.instagram.com/spaceglass_od/', 'https://www.facebook.com/spaceglass.od', 'https://www.youtube.com/@spaceglass5552']
+  },
+  { '@type': 'WebSite', '@id': websiteId, url: new URL('/', origin).href, name: 'Space Glass', publisher: { '@id': organizationId }, inLanguage: locale },
+  { '@type': 'ImageObject', '@id': `${url}#primaryimage`, url: imageUrl, contentUrl: imageUrl, caption: title, representativeOfPage: true },
+  { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: title, description, isPartOf: { '@id': websiteId }, about: { '@id': organizationId }, primaryImageOfPage: { '@id': `${url}#primaryimage` }, breadcrumb: { '@id': `${url}#breadcrumb` }, inLanguage: locale },
+  { '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`, itemListElement: breadcrumbItems }
+];
+if (isService) graph.push({ '@type': 'Service', '@id': `${url}#service`, name: title.replace(/ — Space Glass$/, ''), description, url, provider: { '@id': organizationId }, areaServed: { '@type': 'Country', name: 'Україна' }, serviceType: title.replace(/ — Space Glass$/, '') });
+const data = { '@context': 'https://schema.org', '@graph': graph };
+---
+<script type="application/ld+json" set:html={JSON.stringify(data)} />

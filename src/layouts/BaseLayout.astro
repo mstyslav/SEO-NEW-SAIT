@@ -1,32 +1,31 @@
 ---
 import '../styles/global.css';
+import SEOHead from '../components/SEOHead.astro';
+import StructuredData from '../components/StructuredData.astro';
 
 interface Props {
   title: string;
   description: string;
+  locale?: string;
+  image?: string;
+  noindex?: boolean;
+  schemaType?: 'WebPage' | 'Service';
 }
 
-const { title, description, locale = 'uk' } = Astro.props;
+const { title, description, locale = 'uk', image, noindex = false, schemaType } = Astro.props;
 
-import { localeFromPath, normalizeLocale, stripLocale, localizedPath } from '../i18n/helpers';
+import { localeFromPath, normalizeLocale } from '../i18n/helpers';
 
 const resolvedLocale = normalizeLocale(locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
-const basePath = stripLocale(Astro.url.pathname);
 ---
 <!doctype html>
 <html lang={resolvedLocale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={description} />
     <meta name="theme-color" content="#ffffff" />
-    <link rel="canonical" href={new URL(localizedPath(basePath, resolvedLocale), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="uk" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="ru" href={new URL(localizedPath(basePath, 'ru'), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="en" href={new URL(localizedPath(basePath, 'en'), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="de" href={new URL(localizedPath(basePath, 'de'), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />
-
+    <SEOHead {title} {description} {image} locale={resolvedLocale} {noindex} />
+    <StructuredData {title} {description} {image} locale={resolvedLocale} {schemaType} />
   </head>
   <body>
     <a class="skip-link" href="#main">Перейти до змісту</a>

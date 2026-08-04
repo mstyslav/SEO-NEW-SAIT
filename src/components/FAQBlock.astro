@@ -17,7 +17,9 @@ const {
 } = Astro.props;
 
 const id = `faq-${Math.random().toString(36).slice(2, 9)}`;
+const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: items.map(([question, answer]) => ({ '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer } })) };
 ---
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 <section class={`faq-block faq-block--${variant}`} data-faq-block id={id}>
   <div class="faq-block__head">
     <p class="eyebrow">{eyebrow}</p>

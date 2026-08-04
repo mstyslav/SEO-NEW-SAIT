@@ -2,6 +2,7 @@
 import translations from '../i18n/translations.json';
 import i18nConfig from '../i18n/config.json';
 import { localeFromPath, localizedPath, normalizeLocale } from '../i18n/helpers';
+import Breadcrumbs from './Breadcrumbs.astro';
 
 const requestedLocale = Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname);
 const locale = normalizeLocale(requestedLocale);
@@ -14,7 +15,7 @@ const links = [
   [t.services, '/services/'],
   [t.solutions, '/catalog/'],
   [t.projects, '/projects/'],
-  [t.knowledge, '/knowledge/'],
+  [t.knowledge, '/knowledge-base/'],
   [t.about, '/about/'],
   [t.contacts, '/contacts/'],
 ];
@@ -397,6 +398,7 @@ const menuData = {
     </div>
   </div>
 </header>
+<Breadcrumbs {locale} />
 <script>
   const updateProjectHeaderCount = () => {
     let count = 0;

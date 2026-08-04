@@ -1,0 +1,40 @@
+---
+import { localeFromPath, localizedPath, normalizeLocale, stripLocale } from '../i18n/helpers';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  locale?: string;
+  noindex?: boolean;
+}
+
+const { title, description, image = '/images/space-glass-brand-logo.jpg', noindex = false } = Astro.props;
+const locale = normalizeLocale(Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
+const origin = Astro.site ?? Astro.url.origin;
+const basePath = stripLocale(Astro.url.pathname);
+const canonical = new URL(localizedPath(basePath, locale), origin);
+const socialImage = new URL(image, origin);
+const ogLocale = { uk: 'uk_UA', ru: 'ru_UA', en: 'en_US', de: 'de_DE' }[locale] ?? 'uk_UA';
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+<link rel="canonical" href={canonical} />
+{(['uk', 'ru', 'en', 'de'] as const).map((code) => (
+  <link rel="alternate" hreflang={code} href={new URL(localizedPath(basePath, code), origin)} />
+))}
+<link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, 'uk'), origin)} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Space Glass" />
+<meta property="og:locale" content={ogLocale} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={socialImage} />
+<meta property="og:image:alt" content={`${title} — Space Glass`} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImage} />

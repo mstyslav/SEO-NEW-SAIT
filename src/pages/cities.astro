@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+const cities = [
+  { title: 'Скляні конструкції у Києві', href: '/city/kyiv/', description: 'Замір, проєктування, виготовлення та монтаж у Києві й області.' },
+  { title: 'Скляні конструкції у Львові', href: '/city/lviv/', description: 'Індивідуальні скляні рішення для житлових і комерційних просторів.' },
+  { title: 'Скляні конструкції в Одесі', href: '/city/odesa/', description: 'Повний цикл реалізації скляних конструкцій в Одесі й області.' }
+];
+---
+<BaseLayout title="Скляні конструкції у містах України — Space Glass" description="Локальні послуги Space Glass: замір, виробництво, доставка та монтаж скляних конструкцій у Києві, Львові й Одесі.">
+  <div class="sg-page-shell"><Header/><main id="main">
+    <section class="inner-hero"><div class="inner-hero__copy"><p class="eyebrow">Географія робіт</p><h1>Скляні конструкції у містах України</h1><p class="lead">Локальні команди, точний замір і професійний монтаж для приватних та комерційних об’єктів.</p><a class="button button--mint" href="/contacts/">Перевірити доступність</a></div><div class="inner-hero__visual"><span>УКРАЇНА</span></div></section>
+    <RelatedLinks title="Оберіть ваше місто" links={cities} eyebrow="Міста" />
+    <section class="inner-section"><div class="inner-section__heading"><p class="eyebrow">Єдиний стандарт</p><h2>Від консультації до гарантійного сервісу</h2></div><div class="inner-card-grid"><article class="inner-card"><span>01</span><h3>Локальний замір</h3><p>Перевіряємо геометрію та умови монтажу на об’єкті.</p></article><article class="inner-card"><span>02</span><h3>Власне виробництво</h3><p>Контролюємо матеріали, обробку скла й комплектацію.</p></article><article class="inner-card"><span>03</span><h3>Монтаж і сервіс</h3><p>Встановлюємо конструкцію та підтримуємо після здачі.</p></article></div></section>
+  </main><Footer/></div>
+</BaseLayout>

@@ -1,0 +1,14 @@
+---
+import { localeFromPath, localizedPath, normalizeLocale } from '../i18n/helpers';
+const locale = normalizeLocale(Astro.props.locale ?? localeFromPath(Astro.url.pathname));
+const parts = Astro.url.pathname.split('/').filter(Boolean).filter((part) => !['uk', 'ru', 'en', 'de'].includes(part));
+const labels: Record<string, string> = { services: 'Послуги', city: 'Міста', cities: 'Міста', projects: 'Проєкти', knowledge: 'База знань', 'knowledge-base': 'База знань', catalog: 'Каталог', contacts: 'Контакти', about: 'Про нас' };
+const titleCase = (value: string) => labels[value] ?? value.replaceAll('-', ' ').replace(/^./, (letter) => letter.toUpperCase());
+---
+{parts.length > 0 && <nav class="seo-breadcrumbs" aria-label="Навігаційний ланцюжок">
+  <ol><li><a href={localizedPath('/', locale)}>Головна</a></li>{parts.map((part, index) => {
+    const current = index === parts.length - 1;
+    const href = localizedPath(`/${parts.slice(0, index + 1).join('/')}/`, locale);
+    return <li aria-current={current ? 'page' : undefined}>{current ? <span>{titleCase(part)}</span> : <a href={href}>{titleCase(part)}</a>}</li>;
+  })}</ol>
+</nav>}
