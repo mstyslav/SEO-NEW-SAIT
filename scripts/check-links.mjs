@@ -23,6 +23,12 @@ function routeExists(href) {
   if (!clean || clean === '/' || !clean.startsWith('/')) return true;
   if (clean.startsWith('/images/') || clean.startsWith('/docs/') || clean.startsWith('/js/')) return true;
   if (clean.startsWith('/api/')) return true;
+  if (clean.endsWith('.xml') || clean.endsWith('.txt')) {
+    const asset = clean.replace(/^\//, '');
+    return fs.existsSync(path.resolve('public', asset)) ||
+      fs.existsSync(path.join(pages, `${asset}.ts`)) ||
+      fs.existsSync(path.join(pages, `${asset}.js`));
+  }
 
   const key = clean.replace(/^\//, '').replace(/\/$/, '');
   const localizedKey = key.replace(/^(ru|en|de)\//, '');

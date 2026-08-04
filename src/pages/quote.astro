@@ -52,7 +52,7 @@ import Footer from '../components/Footer.astro';
           <p class="eyebrow">Контактні дані</p>
           <h2>Куди надіслати КП?</h2>
 
-          <form class="quote-form" data-quote-form>
+          <form class="quote-form" data-quote-form data-lead-form data-success-url="/thank-you/?type=quote">
             <div class="quote-form__grid">
               <label>
                 <span>Ім’я *</span>
@@ -78,7 +78,7 @@ import Footer from '../components/Footer.astro';
             </label>
 
             <label class="quote-upload">
-              <input type="file" accept=".jpg,.jpeg,.png,.webp,.pdf,.dwg" multiple />
+              <input name="attachment" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf,.dwg" multiple />
               <span>＋ Додати фото або креслення</span>
               <small>JPG, PNG, WEBP, PDF або DWG</small>
             </label>
@@ -87,12 +87,12 @@ import Footer from '../components/Footer.astro';
             <input type="hidden" name="estimated_price" data-quote-price-input />
 
             <label class="quote-consent">
-              <input type="checkbox" required />
-              <span>Погоджуюсь на обробку даних для підготовки комерційної пропозиції.</span>
+              <input name="consent" value="accepted" type="checkbox" required />
+              <span>Погоджуюсь на обробку даних згідно з <a href="/privacy-policy/">політикою конфіденційності</a>.</span>
             </label>
 
             <button class="button button--mint quote-form__submit" type="submit">Надіслати запит на КП →</button>
-            <p class="quote-form__status" data-quote-status hidden></p>
+            <p class="quote-form__status" data-quote-status data-form-status role="status" hidden></p>
           </form>
         </div>
       </div>
@@ -114,6 +114,7 @@ import Footer from '../components/Footer.astro';
     const decodedPrice = decodeURIComponent(priceRaw || '');
 
     document.querySelector('[data-quote-product]').textContent = projectPayload ? 'Комплексний проєкт Space Glass' : productRaw;
+    const parameterRoot = document.querySelector('[data-quote-parameters]');
     if (projectPayload?.items?.length) {
       document.querySelector('[data-quote-price]').textContent = `${Math.round(projectPayload.total || 0).toLocaleString('uk-UA')} грн`;
       document.querySelector('[data-quote-config-input]').value = JSON.stringify(projectPayload);
@@ -128,7 +129,6 @@ import Footer from '../components/Footer.astro';
     document.querySelector('[data-quote-config-input]').value = decodedConfig;
     document.querySelector('[data-quote-price-input]').value = decodedPrice;
 
-    const parameterRoot = document.querySelector('[data-quote-parameters]');
     if (!projectPayload && decodedConfig) {
       const parts = decodedConfig
         .replace(/^Хочу отримати КП:\s*/i, '')
@@ -166,29 +166,6 @@ import Footer from '../components/Footer.astro';
       localStorage.setItem('spaceGlassQuoteDraft', JSON.stringify(draft));
     });
 
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-
-      const data = new FormData(form);
-      const request = {
-        name: data.get('name'),
-        phone: data.get('phone'),
-        email: data.get('email'),
-        city: data.get('city'),
-        comment: data.get('comment'),
-        product: productRaw,
-        configuration: decodedConfig,
-        estimatedPrice: decodedPrice,
-        createdAt: new Date().toISOString()
-      };
-
-      localStorage.setItem('spaceGlassLastQuote', JSON.stringify(request));
-      localStorage.removeItem('spaceGlassQuoteDraft');
-
-      status.hidden = false;
-      status.textContent = 'Запит сформовано. На фінальному сайті тут буде передача в CRM та надсилання підтвердження клієнту.';
-      status.classList.add('is-success');
-      form.querySelector('button[type="submit"]').textContent = 'Запит сформовано ✓';
-    });
+    form.addEventListener('submit', () => localStorage.removeItem('spaceGlassQuoteDraft'));
   </script>
 </BaseLayout>
