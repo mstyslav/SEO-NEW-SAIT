@@ -1,36 +1,80 @@
 ---
 import '../styles/global.css';
+import { localeFromPath, normalizeLocale, stripLocale, localizedPath } from '../i18n/helpers';
 
 interface Props {
   title: string;
   description: string;
+  locale?: string;
+  image?: string;
+  type?: 'website' | 'article' | 'product';
+  noindex?: boolean;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, locale = 'uk' } = Astro.props;
+const {
+  title,
+  description,
+  locale = 'uk',
+  image = '/images/og/space-glass-default.webp',
+  type = 'website',
+  noindex = false,
+  schema,
+} = Astro.props;
 
-import { localeFromPath, normalizeLocale, stripLocale, localizedPath } from '../i18n/helpers';
-
-const resolvedLocale = normalizeLocale(locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
+const resolvedLocale = normalizeLocale(
+  locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname),
+);
 const basePath = stripLocale(Astro.url.pathname);
+const siteOrigin = Astro.site ?? Astro.url.origin;
+const canonicalUrl = new URL(localizedPath(basePath, resolvedLocale), siteOrigin);
+const imageUrl = new URL(image, siteOrigin);
+const fullTitle = title.includes('Space Glass') ? title : `${title} | Space Glass`;
+const ogLocaleMap: Record<string, string> = {
+  uk: 'uk_UA',
+  ru: 'ru_UA',
+  en: 'en_US',
+  de: 'de_AT',
+};
 ---
 <!doctype html>
 <html lang={resolvedLocale}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#ffffff" />
-    <link rel="canonical" href={new URL(localizedPath(basePath, resolvedLocale), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="uk" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="ru" href={new URL(localizedPath(basePath, 'ru'), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="en" href={new URL(localizedPath(basePath, 'en'), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="de" href={new URL(localizedPath(basePath, 'de'), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="uk" href={new URL(localizedPath(basePath, 'uk'), siteOrigin)} />
+    <link rel="alternate" hreflang="ru" href={new URL(localizedPath(basePath, 'ru'), siteOrigin)} />
+    <link rel="alternate" hreflang="en" href={new URL(localizedPath(basePath, 'en'), siteOrigin)} />
+    <link rel="alternate" hreflang="de" href={new URL(localizedPath(basePath, 'de'), siteOrigin)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, 'uk'), siteOrigin)} />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="Space Glass" />
+    <meta property="og:locale" content={ogLocaleMap[resolvedLocale] ?? 'uk_UA'} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content={title} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    {schema && (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    )}
   </head>
   <body>
     <a class="skip-link" href="#main">Перейти до змісту</a>
     <slot />
-      <script src="/js/i18n-client.js" defer></script>
+    <script src="/js/i18n-client.js" defer></script>
   </body>
 </html>
