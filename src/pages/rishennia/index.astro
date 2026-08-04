@@ -3,16 +3,103 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { seoPages } from '../../data/seo-pages';
+
 const pages = seoPages.filter((page) => page.kind === 'service');
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Скляні та алюмінієві рішення Space Glass',
+  description: 'Каталог індивідуальних скляних та алюмінієвих рішень Space Glass.',
+  hasPart: pages.map((page) => ({
+    '@type': 'Service',
+    name: page.h1,
+    url: `https://space-glass.com.ua/${page.slug}/`,
+    description: page.description,
+  })),
+};
 ---
-<BaseLayout title="Скляні та алюмінієві рішення | Space Glass" description="Каталог індивідуальних скляних та алюмінієвих рішень Space Glass: душові, перегородки, огорожі, фасади, двері, тераси та дзеркала.">
+<BaseLayout
+  title="Скляні та алюмінієві рішення | Space Glass"
+  description="Каталог індивідуальних скляних та алюмінієвих рішень Space Glass: душові, перегородки, огорожі, фасади, двері, тераси та дзеркала."
+  schema={schema}
+>
   <Header />
-  <main id="main" class="hub">
-    <p class="eyebrow">Space Glass</p>
-    <h1>Скляні та алюмінієві рішення</h1>
-    <p class="lead">Оберіть напрямок, перегляньте варіанти виконання та надішліть дані для попереднього розрахунку.</p>
-    <div class="grid">{pages.map((page, index) => <a href={`/${page.slug}/`}><span>{String(index + 1).padStart(2,'0')}</span><h2>{page.h1}</h2><p>{page.description}</p><b>Детальніше →</b></a>)}</div>
+  <main id="main">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">50+ напрямків для дому та бізнесу</p>
+        <h1>Скляні та алюмінієві рішення</h1>
+        <p class="lead">Оберіть потрібну конструкцію, перегляньте варіанти виконання та надішліть розміри або креслення для попереднього розрахунку.</p>
+        <div class="hero-actions">
+          <a class="primary" href="/contacts/">Отримати розрахунок</a>
+          <a class="secondary" href="/projects/">Дивитися проєкти</a>
+        </div>
+      </div>
+      <aside>
+        <strong>{pages.length}</strong>
+        <span>окремих SEO-напрямків уже в структурі сайту</span>
+      </aside>
+    </section>
+
+    <section class="catalog" aria-labelledby="solutions-heading">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Каталог рішень</p>
+          <h2 id="solutions-heading">Оберіть свій напрямок</h2>
+        </div>
+        <p>Виготовлення за індивідуальними розмірами, професійний замір, технічна консультація та монтаж.</p>
+      </div>
+
+      <div class="grid">
+        {pages.map((page, index) => (
+          <a href={`/${page.slug}/`}>
+            <div class="card-top">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <i>↗</i>
+            </div>
+            <h3>{page.h1}</h3>
+            <p>{page.description}</p>
+            <b>Переглянути рішення</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="cta">
+      <div>
+        <p class="eyebrow">Не знайшли потрібний варіант?</p>
+        <h2>Розробимо конструкцію під ваш об’єкт</h2>
+      </div>
+      <a href="/contacts/">Надіслати запит →</a>
+    </section>
   </main>
   <Footer />
 </BaseLayout>
-<style>.hub{padding:70px clamp(22px,5vw,80px)}h1{font-size:clamp(44px,7vw,92px);max-width:1000px;line-height:.98}.lead{font-size:21px;max-width:760px;line-height:1.6}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:55px}.grid a{min-height:280px;padding:28px;border:1px solid #d9e7df;border-radius:18px;color:inherit;text-decoration:none}.grid span{color:#16875f;font-size:12px}.grid h2{margin-top:50px}.grid p{line-height:1.6}@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.grid{grid-template-columns:1fr}}</style>
+
+<style>
+  :global(body){background:#f7f8f6;color:#101512}
+  main{overflow:hidden}
+  .hero{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.6fr);gap:48px;padding:96px clamp(22px,5vw,80px) 76px;background:linear-gradient(135deg,#f8fbf9 0%,#edf5f1 100%);border-bottom:1px solid #dfe8e2}
+  .eyebrow{margin:0 0 18px;color:#16875f;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+  h1{margin:0;max-width:1050px;font-size:clamp(48px,7vw,102px);line-height:.92;letter-spacing:-.055em}
+  .lead{max-width:780px;margin:30px 0 0;font-size:clamp(18px,2vw,23px);line-height:1.55;color:#415047}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+  .hero-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 22px;border-radius:999px;text-decoration:none;font-weight:800}
+  .primary{background:#111;color:white}.secondary{border:1px solid #9eb7aa;color:#111;background:white}
+  .hero aside{align-self:end;padding:32px;border-radius:26px;background:#111;color:white}
+  .hero aside strong{display:block;font-size:72px;line-height:1;color:#7ce0b7}.hero aside span{display:block;margin-top:14px;line-height:1.5;color:#d6dfda}
+  .catalog{padding:84px clamp(22px,5vw,80px)}
+  .section-head{display:grid;grid-template-columns:1fr minmax(280px,520px);gap:40px;align-items:end;margin-bottom:42px}
+  .section-head h2,.cta h2{margin:0;font-size:clamp(34px,5vw,64px);line-height:1;letter-spacing:-.04em}
+  .section-head>p{margin:0;color:#58665e;line-height:1.7}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .grid a{display:flex;min-height:330px;flex-direction:column;padding:28px;border:1px solid #d7e3dc;border-radius:22px;background:#fff;color:inherit;text-decoration:none;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+  .grid a:hover{transform:translateY(-5px);border-color:#76b99d;box-shadow:0 20px 50px rgba(24,63,46,.09)}
+  .card-top{display:flex;justify-content:space-between;align-items:center}.card-top span{font-size:12px;font-weight:800;color:#16875f}.card-top i{font-style:normal;font-size:24px}
+  .grid h3{margin:56px 0 16px;font-size:27px;line-height:1.08;letter-spacing:-.025em}
+  .grid p{margin:0;color:#5f6c65;line-height:1.65}.grid b{margin-top:auto;padding-top:28px;color:#16875f}
+  .cta{display:flex;justify-content:space-between;align-items:end;gap:40px;margin:0 clamp(22px,5vw,80px) 84px;padding:52px;border-radius:28px;background:#111;color:white}
+  .cta h2{max-width:800px}.cta a{white-space:nowrap;color:#7ce0b7;font-weight:900;text-decoration:none;font-size:18px}
+  @media(max-width:980px){.hero,.section-head{grid-template-columns:1fr}.hero aside{max-width:420px}.grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:640px){.hero{padding-top:64px}.grid{grid-template-columns:1fr}.cta{align-items:flex-start;flex-direction:column;padding:32px}.grid a{min-height:290px}}
+</style>
