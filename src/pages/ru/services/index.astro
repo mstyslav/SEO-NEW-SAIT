@@ -1,3 +1,7 @@
 ---
-return Astro.redirect('/services/?lang=ru');
+import SeoLanding from '../../../components/seo/SeoLanding.astro';
+import { hubPages } from '../../../data/seo-pages';
+const locale = 'ru';
+const page = hubPages(locale).find((entry) => entry.slug === 'rishennia');
 ---
+<SeoLanding page={page} locale={locale} />

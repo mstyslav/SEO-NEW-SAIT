@@ -1,0 +1,9 @@
+---
+interface Link { title: string; description?: string; href: string }
+const { eyebrow, title, links = [] } = Astro.props as { eyebrow: string; title: string; links: Link[] };
+---
+{links.length > 0 && <section class="seo-related" aria-labelledby={`related-${title.replace(/\s/g, '-').toLowerCase()}`}>
+  <p class="eyebrow">{eyebrow}</p><h2 id={`related-${title.replace(/\s/g, '-').toLowerCase()}`}>{title}</h2>
+  <div class="seo-related__grid">{links.map(link => <a href={link.href}><h3>{link.title}</h3>{link.description && <p>{link.description}</p>}<b aria-hidden="true">→</b></a>)}</div>
+</section>}
+

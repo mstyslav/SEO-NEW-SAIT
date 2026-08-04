@@ -1,0 +1,6 @@
+---
+import RelatedLinks from './RelatedLinks.astro';
+const { links = [], labels } = Astro.props;
+---
+<RelatedLinks eyebrow={labels.eyebrow} title={labels.title} links={links} />
+

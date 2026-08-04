@@ -5,6 +5,11 @@ const root = path.resolve('src');
 const pages = path.resolve('src/pages');
 const extensions = new Set(['.astro', '.js', '.ts', '.json']);
 const broken = [];
+const seoSlugs = new Set([
+  'rishennia', 'mista', 'baza-znan',
+  'glass-partitions', 'glass-showers', 'glass-railings', 'glass-doors', 'custom-mirrors', 'glass-facades',
+  'mista/kyiv', 'mista/lviv', 'mista/odesa', 'baza-znan/yak-obraty-sklo', 'projects/loft-kyiv'
+]);
 
 function walk(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -20,6 +25,8 @@ function routeExists(href) {
   if (clean.startsWith('/api/')) return true;
 
   const key = clean.replace(/^\//, '').replace(/\/$/, '');
+  const localizedKey = key.replace(/^(ru|en|de)\//, '');
+  if (seoSlugs.has(localizedKey)) return true;
   return fs.existsSync(path.join(pages, `${key}.astro`)) ||
     fs.existsSync(path.join(pages, key, 'index.astro'));
 }

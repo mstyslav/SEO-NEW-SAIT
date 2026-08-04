@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import RelatedServices from './RelatedServices.astro';
+import RelatedCities from './RelatedCities.astro';
+import RelatedArticles from './RelatedArticles.astro';
+import RelatedProjects from './RelatedProjects.astro';
+import CTA from './CTA.astro';
+import FAQ from './FAQ.astro';
+import { commercialPages, pathFor, ui } from '../../data/seo-pages';
+import type { Locale } from '../../i18n/helpers';
+const { page, locale } = Astro.props;
+const labels = ui(locale as Locale);
+const services = commercialPages(locale).filter((p) => p.slug !== page.slug).slice(0, 3).map((p) => ({ title:p.eyebrow, description:p.intro, href:pathFor(locale,p.slug) }));
+const cities = ['kyiv','lviv','odesa'].map((city) => ({ title:({uk:{kyiv:'Київ',lviv:'Львів',odesa:'Одеса'},ru:{kyiv:'Киев',lviv:'Львов',odesa:'Одесса'},en:{kyiv:'Kyiv',lviv:'Lviv',odesa:'Odesa'},de:{kyiv:'Kyjiw',lviv:'Lwiw',odesa:'Odesa'}} as any)[locale][city], href:pathFor(locale,`mista/${city}`) }));
+const articles = [{ title:({uk:'Як обрати безпечне скло',ru:'Как выбрать безопасное стекло',en:'How to choose safety glass',de:'Sicherheitsglas richtig wählen'} as any)[locale], href:pathFor(locale,'baza-znan/yak-obraty-sklo'), description:({uk:'Гартоване чи триплекс: критерії вибору.',ru:'Закалённое или триплекс: критерии выбора.',en:'Tempered or laminated: key selection criteria.',de:'Einscheiben- oder Verbundsicherheitsglas: Kriterien.'} as any)[locale] }];
+const projects = [{ title:({uk:'Loft-перегородка в Києві',ru:'Loft-перегородка в Киеве',en:'Loft partition in Kyiv',de:'Loft-Trennwand in Kyjiw'} as any)[locale], href:pathFor(locale,'projects/loft-kyiv'), description:({uk:'Приклад від заміру до монтажу.',ru:'Пример от замера до монтажа.',en:'A measured-to-installed case study.',de:'Referenz vom Aufmaß bis zur Montage.'} as any)[locale] }];
+const crumbHome = pathFor(locale,'').replace('//','/');
+---
+<BaseLayout title={page.title} description={page.description}>
+ <div class="sg-page-shell"><Header /><main id="main" class="seo-page">
+  <div class="seo-page__wrap"><Breadcrumbs items={[{label:labels.home,href:crumbHome},{label:page.h1}]} /></div>
+  <section class="seo-hero"><div><p class="eyebrow">{page.eyebrow}</p><h1>{page.h1}</h1><p class="lead">{page.intro}</p><a class="button button--mint" href="#seo-request">{labels.ctaButton}</a></div><div class="seo-hero__mark" aria-hidden="true"><span>SPACE</span><b>GLASS</b></div></section>
+  <div class="seo-page__wrap">
+   {page.sections.length > 1 && <nav class="seo-jump" aria-label="On this page">{page.sections.map((section,index)=><a href={`#section-${index+1}`}>{section.title}</a>)}</nav>}
+   <div class="seo-sections">{page.sections.map((section,index)=><section id={`section-${index+1}`}><span>{String(index+1).padStart(2,'0')}</span><div><h2>{section.title}</h2><p>{section.text}</p></div></section>)}</div>
+   <RelatedServices labels={{eyebrow:labels.seeAlso,title:labels.relatedServices}} links={services} />
+   <RelatedCities labels={{eyebrow:labels.seeAlso,title:labels.relatedCities}} links={cities} />
+   <RelatedArticles labels={{eyebrow:labels.seeAlso,title:labels.relatedArticles}} links={articles} />
+   <RelatedProjects labels={{eyebrow:labels.seeAlso,title:labels.relatedProjects}} links={projects} />
+   {page.faq.length > 0 && <FAQ title={`${labels.faq}: ${page.eyebrow}`} intro={labels.faqIntro} items={page.faq} />}
+  </div>
+  <div id="seo-request"><CTA title={labels.ctaTitle} text={labels.ctaText} button={labels.ctaButton} href={pathFor(locale,'quote')} /></div>
+ </main><Footer /></div>
+</BaseLayout>
+

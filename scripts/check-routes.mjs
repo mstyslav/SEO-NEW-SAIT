@@ -24,6 +24,15 @@ const routes = [
   '/dushovi-kabiny/dushovi-dveri/'
 ];
 
+const generatedSeoRoutes = ['rishennia', 'mista', 'baza-znan', 'glass-partitions', 'glass-showers', 'glass-railings', 'glass-doors', 'custom-mirrors', 'glass-facades'];
+const locales = ['', 'ru/', 'en/', 'de/'];
+const catchAll = path.join(path.resolve('src/pages'), '[...seo].astro');
+if (!fs.existsSync(catchAll)) {
+  console.error('Missing SEO catch-all route source:', catchAll);
+  process.exit(1);
+}
+for (const locale of locales) for (const slug of generatedSeoRoutes) routes.push(`/${locale}${slug}/`);
+
 const pages = path.resolve('src/pages');
 const missing = [];
 
@@ -33,7 +42,8 @@ for (const route of routes) {
   const direct = path.join(pages, `${key}.astro`);
   const index = path.join(pages, key, 'index.astro');
 
-  if (!fs.existsSync(direct) && !fs.existsSync(index)) {
+  const isGeneratedSeoRoute = generatedSeoRoutes.some((slug) => key === slug || key.endsWith(`/${slug}`));
+  if (!fs.existsSync(direct) && !fs.existsSync(index) && !isGeneratedSeoRoute) {
     missing.push(route);
   }
 }
