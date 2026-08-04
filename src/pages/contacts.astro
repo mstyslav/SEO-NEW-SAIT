@@ -43,15 +43,17 @@ const offices = [
         <h1>Обговоримо ваш проєкт</h1>
         <p class="lead">Надішліть фото, приблизні розміри або креслення — підготуємо попередню оцінку.</p>
       </div>
-      <form class="quote-form contacts-v15-form">
+      <form class="quote-form contacts-v15-form" data-lead-form data-success-url="/thank-you/">
         <div class="contacts-form-grid">
-          <label>Ім’я<input type="text" placeholder="Ваше ім’я" /></label>
-          <label>Телефон<input type="tel" placeholder="+38" /></label>
+          <label>Ім’я<input name="name" type="text" autocomplete="name" placeholder="Ваше ім’я" required /></label>
+          <label>Телефон<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
         </div>
-        <label>Місто<input type="text" placeholder="Київ, Львів, Одеса..." /></label>
-        <label>Що потрібно<textarea rows="5" placeholder="Коротко опишіть конструкцію"></textarea></label>
-        <label class="contacts-file-field">Фото або креслення<input type="file" accept=".jpg,.jpeg,.png,.webp,.pdf,.dwg" /></label>
-        <button class="button button--mint" type="button">Надіслати запит</button>
+        <label>Місто<input name="city" autocomplete="address-level2" type="text" placeholder="Київ, Львів, Одеса..." /></label>
+        <label>Що потрібно<textarea name="comment" rows="5" placeholder="Коротко опишіть конструкцію"></textarea></label>
+        <label class="contacts-file-field">Фото або креслення<input name="attachment" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf,.dwg" /></label>
+        <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>Погоджуюсь із <a href="/privacy-policy/">політикою конфіденційності</a>.</span></label>
+        <button class="button button--mint" type="submit">Надіслати запит</button>
+        <p data-form-status hidden role="status"></p>
       </form>
     </section>
 
@@ -71,7 +73,10 @@ const offices = [
               class:list={['contacts-tab-button', index === 0 && 'is-active']}
               type="button"
               role="tab"
+              id={`office-tab-${office.id}`}
+              aria-controls={`office-panel-${office.id}`}
               aria-selected={index === 0 ? 'true' : 'false'}
+              tabindex={index === 0 ? '0' : '-1'}
               data-office-button={office.id}>
               {office.city}
             </button>
@@ -82,6 +87,10 @@ const offices = [
           {offices.map((office, index) => (
             <article
               class:list={['contacts-office-panel', index === 0 && 'is-active']}
+              id={`office-panel-${office.id}`}
+              role="tabpanel"
+              aria-labelledby={`office-tab-${office.id}`}
+              hidden={index !== 0}
               data-office-panel={office.id}>
               <div class="contacts-office-info">
                 <p class="eyebrow">{office.city}</p>
@@ -187,6 +196,7 @@ const offices = [
           const active = item === button;
           item.classList.toggle('is-active', active);
           item.setAttribute('aria-selected', String(active));
+          item.setAttribute('tabindex', active ? '0' : '-1');
         });
 
         panels.forEach((panel) => {
@@ -194,6 +204,7 @@ const offices = [
             'is-active',
             panel.getAttribute('data-office-panel') === office
           );
+          panel.hidden = panel.getAttribute('data-office-panel') !== office;
         });
       });
     });

@@ -9,6 +9,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <p>SPACE GLASS</p>
       <h1>Комерційна пропозиція</h1>
       <span data-proposal-date></span>
+      <small data-proposal-number></small>
     </div>
   </header>
 
@@ -29,6 +30,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="proposal-note">
     <h2>Умови</h2>
     <p>Ця комерційна пропозиція є попередньою. Остаточна вартість підтверджується після перевірки розмірів, технічного завдання, доставки та монтажних умов.</p>
+    <ul><li>Термін дії пропозиції — 14 календарних днів.</li><li>Строк виготовлення погоджується після заміру та передоплати.</li><li>Гарантія на конструкції — до 5 років відповідно до договору.</li></ul>
   </section>
 
   <footer class="proposal-footer">
@@ -50,24 +52,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   document.querySelector('[data-proposal-date]').textContent =
     new Date().toLocaleDateString('uk-UA');
+  document.querySelector('[data-proposal-number]').textContent = `КП-${new Date().toISOString().slice(0,10).replaceAll('-','')}-${String(Date.now()).slice(-5)}`;
 
   document.querySelector('[data-client-name]').textContent = lead.name || '—';
   document.querySelector('[data-client-phone]').textContent = lead.phone || '—';
   document.querySelector('[data-client-email]').textContent = lead.email || '—';
   document.querySelector('[data-client-city]').textContent = lead.city || '—';
 
-  const items = Array.isArray(project.items) ? project.items : [];
+  const items = Array.isArray(project.items) && project.items.length ? project.items : (lead.product || lead.configuration ? [{name:lead.product,configuration:lead.configuration,price:Number(String(lead.estimated_price||lead.estimatedPrice||'').replace(/[^0-9.]/g,'')),quantity:1}] : []);
   const total = items.reduce((sum, item) =>
     sum + Number(item.price || 0) * Number(item.quantity || 1), 0);
 
   document.querySelector('[data-proposal-total]').textContent = money(total);
+  const escapeHtml=(value)=>String(value??'').replace(/[&<>'"]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
   document.querySelector('[data-proposal-items]').innerHTML = items.map((item, index) => `
     <article class="proposal-item">
       <div class="proposal-item__number">${String(index+1).padStart(2,'0')}</div>
       <div>
-        <small>${item.category || 'Space Glass'}</small>
-        <h2>${item.name || 'Конструкція'}</h2>
-        <p>${item.configuration || 'Індивідуальна конфігурація'}</p>
+        <small>${escapeHtml(item.category || 'Space Glass')}</small>
+        <h2>${escapeHtml(item.name || 'Конструкція')}</h2>
+        <p>${escapeHtml(item.configuration || 'Індивідуальна конфігурація')}</p>
       </div>
       <div class="proposal-item__price">
         <span>${item.quantity || 1} шт.</span>

@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /cart/
+Disallow: /compare/
+Disallow: /proposal/
+Disallow: /project-print/
+Disallow: /thank-you/
+Disallow: /*?*
+
+User-agent: GPTBot
+Allow: /
+
+Sitemap: https://space-glass.com.ua/sitemap.xml
+Host: https://space-glass.com.ua

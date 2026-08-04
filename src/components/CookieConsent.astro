@@ -1,0 +1,14 @@
+<aside class="cookie-consent" data-cookie-consent hidden aria-label="Налаштування cookies" aria-live="polite">
+  <div><strong>Ваші налаштування приватності</strong><p>Ми використовуємо необхідні cookies та, лише за вашою згодою, аналітику для покращення сайту. <a href="/cookies-policy/">Докладніше</a></p></div>
+  <div class="cookie-consent__actions"><button type="button" class="button button--outline" data-cookie-reject>Лише необхідні</button><button type="button" class="button button--mint" data-cookie-accept>Прийняти</button></div>
+</aside>
+<script is:inline>
+  const box=document.querySelector('[data-cookie-consent]');
+  const saved=localStorage.getItem('sg-cookie-consent');
+  const loadAnalytics=()=>{const {gaId,pixelId}=window.spaceGlassAnalytics||{};if(gaId&&!gaId.includes('XXXX')){const s=document.createElement('script');s.async=true;s.src=`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaId)}`;document.head.append(s);gtag('js',new Date());gtag('config',gaId,{anonymize_ip:true});}if(pixelId&&!/^0+$/.test(pixelId)){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};n.queue=[];t=b.createElement(e);t.async=true;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',pixelId);fbq('track','PageView');}};
+  const apply=(choice)=>{localStorage.setItem('sg-cookie-consent',choice);box.hidden=true;if(choice==='all')loadAnalytics();window.dispatchEvent(new CustomEvent('sg:consent',{detail:{analytics:choice==='all'}}));};
+  if(!saved) box.hidden=false;
+  if(saved==='all') loadAnalytics();
+  box.querySelector('[data-cookie-accept]')?.addEventListener('click',()=>apply('all'));
+  box.querySelector('[data-cookie-reject]')?.addEventListener('click',()=>apply('necessary'));
+</script>
