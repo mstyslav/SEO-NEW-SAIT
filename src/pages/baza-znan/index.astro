@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { seoPages } from '../../data/seo-pages';
+const pages = seoPages.filter((page) => page.kind === 'guide');
+---
+<BaseLayout title="База знань про скло та алюміній | Space Glass" description="Практичні матеріали Space Glass про вибір скла, товщину, фурнітуру, монтаж, догляд і формування вартості конструкцій.">
+  <Header />
+  <main id="main" class="hub">
+    <p class="eyebrow">Knowledge Hub</p><h1>База знань про скло та алюміній</h1><p class="lead">Практичні пояснення, які допомагають правильно підготуватися до замовлення.</p>
+    <div class="grid">{pages.map((page, index) => <a href={`/${page.slug}/`}><span>{String(index + 1).padStart(2,'0')}</span><h2>{page.h1}</h2><p>{page.description}</p><b>Читати →</b></a>)}</div>
+  </main><Footer />
+</BaseLayout>
+<style>.hub{padding:70px clamp(22px,5vw,80px)}h1{font-size:clamp(44px,7vw,88px);line-height:1;max-width:980px}.lead{font-size:22px;max-width:760px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:48px}.grid a{padding:30px;border:1px solid #d9e7df;border-radius:18px;color:inherit;text-decoration:none}.grid span{color:#16875f;font-size:12px}.grid h2{margin-top:28px}.grid p{line-height:1.65}@media(max-width:700px){.grid{grid-template-columns:1fr}}</style>
