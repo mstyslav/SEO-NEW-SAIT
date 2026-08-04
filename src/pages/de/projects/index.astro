@@ -1,3 +1,7 @@
 ---
-return Astro.redirect('/projects/?lang=de');
+import SeoLanding from '../../../components/seo/SeoLanding.astro';
+import { hubPages } from '../../../data/seo-pages';
+const locale = 'de';
+const page = hubPages(locale).find((entry) => entry.slug === 'projects');
 ---
+<SeoLanding page={page} locale={locale} />
