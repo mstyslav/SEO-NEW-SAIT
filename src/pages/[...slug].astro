@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { seoPages, type SeoPage } from '../data/seo-pages';
+
+export function getStaticPaths() {
+  return seoPages.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+
+interface Props { page: SeoPage }
+const { page } = Astro.props;
+const url = new URL(`/${page.slug}/`, Astro.site ?? Astro.url.origin).toString();
+const kindLabel = {
+  service: 'Рішення',
+  city: 'Місто',
+  guide: 'База знань',
+  project: 'Реалізований проєкт',
+}[page.kind];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': page.kind === 'guide' ? 'Article' : page.kind === 'project' ? 'CreativeWork' : 'Service',
+    name: page.h1,
+    description: page.description,
+    url,
+    provider: {
+      '@type': 'Organization',
+      name: 'Space Glass',
+      url: 'https://space-glass.com.ua/',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Головна', item: 'https://space-glass.com.ua/' },
+      { '@type': 'ListItem', position: 2, name: kindLabel, item: `https://space-glass.com.ua/${page.slug.split('/')[0]}/` },
+      { '@type': 'ListItem', position: 3, name: page.h1, item: url },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: page.faq.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  },
+];
+---
+<BaseLayout title={page.title} description={page.description} schema={schema}>
+  <div class="seo-shell">
+    <Header />
+    <main id="main">
+      <nav class="breadcrumbs" aria-label="Хлібні крихти">
+        <a href="/">Головна</a><span>→</span><span>{kindLabel}</span><span>→</span><strong>{page.h1}</strong>
+      </nav>
+
+      <section class="seo-hero">
+        <div>
+          <p class="eyebrow">{kindLabel}</p>
+          <h1>{page.h1}</h1>
+          <p class="lead">{page.intro}</p>
+          <div class="hero-actions">
+            <a class="button button--mint" href="/quote/">Отримати розрахунок</a>
+            <a class="button button--outline" href="/contacts/">Поставити питання</a>
+          </div>
+        </div>
+        <aside class="seo-summary">
+          <span>Space Glass</span>
+          <strong>Скло • алюміній • монтаж</strong>
+          <p>Попередня оцінка за фото, розмірами або кресленням.</p>
+        </aside>
+      </section>
+
+      <section class="seo-highlights" aria-label="Основні переваги">
+        {page.highlights.map((item, index) => (
+          <article><span>{String(index + 1).padStart(2, '0')}</span><h2>{item}</h2></article>
+        ))}
+      </section>
+
+      <section class="seo-content">
+        {page.sections.map((section) => (
+          <article>
+            <h2>{section.heading}</h2>
+            <p>{section.body}</p>
+          </article>
+        ))}
+      </section>
+
+      <section class="seo-process">
+        <div><span>01</span><h2>Заявка</h2><p>Надішліть фото, розміри або креслення.</p></div>
+        <div><span>02</span><h2>Перевірка</h2><p>Уточнюємо технічні деталі й комплектацію.</p></div>
+        <div><span>03</span><h2>Виробництво</h2><p>Погоджуємо креслення та запускаємо замовлення.</p></div>
+        <div><span>04</span><h2>Монтаж</h2><p>Доставляємо конструкцію та виконуємо монтаж.</p></div>
+      </section>
+
+      <section class="seo-faq">
+        <div class="section-heading"><p class="eyebrow">FAQ</p><h2>Часті запитання</h2></div>
+        <div>
+          {page.faq.map((item) => (
+            <details><summary>{item.question}</summary><p>{item.answer}</p></details>
+          ))}
+        </div>
+      </section>
+
+      <section class="seo-related">
+        <div class="section-heading"><p class="eyebrow">Перелінковка</p><h2>Схожі рішення</h2></div>
+        <div class="related-grid">
+          {page.related.map((href) => <a href={href}>{href.replaceAll('/', ' ').trim().replaceAll('-', ' ')} →</a>)}
+        </div>
+      </section>
+
+      <section class="seo-cta">
+        <div><p class="eyebrow">Space Glass</p><h2>Отримайте попередній розрахунок</h2><p>Додайте фото, приблизні розміри й коротко опишіть задачу.</p></div>
+        <a class="button button--white" href="/quote/">Розрахувати проєкт</a>
+      </section>
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .seo-shell{background:#fff;color:#111}.breadcrumbs{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:22px clamp(22px,5vw,80px);font-size:13px}.breadcrumbs a{color:inherit}.seo-hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(300px,.7fr);gap:48px;padding:72px clamp(22px,5vw,80px);background:linear-gradient(135deg,#f5fbf8,#fff)}.seo-hero h1{max-width:950px;margin:10px 0 20px;font-size:clamp(40px,6vw,88px);line-height:.98}.lead{max-width:780px;font-size:clamp(18px,2vw,24px);line-height:1.55}.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}.seo-summary{display:flex;flex-direction:column;justify-content:flex-end;min-height:360px;padding:34px;border-radius:24px;background:#111;color:#fff}.seo-summary span{color:#8fe0bd}.seo-summary strong{margin:12px 0;font-size:32px}.seo-highlights{display:grid;grid-template-columns:repeat(4,1fr);margin:0 clamp(22px,5vw,80px);border:1px solid #d9e7df;border-radius:20px;overflow:hidden}.seo-highlights article{min-height:180px;padding:26px;border-right:1px solid #d9e7df}.seo-highlights article:last-child{border-right:0}.seo-highlights span{font-size:12px;color:#16875f}.seo-highlights h2{margin-top:48px;font-size:18px}.seo-content{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:86px clamp(22px,5vw,80px)}.seo-content article{padding:32px;border:1px solid #dce9e2;border-radius:18px}.seo-content h2{margin-top:0;font-size:28px}.seo-content p{font-size:17px;line-height:1.75}.seo-process{display:grid;grid-template-columns:repeat(4,1fr);padding:72px clamp(22px,5vw,80px);background:#111;color:#fff}.seo-process div{padding:28px;border-right:1px solid #333}.seo-process span{color:#8fe0bd}.seo-faq,.seo-related{display:grid;grid-template-columns:.65fr 1.35fr;gap:60px;padding:86px clamp(22px,5vw,80px)}.seo-faq details{border-bottom:1px solid #d7e4dd;padding:20px 0}.seo-faq summary{font-size:19px;font-weight:700;cursor:pointer}.seo-faq p{line-height:1.7}.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.related-grid a{padding:20px;border:1px solid #d7e4dd;border-radius:14px;text-transform:capitalize;color:inherit}.seo-cta{display:flex;justify-content:space-between;align-items:center;gap:30px;margin:0 clamp(22px,5vw,80px) 80px;padding:46px;border-radius:22px;background:#0c8f63;color:#fff}.seo-cta h2{margin:8px 0;font-size:clamp(30px,4vw,54px)}@media(max-width:900px){.seo-hero,.seo-faq,.seo-related{grid-template-columns:1fr}.seo-highlights,.seo-process{grid-template-columns:1fr 1fr}.seo-content{grid-template-columns:1fr}.seo-summary{min-height:260px}}@media(max-width:560px){.seo-highlights,.seo-process,.related-grid{grid-template-columns:1fr}.seo-cta{align-items:flex-start;flex-direction:column}}
+</style>
