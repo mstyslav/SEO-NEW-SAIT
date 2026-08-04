@@ -1,0 +1,35 @@
+name: SEO production check
+
+on:
+  push:
+    branches: [main, seo-production-sprint-1]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Astro site
+        run: npm run build
+
+      - name: Check routes
+        run: npm run check:routes
+
+      - name: Check internal links
+        run: npm run check:links
+
+      - name: Check configurators
+        run: npm run check:configurator
