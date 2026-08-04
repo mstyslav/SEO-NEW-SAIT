@@ -6,6 +6,7 @@ interface Props {
   items: [string, string][];
   visibleCount?: number;
   variant?: 'default' | 'compact';
+  locale?: import('../i18n/helpers').Locale;
 }
 const {
   eyebrow = 'FAQ',
@@ -13,8 +14,18 @@ const {
   intro = '',
   items,
   visibleCount = 6,
-  variant = 'compact'
+  variant = 'compact',
+  locale: localeProp
 } = Astro.props;
+
+import { localeFromPath, normalizeLocale } from '../i18n/helpers';
+const locale = normalizeLocale(localeProp ?? localeFromPath(Astro.url.pathname));
+const labels = {
+  uk: { all: 'Показати всі питання', less: 'Показати менше' },
+  ru: { all: 'Показать все вопросы', less: 'Показать меньше' },
+  en: { all: 'Show all questions', less: 'Show less' },
+  de: { all: 'Alle Fragen anzeigen', less: 'Weniger anzeigen' }
+}[locale];
 
 const id = `faq-${Math.random().toString(36).slice(2, 9)}`;
 ---
@@ -40,13 +51,13 @@ const id = `faq-${Math.random().toString(36).slice(2, 9)}`;
   {items.length > visibleCount && (
     <div class="faq-block__actions">
       <button class="button button--mint faq-toggle" type="button" aria-expanded="false">
-        Показати всі питання
+        {labels.all}
       </button>
     </div>
   )}
 </section>
 
-<script>
+<script define:vars={{ labels }}>
   document.querySelectorAll('[data-faq-block]').forEach((block) => {
     const toggle = block.querySelector('.faq-toggle');
     if (!toggle) return;
@@ -54,7 +65,7 @@ const id = `faq-${Math.random().toString(36).slice(2, 9)}`;
     toggle.addEventListener('click', () => {
       const expanded = block.classList.toggle('is-expanded');
       toggle.setAttribute('aria-expanded', String(expanded));
-      toggle.textContent = expanded ? 'Показати менше' : 'Показати всі питання';
+      toggle.textContent = expanded ? labels.less : labels.all;
     });
   });
 </script>

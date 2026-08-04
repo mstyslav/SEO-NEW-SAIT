@@ -6,17 +6,16 @@ export function normalizeLocale(locale?: string): Locale {
 }
 
 export function stripLocale(pathname: string): string {
-  const stripped = pathname.replace(/^\/(ru|en|de)(?=\/|$)/, '');
+  const stripped = pathname.replace(/^\/(uk|ru|en|de)(?=\/|$)/, '');
   return stripped || '/';
 }
 
 export function localizedPath(pathname: string, locale: Locale): string {
   const base = stripLocale(pathname);
-  if (locale === 'uk') return base.startsWith('/') ? base : `/${base}`;
   return `/${locale}${base === '/' ? '/' : base}`;
 }
 
 export function localeFromPath(pathname: string): Locale {
-  const match = pathname.match(/^\/(ru|en|de)(?=\/|$)/);
+  const match = pathname.match(/^\/(uk|ru|en|de)(?=\/|$)/);
   return match ? (match[1] as Locale) : 'uk';
 }
