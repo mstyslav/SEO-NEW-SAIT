@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import type { SeoService } from '../data/seo-services';
+import { seoServiceByPath } from '../data/seo-services';
+interface Props { service: SeoService }
+const { service } = Astro.props;
+const related = service.relatedPaths.map((path) => seoServiceByPath.get(path)).filter(Boolean) as SeoService[];
+const schema = {
+  '@context': 'https://schema.org', '@type': 'Service', name: service.name,
+  description: service.description, provider: { '@type': 'Organization', name: 'Space Glass', url: 'https://space-glass.com.ua/' },
+  areaServed: { '@type': 'Country', name: 'Україна' }, url: new URL(service.path, Astro.site ?? Astro.url.origin).href
+};
+---
+<BaseLayout title={service.title} description={service.description} locale="uk" availableLocales={['uk']}>
+  <div class="sg-page-shell"><Header />
+    <main id="main" class="seo-service-page">
+      <div class="seo-service-wrap">
+        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: 'Послуги', href: '/poslugy/' }, { label: service.categoryName, href: `/poslugy/${service.categorySlug}/` }, { label: service.shortName }]} />
+        <section class="seo-service-hero">
+          <p class="eyebrow">{service.categoryName}</p><h1>{service.h1}</h1><p class="lead">{service.intro}</p>
+          <div class="hero__actions"><a class="button button--mint" href="/quote/">Отримати розрахунок</a><a class="button button--outline" href="/contacts/">Замовити замір</a></div>
+        </section>
+        <section class="seo-service-content">
+          <div><p class="eyebrow">Рішення під ваш об’єкт</p><h2>Від ідеї до професійного монтажу</h2><p>Інженер перевіряє основу та геометрію, готує креслення й специфікацію. Ми погоджуємо кожну деталь до запуску у виробництво, щоб конструкція була безпечною, зручною та довговічною.</p></div>
+          <ul><li>Безпечне загартоване або ламіноване скло</li><li>Індивідуальні розміри й добір фурнітури</li><li>Контроль якості та акуратний монтаж</li><li>Гарантія на конструкцію і виконані роботи</li></ul>
+        </section>
+        <section class="seo-benefit"><p class="eyebrow eyebrow--light">Головна перевага</p><h2>{service.benefit.charAt(0).toUpperCase() + service.benefit.slice(1)}</h2><p>Вартість залежить від площі, обробки скла, конфігурації та кріплень. Надішліть орієнтовні розміри — підготуємо прозорий попередній кошторис.</p></section>
+        <section class="seo-related"><div class="category-heading"><div><p class="eyebrow">Внутрішня навігація</p><h2>Пов’язані рішення</h2></div><a href={`/poslugy/${service.categorySlug}/`}>Усі послуги категорії →</a></div><div class="seo-related-grid">{related.map((item) => <a href={item.path}><span>{item.categoryName}</span><strong>{item.shortName}</strong><small>Детальніше →</small></a>)}</div></section>
+        <section class="inner-cta"><div><p class="eyebrow eyebrow--light">Ваш проєкт</p><h2>Потрібна точна вартість?</h2><p>Підготуємо рішення під розміри, стиль і бюджет.</p></div><a class="button button--white" href="/quote/">Отримати пропозицію</a></section>
+      </div>
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    </main><Footer />
+  </div>
+</BaseLayout>
