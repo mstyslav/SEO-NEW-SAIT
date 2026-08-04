@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Сторінку не знайдено — Space Glass';
+const description = 'Сторінку не знайдено. Перейдіть до каталогу рішень Space Glass або отримайте попередній розрахунок.';
+---
+<BaseLayout title={title} description={description} noindex={true}>
+  <Header />
+  <main id="main" class="not-found">
+    <div class="not-found__inner">
+      <p class="not-found__code">404</p>
+      <h1>Сторінку не знайдено</h1>
+      <p>Можливо, адресу було змінено або сторінка більше не існує. Перейдіть до основних розділів сайту.</p>
+      <div class="not-found__actions">
+        <a class="button button--primary" href="/rishennia/">Переглянути рішення</a>
+        <a class="button button--secondary" href="/contacts/">Зв’язатися з нами</a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .not-found{min-height:70vh;display:grid;place-items:center;padding:96px 24px;background:#fff}
+  .not-found__inner{width:min(760px,100%);text-align:center}
+  .not-found__code{margin:0 0 12px;font-size:clamp(72px,14vw,160px);font-weight:800;line-height:.85;letter-spacing:-.08em;color:#b8f3df}
+  h1{margin:0 0 20px;font-size:clamp(36px,6vw,72px);line-height:1.02;letter-spacing:-.045em}
+  .not-found__inner>p:not(.not-found__code){max-width:620px;margin:0 auto;color:#5b6360;font-size:18px;line-height:1.65}
+  .not-found__actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:34px}
+  .button{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;border-radius:999px;text-decoration:none;font-weight:700}
+  .button--primary{background:#111;color:#fff}
+  .button--secondary{border:1px solid #d7ddda;color:#111;background:#fff}
+</style>
