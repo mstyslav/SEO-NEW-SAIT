@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { seoCategories, ukSeoServices } from '../../data/seo-services';
+---
+<BaseLayout title="Послуги зі скла на замовлення в Україні | Space Glass" description="50 рішень зі скла для дому й бізнесу: душові, перегородки, двері, огорожі, дзеркала, фасади та безрамне скління з монтажем." availableLocales={['uk']}>
+  <div class="sg-page-shell"><Header /><main id="main"><div class="seo-service-wrap"><Breadcrumbs items={[{label:'Головна',href:'/'},{label:'Послуги'}]} /><section class="seo-list-hero"><p class="eyebrow">Space Glass</p><h1>Послуги зі скла на замовлення</h1><p class="lead">Проєктуємо, виготовляємо й монтуємо конструкції зі скла. У каталозі — {ukSeoServices.length} спеціалізованих рішень із прозорою навігацією.</p></section><div class="seo-category-grid">{seoCategories.map((category) => <article><p class="eyebrow">{category.services.length} рішень</p><h2><a href={`/poslugy/${category.slug}/`}>{category.name}</a></h2><ul>{category.services.slice(0,4).map((service) => <li><a href={service.path}>{service.shortName}</a></li>)}</ul><a class="seo-category-more" href={`/poslugy/${category.slug}/`}>Уся категорія →</a></article>)}</div></div></main><Footer /></div>
+</BaseLayout>

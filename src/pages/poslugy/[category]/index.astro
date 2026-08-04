@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import { seoCategories } from '../../../data/seo-services';
+export function getStaticPaths() { return seoCategories.map((category) => ({ params: { category: category.slug }, props: { category } })); }
+const { category } = Astro.props;
+---
+<BaseLayout title={`${category.name} на замовлення | Space Glass`} description={`${category.name} від Space Glass: індивідуальне проєктування, виготовлення та монтаж в Україні. Перегляньте доступні рішення.`} availableLocales={['uk']}>
+  <div class="sg-page-shell"><Header /><main id="main"><div class="seo-service-wrap"><Breadcrumbs items={[{label:'Головна',href:'/'},{label:'Послуги',href:'/poslugy/'},{label:category.name}]} /><section class="seo-list-hero"><p class="eyebrow">Каталог послуг</p><h1>{category.name} на замовлення</h1><p class="lead">Оберіть готовий напрям або надішліть нам індивідуальне завдання.</p></section><div class="seo-index-grid">{category.services.map((service) => <a href={service.path}><span>{category.name}</span><h2>{service.shortName}</h2><p>{service.benefit}.</p><strong>Переглянути послугу →</strong></a>)}</div></div></main><Footer /></div>
+</BaseLayout>
