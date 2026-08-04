@@ -115,10 +115,10 @@ const faq = [
       <section class="sg-hero">
         <div class="sg-hero__copy">
           <p class="eyebrow">Скляні конструкції преміум-класу</p>
-          <h1>Простір.<br>Світло.<br><span>Space Glass</span></h1>
+          <h1>Простір<br>Світло<br><span>Space Glass</span></h1>
           <p>Виготовляємо скляні конструкції для дому, бізнесу та комерційних проєктів будь-якої складності.</p>
           <div class="hero__actions">
-            <a class="button button--mint" href="/catalog/">Переглянути каталог →</a>
+            <a class="button button--mint" href="/catalog/">Переглянути каталог скляних конструкцій →</a>
             <a class="button button--outline" href="#quote">Отримати розрахунок</a>
           </div>
         </div>
@@ -146,11 +146,11 @@ const faq = [
             </a>
           ))}
         </div>
-        <a class="sg-all-link" href="/catalog/">Переглянути весь каталог →</a>
+        <a class="sg-all-link" href="/catalog/">Переглянути весь каталог скляних конструкцій →</a>
       </section>
 
       <section class="sg-products">
-        <div class="sg-section-title"><h2>Популярні рішення</h2><a href="/catalog/">Переглянути всі товари ← →</a></div>
+        <div class="sg-section-title"><h2>Популярні рішення</h2><a href="/catalog/">Переглянути всі скляні рішення →</a></div>
         <div class="sg-product-grid">
           {products.map(([title,price,image,status],i) => (
             <a class="sg-product-card" href="/catalog/piddon/">
@@ -162,7 +162,7 @@ const faq = [
                 <small class={status === 'Під замовлення' ? 'is-order' : ''}>● {status}</small>
                 <h3>{title}</h3>
                 <strong>{price}</strong>
-                <span class="sg-product-button">Детальніше →</span>
+                <span class="sg-product-button">Докладніше про скляне рішення →</span>
               </div>
             </a>
           ))}
@@ -173,7 +173,7 @@ const faq = [
         <div class="sg-projects__intro">
           <h2>Наші проєкти</h2>
           <p>Реалізовані рішення для квартир, будинків, офісів, ресторанів та готелів.</p>
-          <a href="/projects/">Дивитися усі проєкти →</a>
+          <a href="/projects/">Дивитися всі реалізовані проєкти →</a>
         </div>
         {['project-1.webp','project-2.webp','project-3.webp','project-4.webp'].map((image) => (
           <a class="sg-project-image" href="/projects/"><img src={`/images/v5/${image}`} alt="Реалізований проєкт Space Glass" loading="lazy" /></a>
