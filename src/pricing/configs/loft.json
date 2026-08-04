@@ -1,0 +1,70 @@
+{
+  "id": "loft",
+  "category": "loft",
+  "titleKey": "loft",
+  "fields": [
+    {
+      "id": "width",
+      "type": "number",
+      "labelKey": "width",
+      "default": 3000,
+      "unit": "mm"
+    },
+    {
+      "id": "height",
+      "type": "number",
+      "labelKey": "height",
+      "default": 2600,
+      "unit": "mm"
+    },
+    {
+      "id": "profile",
+      "type": "choice",
+      "labelKey": "profile",
+      "options": [
+        {
+          "label": "Стандарт",
+          "value": "standard",
+          "multiplier": 1
+        },
+        {
+          "label": "Тонкий",
+          "value": "slim",
+          "multiplier": 1.12
+        },
+        {
+          "label": "Premium",
+          "value": "premium",
+          "multiplier": 1.22
+        }
+      ]
+    },
+    {
+      "id": "doors",
+      "type": "choice",
+      "labelKey": "doors",
+      "options": [
+        {
+          "label": "Без дверей",
+          "value": "none"
+        },
+        {
+          "label": "Розпашні",
+          "value": "hinged",
+          "extraUsd": 250
+        },
+        {
+          "label": "Розсувні",
+          "value": "sliding",
+          "extraUsd": 420
+        }
+      ]
+    },
+    {
+      "id": "installation",
+      "type": "toggle",
+      "labelKey": "installation",
+      "default": true
+    }
+  ]
+}

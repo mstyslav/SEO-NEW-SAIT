@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+<BaseLayout title="Space Glass UI Kit" description="Внутрішня бібліотека компонентів Space Glass.">
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="ui-kit-hero">
+      <p class="eyebrow">Design System</p>
+      <h1>Space Glass UI Kit</h1>
+      <p class="lead">Єдина бібліотека кольорів, кнопок, карток, форм, FAQ та товарних компонентів.</p>
+    </section>
+
+    <section class="ui-kit-section">
+      <h2>Кольори</h2>
+      <div class="swatches">
+        <div><span style="background:#000"></span><b>Black</b><small>#000000</small></div>
+        <div><span style="background:#fff;border:1px solid #ddd"></span><b>White</b><small>#FFFFFF</small></div>
+        <div><span style="background:#93D1BA"></span><b>Brand Mint</b><small>#93D1BA</small></div>
+        <div><span style="background:#67B79A"></span><b>Mint Dark</b><small>#67B79A</small></div>
+      </div>
+    </section>
+
+    <section class="ui-kit-section">
+      <h2>Кнопки</h2>
+      <div class="ui-row">
+        <a class="button button--mint" href="#">Primary CTA</a>
+        <a class="button button--outline" href="#">Secondary</a>
+        <a class="button button--white ui-dark-demo" href="#">On dark</a>
+      </div>
+    </section>
+
+    <section class="ui-kit-section">
+      <h2>Картки</h2>
+      <div class="inner-card-grid">
+        <article class="inner-card"><span>01</span><h3>Service Card</h3><p>Універсальний компонент послуги.</p><a href="#">Детальніше →</a></article>
+        <article class="inner-card"><span>02</span><h3>Knowledge Card</h3><p>Стаття, FAQ або технічна тема.</p><a href="#">Читати →</a></article>
+        <article class="inner-card"><span>03</span><h3>Project Card</h3><p>Реалізований об’єкт з містом і типом рішення.</p><a href="#">Проєкт →</a></article>
+      </div>
+    </section>
+
+    <section class="ui-kit-section">
+      <h2>Форма</h2>
+      <form class="quote-form ui-form-demo">
+        <label>Ім’я<input type="text" /></label>
+        <label>Телефон<input type="tel" /></label>
+        <label>Повідомлення<textarea></textarea></label>
+        <button class="button button--mint" type="button">Надіслати</button>
+      </form>
+    </section>
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

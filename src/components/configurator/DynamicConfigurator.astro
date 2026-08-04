@@ -1,0 +1,235 @@
+---
+import uiAll from '../../i18n/configurator-ui.json';
+import labelsAll from '../../i18n/configurator-labels.json';
+import { localeFromPath, normalizeLocale, localizedPath } from '../../i18n/helpers';
+
+const { config, tariff, currency, productName } = Astro.props;
+const locale = normalizeLocale(Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
+const ui = uiAll[locale] ?? uiAll.uk;
+const labels = labelsAll[locale] ?? labelsAll.uk;
+const resolvedName = config.titleKey ? labels[config.titleKey] : productName;
+const lp = (path: string) => localizedPath(path, locale);
+const labelFor = (field: any) => field.labelKey ? (labels[field.labelKey] ?? field.labelKey) : field.label;
+---
+<section class="dyn-config" data-dyn-config
+ data-locale={locale}
+ data-category={config.category}
+ data-product={resolvedName}
+ data-product-rate={tariff.productUsdM2}
+ data-install-rate={tariff.installationUsdM2 ?? 60}
+ data-install-enabled={String(tariff.installationEnabled)}
+ data-markup={currency.markupUah}
+ data-fallback={currency.fallbackRateUah}
+ data-t-not-selected={ui.notSelected}
+ data-t-added={ui.added}
+ data-t-open={ui.open}>
+  <div class="dyn-config__intro">
+    <p class="eyebrow">{ui.smartConfigurator}</p>
+    <h2>{resolvedName}</h2>
+    <p>{ui.configureText}</p>
+  </div>
+
+  <div class="dyn-config__grid">
+    <div class="dyn-config__fields">
+      {config.fields.map((field: any, index: number) => (
+        <section class="dyn-field" data-field={field.id}>
+          <div class="dyn-field__title">
+            <b>{String(index+1).padStart(2,'0')}</b>
+            <span>{labelFor(field)}</span>
+          </div>
+
+          {field.type === 'number' && (
+            <label class="dyn-number">
+              <input type="number" name={field.id} value={field.default} data-number />
+              {field.unit && <span>{field.unit}</span>}
+            </label>
+          )}
+
+          {field.type === 'choice' && (
+            <div class="dyn-options">
+              {field.options.map((option: any, i: number) => (
+                <button type="button" class:list={['dyn-option', i === 0 && 'is-active']}
+                  data-choice data-value={option.value}
+                  data-multiplier={option.multiplier ?? 1}
+                  data-extra-usd={option.extraUsd ?? 0}>
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {field.type === 'toggle' && (
+            <label class="dyn-toggle">
+              <input type="checkbox" name={field.id} checked={field.default}
+                data-toggle data-extra-usd={field.extraUsd ?? 0}
+                data-extra-usd-m2={field.extraUsdM2 ?? 0} />
+              <span></span><b>{field.default ? ui.included : ui.add}</b>
+            </label>
+          )}
+        </section>
+      ))}
+    </div>
+
+    <aside class="dyn-summary">
+      <p class="eyebrow">{ui.preliminaryCalculation}</p>
+      <h2>{resolvedName}</h2>
+      <dl>
+        <div><dt>{ui.area}</dt><dd data-area>—</dd></div>
+        <div><dt>{ui.product}</dt><dd data-product-price>—</dd></div>
+        <div><dt>{ui.options}</dt><dd data-extras>—</dd></div>
+        <div><dt>{ui.installation}</dt><dd data-installation>—</dd></div>
+        <div><dt>{ui.rate}</dt><dd data-rate>—</dd></div>
+      </dl>
+      <div class="dyn-total">
+        <span>{ui.total}</span>
+        <strong data-total>—</strong>
+        <small data-total-usd></small>
+      </div>
+      <p class="dyn-disclaimer">{ui.disclaimer}</p>
+      <div class="dyn-actions">
+        <a class="button button--mint" href={lp('/quote/')} data-quote>{ui.getQuote}</a>
+        <button class="button button--outline" type="button" data-project>{ui.addProject}</button>
+      </div>
+      <p class="dyn-status" data-status hidden></p>
+    </aside>
+  </div>
+</section>
+
+<script type="module">
+import { getUsdRate } from '../../pricing/client/exchange-rate.js';
+
+document.querySelectorAll('[data-dyn-config]').forEach(async root => {
+  const markup = Number(root.dataset.markup || .8);
+  const fallbackRate = Number(root.dataset.fallback || 43.5);
+  let exchange = {
+    nbuRate: fallbackRate,
+    markup,
+    workingRate: fallbackRate + markup,
+    source: 'fallback'
+  };
+
+  try {
+    const loaded = await getUsdRate({ markup, fallbackRate });
+    if (Number.isFinite(Number(loaded?.workingRate))) {
+      exchange = loaded;
+    }
+  } catch (error) {
+    console.warn('Exchange rate fallback is used.', error);
+  }
+
+  const locale = root.dataset.locale || 'uk';
+  const notSelected = root.dataset.tNotSelected || '—';
+  let last = null;
+
+  const read = () => {
+    const values = {};
+    let multiplier = 1, extras = 0, extrasM2 = 0;
+
+    root.querySelectorAll('[data-field]').forEach(field => {
+      const id = field.dataset.field;
+      const n = field.querySelector('[data-number]');
+      const c = field.querySelector('[data-choice].is-active');
+      const t = field.querySelector('[data-toggle]');
+
+      if (n) values[id] = Number(n.value||0);
+      if (c) {
+        values[id] = c.dataset.value;
+        multiplier *= Number(c.dataset.multiplier||1);
+        extras += Number(c.dataset.extraUsd||0);
+      }
+      if (t) {
+        values[id] = t.checked;
+        if (t.checked) {
+          extras += Number(t.dataset.extraUsd||0);
+          extrasM2 += Number(t.dataset.extraUsdM2||0);
+        }
+      }
+    });
+
+    return {values,multiplier,extras,extrasM2};
+  };
+
+  const calc = () => {
+    const s = read();
+    const width = Number(s.values.width || s.values.length || 0);
+    const area = width/1000 * Number(s.values.height||0)/1000;
+
+    const product = area * Number(root.dataset.productRate||0) * s.multiplier;
+    const optionCost = s.extras + area*s.extrasM2;
+    const installation = root.dataset.installEnabled === 'true' && s.values.installation
+      ? area*Number(root.dataset.installRate||60) : 0;
+
+    const totalUsd = product+optionCost+installation;
+    const totalUah = totalUsd*exchange.workingRate;
+
+    last = {
+      locale,
+      category:root.dataset.category,
+      productName:root.dataset.product,
+      parameters:s.values,
+      areaM2:area,
+      productUsd:product,
+      extrasUsd:optionCost,
+      installationUsd:installation,
+      totalUsd,
+      workingRate:exchange.workingRate,
+      totalUah
+    };
+
+    root.querySelector('[data-area]').textContent = area.toFixed(2)+' m²';
+    root.querySelector('[data-product-price]').textContent = product.toFixed(2)+' $';
+    root.querySelector('[data-extras]').textContent = optionCost ? optionCost.toFixed(2)+' $' : notSelected;
+    root.querySelector('[data-installation]').textContent = installation ? installation.toFixed(2)+' $' : notSelected;
+    root.querySelector('[data-rate]').textContent = exchange.workingRate.toFixed(2)+' UAH/$';
+    root.querySelector('[data-total]').textContent = Math.round(totalUah).toLocaleString(locale === 'uk' ? 'uk-UA' : locale)+' UAH';
+    root.querySelector('[data-total-usd]').textContent = '≈ '+totalUsd.toFixed(2)+' $';
+
+    const quote = root.querySelector('[data-quote]');
+    const url = new URL(quote.href, location.origin);
+    url.searchParams.set('product', root.dataset.product);
+    url.searchParams.set('pricing', JSON.stringify(last));
+    if (locale !== 'uk') url.searchParams.set('lang', locale);
+    quote.href = url.pathname + url.search;
+  };
+
+  root.addEventListener('click', (event) => {
+    const btn = event.target.closest('[data-choice]');
+    if (!btn || !root.contains(btn)) return;
+
+    const field = btn.closest('[data-field]');
+    field.querySelectorAll('[data-choice]').forEach((item) => {
+      item.classList.toggle('is-active', item === btn);
+      item.setAttribute('aria-pressed', item === btn ? 'true' : 'false');
+    });
+
+    calc();
+  });
+
+  root.querySelectorAll('[data-number],[data-toggle]').forEach(el=>el.addEventListener('input',calc));
+
+  root.querySelector('[data-project]').addEventListener('click',()=>{
+    let project={items:[],note:''};
+    try{project=JSON.parse(localStorage.getItem('spaceGlassProject')||'{"items":[],"note":""}')}catch{}
+    if(!Array.isArray(project.items))project.items=[];
+
+    project.items.push({
+      id:root.dataset.category+'-'+Date.now(),
+      name:root.dataset.product,
+      category:root.dataset.category,
+      configuration:Object.entries(last.parameters).map(([k,v])=>k+': '+v).join(' · '),
+      price:Math.round(last.totalUah),
+      pricing:last,
+      quantity:1
+    });
+
+    localStorage.setItem('spaceGlassProject',JSON.stringify(project));
+    window.dispatchEvent(new Event('space-glass-project-updated'));
+
+    const st=root.querySelector('[data-status]');
+    st.hidden=false;
+    st.innerHTML=(root.dataset.tAdded||'Added')+' <a href="/cart/">'+(root.dataset.tOpen||'Open')+' →</a>';
+  });
+
+  calc();
+});
+</script>

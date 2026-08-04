@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="1754" viewBox="0 0 1240 1754">
+<rect width="1240" height="1754" fill="#ffffff"/>
+<rect x="48" y="48" width="1144" height="1658" rx="28" fill="none" stroke="#9ad5c1" stroke-width="3"/>
+<text x="88" y="120" font-family="Arial" font-size="28" fill="#6bbca1" font-weight="700">SPACE GLASS</text>
+<text x="88" y="185" font-family="Arial" font-size="48" fill="#101512" font-weight="700">Догляд за скляною конструкцією</text>
+<text x="88" y="230" font-family="Arial" font-size="22" fill="#68716c">Рекомендації для щоденного користування</text>
+
+<g font-family="Arial">
+<rect x="88" y="300" width="500" height="260" rx="18" fill="#f7fbf9" stroke="#c7e7db"/>
+<text x="126" y="360" font-size="28" fill="#101512" font-weight="700">01 · Очищення скла</text>
+<text x="126" y="415" font-size="22" fill="#4e5752">Використовуйте м’яку серветку</text>
+<text x="126" y="455" font-size="22" fill="#4e5752">та нейтральний засіб без абразиву.</text>
+
+<rect x="652" y="300" width="500" height="260" rx="18" fill="#f7fbf9" stroke="#c7e7db"/>
+<text x="690" y="360" font-size="28" fill="#101512" font-weight="700">02 · Фурнітура</text>
+<text x="690" y="415" font-size="22" fill="#4e5752">Не застосовуйте кислотні засоби.</text>
+<text x="690" y="455" font-size="22" fill="#4e5752">Не залишайте вологу на металі.</text>
+
+<rect x="88" y="610" width="500" height="260" rx="18" fill="#f7fbf9" stroke="#c7e7db"/>
+<text x="126" y="670" font-size="28" fill="#101512" font-weight="700">03 · Після душу</text>
+<text x="126" y="725" font-size="22" fill="#4e5752">Знімайте воду зі скла стяжкою.</text>
+<text x="126" y="765" font-size="22" fill="#4e5752">Провітрюйте приміщення.</text>
+
+<rect x="652" y="610" width="500" height="260" rx="18" fill="#f7fbf9" stroke="#c7e7db"/>
+<text x="690" y="670" font-size="28" fill="#101512" font-weight="700">04 · Перевірка</text>
+<text x="690" y="725" font-size="22" fill="#4e5752">Раз на 6 місяців перевіряйте</text>
+<text x="690" y="765" font-size="22" fill="#4e5752">кріплення, ущільнювачі та ручки.</text>
+
+<rect x="88" y="930" width="1064" height="330" rx="18" fill="#07150f"/>
+<text x="126" y="1000" font-size="30" fill="#9ad5c1" font-weight="700">Не використовуйте</text>
+<text x="126" y="1060" font-size="23" fill="#ffffff">• металеві губки та порошкові абразиви</text>
+<text x="126" y="1110" font-size="23" fill="#ffffff">• концентровані кислоти й луги</text>
+<text x="126" y="1160" font-size="23" fill="#ffffff">• ударне навантаження на край скла</text>
+
+<text x="88" y="1370" font-size="26" fill="#101512" font-weight="700">Потрібна консультація?</text>
+<text x="88" y="1420" font-size="22" fill="#4e5752">Надішліть фото конструкції менеджеру Space Glass.</text>
+<text x="88" y="1510" font-size="20" fill="#68716c">space-glass.com.ua · info@space-glass.com.ua</text>
+</g>
+</svg>

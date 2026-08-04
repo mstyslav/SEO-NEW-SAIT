@@ -1,0 +1,784 @@
+---
+import tariffs from '../../pricing/tariffs.json';
+const showerTariff = tariffs.categories.shower;
+const currencySettings = tariffs.currency;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FAQBlock from '../../components/FAQBlock.astro';
+import productData from '../../data/products.json';
+
+const currentProduct = productData.products.find(item => item.slug === 'walk-in-premium-black') ?? productData.products[0];
+
+const gallery = [
+  ['/images/s20/product-main.webp','Walk-in Premium Black — загальний вигляд'],
+  ['/images/s20/product-angle.webp','Walk-in — вигляд під кутом'],
+  ['/images/s20/product-detail.webp','Деталі скла та профілю'],
+  ['/images/s20/product-interior.webp','Walk-in у сучасному інтер’єрі']
+];
+
+const badgeLabels = {
+  top: 'ТОП продажу',
+  hit: 'Хіт продажу'
+};
+
+const documents = currentProduct.documents ?? [];
+
+const specs = [
+  ['Тип','Walk-in'],
+  ['Скло','Загартоване 8–10 мм'],
+  ['Профіль','Чорний / хром / графіт'],
+  ['Розмір','Стандартний або індивідуальний'],
+  ['Монтаж','Київ, Львів, Одеса'],
+  ['Доставка','По всій Україні']
+];
+
+const related = [
+  {
+    title: 'Душові двері в нішу',
+    category: 'Скляні двері',
+    price: 'від 10 900 грн',
+    image: '/images/s20/product-angle.webp',
+    badge: 'ХІТ',
+    href: '/catalog/piddon/'
+  },
+  {
+    title: 'Піддон зі штучного каменю',
+    category: 'Душові піддони',
+    price: 'від 8 900 грн',
+    image: '/images/s20/product-detail.webp',
+    badge: '',
+    href: '/catalog/piddon/'
+  },
+  {
+    title: 'Комплект чорної фурнітури',
+    category: 'Фурнітура',
+    price: 'від 3 600 грн',
+    image: '/images/s19/walkin-detail.webp',
+    badge: 'ТОП',
+    href: '/catalog/piddon/'
+  },
+  {
+    title: 'Стабілізатор для Walk-in',
+    category: 'Комплектуючі',
+    price: 'від 2 450 грн',
+    image: '/images/s20/product-interior.webp',
+    badge: '',
+    href: '/catalog/piddon/'
+  }
+];
+
+const faq = [
+  [
+    "Скільки коштує душова Walk-in?",
+    "Вартість залежить від розміру, товщини скла, типу профілю, стабілізатора, фурнітури та монтажу."
+  ],
+  [
+    "Чи можна зробити нестандартний розмір?",
+    "Так. Конструкцію виготовляємо за погодженими розмірами після технічної перевірки."
+  ],
+  [
+    "Яке скло краще: 8 чи 10 мм?",
+    "Товщину підбираємо за габаритами, способом кріплення та конструктивом."
+  ],
+  [
+    "Чи входить монтаж у ціну?",
+    "Монтаж розраховується окремо залежно від міста, доступу до об’єкта та складності."
+  ],
+  [
+    "Чи можна замовити тільки товар з доставкою?",
+    "Так, готові комплекти та окремі товари відправляємо по Україні."
+  ],
+  [
+    "Який термін виготовлення?",
+    "Термін залежить від комплектації, розміру та завантаження виробництва."
+  ],
+  [
+    "Чи можна обрати інший колір профілю?",
+    "Так, доступні чорний, хром, графіт та інші варіанти залежно від системи."
+  ],
+  [
+    "Чи потрібен точний замір?",
+    "Для індивідуального виробу точний замір обов’язковий перед запуском у роботу."
+  ],
+  [
+    "Яка гарантія на конструкцію?",
+    "Гарантія залежить від типу виробу, фурнітури та умов монтажу."
+  ],
+  [
+    "Чи можна встановити Walk-in без піддона?",
+    "Так, за умови правильної підготовки підлоги, гідроізоляції та ухилу."
+  ],
+  [
+    "Чи робите ви демонтаж старої душової?",
+    "Таку послугу можна додати після огляду об’єкта та оцінки складності."
+  ],
+  [
+    "Як доглядати за склом?",
+    "Рекомендуємо нейтральні засоби без абразиву та регулярне видалення водного нальоту."
+  ],
+  [
+    "Чи можна додати захисне покриття?",
+    "Так, доступні покриття, що полегшують догляд за склом."
+  ],
+  [
+    "Яка висота Walk-in є стандартною?",
+    "Найчастіше використовують висоту близько 1900–2100 мм, але остаточний розмір визначається проєктом."
+  ],
+  [
+    "Чи потрібен стабілізатор?",
+    "У більшості Walk-in конструкцій він потрібен для жорсткості та стабільності скла."
+  ],
+  [
+    "Чи можна зробити матове або тоноване скло?",
+    "Так, доступні прозоре, матове, тоноване, освітлене та декоративне скло."
+  ],
+  [
+    "Чи виконуєте монтаж у Києві?",
+    "Так, монтаж доступний у Києві та області."
+  ],
+  [
+    "Чи працюєте ви у Львові й Одесі?",
+    "Так, маємо монтажні команди та працюємо в цих містах і областях."
+  ],
+  [
+    "Що потрібно надіслати для розрахунку?",
+    "Достатньо фото душової зони, приблизних розмірів і короткого опису бажаної комплектації."
+  ],
+  [
+    "Від чого найбільше залежить кінцева ціна?",
+    "Від площі скла, виду фурнітури, кольору профілю, складності монтажу та логістики."
+  ]
+]
+---
+<BaseLayout title="Душова Walk-in Premium Black — Space Glass" description="Преміальна душова Walk-in з чорним профілем, загартованим склом і доставкою по Україні.">
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="product-premium product-premium--s19">
+      <div class="product-gallery product-gallery--real product-gallery--s20" data-product-gallery>
+        <div class="product-gallery__thumbs" aria-label="Фотографії товару">
+          {gallery.map(([src,alt],index) => (
+            <button class:list={['product-gallery__thumb', index === 0 && 'is-active']} type="button" data-gallery-thumb data-src={src} data-alt={alt} aria-label={`Фото ${index + 1}`}>
+              <img src={src} alt="" width="150" height="120" loading={index === 0 ? 'eager' : 'lazy'} />
+            </button>
+          ))}
+        </div>
+
+        <button class="product-gallery__main" type="button" aria-label="Відкрити фото" data-gallery-open>
+          <img src={gallery[0][0]} alt={gallery[0][1]} width="1800" height="1500" data-gallery-main />
+          <span class="product-gallery__zoom" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg>
+          </span>
+        </button>
+
+        <dialog class="product-lightbox" data-product-lightbox>
+          <button type="button" class="product-lightbox__close" data-gallery-close aria-label="Закрити">×</button>
+          <img src={gallery[0][0]} alt={gallery[0][1]} data-lightbox-image />
+        </dialog>
+      </div>
+
+      <div class="product-premium__info product-premium__info--sticky">
+        <p class="eyebrow">Душові кабіни / Walk-in</p>
+        <div class="product-meta-row">
+          <div class="product-state product-state--order">● {currentProduct.availabilityLabel}</div>
+          <div class="product-badges">
+            {currentProduct.badges.map(badge => <span class={`product-badge product-badge--${badge}`}>{badgeLabels[badge]}</span>)}
+          </div>
+        </div>
+        <h1>Walk-in Premium Black</h1>
+        <p class="lead">Мінімалістична душова перегородка із загартованого скла та чорного профілю.</p>
+        <div class="product-price-row"><strong>від 18 450 грн</strong><span>Виготовлення під розмір</span></div>
+
+        <div class="configurator-presets">
+          <span>Швидкий вибір:</span>
+          <button type="button" data-preset="basic">Базовий</button>
+          <button type="button" data-preset="premium">Преміум</button>
+          <button type="button" data-preset="business">Для бізнесу</button>
+        </div>
+        <div class="configurator-progress" aria-label="Етапи конфігуратора">
+          <span class="is-active">1. Тип</span>
+          <span>2. Розміри</span>
+          <span>3. Матеріали</span>
+          <span>4. Фурнітура</span>
+          <span>5. Монтаж</span>
+        </div>
+        <div class="product-options product-configurator" data-configurator>
+          <div class="configurator-step is-open" data-config-step="1">
+            <button class="configurator-step__title" type="button"><b>01</b><span>Тип конструкції</span><i>−</i></button>
+            <div class="option-row">
+              <button class="option is-active" data-option-group="type" data-value="Walk-in" data-price="1">Walk-in</button>
+              <button class="option" data-option-group="type" data-value="Кутова" data-price="1.22">Кутова</button>
+              <button class="option" data-option-group="type" data-value="У нішу" data-price="1.14">У нішу</button>
+            </div>
+          </div>
+
+          <div class="configurator-step is-open" data-config-step="2"><button class="configurator-step__title" type="button"><b>02</b><span>Розміри</span><i>−</i></button><div class="product-dimensions">
+            <label>
+              <span>Ширина, мм</span>
+              <input type="number" min="500" max="2500" step="10" value="1000" data-config-width />
+            </label>
+            <label>
+              <span>Висота, мм</span>
+              <input type="number" min="1500" max="2600" step="10" value="2000" data-config-height />
+            </label>
+          </div></div>
+
+          <div class="configurator-step is-open" data-config-step="3"><button class="configurator-step__title" type="button"><b>03</b><span>Матеріали</span><i>−</i></button>
+            <span>Колір профілю</span>
+            <div class="option-row">
+              <button class="option is-active" data-option-group="color" data-value="Black" data-price="1">Black</button>
+              <button class="option" data-option-group="color" data-value="Chrome" data-price="1.05">Chrome</button>
+              <button class="option" data-option-group="color" data-value="Graphite" data-price="1.08">Graphite</button>
+            </div>
+          </div>
+
+          <div>
+            <span>Скло</span>
+            <div class="option-row">
+              <button class="option is-active" data-option-group="glass" data-value="Прозоре" data-price="1">Прозоре</button>
+              <button class="option" data-option-group="glass" data-value="Матовe" data-price="1.12">Матове</button>
+              <button class="option" data-option-group="glass" data-value="Тоноване" data-price="1.18">Тоноване</button>
+            </div>
+          </div>
+
+          <div>
+            <span>Товщина скла</span>
+            <div class="option-row">
+              <button class="option is-active" data-option-group="thickness" data-value="8 мм" data-price="1">8 мм</button>
+              <button class="option" data-option-group="thickness" data-value="10 мм" data-price="1.16">10 мм</button>
+            </div>
+          </div>
+
+          <div class="configurator-step is-open" data-config-step="4"><button class="configurator-step__title" type="button"><b>04</b><span>Фурнітура</span><i>−</i></button>
+            <span>Ручка</span>
+            <div class="option-row">
+              <button class="option is-active" data-option-group="handle" data-value="Стандартна" data-price="1">Стандартна</button>
+              <button class="option" data-option-group="handle" data-value="Преміум" data-price="1.07">Преміум</button>
+              <button class="option" data-option-group="handle" data-value="Прихована" data-price="1.12">Прихована</button>
+            </div>
+          </div>
+
+          <div class="configurator-step is-open" data-config-step="5"><button class="configurator-step__title" type="button"><b>05</b><span>Монтаж</span><i>−</i></button>
+            <span>Монтаж</span>
+            <div class="option-row option-row--services">
+              <button class="option is-active" data-option-group="mounting" data-value="Без монтажу" data-installation="false">Без монтажу</button>
+              <button class="option" data-option-group="mounting" data-value="З монтажем" data-installation="true">З монтажем</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-config-summary product-config-summary--price" data-pricing-card
+          data-product-usd-m2={showerTariff.productUsdM2}
+          data-installation-usd-m2={showerTariff.installationUsdM2}
+          data-rate-markup={currencySettings.markupUah}
+          data-fallback-rate={currencySettings.fallbackRateUah}>
+          <div>
+            <span>Обрана конфігурація</span>
+            <b data-config-summary>Walk-in · 1000 × 2000 мм · Black · Прозоре · 8 мм · Стандартна · Без монтажу</b>
+          </div>
+
+          <div class="product-estimate product-estimate--simple">
+            <span>Попередня ціна</span>
+            <strong data-config-price>Завантаження…</strong>
+            <small data-config-price-usd hidden></small>
+          </div>
+          <small>Орієнтовна загальна вартість. Фінальна ціна підтверджується після перевірки розмірів, комплектації та умов монтажу.</small>
+        </div>
+
+        <div class="product-actions product-actions--three">
+          <a class="button button--mint" href="/quote/" data-quote-link>Отримати КП</a>
+          <button class="button button--outline" type="button" data-add-to-project>Додати до проєкту</button>
+          <button class="button button--outline" type="button" data-add-to-compare>Порівняти</button>
+        </div>
+        <p class="product-project-feedback" data-project-feedback hidden></p>
+
+        <div class="product-trust-row">
+          <span>✓ Безпечне скло</span>
+          <span>✓ Власне виробництво</span>
+          <span>✓ Гарантія</span>
+        </div>
+
+        <div class="product-delivery">
+          <div><b>Доставка</b><span>По всій Україні</span></div>
+          <div><b>Монтаж</b><span>Київ, Львів, Одеса</span></div>
+          <div><b>Гарантія</b><span>Залежить від комплектації</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-spec-section">
+      <div class="product-spec-intro">
+        <p class="eyebrow">Характеристики</p>
+        <h2>Технічні параметри</h2>
+        <p>Фінальна комплектація підтверджується після перевірки розмірів та умов монтажу.</p>
+      </div>
+      <div>
+        <div class="product-spec-table">
+          {specs.map(([name,value]) => <div><span>{name}</span><b>{value}</b></div>)}
+        </div>
+        {documents.length > 0 && (
+          <div class="product-documents">
+            <div class="product-documents__head">
+              <h3>Документація</h3>
+              <p>Відображаються лише матеріали, підготовлені для цієї моделі.</p>
+            </div>
+            {documents.map(document => (
+              <a href={document.url} target="_blank" rel="noopener noreferrer">
+                <span>{document.type}</span><b>{document.title}</b><i>↗</i>
+              </a>
+            ))}
+          </div>
+        )}
+        {documents.length === 0 && (
+          <div class="product-documents product-documents--empty">
+            <b>Документація готується після погодження комплектації.</b>
+            <p>Ми не показуємо універсальні інструкції, якщо вони не відповідають конкретній системі.</p>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <section class="product-feature-band">
+      <article><span>01</span><h3>Безпечне скло</h3><p>Загартоване скло або триплекс залежно від конструкції.</p></article>
+      <article><span>02</span><h3>Преміальна фурнітура</h3><p>Профілі, стабілізатори, петлі та ручки в єдиному стилі.</p></article>
+      <article><span>03</span><h3>Індивідуальні розміри</h3><p>Виготовлення під фактичну геометрію душової зони.</p></article>
+    </section>
+
+    <section class="product-visual-story">
+      <div class="product-visual-story__large product-visual-story__image"><img src="/images/s20/product-interior.webp" alt="Walk-in у сучасному інтер’єрі" loading="lazy" /><span>01 / PREMIUM GLASS</span></div>
+      <div class="product-visual-story__copy">
+        <p class="eyebrow">Дизайн</p>
+        <h2>Максимум світла. Мінімум зайвих деталей.</h2>
+        <p>Walk-in конструкція створює відкритий простір, легко інтегрується в сучасну ванну кімнату та не перевантажує інтер’єр.</p>
+      </div>
+      <div class="product-visual-story__small product-visual-story__image"><img src="/images/s20/product-detail.webp" alt="Деталі профілю та скла" loading="lazy" /><span>02 / DETAILS</span></div>
+    </section>
+
+    <section class="product-related">
+      <div class="category-heading">
+        <div><p class="eyebrow">Разом купують</p><h2>Сумісні товари</h2></div>
+        <a href="/catalog/">Перейти в каталог →</a>
+      </div>
+      <div class="category-model-grid product-compatible-grid">
+        {related.map((item) => (
+          <a class="category-model-card product-compatible-card" href={item.href}>
+            <div class="category-model-card__media product-compatible-card__media">
+              <img src={item.image} alt={item.title} width="520" height="390" loading="lazy" />
+              {item.badge && <span class="product-compatible-card__badge">{item.badge}</span>}
+            </div>
+            <small>{item.category}</small>
+            <h3>{item.title}</h3>
+            <strong>{item.price}</strong>
+            <b>Детальніше →</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="product-related product-related--faq">
+      <FAQBlock
+        title="FAQ про душову Walk-in: ціна, монтаж, скло та замовлення"
+        intro="Відповідаємо на найпоширеніші питання про розміри, скло, профіль, монтаж, доставку та гарантію."
+        items={faq}
+        visibleCount={6}
+      />
+    </section>
+
+    <section id="product-request" class="inner-cta">
+      <div><p class="eyebrow eyebrow--light">Розрахунок</p><h2>Надішліть розмір або фото душової зони</h2><p>Підготуємо попередню комплектацію та вартість.</p></div>
+      <a class="button button--white" href="mailto:info@space-glass.com.ua">Надіслати запит</a>
+    </section>
+  </main>
+  <Footer />
+</div>
+<script type="module">
+  import { getUsdRate } from '../../pricing/client/exchange-rate.js';
+  import { calculatePrice } from '../../pricing/client/engine.js';
+
+  const gallery = document.querySelector('[data-product-gallery]');
+
+  if (gallery) {
+    const main = gallery.querySelector('[data-gallery-main]');
+    const lightbox = gallery.querySelector('[data-product-lightbox]');
+    const lightboxImage = gallery.querySelector('[data-lightbox-image]');
+    const summary = document.querySelector('[data-config-summary]');
+    const configurator = document.querySelector('[data-configurator]');
+    const widthInput = document.querySelector('[data-config-width]');
+    const heightInput = document.querySelector('[data-config-height]');
+    const priceOutput = document.querySelector('[data-config-price]');
+    const priceUsdOutput = document.querySelector('[data-config-price-usd]');
+    const pricingCard = document.querySelector('[data-pricing-card]');
+    const quoteLink = document.querySelector('[data-quote-link]');
+    const addToProjectButton = document.querySelector('[data-add-to-project]');
+    const addToCompareButton = document.querySelector('[data-add-to-compare]');
+    const projectFeedback = document.querySelector('[data-project-feedback]');
+
+    const safeNumber = (value, fallback = 0) => {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : fallback;
+    };
+
+    const productUsdM2 = safeNumber(pricingCard?.dataset.productUsdM2, 150);
+    const installationUsdM2 = safeNumber(pricingCard?.dataset.installationUsdM2, 60);
+    const rateMarkup = safeNumber(pricingCard?.dataset.rateMarkup, 0.8);
+    const fallbackRate = safeNumber(pricingCard?.dataset.fallbackRate, 43.5);
+
+    let exchange = {
+      nbuRate: fallbackRate,
+      markup: rateMarkup,
+      workingRate: fallbackRate + rateMarkup,
+      source: 'fallback',
+    };
+    let lastCalculation = null;
+
+    const formatUah = (value) =>
+      `${Math.round(safeNumber(value)).toLocaleString('uk-UA')} грн`;
+
+    const formatUsd = (value) =>
+      `${Number(value).toLocaleString('uk-UA', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      })} $`;
+
+    const formatArea = (value) =>
+      `${Number(value).toLocaleString('uk-UA', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })} м²`;
+
+    const getActive = (group) =>
+      configurator?.querySelector(`[data-option-group="${group}"].is-active`);
+
+    const updateConfiguration = () => {
+      const width = Math.max(500, Number(widthInput?.value || 1000));
+      const height = Math.max(1500, Number(heightInput?.value || 2000));
+
+      const type = getActive('type');
+      const color = getActive('color');
+      const glass = getActive('glass');
+      const thickness = getActive('thickness');
+      const handle = getActive('handle');
+      const mounting = getActive('mounting');
+
+      const modifiers = [
+        Number(type?.dataset.price || 1),
+        Number(color?.dataset.price || 1),
+        Number(glass?.dataset.price || 1),
+        Number(thickness?.dataset.price || 1),
+        Number(handle?.dataset.price || 1),
+      ];
+
+      const installation = mounting?.dataset.installation === 'true';
+
+      lastCalculation = calculatePrice({
+        widthMm: width,
+        heightMm: height,
+        productUsdM2,
+        installationUsdM2,
+        installation,
+        modifiers,
+        usdRateUah: exchange.workingRate,
+      });
+
+      const values = [
+        type?.dataset.value,
+        `${width} × ${height} мм`,
+        color?.dataset.value,
+        glass?.dataset.value,
+        thickness?.dataset.value,
+        handle?.dataset.value,
+        mounting?.dataset.value,
+      ].filter(Boolean);
+
+      if (summary) summary.textContent = values.join(' · ');
+      if (priceOutput) {
+        priceOutput.textContent = formatUah(lastCalculation.totalUah);
+      }
+      if (priceUsdOutput) {
+        priceUsdOutput.textContent =
+          `≈ ${formatUsd(lastCalculation.subtotalUsd)}`;
+      }
+
+      if (quoteLink) {
+        const priceDetails = {
+          areaM2: lastCalculation.areaM2,
+          productUsdM2,
+          installationUsdM2,
+          productUsd: lastCalculation.productUsd,
+          installationUsd: lastCalculation.installationUsd,
+          usdRateUah: lastCalculation.usdRateUah,
+          totalUah: lastCalculation.totalUah,
+        };
+
+        quoteLink.href =
+          `/quote/?product=${encodeURIComponent('Walk-in Premium Black')}` +
+          `&config=${encodeURIComponent(values.join(' · '))}` +
+          `&price=${encodeURIComponent(formatUah(lastCalculation.totalUah))}` +
+          `&pricing=${encodeURIComponent(JSON.stringify(priceDetails))}`;
+      }
+    };
+
+    const readStorage = (key, fallback) => {
+      try {
+        return JSON.parse(
+          localStorage.getItem(key) || JSON.stringify(fallback)
+        );
+      } catch {
+        return fallback;
+      }
+    };
+
+    const currentItem = () => ({
+      id: `walk-in-premium-black-${Date.now()}`,
+      slug: 'walk-in-premium-black',
+      name: 'Walk-in Premium Black',
+      category: 'Душові кабіни',
+      categoryKey: 'shower',
+      image: main?.src || '/images/s20/product-main.webp',
+      configuration:
+        summary?.textContent || 'Індивідуальна конфігурація',
+      price: Math.round(lastCalculation?.totalUah || 0),
+      quantity: 1,
+      pricing: lastCalculation
+        ? {
+            ...lastCalculation,
+            productUsdM2,
+            installationUsdM2,
+            nbuRate: exchange.nbuRate,
+            rateMarkup: exchange.markup,
+            rateSource: exchange.source,
+          }
+        : null,
+      specs: {
+        type: getActive('type')?.dataset.value || 'Walk-in',
+        size:
+          `${widthInput?.value || 1000} × ` +
+          `${heightInput?.value || 2000} мм`,
+        color: getActive('color')?.dataset.value || 'Black',
+        glass: getActive('glass')?.dataset.value || 'Прозоре',
+        thickness:
+          getActive('thickness')?.dataset.value || '8 мм',
+        handle: getActive('handle')?.dataset.value || 'Стандартна',
+        mounting:
+          getActive('mounting')?.dataset.value || 'Без монтажу',
+      },
+    });
+
+    gallery
+      .querySelectorAll('[data-gallery-thumb]')
+      .forEach((thumb) => {
+        thumb.addEventListener('click', () => {
+          gallery
+            .querySelectorAll('[data-gallery-thumb]')
+            .forEach((item) => item.classList.remove('is-active'));
+
+          thumb.classList.add('is-active');
+          main.classList.add('is-changing');
+
+          setTimeout(() => {
+            main.src = thumb.dataset.src;
+            main.alt = thumb.dataset.alt;
+            lightboxImage.src = thumb.dataset.src;
+            lightboxImage.alt = thumb.dataset.alt;
+            main.classList.remove('is-changing');
+          }, 110);
+        });
+      });
+
+    gallery
+      .querySelector('[data-gallery-open]')
+      ?.addEventListener('click', () => lightbox?.showModal());
+
+    gallery
+      .querySelector('[data-gallery-close]')
+      ?.addEventListener('click', () => lightbox?.close());
+
+    lightbox?.addEventListener('click', (event) => {
+      if (event.target === lightbox) lightbox.close();
+    });
+
+    configurator?.addEventListener('click', (event) => {
+      const option = event.target.closest('.option[data-option-group]');
+      if (!option || !configurator.contains(option)) return;
+
+      const group = option.dataset.optionGroup;
+      if (!group) return;
+
+      configurator
+        .querySelectorAll(`[data-option-group="${group}"]`)
+        .forEach((item) => {
+          item.classList.toggle('is-active', item === option);
+          item.setAttribute('aria-pressed', item === option ? 'true' : 'false');
+        });
+
+      updateConfiguration();
+    });
+
+    widthInput?.addEventListener('input', updateConfiguration);
+    heightInput?.addEventListener('input', updateConfiguration);
+
+    document
+      .querySelectorAll('.configurator-step__title')
+      .forEach((button) => {
+        button.addEventListener('click', () => {
+          const step = button.closest('.configurator-step');
+          step?.classList.toggle('is-open');
+
+          const icon = button.querySelector('i');
+          if (icon && step) {
+            icon.textContent =
+              step.classList.contains('is-open') ? '−' : '+';
+          }
+        });
+      });
+
+    const activateOption = (group, value) => {
+      configurator
+        ?.querySelectorAll(`[data-option-group="${group}"]`)
+        .forEach((item) => {
+          item.classList.toggle(
+            'is-active',
+            item.dataset.value === value
+          );
+        });
+    };
+
+    document.querySelectorAll('[data-preset]').forEach((preset) => {
+      preset.addEventListener('click', () => {
+        document
+          .querySelectorAll('[data-preset]')
+          .forEach((item) => item.classList.remove('is-active'));
+
+        preset.classList.add('is-active');
+        const key = preset.dataset.preset;
+
+        if (key === 'basic') {
+          activateOption('type', 'Walk-in');
+          activateOption('color', 'Black');
+          activateOption('glass', 'Прозоре');
+          activateOption('thickness', '8 мм');
+          activateOption('handle', 'Стандартна');
+          activateOption('mounting', 'Без монтажу');
+          widthInput.value = 1000;
+          heightInput.value = 2000;
+        }
+
+        if (key === 'premium') {
+          activateOption('type', 'Кутова');
+          activateOption('color', 'Graphite');
+          activateOption('glass', 'Тоноване');
+          activateOption('thickness', '10 мм');
+          activateOption('handle', 'Преміум');
+          activateOption('mounting', 'З монтажем');
+          widthInput.value = 1200;
+          heightInput.value = 2100;
+        }
+
+        if (key === 'business') {
+          activateOption('type', 'У нішу');
+          activateOption('color', 'Chrome');
+          activateOption('glass', 'Матове');
+          activateOption('thickness', '10 мм');
+          activateOption('handle', 'Прихована');
+          activateOption('mounting', 'З монтажем');
+          widthInput.value = 1400;
+          heightInput.value = 2200;
+        }
+
+        updateConfiguration();
+      });
+    });
+
+    addToProjectButton?.addEventListener('click', () => {
+      updateConfiguration();
+      const project = readStorage(
+        'spaceGlassProject',
+        { items: [], note: '' }
+      );
+
+      if (!Array.isArray(project.items)) project.items = [];
+      project.items.push(currentItem());
+      localStorage.setItem(
+        'spaceGlassProject',
+        JSON.stringify(project)
+      );
+      window.dispatchEvent(
+        new Event('space-glass-project-updated')
+      );
+
+      if (projectFeedback) {
+        projectFeedback.hidden = false;
+        projectFeedback.innerHTML =
+          'Товар додано до проєкту. ' +
+          '<a href="/cart/">Відкрити проєкт →</a>';
+      }
+
+      addToProjectButton.textContent = 'Додано ✓';
+      addToProjectButton.classList.add('is-added');
+
+      setTimeout(() => {
+        addToProjectButton.textContent = 'Додати до проєкту';
+        addToProjectButton.classList.remove('is-added');
+      }, 2200);
+    });
+
+    addToCompareButton?.addEventListener('click', () => {
+      updateConfiguration();
+      const compare = readStorage(
+        'spaceGlassCompare',
+        { items: [] }
+      );
+      if (!Array.isArray(compare.items)) compare.items = [];
+
+      const item = currentItem();
+      const exists = compare.items.some(
+        (existing) =>
+          existing.slug === item.slug &&
+          existing.configuration === item.configuration
+      );
+
+      if (!exists) compare.items.push(item);
+      compare.items = compare.items.slice(-4);
+      localStorage.setItem(
+        'spaceGlassCompare',
+        JSON.stringify(compare)
+      );
+      window.dispatchEvent(
+        new Event('space-glass-compare-updated')
+      );
+
+      if (projectFeedback) {
+        projectFeedback.hidden = false;
+        projectFeedback.innerHTML = exists
+          ? 'Ця конфігурація вже є у порівнянні. ' +
+            '<a href="/compare/">Відкрити →</a>'
+          : 'Додано до порівняння. ' +
+            '<a href="/compare/">Порівняти товари →</a>';
+      }
+
+      addToCompareButton.textContent =
+        exists ? 'Вже у порівнянні' : 'Додано ✓';
+
+      setTimeout(() => {
+        addToCompareButton.textContent = 'Порівняти';
+      }, 2200);
+    });
+
+    updateConfiguration();
+
+    const loadedExchange = await getUsdRate({
+      markup: rateMarkup,
+      fallbackRate,
+      cacheHours: 24,
+    });
+    exchange = {
+      nbuRate: safeNumber(loadedExchange?.nbuRate, fallbackRate),
+      markup: safeNumber(loadedExchange?.markup, rateMarkup),
+      workingRate: safeNumber(loadedExchange?.workingRate, fallbackRate + rateMarkup),
+      source: loadedExchange?.source || 'fallback',
+    };
+    updateConfiguration();
+  }
+</script>
+</BaseLayout>

@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Комерційна пропозиція | Space Glass" description="Комерційна пропозиція Space Glass">
+<main class="proposal-page">
+  <header class="proposal-header">
+    <img src="/images/space-glass-brand-logo.jpg" alt="Space Glass" />
+    <div>
+      <p>SPACE GLASS</p>
+      <h1>Комерційна пропозиція</h1>
+      <span data-proposal-date></span>
+    </div>
+  </header>
+
+  <section class="proposal-client">
+    <div><span>Клієнт</span><b data-client-name>—</b></div>
+    <div><span>Телефон</span><b data-client-phone>—</b></div>
+    <div><span>Email</span><b data-client-email>—</b></div>
+    <div><span>Місто</span><b data-client-city>—</b></div>
+  </section>
+
+  <section class="proposal-items" data-proposal-items></section>
+
+  <section class="proposal-total">
+    <span>Попередня загальна вартість</span>
+    <strong data-proposal-total>0 грн</strong>
+  </section>
+
+  <section class="proposal-note">
+    <h2>Умови</h2>
+    <p>Ця комерційна пропозиція є попередньою. Остаточна вартість підтверджується після перевірки розмірів, технічного завдання, доставки та монтажних умов.</p>
+  </section>
+
+  <footer class="proposal-footer">
+    <span>space-glass.com.ua</span>
+    <span>info@space-glass.com.ua</span>
+    <span>Space Glass</span>
+  </footer>
+
+  <button type="button" class="proposal-print" onclick="window.print()">Зберегти PDF / Друк</button>
+</main>
+
+<script>
+  const money = (v) => `${Math.round(v).toLocaleString('uk-UA')} грн`;
+  let project = { items: [], note: '' };
+  let lead = {};
+
+  try { project = JSON.parse(localStorage.getItem('spaceGlassProject') || '{"items":[]}'); } catch {}
+  try { lead = JSON.parse(localStorage.getItem('spaceGlassLastQuote') || '{}'); } catch {}
+
+  document.querySelector('[data-proposal-date]').textContent =
+    new Date().toLocaleDateString('uk-UA');
+
+  document.querySelector('[data-client-name]').textContent = lead.name || '—';
+  document.querySelector('[data-client-phone]').textContent = lead.phone || '—';
+  document.querySelector('[data-client-email]').textContent = lead.email || '—';
+  document.querySelector('[data-client-city]').textContent = lead.city || '—';
+
+  const items = Array.isArray(project.items) ? project.items : [];
+  const total = items.reduce((sum, item) =>
+    sum + Number(item.price || 0) * Number(item.quantity || 1), 0);
+
+  document.querySelector('[data-proposal-total]').textContent = money(total);
+  document.querySelector('[data-proposal-items]').innerHTML = items.map((item, index) => `
+    <article class="proposal-item">
+      <div class="proposal-item__number">${String(index+1).padStart(2,'0')}</div>
+      <div>
+        <small>${item.category || 'Space Glass'}</small>
+        <h2>${item.name || 'Конструкція'}</h2>
+        <p>${item.configuration || 'Індивідуальна конфігурація'}</p>
+      </div>
+      <div class="proposal-item__price">
+        <span>${item.quantity || 1} шт.</span>
+        <strong>${money(Number(item.price || 0) * Number(item.quantity || 1))}</strong>
+      </div>
+    </article>
+  `).join('');
+</script>
+</BaseLayout>

@@ -1,0 +1,55 @@
+{
+  "id": "facade",
+  "category": "facades",
+  "titleKey": "facade",
+  "fields": [
+    {
+      "id": "width",
+      "type": "number",
+      "labelKey": "width",
+      "default": 10000,
+      "unit": "mm"
+    },
+    {
+      "id": "height",
+      "type": "number",
+      "labelKey": "height",
+      "default": 6000,
+      "unit": "mm"
+    },
+    {
+      "id": "system",
+      "type": "choice",
+      "labelKey": "system",
+      "options": [
+        {
+          "label": "Стоєчно-ригельна",
+          "value": "mullion-transom",
+          "multiplier": 1
+        },
+        {
+          "label": "Структурна",
+          "value": "structural",
+          "multiplier": 1.22
+        },
+        {
+          "label": "Напівструктурна",
+          "value": "semi-structural",
+          "multiplier": 1.14
+        }
+      ]
+    },
+    {
+      "id": "floor",
+      "type": "number",
+      "labelKey": "floor",
+      "default": 1
+    },
+    {
+      "id": "installation",
+      "type": "toggle",
+      "labelKey": "installation",
+      "default": true
+    }
+  ]
+}

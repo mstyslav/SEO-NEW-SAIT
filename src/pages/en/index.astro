@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+<BaseLayout
+  title="Space Glass — premium glass structures"
+  description="We design, manufacture and install premium glass structures for residential and commercial projects."
+  locale="en"
+>
+  <Header locale="en" />
+  <main class="localized-home">
+    <section class="localized-home__hero">
+      <div class="container">
+        <p class="eyebrow">SPACE GLASS</p>
+        <h1>Space. Light. Space Glass</h1>
+        <p>We design, manufacture and install premium glass structures for residential and commercial projects.</p>
+        <div>
+          <a class="button button--mint" href="/en/quote/">Get a quote</a>
+          <a class="button button--outline" href="/en/catalog/">Open catalog</a>
+        </div>
+      </div>
+    </section>
+    <section class="section localized-home__notice"><div class="container"><p>The complete English version uses dedicated SEO URLs and preserves the selected language while navigating.</p></div></section>
+  </main>
+  <Footer locale="en" />
+</BaseLayout>

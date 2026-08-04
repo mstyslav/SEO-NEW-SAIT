@@ -1,0 +1,61 @@
+{
+  "id": "mirror",
+  "category": "mirrors",
+  "label": "Дзеркало на замовлення",
+  "fields": [
+    {
+      "id": "width",
+      "type": "number",
+      "label": "Ширина",
+      "default": 1000,
+      "unit": "мм"
+    },
+    {
+      "id": "height",
+      "type": "number",
+      "label": "Висота",
+      "default": 1000,
+      "unit": "мм"
+    },
+    {
+      "id": "shape",
+      "type": "choice",
+      "label": "Форма",
+      "options": [
+        {
+          "label": "Прямокутна",
+          "value": "Прямокутна",
+          "multiplier": 1
+        },
+        {
+          "label": "Кругла",
+          "value": "Кругла",
+          "multiplier": 1.12
+        },
+        {
+          "label": "Фігурна",
+          "value": "Фігурна",
+          "multiplier": 1.25
+        }
+      ]
+    },
+    {
+      "id": "led",
+      "type": "toggle",
+      "label": "LED-підсвітка",
+      "extraUsdM2": 55
+    },
+    {
+      "id": "heating",
+      "type": "toggle",
+      "label": "Підігрів",
+      "extraUsd": 45
+    },
+    {
+      "id": "sensor",
+      "type": "toggle",
+      "label": "Сенсор",
+      "extraUsd": 25
+    }
+  ]
+}

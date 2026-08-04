@@ -1,0 +1,84 @@
+{
+  "defaults": {
+    "availability": "made_to_order",
+    "availabilityLabel": "Під замовлення",
+    "badges": []
+  },
+  "products": [
+    {
+      "slug": "walk-in-premium-black",
+      "name": "Walk-in Premium Black",
+      "category": "Душові кабіни",
+      "priceFrom": "18 450 грн",
+      "availability": "made_to_order",
+      "availabilityLabel": "Під замовлення",
+      "badges": [
+        "top"
+      ],
+      "documents": [
+        {
+          "title": "Схема заміру",
+          "type": "SVG",
+          "url": "/docs/walkin-measurement.svg"
+        },
+        {
+          "title": "Інструкція з догляду",
+          "type": "SVG",
+          "url": "/docs/glass-care.svg"
+        }
+      ]
+    },
+    {
+      "slug": "loft-double",
+      "name": "Loft Double",
+      "category": "Перегородки",
+      "priceFrom": "24 980 грн",
+      "availability": "made_to_order",
+      "availabilityLabel": "Під замовлення",
+      "badges": [
+        "hit"
+      ]
+    },
+    {
+      "slug": "glass-slide-comfort",
+      "name": "Glass Slide Comfort",
+      "category": "Скляні двері",
+      "priceFrom": "16 790 грн",
+      "availability": "made_to_order",
+      "availabilityLabel": "Під замовлення",
+      "badges": []
+    },
+    {
+      "slug": "clear-view",
+      "name": "Clear View",
+      "category": "Огорожі",
+      "priceFrom": "12 560 грн/м.п.",
+      "availability": "made_to_order",
+      "availabilityLabel": "Під замовлення",
+      "badges": [
+        "top",
+        "hit"
+      ]
+    },
+    {
+      "slug": "led-mirror-line",
+      "name": "LED Mirror Line",
+      "category": "Дзеркала",
+      "priceFrom": "9 800 грн",
+      "availability": "made_to_order",
+      "availabilityLabel": "Під замовлення",
+      "badges": []
+    },
+    {
+      "slug": "slim-office",
+      "name": "Slim Office",
+      "category": "Перегородки",
+      "priceFrom": "21 300 грн",
+      "availability": "made_to_order",
+      "availabilityLabel": "Під замовлення",
+      "badges": [
+        "hit"
+      ]
+    }
+  ]
+}

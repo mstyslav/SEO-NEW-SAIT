@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+<BaseLayout
+  title="Отримати комерційну пропозицію | Space Glass"
+  description="Надішліть конфігурацію виробу та отримайте комерційну пропозицію Space Glass."
+>
+  <Header />
+
+  <main class="quote-page">
+    <section class="quote-page__hero">
+      <div class="container quote-page__hero-grid">
+        <div>
+          <p class="eyebrow">Комерційна пропозиція</p>
+          <h1>Ваш проєкт уже сформовано</h1>
+          <p>Перевірте параметри, додайте контактні дані — менеджер уточнить технічні деталі та підготує фінальну пропозицію.</p>
+        </div>
+        <div class="quote-page__steps">
+          <span class="is-active">01 Конфігурація</span>
+          <span>02 Контакти</span>
+          <span>03 Підтвердження</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container quote-layout">
+        <aside class="quote-summary">
+          <div class="quote-summary__image">
+            <img src="/images/s20/product-main.webp" alt="Walk-in Premium Black" width="760" height="620" />
+          </div>
+          <div class="quote-summary__head">
+            <small>Душові кабіни / Walk-in</small>
+            <h2 data-quote-product>Walk-in Premium Black</h2>
+            <span>Артикул: SG-WI-001</span>
+          </div>
+
+          <dl class="quote-summary__parameters" data-quote-parameters>
+            <div><dt>Конфігурація</dt><dd>Завантаження параметрів…</dd></div>
+          </dl>
+
+          <div class="quote-summary__price">
+            <span>Попередня ціна</span>
+            <strong data-quote-price>Уточнюється</strong>
+          </div>
+          <p class="quote-summary__notice">Попередня ціна не є офертою. Фінальна вартість залежить від перевірки розмірів, фурнітури, доставки та монтажних умов.</p>
+        </aside>
+
+        <div class="quote-form-card">
+          <p class="eyebrow">Контактні дані</p>
+          <h2>Куди надіслати КП?</h2>
+
+          <form class="quote-form" data-quote-form>
+            <div class="quote-form__grid">
+              <label>
+                <span>Ім’я *</span>
+                <input name="name" autocomplete="name" required />
+              </label>
+              <label>
+                <span>Телефон *</span>
+                <input name="phone" type="tel" autocomplete="tel" required />
+              </label>
+              <label>
+                <span>Email</span>
+                <input name="email" type="email" autocomplete="email" />
+              </label>
+              <label>
+                <span>Місто</span>
+                <input name="city" autocomplete="address-level2" />
+              </label>
+            </div>
+
+            <label>
+              <span>Коментар до проєкту</span>
+              <textarea name="comment" rows="5" placeholder="Наприклад: потрібна доставка, монтаж, особливий колір фурнітури…"></textarea>
+            </label>
+
+            <label class="quote-upload">
+              <input type="file" accept=".jpg,.jpeg,.png,.webp,.pdf,.dwg" multiple />
+              <span>＋ Додати фото або креслення</span>
+              <small>JPG, PNG, WEBP, PDF або DWG</small>
+            </label>
+
+            <input type="hidden" name="configuration" data-quote-config-input />
+            <input type="hidden" name="estimated_price" data-quote-price-input />
+
+            <label class="quote-consent">
+              <input type="checkbox" required />
+              <span>Погоджуюсь на обробку даних для підготовки комерційної пропозиції.</span>
+            </label>
+
+            <button class="button button--mint quote-form__submit" type="submit">Надіслати запит на КП →</button>
+            <p class="quote-form__status" data-quote-status hidden></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const projectRaw = params.get('project') || '';
+    const configRaw = params.get('config') || params.get('request') || '';
+    const priceRaw = params.get('price') || '';
+    const productRaw = params.get('product') || 'Walk-in Premium Black';
+    let projectPayload = null;
+    try { projectPayload = projectRaw ? JSON.parse(decodeURIComponent(projectRaw)) : null; } catch {}
+
+    const decodedConfig = decodeURIComponent(configRaw || '');
+    const decodedPrice = decodeURIComponent(priceRaw || '');
+
+    document.querySelector('[data-quote-product]').textContent = projectPayload ? 'Комплексний проєкт Space Glass' : productRaw;
+    if (projectPayload?.items?.length) {
+      document.querySelector('[data-quote-price]').textContent = `${Math.round(projectPayload.total || 0).toLocaleString('uk-UA')} грн`;
+      document.querySelector('[data-quote-config-input]').value = JSON.stringify(projectPayload);
+      parameterRoot.innerHTML = projectPayload.items.map((item, index) => `
+        <div>
+          <dt>${index + 1}. ${item.name}</dt>
+          <dd>${item.configuration} · ${item.quantity || 1} шт.</dd>
+        </div>
+      `).join('');
+    } else {
+    document.querySelector('[data-quote-price]').textContent = decodedPrice || 'Уточнюється';
+    document.querySelector('[data-quote-config-input]').value = decodedConfig;
+    document.querySelector('[data-quote-price-input]').value = decodedPrice;
+
+    const parameterRoot = document.querySelector('[data-quote-parameters]');
+    if (!projectPayload && decodedConfig) {
+      const parts = decodedConfig
+        .replace(/^Хочу отримати КП:\s*/i, '')
+        .replace(/\.\s*Попередня ціна:.*$/i, '')
+        .split(/[·,]/)
+        .map(value => value.trim())
+        .filter(Boolean);
+
+      parameterRoot.innerHTML = parts.map((part, index) => `
+        <div>
+          <dt>${index === 0 ? 'Тип' : `Параметр ${index + 1}`}</dt>
+          <dd>${part}</dd>
+        </div>
+      `).join('');
+    } else if (!projectPayload) {
+      parameterRoot.innerHTML = `
+        <div><dt>Статус</dt><dd>Конфігурацію можна уточнити з менеджером</dd></div>
+      `;
+    }
+    }
+
+    const form = document.querySelector('[data-quote-form]');
+    const status = document.querySelector('[data-quote-status]');
+
+    const savedDraft = JSON.parse(localStorage.getItem('spaceGlassQuoteDraft') || '{}');
+    ['name','phone','email','city','comment'].forEach((field) => {
+      if (savedDraft[field] && form.elements[field]) form.elements[field].value = savedDraft[field];
+    });
+
+    form.addEventListener('input', () => {
+      const draft = {};
+      ['name','phone','email','city','comment'].forEach((field) => {
+        draft[field] = form.elements[field]?.value || '';
+      });
+      localStorage.setItem('spaceGlassQuoteDraft', JSON.stringify(draft));
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const data = new FormData(form);
+      const request = {
+        name: data.get('name'),
+        phone: data.get('phone'),
+        email: data.get('email'),
+        city: data.get('city'),
+        comment: data.get('comment'),
+        product: productRaw,
+        configuration: decodedConfig,
+        estimatedPrice: decodedPrice,
+        createdAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('spaceGlassLastQuote', JSON.stringify(request));
+      localStorage.removeItem('spaceGlassQuoteDraft');
+
+      status.hidden = false;
+      status.textContent = 'Запит сформовано. На фінальному сайті тут буде передача в CRM та надсилання підтвердження клієнту.';
+      status.classList.add('is-success');
+      form.querySelector('button[type="submit"]').textContent = 'Запит сформовано ✓';
+    });
+  </script>
+</BaseLayout>

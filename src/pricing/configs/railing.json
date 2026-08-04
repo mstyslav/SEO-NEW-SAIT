@@ -1,0 +1,55 @@
+{
+  "id": "railing",
+  "category": "railings",
+  "titleKey": "railing",
+  "fields": [
+    {
+      "id": "length",
+      "type": "number",
+      "labelKey": "length",
+      "default": 4000,
+      "unit": "mm"
+    },
+    {
+      "id": "height",
+      "type": "number",
+      "labelKey": "height",
+      "default": 1100,
+      "unit": "mm"
+    },
+    {
+      "id": "mountingType",
+      "type": "choice",
+      "labelKey": "mountingType",
+      "options": [
+        {
+          "label": "Профіль",
+          "value": "profile",
+          "multiplier": 1
+        },
+        {
+          "label": "Точки",
+          "value": "points",
+          "multiplier": 1.12
+        },
+        {
+          "label": "Стійки",
+          "value": "posts",
+          "multiplier": 1.08
+        }
+      ]
+    },
+    {
+      "id": "handrail",
+      "type": "toggle",
+      "labelKey": "handrail",
+      "extraUsdM2": 35
+    },
+    {
+      "id": "installation",
+      "type": "toggle",
+      "labelKey": "installation",
+      "default": true
+    }
+  ]
+}

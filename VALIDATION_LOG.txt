@@ -1,0 +1,29 @@
+
+> space-glass-web@0.1.0 check:production
+> npm run check:routes && npm run check:links && npm run check:configurator
+
+
+> space-glass-web@0.1.0 check:routes
+> node scripts/check-routes.mjs
+
+OK: 20 critical routes are present.
+
+> space-glass-web@0.1.0 check:links
+> node scripts/check-links.mjs
+
+OK: internal static href links are valid.
+
+> space-glass-web@0.1.0 check:configurator
+> node scripts/check-configurator.mjs
+
+OK: configurator interaction regression checks passed.
+
+
+
+=== BUILD ===
+
+> space-glass-web@0.1.0 build
+> astro build
+
+
+sh: 1: astro: Permission denied

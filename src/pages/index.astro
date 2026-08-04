@@ -1,0 +1,247 @@
+---
+import translations from '../i18n/translations.json';
+import { localeFromPath, normalizeLocale } from '../i18n/helpers';
+const pageLocale = normalizeLocale(Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
+const pageT = translations[pageLocale] ?? translations.uk;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FAQBlock from '../components/FAQBlock.astro';
+
+const categories = [
+  ['Душові кабіни','Walk-in, розсувні, у нішу, кутові та індивідуальні рішення','▯'],
+  ['Скляні перегородки','Loft, офісні, розсувні, стаціонарні та мобільні системи','▦'],
+  ['Скляні двері','Розпашні, розсувні, маятникові та прихованого монтажу','▯'],
+  ['Скляні огорожі','Для сходів, балконів, терас та комерційних приміщень','⌁'],
+  ['Дзеркала та скло','Дзеркала, матове скло, фарбоване скло та скляні панелі','◇'],
+];
+
+const products = [
+  ['Душова кабіна Walk-in Premium Black','від 18 450 грн','/images/v5/product-1.webp','В наявності'],
+  ['Скляна перегородка Loft Double','від 24 980 грн','/images/v5/product-2.webp','В наявності'],
+  ['Розсувні двері Glass Slide Comfort','від 16 790 грн','/images/v5/product-3.webp','Під замовлення'],
+  ['Огорожа на сходи Clear View','від 12 560 грн/м.п.','/images/v5/product-4.webp','В наявності'],
+  ['Душова кабіна у нішу Minimal','від 15 990 грн','/images/v5/product-5.webp','В наявності'],
+  ['Loft-перегородка Slim Line','від 21 300 грн','/images/v5/product-6.webp','Під замовлення'],
+];
+
+const faq = [
+  [
+    "Як отримати попередній розрахунок?",
+    "Надішліть фото, приблизні розміри або креслення. Ми уточнимо деталі та підготуємо попередню оцінку."
+  ],
+  [
+    "У яких містах доступний монтаж?",
+    "Основний монтаж виконуємо у Києві, Львові та Одесі з областями."
+  ],
+  [
+    "Чи є доставка по Україні?",
+    "Так, готові товари, фурнітуру та окремі конструкції доставляємо по Україні."
+  ],
+  [
+    "Чи працюєте ви з комерційними об’єктами?",
+    "Так, реалізуємо проєкти для офісів, магазинів, ресторанів, готелів і клінік."
+  ],
+  [
+    "Чи можна замовити конструкцію за індивідуальними розмірами?",
+    "Так, більшість конструкцій виготовляємо індивідуально після технічної перевірки."
+  ],
+  [
+    "Чи виконуєте ви замір?",
+    "Так, професійний замір доступний у містах монтажу."
+  ],
+  [
+    "Які строки виготовлення?",
+    "Строк залежить від типу конструкції, матеріалів, складності та завантаження виробництва."
+  ],
+  [
+    "Чи надаєте гарантію?",
+    "Так, гарантія залежить від виду конструкції, фурнітури й формату монтажу."
+  ],
+  [
+    "Чи можна замовити тільки виготовлення без монтажу?",
+    "Так, для частини товарів і конструкцій доступне виготовлення з доставкою."
+  ],
+  [
+    "Чи робите технічні креслення?",
+    "Так, для складних виробів готуємо та погоджуємо креслення перед виробництвом."
+  ],
+  [
+    "Яке скло ви використовуєте?",
+    "Загартоване скло, триплекс, склопакети та спеціальні види скла залежно від задачі."
+  ],
+  [
+    "Чи можна обрати колір профілю та фурнітури?",
+    "Так, доступні стандартні й індивідуальні кольори залежно від системи."
+  ],
+  [
+    "Чи працюєте з дизайнерами та архітекторами?",
+    "Так, надаємо консультації, технічні матеріали та супровід проєкту."
+  ],
+  [
+    "Чи виконуєте демонтаж старих конструкцій?",
+    "Так, демонтаж оцінюється окремо після огляду об’єкта."
+  ],
+  [
+    "Чи можна реалізувати проєкт поетапно?",
+    "Так, великі проєкти можна поділити на етапи за погодженим графіком."
+  ],
+  [
+    "Що потрібно надіслати для розрахунку?",
+    "Фото, приблизні розміри, місто та короткий опис бажаної конструкції."
+  ],
+  [
+    "Чи є післягарантійний сервіс?",
+    "Так, доступні регулювання, консультації та заміна окремих комплектуючих."
+  ],
+  [
+    "Чи доставляєте ви до Європи?",
+    "Так, окремі товари та конструкції можемо доставляти до країн Європи."
+  ],
+  [
+    "Від чого залежить вартість?",
+    "Від розмірів, типу скла, профілю, фурнітури, складності монтажу та логістики."
+  ],
+  [
+    "Як розпочати роботу?",
+    "Залиште заявку або надішліть фото й розміри — спеціаліст зв’яжеться з вами для уточнення."
+  ]
+];
+---
+<BaseLayout title="Space Glass — скляні конструкції в Україні" description="Скляні перегородки, душові, огорожі, фасади та готові товари. Монтаж у Києві, Львові й Одесі. Доставка по Україні.">
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main">
+      <section class="sg-hero">
+        <div class="sg-hero__copy">
+          <p class="eyebrow">Скляні конструкції преміум-класу</p>
+          <h1>Простір.<br>Світло.<br><span>Space Glass</span></h1>
+          <p>Виготовляємо скляні конструкції для дому, бізнесу та комерційних проєктів будь-якої складності.</p>
+          <div class="hero__actions">
+            <a class="button button--mint" href="/catalog/">Переглянути каталог →</a>
+            <a class="button button--outline" href="#quote">Отримати розрахунок</a>
+          </div>
+        </div>
+        <div class="sg-hero__image">
+          <img src="/images/v5/hero.webp" width="1200" height="900" alt="Скляна перегородка Space Glass" fetchpriority="high" />
+          <span class="sg-glass-line" aria-hidden="true"></span>
+        </div>
+      </section>
+
+      <section class="sg-benefits">
+        <div><span>◇</span><b>Власне виробництво</b><small>В Україні</small></div>
+        <div><span>◉</span><b>Гарантія до 5 років</b><small>На всі конструкції</small></div>
+        <div><span>▱</span><b>Доставка по Україні</b><small>Та Європі</small></div>
+        <div><span>◯</span><b>Індивідуальні рішення</b><small>Під ваш проєкт</small></div>
+      </section>
+
+      <section class="sg-categories">
+        <div class="sg-categories__grid">
+          {categories.map(([title,text,icon]) => (
+            <a class="sg-category-card" href="/catalog/">
+              <span class="sg-category-card__icon">{icon}</span>
+              <h2>{title}</h2>
+              <p>{text}</p>
+              <b>→</b>
+            </a>
+          ))}
+        </div>
+        <a class="sg-all-link" href="/catalog/">Переглянути весь каталог →</a>
+      </section>
+
+      <section class="sg-products">
+        <div class="sg-section-title"><h2>Популярні рішення</h2><a href="/catalog/">Переглянути всі товари ← →</a></div>
+        <div class="sg-product-grid">
+          {products.map(([title,price,image,status],i) => (
+            <a class="sg-product-card" href="/catalog/piddon/">
+              <div class="sg-product-card__media">
+                <img src={image} alt={title} loading="lazy" />
+                <span class="sg-heart">♡</span>
+              </div>
+              <div class="sg-product-card__body">
+                <small class={status === 'Під замовлення' ? 'is-order' : ''}>● {status}</small>
+                <h3>{title}</h3>
+                <strong>{price}</strong>
+                <span class="sg-product-button">Детальніше →</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="sg-projects">
+        <div class="sg-projects__intro">
+          <h2>Наші проєкти</h2>
+          <p>Реалізовані рішення для квартир, будинків, офісів, ресторанів та готелів.</p>
+          <a href="/projects/">Дивитися усі проєкти →</a>
+        </div>
+        {['project-1.webp','project-2.webp','project-3.webp','project-4.webp'].map((image) => (
+          <a class="sg-project-image" href="/projects/"><img src={`/images/v5/${image}`} alt="Реалізований проєкт Space Glass" loading="lazy" /></a>
+        ))}
+      </section>
+
+      <section class="sg-final-benefits">
+        <div><span>◇</span><b>Індивідуальні рішення</b><small>Розробляємо під ваш проєкт та розміри</small></div>
+        <div><span>▱</span><b>Якісні матеріали</b><small>Загартоване скло та фурнітура преміум-класу</small></div>
+        <div><span>⚒</span><b>Професійний монтаж</b><small>Досвідчені монтажні бригади</small></div>
+        <div><span>◇</span><b>Гарантія та сервіс</b><small>Підтримка після монтажу</small></div>
+      </section>
+
+      <section class="section sg-faq sg-faq--home">
+        <FAQBlock
+          title="Часті запитання"
+          intro="Відповідаємо на основні питання про розрахунок, замір, виготовлення, доставку, монтаж, гарантію та сервіс."
+          items={faq}
+          visibleCount={6}
+        />
+      </section>
+
+      <section id="quote" class="section quote-v4">
+        <div class="container quote-v4__grid">
+          <div><p class="eyebrow eyebrow--light">Заявка</p><h2>Покажіть нам ваш простір</h2><p>Надішліть фото, розміри або креслення — підготуємо попередній розрахунок.</p></div>
+          <form class="quote-form quote-form--home-final" data-home-quote-form>
+            <label>
+              <span>{pageT.name}</span>
+              <input type="text" name="name" autocomplete="name" />
+            </label>
+
+            <label>
+              <span>{pageT.phone}</span>
+              <input type="tel" name="phone" autocomplete="tel" />
+            </label>
+
+            <label>
+              <span>{pageT.city}</span>
+              <input type="text" name="city" autocomplete="address-level2" />
+            </label>
+
+            <label class="quote-form--home-final__need">
+              <span>{pageT.need}</span>
+              <input type="text" name="message" placeholder="Наприклад: душова Walk-in" />
+            </label>
+
+            <button class="button button--white quote-form--home-final__submit" type="submit">
+              {pageT.preliminaryQuote}
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <Footer />
+    <script>
+      const homeQuoteForm = document.querySelector('[data-home-quote-form]');
+      homeQuoteForm?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const data = new FormData(homeQuoteForm);
+        const request = [
+          data.get('name'),
+          data.get('phone'),
+          data.get('city'),
+          data.get('message')
+        ].filter(Boolean).join(' · ');
+
+        window.location.href = `/quote/?request=${encodeURIComponent(request)}`;
+      });
+    </script>
+  </div>
+</BaseLayout>

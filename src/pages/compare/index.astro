@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+<BaseLayout
+  title="Порівняння товарів | Space Glass"
+  description="Порівняйте конфігурації скляних конструкцій Space Glass."
+>
+  <Header />
+
+  <main class="compare-page">
+    <section class="compare-hero">
+      <div class="container">
+        <p class="eyebrow eyebrow--light">Порівняння</p>
+        <h1>Оберіть найкраще рішення</h1>
+        <p>Порівнюйте розміри, скло, колір профілю, фурнітуру, монтаж і попередню вартість.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="compare-toolbar">
+          <div>
+            <p class="eyebrow">До 4 позицій</p>
+            <h2>Порівняння конструкцій</h2>
+          </div>
+          <button type="button" data-compare-clear>Очистити порівняння</button>
+        </div>
+
+        <div class="compare-empty" data-compare-empty>
+          <h3>Немає товарів для порівняння</h3>
+          <p>Відкрийте картку товару, налаштуйте конфігурацію та натисніть «Порівняти».</p>
+          <a class="button button--mint" href="/catalog/">Перейти до каталогу</a>
+        </div>
+
+        <div class="compare-table-wrap" data-compare-wrap hidden>
+          <div class="compare-grid" data-compare-grid></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <template id="compare-card-template">
+    <article class="compare-card">
+      <button class="compare-card__remove" type="button" aria-label="Видалити">×</button>
+      <div class="compare-card__image"><img src="" alt="" /></div>
+      <small></small>
+      <h3></h3>
+      <strong class="compare-card__price"></strong>
+      <dl></dl>
+      <a class="button button--outline" href="/catalog/piddon/">Відкрити товар</a>
+    </article>
+  </template>
+
+  <Footer />
+
+  <script>
+    const STORAGE_KEY = 'spaceGlassCompare';
+    const empty = document.querySelector('[data-compare-empty]');
+    const wrap = document.querySelector('[data-compare-wrap]');
+    const grid = document.querySelector('[data-compare-grid]');
+    const template = document.querySelector('#compare-card-template');
+
+    const readCompare = () => {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"items":[]}');
+      } catch {
+        return { items: [] };
+      }
+    };
+
+    const saveCompare = (compare) => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(compare));
+      render();
+    };
+
+    const labels = {
+      type: 'Тип',
+      size: 'Розмір',
+      color: 'Колір профілю',
+      glass: 'Скло',
+      thickness: 'Товщина',
+      handle: 'Ручка',
+      mounting: 'Монтаж'
+    };
+
+    const render = () => {
+      const compare = readCompare();
+      const items = Array.isArray(compare.items) ? compare.items : [];
+
+      grid.innerHTML = '';
+      empty.hidden = items.length > 0;
+      wrap.hidden = items.length === 0;
+
+      items.forEach((item, index) => {
+        const node = template.content.cloneNode(true);
+        const card = node.querySelector('.compare-card');
+
+        const image = card.querySelector('img');
+        image.src = item.image || '/images/s20/product-main.webp';
+        image.alt = item.name || 'Товар Space Glass';
+
+        card.querySelector('small').textContent = item.category || 'Space Glass';
+        card.querySelector('h3').textContent = item.name || 'Конструкція';
+        card.querySelector('.compare-card__price').textContent =
+          `${Math.round(Number(item.price || 0)).toLocaleString('uk-UA')} грн`;
+
+        const specs = item.specs || {};
+        card.querySelector('dl').innerHTML = Object.entries(labels)
+          .map(([key, label]) => `
+            <div>
+              <dt>${label}</dt>
+              <dd>${specs[key] || 'Уточнюється'}</dd>
+            </div>
+          `).join('');
+
+        card.querySelector('.compare-card__remove').addEventListener('click', () => {
+          const next = readCompare();
+          next.items.splice(index, 1);
+          saveCompare(next);
+        });
+
+        grid.appendChild(node);
+      });
+
+      grid.style.setProperty('--compare-columns', Math.max(1, items.length));
+    };
+
+    document.querySelector('[data-compare-clear]').addEventListener('click', () => {
+      saveCompare({ items: [] });
+    });
+
+    render();
+  </script>
+</BaseLayout>

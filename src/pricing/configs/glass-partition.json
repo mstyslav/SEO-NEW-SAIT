@@ -1,0 +1,70 @@
+{
+  "id": "glass-partition",
+  "category": "glass_partitions",
+  "label": "Скляна перегородка",
+  "fields": [
+    {
+      "id": "width",
+      "type": "number",
+      "label": "Ширина",
+      "default": 3000,
+      "unit": "мм"
+    },
+    {
+      "id": "height",
+      "type": "number",
+      "label": "Висота",
+      "default": 2600,
+      "unit": "мм"
+    },
+    {
+      "id": "system",
+      "type": "choice",
+      "label": "Система",
+      "options": [
+        {
+          "label": "Безрамна",
+          "value": "Безрамна",
+          "multiplier": 1
+        },
+        {
+          "label": "Профільна",
+          "value": "Профільна",
+          "multiplier": 1.12
+        },
+        {
+          "label": "Premium",
+          "value": "Premium",
+          "multiplier": 1.333333
+        }
+      ]
+    },
+    {
+      "id": "door",
+      "type": "choice",
+      "label": "Двері",
+      "options": [
+        {
+          "label": "Без дверей",
+          "value": "Без дверей"
+        },
+        {
+          "label": "Розпашні",
+          "value": "Розпашні",
+          "extraUsd": 180
+        },
+        {
+          "label": "Розсувні",
+          "value": "Розсувні",
+          "extraUsd": 350
+        }
+      ]
+    },
+    {
+      "id": "installation",
+      "type": "toggle",
+      "label": "Монтаж",
+      "default": true
+    }
+  ]
+}

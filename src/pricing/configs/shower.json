@@ -1,0 +1,39 @@
+{
+  "id": "shower",
+  "category": "shower",
+  "label": "Душова",
+  "areaFormula": "rectangle",
+  "steps": [
+    {
+      "id": "type",
+      "label": "Тип конструкції",
+      "required": true
+    },
+    {
+      "id": "dimensions",
+      "label": "Розміри",
+      "required": true
+    },
+    {
+      "id": "materials",
+      "label": "Матеріали",
+      "required": true
+    },
+    {
+      "id": "hardware",
+      "label": "Фурнітура",
+      "required": true
+    },
+    {
+      "id": "services",
+      "label": "Монтаж",
+      "required": false
+    }
+  ],
+  "futureFields": [
+    "Easy Clean",
+    "напрямок відкривання",
+    "піддон / без піддона",
+    "доставка"
+  ]
+}

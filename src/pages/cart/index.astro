@@ -1,0 +1,234 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+<BaseLayout
+  title="Мій проєкт | Space Glass"
+  description="Збережені товари, конфігурації та запит на комерційну пропозицію Space Glass."
+>
+  <Header />
+
+  <main class="project-cart-page">
+    <section class="project-cart-hero">
+      <div class="container project-cart-hero__grid">
+        <div>
+          <p class="eyebrow">Мій проєкт</p>
+          <h1>Зберіть усі конструкції в одному місці</h1>
+          <p>Додавайте душові, дзеркала, перегородки, двері, огорожі та інші рішення. Після цього відправте один запит на комерційну пропозицію.</p>
+        </div>
+        <div class="project-cart-hero__stats">
+          <div><span data-project-count>0</span><small>позицій</small></div>
+          <div><span data-project-total>0 грн</span><small>попередньо</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section project-cart-section">
+      <div class="container project-cart-layout">
+        <div class="project-cart-list-wrap">
+          <div class="project-cart-head">
+            <div>
+              <p class="eyebrow">Склад проєкту</p>
+              <h2>Обрані конструкції</h2>
+            </div>
+            <button class="project-cart-clear" type="button" data-project-clear>Очистити проєкт</button>
+          </div>
+
+          <div class="project-cart-empty" data-project-empty>
+            <div class="project-cart-empty__icon">＋</div>
+            <h3>У проєкті ще немає конструкцій</h3>
+            <p>Перейдіть у каталог, налаштуйте товар і додайте його до проєкту.</p>
+            <a class="button button--mint" href="/catalog/">Перейти до каталогу</a>
+          </div>
+
+          <div class="project-cart-list" data-project-list></div>
+        </div>
+
+        <aside class="project-cart-summary">
+          <p class="eyebrow">Підсумок</p>
+          <h2>Ваш проєкт</h2>
+
+          <div class="project-cart-summary__rows">
+            <div><span>Кількість позицій</span><b data-summary-count>0</b></div>
+            <div><span>Попередня сума</span><b data-summary-total>0 грн</b></div>
+          </div>
+
+          <label class="project-cart-note">
+            <span>Коментар до проєкту</span>
+            <textarea rows="4" data-project-note placeholder="Наприклад: потрібна доставка й монтаж у Києві"></textarea>
+          </label>
+
+          <a class="button button--mint project-cart-quote" href="/quote/" data-project-quote>Отримати КП на весь проєкт →</a>
+          <button class="button button--outline project-cart-save" type="button" data-project-save>Зберегти проєкт</button>
+          <button class="button button--outline project-cart-share" type="button" data-project-share>Скопіювати посилання</button>
+          <button class="button button--outline project-cart-download" type="button" data-project-download>Завантажити PDF</button>
+          <p class="project-cart-action-status" data-project-action-status hidden></p>
+
+          <p class="project-cart-summary__notice">Попередня сума не є офертою. Фінальна вартість залежить від перевірки розмірів, матеріалів, доставки й монтажних умов.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <template id="project-item-template">
+    <article class="project-cart-item">
+      <div class="project-cart-item__image">
+        <img src="" alt="" width="320" height="250" />
+      </div>
+      <div class="project-cart-item__body">
+        <div class="project-cart-item__top">
+          <div>
+            <small></small>
+            <h3></h3>
+          </div>
+          <button type="button" aria-label="Видалити">×</button>
+        </div>
+        <p class="project-cart-item__config"></p>
+        <div class="project-cart-item__bottom">
+          <label>
+            <span>Кількість</span>
+            <input type="number" min="1" max="50" value="1" />
+          </label>
+          <strong></strong>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <Footer />
+
+  <script>
+    const STORAGE_KEY = 'spaceGlassProject';
+    const list = document.querySelector('[data-project-list]');
+    const empty = document.querySelector('[data-project-empty]');
+    const template = document.querySelector('#project-item-template');
+    const note = document.querySelector('[data-project-note]');
+    const quoteLink = document.querySelector('[data-project-quote]');
+
+    const money = (value) => `${Math.round(value).toLocaleString('uk-UA')} грн`;
+
+    const readProject = () => {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"items":[],"note":""}');
+      } catch {
+        return { items: [], note: '' };
+      }
+    };
+
+    const saveProject = (project) => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(project));
+      render();
+    };
+
+    const totals = (items) => {
+      const count = items.reduce((sum, item) => sum + Number(item.quantity || 1), 0);
+      const total = items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.quantity || 1), 0);
+      return { count, total };
+    };
+
+    const render = () => {
+      const project = readProject();
+      list.innerHTML = '';
+      empty.hidden = project.items.length > 0;
+      note.value = project.note || '';
+
+      project.items.forEach((item, index) => {
+        const node = template.content.cloneNode(true);
+        const card = node.querySelector('.project-cart-item');
+        const img = card.querySelector('img');
+        img.src = item.image || '/images/s20/product-main.webp';
+        img.alt = item.name || 'Конструкція Space Glass';
+        card.querySelector('small').textContent = item.category || 'Space Glass';
+        card.querySelector('h3').textContent = item.name || 'Конструкція';
+        card.querySelector('.project-cart-item__config').textContent = item.configuration || 'Індивідуальна конфігурація';
+        card.querySelector('strong').textContent = money(Number(item.price || 0) * Number(item.quantity || 1));
+
+        const quantity = card.querySelector('input');
+        quantity.value = item.quantity || 1;
+        quantity.addEventListener('change', () => {
+          const next = readProject();
+          next.items[index].quantity = Math.max(1, Number(quantity.value || 1));
+          saveProject(next);
+        });
+
+        card.querySelector('button').addEventListener('click', () => {
+          const next = readProject();
+          next.items.splice(index, 1);
+          saveProject(next);
+        });
+
+        list.appendChild(node);
+      });
+
+      const { count, total } = totals(project.items);
+      document.querySelectorAll('[data-project-count],[data-summary-count]').forEach(el => el.textContent = count);
+      document.querySelectorAll('[data-project-total],[data-summary-total]').forEach(el => el.textContent = money(total));
+
+      const projectPayload = encodeURIComponent(JSON.stringify({
+        items: project.items,
+        note: project.note || '',
+        total
+      }));
+      quoteLink.href = `/quote/?project=${projectPayload}`;
+      quoteLink.classList.toggle('is-disabled', project.items.length === 0);
+      quoteLink.setAttribute('aria-disabled', project.items.length === 0 ? 'true' : 'false');
+    };
+
+    note.addEventListener('input', () => {
+      const project = readProject();
+      project.note = note.value;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(project));
+    });
+
+    document.querySelector('[data-project-clear]').addEventListener('click', () => {
+      saveProject({ items: [], note: '' });
+    });
+
+    const actionStatus = document.querySelector('[data-project-action-status]');
+
+    const showStatus = (message) => {
+      actionStatus.hidden = false;
+      actionStatus.textContent = message;
+      setTimeout(() => actionStatus.hidden = true, 2600);
+    };
+
+    document.querySelector('[data-project-save]').addEventListener('click', () => {
+      const project = readProject();
+      project.savedAt = new Date().toISOString();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(project));
+      showStatus('Проєкт збережено у цьому браузері.');
+    });
+
+    document.querySelector('[data-project-share]').addEventListener('click', async () => {
+      const project = readProject();
+      const payload = btoa(unescape(encodeURIComponent(JSON.stringify(project))));
+      const shareUrl = `${window.location.origin}/cart/?project=${encodeURIComponent(payload)}`;
+
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        showStatus('Посилання скопійовано.');
+      } catch {
+        window.prompt('Скопіюйте посилання:', shareUrl);
+      }
+    });
+
+    document.querySelector('[data-project-download]').addEventListener('click', () => {
+      window.open('/project-print/', '_blank', 'noopener,noreferrer');
+    });
+
+    const importedPayload = new URLSearchParams(window.location.search).get('project');
+    if (importedPayload) {
+      try {
+        const imported = JSON.parse(decodeURIComponent(escape(atob(importedPayload))));
+        if (Array.isArray(imported.items)) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(imported));
+          history.replaceState({}, '', '/cart/');
+          showStatus('Спільний проєкт завантажено.');
+        }
+      } catch {}
+    }
+
+    render();
+  </script>
+</BaseLayout>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="1754" viewBox="0 0 1240 1754">
+<rect width="1240" height="1754" fill="#ffffff"/>
+<rect x="48" y="48" width="1144" height="1658" rx="28" fill="none" stroke="#9ad5c1" stroke-width="3"/>
+<text x="88" y="120" font-family="Arial" font-size="28" fill="#6bbca1" font-weight="700">SPACE GLASS</text>
+<text x="88" y="185" font-family="Arial" font-size="48" fill="#101512" font-weight="700">Схема заміру Walk-in</text>
+<text x="88" y="230" font-family="Arial" font-size="22" fill="#68716c">Базова форма для попереднього розрахунку</text>
+
+<rect x="88" y="290" width="700" height="900" rx="18" fill="#f7fbf9" stroke="#c7e7db" stroke-width="2"/>
+<line x1="260" y1="1000" x2="260" y2="470" stroke="#111" stroke-width="8"/>
+<line x1="260" y1="470" x2="620" y2="470" stroke="#111" stroke-width="8"/>
+<line x1="620" y1="470" x2="620" y2="1000" stroke="#111" stroke-width="8"/>
+<line x1="260" y1="1000" x2="620" y2="1000" stroke="#111" stroke-width="8"/>
+<line x1="300" y1="510" x2="580" y2="960" stroke="#9ad5c1" stroke-width="4"/>
+<line x1="580" y1="510" x2="300" y2="960" stroke="#9ad5c1" stroke-width="4"/>
+
+<line x1="225" y1="470" x2="225" y2="1000" stroke="#6bbca1" stroke-width="3"/>
+<path d="M225 470 l-10 20 h20 z M225 1000 l-10-20 h20 z" fill="#6bbca1"/>
+<text x="145" y="750" font-family="Arial" font-size="24" fill="#101512" transform="rotate(-90 145 750)">H — висота</text>
+
+<line x1="260" y1="1040" x2="620" y2="1040" stroke="#6bbca1" stroke-width="3"/>
+<path d="M260 1040 l20-10 v20 z M620 1040 l-20-10 v20 z" fill="#6bbca1"/>
+<text x="360" y="1090" font-family="Arial" font-size="24" fill="#101512">W — ширина</text>
+
+<text x="840" y="330" font-family="Arial" font-size="25" fill="#101512" font-weight="700">Вкажіть:</text>
+<text x="840" y="390" font-family="Arial" font-size="22" fill="#4e5752">1. Ширину W у трьох точках</text>
+<text x="840" y="440" font-family="Arial" font-size="22" fill="#4e5752">2. Висоту H зліва та справа</text>
+<text x="840" y="490" font-family="Arial" font-size="22" fill="#4e5752">3. Ухил підлоги</text>
+<text x="840" y="540" font-family="Arial" font-size="22" fill="#4e5752">4. Матеріал стіни</text>
+<text x="840" y="590" font-family="Arial" font-size="22" fill="#4e5752">5. Фото зони монтажу</text>
+
+<rect x="88" y="1240" width="1064" height="280" rx="18" fill="#07150f"/>
+<text x="126" y="1310" font-family="Arial" font-size="28" fill="#9ad5c1" font-weight="700">Важливо</text>
+<text x="126" y="1365" font-family="Arial" font-size="22" fill="#ffffff">Ця схема використовується для попередньої оцінки.</text>
+<text x="126" y="1410" font-family="Arial" font-size="22" fill="#ffffff">Фінальні виробничі розміри підтверджуються після технічної перевірки.</text>
+<text x="126" y="1490" font-family="Arial" font-size="20" fill="#aab5af">space-glass.com.ua · info@space-glass.com.ua</text>
+</svg>

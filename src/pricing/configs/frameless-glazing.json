@@ -1,0 +1,50 @@
+{
+  "id": "frameless",
+  "category": "frameless_glazing",
+  "titleKey": "frameless",
+  "fields": [
+    {
+      "id": "width",
+      "type": "number",
+      "labelKey": "width",
+      "default": 5000,
+      "unit": "mm"
+    },
+    {
+      "id": "height",
+      "type": "number",
+      "labelKey": "height",
+      "default": 2500,
+      "unit": "mm"
+    },
+    {
+      "id": "sections",
+      "type": "number",
+      "labelKey": "sections",
+      "default": 5
+    },
+    {
+      "id": "opening",
+      "type": "choice",
+      "labelKey": "opening",
+      "options": [
+        {
+          "label": "Складна",
+          "value": "folding",
+          "multiplier": 1
+        },
+        {
+          "label": "Розсувна",
+          "value": "sliding",
+          "multiplier": 1.12
+        }
+      ]
+    },
+    {
+      "id": "installation",
+      "type": "toggle",
+      "labelKey": "installation",
+      "default": true
+    }
+  ]
+}

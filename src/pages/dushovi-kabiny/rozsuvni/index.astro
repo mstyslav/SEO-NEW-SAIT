@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+
+const title = "Розсувна душова кабіна";
+const subtitle = "Функціональне рішення для компактних ванних кімнат без зони відкривання дверей.";
+const price = "від 150 $/м²";
+const features = ["Економія простору", "Плавний хід роликів", "Стаціонарні й рухомі секції", "Легка експлуатація"];
+const faq = [
+  ["Яка товщина скла використовується?", "Зазвичай 8 або 10 мм залежно від типу й розмірів конструкції."],
+  ["Чи можна зробити за індивідуальними розмірами?", "Так, конструкція виготовляється після заміру або перевірки наданих розмірів."],
+  ["Чи входить монтаж у ціну?", "Монтаж розраховується окремо та додається в конфігураторі."],
+  ["Які кольори фурнітури доступні?", "Базові варіанти — чорний, хром і графіт. Інші кольори уточнюються окремо."],
+  ["Скільки триває виготовлення?", "Термін підтверджуємо після погодження креслення та комплектації."]
+];
+---
+<BaseLayout title={`${title} — Space Glass`} description={subtitle}>
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main">
+      <section class="product-detail-hero">
+        <div class="product-detail-hero__media">
+          <img src="/images/s19/walkin-main.webp" alt={title} />
+        </div>
+        <div class="product-detail-hero__copy">
+          <p class="eyebrow">Душові кабіни</p>
+          <h1>{title}</h1>
+          <p class="lead">{subtitle}</p>
+          <div class="product-detail-price">{price}</div>
+          <div class="hero__actions">
+            <a class="button button--mint" href="/catalog/piddon/">Налаштувати та розрахувати</a>
+            <a class="button button--outline" href="/quote/">Отримати КП</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="product-detail-section">
+        <div class="category-heading">
+          <div>
+            <p class="eyebrow">Переваги</p>
+            <h2>Комплектація під ваш простір</h2>
+          </div>
+          <p>Після заміру узгоджуємо креслення, скло, фурнітуру, ущільнення та спосіб монтажу.</p>
+        </div>
+        <div class="product-feature-grid">
+          {features.map((feature, i) => (
+            <article>
+              <span>{String(i + 1).padStart(2, '0')}</span>
+              <h3>{feature}</h3>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="product-spec-section">
+        <div>
+          <p class="eyebrow">Характеристики</p>
+          <h2>Технічна база</h2>
+        </div>
+        <dl class="product-spec-list">
+          <div><dt>Скло</dt><dd>Загартоване ESG</dd></div>
+          <div><dt>Товщина</dt><dd>8 або 10 мм</dd></div>
+          <div><dt>Колір скла</dt><dd>Прозоре, матове, тоноване</dd></div>
+          <div><dt>Фурнітура</dt><dd>Black, Chrome, Graphite</dd></div>
+          <div><dt>Розмір</dt><dd>Індивідуальний</dd></div>
+          <div><dt>Монтаж</dt><dd>Київ, Львів, Одеса та області</dd></div>
+        </dl>
+      </section>
+
+      <section class="product-gallery-strip">
+        <img src="/images/s19/walkin-angle.webp" alt={`${title} — ракурс`} />
+        <img src="/images/s19/walkin-detail.webp" alt={`${title} — деталь`} />
+        <img src="/images/s20/product-interior.webp" alt={`${title} в інтер’єрі`} />
+      </section>
+
+      <FAQBlock
+        eyebrow="FAQ"
+        title="Часті запитання"
+        description="Основна інформація про замовлення, виготовлення та монтаж."
+        items={faq}
+        initiallyVisible={5}
+      />
+
+      <section class="inner-cta">
+        <div>
+          <p class="eyebrow eyebrow--light">Попередня оцінка</p>
+          <h2>Надішліть фото та розміри</h2>
+          <p>Підготуємо конфігурацію та попередній розрахунок.</p>
+        </div>
+        <a class="button button--white" href="/quote/">Отримати розрахунок</a>
+      </section>
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>

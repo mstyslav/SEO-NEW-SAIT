@@ -1,0 +1,187 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const values = [
+  ['Професіоналізм','Постійно вдосконалюємо навички, вивчаємо нові системи та технології монтажу.'],
+  ['Якісні матеріали','Працюємо з перевіреним склом, профілями та фурнітурою від виробників Європи й Азії.'],
+  ['Дотримання строків','Плануємо етапи робіт і виконуємо взяті на себе зобов’язання.'],
+  ['Індивідуальний підхід','Кожен об’єкт розглядаємо як окреме технічне та дизайнерське завдання.']
+];
+
+const team = [
+  ['Олександр','Співвласник, співзасновник'],
+  ['Мстислав','Співвласник, співзасновник'],
+  ['Микола','Керівник відділу продажів'],
+  ['Юлія','Контент-мейкер'],
+  ['Анастасія','SMM-спеціаліст'],
+  ['Євген','Майстер з монтажу'],
+  ['Марія','Акаунт-менеджер'],
+  ['Юлія','Організатор'],
+  ['Мілана','Менеджер проєкту'],
+  ['Артур','Майстер з монтажу'],
+  ['Петро','Помічник майстра з монтажу'],
+  ['Максим','Комірник, логіст']
+];
+---
+<BaseLayout title="Про Space Glass — історія, команда та цінності" description="Історія Space Glass, команда, цінності, офіси у Києві, Одесі та Львові, власні монтажні бригади та реалізація складних скляних конструкцій.">
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="about-v12-hero">
+      <div class="about-v12-hero__copy">
+        <p class="eyebrow">Про Space Glass</p>
+        <h1>Ми перетворюємо складні ідеї зі скла на реальні простори</h1>
+        <p class="lead">Space Glass виросла з практичного досвіду, технічної експертизи та бажання працювати інакше: уважно до деталей, чесно у комунікації та відповідально на кожному етапі.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="/projects/">Переглянути проєкти</a>
+          <a class="button button--outline" href="#about-contact">Зв’язатися з командою</a>
+        </div>
+      </div>
+      <div class="about-v12-hero__visual">
+        <span>SPACE GLASS</span>
+      </div>
+    </section>
+
+    <section class="about-v12-facts">
+      <div><b>2014</b><span>початок професійного шляху у сфері скла</span></div>
+      <div><b>4</b><span>людини у першій команді</span></div>
+      <div><b>3</b><span>міста присутності: Одеса, Київ, Львів</span></div>
+      <div><b>Власні</b><span>монтажні бригади та внутрішні процеси</span></div>
+    </section>
+
+    <section class="about-v12-story">
+      <div class="about-v12-story__intro">
+        <p class="eyebrow">Наша історія</p>
+        <h2>Від роботи з фурнітурою до комплексних скляних рішень</h2>
+      </div>
+      <div class="about-v12-story__copy">
+        <p>Наша історія у галузі скла почалася ще до появи Space Glass. Із 2014 року майбутні засновники компанії працювали з фурнітурою для виробів із загартованого скла, проходили різні ролі та поступово накопичували технічний і комерційний досвід.</p>
+        <p>Коли стало зрозуміло, що цього досвіду достатньо для власної справи, ми почали з нуля: без офісу, без великої команди, але з чітким бажанням будувати сервіс навколо якості, комунікації та відповідальності. На старті Space Glass складалася лише з чотирьох людей, і кожен був залучений майже в усі процеси — від менеджменту та маркетингу до технічного супроводу.</p>
+      </div>
+      <div class="about-v12-story__visual about-v12-story__visual--one"><span>01 / START</span></div>
+      <div class="about-v12-story__visual about-v12-story__visual--two"><span>02 / GROWTH</span></div>
+      <div class="about-v12-story__copy about-v12-story__copy--wide">
+        <p>Перший рік став періодом активного навчання: формування клієнтської бази, пошуку партнерів, побудови команди та створення власного робочого простору зі зразками матеріалів і фурнітури.</p>
+        <p>Поступово ми вийшли за межі Одеси, почали працювати з проєктами у Львові та Києві, а влітку 2022 року відкрили офіс у столиці. Наступним важливим кроком стало формування власних монтажних бригад замість залежності від випадкових підрядників. Це дало змогу краще контролювати строки, якість і результат.</p>
+        <p>Сьогодні Space Glass — це команда, яка проєктує, виготовляє та монтує скляні конструкції для приватних і комерційних об’єктів та готова братися за завдання різної складності.</p>
+      </div>
+    </section>
+
+    <section class="about-v12-values">
+      <div class="about-v12-section-head">
+        <div><p class="eyebrow eyebrow--light">Місія і цінності</p><h2>Створювати простори, у яких скло працює на архітектуру й людину</h2></div>
+        <p>Ми прагнемо, щоб кожна конструкція була не просто красивою, а безпечною, продуманою та довговічною.</p>
+      </div>
+      <div class="about-v12-values__grid">
+        {values.map(([title,text],i) => <article><span>{String(i+1).padStart(2,'0')}</span><h3>{title}</h3><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="about-v12-team">
+      <div class="about-v12-section-head">
+        <div><p class="eyebrow">Наша команда</p><h2>Люди, які відповідають за результат</h2></div>
+        <p>Від першої консультації до логістики та монтажу — кожен етап має свою відповідальну людину.</p>
+      </div>
+      <div class="about-v12-team__grid">
+        {team.map(([name,role],i) => <article><div class="about-v12-avatar">{String(i+1).padStart(2,'0')}</div><h3>{name}</h3><p>{role}</p></article>)}
+      </div>
+    </section>
+
+    <section class="about-v12-career">
+      <div>
+        <p class="eyebrow">Хочу в команду</p>
+        <h2>Шукаємо людей, яким важлива якість роботи</h2>
+        <p>Надішліть коротку інформацію про себе, досвід і напрям, у якому хочете розвиватися.</p>
+      </div>
+      <form class="about-v12-career__form">
+        <label>Ім’я<input type="text" placeholder="Ваше ім’я" /></label>
+        <label>Телефон<input type="tel" placeholder="+38" /></label>
+        <label>Напрям<select><option>Монтаж</option><option>Продажі</option><option>Проєктування</option><option>Маркетинг</option><option>Інше</option></select></label>
+        <button type="button" class="button button--mint">Надіслати заявку</button>
+      </form>
+    </section>
+
+    <section id="about-contact" class="about-v12-offices">
+      <div class="about-v12-section-head">
+        <div><p class="eyebrow">Наші офіси</p><h2>Space Glass у трьох містах</h2></div>
+        <p>Оберіть місто, щоб побачити адресу, графік і схематичне розташування офісу.</p>
+      </div>
+
+      <div class="office-tabs">
+        <input checked type="radio" name="office" id="office-odesa" />
+        <input type="radio" name="office" id="office-kyiv" />
+        <input type="radio" name="office" id="office-lviv" />
+
+        <div class="office-tabs__labels">
+          <label for="office-odesa">Одеса</label>
+          <label for="office-kyiv">Київ</label>
+          <label for="office-lviv">Львів</label>
+        </div>
+
+        <div class="office-panel office-panel--odesa">
+          <div class="office-info">
+            <p class="eyebrow">Одеса</p>
+            <h3>вул. Глиняна, 5</h3>
+            <p>Понеділок–п’ятниця: 09:00–19:00</p>
+            <a href="tel:+380734251400">+38 (073) 425 14 00</a>
+            <a class="button button--mint" href="https://www.google.com/maps/dir/?api=1&destination=%D0%9E%D0%B4%D0%B5%D1%81%D0%B0%2C+%D0%B2%D1%83%D0%BB.+%D0%93%D0%BB%D0%B8%D0%BD%D1%8F%D0%BD%D0%B0%2C+5" target="_blank" rel="noopener noreferrer">Прокласти маршрут</a>
+          </div>
+          <div class="office-map office-map--google">
+            <iframe
+              src="https://www.google.com/maps?q=%D0%9E%D0%B4%D0%B5%D1%81%D0%B0%2C+%D0%B2%D1%83%D0%BB.+%D0%93%D0%BB%D0%B8%D0%BD%D1%8F%D0%BD%D0%B0%2C+5&output=embed"
+              title="Карта офісу Space Glass — Одеса"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen>
+            </iframe>
+            <a class="office-map__open" href="https://www.google.com/maps/dir/?api=1&destination=%D0%9E%D0%B4%D0%B5%D1%81%D0%B0%2C+%D0%B2%D1%83%D0%BB.+%D0%93%D0%BB%D0%B8%D0%BD%D1%8F%D0%BD%D0%B0%2C+5" target="_blank" rel="noopener noreferrer">Відкрити у Google Maps ↗</a>
+          </div>
+        </div>
+
+        <div class="office-panel office-panel--kyiv">
+          <div class="office-info">
+            <p class="eyebrow">Київ</p>
+            <h3>вул. Лауреатська, 8</h3>
+            <p>Понеділок–п’ятниця: 09:00–19:00</p>
+            <a href="tel:+380734251400">+38 (073) 425 14 00</a>
+            <a class="button button--mint" href="https://www.google.com/maps/dir/?api=1&destination=%D0%9A%D0%B8%D1%97%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9B%D0%B0%D1%83%D1%80%D0%B5%D0%B0%D1%82%D1%81%D1%8C%D0%BA%D0%B0%2C+8" target="_blank" rel="noopener noreferrer">Прокласти маршрут</a>
+          </div>
+          <div class="office-map office-map--google">
+            <iframe
+              src="https://www.google.com/maps?q=%D0%9A%D0%B8%D1%97%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9B%D0%B0%D1%83%D1%80%D0%B5%D0%B0%D1%82%D1%81%D1%8C%D0%BA%D0%B0%2C+8&output=embed"
+              title="Карта офісу Space Glass — Київ"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen>
+            </iframe>
+            <a class="office-map__open" href="https://www.google.com/maps/dir/?api=1&destination=%D0%9A%D0%B8%D1%97%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9B%D0%B0%D1%83%D1%80%D0%B5%D0%B0%D1%82%D1%81%D1%8C%D0%BA%D0%B0%2C+8" target="_blank" rel="noopener noreferrer">Відкрити у Google Maps ↗</a>
+          </div>
+        </div>
+
+        <div class="office-panel office-panel--lviv">
+          <div class="office-info">
+            <p class="eyebrow">Львів</p>
+            <h3>вул. Кульпарківська, 144</h3>
+            <p>Понеділок–п’ятниця: 09:00–19:00</p>
+            <a href="tel:+380734251400">+38 (073) 425 14 00</a>
+            <a class="button button--mint" href="https://www.google.com/maps/dir/?api=1&destination=%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9A%D1%83%D0%BB%D1%8C%D0%BF%D0%B0%D1%80%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0%2C+144" target="_blank" rel="noopener noreferrer">Прокласти маршрут</a>
+          </div>
+          <div class="office-map office-map--google">
+            <iframe
+              src="https://www.google.com/maps?q=%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9A%D1%83%D0%BB%D1%8C%D0%BF%D0%B0%D1%80%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0%2C+144&output=embed"
+              title="Карта офісу Space Glass — Львів"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen>
+            </iframe>
+            <a class="office-map__open" href="https://www.google.com/maps/dir/?api=1&destination=%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9A%D1%83%D0%BB%D1%8C%D0%BF%D0%B0%D1%80%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0%2C+144" target="_blank" rel="noopener noreferrer">Відкрити у Google Maps ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

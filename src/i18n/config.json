@@ -1,0 +1,25 @@
+{
+  "defaultLocale": "uk",
+  "locales": {
+    "uk": {
+      "label": "Українська",
+      "short": "UA",
+      "htmlLang": "uk"
+    },
+    "ru": {
+      "label": "Русский",
+      "short": "RU",
+      "htmlLang": "ru"
+    },
+    "en": {
+      "label": "English",
+      "short": "EN",
+      "htmlLang": "en"
+    },
+    "de": {
+      "label": "Deutsch",
+      "short": "DE",
+      "htmlLang": "de"
+    }
+  }
+}

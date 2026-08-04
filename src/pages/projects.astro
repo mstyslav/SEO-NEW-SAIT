@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const projects = [
+['Скляна Loft-перегородка','Київ','Квартира','/projects/loft-kyiv/'],
+['Душова Walk-in','Одеса','Приватний будинок','#'],
+['Безрамна огорожа','Львів','Сходи','#'],
+['Скляний офіс','Київ','Комерційний об’єкт','#'],
+['LED-дзеркала','Одеса','Апартаменти','#'],
+['Розсувні двері','Львів','Будинок','#']
+];
+---
+<BaseLayout title="Проєкти Space Glass" description="Реалізовані проєкти Space Glass: душові, перегородки, двері, огорожі, дзеркала та фасади.">
+<div class="sg-page-shell"><Header/><main id="main">
+<section class="projects-v14-hero"><p class="eyebrow">Проєкти</p><h1>Реальні об’єкти. Реальні рішення.</h1><p class="lead">Кожен кейс показує задачу, матеріали, процес та результат.</p></section>
+<section class="projects-v14-grid">{projects.map(([title,city,type,href],i)=><a href={href}><div><span>{String(i+1).padStart(2,'0')}</span></div><small>{city} / {type}</small><h2>{title}</h2><b>Дивитися кейс →</b></a>)}</section>
+</main><Footer/></div></BaseLayout>

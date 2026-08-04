@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "currency": {
+    "base": "USD",
+    "display": "UAH",
+    "source": "NBU",
+    "nbuEndpoint": "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json",
+    "markupUah": 0.8,
+    "markupMinUah": 0.5,
+    "markupMaxUah": 1.0,
+    "fallbackRateUah": 43.5,
+    "cacheHours": 24
+  },
+  "defaults": {
+    "installationUsdM2": 60,
+    "deliveryUah": 0,
+    "minimumOrderUsd": 0
+  },
+  "categories": {
+    "shower": {
+      "label": "Душові",
+      "productUsdM2": 150,
+      "installationUsdM2": 60,
+      "installationEnabled": true,
+      "config": "shower"
+    },
+    "glass_partitions": {
+      "label": "Скляні перегородки",
+      "productUsdM2": 150,
+      "premiumProductUsdM2": 200,
+      "installationUsdM2": 60,
+      "installationEnabled": true,
+      "config": "glass-partition"
+    },
+    "mirrors": {
+      "label": "Дзеркала",
+      "productUsdM2": 150,
+      "installationUsdM2": 60,
+      "installationEnabled": false,
+      "config": "mirror"
+    },
+    "railings": {
+      "label": "Скляні огорожі",
+      "productUsdM2": 200,
+      "installationUsdM2": 60,
+      "installationEnabled": true,
+      "config": "railing"
+    },
+    "frameless_glazing": {
+      "label": "Безрамне скління",
+      "productUsdM2": 200,
+      "installationUsdM2": 60,
+      "installationEnabled": true,
+      "config": "frameless-glazing"
+    },
+    "loft": {
+      "label": "Loft-конструкції",
+      "productUsdM2": 200,
+      "installationUsdM2": 60,
+      "installationEnabled": true,
+      "config": "loft"
+    },
+    "facades": {
+      "label": "Фасадне скління",
+      "productUsdM2": 400,
+      "installationUsdM2": 60,
+      "installationEnabled": true,
+      "config": "facade"
+    }
+  },
+  "modifiers": {
+    "type": {
+      "Walk-in": 1.0,
+      "Кутова": 1.22,
+      "У нішу": 1.14
+    },
+    "color": {
+      "Black": 1.0,
+      "Chrome": 1.05,
+      "Graphite": 1.08
+    },
+    "glass": {
+      "Прозоре": 1.0,
+      "Матове": 1.12,
+      "Тоноване": 1.18,
+      "Ultra Clear": 1.15,
+      "Bronze": 1.12,
+      "Grey": 1.12
+    },
+    "thickness": {
+      "8 мм": 1.0,
+      "10 мм": 1.16,
+      "12 мм": 1.18
+    },
+    "handle": {
+      "Стандартна": 1.0,
+      "Преміум": 1.07,
+      "Прихована": 1.12
+    }
+  }
+}

@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+const title = "Розсувні скляні перегородки";
+const description = "Компактне рішення для великих прорізів і гнучкого зонування.";
+const image = "/images/s20/product-detail.webp";
+const features = ["Одно- та багатостулкові системи", "М’який і тихий хід", "Мінімум зайнятого простору"];
+const faq = [
+ ["Чи можна виготовити за індивідуальними розмірами?","Так, кожну конструкцію проєктуємо під фактичну геометрію отвору."],
+ ["Яке скло використовується?","Використовуємо загартоване скло або триплекс відповідно до конструкції та вимог безпеки."],
+ ["Чи входить монтаж у вартість?","Монтаж розраховується окремо після уточнення міста, доступу та складності робіт."],
+ ["Скільки триває виготовлення?","Термін залежить від системи, фурнітури, кольору профілю та завантаження виробництва."],
+ ["Чи виконуєте замір?","Так, після попереднього погодження комплектації організовуємо точний замір."],
+ ["Яка гарантія?","Гарантія визначається комплектацією та умовами договору."],
+];
+---
+<BaseLayout title={`${title} — Space Glass`} description={description}>
+<div class="sg-page-shell"><Header/><main id="main">
+<section class="product-premium product-premium--s19 category-product-hero">
+ <div class="product-gallery product-gallery--real"><button class="product-gallery__main" type="button"><img src={image} alt={title} width="1800" height="1300"/></button></div>
+ <div class="product-premium__info"><p class="eyebrow">Скляні перегородки</p><div class="product-state product-state--order">● Під замовлення</div><h1>{title}</h1><p class="lead">{description}</p><div class="product-price-row"><strong>від 150 $/м²</strong><span>Попередня базова ставка</span></div>
+ <ul class="detail-feature-list">{features.map(item=><li>✓ {item}</li>)}</ul>
+ <div class="product-actions"><a class="button button--mint" href="/peregorodky-configurator/">Розрахувати</a><a class="button button--outline" href="/quote/">Отримати КП</a></div></div>
+</section>
+<section class="product-spec-section"><div class="product-spec-intro"><p class="eyebrow">Конструкція</p><h2>Підбираємо систему під задачу</h2><p>Враховуємо розміри, спосіб відкривання, дизайн профілю, тип скла, акустику та монтажні умови.</p></div><div class="product-spec-table">
+<div><span>Виготовлення</span><b>Індивідуальне</b></div><div><span>Скло</span><b>Загартоване / триплекс</b></div><div><span>Профіль</span><b>Чорний, графіт, RAL</b></div><div><span>Монтаж</span><b>По Україні</b></div><div><span>Проєктування</span><b>За замірами або кресленнями</b></div><div><span>Гарантія</span><b>За договором</b></div></div></section>
+<section class="category-section"><div class="category-heading"><div><p class="eyebrow">Етапи</p><h2>Від ідеї до монтажу</h2></div><p>Один процес для приватних і комерційних проєктів.</p></div><div class="category-process__grid category-process__grid--light"><div><span>01</span><b>Запит</b><small>Фото, розміри або креслення</small></div><div><span>02</span><b>Розрахунок</b><small>Система та комплектація</small></div><div><span>03</span><b>Замір</b><small>Точна геометрія</small></div><div><span>04</span><b>Проєкт</b><small>Креслення і погодження</small></div><div><span>05</span><b>Виробництво</b><small>Контроль якості</small></div><div><span>06</span><b>Монтаж</b><small>Здача готової конструкції</small></div></div></section>
+<section class="section"><FAQBlock title={`FAQ про ${title.toLowerCase()}`} intro="Основні питання про вартість, матеріали, замір і монтаж." items={faq} visibleCount={6}/></section>
+<section class="inner-cta"><div><p class="eyebrow eyebrow--light">Попередній розрахунок</p><h2>Надішліть фото або креслення</h2><p>Підготуємо комплектацію та орієнтовну вартість.</p></div><a class="button button--white" href="/quote/">Отримати розрахунок</a></section>
+</main><Footer/></div></BaseLayout>

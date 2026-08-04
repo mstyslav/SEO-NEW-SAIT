@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const sections = [
+  ['Статті','Практичні матеріали про вибір, монтаж і догляд.','/knowledge/yake-sklo-krashche/'],
+  ['Матеріали','Загартоване скло, триплекс, профілі та фурнітура.','#'],
+  ['Технології','Системи кріплення, монтажні вузли та конструктив.','#'],
+  ['FAQ','Короткі відповіді на найчастіші запитання клієнтів.','#'],
+  ['Для дизайнерів','Рекомендації, палітри, текстури та готові рішення.','#'],
+  ['Для архітекторів','PDF, креслення, специфікації та технічні матеріали.','#']
+];
+
+const featured = [
+  ['Загартоване скло чи триплекс','Порівняння безпеки, міцності та застосування.','/knowledge/yake-sklo-krashche/'],
+  ['Скло 8 мм чи 10 мм','Як товщина впливає на конструкцію та ціну.','#'],
+  ['Як підготувати отвір до заміру','Що потрібно завершити до виїзду спеціаліста.','#']
+];
+---
+<BaseLayout title="База знань Space Glass" description="Експертні матеріали про скляні конструкції, матеріали, монтаж, технології, FAQ та поради.">
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="knowledge-v14-hero">
+      <div>
+        <p class="eyebrow">Space Glass Knowledge Hub</p>
+        <h1>База знань Space Glass</h1>
+        <p class="lead">Все про скляні конструкції: матеріали, технології, монтаж, догляд, порівняння та відповіді на запитання.</p>
+      </div>
+      <div class="knowledge-v14-search">
+        <label for="knowledge-search">Пошук у базі знань</label>
+        <div><input id="knowledge-search" type="search" placeholder="Наприклад: триплекс, Walk-in, фурнітура" /><button class="button button--mint" type="button">Знайти</button></div>
+        <small>Пошук працює як UI-прототип. Підключення індексу — на етапі інтеграції.</small>
+      </div>
+    </section>
+
+    <section class="knowledge-v14-sections">
+      {sections.map(([title,text,href],i)=><a href={href}><span>{String(i+1).padStart(2,'0')}</span><h2>{title}</h2><p>{text}</p><b>Перейти →</b></a>)}
+    </section>
+
+    <section class="knowledge-v14-featured">
+      <div class="category-heading"><div><p class="eyebrow">Популярні матеріали</p><h2>Почніть із головного</h2></div><a href="#">Усі матеріали →</a></div>
+      <div class="article-related-grid">
+        {featured.map(([title,text,href],i)=><a class="article-related-card" href={href}><span>{String(i+1).padStart(2,'0')}</span><h3>{title}</h3><p>{text}</p></a>)}
+      </div>
+    </section>
+
+    <section class="inner-cta">
+      <div><p class="eyebrow eyebrow--light">Не знайшли відповідь?</p><h2>Поставте запитання спеціалісту</h2><p>Опишіть конструкцію або надішліть фото й креслення.</p></div>
+      <a class="button button--white" href="mailto:info@space-glass.com.ua">Надіслати запит</a>
+    </section>
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

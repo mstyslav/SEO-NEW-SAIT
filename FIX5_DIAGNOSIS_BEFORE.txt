@@ -1,0 +1,115 @@
+
+--- src/components/configurator/DynamicConfigurator.astro ---
+
+   {field.type === 'number' && (
+            <label class="dyn-number">
+              <input type="number" name={field.id} value={field.default} data-number />
+              {field.unit && <span>{field.unit}</span>}
+            </label>
+          )}
+
+          {field.type === 'choice' && (
+            <div class="dyn-options">
+              {field.options.map((option: any, i: number) => (
+                <button type="button" class:list={['dyn-option', i === 0 && 'is-active']}
+                  data-choice data-value={option.value}
+                  data-multiplier={option.multiplier ?? 1}
+                  data-extra-usd={option.extraUsd ?? 0}>
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {field.type === 'toggle' && (
+            <label class="dyn-toggle">
+              <input type="checkbox" name={field.id} checked={field.default}
+                data-toggle data-extra-usd={field.extraUsd ?? 0}
+                data-extra-usd-m2={field.extraUsdM2 ?? 0} />
+              <span></span><b>{field.default ? ui.included : ui.add}</b>
+            </label>
+          )}
+        </section>
+      ))}
+    </div>
+
+    <aside class="dyn-summary">
+      <p class="eyebrow">{ui.preliminaryCalculation}</p>
+      <h2>{resolvedName}</h2>
+      <dl>
+        <div><dt>{ui.area}</dt><dd data-area>—</dd></div>
+        <div><dt>{ui.product}</dt><dd data-product-price>—</dd></div>
+        <div><dt>{ui.options}</dt><dd data-extras>—</dd></div>
+        <div><dt>{ui.installation}</dt><dd data-installation>—</dd></div>
+        <div><dt>{ui.rate}</dt><dd data-rate>—</dd></div>
+      </dl>
+      <div class="dyn-total">
+        <span>{ui.total}</span>
+        <strong data-total>—</strong>
+        <small data-total-usd></small>
+      </div>
+      <p class="dyn-disclaimer">{ui.disclaimer}</p>
+      <div class="dyn-actions">
+     
+
+--- src/pages/catalog/piddon.astro ---
+
+Input?.value || 2000} мм`,
+        color: getActive('color')?.dataset.value || 'Black',
+        glass: getActive('glass')?.dataset.value || 'Прозоре',
+        thickness:
+          getActive('thickness')?.dataset.value || '8 мм',
+        handle: getActive('handle')?.dataset.value || 'Стандартна',
+        mounting:
+          getActive('mounting')?.dataset.value || 'Без монтажу',
+      },
+    });
+
+    gallery
+      .querySelectorAll('[data-gallery-thumb]')
+      .forEach((thumb) => {
+        thumb.addEventListener('click', () => {
+          gallery
+            .querySelectorAll('[data-gallery-thumb]')
+            .forEach((item) => item.classList.remove('is-active'));
+
+          thumb.classList.add('is-active');
+          main.classList.add('is-changing');
+
+          setTimeout(() => {
+            main.src = thumb.dataset.src;
+            main.alt = thumb.dataset.alt;
+            lightboxImage.src = thumb.dataset.src;
+            lightboxImage.alt = thumb.dataset.alt;
+            main.classList.remove('is-changing');
+          }, 110);
+        });
+      });
+
+    gallery
+      .querySelector('[data-gallery-open]')
+      ?.addEventListener('click', () => lightbox?.showModal());
+
+    gallery
+      .querySelector('[data-gallery-close]')
+      ?.addEventListener('click', () => lightbox?.close());
+
+    lightbox?.addEventListener('click', (event) => {
+      if (event.target === lightbox) lightbox.close();
+    });
+
+    configurator?.querySelectorAll('.option').forEach((option) => {
+      option.addEventListener('click', () => {
+        const group = option.dataset.optionGroup;
+        if (!group) return;
+
+        configurator
+          .querySelectorAll(`[data-option-group="${group}"]`)
+          .forEach((item) => item.classList.remove('is-active'));
+
+        option.classList.add('is-active');
+        updateConfiguration();
+      });
+    });
+
+    widthInput?.addEventListener('i
