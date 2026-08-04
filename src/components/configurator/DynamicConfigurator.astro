@@ -27,6 +27,10 @@ const labelFor = (field: any) => field.labelKey ? (labels[field.labelKey] ?? fie
     <p class="eyebrow">{ui.smartConfigurator}</p>
     <h2>{resolvedName}</h2>
     <p>{ui.configureText}</p>
+    <div class="dyn-progress" role="progressbar" aria-label="Прогрес налаштування" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <span data-progress-bar></span>
+    </div>
+    <p class="dyn-progress__label" aria-live="polite"><span data-progress-value>0</span>% · {config.fields.length} кроків</p>
   </div>
 
   <div class="dyn-config__grid">
@@ -48,7 +52,7 @@ const labelFor = (field: any) => field.labelKey ? (labels[field.labelKey] ?? fie
           {field.type === 'choice' && (
             <div class="dyn-options">
               {field.options.map((option: any, i: number) => (
-                <button type="button" class:list={['dyn-option', i === 0 && 'is-active']}
+                <button type="button" class:list={['dyn-option', i === 0 && 'is-active']} aria-pressed={i === 0 ? 'true' : 'false'}
                   data-choice data-value={option.value}
                   data-multiplier={option.multiplier ?? 1}
                   data-extra-usd={option.extraUsd ?? 0}>
@@ -190,6 +194,17 @@ document.querySelectorAll('[data-dyn-config]').forEach(async root => {
     url.searchParams.set('pricing', JSON.stringify(last));
     if (locale !== 'uk') url.searchParams.set('lang', locale);
     quote.href = url.pathname + url.search;
+
+    const fields = [...root.querySelectorAll('[data-field]')];
+    const completed = fields.filter(field => {
+      const number = field.querySelector('[data-number]');
+      return number ? Number(number.value) > 0 : Boolean(field.querySelector('[data-choice].is-active, [data-toggle]'));
+    }).length;
+    const progress = Math.round(completed / Math.max(fields.length, 1) * 100);
+    const progressRoot = root.querySelector('.dyn-progress');
+    progressRoot?.setAttribute('aria-valuenow', String(progress));
+    if (root.querySelector('[data-progress-bar]')) root.querySelector('[data-progress-bar]').style.width = progress + '%';
+    if (root.querySelector('[data-progress-value]')) root.querySelector('[data-progress-value]').textContent = String(progress);
   };
 
   root.addEventListener('click', (event) => {
