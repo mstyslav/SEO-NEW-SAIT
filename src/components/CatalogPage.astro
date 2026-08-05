@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { catalogItems, catalogSeo } from '../data/mainCatalog';
+import { breadcrumbSchema, absoluteUrl, type JsonLdObject } from '../seo/schema';
+import { localizedPath, type Locale } from '../i18n/helpers';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const seo = catalogSeo[locale];
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(localizedPath('/catalog/', locale), origin);
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#catalog-list`,
+  name: seo.h1,
+  itemListElement: catalogItems.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: absoluteUrl(localizedPath(`/${item.slug}/`, locale), origin),
+    name: item.titles[locale],
+    image: absoluteUrl(item.image, origin)
+  }))
+};
+const images = catalogItems.map((item) => ({
+  '@type': 'ImageObject',
+  name: item.titles[locale],
+  caption: item.alts[locale],
+  contentUrl: absoluteUrl(item.image, origin),
+  representativeOfPage: item.key === 'showers'
+}));
+const schema = [
+  breadcrumbSchema([
+    { label: seo.home, href: absoluteUrl(localizedPath('/', locale), origin) },
+    { label: seo.catalog, href: pageUrl }
+  ]),
+  itemList,
+  ...images
+];
+---
+<BaseLayout title={seo.title} description={seo.description} locale={locale} image="/images/s24-menu/showers.webp" schemaType="CollectionPage" structuredData={schema}>
+  <div class="sg-page-shell">
+    <Header locale={locale} />
+    <main id="main" class="main-catalog">
+      <section class="catalog-hero catalog-hero--main">
+        <div class="container catalog-hero__inner">
+          <nav class="catalog-breadcrumb" aria-label="Breadcrumb">
+            <a href={localizedPath('/', locale)}>{seo.home}</a><span>/</span><span>{seo.catalog}</span>
+          </nav>
+          <p class="eyebrow">{seo.eyebrow}</p>
+          <h1>{seo.h1}</h1>
+          <p>{seo.lead}</p>
+        </div>
+      </section>
+
+      <section class="section catalog-main-section" aria-labelledby="catalog-categories-title">
+        <div class="container">
+          <h2 id="catalog-categories-title" class="visually-hidden">{seo.h1}</h2>
+          <div class="catalog-main-grid">
+            {catalogItems.map((item, index) => {
+              const href = localizedPath(`/${item.slug}/`, locale);
+              return (
+                <article class="catalog-main-card" id={item.key}>
+                  <a class="catalog-main-card__media" href={href} aria-label={`${seo.cta}: ${item.titles[locale]}`}>
+                    <picture>
+                      <source srcset={`${item.image} 640w`} type="image/webp" />
+                      <img src={item.image} width="640" height="460" alt={item.alts[locale]} loading={index < 3 ? 'eager' : 'lazy'} decoding="async" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 44vw, 31vw" />
+                    </picture>
+                  </a>
+                  <div class="catalog-main-card__body">
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <h3><a href={href}>{item.titles[locale]}</a></h3>
+                    <p>{item.descriptions[locale]}</p>
+                    <a class="catalog-main-card__cta" href={href}>{seo.cta} →</a>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer locale={locale} />
+  </div>
+</BaseLayout>

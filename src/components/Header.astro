@@ -83,7 +83,8 @@ const menuGroups = [
 ];
 
 const architectureItems = [
-  ['frameless','Безрамне скління','/arkhitekturni-systemy/'],
+  ['frameless','Безрамне скління','/bezramne-sklinnya/'],
+  ['pergolas','Перголи','/pergoly/'],
   ['loft','Loft-системи','/sklyani-perehorodky/'],
   ['partitions','Скляні перегородки','/sklyani-perehorodky/'],
   ['doors','Скляні двері','/sklyani-dveri/'],
@@ -204,12 +205,26 @@ const menuData = {
     title: 'Безрамне скління',
     text: 'Панорамні рішення для терас, балконів, офісів і приватних будинків.',
     button: 'Переглянути безрамне скління',
-    href: '/arkhitekturni-systemy/',
+    href: '/bezramne-sklinnya/',
     image: '/images/s24-menu/frameless.webp',
     popular: [
       ['Скління тераси','Захист без втрати світла','/images/v5/product-5.webp','/arkhitekturni-systemy/'],
       ['Скління балкона','Панорамний вигляд','/images/v5/hero.webp','/arkhitekturni-systemy/'],
       ['Скління офісу','Відкрита архітектура','/images/v5/product-2.webp','/arkhitekturni-systemy/']
+    ]
+  },
+
+  pergolas: {
+    eyebrow: 'Архітектурні системи',
+    title: 'Перголи',
+    text: 'Окремі алюмінієві перголи зі скляним або ламельним накриттям для терас.',
+    button: 'Переглянути перголи',
+    href: '/pergoly/',
+    image: '/images/v5/project-4.webp',
+    popular: [
+      ['Пергола для тераси','Комфортний простір надворі','/images/v5/project-4.webp','/pergoly/'],
+      ['Скляне накриття','Захист від опадів і світло','/images/v5/project-1.webp','/pergoly/'],
+      ['Алюмінієва система','Міцний профіль на роки','/images/s24-menu/aluminium.webp','/pergoly/']
     ]
   },
   loft: {
@@ -266,6 +281,13 @@ const menuData = {
   }
 };
 
+
+const localizedMenuData = Object.fromEntries(Object.entries(menuData).map(([key, value]) => [key, {
+  ...value,
+  href: lp(value.href),
+  popular: value.popular.map(([title, text, image, href]) => [title, text, image, lp(href)])
+}]));
+
 ---
 <header class="site-header sg-header">
   <div class="container nav sg-nav">
@@ -284,8 +306,8 @@ const menuData = {
                 <h3>{section.icon} {section.section}</h3>
                 {section.groups.map(group => (
                   <div class="catalog-mega__group" data-menu-key={group.key}>
-                    <a class="catalog-mega__group-title" href={group.href}>{group.title}</a>
-                    {group.items.map(item => <a href={group.href}>{item}</a>)}
+                    <a class="catalog-mega__group-title" href={lp(group.href)}>{group.title}</a>
+                    {group.items.map(item => <a href={lp(group.href)}>{item}</a>)}
                   </div>
                 ))}
               </section>
@@ -295,13 +317,13 @@ const menuData = {
               <h3>◇ Архітектурні системи</h3>
               <div class="catalog-mega__architecture-list">
                 {architectureItems.map(([key,label,href]) => (
-                  <a href={href} data-menu-key={key}><span>{label}</span><b>›</b></a>
+                  <a href={lp(href)} data-menu-key={key}><span>{label}</span><b>›</b></a>
                 ))}
               </div>
 
               <div class="catalog-mega__popular" data-popular-list>
                 {menuData.partitions.popular.map(([title,text,image,href]) => (
-                  <a href={href}>
+                  <a href={lp(href)}>
                     <img src={image} width="84" height="66" alt="" loading="lazy" />
                     <span><b>{title}</b><small>{text}</small></span>
                   </a>
@@ -316,7 +338,7 @@ const menuData = {
                 <p data-promo-eyebrow>{menuData.partitions.eyebrow}</p>
                 <h2 data-promo-title>{menuData.partitions.title}</h2>
                 <span data-promo-text>{menuData.partitions.text}</span>
-                <a class="button button--mint" href={menuData.partitions.href} data-promo-button>{menuData.partitions.button} →</a>
+                <a class="button button--mint" href={lp(menuData.partitions.href)} data-promo-button>{menuData.partitions.button} →</a>
               </div>
             </aside>
           </div>
@@ -418,7 +440,7 @@ const menuData = {
   setInterval(updateProjectHeaderCount, 1500);
 </script>
 
-<script define:vars={{ menuData }}>
+<script define:vars={{ menuData: localizedMenuData }}>
   const mega = document.querySelector('[data-catalog-mega]');
 
   if (mega) {
