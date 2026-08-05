@@ -1,0 +1,41 @@
+---
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+
+const pages = import.meta.glob<{ default: AstroComponentFactory }>('../**/*.astro', { eager: true });
+
+export function getStaticPaths() {
+  const excluded = /\.\.\/(?:uk|ru|en|de|api)\//;
+
+  const modules = import.meta.glob<{ default: AstroComponentFactory }>(
+  '../**/*.astro',
+  { eager: true }
+);
+
+const generatedPaths = Object.keys(modules)
+  .filter(
+    (file) =>
+      !excluded.test(file) &&
+      !file.includes('[') &&
+      !file.endsWith('../index.astro')
+  )
+  .map((file) => {
+    const path = file
+      .replace(/^\.\.\//, '')
+      .replace(/(?:\/index)?\.astro$/, '');
+
+    return { params: { path } };
+  });
+
+return [
+  { params: { path: undefined } },
+  ...generatedPaths
+];
+}
+
+const source = `../${Astro.params.path}${Astro.params.path?.includes('.') ? '' : '/index'}.astro`;
+const flatSource = `../${Astro.params.path}.astro`;
+const Page = (pages[source] ?? pages[flatSource])?.default;
+
+if (!Page) return Astro.redirect('/uk/');
+---
+<Page />

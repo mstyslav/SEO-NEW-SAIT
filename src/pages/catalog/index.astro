@@ -4,10 +4,28 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import catalog from '../../data/catalog.json';
 import productData from '../../data/products.json';
+import { breadcrumbSchema } from '../../seo/schema';
 
 const products = productData.products;
+const origin = Astro.site ?? Astro.url.origin;
+const structuredData = [
+  breadcrumbSchema([
+    { label: 'Головна', href: new URL('/', origin) },
+    { label: 'Каталог', href: new URL('/catalog/', origin) }
+  ]),
+  {
+    '@type': 'ItemList',
+    name: 'Каталог Space Glass',
+    itemListElement: catalog.categories.map((category, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: category.title,
+      url: new URL(`/${category.slug}/`, origin).href
+    }))
+  }
+];
 ---
-<BaseLayout title="Каталог Space Glass" description="Каталог душових, перегородок, дверей, огорож, дзеркал та алюмінієвих конструкцій Space Glass.">
+<BaseLayout schemaType="CollectionPage" structuredData={structuredData} title="Каталог Space Glass" description="Каталог душових, перегородок, дверей, огорож, дзеркал та алюмінієвих конструкцій Space Glass.">
 <div class="sg-page-shell">
   <Header />
   <main id="main">
