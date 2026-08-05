@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { breadcrumbSchema, webPageSchema, faqSchema } from '../seo/schema';
+import { localeFromPath, normalizeLocale, stripLocale, localizedPath } from '../i18n/helpers';
+const { title, seoTitle, description, updated='4 серпня 2026', toc=[], faq=[] } = Astro.props;
+const locale = normalizeLocale(Astro.props.locale ?? localeFromPath(Astro.url.pathname));
+const origin = Astro.site ?? Astro.url.origin;
+const basePath = stripLocale(Astro.url.pathname);
+const canonical = new URL(localizedPath(basePath, locale), origin).href;
+const crumbs = [{ label:'Головна', href: localizedPath('/', locale) }, { label:title, href: localizedPath(basePath, locale) }];
+const structuredData = [
+  webPageSchema({ canonical, title: seoTitle ?? `${title} | Space Glass`, description, image: new URL('/images/v5/hero.webp', origin).href, language: locale, type:'WebPage' }),
+  breadcrumbSchema(crumbs.map((item) => ({ label:item.label, href:new URL(item.href, origin).href }))),
+  ...(faq.length ? [faqSchema(faq)] : [])
+];
+---
+<BaseLayout title={seoTitle ?? `${title} | Space Glass`} description={description} locale={locale} structuredData={structuredData}>
+  <Header />
+  <main id="main" class="legal-page legal-structured">
+    <nav class="container legal-breadcrumbs" aria-label="Breadcrumbs"><a href={localizedPath('/', locale)}>Головна</a><span> / </span><span>{title}</span></nav>
+    <header class="legal-page__hero"><div class="container"><p class="eyebrow">Юридична інформація</p><h1>{title}</h1><p>Останнє оновлення: {updated}</p></div></header>
+    <article class="container legal-page__content">
+      {toc.length > 0 && <aside class="legal-toc"><strong>Зміст</strong><ol>{toc.map((item) => <li><a href={`#${item.id}`}>{item.label}</a></li>)}</ol></aside>}
+      <slot />
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

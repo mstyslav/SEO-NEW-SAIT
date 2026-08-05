@@ -215,10 +215,13 @@ const lp = (path: string) => localizedPath(path, locale);
   <div class="footer-refined__bottom">
     <span>© 2026 Space Glass. Усі права захищені.</span>
     <div>
-      <a href="/privacy-policy/">Політика конфіденційності</a>
-      <a href="/terms/">Умови використання</a>
-      <a href="/cookies-policy/">Cookies</a>
-      <a href="/sitemap.xml">Карта сайту</a>
+      <a href={lp("/privacy/")}>Політика конфіденційності</a>
+      <a href={lp("/cookies/")}>Політика використання Cookie</a>
+      <a href={lp("/publichna-oferta/")}>Договір публічної оферти</a>
+      <a href={lp("/services/dostavka/")}>Оплата і доставка</a>
+      <a href={lp("/harantiia/")}>Умови гарантії</a>
+      <a href={lp("/povernennia/")}>Повернення товару</a>
+      <a href={lp("/contacts/")}>Контакти</a>
     </div>
     <span>Розробка сайту — Space Glass</span>
   </div>

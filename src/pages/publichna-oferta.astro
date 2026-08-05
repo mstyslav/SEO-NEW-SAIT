@@ -1,0 +1,8 @@
+---
+import LegalStructuredPage from '../components/LegalStructuredPage.astro';
+import { legalUpdated, publicOfferSections } from '../data/legal-pages';
+const toc = publicOfferSections.map(([title]) => ({ id: title.toLowerCase().replace(/[^а-яіїєґa-z0-9]+/g, '-').replace(/^-|-$/g, ''), label: title }));
+---
+<LegalStructuredPage title="Договір публічної оферти" seoTitle="Договір публічної оферти | Space Glass" description="Умови дистанційного замовлення, оплати, виготовлення, доставки, відповідальності сторін та повернення товарів і скляних конструкцій Space Glass." updated={legalUpdated} toc={toc}>
+  {publicOfferSections.map(([heading, paragraphs], index) => <section id={toc[index].id}><h2>{heading}</h2>{paragraphs.map((text) => <p>{text}</p>)}</section>)}
+</LegalStructuredPage>
