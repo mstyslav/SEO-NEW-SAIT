@@ -13,14 +13,52 @@ import { commercialPages, pathFor, ui } from '../../data/seo-pages';
 import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
 import type { Locale } from '../../i18n/helpers';
 const { page, locale } = Astro.props;
-const labels = ui(locale as Locale);
-const services = commercialPages(locale).filter((p) => p.slug !== page.slug).slice(0, 3).map((p) => ({ title:p.eyebrow, description:p.intro, href:pathFor(locale,p.slug) }));
-const cities = ['kyiv','lviv','odesa'].map((city) => ({ title:({uk:{kyiv:'Київ',lviv:'Львів',odesa:'Одеса'},ru:{kyiv:'Киев',lviv:'Львов',odesa:'Одесса'},en:{kyiv:'Kyiv',lviv:'Lviv',odesa:'Odesa'},de:{kyiv:'Kyjiw',lviv:'Lwiw',odesa:'Odesa'}} as any)[locale][city], href:pathFor(locale,`mista/${city}`) }));
-const articles = [{ title:({uk:'Як обрати безпечне скло',ru:'Как выбрать безопасное стекло',en:'How to choose safety glass',de:'Sicherheitsglas richtig wählen'} as any)[locale], href:pathFor(locale,'baza-znan/yak-obraty-sklo'), description:({uk:'Гартоване чи триплекс: критерії вибору.',ru:'Закалённое или триплекс: критерии выбора.',en:'Tempered or laminated: key selection criteria.',de:'Einscheiben- oder Verbundsicherheitsglas: Kriterien.'} as any)[locale] }];
-const projects = [{ title:({uk:'Loft-перегородка в Києві',ru:'Loft-перегородка в Киеве',en:'Loft partition in Kyiv',de:'Loft-Trennwand in Kyjiw'} as any)[locale], href:pathFor(locale,'projects/loft-kyiv'), description:({uk:'Приклад від заміру до монтажу.',ru:'Пример от замера до монтажа.',en:'A measured-to-installed case study.',de:'Referenz vom Aufmaß bis zur Montage.'} as any)[locale] }];
-const crumbHome = pathFor(locale,'').replace('//','/');
+
+const safeLocale: Locale =
+  locale === 'ru' || locale === 'en' || locale === 'de'
+    ? locale
+    : 'uk';
+
+const labels = ui(safeLocale);
+
+const services = commercialPages(safeLocale).filter((p) => p.slug !== page.slug);
+
+const cities = ['kyiv', 'lviv', 'odesa'].map((city) => ({
+  title: ({
+    uk: { kyiv: 'Київ', lviv: 'Львів', odesa: 'Одеса' },
+    ru: { kyiv: 'Киев', lviv: 'Львов', odesa: 'Одесса' },
+    en: { kyiv: 'Kyiv', lviv: 'Lviv', odesa: 'Odesa' },
+    de: { kyiv: 'Kyjiw', lviv: 'Lwiw', odesa: 'Odesa' }
+  } as const)[safeLocale][city as 'kyiv' | 'lviv' | 'odesa'],
+  href: pathFor(safeLocale, `mista/${city}`)
+}));
+
+const articles = [
+  {
+    title: {
+      uk: 'Як обрати безпечне скло',
+      ru: 'Как выбрать безопасное стекло',
+      en: 'How to choose safety glass',
+      de: 'Sicherheitsglas richtig wählen'
+    }[safeLocale],
+    href: pathFor(safeLocale, 'baza-znan/yak-obraty-sklo')
+  }
+];
+
+const projects = [
+  {
+    title: {
+      uk: 'Loft-перегородка в Києві',
+      ru: 'Loft-перегородка в Киеве',
+      en: 'Loft partition in Kyiv',
+      de: 'Loft-Trennwand in Kyjiw'
+    }[safeLocale],
+    href: pathFor(safeLocale, 'projects/loft-kyiv')
+  }
+];
+const crumbHome = pathFor(safeLocale, '').replace('//', '/');
 const origin = Astro.site ?? Astro.url.origin;
-const pageUrl = absoluteUrl(pathFor(locale, page.slug), origin);
+const pageUrl = absoluteUrl(pathFor(safeLocale, page.slug), origin);
 const schemaTypeByKind = { hub: 'CollectionPage', service: 'Service', city: 'Service', article: 'Article', project: 'CreativeWork' } as const;
 const pageStructuredData: JsonLdObject = {
   '@type': schemaTypeByKind[page.kind],
@@ -29,7 +67,7 @@ const pageStructuredData: JsonLdObject = {
   name: page.h1,
   headline: page.h1,
   description: page.description,
-  inLanguage: locale,
+  inLanguage: safeLocale,
   provider: { '@id': `${absoluteUrl('/', origin)}#organization` },
   mainEntityOfPage: { '@id': `${pageUrl}#webpage` }
 };
@@ -56,7 +94,7 @@ const structuredData = [
    <RelatedProjects labels={{eyebrow:labels.seeAlso,title:labels.relatedProjects}} links={projects} />
    {page.faq.length > 0 && <FAQ title={`${labels.faq}: ${page.eyebrow}`} intro={labels.faqIntro} items={page.faq} />}
   </div>
-  <div id="seo-request"><CTA title={labels.ctaTitle} text={labels.ctaText} button={labels.ctaButton} href={pathFor(locale,'quote')} /></div>
+  <div id="seo-request"><CTA title={labels.ctaTitle} text={labels.ctaText} button={labels.ctaButton} href={pathFor(safeLocale,'quote')} /></div>
  </main><Footer /></div>
 </BaseLayout>
 
