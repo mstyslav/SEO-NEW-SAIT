@@ -25,8 +25,10 @@ const prefix = (locale:Locale) => locale === 'uk' ? '' : `/${locale}`;
 export const ui = (locale:Locale) => copy[locale];
 
 export function commercialPages(locale:Locale): SeoPage[] {
-  return Object.values(products).map((p) => {
-    const [name,h1,intro] = p[locale] as string[];
+  return Object.values(products)
+   .filter((p: any) => Boolean(p && p.variants && p.glass && p.hardware && p.uses))
+   .map((p: any) => {
+    const [name,h1,intro] = (p[locale] ?? p.uk ?? p.en ?? ['', '', '']) as string[];
     const sections = [
       [copy[locale].variants, native(locale,`Choose from ${p.variant}. Each layout is measured and detailed for the opening rather than adapted from a standard kit.`,`Доступні ${p.variant}. Кожну конструкцію вимірюємо та проєктуємо під конкретний отвір, а не адаптуємо зі стандартного комплекту.`,`Доступны ${p.variant}. Каждую конструкцию измеряем и проектируем под конкретный проём, а не адаптируем из типового комплекта.`,`Zur Auswahl stehen ${p.variant}. Jede Konstruktion wird für die konkrete Öffnung geplant und nicht aus einem Standardset angepasst.`)],
       [copy[locale].glass, native(locale,`We specify ${p.glass}. Final thickness follows panel size, support, loads and applicable safety requirements.`,`Підбираємо ${p.glass}. Остаточна товщина залежить від площі полотна, опор, навантаження та вимог безпеки.`,`Подбираем ${p.glass}. Итоговая толщина зависит от площади полотна, опор, нагрузок и требований безопасности.`,`Wir spezifizieren ${p.glass}. Die endgültige Stärke richtet sich nach Scheibengröße, Lagerung, Lasten und Sicherheitsanforderungen.`)],
@@ -41,7 +43,7 @@ export function commercialPages(locale:Locale): SeoPage[] {
       [native(locale,'Is site measurement required?','Чи потрібен професійний замір?','Нужен ли профессиональный замер?','Ist ein Aufmaß erforderlich?'),native(locale,'Yes for made-to-measure installation. It confirms geometry, substrates, access and final production dimensions.','Так, для індивідуального монтажу. Він фіксує геометрію, основи, доступ і виробничі розміри.','Да, для индивидуального монтажа. Он фиксирует геометрию, основания, доступ и производственные размеры.','Ja, bei Maßanfertigung. Dabei werden Geometrie, Untergründe, Zugang und Produktionsmaße geprüft.')],
       [native(locale,'How long does the project take?','Скільки триває проєкт?','Сколько длится проект?','Wie lange dauert das Projekt?'),native(locale,'Lead time is confirmed after measurement and specification approval because glass processing and hardware availability vary.','Строк підтверджуємо після заміру й погодження специфікації, адже обробка скла та наявність фурнітури відрізняються.','Срок подтверждаем после замера и согласования спецификации, поскольку обработка стекла и наличие фурнитуры различаются.','Den Termin bestätigen wir nach Aufmaß und Freigabe, da Glasbearbeitung und Beschlagverfügbarkeit variieren.')]
     ] };
-  });
+  })
 }
 
 export function hubPages(locale:Locale): SeoPage[] {
