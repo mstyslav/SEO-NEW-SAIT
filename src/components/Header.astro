@@ -315,7 +315,6 @@ const menuData = {
             </section>
 
             <aside class="catalog-mega__promo" data-promo>
-              <img src={menuData.partitions.image} width="560" height="700" alt="Скляні перегородки Space Glass" data-promo-image />
               <div class="catalog-mega__promo-overlay"></div>
               <div class="catalog-mega__promo-copy">
                 <p data-promo-eyebrow>{menuData.partitions.eyebrow}</p>
@@ -468,17 +467,19 @@ const menuData = {
       currentKey = key;
       const data = menuData[key];
 
-      image.classList.add('is-changing');
+      image?.classList.add('is-changing');
       setTimeout(() => {
-        image.src = data.image;
-        image.alt = data.title;
+        if (image) {
+          image.src = data.image;
+          image.alt = data.title;
+        }
         eyebrow.textContent = data.eyebrow;
         title.textContent = data.title;
         text.textContent = data.text;
         button.textContent = `${data.button} →`;
         button.href = data.href;
         renderPopular(data.popular);
-        requestAnimationFrame(() => image.classList.remove('is-changing'));
+        requestAnimationFrame(() => image?.classList.remove('is-changing'));
       }, 120);
     };
 
