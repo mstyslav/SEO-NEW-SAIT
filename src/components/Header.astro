@@ -361,7 +361,7 @@ const menuData = {
           <i>⌄</i>
         </button>
         <div class="language-switcher__menu" data-language-menu>
-          {Object.entries(i18nConfig.locales).map(([code, item]) => (
+          {Object.entries(i18nConfig.locales).filter(([code]) => code === 'uk' || code === 'ru').map(([code, item]) => (
             <a class:list={['language-switcher__option', code === locale && 'is-active']} href={localizedPath(currentPath, code)} hreflang={code} lang={code} data-locale={code}>
               <b>{item.short}</b>
               <span>{item.label}</span>

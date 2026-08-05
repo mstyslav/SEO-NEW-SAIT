@@ -6931,8 +6931,6 @@ a,button,.button,.nav-link,.nav-icon,.language-switcher__button,.language-switch
 
 .button,
 .sg-header .sg-header-cta,
-.footer-refined__quote,
-.footer-refined__call,
 .quote-form button,
 .quote-form--home-final__submit{
   min-height:48px!important;
@@ -6959,11 +6957,10 @@ a,button,.button,.nav-link,.nav-icon,.language-switcher__button,.language-switch
 .sg-header .language-switcher__button{width:auto!important;padding-inline:14px!important}
 .language-switcher__option{min-height:48px!important;padding-block:4px!important}
 
-.footer-refined__socials{grid-template-columns:repeat(5,48px)!important;gap:10px!important}
-.footer-refined__socials a,.contacts-social-mini a{width:48px!important;height:48px!important;padding:10px!important}
-.footer-refined__socials svg,.contacts-social-mini svg{width:22px!important;height:22px!important}
+.contacts-social-mini a{width:48px!important;height:48px!important;padding:10px!important}
+.contacts-social-mini svg{width:22px!important;height:22px!important}
 
-.sg-product-card,.sg-category-card,.category-type-card,.product-card,.solution-card,.content-card a,.inner-card a,.seo-related-grid>a,.seo-index-grid>a,.footer-refined__product-grid a{
+.sg-product-card,.sg-category-card,.category-type-card,.product-card,.solution-card,.content-card a,.inner-card a,.seo-related-grid>a,.seo-index-grid>a{
   min-height:48px;
 }
 .sg-product-card,.sg-category-card,.category-type-card,.product-card{display:flex;flex-direction:column}
@@ -6971,11 +6968,11 @@ a,button,.button,.nav-link,.nav-icon,.language-switcher__button,.language-switch
 
 .eyebrow,h1 span,.solution-card>span,.solution-card>b,.knowledge-grid span,.product-card__badge,.product-chip,.seo-category-more,.seo-related-grid span,.seo-related-grid small,.seo-sections>section>span,.seo-related__grid b{color:var(--green-dark)!important}
 .product-card__badge,.product-chip{background:var(--green-dark)!important;color:#fff!important}
-.lead,.hero__facts,.section-heading>p,.product-card__meta,.knowledge-grid p,.faq p,.footer__brand p,.footer__cta span,.footer a,.footer-refined__brand p,.footer-refined__col a,.footer-refined__contacts a,.footer-refined__contacts>span,.footer-refined__bottom,.footer-refined__bottom a,.language-switcher__option,.localized-home__hero p:not(.eyebrow),.sg-benefits small,.sg-category-card p,.sg-product-card small,.sg-projects__intro p,.sg-final-benefits small{color:#4f5a55!important}
-.footer,.footer-refined{color:#fff}.footer a,.footer-refined__col a,.footer-refined__contacts a,.footer-refined__contacts>span,.footer-refined__brand p,.footer-refined__bottom,.footer-refined__bottom a{color:#c6cec9!important}.footer-refined__benefit small,.footer-refined__quote small{color:#d8eee5!important}.eyebrow--light,.project--dark span{color:#b7f0d0!important}
+.lead,.hero__facts,.section-heading>p,.product-card__meta,.knowledge-grid p,.faq p,.footer__brand p,.footer__cta span,.footer a,.language-switcher__option,.localized-home__hero p:not(.eyebrow),.sg-benefits small,.sg-category-card p,.sg-product-card small,.sg-projects__intro p,.sg-final-benefits small{color:#4f5a55!important}
+.footer{color:#fff}.footer a{color:#c6cec9!important}.eyebrow--light,.project--dark span{color:#b7f0d0!important}
 
 img[loading="lazy"]{content-visibility:auto}
-.sg-product-card__media img,.sg-project-image img,.catalog-mega__popular img,.footer-refined__product-grid img{max-width:100%;height:auto}
+.sg-product-card__media img,.sg-project-image img,.catalog-mega__popular img{max-width:100%;height:auto}
 @media(max-width:640px){.nav__actions .button{min-height:48px!important}.sg-header .sg-nav{min-height:76px!important}.sg-header .brand-logo{width:128px!important}}
 
 /* Production UI regression fixes — readable desktop mega menu and tablet/mobile header */
