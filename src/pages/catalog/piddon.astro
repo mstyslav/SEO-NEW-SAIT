@@ -275,7 +275,7 @@ const faq = [
           data-fallback-rate={currencySettings.fallbackRateUah}>
           <div>
             <span>Обрана конфігурація</span>
-            <b data-config-summary>Walk-in · 1000 × 2000 мм · Black · Прозоре · 8 мм · Стандартна · Без монтажу</b>
+            <b data-config-summary>Попередня ціна</b>
           </div>
 
           <div class="product-estimate product-estimate--simple">
@@ -302,7 +302,7 @@ const faq = [
         <div class="product-delivery">
           <div><b>Доставка</b><span>По всій Україні</span></div>
           <div><b>Монтаж</b><span>Київ, Львів, Одеса</span></div>
-          <div><b>Гарантія</b><span>Залежить від комплектації</span></div>
+          <div><b>Гарантія</b><span>2 роки</span></div>
         </div>
       </div>
     </section>
@@ -491,7 +491,7 @@ const faq = [
         mounting?.dataset.value,
       ].filter(Boolean);
 
-      if (summary) summary.textContent = values.join(' · ');
+      if (summary) summary.textContent = 'Попередня ціна';
       if (priceOutput) {
         priceOutput.textContent = formatUah(lastCalculation.totalUah);
       }

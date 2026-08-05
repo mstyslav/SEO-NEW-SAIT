@@ -15,7 +15,8 @@
     "phone": "Телефон",
     "city": "Місто",
     "need": "Що потрібно",
-    "preliminaryQuote": "Отримати попередній розрахунок"
+    "preliminaryQuote": "Отримати попередній розрахунок",
+    "warrantyShort": "Гарантія 2 роки"
   },
   "ru": {
     "catalog": "Каталог",
@@ -33,7 +34,8 @@
     "name": "Имя",
     "phone": "Телефон",
     "need": "Что нужно",
-    "preliminaryQuote": "Получить предварительный расчёт"
+    "preliminaryQuote": "Получить предварительный расчёт",
+    "warrantyShort": "Гарантия 2 года"
   },
   "en": {
     "catalog": "Catalog",
@@ -51,7 +53,8 @@
     "name": "Name",
     "phone": "Phone",
     "need": "What do you need?",
-    "preliminaryQuote": "Get a preliminary estimate"
+    "preliminaryQuote": "Get a preliminary estimate",
+    "warrantyShort": "2-year warranty"
   },
   "de": {
     "catalog": "Katalog",
@@ -69,6 +72,7 @@
     "name": "Name",
     "phone": "Telefon",
     "need": "Was benötigen Sie?",
-    "preliminaryQuote": "Vorläufiges Angebot erhalten"
+    "preliminaryQuote": "Vorläufiges Angebot erhalten",
+    "warrantyShort": "2 Jahre Garantie"
   }
 }

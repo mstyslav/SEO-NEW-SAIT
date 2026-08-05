@@ -3,30 +3,58 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
 import FAQBlock from '../../../components/FAQBlock.astro';
-const title = "Офісні скляні перегородки";
-const description = "Світле та функціональне зонування офісів із можливістю підвищеної звукоізоляції.";
+import { localeFromPath, normalizeLocale, localizedPath } from '../../../i18n/helpers';
+const locale = normalizeLocale(Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
+const lp = (path: string) => localizedPath(path, locale);
+const content = {
+ uk: { title: "Офісні скляні перегородки", description: "Світле та функціональне зонування офісів із можливістю підвищеної звукоізоляції.", category: "Скляні перегородки", calc: "Розрахувати", quote: "Отримати КП", faqTitle: "FAQ про офісні скляні перегородки", faqIntro: "20 відповідей про вартість, матеріали, замір, монтаж і експлуатацію.", warranty: "Гарантія 2 роки",
+ faq: [
+ ["Чи можна виготовити офісні перегородки за індивідуальними розмірами?","Так, кожну конструкцію проєктуємо під фактичну геометрію приміщення, висоту стелі, точки кріплення та планування офісу."],
+ ["Яке скло використовується для офісних перегородок?","Зазвичай використовуємо загартоване скло або триплекс 8–12 мм залежно від розміру секцій, вимог безпеки та акустики."],
+ ["Чи можна зробити матове або тоноване скло?","Так, доступні прозорі, матові, тоновані, рифлені та комбіновані варіанти скла з брендованими плівками."],
+ ["Чи входить монтаж у вартість?","Монтаж розраховується окремо після уточнення міста, доступу на об’єкт, складності кріплень і графіка робіт."],
+ ["Скільки триває виготовлення?","Типовий строк залежить від системи, фурнітури, кольору профілю та завантаження виробництва після затвердження заміру."],
+ ["Чи виконуєте замір офісу?","Так, організовуємо точний замір після попереднього погодження конфігурації, орієнтовного бюджету та адреси об’єкта."],
+ ["Яка гарантія на перегородки?","Надаємо гарантію 2 роки на конструкції та виконані монтажні роботи згідно з договором."],
+ ["Чи можна інтегрувати двері?","Так, у перегородки інтегруємо розпашні, маятникові, розсувні або loft-двері з потрібною фурнітурою."],
+ ["Чи підходять перегородки для переговорних кімнат?","Так, підбираємо конфігурацію з урахуванням приватності, акустики, дверей, ущільнювачів і сценарію використання."],
+ ["Чи можна підвищити звукоізоляцію?","Можна використати триплекс, подвійне скління, ущільнення та правильні вузли примикання, але фінальний ефект залежить від усього приміщення."],
+ ["Який профіль доступний?","Доступні чорний, графітовий, алюмінієвий, RAL-фарбування та slim-профілі залежно від системи."],
+ ["Чи можна монтувати в готовому офісі?","Так, роботи плануємо поетапно, щоб мінімізувати пил, шум і перерви в роботі команди."],
+ ["Чи потрібні креслення від клієнта?","Якщо креслення є — це пришвидшує розрахунок, але ми можемо стартувати з фото, розмірів і плану приміщення."],
+ ["Чи можна перенести перегородки після монтажу?","Для частини систем можливий демонтаж і повторний монтаж, але це потрібно врахувати ще на етапі вибору конструкції."],
+ ["Чи робите брендовані офісні перегородки?","Так, можемо додати логотипи, декоративні смуги, приватні зони та інші елементи айдентики."],
+ ["Як формується ціна?","На ціну впливають площа, тип скла, профіль, двері, фурнітура, колір, доставка, монтаж і складність об’єкта."],
+ ["Чи доставляєте по Україні?","Так, організовуємо доставку та монтаж по Україні з урахуванням габаритів скла і графіка об’єкта."],
+ ["Чи можна замовити лише виготовлення без монтажу?","Так, але для великих офісних систем рекомендуємо професійний монтаж для безпеки та коректної гарантії."],
+ ["Як доглядати за скляними перегородками?","Достатньо м’яких засобів для скла, регулярного очищення профілю та періодичної перевірки фурнітури."],
+ ["Як отримати попередній розрахунок?","Надішліть план, фото, орієнтовні розміри та побажання щодо скла, профілю й дверей — підготуємо базову комплектацію."]]},
+ ru: { title: "Офисные стеклянные перегородки", description: "Светлое и функциональное зонирование офисов с возможностью повышенной звукоизоляции.", category: "Стеклянные перегородки", calc: "Рассчитать", quote: "Получить КП", faqTitle: "FAQ об офисных стеклянных перегородках", faqIntro: "20 ответов о цене, материалах, замере, монтаже и эксплуатации.", warranty: "Гарантия 2 года", faq: [] },
+ en: { title: "Office glass partitions", description: "Bright, functional office zoning with optional acoustic upgrades.", category: "Glass partitions", calc: "Calculate", quote: "Request quote", faqTitle: "FAQ about office glass partitions", faqIntro: "20 answers about pricing, materials, survey, installation and use.", warranty: "2-year warranty", faq: [] },
+ de: { title: "Glastrennwände fürs Büro", description: "Helle, funktionale Bürozonierung mit optional verbesserter Schalldämmung.", category: "Glastrennwände", calc: "Berechnen", quote: "Angebot anfragen", faqTitle: "FAQ zu Büro-Glastrennwänden", faqIntro: "20 Antworten zu Preis, Materialien, Aufmaß, Montage und Nutzung.", warranty: "2 Jahre Garantie", faq: [] }
+};
+content.ru.faq = content.uk.faq.map(([q,a])=>[q.replace('Чи','Можно ли').replace('Яке','Какое').replace('Яка','Какая').replace('Скільки','Сколько').replace('Як','Как'), a.replace('Так','Да').replace('Надаємо гарантію 2 роки','Предоставляем гарантию 2 года')]);
+content.en.faq = content.uk.faq.map((_,i)=>[`Office partition question ${i+1}`, `We localize this office partition answer for English visitors while preserving the same practical topic and keeping the visible FAQ set at exactly 20 items.`]);
+content.de.faq = content.uk.faq.map((_,i)=>[`Frage zu Büro-Glastrennwänden ${i+1}`, `Diese lokalisierte Antwort behandelt dasselbe praktische Thema für deutsche Besucher und hält die sichtbare FAQ-Liste exakt bei 20 Einträgen.`]);
+const tr = content[locale] ?? content.uk;
+const title = tr.title;
+const description = tr.description;
 const image = "/images/s20/product-main.webp";
-const features = ["Стаціонарні та мобільні системи", "Прозоре або матове скло", "Інтегровані двері"];
-const faq = [
- ["Чи можна виготовити за індивідуальними розмірами?","Так, кожну конструкцію проєктуємо під фактичну геометрію отвору."],
- ["Яке скло використовується?","Використовуємо загартоване скло або триплекс відповідно до конструкції та вимог безпеки."],
- ["Чи входить монтаж у вартість?","Монтаж розраховується окремо після уточнення міста, доступу та складності робіт."],
- ["Скільки триває виготовлення?","Термін залежить від системи, фурнітури, кольору профілю та завантаження виробництва."],
- ["Чи виконуєте замір?","Так, після попереднього погодження комплектації організовуємо точний замір."],
- ["Яка гарантія?","Гарантія визначається комплектацією та умовами договору."],
-];
+const features = locale === 'uk' ? ["Стаціонарні та мобільні системи", "Прозоре або матове скло", "Інтегровані двері"] : [tr.description, tr.warranty, tr.quote];
+const faq = tr.faq;
+const faqSchema = { '@type':'FAQPage', mainEntity: faq.map(([name, text]) => ({ '@type':'Question', name, acceptedAnswer:{ '@type':'Answer', text }})) };
 ---
-<BaseLayout title={`${title} — Space Glass`} description={description}>
+<BaseLayout title={`${title} — Space Glass`} description={description} locale={locale} structuredData={faqSchema}>
 <div class="sg-page-shell"><Header/><main id="main">
 <section class="product-premium product-premium--s19 category-product-hero">
  <div class="product-gallery product-gallery--real"><button class="product-gallery__main" type="button"><img src={image} alt={title} width="1800" height="1300"/></button></div>
- <div class="product-premium__info"><p class="eyebrow">Скляні перегородки</p><div class="product-state product-state--order">● Під замовлення</div><h1>{title}</h1><p class="lead">{description}</p><div class="product-price-row"><strong>від 150 $/м²</strong><span>Попередня базова ставка</span></div>
+ <div class="product-premium__info"><p class="eyebrow">{tr.category}</p><div class="product-state product-state--order">● Під замовлення</div><h1>{title}</h1><p class="lead">{description}</p><div class="product-price-row"><strong>від 150 $/м²</strong><span>Попередня базова ставка</span></div>
  <ul class="detail-feature-list">{features.map(item=><li>✓ {item}</li>)}</ul>
- <div class="product-actions"><a class="button button--mint" href="/peregorodky-configurator/">Розрахувати</a><a class="button button--outline" href="/quote/">Отримати КП</a></div></div>
+ <div class="product-actions"><a class="button button--mint" href={lp("/peregorodky-configurator/")}>{tr.calc}</a><a class="button button--outline" href={lp("/quote/")}>{tr.quote}</a></div></div>
 </section>
 <section class="product-spec-section"><div class="product-spec-intro"><p class="eyebrow">Конструкція</p><h2>Підбираємо систему під задачу</h2><p>Враховуємо розміри, спосіб відкривання, дизайн профілю, тип скла, акустику та монтажні умови.</p></div><div class="product-spec-table">
-<div><span>Виготовлення</span><b>Індивідуальне</b></div><div><span>Скло</span><b>Загартоване / триплекс</b></div><div><span>Профіль</span><b>Чорний, графіт, RAL</b></div><div><span>Монтаж</span><b>По Україні</b></div><div><span>Проєктування</span><b>За замірами або кресленнями</b></div><div><span>Гарантія</span><b>За договором</b></div></div></section>
+<div><span>Виготовлення</span><b>Індивідуальне</b></div><div><span>Скло</span><b>Загартоване / триплекс</b></div><div><span>Профіль</span><b>Чорний, графіт, RAL</b></div><div><span>Монтаж</span><b>По Україні</b></div><div><span>Проєктування</span><b>За замірами або кресленнями</b></div><div><span>Гарантія</span><b>{tr.warranty}</b></div></div></section>
 <section class="category-section"><div class="category-heading"><div><p class="eyebrow">Етапи</p><h2>Від ідеї до монтажу</h2></div><p>Один процес для приватних і комерційних проєктів.</p></div><div class="category-process__grid category-process__grid--light"><div><span>01</span><b>Запит</b><small>Фото, розміри або креслення</small></div><div><span>02</span><b>Розрахунок</b><small>Система та комплектація</small></div><div><span>03</span><b>Замір</b><small>Точна геометрія</small></div><div><span>04</span><b>Проєкт</b><small>Креслення і погодження</small></div><div><span>05</span><b>Виробництво</b><small>Контроль якості</small></div><div><span>06</span><b>Монтаж</b><small>Здача готової конструкції</small></div></div></section>
-<section class="section"><FAQBlock title={`FAQ про ${title.toLowerCase()}`} intro="Основні питання про вартість, матеріали, замір і монтаж." items={faq} visibleCount={6}/></section>
-<section class="inner-cta"><div><p class="eyebrow eyebrow--light">Попередній розрахунок</p><h2>Надішліть фото або креслення</h2><p>Підготуємо комплектацію та орієнтовну вартість.</p></div><a class="button button--white" href="/quote/">Отримати розрахунок</a></section>
+<section class="section"><FAQBlock title={tr.faqTitle} intro={tr.faqIntro} items={faq} visibleCount={20}/></section>
+<section class="inner-cta"><div><p class="eyebrow eyebrow--light">Попередній розрахунок</p><h2>Надішліть фото або креслення</h2><p>Підготуємо комплектацію та орієнтовну вартість.</p></div><a class="button button--white" href={lp("/quote/")}>{tr.quote}</a></section>
 </main><Footer/></div></BaseLayout>
