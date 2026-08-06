@@ -10,6 +10,32 @@ const localeInfo = i18nConfig.locales[locale] ?? i18nConfig.locales.uk;
 const currentPath = Astro.url.pathname;
 const lp = (path: string) => localizedPath(path, locale);
 
+// Russian currently has a deliberately smaller set of generated pages. Keep the
+// visitor on an equivalent route when it exists and use the Russian homepage
+// rather than sending them to a 404 for Ukrainian-only content.
+const russianRoutes = new Set([
+  '/',
+  '/about/',
+  '/bezramne-configurator/',
+  '/cart/',
+  '/catalog/',
+  '/compare/',
+  '/contacts/',
+  '/dzerkala-configurator/',
+  '/fasadne-configurator/',
+  '/loft-configurator/',
+  '/ogorozhi-configurator/',
+  '/peregorodky-configurator/',
+  '/projects/',
+  '/quote/',
+  '/services/',
+]);
+const localeSwitchPath = (targetLocale: 'uk' | 'ru') => {
+  const unlocalizedPath = currentPath.replace(/^\/(uk|ru|en|de)(?=\/|$)/, '') || '/';
+  if (targetLocale === 'ru' && !russianRoutes.has(unlocalizedPath)) return '/ru/';
+  return localizedPath(currentPath, targetLocale);
+};
+
 const links = [
   [t.services, locale === 'uk' ? '/poslugy/' : '/services/'],
   [t.solutions, '/catalog/'],
@@ -315,6 +341,7 @@ const menuData = {
             </section>
 
             <aside class="catalog-mega__promo" data-promo>
+              <img src={menuData.partitions.image} width="560" height="700" alt="Скляні перегородки Space Glass" data-promo-image />
               <div class="catalog-mega__promo-overlay"></div>
               <div class="catalog-mega__promo-copy">
                 <p data-promo-eyebrow>{menuData.partitions.eyebrow}</p>
@@ -362,7 +389,7 @@ const menuData = {
         </button>
         <div class="language-switcher__menu" data-language-menu>
           {Object.entries(i18nConfig.locales).filter(([code]) => code === 'uk' || code === 'ru').map(([code, item]) => (
-            <a class:list={['language-switcher__option', code === locale && 'is-active']} href={localizedPath(currentPath, code)} hreflang={code} lang={code} data-locale={code}>
+            <a class:list={['language-switcher__option', code === locale && 'is-active']} href={localeSwitchPath(code as 'uk' | 'ru')} hreflang={code} lang={code} data-locale={code}>
               <b>{item.short}</b>
               <span>{item.label}</span>
               {code === locale && <i>✓</i>}
@@ -521,10 +548,7 @@ const menuData = {
 
   if (!localStorage.getItem('spaceGlassLocale')) {
     const browserLocale = (navigator.language || '').toLowerCase();
-    const detected =
-      browserLocale.startsWith('de') ? 'de' :
-      browserLocale.startsWith('en') ? 'en' :
-      browserLocale.startsWith('ru') ? 'ru' : 'uk';
+    const detected = browserLocale.startsWith('ru') ? 'ru' : 'uk';
 
     localStorage.setItem('spaceGlassLocale', detected);
   }
