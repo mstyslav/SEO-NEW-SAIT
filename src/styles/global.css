@@ -3517,6 +3517,22 @@ linear-gradient(135deg,#fff,#eff9f4);background-size:36px 36px}
   min-height:auto;
   border:1px solid var(--mint);
   border-radius:4px;
+  background:#f7faf8;
+}
+
+.footer-refined__benefit--delivery{
+  background:#f7faf8;
+  border-color:var(--mint);
+}
+
+.footer-refined__benefit--delivery b,
+.footer-refined__quote b{
+  color:#102018;
+}
+
+.footer-refined__benefit--delivery small,
+.footer-refined__quote small{
+  color:#52615a;
 }
 
 /* Main footer menu */
@@ -3541,7 +3557,7 @@ linear-gradient(135deg,#fff,#eff9f4);background-size:36px 36px}
 .footer-refined__col,.footer-refined__contacts{display:grid;align-content:start;gap:10px}
 .footer-refined__col>strong,.footer-refined__contacts>strong{margin-bottom:8px;color:var(--mint);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 .footer-refined__col a,.footer-refined__contacts a,.footer-refined__contacts>span{display:flex;gap:9px;align-items:flex-start;color:#aeb4b0;font-size:11.4px;line-height:1.38}
-.footer-refined__call{justify-content:center;align-items:center!important;min-height:50px;margin-top:16px;padding:0 16px;border:1px solid var(--mint);border-radius:4px;color:#fff!important}
+.footer-refined__call{justify-content:center;align-items:center!important;min-height:50px;margin-top:16px;padding:0 16px;border:1px solid var(--mint);border-radius:4px;background:#f7faf8;color:#102018!important}
 
 /* Product strip icons */
 .footer-refined__products{padding:28px 0 30px;border-bottom:1px solid #202622}
