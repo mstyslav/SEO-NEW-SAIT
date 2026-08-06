@@ -1,72 +1,79 @@
 ---
-const solutions = [
-  ['Скляні перегородки','/sklyani-perehorodky/'],
-  ['Душові кабіни','/dushovi-kabiny/'],
-  ['Скляні двері','/sklyani-dveri/'],
-  ['Скляні огорожі','/sklyani-ohorozhi/'],
-  ['Дзеркала та скло','/dzerkala/'],
-  ['Скляні фасади','/arkhitekturni-systemy/'],
-  ['Підлоги зі скла','/catalog/'],
-  ['Фурнітура та аксесуари','/catalog/']
-];
-
-const products = [
-  ['Душові кабіни','/dushovi-kabiny/'],
-  ['Скляні перегородки','/sklyani-perehorodky/'],
-  ['Скляні двері','/sklyani-dveri/'],
-  ['Скляні огорожі','/sklyani-ohorozhi/'],
-  ['Дзеркала та скло','/dzerkala/'],
-  ['Підлоги зі скла','/catalog/'],
-  ['Фурнітура та аксесуари','/catalog/'],
-  ['Комплектуючі','/catalog/']
-];
-
-const services = [
-  ['Виготовлення','/services/vyhotovlennya/'],
-  ['Доставка','/services/dostavka/'],
-  ['Монтаж','/services/montazh/'],
-  ['Замір та проєктування','/services/proektuvannya/'],
-  ['Гарантія та сервіс','/services/servis/'],
-  ['Післягарантійне обслуговування','/services/servis/']
-];
-
-const company = [
-  ['Про нас','/about/'],
-  ['Наше виробництво','/about/'],
-  ['Матеріали','/knowledge/'],
-  ['Технології','/knowledge/'],
-  ['Вакансії','/about/#career'],
-  ['Партнери','/about/'],
-  ['Відгуки','/projects/'],
-  ['Контакти','/contacts/']
-];
-
-const cities = [
-  ['Скляні конструкції Київ','/city/kyiv/'],
-  ['Скляні конструкції Львів','/city/lviv/'],
-  ['Скляні конструкції Одеса','/city/odesa/'],
-  ['Скляні конструкції Дніпро','#'],
-  ['Скляні конструкції Харків','#'],
-  ['Скляні конструкції Івано-Франківськ','#'],
-  ['Скляні конструкції Вінниця','#'],
-  ['Всі міста','/catalog/']
-];
-
-const productStrip = [
-  ['Душові кабіни','/dushovi-kabiny/','shower'],
-  ['Скляні перегородки','/sklyani-perehorodky/','partition'],
-  ['Скляні двері','/sklyani-dveri/','door'],
-  ['Скляні огорожі','/sklyani-ohorozhi/','railing'],
-  ['Дзеркала та скло','/dzerkala/','mirror'],
-  ['Скляні підлоги','/catalog/','floor'],
-  ['Скляні фасади','/arkhitekturni-systemy/','facade'],
-  ['Фурнітура та аксесуари','/catalog/','hardware']
-];
-
 import { localeFromPath, localizedPath, normalizeLocale } from '../i18n/helpers';
 
 const locale = normalizeLocale(Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
+const isRu = locale === 'ru';
+const russianRoutes = new Set(['/', '/about/', '/catalog/', '/contacts/', '/projects/', '/services/']);
 const lp = (path: string) => localizedPath(path, locale);
+const fp = (path: string) => {
+  if (path.startsWith('#')) return path;
+  if (locale === 'ru' && !russianRoutes.has(path.split('#')[0])) return '/ru/';
+  return lp(path);
+};
+
+const solutions = [
+  [isRu ? 'Стеклянные перегородки' : 'Скляні перегородки','/sklyani-perehorodky/'],
+  [isRu ? 'Душевые кабины' : 'Душові кабіни','/dushovi-kabiny/'],
+  [isRu ? 'Стеклянные двери' : 'Скляні двері','/sklyani-dveri/'],
+  [isRu ? 'Стеклянные ограждения' : 'Скляні огорожі','/sklyani-ohorozhi/'],
+  [isRu ? 'Зеркала и стекло' : 'Дзеркала та скло','/dzerkala/'],
+  [isRu ? 'Стеклянные фасады' : 'Скляні фасади','/arkhitekturni-systemy/'],
+  [isRu ? 'Стеклянные полы' : 'Підлоги зі скла','/catalog/'],
+  [isRu ? 'Фурнитура и аксессуары' : 'Фурнітура та аксесуари','/catalog/']
+];
+
+const products = [
+  [isRu ? 'Душевые кабины' : 'Душові кабіни','/dushovi-kabiny/'],
+  [isRu ? 'Стеклянные перегородки' : 'Скляні перегородки','/sklyani-perehorodky/'],
+  [isRu ? 'Стеклянные двери' : 'Скляні двері','/sklyani-dveri/'],
+  [isRu ? 'Стеклянные ограждения' : 'Скляні огорожі','/sklyani-ohorozhi/'],
+  [isRu ? 'Зеркала и стекло' : 'Дзеркала та скло','/dzerkala/'],
+  [isRu ? 'Стеклянные полы' : 'Підлоги зі скла','/catalog/'],
+  [isRu ? 'Фурнитура и аксессуары' : 'Фурнітура та аксесуари','/catalog/'],
+  [isRu ? 'Комплектующие' : 'Комплектуючі','/catalog/']
+];
+
+const services = [
+  [isRu ? 'Изготовление' : 'Виготовлення','/services/vyhotovlennya/'],
+  [isRu ? 'Доставка' : 'Доставка','/services/dostavka/'],
+  [isRu ? 'Монтаж' : 'Монтаж','/services/montazh/'],
+  [isRu ? 'Замер и проектирование' : 'Замір та проєктування','/services/proektuvannya/'],
+  [isRu ? 'Гарантия и сервис' : 'Гарантія та сервіс','/services/servis/'],
+  [isRu ? 'Послегарантийное обслуживание' : 'Післягарантійне обслуговування','/services/servis/']
+];
+
+const company = [
+  [isRu ? 'О нас' : 'Про нас','/about/'],
+  [isRu ? 'Наше производство' : 'Наше виробництво','/about/'],
+  [isRu ? 'Материалы' : 'Матеріали','/knowledge/'],
+  [isRu ? 'Технологии' : 'Технології','/knowledge/'],
+  [isRu ? 'Вакансии' : 'Вакансії','/about/#career'],
+  [isRu ? 'Партнёры' : 'Партнери','/about/'],
+  [isRu ? 'Отзывы' : 'Відгуки','/projects/'],
+  [isRu ? 'Контакты' : 'Контакти','/contacts/']
+];
+
+const cities = [
+  [isRu ? 'Стеклянные конструкции Киев' : 'Скляні конструкції Київ','/city/kyiv/'],
+  [isRu ? 'Стеклянные конструкции Львов' : 'Скляні конструкції Львів','/city/lviv/'],
+  [isRu ? 'Стеклянные конструкции Одесса' : 'Скляні конструкції Одеса','/city/odesa/'],
+  [isRu ? 'Стеклянные конструкции Днепр' : 'Скляні конструкції Дніпро','#'],
+  [isRu ? 'Стеклянные конструкции Харьков' : 'Скляні конструкції Харків','#'],
+  [isRu ? 'Стеклянные конструкции Ивано-Франковск' : 'Скляні конструкції Івано-Франківськ','#'],
+  [isRu ? 'Стеклянные конструкции Винница' : 'Скляні конструкції Вінниця','#'],
+  [isRu ? 'Все города' : 'Всі міста','/catalog/']
+];
+
+const productStrip = [
+  [isRu ? 'Душевые кабины' : 'Душові кабіни','/dushovi-kabiny/','shower'],
+  [isRu ? 'Стеклянные перегородки' : 'Скляні перегородки','/sklyani-perehorodky/','partition'],
+  [isRu ? 'Стеклянные двери' : 'Скляні двері','/sklyani-dveri/','door'],
+  [isRu ? 'Стеклянные ограждения' : 'Скляні огорожі','/sklyani-ohorozhi/','railing'],
+  [isRu ? 'Зеркала и стекло' : 'Дзеркала та скло','/dzerkala/','mirror'],
+  [isRu ? 'Стеклянные полы' : 'Скляні підлоги','/catalog/','floor'],
+  [isRu ? 'Стеклянные фасады' : 'Скляні фасади','/arkhitekturni-systemy/','facade'],
+  [isRu ? 'Фурнитура и аксессуары' : 'Фурнітура та аксесуари','/catalog/','hardware']
+];
 ---
 <footer class="site-footer footer-refined">
   <div class="footer-refined__benefits">
@@ -75,7 +82,7 @@ const lp = (path: string) => localizedPath(path, locale);
         <path d="M24 4 39 10v12c0 9.5-6.2 17.5-15 22-8.8-4.5-15-12.5-15-22V10l15-6Z"/>
         <path d="m17 23 5 5 10-11"/>
       </svg>
-      <div><b>Власне виробництво</b><small>Повний контроль якості</small></div>
+      <div><b>{isRu ? 'Собственное производство' : 'Власне виробництво'}</b><small>{isRu ? 'Полный контроль качества' : 'Повний контроль якості'}</small></div>
     </div>
 
     <div class="footer-refined__benefit">
@@ -84,7 +91,7 @@ const lp = (path: string) => localizedPath(path, locale);
         <path d="m18 30-3 14 9-5 9 5-3-14"/>
         <path d="m19 18 3 3 7-7"/>
       </svg>
-      <div><b>Гарантія 2 роки</b><small>На всі конструкції</small></div>
+      <div><b>{isRu ? 'Гарантия 2 года' : 'Гарантія 2 роки'}</b><small>{isRu ? 'На все конструкции' : 'На всі конструкції'}</small></div>
     </div>
 
     <div class="footer-refined__benefit">
@@ -94,7 +101,7 @@ const lp = (path: string) => localizedPath(path, locale);
         <circle cx="14" cy="38" r="4"/>
         <circle cx="43" cy="38" r="4"/>
       </svg>
-      <div><b>Доставка по Україні та Європі</b><small>Швидко та надійно</small></div>
+      <div><b>{isRu ? 'Доставка по Украине и Европе' : 'Доставка по Україні та Європі'}</b><small>{isRu ? 'Быстро и надёжно' : 'Швидко та надійно'}</small></div>
     </div>
 
     <div class="footer-refined__benefit">
@@ -102,24 +109,24 @@ const lp = (path: string) => localizedPath(path, locale);
         <circle cx="24" cy="14" r="8"/>
         <path d="M11 42c1-10 7-16 13-16s12 6 13 16"/>
       </svg>
-      <div><b>Індивідуальні рішення</b><small>Під ваш проєкт</small></div>
+      <div><b>{isRu ? 'Индивидуальные решения' : 'Індивідуальні рішення'}</b><small>{isRu ? 'Под ваш проект' : 'Під ваш проєкт'}</small></div>
     </div>
 
-    <a class="footer-refined__quote" href={lp("/contacts/")}>
+    <a class="footer-refined__quote" href={fp("/contacts/")}>
       <svg viewBox="0 0 48 48" aria-hidden="true">
         <path d="m5 24 37-17-12 34-8-13-17-4Z"/>
         <path d="m22 28 20-21"/>
       </svg>
-      <div><b>Отримати розрахунок</b><small>Надішліть проєкт або фото</small></div>
+      <div><b>{isRu ? 'Получить расчёт' : 'Отримати розрахунок'}</b><small>{isRu ? 'Отправьте проект или фото' : 'Надішліть проєкт або фото'}</small></div>
     </a>
   </div>
 
   <div class="footer-refined__main">
     <div class="footer-refined__brand">
-      <a href="/" class="footer-refined__logo">
+      <a href={fp("/")} class="footer-refined__logo">
         <img src="/images/space-glass-brand-logo.jpg" width="220" height="178" alt="Space Glass" />
       </a>
-      <p>Скляні конструкції преміум-класу для дому, бізнесу та архітектурних проєктів.</p>
+      <p>{isRu ? 'Стеклянные конструкции премиум-класса для дома, бизнеса и архитектурных проектов.' : 'Скляні конструкції преміум-класу для дому, бізнесу та архітектурних проєктів.'}</p>
       <div class="footer-refined__socials">
 
 <a href="https://www.instagram.com/spaceglass_od/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
@@ -157,45 +164,45 @@ const lp = (path: string) => localizedPath(path, locale);
     </div>
 
     <div class="footer-refined__col">
-      <strong>Рішення</strong>
-      {solutions.map(([label,href]) => <a href={href}>{label}</a>)}
+      <strong>{isRu ? 'Решения' : 'Рішення'}</strong>
+      {solutions.map(([label,href]) => <a href={fp(href)}>{label}</a>)}
     </div>
 
     <div class="footer-refined__col">
-      <strong>Товари</strong>
-      {products.map(([label,href]) => <a href={href}>{label}</a>)}
+      <strong>{isRu ? 'Товары' : 'Товари'}</strong>
+      {products.map(([label,href]) => <a href={fp(href)}>{label}</a>)}
     </div>
 
     <div class="footer-refined__col">
-      <strong>Послуги</strong>
-      {services.map(([label,href]) => <a href={href}>{label}</a>)}
+      <strong>{isRu ? 'Услуги' : 'Послуги'}</strong>
+      {services.map(([label,href]) => <a href={fp(href)}>{label}</a>)}
     </div>
 
     <div class="footer-refined__col">
-      <strong>Компанія</strong>
-      {company.map(([label,href]) => <a href={href}>{label}</a>)}
+      <strong>{isRu ? 'Компания' : 'Компанія'}</strong>
+      {company.map(([label,href]) => <a href={fp(href)}>{label}</a>)}
     </div>
 
     <div class="footer-refined__col">
-      <strong>Міста</strong>
-      {cities.map(([label,href]) => <a href={href}>{label}</a>)}
+      <strong>{isRu ? 'Города' : 'Міста'}</strong>
+      {cities.map(([label,href]) => <a href={fp(href)}>{label}</a>)}
     </div>
 
     <div class="footer-refined__contacts">
-      <strong>Контакти</strong>
+      <strong>{isRu ? 'Контакты' : 'Контакти'}</strong>
       <a href="tel:+380734251400">☎ <span>+38 (073) 425 14 00</span></a>
       <a href="mailto:info@space-glass.com.ua">✉ <span>info@space-glass.com.ua</span></a>
-      <span>⌖ <b>Київ · Львів · Одеса</b></span>
-      <span>◷ <b>Пн–Пт: 09:00–19:00</b></span>
-      <a class="footer-refined__call" href={lp("/contacts/")}>☎ <span>Замовити дзвінок</span></a>
+      <span>⌖ <b>{isRu ? 'Киев · Львов · Одесса' : 'Київ · Львів · Одеса'}</b></span>
+      <span>◷ <b>{isRu ? 'Пн–Пт: 09:00–19:00' : 'Пн–Пт: 09:00–19:00'}</b></span>
+      <a class="footer-refined__call" href={fp("/contacts/")}>☎ <span>{isRu ? 'Заказать звонок' : 'Замовити дзвінок'}</span></a>
     </div>
   </div>
 
   <div class="footer-refined__products">
-    <h3>Наша продукція</h3>
+    <h3>{isRu ? 'Наша продукция' : 'Наша продукція'}</h3>
     <div class="footer-refined__product-grid">
       {productStrip.map(([label,href,type]) => (
-        <a href={href}>
+        <a href={fp(href)}>
           <span class={`footer-refined__icon footer-refined__icon--${type}`}>
             {type === 'shower' && <svg viewBox="0 0 72 72"><path d="M16 10h40v52H16z"/><path d="M22 16h28v40H22z"/><path d="M36 16v40"/><path d="M36 22h9"/><circle cx="46" cy="23" r="1.8"/></svg>}
             {type === 'partition' && <svg viewBox="0 0 72 72"><path d="M12 12h48v48H12z"/><path d="M28 12v48M44 12v48M12 28h48M12 44h48"/></svg>}
@@ -213,13 +220,13 @@ const lp = (path: string) => localizedPath(path, locale);
   </div>
 
   <div class="footer-refined__bottom">
-    <span>© 2026 Space Glass. Усі права захищені.</span>
+    <span>© 2026 Space Glass. {isRu ? 'Все права защищены.' : 'Усі права захищені.'}</span>
     <div>
-      <a href="/privacy-policy/">Політика конфіденційності</a>
-      <a href="/terms/">Умови використання</a>
-      <a href="/cookies-policy/">Cookies</a>
-      <a href="/sitemap.xml">Карта сайту</a>
+      <a href={fp("/privacy-policy/")}>{isRu ? 'Политика конфиденциальности' : 'Політика конфіденційності'}</a>
+      <a href={fp("/terms/")}>{isRu ? 'Условия использования' : 'Умови використання'}</a>
+      <a href={fp("/cookies-policy/")}>Cookies</a>
+      <a href={isRu ? '/ru/' : '/sitemap.xml'}>{isRu ? 'Карта сайта' : 'Карта сайту'}</a>
     </div>
-    <span>Розробка сайту — Space Glass</span>
+    <span>{isRu ? 'Разработка сайта — Space Glass' : 'Розробка сайту — Space Glass'}</span>
   </div>
 </footer>

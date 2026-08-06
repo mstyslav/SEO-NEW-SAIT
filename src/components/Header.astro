@@ -8,7 +8,6 @@ const locale = normalizeLocale(requestedLocale);
 const t = translations[locale] ?? translations.uk;
 const localeInfo = i18nConfig.locales[locale] ?? i18nConfig.locales.uk;
 const currentPath = Astro.url.pathname;
-const lp = (path: string) => localizedPath(path, locale);
 
 // Russian currently has a deliberately smaller set of generated pages. Keep the
 // visitor on an equivalent route when it exists and use the Russian homepage
@@ -30,10 +29,15 @@ const russianRoutes = new Set([
   '/quote/',
   '/services/',
 ]);
+const lp = (path: string) => {
+  const unlocalizedPath = path.replace(/^\/(uk|ru|en|de)(?=\/|$)/, '') || '/';
+  if (locale === 'ru' && !russianRoutes.has(unlocalizedPath)) return '/ru/';
+  return localizedPath(unlocalizedPath, locale);
+};
 const localeSwitchPath = (targetLocale: 'uk' | 'ru') => {
   const unlocalizedPath = currentPath.replace(/^\/(uk|ru|en|de)(?=\/|$)/, '') || '/';
   if (targetLocale === 'ru' && !russianRoutes.has(unlocalizedPath)) return '/ru/';
-  return localizedPath(currentPath, targetLocale);
+  return localizedPath(unlocalizedPath, targetLocale);
 };
 
 const links = [
@@ -129,9 +133,9 @@ const menuData = {
     href: '/dushovi-kabiny/',
     image: '/images/s24-menu/showers.webp',
     popular: [
-      ['Walk-in Premium','Лаконічно та просторо','/images/v5/product-1.webp','/dushovi-kabiny/'],
-      ['Кутова душова','Для компактних ванних','/images/v5/product-3.webp','/dushovi-kabiny/'],
-      ['Розсувна система','Зручно для щоденного використання','/images/v5/product-5.webp','/dushovi-kabiny/']
+      ['Walk-in Premium','Лаконічно та просторо','/images/s19/walkin-main.webp','/dushovi-kabiny/'],
+      ['Кутова душова','Для компактних ванних','/images/s19/walkin-angle.webp','/dushovi-kabiny/'],
+      ['Розсувна система','Зручно для щоденного використання','/images/s19/walkin-detail.webp','/dushovi-kabiny/']
     ]
   },
   mirrors: {
@@ -142,9 +146,9 @@ const menuData = {
     href: '/dzerkala/',
     image: '/images/s24-menu/mirrors.webp',
     popular: [
-      ['LED-дзеркало','Функціональне підсвічування','/images/v5/product-6.webp','/dzerkala/'],
-      ['Дзеркало у ванну','Індивідуальні розміри','/images/v5/product-1.webp','/dzerkala/'],
-      ['Дзеркало на стіну','Для сучасного інтер’єру','/images/v5/product-2.webp','/dzerkala/']
+      ['LED-дзеркало','Функціональне підсвічування','/images/s24-menu/mirrors.webp','/dzerkala/'],
+      ['Дзеркало у ванну','Індивідуальні розміри','/images/s24-menu/mirrors.webp','/dzerkala/'],
+      ['Дзеркало на стіну','Для сучасного інтер’єру','/images/s24-menu/mirrors.webp','/dzerkala/']
     ]
   },
   doors: {
@@ -155,9 +159,9 @@ const menuData = {
     href: '/sklyani-dveri/',
     image: '/images/s24-menu/doors.webp',
     popular: [
-      ['Розсувні двері','Економія простору','/images/v5/product-3.webp','/sklyani-dveri/'],
-      ['Маятникові двері','Для офісів і магазинів','/images/v5/product-2.webp','/sklyani-dveri/'],
-      ['Міжкімнатні двері','Легкість і світло','/images/v5/product-5.webp','/sklyani-dveri/']
+      ['Розсувні двері','Економія простору','/images/s24-menu/doors.webp','/sklyani-dveri/'],
+      ['Маятникові двері','Для офісів і магазинів','/images/s24-menu/doors.webp','/sklyani-dveri/'],
+      ['Міжкімнатні двері','Легкість і світло','/images/s24-menu/doors.webp','/sklyani-dveri/']
     ]
   },
   railings: {
@@ -168,9 +172,9 @@ const menuData = {
     href: '/sklyani-ohorozhi/',
     image: '/images/s24-menu/railings.webp',
     popular: [
-      ['Безрамна огорожа','Максимум прозорості','/images/v5/product-4.webp','/sklyani-ohorozhi/'],
-      ['Огорожа на стійках','Надійне рішення','/images/v5/product-5.webp','/sklyani-ohorozhi/'],
-      ['Огорожа для сходів','Безпечно та елегантно','/images/v5/product-4.webp','/sklyani-ohorozhi/']
+      ['Безрамна огорожа','Максимум прозорості','/images/s24-menu/railings.webp','/sklyani-ohorozhi/'],
+      ['Огорожа на стійках','Надійне рішення','/images/s24-menu/railings.webp','/sklyani-ohorozhi/'],
+      ['Огорожа для сходів','Безпечно та елегантно','/images/s24-menu/railings.webp','/sklyani-ohorozhi/']
     ]
   },
   partitions: {
@@ -181,9 +185,9 @@ const menuData = {
     href: '/sklyani-perehorodky/',
     image: '/images/s24-menu/loft.webp',
     popular: [
-      ['Loft-перегородка','Акцентний чорний профіль','/images/v5/product-2.webp','/sklyani-perehorodky/'],
-      ['Офісна перегородка','Світлий робочий простір','/images/v5/product-5.webp','/sklyani-perehorodky/'],
-      ['Мобільна система','Гнучке зонування','/images/v5/product-3.webp','/sklyani-perehorodky/']
+      ['Loft-перегородка','Акцентний чорний профіль','/images/s24-menu/loft.webp','/sklyani-perehorodky/'],
+      ['Офісна перегородка','Світлий робочий простір','/images/s24-menu/partitions.webp','/sklyani-perehorodky/'],
+      ['Мобільна система','Гнучке зонування','/images/s19/menu-loft.webp','/sklyani-perehorodky/']
     ]
   },
   facades: {
@@ -194,9 +198,9 @@ const menuData = {
     href: '/arkhitekturni-systemy/',
     image: '/images/s24-menu/facades.webp',
     popular: [
-      ['Структурне скління','Чистий сучасний фасад','/images/v5/hero.webp','/arkhitekturni-systemy/'],
-      ['Безрамний фасад','Максимум світла','/images/v5/product-2.webp','/arkhitekturni-systemy/'],
-      ['Слайдерні системи','Великі панорамні отвори','/images/v5/product-5.webp','/arkhitekturni-systemy/']
+      ['Структурне скління','Чистий сучасний фасад','/images/s24-menu/facades.webp','/arkhitekturni-systemy/'],
+      ['Безрамний фасад','Максимум світла','/images/s24-menu/facades.webp','/arkhitekturni-systemy/'],
+      ['Слайдерні системи','Великі панорамні отвори','/images/s24-menu/facades.webp','/arkhitekturni-systemy/']
     ]
   },
   aluminium: {
@@ -207,9 +211,9 @@ const menuData = {
     href: '/alyuminiievi-konstruktsii/',
     image: '/images/s24-menu/aluminium.webp',
     popular: [
-      ['Алюмінієві вікна','Теплі та панорамні','/images/v5/product-5.webp','/alyuminiievi-konstruktsii/'],
-      ['Розсувні двері','Великі світлові отвори','/images/v5/product-2.webp','/alyuminiievi-konstruktsii/'],
-      ['Зимовий сад','Простір у будь-яку пору року','/images/v5/hero.webp','/alyuminiievi-konstruktsii/']
+      ['Алюмінієві вікна','Теплі та панорамні','/images/s24-menu/aluminium.webp','/alyuminiievi-konstruktsii/'],
+      ['Розсувні двері','Великі світлові отвори','/images/s24-menu/aluminium.webp','/alyuminiievi-konstruktsii/'],
+      ['Зимовий сад','Простір у будь-яку пору року','/images/s24-menu/aluminium.webp','/alyuminiievi-konstruktsii/']
     ]
   },
   pvc: {
@@ -220,9 +224,9 @@ const menuData = {
     href: '/catalog/',
     image: '/images/s24-menu/doors.webp',
     popular: [
-      ['Металопластикові вікна','Енергоефективність','/images/v5/product-5.webp','/catalog/'],
-      ['Балконні системи','Комплексне рішення','/images/v5/product-3.webp','/catalog/'],
-      ['Розсувні двері','Більше світла','/images/v5/product-2.webp','/catalog/']
+      ['Металопластикові вікна','Енергоефективність','/images/s24-menu/doors.webp','/catalog/'],
+      ['Балконні системи','Комплексне рішення','/images/s24-menu/doors.webp','/catalog/'],
+      ['Розсувні двері','Більше світла','/images/s24-menu/doors.webp','/catalog/']
     ]
   },
   frameless: {
@@ -233,9 +237,9 @@ const menuData = {
     href: '/arkhitekturni-systemy/',
     image: '/images/s24-menu/frameless.webp',
     popular: [
-      ['Скління тераси','Захист без втрати світла','/images/v5/product-5.webp','/arkhitekturni-systemy/'],
-      ['Скління балкона','Панорамний вигляд','/images/v5/hero.webp','/arkhitekturni-systemy/'],
-      ['Скління офісу','Відкрита архітектура','/images/v5/product-2.webp','/arkhitekturni-systemy/']
+      ['Скління тераси','Захист без втрати світла','/images/s24-menu/frameless.webp','/arkhitekturni-systemy/'],
+      ['Скління балкона','Панорамний вигляд','/images/s24-menu/frameless.webp','/arkhitekturni-systemy/'],
+      ['Скління офісу','Відкрита архітектура','/images/s24-menu/frameless.webp','/arkhitekturni-systemy/']
     ]
   },
   loft: {
@@ -246,9 +250,9 @@ const menuData = {
     href: '/sklyani-perehorodky/',
     image: '/images/s24-menu/loft.webp',
     popular: [
-      ['Loft Slim','Тонкий профіль','/images/v5/product-2.webp','/sklyani-perehorodky/'],
-      ['Loft Double','Подвійне зонування','/images/v5/product-5.webp','/sklyani-perehorodky/'],
-      ['Loft Office','Для робочих просторів','/images/v5/product-3.webp','/sklyani-perehorodky/']
+      ['Loft Slim','Тонкий профіль','/images/s24-menu/loft.webp','/sklyani-perehorodky/'],
+      ['Loft Double','Подвійне зонування','/images/s24-menu/partitions.webp','/sklyani-perehorodky/'],
+      ['Loft Office','Для робочих просторів','/images/s19/menu-loft.webp','/sklyani-perehorodky/']
     ]
   },
   hardware: {
@@ -259,9 +263,9 @@ const menuData = {
     href: '/catalog/',
     image: '/images/s20/product-detail.webp',
     popular: [
-      ['Петлі для скла','Надійна механіка','/images/v5/product-1.webp','/catalog/'],
-      ['Ручки та замки','Для дверей і душових','/images/v5/product-3.webp','/catalog/'],
-      ['Профілі','Алюмінієві системи','/images/v5/product-2.webp','/catalog/']
+      ['Петлі для скла','Надійна механіка','/images/s20/product-detail.webp','/catalog/'],
+      ['Ручки та замки','Для дверей і душових','/images/s20/product-angle.webp','/catalog/'],
+      ['Профілі','Алюмінієві системи','/images/s20/product-interior.webp','/catalog/']
     ]
   },
   profiles: {
@@ -272,9 +276,9 @@ const menuData = {
     href: '/arkhitekturni-systemy/',
     image: '/images/s24-menu/aluminium.webp',
     popular: [
-      ['Фасадні профілі','Для великих площ','/images/v5/hero.webp','/arkhitekturni-systemy/'],
-      ['Loft профілі','Чорний архітектурний акцент','/images/v5/product-2.webp','/arkhitekturni-systemy/'],
-      ['Розсувні профілі','Для панорамних систем','/images/v5/product-5.webp','/arkhitekturni-systemy/']
+      ['Фасадні профілі','Для великих площ','/images/s24-menu/aluminium.webp','/arkhitekturni-systemy/'],
+      ['Loft профілі','Чорний архітектурний акцент','/images/s24-menu/aluminium.webp','/arkhitekturni-systemy/'],
+      ['Розсувні профілі','Для панорамних систем','/images/s24-menu/aluminium.webp','/arkhitekturni-systemy/']
     ]
   },
   glass: {
@@ -285,12 +289,20 @@ const menuData = {
     href: '/knowledge/',
     image: '/images/s20/product-main.webp',
     popular: [
-      ['Загартоване скло','Міцність і безпека','/images/v5/product-4.webp','/knowledge/'],
-      ['Триплекс','Багатошарова безпека','/images/v5/product-5.webp','/knowledge/'],
-      ['Матове скло','Приватність і світло','/images/v5/product-3.webp','/knowledge/']
+      ['Загартоване скло','Міцність і безпека','/images/s20/product-main.webp','/knowledge/'],
+      ['Триплекс','Багатошарова безпека','/images/s20/product-interior.webp','/knowledge/'],
+      ['Матове скло','Приватність і світло','/images/s20/product-angle.webp','/knowledge/']
     ]
   }
 };
+
+const localizedMenuData = Object.fromEntries(
+  Object.entries(menuData).map(([key, data]) => [key, {
+    ...data,
+    href: lp(data.href),
+    popular: data.popular.map(([title, text, image, href]) => [title, text, image, lp(href)])
+  }])
+);
 
 ---
 <header class="site-header sg-header">
@@ -306,7 +318,7 @@ const menuData = {
 
     <nav class="nav__links sg-nav-links" aria-label="Головна навігація">
       <div class="mega-trigger mega-trigger--catalog">
-        <a class="nav-link nav-link--catalog" href={lp("/catalog/")}>Каталог <span class="catalog-arrow">⌄</span></a>
+        <a class="nav-link nav-link--catalog" href={lp("/catalog/")}>{t.catalog} <span class="catalog-arrow">⌄</span></a>
 
         <div class="catalog-mega catalog-mega--dynamic" data-catalog-mega>
           <div class="catalog-mega__main">
@@ -315,8 +327,8 @@ const menuData = {
                 <h3>{section.icon} {section.section}</h3>
                 {section.groups.map(group => (
                   <div class="catalog-mega__group" data-menu-key={group.key}>
-                    <a class="catalog-mega__group-title" href={group.href}>{group.title}</a>
-                    {group.items.map(item => <a href={group.href}>{item}</a>)}
+                    <a class="catalog-mega__group-title" href={lp(group.href)}>{group.title}</a>
+                    {group.items.map(item => <a href={lp(group.href)}>{item}</a>)}
                   </div>
                 ))}
               </section>
@@ -326,14 +338,14 @@ const menuData = {
               <h3>◇ Архітектурні системи</h3>
               <div class="catalog-mega__architecture-list">
                 {architectureItems.map(([key,label,href]) => (
-                  <a href={href} data-menu-key={key}><span>{label}</span><b>›</b></a>
+                  <a href={lp(href)} data-menu-key={key}><span>{label}</span><b>›</b></a>
                 ))}
               </div>
 
               <div class="catalog-mega__popular" data-popular-list>
-                {menuData.partitions.popular.map(([title,text,image,href]) => (
+                {localizedMenuData.partitions.popular.map(([title,text,image,href]) => (
                   <a href={href}>
-                    <img src={image} width="84" height="66" alt="" loading="lazy" />
+                    <img src={image} width="62" height="50" alt="" loading="lazy" />
                     <span><b>{title}</b><small>{text}</small></span>
                   </a>
                 ))}
@@ -341,34 +353,34 @@ const menuData = {
             </section>
 
             <aside class="catalog-mega__promo" data-promo>
-              <img src={menuData.partitions.image} width="560" height="700" alt="Скляні перегородки Space Glass" data-promo-image />
+              <img src={localizedMenuData.partitions.image} width="1800" height="2100" alt="Скляні перегородки Space Glass" data-promo-image />
               <div class="catalog-mega__promo-overlay"></div>
               <div class="catalog-mega__promo-copy">
-                <p data-promo-eyebrow>{menuData.partitions.eyebrow}</p>
-                <h2 data-promo-title>{menuData.partitions.title}</h2>
-                <span data-promo-text>{menuData.partitions.text}</span>
-                <a class="button button--mint" href={menuData.partitions.href} data-promo-button>{menuData.partitions.button} →</a>
+                <p data-promo-eyebrow>{localizedMenuData.partitions.eyebrow}</p>
+                <h2 data-promo-title>{localizedMenuData.partitions.title}</h2>
+                <span data-promo-text>{localizedMenuData.partitions.text}</span>
+                <a class="button button--mint" href={localizedMenuData.partitions.href} data-promo-button>{localizedMenuData.partitions.button} →</a>
               </div>
             </aside>
           </div>
 
           <div class="catalog-mega__cities">
             <strong>⌖ Пошук за містами</strong>
-            <a href="/city/kyiv/">Київ</a>
-            <a href="/city/lviv/">Львів</a>
-            <a href="/city/odesa/">Одеса</a>
-            <a href="#">Дніпро</a>
-            <a href="#">Харків</a>
-            <a href="#">Вінниця</a>
-            <a href="#">Івано-Франківськ</a>
+            <a href={lp("/city/kyiv/")}>Київ</a>
+            <a href={lp("/city/lviv/")}>Львів</a>
+            <a href={lp("/city/odesa/")}>Одеса</a>
+            <a href={lp("/")}>Дніпро</a>
+            <a href={lp("/")}>Харків</a>
+            <a href={lp("/")}>Вінниця</a>
+            <a href={lp("/")}>Івано-Франківськ</a>
             <a href={lp("/catalog/")}>Вся Україна →</a>
           </div>
 
           <div class="catalog-mega__benefits">
-            <div><span>⚙</span><b>Власне виробництво</b><small>Сучасне обладнання</small></div>
-            <div><span>◇</span><b>{t.warrantyShort ?? 'Гарантія 2 роки'}</b><small>На конструкції та монтаж</small></div>
-            <div><span>♙</span><b>Професійний монтаж</b><small>Досвідчені бригади</small></div>
-            <div><img src="/images/icons/delivery-truck.png" alt="" width="42" height="30" /><b>Доставка по Україні</b><small>Надійно та в строк</small></div>
+            <div><span>⚙</span><b>{locale === 'ru' ? 'Собственное производство' : 'Власне виробництво'}</b><small>{locale === 'ru' ? 'Современное оборудование' : 'Сучасне обладнання'}</small></div>
+            <div><span>◇</span><b>{t.warrantyShort ?? 'Гарантія 2 роки'}</b><small>{locale === 'ru' ? 'На конструкции и монтаж' : 'На конструкції та монтаж'}</small></div>
+            <div><span>♙</span><b>{locale === 'ru' ? 'Профессиональный монтаж' : 'Професійний монтаж'}</b><small>{locale === 'ru' ? 'Опытные бригады' : 'Досвідчені бригади'}</small></div>
+            <div><img src="/images/icons/delivery-truck.png" alt="" width="42" height="30" /><b>{locale === 'ru' ? 'Доставка по Украине' : 'Доставка по Україні'}</b><small>{locale === 'ru' ? 'Надёжно и в срок' : 'Надійно та в строк'}</small></div>
           </div>
         </div>
       </div>
@@ -419,10 +431,10 @@ const menuData = {
   </div>
   <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden>
     <div class="sg-mobile-menu__panel">
-      <a class="sg-mobile-menu__primary" href={lp("/catalog/")}>Каталог</a>
+      <a class="sg-mobile-menu__primary" href={lp("/catalog/")}>{t.catalog}</a>
       {links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}
-      <a href={lp("/compare/")}>Порівняння</a>
-      <a href={lp("/cart/")}>Кошик</a>
+      <a href={lp("/compare/")}>{t.compare}</a>
+      <a href={lp("/cart/")}>{locale === 'ru' ? 'Корзина' : 'Кошик'}</a>
       <a href="tel:+380734251400">+38 (073) 425 14 00</a>
       <a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a>
     </div>
@@ -468,7 +480,7 @@ const menuData = {
   setInterval(updateProjectHeaderCount, 1500);
 </script>
 
-<script define:vars={{ menuData }}>
+<script define:vars={{ menuData: localizedMenuData }}>
   const mega = document.querySelector('[data-catalog-mega]');
 
   if (mega) {
@@ -483,7 +495,7 @@ const menuData = {
     const renderPopular = (items) => {
       popularList.innerHTML = items.map(([itemTitle,itemText,itemImage,itemHref]) => `
         <a href="${itemHref}">
-          <img src="${itemImage}" width="84" height="66" alt="" loading="lazy" />
+          <img src="${itemImage}" width="62" height="50" alt="" loading="lazy" />
           <span><b>${itemTitle}</b><small>${itemText}</small></span>
         </a>
       `).join('');
@@ -499,6 +511,9 @@ const menuData = {
         if (image) {
           image.src = data.image;
           image.alt = data.title;
+          const isLandscapeImage = data.image.startsWith('/images/s20/');
+          image.width = 1800;
+          image.height = isLandscapeImage ? 1500 : 2100;
         }
         eyebrow.textContent = data.eyebrow;
         title.textContent = data.title;

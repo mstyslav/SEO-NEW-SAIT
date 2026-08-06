@@ -26,10 +26,7 @@ const generatedPaths = Object.keys(modules)
     return { params: { path } };
   });
 
-return [
-  { params: { path: undefined } },
-  ...generatedPaths
-];
+return generatedPaths;
 }
 
 const source = `../${Astro.params.path}${Astro.params.path?.includes('.') ? '' : '/index'}.astro`;
