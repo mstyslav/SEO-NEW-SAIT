@@ -33,7 +33,7 @@ const russianRoutes = new Set([
 const localeSwitchPath = (targetLocale: 'uk' | 'ru') => {
   const unlocalizedPath = currentPath.replace(/^\/(uk|ru|en|de)(?=\/|$)/, '') || '/';
   if (targetLocale === 'ru' && !russianRoutes.has(unlocalizedPath)) return '/ru/';
-  return localizedPath(currentPath, targetLocale);
+  return localizedPath(unlocalizedPath, targetLocale);
 };
 
 const links = [
@@ -129,9 +129,9 @@ const menuData = {
     href: '/dushovi-kabiny/',
     image: '/images/s24-menu/showers.webp',
     popular: [
-      ['Walk-in Premium','Лаконічно та просторо','/images/v5/product-1.webp','/dushovi-kabiny/'],
-      ['Кутова душова','Для компактних ванних','/images/v5/product-3.webp','/dushovi-kabiny/'],
-      ['Розсувна система','Зручно для щоденного використання','/images/v5/product-5.webp','/dushovi-kabiny/']
+      ['Walk-in Premium','Лаконічно та просторо','/images/s19/walkin-main.webp','/dushovi-kabiny/'],
+      ['Кутова душова','Для компактних ванних','/images/s19/walkin-angle.webp','/dushovi-kabiny/'],
+      ['Розсувна система','Зручно для щоденного використання','/images/s19/walkin-detail.webp','/dushovi-kabiny/']
     ]
   },
   mirrors: {
@@ -142,9 +142,9 @@ const menuData = {
     href: '/dzerkala/',
     image: '/images/s24-menu/mirrors.webp',
     popular: [
-      ['LED-дзеркало','Функціональне підсвічування','/images/v5/product-6.webp','/dzerkala/'],
-      ['Дзеркало у ванну','Індивідуальні розміри','/images/v5/product-1.webp','/dzerkala/'],
-      ['Дзеркало на стіну','Для сучасного інтер’єру','/images/v5/product-2.webp','/dzerkala/']
+      ['LED-дзеркало','Функціональне підсвічування','/images/s24-menu/mirrors.webp','/dzerkala/'],
+      ['Дзеркало у ванну','Індивідуальні розміри','/images/s24-menu/mirrors.webp','/dzerkala/'],
+      ['Дзеркало на стіну','Для сучасного інтер’єру','/images/s24-menu/mirrors.webp','/dzerkala/']
     ]
   },
   doors: {
@@ -155,9 +155,9 @@ const menuData = {
     href: '/sklyani-dveri/',
     image: '/images/s24-menu/doors.webp',
     popular: [
-      ['Розсувні двері','Економія простору','/images/v5/product-3.webp','/sklyani-dveri/'],
-      ['Маятникові двері','Для офісів і магазинів','/images/v5/product-2.webp','/sklyani-dveri/'],
-      ['Міжкімнатні двері','Легкість і світло','/images/v5/product-5.webp','/sklyani-dveri/']
+      ['Розсувні двері','Економія простору','/images/s24-menu/doors.webp','/sklyani-dveri/'],
+      ['Маятникові двері','Для офісів і магазинів','/images/s24-menu/doors.webp','/sklyani-dveri/'],
+      ['Міжкімнатні двері','Легкість і світло','/images/s24-menu/doors.webp','/sklyani-dveri/']
     ]
   },
   railings: {
@@ -168,9 +168,9 @@ const menuData = {
     href: '/sklyani-ohorozhi/',
     image: '/images/s24-menu/railings.webp',
     popular: [
-      ['Безрамна огорожа','Максимум прозорості','/images/v5/product-4.webp','/sklyani-ohorozhi/'],
-      ['Огорожа на стійках','Надійне рішення','/images/v5/product-5.webp','/sklyani-ohorozhi/'],
-      ['Огорожа для сходів','Безпечно та елегантно','/images/v5/product-4.webp','/sklyani-ohorozhi/']
+      ['Безрамна огорожа','Максимум прозорості','/images/s24-menu/railings.webp','/sklyani-ohorozhi/'],
+      ['Огорожа на стійках','Надійне рішення','/images/s24-menu/railings.webp','/sklyani-ohorozhi/'],
+      ['Огорожа для сходів','Безпечно та елегантно','/images/s24-menu/railings.webp','/sklyani-ohorozhi/']
     ]
   },
   partitions: {
@@ -181,9 +181,9 @@ const menuData = {
     href: '/sklyani-perehorodky/',
     image: '/images/s24-menu/loft.webp',
     popular: [
-      ['Loft-перегородка','Акцентний чорний профіль','/images/v5/product-2.webp','/sklyani-perehorodky/'],
-      ['Офісна перегородка','Світлий робочий простір','/images/v5/product-5.webp','/sklyani-perehorodky/'],
-      ['Мобільна система','Гнучке зонування','/images/v5/product-3.webp','/sklyani-perehorodky/']
+      ['Loft-перегородка','Акцентний чорний профіль','/images/s24-menu/partitions.webp','/sklyani-perehorodky/'],
+      ['Офісна перегородка','Світлий робочий простір','/images/s24-menu/partitions.webp','/sklyani-perehorodky/'],
+      ['Мобільна система','Гнучке зонування','/images/s24-menu/partitions.webp','/sklyani-perehorodky/']
     ]
   },
   facades: {
@@ -194,9 +194,9 @@ const menuData = {
     href: '/arkhitekturni-systemy/',
     image: '/images/s24-menu/facades.webp',
     popular: [
-      ['Структурне скління','Чистий сучасний фасад','/images/v5/hero.webp','/arkhitekturni-systemy/'],
-      ['Безрамний фасад','Максимум світла','/images/v5/product-2.webp','/arkhitekturni-systemy/'],
-      ['Слайдерні системи','Великі панорамні отвори','/images/v5/product-5.webp','/arkhitekturni-systemy/']
+      ['Структурне скління','Чистий сучасний фасад','/images/s24-menu/facades.webp','/arkhitekturni-systemy/'],
+      ['Безрамний фасад','Максимум світла','/images/s24-menu/facades.webp','/arkhitekturni-systemy/'],
+      ['Слайдерні системи','Великі панорамні отвори','/images/s24-menu/facades.webp','/arkhitekturni-systemy/']
     ]
   },
   aluminium: {
@@ -207,9 +207,9 @@ const menuData = {
     href: '/alyuminiievi-konstruktsii/',
     image: '/images/s24-menu/aluminium.webp',
     popular: [
-      ['Алюмінієві вікна','Теплі та панорамні','/images/v5/product-5.webp','/alyuminiievi-konstruktsii/'],
-      ['Розсувні двері','Великі світлові отвори','/images/v5/product-2.webp','/alyuminiievi-konstruktsii/'],
-      ['Зимовий сад','Простір у будь-яку пору року','/images/v5/hero.webp','/alyuminiievi-konstruktsii/']
+      ['Алюмінієві вікна','Теплі та панорамні','/images/s24-menu/aluminium.webp','/alyuminiievi-konstruktsii/'],
+      ['Розсувні двері','Великі світлові отвори','/images/s24-menu/aluminium.webp','/alyuminiievi-konstruktsii/'],
+      ['Зимовий сад','Простір у будь-яку пору року','/images/s24-menu/aluminium.webp','/alyuminiievi-konstruktsii/']
     ]
   },
   pvc: {
@@ -220,9 +220,9 @@ const menuData = {
     href: '/catalog/',
     image: '/images/s24-menu/doors.webp',
     popular: [
-      ['Металопластикові вікна','Енергоефективність','/images/v5/product-5.webp','/catalog/'],
-      ['Балконні системи','Комплексне рішення','/images/v5/product-3.webp','/catalog/'],
-      ['Розсувні двері','Більше світла','/images/v5/product-2.webp','/catalog/']
+      ['Металопластикові вікна','Енергоефективність','/images/s24-menu/doors.webp','/catalog/'],
+      ['Балконні системи','Комплексне рішення','/images/s24-menu/doors.webp','/catalog/'],
+      ['Розсувні двері','Більше світла','/images/s24-menu/doors.webp','/catalog/']
     ]
   },
   frameless: {
@@ -233,9 +233,9 @@ const menuData = {
     href: '/arkhitekturni-systemy/',
     image: '/images/s24-menu/frameless.webp',
     popular: [
-      ['Скління тераси','Захист без втрати світла','/images/v5/product-5.webp','/arkhitekturni-systemy/'],
-      ['Скління балкона','Панорамний вигляд','/images/v5/hero.webp','/arkhitekturni-systemy/'],
-      ['Скління офісу','Відкрита архітектура','/images/v5/product-2.webp','/arkhitekturni-systemy/']
+      ['Скління тераси','Захист без втрати світла','/images/s24-menu/frameless.webp','/arkhitekturni-systemy/'],
+      ['Скління балкона','Панорамний вигляд','/images/s24-menu/frameless.webp','/arkhitekturni-systemy/'],
+      ['Скління офісу','Відкрита архітектура','/images/s24-menu/frameless.webp','/arkhitekturni-systemy/']
     ]
   },
   loft: {
@@ -246,9 +246,9 @@ const menuData = {
     href: '/sklyani-perehorodky/',
     image: '/images/s24-menu/loft.webp',
     popular: [
-      ['Loft Slim','Тонкий профіль','/images/v5/product-2.webp','/sklyani-perehorodky/'],
-      ['Loft Double','Подвійне зонування','/images/v5/product-5.webp','/sklyani-perehorodky/'],
-      ['Loft Office','Для робочих просторів','/images/v5/product-3.webp','/sklyani-perehorodky/']
+      ['Loft Slim','Тонкий профіль','/images/s24-menu/loft.webp','/sklyani-perehorodky/'],
+      ['Loft Double','Подвійне зонування','/images/s24-menu/loft.webp','/sklyani-perehorodky/'],
+      ['Loft Office','Для робочих просторів','/images/s24-menu/loft.webp','/sklyani-perehorodky/']
     ]
   },
   hardware: {
@@ -259,9 +259,9 @@ const menuData = {
     href: '/catalog/',
     image: '/images/s20/product-detail.webp',
     popular: [
-      ['Петлі для скла','Надійна механіка','/images/v5/product-1.webp','/catalog/'],
-      ['Ручки та замки','Для дверей і душових','/images/v5/product-3.webp','/catalog/'],
-      ['Профілі','Алюмінієві системи','/images/v5/product-2.webp','/catalog/']
+      ['Петлі для скла','Надійна механіка','/images/s20/product-detail.webp','/catalog/'],
+      ['Ручки та замки','Для дверей і душових','/images/s20/product-angle.webp','/catalog/'],
+      ['Профілі','Алюмінієві системи','/images/s20/product-interior.webp','/catalog/']
     ]
   },
   profiles: {
@@ -272,9 +272,9 @@ const menuData = {
     href: '/arkhitekturni-systemy/',
     image: '/images/s24-menu/aluminium.webp',
     popular: [
-      ['Фасадні профілі','Для великих площ','/images/v5/hero.webp','/arkhitekturni-systemy/'],
-      ['Loft профілі','Чорний архітектурний акцент','/images/v5/product-2.webp','/arkhitekturni-systemy/'],
-      ['Розсувні профілі','Для панорамних систем','/images/v5/product-5.webp','/arkhitekturni-systemy/']
+      ['Фасадні профілі','Для великих площ','/images/s24-menu/aluminium.webp','/arkhitekturni-systemy/'],
+      ['Loft профілі','Чорний архітектурний акцент','/images/s24-menu/aluminium.webp','/arkhitekturni-systemy/'],
+      ['Розсувні профілі','Для панорамних систем','/images/s24-menu/aluminium.webp','/arkhitekturni-systemy/']
     ]
   },
   glass: {
@@ -285,9 +285,9 @@ const menuData = {
     href: '/knowledge/',
     image: '/images/s20/product-main.webp',
     popular: [
-      ['Загартоване скло','Міцність і безпека','/images/v5/product-4.webp','/knowledge/'],
-      ['Триплекс','Багатошарова безпека','/images/v5/product-5.webp','/knowledge/'],
-      ['Матове скло','Приватність і світло','/images/v5/product-3.webp','/knowledge/']
+      ['Загартоване скло','Міцність і безпека','/images/s20/product-main.webp','/knowledge/'],
+      ['Триплекс','Багатошарова безпека','/images/s20/product-interior.webp','/knowledge/'],
+      ['Матове скло','Приватність і світло','/images/s20/product-angle.webp','/knowledge/']
     ]
   }
 };
@@ -333,7 +333,7 @@ const menuData = {
               <div class="catalog-mega__popular" data-popular-list>
                 {menuData.partitions.popular.map(([title,text,image,href]) => (
                   <a href={href}>
-                    <img src={image} width="84" height="66" alt="" loading="lazy" />
+                    <img src={image} width="62" height="50" alt="" loading="lazy" />
                     <span><b>{title}</b><small>{text}</small></span>
                   </a>
                 ))}
@@ -341,7 +341,7 @@ const menuData = {
             </section>
 
             <aside class="catalog-mega__promo" data-promo>
-              <img src={menuData.partitions.image} width="560" height="700" alt="Скляні перегородки Space Glass" data-promo-image />
+              <img src={menuData.partitions.image} width="1800" height="2100" alt="Скляні перегородки Space Glass" data-promo-image />
               <div class="catalog-mega__promo-overlay"></div>
               <div class="catalog-mega__promo-copy">
                 <p data-promo-eyebrow>{menuData.partitions.eyebrow}</p>
@@ -483,7 +483,7 @@ const menuData = {
     const renderPopular = (items) => {
       popularList.innerHTML = items.map(([itemTitle,itemText,itemImage,itemHref]) => `
         <a href="${itemHref}">
-          <img src="${itemImage}" width="84" height="66" alt="" loading="lazy" />
+          <img src="${itemImage}" width="62" height="50" alt="" loading="lazy" />
           <span><b>${itemTitle}</b><small>${itemText}</small></span>
         </a>
       `).join('');
@@ -499,6 +499,9 @@ const menuData = {
         if (image) {
           image.src = data.image;
           image.alt = data.title;
+          const isLandscapeImage = data.image.startsWith('/images/s20/');
+          image.width = 1800;
+          image.height = isLandscapeImage ? 1500 : 2100;
         }
         eyebrow.textContent = data.eyebrow;
         title.textContent = data.title;

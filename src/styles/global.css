@@ -6972,7 +6972,7 @@ a,button,.button,.nav-link,.nav-icon,.language-switcher__button,.language-switch
 .footer{color:#fff}.footer a{color:#c6cec9!important}.eyebrow--light,.project--dark span{color:#b7f0d0!important}
 
 img[loading="lazy"]{content-visibility:auto}
-.sg-product-card__media img,.sg-project-image img,.catalog-mega__popular img{max-width:100%;height:auto}
+.sg-product-card__media img,.sg-project-image img{max-width:100%;height:auto}
 @media(max-width:640px){.nav__actions .button{min-height:48px!important}.sg-header .sg-nav{min-height:76px!important}.sg-header .brand-logo{width:128px!important}}
 
 /* Production UI regression fixes — readable desktop mega menu and tablet/mobile header */
@@ -6982,3 +6982,15 @@ img[loading="lazy"]{content-visibility:auto}
   .sg-header .sg-nav{grid-template-columns:minmax(118px,150px) auto 1fr!important;min-height:82px!important;padding-inline:16px!important}.sg-mobile-toggle{display:inline-flex;align-items:center;gap:5px;justify-self:start;width:auto;min-height:44px;padding:0 12px;border:1px solid rgba(255,255,255,.2);background:#101411;color:#fff;border-radius:999px}.sg-mobile-toggle span{display:block;width:14px;height:2px;background:currentColor}.sg-mobile-toggle b{font-size:12px}.sg-header .sg-nav-actions{gap:7px!important}.sg-header .sg-nav-actions .nav-icon{width:40px!important;height:40px!important;flex-basis:40px!important}.sg-header-cta{display:inline-flex!important;min-height:42px!important;padding-inline:14px!important}.sg-mobile-menu{position:absolute;left:0;right:0;top:100%;z-index:1200;background:#070908;border-top:1px solid #222824;box-shadow:0 24px 60px rgba(0,0,0,.45)}.sg-mobile-menu__panel{display:grid;gap:4px;padding:14px 18px 20px}.sg-mobile-menu__panel a{min-height:44px;display:flex;align-items:center;color:#fff;border-bottom:1px solid #1d231f}.sg-mobile-menu__primary{color:var(--mint)!important;font-weight:800}.sg-mobile-menu__panel .button{justify-content:center;margin-top:8px;border-bottom:0}
 }
 @media(max-width:640px){.sg-header .sg-nav{grid-template-columns:112px auto 1fr!important;padding-inline:10px!important}.sg-header .brand-logo{width:106px!important}.sg-header .language-switcher__button{min-width:62px!important;padding-inline:8px!important}.sg-header .sg-nav-actions .nav-icon--compare{display:none!important}.sg-header .sg-header-cta{display:none!important}}
+@media(max-width:460px){
+  .sg-header .sg-nav{grid-template-columns:72px 40px minmax(0,1fr)!important;gap:5px!important;padding-inline:8px!important}
+  .sg-header .brand-logo{width:72px!important}
+  .sg-mobile-toggle{width:40px;min-height:40px;padding:0 7px;gap:2px}
+  .sg-mobile-toggle span{width:7px}
+  .sg-mobile-toggle b{display:none}
+  .sg-header .sg-nav-actions{min-width:0!important;gap:4px!important}
+  .sg-header .language-switcher__button{min-width:48px!important;width:48px!important;padding-inline:6px!important;gap:3px!important}
+  .sg-header .language-switcher__button svg{display:none}
+  .sg-header .sg-nav-actions .nav-icon{width:36px!important;height:36px!important;flex-basis:36px!important}
+  .sg-header .sg-nav-actions > .nav-icon[aria-label="Зателефонувати"]{display:none!important}
+}
