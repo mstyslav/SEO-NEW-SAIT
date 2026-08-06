@@ -29,7 +29,56 @@ const russianRoutes = new Set([
   '/projects/',
   '/quote/',
   '/services/',
+  '/oplata-dostavka/',
+  '/catalog/piddon/',
+  '/sklyani-perehorodky/ofisni/',
 ]);
+const hrefForLocale = (path: string) => {
+  if (path === '#') return '#';
+  if (/^(?:https?:|tel:|mailto:|#)/.test(path)) return path;
+  const base = path.replace(/^\/(?:uk|ru)(?=\/|$)/, '') || '/';
+  if (locale === 'ru' && !russianRoutes.has(base)) return '/ru/';
+  return localizedPath(base, locale);
+};
+
+const ruText: Record<string, string> = {
+  'Для дому':'Для дома','Для бізнесу':'Для бизнеса','Для дому та бізнесу':'Для дома и бизнеса',
+  'Душові кабіни':'Душевые кабины','Душові Walk-in':'Душевые Walk-in','Кутові душові':'Угловые душевые','Розсувні душові':'Раздвижные душевые','Душові в нішу':'Душевые в нишу','Шторки для ванни':'Шторки для ванны','Душові піддони':'Душевые поддоны',
+  'Дзеркала':'Зеркала','LED-дзеркала':'LED-зеркала','Дзеркала у ванну':'Зеркала в ванную','Дзеркала в повний зріст':'Зеркала в полный рост','Дзеркала на стіну':'Настенные зеркала','Дзеркальні панно':'Зеркальные панно',
+  'Скляні двері':'Стеклянные двери','Міжкімнатні скляні двері':'Межкомнатные стеклянные двери','Розсувні скляні двері':'Раздвижные стеклянные двери','Маятникові скляні двері':'Маятниковые стеклянные двери','Двері в душову':'Двери в душевую','Офісні скляні двері':'Офисные стеклянные двери',
+  'Скляні огорожі':'Стеклянные ограждения','Скляні перила':'Стеклянные перила','Огорожі на стійках':'Ограждения на стойках','Безрамні огорожі':'Безрамные ограждения','Балконні огорожі':'Балконные ограждения','Огорожі для сходів':'Ограждения для лестниц',
+  'Скляні перегородки':'Стеклянные перегородки','Loft-перегородки':'Loft-перегородки','Офісні перегородки':'Офисные перегородки','Для магазинів':'Для магазинов','Для ресторанів':'Для ресторанов','Для готелів':'Для гостиниц','Мобільні перегородки':'Мобильные перегородки',
+  'Скляні фасади':'Стеклянные фасады','Структурне скління':'Структурное остекление','Напівструктурне скління':'Полуструктурное остекление','Безрамне скління':'Безрамное остекление','Накладне скління':'Накладное остекление','Слайдерні системи':'Слайдерные системы',
+  'Алюмінієві конструкції':'Алюминиевые конструкции','Алюмінієві вікна':'Алюминиевые окна','Алюмінієві двері':'Алюминиевые двери','Розсувні системи':'Раздвижные системы','Фасадні системи':'Фасадные системы','Зимові сади':'Зимние сады',
+  'Металопластикові конструкції':'Металлопластиковые конструкции','Металопластикові вікна':'Металлопластиковые окна','Металопластикові двері':'Металлопластиковые двери','Балконні системи':'Балконные системы',
+  'Архітектурні системи':'Архитектурные системы','Loft-системи':'Loft-системы','Фурнітура та аксесуари':'Фурнитура и аксессуары','Профільні системи':'Профильные системы','Скло та матеріали':'Стекло и материалы',
+  'Пошук за містами':'Поиск по городам','Київ':'Киев','Львів':'Львов','Одеса':'Одесса','Дніпро':'Днепр','Харків':'Харьков','Вінниця':'Винница','Івано-Франківськ':'Ивано-Франковск','Вся Україна':'Вся Украина',
+  'Власне виробництво':'Собственное производство','Сучасне обладнання':'Современное оборудование','На конструкції та монтаж':'На конструкции и монтаж','Професійний монтаж':'Профессиональный монтаж','Досвідчені бригади':'Опытные бригады','Доставка по Україні':'Доставка по Украине','Надійно та в строк':'Надёжно и в срок',
+  'Каталог':'Каталог','Порівняння':'Сравнение','Кошик':'Корзина','Пошук':'Поиск','Зателефонувати':'Позвонить','Головна навігація':'Главная навигация',
+  'Безпека та дизайн':'Безопасность и дизайн','Віконні системи':'Оконные системы','Комплектуючі':'Комплектующие','Матеріали':'Материалы',
+  'Walk-in, кутові та розсувні душові за індивідуальними розмірами.':'Walk-in, угловые и раздвижные душевые по индивидуальным размерам.','Переглянути душові':'Посмотреть душевые',
+  'Дзеркала для ванних, інтер’єрів і комерційних просторів.':'Зеркала для ванных, интерьеров и коммерческих пространств.','Переглянути дзеркала':'Посмотреть зеркала',
+  'Розпашні, розсувні, маятникові та приховані системи.':'Распашные, раздвижные, маятниковые и скрытые системы.','Переглянути двері':'Посмотреть двери',
+  'Огорожі для сходів, балконів, терас і комерційних просторів.':'Ограждения для лестниц, балконов, террас и коммерческих пространств.','Переглянути огорожі':'Посмотреть ограждения',
+  'Loft, офісні, мобільні та стаціонарні системи для зонування.':'Loft, офисные, мобильные и стационарные системы для зонирования.','Переглянути перегородки':'Посмотреть перегородки',
+  'Структурне, напівструктурне та безрамне фасадне скління.':'Структурное, полуструктурное и безрамное фасадное остекление.','Переглянути фасади':'Посмотреть фасады',
+  'Вікна, двері, фасади, зимові сади та розсувні системи.':'Окна, двери, фасады, зимние сады и раздвижные системы.','Переглянути алюміній':'Посмотреть алюминий',
+  'Вікна, двері, балконні та розсувні системи для житлових об’єктів.':'Окна, двери, балконные и раздвижные системы для жилых объектов.','Переглянути системи':'Посмотреть системы',
+  'Панорамні рішення для терас, балконів, офісів і приватних будинків.':'Панорамные решения для террас, балконов, офисов и частных домов.','Переглянути безрамне скління':'Посмотреть безрамное остекление',
+  'Сучасні перегородки в чорному профілі для дому та бізнесу.':'Современные перегородки в чёрном профиле для дома и бизнеса.','Переглянути Loft-системи':'Посмотреть Loft-системы',
+  'Петлі, ручки, профілі, ущільнювачі та монтажні комплектуючі.':'Петли, ручки, профили, уплотнители и монтажные комплектующие.','Переглянути фурнітуру':'Посмотреть фурнитуру',
+  'Алюмінієві профілі для фасадів, перегородок і розсувних конструкцій.':'Алюминиевые профили для фасадов, перегородок и раздвижных конструкций.','Переглянути профілі':'Посмотреть профили',
+  'Загартоване скло, триплекс, декоративне та спеціальне скло.':'Закалённое стекло, триплекс, декоративное и специальное стекло.','Перейти до матеріалів':'Перейти к материалам',
+  'Лаконічно та просторо':'Лаконично и просторно','Кутова душова':'Угловая душевая','Для компактних ванних':'Для компактных ванных','Розсувна система':'Раздвижная система','Зручно для щоденного використання':'Удобно для ежедневного использования',
+  'LED-дзеркало':'LED-зеркало','Функціональне підсвічування':'Функциональная подсветка','Дзеркало у ванну':'Зеркало в ванную','Індивідуальні розміри':'Индивидуальные размеры','Дзеркало на стіну':'Настенное зеркало','Для сучасного інтер’єру':'Для современного интерьера',
+  'Розсувні двері':'Раздвижные двери','Економія простору':'Экономия пространства','Маятникові двері':'Маятниковые двери','Для офісів і магазинів':'Для офисов и магазинов','Міжкімнатні двері':'Межкомнатные двери','Легкість і світло':'Лёгкость и свет',
+  'Безрамна огорожа':'Безрамное ограждение','Максимум прозорості':'Максимум прозрачности','Огорожа на стійках':'Ограждение на стойках','Надійне рішення':'Надёжное решение','Огорожа для сходів':'Ограждение для лестниц','Безпечно та елегантно':'Безопасно и элегантно',
+  'Loft-перегородка':'Loft-перегородка','Акцентний чорний профіль':'Акцентный чёрный профиль','Офісна перегородка':'Офисная перегородка','Світлий робочий простір':'Светлое рабочее пространство','Мобільна система':'Мобильная система','Гнучке зонування':'Гибкое зонирование',
+  'Чистий сучасний фасад':'Чистый современный фасад','Безрамний фасад':'Безрамный фасад','Максимум світла':'Максимум света','Великі панорамні отвори':'Большие панорамные проёмы','Теплі та панорамні':'Тёплые и панорамные','Великі світлові отвори':'Большие световые проёмы','Зимовий сад':'Зимний сад','Простір у будь-яку пору року':'Пространство в любое время года',
+  'Енергоефективність':'Энергоэффективность','Балконні системи':'Балконные системы','Комплексне рішення':'Комплексное решение','Більше світла':'Больше света','Скління тераси':'Остекление террасы','Захист без втрати світла':'Защита без потери света','Скління балкона':'Остекление балкона','Панорамний вигляд':'Панорамный вид','Скління офісу':'Остекление офиса','Відкрита архітектура':'Открытая архитектура',
+  'Тонкий профіль':'Тонкий профиль','Подвійне зонування':'Двойное зонирование','Для робочих просторів':'Для рабочих пространств','Петлі для скла':'Петли для стекла','Надійна механіка':'Надёжная механика','Ручки та замки':'Ручки и замки','Для дверей і душових':'Для дверей и душевых','Профілі':'Профили','Алюмінієві системи':'Алюминиевые системы','Фасадні профілі':'Фасадные профили','Для великих площ':'Для больших площадей','Loft профілі':'Loft-профили','Чорний архітектурний акцент':'Чёрный архитектурный акцент','Розсувні профілі':'Раздвижные профили','Для панорамних систем':'Для панорамных систем','Загартоване скло':'Закалённое стекло','Міцність і безпека':'Прочность и безопасность','Багатошарова безпека':'Многослойная безопасность','Матове скло':'Матовое стекло','Приватність і світло':'Приватность и свет',
+};
+const tr = (value: string) => locale === 'ru' ? (ruText[value] ?? value) : value;
 const localeSwitchPath = (targetLocale: 'uk' | 'ru') => {
   const unlocalizedPath = currentPath.replace(/^\/(uk|ru|en|de)(?=\/|$)/, '') || '/';
   if (targetLocale === 'ru' && !russianRoutes.has(unlocalizedPath)) return '/ru/';
@@ -292,46 +341,52 @@ const menuData = {
   }
 };
 
+const localizedMenuData = Object.fromEntries(Object.entries(menuData).map(([key, data]) => [key, {
+  ...data,
+  eyebrow: tr(data.eyebrow), title: tr(data.title), text: tr(data.text), button: tr(data.button), href: hrefForLocale(data.href),
+  popular: data.popular.map(([title, text, image, href]) => [tr(title), tr(text), image, hrefForLocale(href)])
+}]));
+
 ---
 <header class="site-header sg-header">
   <div class="container nav sg-nav">
-    <a class="brand-logo" href={lp("/")} aria-label="Space Glass — головна">
+    <a class="brand-logo" href={locale === 'ru' ? '/ru/' : '/uk/'} aria-label={`Space Glass — ${locale === 'ru' ? 'главная' : 'головна'}`}>
       <img src="/images/space-glass-brand-logo.jpg" width="220" height="178" alt="Space Glass" />
     </a>
 
     <button class="sg-mobile-toggle" type="button" aria-controls="sg-mobile-menu" aria-expanded="false" data-mobile-menu-button>
       <span></span><span></span><span></span>
-      <b>Menu</b>
+      <b>{locale === 'ru' ? 'Меню' : 'Меню'}</b>
     </button>
 
-    <nav class="nav__links sg-nav-links" aria-label="Головна навігація">
+    <nav class="nav__links sg-nav-links" aria-label={tr("Головна навігація")}>
       <div class="mega-trigger mega-trigger--catalog">
-        <a class="nav-link nav-link--catalog" href={lp("/catalog/")}>Каталог <span class="catalog-arrow">⌄</span></a>
+        <a class="nav-link nav-link--catalog" href={hrefForLocale("/catalog/")}>{tr("Каталог")} <span class="catalog-arrow">⌄</span></a>
 
         <div class="catalog-mega catalog-mega--dynamic" data-catalog-mega>
           <div class="catalog-mega__main">
             {menuGroups.map(section => (
               <section class="catalog-mega__column">
-                <h3>{section.icon} {section.section}</h3>
+                <h3>{section.icon} {tr(section.section)}</h3>
                 {section.groups.map(group => (
                   <div class="catalog-mega__group" data-menu-key={group.key}>
-                    <a class="catalog-mega__group-title" href={group.href}>{group.title}</a>
-                    {group.items.map(item => <a href={group.href}>{item}</a>)}
+                    <a class="catalog-mega__group-title" href={hrefForLocale(group.href)}>{tr(group.title)}</a>
+                    {group.items.map(item => <a href={hrefForLocale(group.href)}>{tr(item)}</a>)}
                   </div>
                 ))}
               </section>
             ))}
 
             <section class="catalog-mega__column catalog-mega__architecture">
-              <h3>◇ Архітектурні системи</h3>
+              <h3>◇ {tr("Архітектурні системи")}</h3>
               <div class="catalog-mega__architecture-list">
                 {architectureItems.map(([key,label,href]) => (
-                  <a href={href} data-menu-key={key}><span>{label}</span><b>›</b></a>
+                  <a href={hrefForLocale(href)} data-menu-key={key}><span>{tr(label)}</span><b>›</b></a>
                 ))}
               </div>
 
               <div class="catalog-mega__popular" data-popular-list>
-                {menuData.partitions.popular.map(([title,text,image,href]) => (
+                {localizedMenuData.partitions.popular.map(([title,text,image,href]) => (
                   <a href={href}>
                     <img src={image} width="84" height="66" alt="" loading="lazy" />
                     <span><b>{title}</b><small>{text}</small></span>
@@ -341,39 +396,33 @@ const menuData = {
             </section>
 
             <aside class="catalog-mega__promo" data-promo>
-              <img src={menuData.partitions.image} width="560" height="700" alt="Скляні перегородки Space Glass" data-promo-image />
+              <img src={localizedMenuData.partitions.image} width="560" height="700" alt={`${tr('Скляні перегородки')} Space Glass`} data-promo-image />
               <div class="catalog-mega__promo-overlay"></div>
               <div class="catalog-mega__promo-copy">
-                <p data-promo-eyebrow>{menuData.partitions.eyebrow}</p>
-                <h2 data-promo-title>{menuData.partitions.title}</h2>
-                <span data-promo-text>{menuData.partitions.text}</span>
-                <a class="button button--mint" href={menuData.partitions.href} data-promo-button>{menuData.partitions.button} →</a>
+                <p data-promo-eyebrow>{localizedMenuData.partitions.eyebrow}</p>
+                <h2 data-promo-title>{localizedMenuData.partitions.title}</h2>
+                <span data-promo-text>{localizedMenuData.partitions.text}</span>
+                <a class="button button--mint" href={localizedMenuData.partitions.href} data-promo-button>{localizedMenuData.partitions.button} →</a>
               </div>
             </aside>
           </div>
 
           <div class="catalog-mega__cities">
-            <strong>⌖ Пошук за містами</strong>
-            <a href="/city/kyiv/">Київ</a>
-            <a href="/city/lviv/">Львів</a>
-            <a href="/city/odesa/">Одеса</a>
-            <a href="#">Дніпро</a>
-            <a href="#">Харків</a>
-            <a href="#">Вінниця</a>
-            <a href="#">Івано-Франківськ</a>
-            <a href={lp("/catalog/")}>Вся Україна →</a>
+            <strong>⌖ {tr("Пошук за містами")}</strong>
+            {['Київ','Львів','Одеса','Дніпро','Харків','Вінниця','Івано-Франківськ'].map((city, index) => <a href={index < 3 ? hrefForLocale(`/city/${['kyiv','lviv','odesa'][index]}/`) : hrefForLocale('/catalog/')}>{tr(city)}</a>)}
+            <a href={hrefForLocale("/catalog/")}>{tr("Вся Україна")} →</a>
           </div>
 
           <div class="catalog-mega__benefits">
-            <div><span>⚙</span><b>Власне виробництво</b><small>Сучасне обладнання</small></div>
-            <div><span>◇</span><b>{t.warrantyShort ?? 'Гарантія 2 роки'}</b><small>На конструкції та монтаж</small></div>
-            <div><span>♙</span><b>Професійний монтаж</b><small>Досвідчені бригади</small></div>
-            <div><img src="/images/icons/delivery-truck.png" alt="" width="42" height="30" /><b>Доставка по Україні</b><small>Надійно та в строк</small></div>
+            <div><span>⚙</span><b>{tr('Власне виробництво')}</b><small>{tr('Сучасне обладнання')}</small></div>
+            <div><span>◇</span><b>{t.warrantyShort}</b><small>{tr('На конструкції та монтаж')}</small></div>
+            <div><span>♙</span><b>{tr('Професійний монтаж')}</b><small>{tr('Досвідчені бригади')}</small></div>
+            <div><img src="/images/icons/delivery-truck.png" alt="" width="42" height="30" /><b>{tr('Доставка по Україні')}</b><small>{tr('Надійно та в строк')}</small></div>
           </div>
         </div>
       </div>
 
-      {links.map(([label, href]) => <a class="nav-link" href={lp(href)}>{label}</a>)}
+      {links.map(([label, href]) => <a class="nav-link" href={hrefForLocale(href)}>{label}</a>)}
     </nav>
 
     <div class="nav__actions sg-nav-actions">
@@ -398,14 +447,14 @@ const menuData = {
         </div>
       </div>
 
-      <a class="nav-icon" href={lp("/catalog/")} aria-label="Пошук">⌕</a>
-      <a class="nav-icon nav-icon--compare" href={lp("/compare/")} aria-label="Порівняння">
+      <a class="nav-icon" href={hrefForLocale("/catalog/")} aria-label={tr("Пошук")}>⌕</a>
+      <a class="nav-icon nav-icon--compare" href={hrefForLocale("/compare/")} aria-label={tr("Порівняння")}>
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M7 4v16M17 4v16M4 8h6M14 16h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
         </svg>
         <small data-compare-header-count>0</small>
       </a>
-      <a class="nav-icon nav-icon--cart" href={lp("/cart/")} aria-label="Кошик">
+      <a class="nav-icon nav-icon--cart" href={hrefForLocale("/cart/")} aria-label={tr("Кошик")}>
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21 8H7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           <circle cx="10" cy="20" r="1.4" fill="currentColor"/>
@@ -413,18 +462,18 @@ const menuData = {
         </svg>
         <small data-project-header-count>0</small>
       </a>
-      <a class="nav-icon" href="tel:+380734251400" aria-label="Зателефонувати">☎</a>
-      <a class="button button--mint sg-header-cta" href={lp("/contacts/")}>{t.quote}</a>
+      <a class="nav-icon" href="tel:+380734251400" aria-label={tr("Зателефонувати")}>☎</a>
+      <a class="button button--mint sg-header-cta" href={hrefForLocale("/contacts/")}>{t.quote}</a>
     </div>
   </div>
   <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden>
     <div class="sg-mobile-menu__panel">
-      <a class="sg-mobile-menu__primary" href={lp("/catalog/")}>Каталог</a>
-      {links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}
-      <a href={lp("/compare/")}>Порівняння</a>
-      <a href={lp("/cart/")}>Кошик</a>
+      <a class="sg-mobile-menu__primary" href={hrefForLocale("/catalog/")}>{tr('Каталог')}</a>
+      {links.map(([label, href]) => <a href={hrefForLocale(href)}>{label}</a>)}
+      <a href={hrefForLocale("/compare/")}>{tr('Порівняння')}</a>
+      <a href={hrefForLocale("/cart/")}>{tr('Кошик')}</a>
       <a href="tel:+380734251400">+38 (073) 425 14 00</a>
-      <a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a>
+      <a class="button button--mint" href={hrefForLocale("/contacts/")}>{t.quote}</a>
     </div>
   </div>
 </header>
@@ -468,7 +517,7 @@ const menuData = {
   setInterval(updateProjectHeaderCount, 1500);
 </script>
 
-<script define:vars={{ menuData }}>
+<script define:vars={{ menuData: localizedMenuData }}>
   const mega = document.querySelector('[data-catalog-mega]');
 
   if (mega) {
