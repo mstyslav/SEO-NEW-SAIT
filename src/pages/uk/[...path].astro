@@ -16,6 +16,8 @@ const generatedPaths = Object.keys(modules)
     (file) =>
       !excluded.test(file) &&
       !file.includes('[') &&
+      file !== '../catalog/index.astro' &&
+      file !== '../rishennya/index.astro' &&
       !file.endsWith('../index.astro')
   )
   .map((file) => {
