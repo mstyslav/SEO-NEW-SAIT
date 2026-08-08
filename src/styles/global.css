@@ -275,6 +275,8 @@ body{background:#202020}
 .sg-benefits div{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:center;padding:0 24px;border-right:1px solid var(--line)}
 .sg-benefits div:last-child{border:0}
 .sg-benefits span{grid-row:1/3;font-size:32px;color:var(--mint-dark)}
+.sg-benefits span svg{width:36px;height:36px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sg-benefits span img{display:block;width:42px;height:30px;object-fit:contain}
 .sg-benefits b,.sg-benefits small{display:block}.sg-benefits small{color:var(--muted)}
 
 .sg-categories{padding:16px 58px 26px}
@@ -3515,6 +3517,31 @@ linear-gradient(135deg,#fff,#eff9f4);background-size:36px 36px}
   min-height:auto;
   border:1px solid var(--mint);
   border-radius:4px;
+  background:#f7faf8;
+}
+
+.footer-refined__benefit--delivery{
+  background:#f7faf8;
+  border-color:var(--mint);
+}
+
+.footer-refined__benefit--delivery b,
+.footer-refined__quote b{
+  color:#102018;
+}
+
+.footer-refined__benefit--delivery small,
+.footer-refined__quote small{
+  color:#52615a;
+}
+
+/* Light footer controls must not inherit dark icon tiles from legacy themes. */
+.footer-refined__benefit--delivery svg,
+.footer-refined__benefit--delivery img,
+.footer-refined__quote svg,
+.footer-refined__call span{
+  background:transparent!important;
+  box-shadow:none!important;
 }
 
 /* Main footer menu */
@@ -3539,7 +3566,11 @@ linear-gradient(135deg,#fff,#eff9f4);background-size:36px 36px}
 .footer-refined__col,.footer-refined__contacts{display:grid;align-content:start;gap:10px}
 .footer-refined__col>strong,.footer-refined__contacts>strong{margin-bottom:8px;color:var(--mint);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 .footer-refined__col a,.footer-refined__contacts a,.footer-refined__contacts>span{display:flex;gap:9px;align-items:flex-start;color:#aeb4b0;font-size:11.4px;line-height:1.38}
-.footer-refined__call{justify-content:center;align-items:center!important;min-height:50px;margin-top:16px;padding:0 16px;border:1px solid var(--mint);border-radius:4px;color:#fff!important}
+.footer-refined__call{justify-content:center;align-items:center!important;min-height:50px;margin-top:16px;padding:0 16px;border:1px solid var(--mint);border-radius:4px;background:#f7faf8;color:#102018!important}
+
+.footer-refined__call{
+  background:#f7faf8!important;
+}
 
 /* Product strip icons */
 .footer-refined__products{padding:28px 0 30px;border-bottom:1px solid #202622}
@@ -5648,6 +5679,14 @@ linear-gradient(135deg,#fff,#eff9f4);background-size:36px 36px}
 .nav-icon--compare svg{
   width:22px;
   height:22px;
+}
+
+.sg-header .nav-icon--cart,
+.sg-header .nav-icon--compare,
+.sg-header .nav-icon--cart svg,
+.sg-header .nav-icon--compare svg{
+  background:transparent!important;
+  box-shadow:none!important;
 }
 
 /* Printable PDF page */
