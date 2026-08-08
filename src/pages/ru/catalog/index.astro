@@ -1,3 +1,58 @@
 ---
-return Astro.redirect('/catalog/?lang=ru');
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import catalog from '../../../data/catalog.json';
+import productData from '../../../data/products.json';
+
+const categoryCopy = [
+  ['Душевые кабины','Walk-in, угловые, в нишу, раздвижные и индивидуальные решения',['Walk-in','Угловые','В нишу','Раздвижные','Шторки для ванны','Душевые двери']],
+  ['Стеклянные перегородки','Loft, офисные, межкомнатные, раздвижные и цельностеклянные системы',['Loft','Офисные','Межкомнатные','Раздвижные','Телескопические','Pivot']],
+  ['Стеклянные двери','Распашные, раздвижные, маятниковые и скрытые системы',['Распашные','Раздвижные','Маятниковые','Pivot','В профиле','Безрамные']],
+  ['Стеклянные ограждения','Лестницы, балконы, террасы и бассейны',['Лестницы','Балконы','Террасы','Бассейны','Безрамные','На стойках']],
+  ['Зеркала','LED, в раме, панно, настенные и индивидуальные формы',['LED','В раме','Панно','Настенные','Фигурные','Для ванной']],
+  ['Алюминиевые конструкции','Окна, двери, фасады, зимние сады и раздвижные системы',['Окна','Двери','Раздвижные','Фасады','Зимние сады','Перголы']],
+  ['Архитектурные системы','Безрамное остекление, фасады, Loft-системы, профили, фурнитура и специальные решения',['Безрамное остекление','Loft-системы','Стеклянные фасады','Профильные системы','Стекло и материалы','Фурнитура']]
+];
+const categories = catalog.categories.map((category, index) => ({...category,title:categoryCopy[index][0],subtitle:categoryCopy[index][1],items:categoryCopy[index][2]}));
+const productCategories = {'Душові кабіни':'Душевые кабины','Перегородки':'Перегородки','Скляні двері':'Стеклянные двери','Огорожі':'Ограждения','Дзеркала':'Зеркала'};
+const products = productData.products.map((product) => ({...product,category:productCategories[product.category] ?? product.category,availabilityLabel:'Под заказ'}));
 ---
+<BaseLayout title="Каталог Space Glass" description="Каталог душевых кабин, перегородок, дверей, ограждений, зеркал и алюминиевых конструкций Space Glass." locale="ru">
+<div class="sg-page-shell">
+  <Header locale="ru" />
+  <main id="main">
+    <section class="catalog-v14-hero">
+      <div><p class="eyebrow">Каталог</p><h1>Стеклянные и алюминиевые решения</h1><p class="lead">Готовые товары, индивидуальные конструкции, доставка по Украине и монтаж в ключевых городах.</p></div>
+      <div class="catalog-v14-search"><input type="search" placeholder="Поиск по каталогу" /><button class="button button--mint">Найти</button></div>
+    </section>
+
+    <section class="catalog-v14-categories">
+      {categories.map((category,i)=><a href="/ru/"><span>{String(i+1).padStart(2,'0')}</span><h2>{category.title}</h2><p>{category.subtitle}</p><ul>{category.items.slice(0,4).map(item=><li>{item}</li>)}</ul><b>Перейти →</b></a>)}
+    </section>
+
+    <section class="catalog-v14-products">
+      <div class="category-heading"><div><p class="eyebrow">Популярные товары</p><h2>Решения, которые выбирают чаще всего</h2></div><select><option>Сначала популярные</option><option>Цена по возрастанию</option></select></div>
+      <div class="catalog-product-grid">
+        {products.map((product,i)=><a class="catalog-product" href="/ru/">
+          <div class="catalog-product__media">
+            <span>{String(i+1).padStart(2,'0')}</span>
+            <div class="catalog-product__badges">
+              {product.badges.includes('top') && <em>ТОП</em>}
+              {product.badges.includes('hit') && <em>ХИТ</em>}
+            </div>
+          </div>
+          <div class="catalog-product__body">
+            <small>{product.category}</small>
+            <span class="catalog-product__availability">● {product.availabilityLabel}</span>
+            <h3>{product.name}</h3>
+            <strong>от {product.priceFrom}</strong>
+            <b>Подробнее →</b>
+          </div>
+        </a>)}
+      </div>
+    </section>
+  </main>
+  <Footer locale="ru" />
+</div>
+</BaseLayout>
