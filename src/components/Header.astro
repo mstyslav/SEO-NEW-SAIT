@@ -19,6 +19,7 @@ const russianRoutes = new Set([
   '/bezramne-configurator/',
   '/cart/',
   '/catalog/',
+  '/rishennya/',
   '/compare/',
   '/contacts/',
   '/dzerkala-configurator/',
@@ -38,7 +39,7 @@ const localeSwitchPath = (targetLocale: 'uk' | 'ru') => {
 
 const links = [
   [t.services, locale === 'uk' ? '/poslugy/' : '/services/'],
-  [t.solutions, '/catalog/'],
+  [t.solutions, '/rishennya/'],
   [t.projects, '/projects/'],
   [t.knowledge, '/knowledge/'],
   [t.about, '/about/'],

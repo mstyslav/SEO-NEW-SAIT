@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const solutions = [
+  ['Для квартири', 'Душові, перегородки, двері, дзеркала та огорожі для сучасної квартири.', '/images/v5/project-1.webp', '/rishennya/dlya-kvartyry/'],
+  ['Для приватного будинку', 'Сходи, тераси, душові, перегородки, фасади та вхідні системи.', '/images/v5/project-2.webp', '/rishennya/dlya-budynku/'],
+  ['Для офісу', 'Офісні перегородки, двері, мобільні системи та фасадне скління.', '/images/v5/project-3.webp', '/rishennya/dlya-ofisu/'],
+  ['Для готелю', 'Душові, огорожі, перегородки, дзеркала й фасадні системи для HoReCa.', '/images/v5/project-4.webp', '/rishennya/dlya-hotelyu/'],
+  ['Для ресторану', 'Перегородки, фасади, двері, тераси, дзеркала та декоративне скло.', '/images/s19/menu-loft.webp', '/rishennya/dlya-restoranu/']
+];
+---
+<BaseLayout title="Готові рішення Space Glass" description="Готові скляні рішення Space Glass для квартир, будинків, офісів, готелів і ресторанів.">
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main">
+      <section class="projects-v14-hero">
+        <p class="eyebrow">Готові рішення</p>
+        <h1>Скляні рішення для вашого простору</h1>
+        <p class="lead">Оберіть тип об’єкта, щоб переглянути комплексний підхід до проєктування, виготовлення та монтажу.</p>
+      </section>
+      <section class="projects-v14-grid" aria-label="Рішення за типом простору">
+        {solutions.map(([title, description, image, href]) => <a href={href}>
+          <div><img src={image} alt={title} width="640" height="416" loading="lazy" /></div>
+          <small>Готове рішення</small>
+          <h2>{title}</h2>
+          <p>{description}</p>
+          <b>Переглянути рішення →</b>
+        </a>)}
+      </section>
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>
