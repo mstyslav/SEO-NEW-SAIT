@@ -1,0 +1,60 @@
+name: Site QA
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-qa-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check imports
+        run: npm run check:imports
+
+      - name: Check routes
+        run: npm run check:routes
+
+      - name: Check links
+        run: npm run check:links
+
+      - name: Check configurators
+        run: npm run check:configurator
+
+      - name: Check SEO pages
+        run: npm run check:seo
+
+      - name: Build production site
+        run: npm run build
+
+      - name: Upload preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview-${{ github.event.pull_request.number || github.sha }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
+
