@@ -12,3 +12,69 @@ const { title, description, updated = '4 серпня 2026' } = Astro.props;
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  .legal-page {
+    background: #f3f8f7;
+    color: #152421;
+    padding-bottom: clamp(64px, 8vw, 112px);
+  }
+
+  .legal-page__hero {
+    background:
+      radial-gradient(circle at 85% 20%, rgba(73, 220, 190, 0.2), transparent 32%),
+      linear-gradient(135deg, #f8fffd 0%, #e7f5f1 100%);
+    border-bottom: 1px solid rgba(20, 103, 91, 0.14);
+    padding: clamp(72px, 9vw, 128px) 0 clamp(48px, 6vw, 78px);
+  }
+
+  .legal-page__hero h1 {
+    color: #10201d;
+    margin: 12px 0 16px;
+  }
+
+  .legal-page__hero p:last-child {
+    color: #52645f;
+    margin: 0;
+  }
+
+  .legal-page__content {
+    background: #fff;
+    border: 1px solid rgba(20, 103, 91, 0.12);
+    border-radius: 28px;
+    box-shadow: 0 24px 70px rgba(16, 50, 44, 0.08);
+    margin-top: clamp(32px, 5vw, 64px);
+    max-width: 980px;
+    padding: clamp(32px, 6vw, 72px);
+  }
+
+  .legal-page__content :global(h2) {
+    color: #123f38;
+    font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+    margin: 42px 0 14px;
+  }
+
+  .legal-page__content :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .legal-page__content :global(p),
+  .legal-page__content :global(li) {
+    color: #334b46;
+    line-height: 1.8;
+  }
+
+  .legal-page__content :global(a) {
+    color: #087f70;
+    font-weight: 650;
+    text-decoration-color: rgba(8, 127, 112, 0.35);
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 640px) {
+    .legal-page__content {
+      border-radius: 20px;
+      width: calc(100% - 32px);
+    }
+  }
+</style>

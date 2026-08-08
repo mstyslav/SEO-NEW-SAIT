@@ -1,3 +1,212 @@
 ---
-return Astro.redirect('/contacts/?lang=ru');
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+
+const offices = [
+  {
+    id: 'odesa',
+    city: 'Одесса',
+    address: 'ул. Глиняная, 5',
+    phone: '+38 (073) 425 14 00',
+    email: 'info@space-glass.com.ua',
+    hours: 'Пн–Пт: 09:00–19:00',
+    query: 'Одесса, ул. Глиняная, 5'
+  },
+  {
+    id: 'kyiv',
+    city: 'Киев',
+    address: 'ул. Лауреатская, 8',
+    phone: '+38 (073) 425 14 00',
+    email: 'info@space-glass.com.ua',
+    hours: 'Пн–Пт: 09:00–19:00',
+    query: 'Киев, ул. Лауреатская, 8'
+  },
+  {
+    id: 'lviv',
+    city: 'Львов',
+    address: 'ул. Кульпарковская, 144',
+    phone: '+38 (073) 425 14 00',
+    email: 'info@space-glass.com.ua',
+    hours: 'Пн–Пт: 09:00–19:00',
+    query: 'Львов, ул. Кульпарковская, 144'
+  }
+];
 ---
+<BaseLayout title="Контакты Space Glass" description="Офисы Space Glass в Киеве, Одессе и Львове. Телефон, email, график и Google Maps." locale="ru">
+<div class="sg-page-shell">
+  <Header locale="ru" />
+  <main id="main">
+    <section class="contacts-v15-hero">
+      <div>
+        <p class="eyebrow">Контакты</p>
+        <h1>Обсудим ваш проект</h1>
+        <p class="lead">Отправьте фото, примерные размеры или чертёж — подготовим предварительную оценку.</p>
+      </div>
+      <form class="quote-form contacts-v15-form" data-lead-form data-success-url="/ru/">
+        <div class="contacts-form-grid">
+          <label>Имя<input name="name" type="text" autocomplete="name" placeholder="Ваше имя" required /></label>
+          <label>Телефон<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
+        </div>
+        <label>Город<input name="city" autocomplete="address-level2" type="text" placeholder="Киев, Львов, Одесса..." /></label>
+        <label>Что требуется<textarea name="comment" rows="5" placeholder="Кратко опишите конструкцию"></textarea></label>
+        <label class="contacts-file-field">Фото или чертёж<input name="attachment" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf,.dwg" /></label>
+        <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>Соглашаюсь с <a href="/ru/">политикой конфиденциальности</a>.</span></label>
+        <button class="button button--mint" type="submit">Отправить запрос</button>
+        <p data-form-status hidden role="status"></p>
+      </form>
+    </section>
+
+    <section class="contacts-v15-section">
+      <div class="contacts-v15-head">
+        <div>
+          <p class="eyebrow">Наши офисы</p>
+          <h2>Выберите город</h2>
+        </div>
+        <p>Контакты, график работы и интерактивная Google Map меняются без перезагрузки страницы.</p>
+      </div>
+
+      <div class="contacts-tabs" data-contact-tabs>
+        <div class="contacts-tabs__buttons" role="tablist" aria-label="Офисы Space Glass">
+          {offices.map((office, index) => (
+            <button
+              class:list={['contacts-tab-button', index === 0 && 'is-active']}
+              type="button"
+              role="tab"
+              id={`office-tab-${office.id}`}
+              aria-controls={`office-panel-${office.id}`}
+              aria-selected={index === 0 ? 'true' : 'false'}
+              tabindex={index === 0 ? '0' : '-1'}
+              data-office-button={office.id}>
+              {office.city}
+            </button>
+          ))}
+        </div>
+
+        <div class="contacts-tabs__shell">
+          {offices.map((office, index) => (
+            <article
+              class:list={['contacts-office-panel', index === 0 && 'is-active']}
+              id={`office-panel-${office.id}`}
+              role="tabpanel"
+              aria-labelledby={`office-tab-${office.id}`}
+              hidden={index !== 0}
+              data-office-panel={office.id}>
+              <div class="contacts-office-info">
+                <p class="eyebrow">{office.city}</p>
+                <h3>{office.address}</h3>
+
+                <div class="contacts-office-info__rows">
+                  <div>
+                    <span>Телефон</span>
+                    <a href={`tel:${office.phone.replace(/\s|\(|\)|-/g,'')}`}>{office.phone}</a>
+                  </div>
+                  <div>
+                    <span>Email</span>
+                    <a href={`mailto:${office.email}`}>{office.email}</a>
+                  </div>
+                  <div>
+                    <span>График</span>
+                    <b>{office.hours}</b>
+                  </div>
+                </div>
+
+                <div class="contacts-office-actions">
+                  <a
+                    class="button button--mint"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(office.query)}`}>
+                    Проложить маршрут
+                  </a>
+                  <a
+                    class="button button--outline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.query)}`}>
+                    Открыть карту
+                  </a>
+                </div>
+
+                <div class="contacts-social-mini" aria-label="Социальные сети Space Glass">
+
+<a href="https://www.instagram.com/spaceglass_od/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+    <circle cx="12" cy="12" r="4"></circle>
+    <circle cx="17.5" cy="6.5" r="1"></circle>
+  </svg>
+</a>
+<a href="https://t.me/spaceglass" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M21 4 3.8 10.6c-.8.3-.8 1.4 0 1.7l4.3 1.4 1.6 5c.2.7 1.1.9 1.6.4l2.4-2.5 4.1 3c.6.4 1.4.1 1.6-.6L22 5.2c.2-.8-.3-1.4-1-1.2Z"></path>
+    <path d="m8.1 13.7 9.8-6.2-7.6 8.1"></path>
+  </svg>
+</a>
+<a href="https://www.tiktok.com/@spaceglass_od" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M14 3v10.2a4.4 4.4 0 1 1-3.8-4.4"></path>
+    <path d="M14 3c.6 2.6 2.2 4.2 4.8 4.8"></path>
+  </svg>
+</a>
+<a href="https://www.facebook.com/spaceglass.od" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M14 8h3V4.5c-.6-.1-1.8-.2-3.2-.2-3.1 0-5.2 1.9-5.2 5.4V13H5v4h3.6v7H13v-7h3.6l.6-4H13v-3c0-1.2.3-2 1-2Z"></path>
+  </svg>
+</a>
+<a href="https://www.youtube.com/@spaceglass5552" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M21 8.2a3 3 0 0 0-2.1-2.1C17 5.6 12 5.6 12 5.6s-5 0-6.9.5A3 3 0 0 0 3 8.2 31 31 0 0 0 2.6 12 31 31 0 0 0 3 15.8a3 3 0 0 0 2.1 2.1c1.9.5 6.9.5 6.9.5s5 0 6.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-3.8 31 31 0 0 0-.4-3.8Z"></path>
+    <path d="m10 9 5 3-5 3V9Z"></path>
+  </svg>
+</a>
+
+                </div>
+              </div>
+
+              <div class="contacts-office-map">
+                <iframe
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(office.query)}&output=embed`}
+                  title={`Карта офиса Space Glass — ${office.city}`}
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  allowfullscreen>
+                </iframe>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer locale="ru" />
+</div>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll('[data-contact-tabs]').forEach((tabs) => {
+    const buttons = tabs.querySelectorAll('[data-office-button]');
+    const panels = tabs.querySelectorAll('[data-office-panel]');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const office = button.getAttribute('data-office-button');
+
+        buttons.forEach((item) => {
+          const active = item === button;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-selected', String(active));
+          item.setAttribute('tabindex', active ? '0' : '-1');
+        });
+
+        panels.forEach((panel) => {
+          panel.classList.toggle(
+            'is-active',
+            panel.getAttribute('data-office-panel') === office
+          );
+          panel.hidden = panel.getAttribute('data-office-panel') !== office;
+        });
+      });
+    });
+  });
+</script>
