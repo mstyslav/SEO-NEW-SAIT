@@ -9,4 +9,4 @@ const source = `../../${Astro.params.path}.astro`;
 const Page = pages[source]?.default;
 if (!Page) return Astro.redirect('/');
 ---
-<Page locale={Astro.url.pathname.split('/')[1]} />
+<Page locale="ru" />

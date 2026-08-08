@@ -1,8 +1,22 @@
 ---
 import LegalStructuredPage from '../components/LegalStructuredPage.astro';
-import { legalUpdated, publicOfferSections } from '../data/legal-pages';
-const toc = publicOfferSections.map(([title]) => ({ id: title.toLowerCase().replace(/[^а-яіїєґa-z0-9]+/g, '-').replace(/^-|-$/g, ''), label: title }));
+import { legalUpdated, publicOfferSections, publicOfferSectionsRu } from '../data/legal-pages';
+import { localeFromPath, normalizeLocale } from '../i18n/helpers';
+
+const locale = normalizeLocale(Astro.props.locale ?? localeFromPath(Astro.url.pathname));
+const isRussian = locale === 'ru';
+const sections = isRussian ? publicOfferSectionsRu : publicOfferSections;
+const title = isRussian ? 'Договор публичной оферты' : 'Договір публічної оферти';
+const description = isRussian
+  ? 'Условия дистанционного заказа, оплаты, изготовления, доставки, ответственности сторон и возврата товаров и стеклянных конструкций Space Glass.'
+  : 'Умови дистанційного замовлення, оплати, виготовлення, доставки, відповідальності сторін та повернення товарів і скляних конструкцій Space Glass.';
+const toc = sections.map(([heading], index) => ({ id: `section-${index + 1}`, label: heading }));
 ---
-<LegalStructuredPage title="Договір публічної оферти" seoTitle="Договір публічної оферти | Space Glass" description="Умови дистанційного замовлення, оплати, виготовлення, доставки, відповідальності сторін та повернення товарів і скляних конструкцій Space Glass." updated={legalUpdated} toc={toc}>
-  {publicOfferSections.map(([heading, paragraphs], index) => <section id={toc[index].id}><h2>{heading}</h2>{paragraphs.map((text) => <p>{text}</p>)}</section>)}
+<LegalStructuredPage title={title} seoTitle={`${title} | Space Glass`} description={description} updated={isRussian ? '4 августа 2026' : legalUpdated} toc={toc} locale={locale}>
+  {sections.map(([heading, paragraphs], index) => (
+    <section id={toc[index].id}>
+      <h2>{heading}</h2>
+      {paragraphs.map((text) => <p>{text}</p>)}
+    </section>
+  ))}
 </LegalStructuredPage>

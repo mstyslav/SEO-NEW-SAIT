@@ -67,6 +67,26 @@ import { localeFromPath, localizedPath, normalizeLocale } from '../i18n/helpers'
 
 const locale = normalizeLocale(Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
 const lp = (path: string) => localizedPath(path, locale);
+const legalPath = (path: string) => locale === 'ru' ? localizedPath(path, 'ru') : locale === 'uk' ? localizedPath(path, 'uk') : path;
+const legalLabels = locale === 'ru'
+  ? {
+      privacy: 'Политика конфиденциальности',
+      cookies: 'Политика использования Cookie',
+      offer: 'Договор публичной оферты',
+      delivery: 'Оплата и доставка',
+      warranty: 'Условия гарантии',
+      returns: 'Возврат товара',
+      contacts: 'Контакты'
+    }
+  : {
+      privacy: 'Політика конфіденційності',
+      cookies: 'Політика використання Cookie',
+      offer: 'Договір публічної оферти',
+      delivery: 'Оплата і доставка',
+      warranty: 'Умови гарантії',
+      returns: 'Повернення товару',
+      contacts: 'Контакти'
+    };
 ---
 <footer class="site-footer footer-refined">
   <div class="footer-refined__benefits">
@@ -215,13 +235,13 @@ const lp = (path: string) => localizedPath(path, locale);
   <div class="footer-refined__bottom">
     <span>© 2026 Space Glass. Усі права захищені.</span>
     <div>
-      <a href={lp("/privacy/")}>Політика конфіденційності</a>
-      <a href={lp("/cookies/")}>Політика використання Cookie</a>
-      <a href={lp("/publichna-oferta/")}>Договір публічної оферти</a>
-      <a href={lp("/services/dostavka/")}>Оплата і доставка</a>
-      <a href={lp("/harantiia/")}>Умови гарантії</a>
-      <a href={lp("/povernennia/")}>Повернення товару</a>
-      <a href={lp("/contacts/")}>Контакти</a>
+      <a href={legalPath('/privacy/')}>{legalLabels.privacy}</a>
+      <a href={legalPath('/cookies/')}>{legalLabels.cookies}</a>
+      <a href={legalPath('/publichna-oferta/')}>{legalLabels.offer}</a>
+      <a href="/services/dostavka/">{legalLabels.delivery}</a>
+      <a href={legalPath('/harantiia/')}>{legalLabels.warranty}</a>
+      <a href={legalPath('/povernennia/')}>{legalLabels.returns}</a>
+      <a href="/contacts/">{legalLabels.contacts}</a>
     </div>
     <span>Розробка сайту — Space Glass</span>
   </div>

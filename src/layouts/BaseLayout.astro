@@ -8,10 +8,11 @@ interface Props {
   image?: string;
   schemaType?: 'Organization' | 'WebSite' | 'WebPage' | 'CollectionPage' | 'AboutPage' | 'ContactPage' | 'Service' | 'Article' | 'CreativeWork';
   structuredData?: import('../seo/schema').JsonLdObject | import('../seo/schema').JsonLdObject[];
+  alternateLocales?: import('../i18n/helpers').Locale[];
 }
 
 
-const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [] } = Astro.props;
+const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales = supportedLocales } = Astro.props;
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales } from '../i18n/helpers';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
@@ -48,10 +49,7 @@ const schema = jsonLdGraph([
     <meta name="theme-color" content="#ffffff" />
     <title>{title}</title>
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="uk" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="ru" href={new URL(localizedPath(basePath, 'ru'), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="en" href={new URL(localizedPath(basePath, 'en'), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="de" href={new URL(localizedPath(basePath, 'de'), Astro.site ?? Astro.url.origin)} />
+    {alternateLocales.map((item) => <link rel="alternate" hreflang={item} href={new URL(localizedPath(basePath, item), Astro.site ?? Astro.url.origin)} />)}
     <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Space Glass" />
@@ -60,7 +58,7 @@ const schema = jsonLdGraph([
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
     <meta property="og:locale" content={localeNames[resolvedLocale]} />
-    {supportedLocales.filter((item) => item !== resolvedLocale).map((item) => <meta property="og:locale:alternate" content={localeNames[item]} />)}
+    {alternateLocales.filter((item) => item !== resolvedLocale).map((item) => <meta property="og:locale:alternate" content={localeNames[item]} />)}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
