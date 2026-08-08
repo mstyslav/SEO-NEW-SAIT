@@ -299,6 +299,11 @@ const menuData = {
       <img src="/images/space-glass-brand-logo.jpg" width="220" height="178" alt="Space Glass" />
     </a>
 
+    <button class="sg-mobile-toggle" type="button" aria-controls="sg-mobile-menu" aria-expanded="false" data-mobile-menu-button>
+      <span></span><span></span><span></span>
+      <b>Menu</b>
+    </button>
+
     <nav class="nav__links sg-nav-links" aria-label="Головна навігація">
       <div class="mega-trigger mega-trigger--catalog">
         <a class="nav-link nav-link--catalog" href={lp("/catalog/")}>Каталог <span class="catalog-arrow">⌄</span></a>
@@ -372,16 +377,7 @@ const menuData = {
     </nav>
 
     <div class="nav__actions sg-nav-actions">
-      <a class="nav-icon" href={lp("/catalog/")} aria-label="Пошук">⌕</a>
-      <a class="nav-icon nav-icon--cart" href={lp("/cart/")} aria-label="Кошик">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21 8H7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="10" cy="20" r="1.4" fill="currentColor"/>
-          <circle cx="18" cy="20" r="1.4" fill="currentColor"/>
-        </svg>
-        <small data-project-header-count>0</small>
-      </a>
-
+      
       <div class="language-switcher" data-language-switcher>
         <button class="language-switcher__button" type="button" aria-haspopup="true" aria-expanded="false" data-language-button>
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -401,22 +397,32 @@ const menuData = {
           ))}
         </div>
       </div>
+
+      <a class="nav-icon" href={lp("/catalog/")} aria-label="Пошук">⌕</a>
+      <a class="nav-icon nav-icon--compare" href={lp("/compare/")} aria-label="Порівняння">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 4v16M17 4v16M4 8h6M14 16h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <small data-compare-header-count>0</small>
+      </a>
+      <a class="nav-icon nav-icon--cart" href={lp("/cart/")} aria-label="Кошик">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21 8H7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="20" r="1.4" fill="currentColor"/>
+          <circle cx="18" cy="20" r="1.4" fill="currentColor"/>
+        </svg>
+        <small data-project-header-count>0</small>
+      </a>
+      <a class="nav-icon" href="tel:+380734251400" aria-label="Зателефонувати">☎</a>
       <a class="button button--mint sg-header-cta" href={lp("/contacts/")}>{t.quote}</a>
     </div>
-
-    <button class="sg-mobile-toggle" type="button" aria-controls="sg-mobile-menu" aria-expanded="false" data-mobile-menu-button>
-      <span></span><span></span><span></span>
-      <b>Menu</b>
-    </button>
   </div>
   <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden>
     <div class="sg-mobile-menu__panel">
       <a class="sg-mobile-menu__primary" href={lp("/catalog/")}>Каталог</a>
       {links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}
+      <a href={lp("/compare/")}>Порівняння</a>
       <a href={lp("/cart/")}>Кошик</a>
-      {Object.entries(i18nConfig.locales).filter(([code]) => code === 'uk' || code === 'ru').map(([code, item]) => (
-        <a href={localeSwitchPath(code as 'uk' | 'ru')} hreflang={code} lang={code}>{item.label}</a>
-      ))}
       <a href="tel:+380734251400">+38 (073) 425 14 00</a>
       <a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a>
     </div>
