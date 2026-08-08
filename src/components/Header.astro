@@ -15,9 +15,18 @@ const localizedRoutes = new Set([
   '/peregorodky-configurator/', '/projects/', '/quote/', '/services/',
   '/sklyani-perehorodky/ofisni/'
 ]);
+const russianRoutes = new Set([
+  '/', '/bezramne-configurator/', '/dzerkala-configurator/', '/fasadne-configurator/',
+  '/loft-configurator/', '/ogorozhi-configurator/', '/oplata-dostavka/',
+  '/peregorodky-configurator/', '/projects/', '/services/',
+  '/sklyani-perehorodky/ofisni/'
+]);
 // Localized editions currently expose a deliberately smaller route set. Never
 // manufacture a localized URL that Astro cannot serve.
-const lp = (path: string) => locale === 'uk' || localizedRoutes.has(path)
+const routeKey = (path: string) => path.split(/[?#]/, 1)[0] || '/';
+const localeHasRoute = (targetLocale: 'uk' | 'ru' | 'en' | 'de', path: string) =>
+  targetLocale === 'uk' || (targetLocale === 'ru' ? russianRoutes : localizedRoutes).has(routeKey(path));
+const lp = (path: string) => localeHasRoute(locale, path)
   ? localizedPath(path, locale)
   : localizedPath('/', locale);
 
@@ -26,7 +35,7 @@ const lp = (path: string) => locale === 'uk' || localizedRoutes.has(path)
 // rather than sending them to a 404 for Ukrainian-only content.
 const localeSwitchPath = (targetLocale: 'uk' | 'ru' | 'en' | 'de') => {
   const unlocalizedPath = currentPath.replace(/^\/(uk|ru|en|de)(?=\/|$)/, '') || '/';
-  if (targetLocale !== 'uk' && !localizedRoutes.has(unlocalizedPath)) return localizedPath('/', targetLocale);
+  if (!localeHasRoute(targetLocale, unlocalizedPath)) return localizedPath('/', targetLocale);
   return localizedPath(currentPath, targetLocale);
 };
 
@@ -285,6 +294,11 @@ const menuData = {
     ]
   }
 };
+const routedMenuData = Object.fromEntries(Object.entries(menuData).map(([key, data]) => [key, {
+  ...data,
+  href: lp(data.href),
+  popular: data.popular.map(([title, text, image, href]) => [title, text, image, lp(href)])
+}]));
 
 ---
 <header class="site-header sg-header">
@@ -309,8 +323,8 @@ const menuData = {
                 <h3>{section.icon} {section.section}</h3>
                 {section.groups.map(group => (
                   <div class="catalog-mega__group" data-menu-key={group.key}>
-                    <a class="catalog-mega__group-title" href={group.href}>{group.title}</a>
-                    {group.items.map(item => <a href={group.href}>{item}</a>)}
+                    <a class="catalog-mega__group-title" href={lp(group.href)}>{group.title}</a>
+                    {group.items.map(item => <a href={lp(group.href)}>{item}</a>)}
                   </div>
                 ))}
               </section>
@@ -320,12 +334,12 @@ const menuData = {
               <h3>◇ Архітектурні системи</h3>
               <div class="catalog-mega__architecture-list">
                 {architectureItems.map(([key,label,href]) => (
-                  <a href={href} data-menu-key={key}><span>{label}</span><b>›</b></a>
+                  <a href={lp(href)} data-menu-key={key}><span>{label}</span><b>›</b></a>
                 ))}
               </div>
 
               <div class="catalog-mega__popular" data-popular-list>
-                {menuData.partitions.popular.map(([title,text,image,href]) => (
+                {routedMenuData.partitions.popular.map(([title,text,image,href]) => (
                   <a href={href}>
                     <img src={image} width="84" height="66" alt="" loading="lazy" />
                     <span><b>{title}</b><small>{text}</small></span>
@@ -335,26 +349,26 @@ const menuData = {
             </section>
 
             <aside class="catalog-mega__promo" data-promo>
-              <img src={menuData.partitions.image} width="560" height="700" alt="Скляні перегородки Space Glass" data-promo-image />
+              <img src={routedMenuData.partitions.image} width="560" height="700" alt="Скляні перегородки Space Glass" data-promo-image />
               <div class="catalog-mega__promo-overlay"></div>
               <div class="catalog-mega__promo-copy">
-                <p data-promo-eyebrow>{menuData.partitions.eyebrow}</p>
-                <h2 data-promo-title>{menuData.partitions.title}</h2>
-                <span data-promo-text>{menuData.partitions.text}</span>
-                <a class="button button--mint" href={menuData.partitions.href} data-promo-button>{menuData.partitions.button} →</a>
+                <p data-promo-eyebrow>{routedMenuData.partitions.eyebrow}</p>
+                <h2 data-promo-title>{routedMenuData.partitions.title}</h2>
+                <span data-promo-text>{routedMenuData.partitions.text}</span>
+                <a class="button button--mint" href={routedMenuData.partitions.href} data-promo-button>{routedMenuData.partitions.button} →</a>
               </div>
             </aside>
           </div>
 
           <div class="catalog-mega__cities">
             <strong>⌖ Пошук за містами</strong>
-            <a href="/city/kyiv/">Київ</a>
-            <a href="/city/lviv/">Львів</a>
-            <a href="/city/odesa/">Одеса</a>
-            <a href="#">Дніпро</a>
-            <a href="#">Харків</a>
-            <a href="#">Вінниця</a>
-            <a href="#">Івано-Франківськ</a>
+            <a href={lp("/city/kyiv/")}>Київ</a>
+            <a href={lp("/city/lviv/")}>Львів</a>
+            <a href={lp("/city/odesa/")}>Одеса</a>
+            <a href={lp("/")}>Дніпро</a>
+            <a href={lp("/")}>Харків</a>
+            <a href={lp("/")}>Вінниця</a>
+            <a href={lp("/")}>Івано-Франківськ</a>
             <a href={lp("/catalog/")}>Вся Україна →</a>
           </div>
 
@@ -462,7 +476,7 @@ const menuData = {
   setInterval(updateProjectHeaderCount, 1500);
 </script>
 
-<script define:vars={{ menuData }}>
+<script define:vars={{ menuData: routedMenuData }}>
   const mega = document.querySelector('[data-catalog-mega]');
 
   if (mega) {
