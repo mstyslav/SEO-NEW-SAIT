@@ -78,3 +78,52 @@ const structuredData: JsonLdObject[] = [
     <section class="inner-cta"><div><p class="eyebrow">Space Glass</p><h2>{copy.ctaTitle}</h2><p>{copy.ctaText}</p></div><a class="button button--white" href={`${localizedPrefix}/contacts/`}>{copy.ctaPrimary}</a></section>
   </main><Footer/></div>
 </BaseLayout>
+
+<style>
+  .pay-delivery {
+    background: #f3f8f7;
+    color: #152421;
+    padding-bottom: clamp(64px, 8vw, 112px);
+  }
+
+  .pay-delivery__hero {
+    background:
+      radial-gradient(circle at 88% 18%, rgba(73, 220, 190, 0.22), transparent 34%),
+      linear-gradient(135deg, #f9fffd 0%, #e4f4ef 100%);
+    border-bottom: 1px solid rgba(20, 103, 91, 0.14);
+    color: #152421;
+  }
+
+  .pay-delivery__hero h1,
+  .pay-delivery__hero .lead,
+  .pay-delivery__hero .inner-hero__visual {
+    color: #152421;
+  }
+
+  .pay-delivery :global(.inner-section) {
+    background: #fff;
+    color: #263d38;
+  }
+
+  .pay-delivery :global(.inner-section h2),
+  .pay-delivery__faq summary {
+    color: #123f38;
+  }
+
+  .pay-delivery__facts article,
+  .pay-delivery__text,
+  .pay-delivery__faq details {
+    color: #334b46;
+    border-color: rgba(20, 103, 91, 0.14);
+    box-shadow: 0 16px 44px rgba(16, 50, 44, 0.07);
+  }
+
+  .pay-delivery__links a {
+    color: #205149;
+    border-color: rgba(8, 127, 112, 0.24);
+  }
+
+  .pay-delivery__links a:hover {
+    background: #e8f7f3;
+  }
+</style>
