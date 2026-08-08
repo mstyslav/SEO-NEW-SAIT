@@ -3,9 +3,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import catalog from '../../data/catalog.json';
-import productData from '../../data/products.json';
 
-const products = productData.products;
+const categoryIcons: Record<string, string> = {
+  'dushovi-kabiny': '/images/s24-menu/showers.webp',
+  'sklyani-perehorodky': '/images/s24-menu/partitions.webp',
+  'sklyani-dveri': '/images/s24-menu/doors.webp',
+  'sklyani-ohorozhi': '/images/s24-menu/railings.webp',
+  dzerkala: '/images/s24-menu/mirrors.webp',
+  'alyuminiievi-konstruktsii': '/images/s24-menu/aluminium.webp',
+  'arkhitekturni-systemy': '/images/s24-menu/facades.webp'
+};
 ---
 <BaseLayout title="Каталог Space Glass" description="Каталог душових, перегородок, дверей, огорож, дзеркал та алюмінієвих конструкцій Space Glass.">
 <div class="sg-page-shell">
@@ -16,30 +23,12 @@ const products = productData.products;
       <div class="catalog-v14-search"><input type="search" placeholder="Пошук по каталогу" /><button class="button button--mint">Знайти</button></div>
     </section>
 
-    <section class="catalog-v14-categories">
-      {catalog.categories.map((category,i)=><a href={`/${category.slug}/`}><span>{String(i+1).padStart(2,'0')}</span><h2>{category.title}</h2><p>{category.subtitle}</p><ul>{category.items.slice(0,4).map(item=><li>{item}</li>)}</ul><b>Перейти →</b></a>)}
-    </section>
-
-    <section class="catalog-v14-products">
-      <div class="category-heading"><div><p class="eyebrow">Популярні товари</p><h2>Рішення, які обирають найчастіше</h2></div><select><option>Популярні спочатку</option><option>Ціна за зростанням</option></select></div>
-      <div class="catalog-product-grid">
-        {products.map((product,i)=><a class="catalog-product" href="/catalog/piddon/">
-          <div class="catalog-product__media">
-            <span>{String(i+1).padStart(2,'0')}</span>
-            <div class="catalog-product__badges">
-              {product.badges.includes('top') && <em>ТОП</em>}
-              {product.badges.includes('hit') && <em>ХІТ</em>}
-            </div>
-          </div>
-          <div class="catalog-product__body">
-            <small>{product.category}</small>
-            <span class="catalog-product__availability">● {product.availabilityLabel}</span>
-            <h3>{product.name}</h3>
-            <strong>від {product.priceFrom}</strong>
-            <b>Детальніше →</b>
-          </div>
-        </a>)}
-      </div>
+    <section class="catalog-v14-categories" aria-label="Категорії товарів">
+      {catalog.categories.map((category)=><a href={`/${category.slug}/`}>
+        <img src={categoryIcons[category.slug]} alt="" width="96" height="96" loading="lazy" />
+        <div><h2>{category.title}</h2><p>{category.subtitle}</p></div>
+        <b>Перейти <span aria-hidden="true">→</span></b>
+      </a>)}
     </section>
   </main>
   <Footer />
