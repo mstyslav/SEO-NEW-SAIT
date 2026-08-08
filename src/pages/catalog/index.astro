@@ -3,6 +3,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import catalog from '../../data/catalog.json';
+
+const categoryImages: Record<string, string> = {
+  'dushovi-kabiny': '/images/s24-menu/showers.webp',
+  'sklyani-perehorodky': '/images/s24-menu/partitions.webp',
+  'sklyani-dveri': '/images/s24-menu/doors.webp',
+  'sklyani-ohorozhi': '/images/s24-menu/railings.webp',
+  dzerkala: '/images/s24-menu/mirrors.webp',
+  'alyuminiievi-konstruktsii': '/images/s24-menu/aluminium.webp',
+  'arkhitekturni-systemy': '/images/s24-menu/facades.webp'
+};
 ---
 <BaseLayout title="Каталог Space Glass" description="Каталог душових, перегородок, дверей, огорож, дзеркал та алюмінієвих конструкцій Space Glass.">
 <div class="sg-page-shell">
@@ -18,19 +28,14 @@ import catalog from '../../data/catalog.json';
       <div class="inner-hero__visual"><span>SPACE GLASS</span></div>
     </section>
 
-    <section class="inner-section" aria-labelledby="catalog-categories-title">
-      <div class="inner-section__heading">
-        <p class="eyebrow">Категорії</p>
-        <h2 id="catalog-categories-title">Оберіть потрібне рішення</h2>
-      </div>
-      <div class="inner-card-grid">
-        {catalog.categories.map((category, i)=><article class="inner-card">
-          <span>{String(i + 1).padStart(2, '0')}</span>
-          <h2 class="inner-card__title">{category.title}</h2>
-          <p>{category.subtitle}</p>
-          <a href={`/${category.slug}/`}>Перейти →</a>
-        </article>)}
-      </div>
+    <section class="projects-v14-grid" aria-label="Категорії товарів">
+      {catalog.categories.map((category)=><a href={`/${category.slug}/`}>
+        <div><img src={categoryImages[category.slug]} alt={category.title} width="640" height="416" loading="lazy" /></div>
+        <small>Категорія</small>
+        <h2>{category.title}</h2>
+        <p>{category.subtitle}</p>
+        <b>Перейти →</b>
+      </a>)}
     </section>
   </main>
   <Footer />
