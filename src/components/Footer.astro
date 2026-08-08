@@ -84,8 +84,43 @@ const linkNames = {
   en: { catalog:'Catalog', partitions:'Glass partitions', showers:'Shower enclosures', doors:'Glass doors', railings:'Glass railings', mirrors:'Mirrors and glass', facades:'Glass façades', service:'Services', about:'About us', knowledge:'Materials and technology', projects:'Projects', contacts:'Contacts', city:'Glass structures' },
   de: { catalog:'Katalog', partitions:'Glastrennwände', showers:'Duschkabinen', doors:'Glastüren', railings:'Glasgeländer', mirrors:'Spiegel und Glas', facades:'Glasfassaden', service:'Leistungen', about:'Über uns', knowledge:'Materialien und Technik', projects:'Projekte', contacts:'Kontakt', city:'Glaskonstruktionen' }
 } as const;
+const russianFooterLabels: Record<string, string> = {
+  'Скляні перегородки': 'Стеклянные перегородки',
+  'Душові кабіни': 'Душевые кабины',
+  'Скляні двері': 'Стеклянные двери',
+  'Скляні огорожі': 'Стеклянные ограждения',
+  'Дзеркала та скло': 'Зеркала и стекло',
+  'Скляні фасади': 'Стеклянные фасады',
+  'Підлоги зі скла': 'Стеклянные полы',
+  'Скляні підлоги': 'Стеклянные полы',
+  'Фурнітура та аксесуари': 'Фурнитура и аксессуары',
+  'Комплектуючі': 'Комплектующие',
+  'Виготовлення': 'Изготовление',
+  'Доставка': 'Доставка',
+  'Монтаж': 'Монтаж',
+  'Замір та проєктування': 'Замер и проектирование',
+  'Гарантія та сервіс': 'Гарантия и сервис',
+  'Післягарантійне обслуговування': 'Послегарантийное обслуживание',
+  'Про нас': 'О компании',
+  'Наше виробництво': 'Наше производство',
+  'Матеріали': 'Материалы',
+  'Технології': 'Технологии',
+  'Вакансії': 'Вакансии',
+  'Партнери': 'Партнёры',
+  'Відгуки': 'Отзывы',
+  'Контакти': 'Контакты',
+  'Скляні конструкції Київ': 'Стеклянные конструкции — Киев',
+  'Скляні конструкції Львів': 'Стеклянные конструкции — Львов',
+  'Скляні конструкції Одеса': 'Стеклянные конструкции — Одесса',
+  'Скляні конструкції Дніпро': 'Стеклянные конструкции — Днепр',
+  'Скляні конструкції Харків': 'Стеклянные конструкции — Харьков',
+  'Скляні конструкції Івано-Франківськ': 'Стеклянные конструкции — Ивано-Франковск',
+  'Скляні конструкції Вінниця': 'Стеклянные конструкции — Винница',
+  'Всі міста': 'Все города'
+};
 const footerLabel = (label: string, href: string) => {
   if (locale === 'uk') return label;
+  if (locale === 'ru') return russianFooterLabels[label] ?? label;
   const names = linkNames[locale];
   if (href.startsWith('/sklyani-perehorodky')) return names.partitions;
   if (href.startsWith('/dushovi-kabiny')) return names.showers;
