@@ -3,32 +3,34 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import catalog from '../../data/catalog.json';
-
-const categoryIcons: Record<string, string> = {
-  'dushovi-kabiny': '/images/s24-menu/showers.webp',
-  'sklyani-perehorodky': '/images/s24-menu/partitions.webp',
-  'sklyani-dveri': '/images/s24-menu/doors.webp',
-  'sklyani-ohorozhi': '/images/s24-menu/railings.webp',
-  dzerkala: '/images/s24-menu/mirrors.webp',
-  'alyuminiievi-konstruktsii': '/images/s24-menu/aluminium.webp',
-  'arkhitekturni-systemy': '/images/s24-menu/facades.webp'
-};
 ---
 <BaseLayout title="Каталог Space Glass" description="Каталог душових, перегородок, дверей, огорож, дзеркал та алюмінієвих конструкцій Space Glass.">
 <div class="sg-page-shell">
   <Header />
   <main id="main">
-    <section class="catalog-v14-hero">
-      <div><p class="eyebrow">Каталог</p><h1>Скляні та алюмінієві рішення</h1><p class="lead">Готові товари, індивідуальні конструкції, доставка по Україні та монтаж у ключових містах.</p></div>
-      <div class="catalog-v14-search"><input type="search" placeholder="Пошук по каталогу" /><button class="button button--mint">Знайти</button></div>
+    <section class="inner-hero">
+      <div class="inner-hero__copy">
+        <p class="eyebrow">Каталог</p>
+        <h1>Скляні та алюмінієві рішення</h1>
+        <p class="lead">Готові товари, індивідуальні конструкції, доставка по Україні та монтаж у ключових містах.</p>
+        <div class="catalog-v14-search"><input type="search" placeholder="Пошук по каталогу" /><button class="button button--mint">Знайти</button></div>
+      </div>
+      <div class="inner-hero__visual"><span>SPACE GLASS</span></div>
     </section>
 
-    <section class="catalog-v14-categories" aria-label="Категорії товарів">
-      {catalog.categories.map((category)=><a href={`/${category.slug}/`}>
-        <img src={categoryIcons[category.slug]} alt="" width="96" height="96" loading="lazy" />
-        <div><h2>{category.title}</h2><p>{category.subtitle}</p></div>
-        <b>Перейти <span aria-hidden="true">→</span></b>
-      </a>)}
+    <section class="inner-section" aria-labelledby="catalog-categories-title">
+      <div class="inner-section__heading">
+        <p class="eyebrow">Категорії</p>
+        <h2 id="catalog-categories-title">Оберіть потрібне рішення</h2>
+      </div>
+      <div class="inner-card-grid">
+        {catalog.categories.map((category, i)=><article class="inner-card">
+          <span>{String(i + 1).padStart(2, '0')}</span>
+          <h2 class="inner-card__title">{category.title}</h2>
+          <p>{category.subtitle}</p>
+          <a href={`/${category.slug}/`}>Перейти →</a>
+        </article>)}
+      </div>
     </section>
   </main>
   <Footer />
