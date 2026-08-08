@@ -8,31 +8,25 @@ const locale = normalizeLocale(requestedLocale);
 const t = translations[locale] ?? translations.uk;
 const localeInfo = i18nConfig.locales[locale] ?? i18nConfig.locales.uk;
 const currentPath = Astro.url.pathname;
-const lp = (path: string) => localizedPath(path, locale);
+const localizedRoutes = new Set([
+  '/', '/about/', '/bezramne-configurator/', '/cart/', '/catalog/', '/catalog/piddon/',
+  '/compare/', '/contacts/', '/dzerkala-configurator/', '/fasadne-configurator/',
+  '/loft-configurator/', '/ogorozhi-configurator/', '/oplata-dostavka/',
+  '/peregorodky-configurator/', '/projects/', '/quote/', '/services/',
+  '/sklyani-perehorodky/ofisni/'
+]);
+// Localized editions currently expose a deliberately smaller route set. Never
+// manufacture a localized URL that Astro cannot serve.
+const lp = (path: string) => locale === 'uk' || localizedRoutes.has(path)
+  ? localizedPath(path, locale)
+  : localizedPath('/', locale);
 
 // Russian currently has a deliberately smaller set of generated pages. Keep the
 // visitor on an equivalent route when it exists and use the Russian homepage
 // rather than sending them to a 404 for Ukrainian-only content.
-const russianRoutes = new Set([
-  '/',
-  '/about/',
-  '/bezramne-configurator/',
-  '/cart/',
-  '/catalog/',
-  '/compare/',
-  '/contacts/',
-  '/dzerkala-configurator/',
-  '/fasadne-configurator/',
-  '/loft-configurator/',
-  '/ogorozhi-configurator/',
-  '/peregorodky-configurator/',
-  '/projects/',
-  '/quote/',
-  '/services/',
-]);
-const localeSwitchPath = (targetLocale: 'uk' | 'ru') => {
+const localeSwitchPath = (targetLocale: 'uk' | 'ru' | 'en' | 'de') => {
   const unlocalizedPath = currentPath.replace(/^\/(uk|ru|en|de)(?=\/|$)/, '') || '/';
-  if (targetLocale === 'ru' && !russianRoutes.has(unlocalizedPath)) return '/ru/';
+  if (targetLocale !== 'uk' && !localizedRoutes.has(unlocalizedPath)) return localizedPath('/', targetLocale);
   return localizedPath(currentPath, targetLocale);
 };
 
@@ -388,8 +382,8 @@ const menuData = {
           <i>⌄</i>
         </button>
         <div class="language-switcher__menu" data-language-menu>
-          {Object.entries(i18nConfig.locales).filter(([code]) => code === 'uk' || code === 'ru').map(([code, item]) => (
-            <a class:list={['language-switcher__option', code === locale && 'is-active']} href={localeSwitchPath(code as 'uk' | 'ru')} hreflang={code} lang={code} data-locale={code}>
+          {Object.entries(i18nConfig.locales).map(([code, item]) => (
+            <a class:list={['language-switcher__option', code === locale && 'is-active']} href={localeSwitchPath(code as 'uk' | 'ru' | 'en' | 'de')} hreflang={code} lang={code} data-locale={code}>
               <b>{item.short}</b>
               <span>{item.label}</span>
               {code === locale && <i>✓</i>}
