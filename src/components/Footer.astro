@@ -67,7 +67,7 @@ import { localeFromPath, localizedPath, normalizeLocale } from '../i18n/helpers'
 
 const locale = normalizeLocale(Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
 const localizedRoutes = new Set(['/', '/about/', '/cart/', '/catalog/', '/catalog/piddon/', '/compare/', '/contacts/', '/oplata-dostavka/', '/projects/', '/quote/', '/services/']);
-const russianRoutes = new Set(['/', '/oplata-dostavka/', '/projects/', '/services/']);
+const russianRoutes = new Set(['/', '/about/', '/catalog/', '/contacts/', '/knowledge/', '/oplata-dostavka/', '/projects/', '/services/']);
 const routeKey = (path: string) => path.split(/[?#]/, 1)[0] || '/';
 const lp = (path: string) => locale === 'uk' || (locale === 'ru' ? russianRoutes : localizedRoutes).has(routeKey(path))
   ? localizedPath(path, locale)
