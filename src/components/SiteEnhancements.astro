@@ -1,33 +1,75 @@
 ---
 ---
 <style is:global>
-  header nav a:not(.button),header [role="navigation"] a:not(.button){position:relative}
-  header nav a:not(.button)::after,header [role="navigation"] a:not(.button)::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:#7fd7bd;transform:scaleX(0);transform-origin:center;transition:transform .18s ease}
-  header nav a:not(.button):hover::after,header nav a:not(.button):focus-visible::after,header [role="navigation"] a:not(.button):hover::after,header [role="navigation"] a:not(.button):focus-visible::after{transform:scaleX(1)}
+  :root{--sg-brand-mint:#7fd7bd;--sg-brand-deep:#0e4f3d}
+  .catalog-mega a::after{display:none!important}
+  .catalog-mega a{transition:color .16s ease,background .16s ease}
+  .catalog-mega a:hover,.catalog-mega a:focus-visible{color:var(--sg-brand-mint)}
+  .catalog-mega__group:hover,.catalog-mega__group.is-active{background:rgba(127,215,189,.06)}
   .sg-wishlist-header{width:44px;height:44px;border:1px solid rgba(255,255,255,.22);border-radius:50%;display:inline-grid;place-items:center;color:#fff;text-decoration:none;position:relative;flex:0 0 44px;background:transparent;transition:border-color .18s ease,background .18s ease}
-  .sg-wishlist-header:hover{border-color:#7fd7bd;background:rgba(127,215,189,.08)}.sg-wishlist-header svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8}.sg-wishlist-count{position:absolute;right:-2px;top:-5px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#7fd7bd;color:#09251e;font:700 10px/18px Arial,sans-serif;text-align:center}
+  .sg-wishlist-header:hover{border-color:var(--sg-brand-mint);background:rgba(127,215,189,.08)}.sg-wishlist-header svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8}.sg-wishlist-count{position:absolute;right:-2px;top:-5px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--sg-brand-mint);color:#09251e;font:700 10px/18px Arial,sans-serif;text-align:center}
   .sg-home-category-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important}.sg-home-category-grid .sg-category-card{min-height:260px;padding:24px 22px!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important}.sg-home-category-grid .sg-category-card__icon{width:44px;height:44px;display:grid;place-items:center;margin-bottom:24px;color:#205f50}.sg-home-category-grid .sg-category-card__icon svg{width:42px;height:42px;stroke:currentColor;fill:none;stroke-width:1.5}.sg-home-category-grid .sg-category-card h2{font-size:clamp(22px,2.1vw,31px)!important;line-height:1.02!important;letter-spacing:-.035em!important;margin:0 0 18px!important}.sg-home-category-grid .sg-category-card p{font-size:14px!important;line-height:1.45!important;margin:auto 0 16px!important;max-width:34ch}
+  [data-wishlist-product].is-active{border-color:var(--sg-brand-mint)!important;background:#effaf6!important;color:#0d5e48!important}
   @media(max-width:900px){.sg-home-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}@media(max-width:620px){.sg-home-category-grid{grid-template-columns:1fr!important}.sg-home-category-grid .sg-category-card{min-height:210px}}
 </style>
 <script is:inline>
 (() => {
   const wishlistKey = 'sg-wishlist';
-  const readWishlist = () => { try { return JSON.parse(localStorage.getItem(wishlistKey) || '[]'); } catch { return []; } };
+  const readWishlist = () => { try { const data=JSON.parse(localStorage.getItem(wishlistKey) || '[]'); return Array.isArray(data)?data:[]; } catch { return []; } };
   const updateWishlistCount = () => {
     const count = readWishlist().length;
     document.querySelectorAll('[data-wishlist-count]').forEach((el) => { el.textContent = String(count); el.hidden = count === 0; });
   };
 
   const header = document.querySelector('header');
-  if (header && !header.querySelector('.sg-wishlist-header')) {
-    const quoteControl = [...header.querySelectorAll('a,button')].find((el) => /отримати розрахунок|расчёт|quote|get a quote/i.test((el.textContent || '').trim()));
-    if (quoteControl?.parentElement) {
-      const heart = document.createElement('a');
-      heart.className = 'sg-wishlist-header'; heart.href = '/wishlist/'; heart.setAttribute('aria-label','Обране'); heart.title = 'Обране';
-      heart.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg><span class="sg-wishlist-count" data-wishlist-count hidden>0</span>';
-      quoteControl.parentElement.insertBefore(heart, quoteControl);
-    }
+  let heart = header?.querySelector('.sg-wishlist-header');
+  if (header && !heart) {
+    heart = document.createElement('a');
+    heart.className = 'sg-wishlist-header'; heart.href = '/wishlist/'; heart.setAttribute('aria-label','Обране'); heart.title = 'Обране';
+    heart.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg><span class="sg-wishlist-count" data-wishlist-count hidden>0</span>';
   }
+  const actions = header?.querySelector('.sg-nav-actions');
+  if (actions) {
+    const quote = actions.querySelector('.sg-header-cta');
+    const search = actions.querySelector('[aria-label="Пошук"]');
+    const compare = actions.querySelector('[aria-label="Порівняння"]');
+    const cart = actions.querySelector('[aria-label="Кошик"]');
+    const phone = actions.querySelector('[aria-label="Зателефонувати"]');
+    const language = actions.querySelector('.language-switcher');
+    [search,compare,heart,cart,phone,language].forEach((node) => { if(node) actions.insertBefore(node,quote); });
+  }
+
+  const bindWishlistButtons = () => {
+    document.querySelectorAll('[data-wishlist-product]').forEach((button) => {
+      if (button.dataset.wishlistBound === '1') return;
+      button.dataset.wishlistBound = '1';
+      const product = {
+        id: button.dataset.productId,
+        title: button.dataset.productTitle,
+        href: button.dataset.productHref,
+        image: button.dataset.productImage,
+        price: button.dataset.productPrice
+      };
+      const render = () => {
+        const active = readWishlist().some((item) => (item.id || item) === product.id || item.href === product.href);
+        button.classList.toggle('is-active',active);
+        button.setAttribute('aria-pressed',String(active));
+        const icon = button.querySelector('[data-wishlist-icon]');
+        const text = button.querySelector('[data-wishlist-text]');
+        if(icon) icon.textContent = active ? '♥' : '♡';
+        if(text) text.textContent = active ? 'В обраному' : 'В обране';
+      };
+      button.addEventListener('click',(event)=>{
+        event.preventDefault(); event.stopPropagation();
+        let list = readWishlist();
+        const exists = list.some((item) => (item.id || item) === product.id || item.href === product.href);
+        list = exists ? list.filter((item) => (item.id || item) !== product.id && item.href !== product.href) : [...list,product];
+        localStorage.setItem(wishlistKey,JSON.stringify(list));
+        render(); updateWishlistCount(); dispatchEvent(new Event('sg-wishlist-change'));
+      });
+      render();
+    });
+  };
 
   const basePath = location.pathname.replace(/^\/(uk|ru|en|de)(?=\/|$)/,'') || '/';
   if (basePath === '/') {
@@ -46,22 +88,6 @@
   }
 
   if (basePath === '/catalog/dushova-perehorodka-walk-in-black/') {
-    const product = { id:'SG-WI-BL-001', title:'Душова перегородка Walk-In Black', href:'/catalog/dushova-perehorodka-walk-in-black/', image:'/images/v5/product-1.webp', price:'від 12 900 ₴' };
-    const wishButton = document.getElementById('wishlist');
-    const renderWish = () => {
-      if (!wishButton) return;
-      const active = readWishlist().some((item) => (item.id || item) === product.id || item.href === product.href);
-      wishButton.classList.toggle('is-active', active); wishButton.setAttribute('aria-pressed', String(active));
-      const iconEl = wishButton.querySelector('span'); const textEl = wishButton.querySelector('b');
-      if (iconEl) iconEl.textContent = active ? '♥' : '♡'; if (textEl) textEl.textContent = active ? 'В обраному' : 'В обране';
-    };
-    wishButton?.addEventListener('click', () => {
-      let list = readWishlist(); const exists = list.some((item) => (item.id || item) === product.id || item.href === product.href);
-      list = exists ? list.filter((item) => (item.id || item) !== product.id && item.href !== product.href) : [...list, product];
-      localStorage.setItem(wishlistKey, JSON.stringify(list)); renderWish(); updateWishlistCount(); dispatchEvent(new Event('sg-wishlist-change'));
-    });
-    renderWish();
-
     const mainImg = document.querySelector('.main-photo img'); const lightbox = document.getElementById('product-lightbox'); const lightboxImg = lightbox?.querySelector('img');
     document.querySelectorAll('.thumbs button[data-src]').forEach((thumb) => thumb.addEventListener('click', (event) => {
       event.stopPropagation(); document.querySelectorAll('.thumbs button').forEach((el) => el.classList.remove('active')); thumb.classList.add('active');
@@ -69,16 +95,26 @@
     }));
     document.querySelector('[data-gallery-open]')?.addEventListener('click', () => { if (lightbox && lightboxImg && mainImg) { lightboxImg.src = mainImg.src; lightboxImg.alt = mainImg.alt; lightbox.showModal(); } });
     lightbox?.querySelector('button')?.addEventListener('click', () => lightbox.close());
+    lightbox?.addEventListener('click',(event)=>{if(event.target===lightbox) lightbox.close();});
 
     document.getElementById('cfg-calc')?.addEventListener('click', () => {
       const val = (id) => document.getElementById(id)?.value;
-      const width = Number(val('cfg-width') || 1200); const height = Number(val('cfg-height') || 2000); let price = 12900 * (width / 1200) * (height / 2000);
-      if (val('cfg-thickness') === '10') price *= 1.13; if (val('cfg-glass') === 'satin') price *= 1.10; if (val('cfg-glass') === 'tinted') price *= 1.16;
-      if (val('cfg-hardware') === 'chrome') price *= 1.04; if (val('cfg-hardware') === 'graphite') price *= 1.07; if (val('cfg-tray') === 'stone') price += 8900; if (val('cfg-tray') === 'acrylic') price += 4200; if (val('cfg-install') === 'yes') price += 2500;
+      const width = Number(val('cfg-width') || 900); const height = Number(val('cfg-height') || 2000); let price = 12900 * (width / 900) * (height / 2000);
+      if (val('cfg-thickness') === '10') price *= 1.13;
+      if (val('cfg-glass') === 'satin') price *= 1.10;
+      if (val('cfg-glass') === 'gray') price *= 1.12;
+      if (val('cfg-glass') === 'bronze') price *= 1.12;
+      if (val('cfg-hardware') === 'chrome') price *= 1.04;
+      if (val('cfg-hardware') === 'brushed') price *= 1.06;
+      if (val('cfg-hardware') === 'gold') price *= 1.10;
+      if (val('cfg-hardware') === 'custom') price *= 1.12;
+      if (val('cfg-tray') === 'stone') price += 8900; if (val('cfg-tray') === 'acrylic') price += 4200; if (val('cfg-install') === 'yes') price += 2500;
       const rounded = Math.round(price / 100) * 100; const result = document.getElementById('cfg-result'); if (result) result.textContent = `від ${rounded.toLocaleString('uk-UA')} ₴`;
     });
   }
 
-  updateWishlistCount(); addEventListener('storage', updateWishlistCount); addEventListener('sg-wishlist-change', updateWishlistCount);
+  bindWishlistButtons(); updateWishlistCount();
+  addEventListener('storage',()=>{updateWishlistCount();bindWishlistButtons();});
+  addEventListener('sg-wishlist-change',()=>{updateWishlistCount();bindWishlistButtons();});
 })();
 </script>
