@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+<BaseLayout title="Обране | Space Glass" description="Збережені товари та скляні рішення Space Glass.">
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main" class="wishlist-page">
+      <section class="wishlist-hero">
+        <p class="eyebrow">Обране</p>
+        <h1>Збережені рішення</h1>
+        <p>Тут зберігаються товари, які ви додали в обране на цьому пристрої.</p>
+      </section>
+      <section class="wishlist-content">
+        <div id="wishlist-grid" class="wishlist-grid" aria-live="polite"></div>
+        <div id="wishlist-empty" class="wishlist-empty" hidden>
+          <h2>Поки що тут порожньо</h2>
+          <p>Додайте товари в обране, щоб швидко повернутися до них пізніше.</p>
+          <a href="/catalog/">Перейти до каталогу →</a>
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+.wishlist-page{max-width:1380px;margin:0 auto;background:#fff}.wishlist-hero{padding:64px 34px 28px;max-width:850px}.wishlist-hero h1{font-size:clamp(42px,6vw,72px);line-height:.98;letter-spacing:-.05em;margin:8px 0 16px}.wishlist-hero>p:not(.eyebrow){font-size:17px;color:#66736f}.wishlist-content{padding:20px 34px 80px}.wishlist-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.wishlist-card{border:1px solid #dce7e3;background:white}.wishlist-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}.wishlist-card__body{padding:17px}.wishlist-card__body h2{font-size:21px;line-height:1.1;margin:6px 0 10px}.wishlist-card__body strong{display:block;font-size:20px;margin-bottom:14px}.wishlist-card__actions{display:flex;gap:8px;align-items:center}.wishlist-card__actions a,.wishlist-card__actions button{border:1px solid #dce7e3;background:white;color:#16231f;padding:10px 12px;text-decoration:none;font-weight:700;cursor:pointer}.wishlist-card__actions a{background:#7fd7bd;border-color:#7fd7bd}.wishlist-empty{padding:60px 0;max-width:560px}.wishlist-empty h2{font-size:34px;margin:0 0 10px}.wishlist-empty p{color:#66736f}.wishlist-empty a{display:inline-block;margin-top:12px;color:#176b55;font-weight:800;text-decoration:none}@media(max-width:900px){.wishlist-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.wishlist-hero,.wishlist-content{padding-left:18px;padding-right:18px}.wishlist-grid{grid-template-columns:1fr}}
+</style>
+
+<script is:inline>
+(() => {
+  const key = 'sg-wishlist';
+  const grid = document.getElementById('wishlist-grid');
+  const empty = document.getElementById('wishlist-empty');
+  const read = () => { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch { return []; } };
+  const render = () => {
+    const items = read();
+    if (!grid || !empty) return;
+    empty.hidden = items.length > 0;
+    grid.innerHTML = items.map((item) => {
+      const title = item.title || 'Збережене рішення';
+      const href = item.href || '/catalog/';
+      const image = item.image || '/images/v5/product-1.webp';
+      const price = item.price || '';
+      const id = item.id || href;
+      return `<article class="wishlist-card"><img src="${image}" alt="${title}" loading="lazy"><div class="wishlist-card__body"><small>Space Glass</small><h2>${title}</h2>${price ? `<strong>${price}</strong>` : ''}<div class="wishlist-card__actions"><a href="${href}">Переглянути →</a><button type="button" data-remove="${id}">Видалити</button></div></div></article>`;
+    }).join('');
+    grid.querySelectorAll('[data-remove]').forEach((button) => button.addEventListener('click', () => {
+      const id = button.dataset.remove;
+      const next = read().filter((item) => (item.id || item.href) !== id);
+      localStorage.setItem(key, JSON.stringify(next));
+      dispatchEvent(new Event('sg-wishlist-change'));
+      render();
+    }));
+  };
+  render();
+})();
+</script>
