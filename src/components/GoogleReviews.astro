@@ -1,0 +1,76 @@
+---
+const reviews = [
+  {
+    name: 'nanaborchenko',
+    rating: 5,
+    text: 'Ми залишилися дуже задоволені виконанням і якістю роботи Space Glass.',
+  },
+  {
+    name: 'olersiyustymenko',
+    rating: 5,
+    text: 'Душова супер. Дякуємо за сервіс, якість і акуратну реалізацію.',
+  },
+  {
+    name: 'kolychevahelen',
+    rating: 5,
+    text: 'Дякую команді Space Glass за якісно виконану роботу. Ціна відповідає якості, а роботи виконали у погоджений строк.',
+  },
+  {
+    name: 'Клієнт Space Glass',
+    rating: 5,
+    text: 'Задоволені комунікацією, підходом до деталей та результатом. Конструкція виглядає саме так, як планували.',
+  },
+];
+
+const googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=Space%20Glass%20Odesa&query_place_id=ChIJZ-tkEoszxkARAgMhHIePeAg';
+const googleReviewUrl = 'https://search.google.com/local/writereview?placeid=ChIJZ-tkEoszxkARAgMhHIePeAg';
+---
+<section class="sg-google-reviews" data-google-reviews aria-labelledby="google-reviews-title">
+  <div class="sg-google-reviews__head">
+    <div>
+      <p class="eyebrow">Відгуки клієнтів</p>
+      <h2 id="google-reviews-title">Що говорять про Space Glass</h2>
+    </div>
+    <p>Реальний досвід клієнтів після виготовлення та монтажу скляних конструкцій.</p>
+  </div>
+
+  <div class="sg-google-reviews__grid">
+    {reviews.map((review) => (
+      <article class="sg-google-review-card">
+        <div class="sg-google-review-card__top">
+          <span class="sg-google-review-card__avatar" aria-hidden="true">{review.name.slice(0, 1).toUpperCase()}</span>
+          <div>
+            <strong>{review.name}</strong>
+            <span class="sg-google-review-card__source">Відгук клієнта</span>
+          </div>
+        </div>
+        <div class="sg-google-review-card__stars" aria-label={`${review.rating} з 5`}>{'★★★★★'}</div>
+        <p>{review.text}</p>
+      </article>
+    ))}
+  </div>
+
+  <div class="sg-google-reviews__actions">
+    <a class="sg-google-reviews__button" href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Усі відгуки в Google →</a>
+    <a class="sg-google-reviews__button sg-google-reviews__button--mint" href={googleReviewUrl} target="_blank" rel="noopener noreferrer">Залишити відгук →</a>
+  </div>
+</section>
+
+<style>
+  .sg-google-reviews{background:#fff;padding:clamp(58px,7vw,92px) clamp(24px,4.2vw,58px);border-top:1px solid rgba(20,103,91,.12);border-bottom:1px solid rgba(20,103,91,.12)}
+  .sg-google-reviews__head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.6fr);gap:36px;align-items:end;max-width:1440px;margin:0 auto 34px}
+  .sg-google-reviews__head h2{margin:8px 0 0;font-size:clamp(32px,3.4vw,54px);line-height:1.02;letter-spacing:-.045em;color:#14211e}
+  .sg-google-reviews__head>p{margin:0;color:#5f6e69;font-size:16px;line-height:1.6;max-width:44ch}
+  .sg-google-reviews__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;max-width:1440px;margin:0 auto}
+  .sg-google-review-card{min-width:0;min-height:270px;padding:24px;border:1px solid rgba(20,103,91,.16);background:#fbfdfc;display:flex;flex-direction:column}
+  .sg-google-review-card__top{display:flex;gap:12px;align-items:center}
+  .sg-google-review-card__avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#e9f7f2;color:#175f4e;font-weight:800}
+  .sg-google-review-card__top strong,.sg-google-review-card__source{display:block}.sg-google-review-card__top strong{font-size:15px;color:#15231f}.sg-google-review-card__source{margin-top:3px;font-size:12px;color:#7a8883}
+  .sg-google-review-card__stars{margin:22px 0 14px;color:#f5b400;letter-spacing:.12em;font-size:16px}
+  .sg-google-review-card p{margin:0;color:#40504b;font-size:15px;line-height:1.65}
+  .sg-google-reviews__actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;max-width:1440px;margin:30px auto 0}
+  .sg-google-reviews__button{min-height:58px;padding:0 30px;border:1px solid #d8dfdc;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;color:#111b18;font-weight:800;text-decoration:none;background:#fff;transition:transform .18s ease,border-color .18s ease,background .18s ease}
+  .sg-google-reviews__button:hover{transform:translateY(-1px);border-color:#7acbb4}.sg-google-reviews__button--mint{background:#83d5be;border-color:#83d5be}
+  @media(max-width:1100px){.sg-google-reviews__grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sg-google-reviews__head{grid-template-columns:1fr}}
+  @media(max-width:640px){.sg-google-reviews{padding-inline:18px}.sg-google-reviews__grid{grid-template-columns:1fr;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.sg-google-review-card{min-width:86vw;scroll-snap-align:start}.sg-google-reviews__actions{display:grid}.sg-google-reviews__button{width:100%}}
+</style>
