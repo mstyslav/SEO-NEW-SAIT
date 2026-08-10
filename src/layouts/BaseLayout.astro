@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/home-polish.css';
 
 interface Props {
   title: string;
@@ -74,6 +75,11 @@ const schema = jsonLdGraph([
       if (mobileMenuButton) {
         mobileMenuButton.setAttribute('aria-label', menuLabel);
         mobileMenuButton.setAttribute('title', menuLabel);
+      }
+      const heroImage = document.querySelector('.sg-hero__image img');
+      if (heroImage) {
+        heroImage.setAttribute('alt', 'Панорамні скляні перегородки та алюмінієві конструкції Space Glass у сучасному інтер’єрі');
+        heroImage.setAttribute('decoding', 'async');
       }
     </script>
     <script src="/js/i18n-client.js" defer></script>
