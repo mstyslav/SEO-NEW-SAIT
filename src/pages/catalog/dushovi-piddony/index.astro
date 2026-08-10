@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+
+const trayTypes = [
+  ['Низькі душові піддони','Сучасне рішення для мінімалістичних душових зон і Walk-In конструкцій.'],
+  ['Прямокутні душові піддони','Популярний формат для ніш, Walk-In та просторих душових.'],
+  ['Квадратні душові піддони','Компактне рішення для кутових душових кабін.'],
+  ['Піддони зі штучного каменю','Жорсткі, стабільні та візуально преміальні моделі для сучасної ванної.']
+];
+---
+<BaseLayout title="Душові піддони купити в Україні — розміри та ціни | Space Glass" description="Душові піддони для Walk-In і душових кабін: низькі, прямокутні, квадратні та зі штучного каменю. Підбір розміру, доставка по Україні та Європі.">
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main" class="tray-page">
+      <nav class="tray-breadcrumbs"><a href="/">Головна</a><span>›</span><a href="/dushovi-kabiny/">Душові кабіни</a><span>›</span><span>Душові піддони</span></nav>
+      <header class="tray-hero">
+        <div>
+          <p class="eyebrow">Душові конструкції</p>
+          <h1>Душові піддони</h1>
+          <p>Підбираємо душовий піддон під Walk-In, душову кабіну або нішу: за розміром, формою, висотою та матеріалом. Допоможемо узгодити піддон зі скляною конструкцією ще до замовлення.</p>
+          <a href="#quote" class="tray-cta">Підібрати душовий піддон →</a>
+        </div>
+        <img src="/images/s20/product-detail.webp" alt="Сучасний душовий піддон для душової кабіни та Walk-In" width="1000" height="680" fetchpriority="high" />
+      </header>
+
+      <section class="tray-section">
+        <p class="eyebrow">Асортимент</p>
+        <h2>Піддони для душу за типом конструкції</h2>
+        <div class="tray-grid">{trayTypes.map(([title,text]) => <article><h3>{title}</h3><p>{text}</p><a href="#quote">Підібрати →</a></article>)}</div>
+      </section>
+
+      <section class="tray-section tray-copy">
+        <div><p class="eyebrow">Як обрати</p><h2>Душовий піддон під конкретну душову</h2></div>
+        <div><p>При виборі враховуємо зовнішній розмір, місце встановлення, положення зливу, висоту борту, матеріал і сумісність зі скляною перегородкою або дверима.</p><p>Для Walk-In особливо важливо заздалегідь погодити геометрію піддона та спосіб кріплення скла, щоб після монтажу конструкція виглядала цілісно.</p></div>
+      </section>
+
+      <section id="quote" class="tray-quote"><div><p class="eyebrow">Розрахунок</p><h2>Потрібен піддон разом із душовою?</h2><p>Надішліть розміри душової зони — підберемо сумісний піддон і скляну конструкцію.</p></div><a href="/quote/">Отримати розрахунок →</a></section>
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+.tray-page{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17211e}.tray-breadcrumbs{max-width:1280px;margin:0 auto;padding:26px 24px 0;display:flex;gap:9px;font-size:13px;color:#68736f}.tray-breadcrumbs a{color:inherit}.tray-hero{max-width:1280px;margin:0 auto;padding:34px 24px 70px;display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}.tray-hero h1{font-size:clamp(42px,5vw,68px);line-height:.98;margin:10px 0 22px;letter-spacing:-.04em}.tray-hero p{font-size:18px;line-height:1.62;color:#55615d;max-width:620px}.tray-hero img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:22px}.tray-cta,.tray-quote>a{display:inline-flex;margin-top:22px;padding:14px 20px;border-radius:12px;background:#79cfb3;color:#0f251e;text-decoration:none;font-weight:750}.tray-section{max-width:1280px;margin:0 auto;padding:64px 24px}.tray-section h2{font-size:clamp(30px,3.2vw,44px);letter-spacing:-.035em;margin:8px 0 28px}.tray-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.tray-grid article{border:1px solid #dce7e2;border-radius:16px;padding:22px;min-height:190px;display:flex;flex-direction:column}.tray-grid h3{font-size:21px;margin:0 0 12px}.tray-grid p{font-size:14px;line-height:1.55;color:#63706b}.tray-grid a{margin-top:auto;color:#13785f;font-weight:700}.tray-copy{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;border-top:1px solid #e4ebe8}.tray-copy p{font-size:17px;line-height:1.7;color:#55615d}.tray-quote{max-width:1280px;margin:20px auto 80px;padding:34px;border-radius:22px;background:#073f31;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:30px}.tray-quote h2{font-size:34px;margin:6px 0 10px}.tray-quote p{color:#d6ebe4}.tray-quote>a{margin:0;background:#fff;color:#10372e}@media(max-width:900px){.tray-hero,.tray-copy{grid-template-columns:1fr}.tray-grid{grid-template-columns:repeat(2,1fr)}.tray-quote{align-items:flex-start;flex-direction:column}}@media(max-width:560px){.tray-grid{grid-template-columns:1fr}.tray-hero{gap:26px}.tray-section{padding-block:42px}}
+</style>
