@@ -3,6 +3,7 @@ import '../styles/global.css';
 import '../styles/home-polish.css';
 import SiteEnhancements from '../components/SiteEnhancements.astro';
 import GoogleReviews from '../components/GoogleReviews.astro';
+import HeaderFixes from '../components/HeaderFixes.astro';
 
 interface Props {
   title: string;
@@ -74,6 +75,7 @@ const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
     <slot />
     {showHomeReviews && <GoogleReviews />}
     <SiteEnhancements />
+    <HeaderFixes />
     <script is:inline define:vars={{ menuLabel: menuLabels[resolvedLocale], moveReviews: showHomeReviews }}>
       const mobileMenuButton = document.querySelector('[data-mobile-menu-button]');
       if (mobileMenuButton) {
