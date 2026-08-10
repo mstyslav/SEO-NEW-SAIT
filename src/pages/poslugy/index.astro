@@ -4,49 +4,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { seoCategories, ukSeoServices } from '../../data/seo-services';
-
-const categoryServices = (category) => {
-  if (category.slug !== 'dushovi-konstruktsii') return category.services;
-  return [
-    ...category.services,
-    {
-      path: '/catalog/dushovi-piddony/',
-      shortName: 'Душові піддони'
-    }
-  ];
-};
 ---
-<BaseLayout title="Послуги зі скла на замовлення в Україні | Space Glass" description="50+ рішень зі скла для дому й бізнесу: душові, душові піддони, перегородки, двері, огорожі, дзеркала, фасади та безрамне скління з монтажем." availableLocales={['uk']}>
-  <div class="sg-page-shell">
-    <Header />
-    <main id="main">
-      <div class="seo-service-wrap">
-        <Breadcrumbs items={[{label:'Головна',href:'/'},{label:'Послуги'}]} />
-        <section class="seo-list-hero">
-          <p class="eyebrow">Space Glass</p>
-          <h1>Послуги зі скла на замовлення</h1>
-          <p class="lead">Проєктуємо, виготовляємо й монтуємо конструкції зі скла. На цій сторінці показуємо повний перелік напрямів так само, як у мега-меню, щоб клієнт одразу бачив усі доступні рішення.</p>
-        </section>
-
-        <div class="seo-category-grid">
-          {seoCategories.map((category) => {
-            const services = categoryServices(category);
-            return <article>
-              <p class="eyebrow">{services.length} рішень</p>
-              <h2><a href={`/poslugy/${category.slug}/`}>{category.name}</a></h2>
-              <ul>
-                {services.map((service) => <li><a href={service.path}>{service.shortName}</a></li>)}
-              </ul>
-              <a class="seo-category-more" href={`/poslugy/${category.slug}/`}>Уся категорія →</a>
-            </article>;
-          })}
-        </div>
-      </div>
-    </main>
-    <Footer />
-  </div>
+<BaseLayout title="Послуги зі скла на замовлення в Україні | Space Glass" description="50+ рішень зі скла для дому й бізнесу: душові, перегородки, двері, огорожі, дзеркала, фасади та безрамне скління з монтажем." availableLocales={['uk']}>
+  <div class="sg-page-shell"><Header /><main id="main"><div class="seo-service-wrap"><Breadcrumbs items={[{label:'Головна',href:'/'},{label:'Послуги'}]} /><section class="seo-list-hero"><p class="eyebrow">Space Glass</p><h1>Послуги зі скла на замовлення</h1><p class="lead">Проєктуємо, виготовляємо й монтуємо конструкції зі скла. У каталозі — {ukSeoServices.length} спеціалізованих рішень із прозорою навігацією.</p></section><div class="seo-category-grid">{seoCategories.map((category) => <article><p class="eyebrow">{category.services.length} рішень</p><h2><a href={`/poslugy/${category.slug}/`}>{category.name}</a></h2><ul>{category.services.slice(0,4).map((service) => <li><a href={service.path}>{service.shortName}</a></li>)}</ul><a class="seo-category-more" href={`/poslugy/${category.slug}/`}>Уся категорія →</a></article>)}</div></div></main><Footer /></div>
 </BaseLayout>
-
-<style>
-.seo-category-grid article{display:flex;flex-direction:column}.seo-category-grid ul{display:grid;gap:8px;margin:18px 0 22px;padding:0;list-style:none}.seo-category-grid li a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(32,54,49,.10);color:inherit;text-decoration:none}.seo-category-grid li a::after{content:'→';color:#16876b}.seo-category-more{margin-top:auto}
-</style>
