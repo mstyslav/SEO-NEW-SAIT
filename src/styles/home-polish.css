@@ -41,6 +41,46 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%231b2722' stroke-width='2'%3E%3Cpath d='M12 30h56v38H12zM9 30l7-16h48l7 16M20 30v38M47 30v38M20 49h27'/%3E%3Cpath d='M13 30c0 5 8 5 8 0 0 5 8 5 8 0 0 5 8 5 8 0 0 5 8 5 8 0 0 5 8 5 8 0 0 5 8 5 8 0 0 5 8 5 8 0'/%3E%3C/g%3E%3Cpath d='M22 32h23v15H22zm27 0h17v34H49z' fill='%23dff5ee' fill-opacity='.7'/%3E%3C/svg%3E");
 }
 
+/* Homepage quote form: clean two-column tablet/laptop reflow. */
+@media (max-width: 1180px) and (min-width: 701px) {
+  .quote-v4 .quote-form--home-final {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 22px 24px !important;
+  }
+
+  .quote-v4 .quote-form--home-final label:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .quote-v4 .quote-form--home-final label:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  /* City moves under Phone. */
+  .quote-v4 .quote-form--home-final label:nth-child(3) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  /* Need stays under Name. */
+  .quote-v4 .quote-form--home-final__need {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+  }
+
+  /* CTA occupies the full width of both fields. */
+  .quote-v4 .quote-form--home-final__submit {
+    grid-column: 1 / -1 !important;
+    grid-row: 3 !important;
+    width: 100% !important;
+    min-height: 64px !important;
+    justify-self: stretch !important;
+    margin: 0 !important;
+  }
+}
+
 @media (max-width: 760px) {
   .sg-categories .sg-category-card__icon { width: 52px; height: 52px; margin-bottom: 12px; }
 }
