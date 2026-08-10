@@ -12,3 +12,54 @@ const { title, description, updated = '4 серпня 2026' } = Astro.props;
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  .legal-page {
+    background: #fff;
+    color: #17211d;
+    color-scheme: light;
+  }
+  .legal-page__hero {
+    padding: 72px 0 42px;
+    background: #f5f8f7;
+    border-bottom: 1px solid #dce5e2;
+  }
+  .legal-page__hero .eyebrow {
+    color: #064b32 !important;
+  }
+  .legal-page__hero h1 {
+    margin: 10px 0 16px;
+    color: #111814 !important;
+    font-size: clamp(2.4rem, 6vw, 5rem);
+    line-height: 1;
+  }
+  .legal-page__hero p:not(.eyebrow) {
+    color: #4f5a55 !important;
+  }
+  .legal-page__content {
+    max-width: 960px;
+    padding-top: 48px;
+    padding-bottom: 88px;
+    color: #26332d !important;
+  }
+  .legal-page__content :global(h2) {
+    margin: 42px 0 14px;
+    color: #111814 !important;
+    font-size: clamp(1.35rem, 2.5vw, 2rem);
+  }
+  .legal-page__content :global(p),
+  .legal-page__content :global(li) {
+    color: #33413a !important;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+  .legal-page__content :global(a) {
+    color: #087347 !important;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  @media (max-width: 640px) {
+    .legal-page__hero { padding: 48px 0 30px; }
+    .legal-page__content { padding-top: 28px; padding-bottom: 60px; }
+  }
+</style>
