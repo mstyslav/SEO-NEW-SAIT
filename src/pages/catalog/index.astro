@@ -14,30 +14,61 @@ const categoryImages: Record<string, string> = {
   'arkhitekturni-systemy': '/images/s24-menu/facades.webp'
 };
 ---
-<BaseLayout title="Каталог Space Glass" description="Каталог душових, перегородок, дверей, огорож, дзеркал та алюмінієвих конструкцій Space Glass.">
+<BaseLayout title="Каталог Space Glass" description="Каталог скляних конструкцій Space Glass: душові, перегородки, двері, огорожі, дзеркала та алюмінієві системи. Пошук, категорії та товари з індивідуальним розрахунком.">
 <div class="sg-page-shell">
   <Header />
   <main id="main">
     <section class="inner-hero">
       <div class="inner-hero__copy">
         <p class="eyebrow">Каталог</p>
-        <h1>Скляні та алюмінієві рішення</h1>
-        <p class="lead">Готові товари, індивідуальні конструкції, доставка по Україні та монтаж у ключових містах.</p>
-        <div class="catalog-v14-search"><input type="search" placeholder="Пошук по каталогу" /><button class="button button--mint">Знайти</button></div>
+        <h1>Каталог скляних конструкцій</h1>
+        <p class="lead">Готові товари та індивідуальні конструкції Space Glass. Доставка по Україні та Європі.</p>
+        <div class="catalog-v14-search"><input type="search" placeholder="Пошук за назвою або артикулом" /><button class="button button--mint">Знайти</button></div>
       </div>
       <div class="inner-hero__visual"><span>SPACE GLASS</span></div>
     </section>
 
-    <section class="projects-v14-grid" aria-label="Категорії товарів">
-      {catalog.categories.map((category)=><a href={`/${category.slug}/`}>
-        <div><img src={categoryImages[category.slug]} alt={category.title} width="640" height="416" loading="lazy" /></div>
-        <small>Категорія</small>
-        <h2>{category.title}</h2>
-        <p>{category.subtitle}</p>
-        <b>Перейти →</b>
-      </a>)}
+    <section class="catalog-product-area">
+      <aside class="catalog-filter" aria-label="Фільтр товарів">
+        <h2>Фільтр</h2>
+        <label>Категорія<select><option>Усі товари</option><option>Душові кабіни</option><option>Скляні перегородки</option><option>Скляні двері</option><option>Скляні огорожі</option></select></label>
+        <label>Тип скла<select><option>Будь-який</option><option>Прозоре</option><option>Матове</option><option>Тоноване</option></select></label>
+        <label>Товщина<select><option>Будь-яка</option><option>8 мм</option><option>10 мм</option><option>12 мм</option></select></label>
+        <label>Колір фурнітури<select><option>Будь-який</option><option>Чорний</option><option>Хром</option></select></label>
+        <p>Фільтри підключимо до WooCommerce Attributes під час інтеграції з WordPress.</p>
+      </aside>
+
+      <div class="catalog-results">
+        <div class="catalog-results__head"><div><small>Перший товар</small><h2>Товари Space Glass</h2></div><select aria-label="Сортування"><option>Рекомендовані</option><option>Ціна: від нижчої</option><option>Ціна: від вищої</option></select></div>
+        <div class="catalog-product-grid">
+          <a class="catalog-product-card" href="/catalog/dushova-perehorodka-walk-in-black/">
+            <div class="catalog-product-card__media">
+              <img src="/images/v5/product-1.webp" alt="Душова перегородка Walk-In Black із прозорого загартованого скла" width="640" height="520" loading="eager" />
+              <span>На замовлення</span>
+            </div>
+            <div class="catalog-product-card__body">
+              <small>Душові кабіни · SKU SG-WI-BL-001</small>
+              <h3>Душова перегородка Walk-In Black</h3>
+              <p>Загартоване скло ESG 8–10 мм · чорна або хромована фурнітура · індивідуальний розмір.</p>
+              <strong>від 12 900 ₴</strong>
+              <b>Розрахувати конструкцію →</b>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="catalog-category-links" aria-label="Категорії каталогу">
+      <div class="sg-section-title"><h2>Категорії</h2><p>Для переходу на SEO-сторінки категорій.</p></div>
+      <div class="catalog-category-chips">
+        {catalog.categories.map((category)=><a href={`/${category.slug}/`}>{category.title}</a>)}
+      </div>
     </section>
   </main>
   <Footer />
 </div>
 </BaseLayout>
+
+<style>
+.catalog-product-area{max-width:1320px;margin:0 auto;padding:64px 24px;display:grid;grid-template-columns:270px minmax(0,1fr);gap:34px}.catalog-filter{border:1px solid #dfe6e3;border-radius:18px;padding:22px;align-self:start;position:sticky;top:90px}.catalog-filter h2{margin-top:0}.catalog-filter label{display:grid;gap:7px;margin:16px 0;font-size:13px}.catalog-filter select,.catalog-results__head select{border:1px solid #d6dfdc;border-radius:11px;padding:11px;background:#fff;color:#1d2926}.catalog-filter p{font-size:12px;line-height:1.55;color:#74807c;margin-bottom:0}.catalog-results__head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:20px}.catalog-results__head small{color:#16876b;text-transform:uppercase;letter-spacing:.06em}.catalog-results__head h2{font-size:36px;margin:5px 0 0}.catalog-product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.catalog-product-card{border:1px solid #dfe6e3;border-radius:18px;overflow:hidden;background:#fff;color:inherit;text-decoration:none;transition:transform .2s ease,border-color .2s ease}.catalog-product-card:hover{transform:translateY(-3px);border-color:#67d8b8}.catalog-product-card__media{position:relative;background:#eef3f1;aspect-ratio:4/3;overflow:hidden}.catalog-product-card__media img{width:100%;height:100%;display:block;object-fit:cover}.catalog-product-card__media span{position:absolute;left:12px;top:12px;background:#12322d;color:#fff;border-radius:999px;padding:7px 10px;font-size:11px;text-transform:uppercase}.catalog-product-card__body{padding:18px}.catalog-product-card__body small{color:#74807c}.catalog-product-card__body h3{font-size:22px;line-height:1.15;margin:9px 0}.catalog-product-card__body p{font-size:14px;line-height:1.55;color:#53615d}.catalog-product-card__body strong{display:block;font-size:24px;margin:14px 0}.catalog-product-card__body b{display:block;color:#14856a}.catalog-category-links{max-width:1320px;margin:0 auto;padding:20px 24px 80px}.catalog-category-chips{display:flex;flex-wrap:wrap;gap:10px}.catalog-category-chips a{border:1px solid #dce5e2;border-radius:999px;padding:10px 14px;color:#27413b;background:#fff}@media(max-width:980px){.catalog-product-area{grid-template-columns:1fr}.catalog-filter{position:static}.catalog-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:620px){.catalog-product-area{padding-inline:16px}.catalog-results__head{align-items:flex-start;flex-direction:column}.catalog-product-grid{grid-template-columns:1fr}.catalog-category-links{padding-inline:16px}}
+</style>
