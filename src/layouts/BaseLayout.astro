@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../styles/home-polish.css';
 import SiteEnhancements from '../components/SiteEnhancements.astro';
+import GoogleReviews from '../components/GoogleReviews.astro';
 
 interface Props {
   title: string;
@@ -40,6 +41,7 @@ const schema = jsonLdGraph([
   pageSchema,
   ...extraStructuredData
 ]);
+const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
 ---
 <!doctype html>
 <html lang={resolvedLocale}>
@@ -70,8 +72,9 @@ const schema = jsonLdGraph([
   <body>
     <a class="skip-link" href="#main">{skipLinks[resolvedLocale]}</a>
     <slot />
+    {showHomeReviews && <GoogleReviews />}
     <SiteEnhancements />
-    <script is:inline define:vars={{ menuLabel: menuLabels[resolvedLocale] }}>
+    <script is:inline define:vars={{ menuLabel: menuLabels[resolvedLocale], moveReviews: showHomeReviews }}>
       const mobileMenuButton = document.querySelector('[data-mobile-menu-button]');
       if (mobileMenuButton) {
         mobileMenuButton.setAttribute('aria-label', menuLabel);
@@ -81,6 +84,11 @@ const schema = jsonLdGraph([
       if (heroImage) {
         heroImage.setAttribute('alt', 'Панорамні скляні перегородки та алюмінієві конструкції Space Glass у сучасному інтер’єрі');
         heroImage.setAttribute('decoding', 'async');
+      }
+      if (moveReviews) {
+        const reviews = document.querySelector('[data-google-reviews]');
+        const footer = document.querySelector('footer');
+        if (reviews && footer) footer.before(reviews);
       }
     </script>
     <script src="/js/i18n-client.js" defer></script>
