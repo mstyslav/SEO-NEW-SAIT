@@ -23,6 +23,7 @@ const canonical = new URL(localizedPath(basePath, resolvedLocale), origin);
 const socialImage = new URL(image, origin);
 const localeNames = { uk: 'uk_UA', ru: 'ru_UA', en: 'en_US', de: 'de_DE' } as const;
 const skipLinks = { uk: 'Перейти до змісту', ru: 'Перейти к содержанию', en: 'Skip to content', de: 'Zum Inhalt springen' } as const;
+const menuLabels = { uk: 'Відкрити меню', ru: 'Открыть меню', en: 'Open menu', de: 'Menü öffnen' } as const;
 const pageSchema = webPageSchema({
   canonical: canonical.href,
   title,
@@ -68,6 +69,13 @@ const schema = jsonLdGraph([
   <body>
     <a class="skip-link" href="#main">{skipLinks[resolvedLocale]}</a>
     <slot />
-      <script src="/js/i18n-client.js" defer></script>
+    <script is:inline define:vars={{ menuLabel: menuLabels[resolvedLocale] }}>
+      const mobileMenuButton = document.querySelector('[data-mobile-menu-button]');
+      if (mobileMenuButton) {
+        mobileMenuButton.setAttribute('aria-label', menuLabel);
+        mobileMenuButton.setAttribute('title', menuLabel);
+      }
+    </script>
+    <script src="/js/i18n-client.js" defer></script>
   </body>
 </html>
