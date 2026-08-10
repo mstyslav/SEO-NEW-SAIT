@@ -23,7 +23,7 @@ const solutions = [
       </section>
       <section class="projects-v14-grid" aria-label="Скляні рішення за типом об’єкта">
         {solutions.map(([title, description, image, href, alt]) => <a href={href}>
-          <div><img src={image} alt={alt} width="640" height="416" loading="lazy" decoding="async" /></div>
+          <div class="solution-image"><img src={image} alt={alt} width="640" height="416" loading="lazy" decoding="async" /></div>
           <small>Готове рішення</small>
           <h2>{title}</h2>
           <p>{description}</p>
@@ -34,3 +34,29 @@ const solutions = [
     <Footer />
   </div>
 </BaseLayout>
+
+<style>
+  .projects-v14-grid > a {
+    overflow: hidden;
+  }
+
+  .projects-v14-grid .solution-image {
+    width: calc(100% + 2px);
+    margin: -1px -1px 0;
+    padding: 0;
+    overflow: hidden;
+    aspect-ratio: 640 / 416;
+    line-height: 0;
+  }
+
+  .projects-v14-grid .solution-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    object-fit: cover;
+    object-position: center;
+  }
+</style>
