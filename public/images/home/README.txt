@@ -1,0 +1,1 @@
+Hero assets for the Space Glass homepage.
