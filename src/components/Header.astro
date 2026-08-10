@@ -78,8 +78,10 @@ const menuData = {
     <a class="brand-logo" href={lp("/")} aria-label="Space Glass — головна"><img src="/images/space-glass-brand-logo.jpg" width="220" height="178" alt="Space Glass" /></a>
     <button class="sg-mobile-toggle" type="button" aria-controls="sg-mobile-menu" aria-expanded="false" data-mobile-menu-button><span></span><span></span><span></span><b>Menu</b></button>
     <nav class="nav__links sg-nav-links" aria-label="Головна навігація">
-      <div class="mega-trigger mega-trigger--catalog">
-        <a class="nav-link nav-link--catalog" href={lp("/catalog/")}>Каталог <span class="catalog-arrow">⌄</span></a>
+      <a class="nav-link nav-link--catalog" href={lp("/catalog/")}>Каталог</a>
+      {links.map(([label, href]) => <a class="nav-link" href={lp(href)}>{label}</a>)}
+      <div class="mega-trigger mega-trigger--catalog mega-trigger--menu" data-mega-trigger>
+        <button class="nav-link sg-categories-trigger" type="button" aria-label="Всі категорії" aria-haspopup="true" aria-expanded="false" data-mega-button><span></span><span></span><span></span></button>
         <div class="catalog-mega catalog-mega--dynamic" data-catalog-mega>
           <div class="catalog-mega__main">
             {menuGroups.map(section => <section class="catalog-mega__column"><h3>{section.icon} {section.section}</h3>{section.groups.map(group => <div class="catalog-mega__group" data-menu-key={group.key}><a class="catalog-mega__group-title" href={group.href}>{group.title}</a>{group.items.map(item => <a href={group.href}>{item}</a>)}</div>)}</section>)}
@@ -90,7 +92,6 @@ const menuData = {
           <div class="catalog-mega__benefits"><div><span>⚙</span><b>Власне виробництво</b><small>Сучасне обладнання</small></div><div><span>◇</span><b>{t.warrantyShort ?? 'Гарантія 2 роки'}</b><small>На конструкції та монтаж</small></div><div><span>♙</span><b>Професійний монтаж</b><small>Досвідчені бригади</small></div><div><img src="/images/icons/delivery-truck.png" alt="" width="42" height="30" /><b>Доставка по Україні</b><small>Надійно та в строк</small></div></div>
         </div>
       </div>
-      {links.map(([label, href]) => <a class="nav-link" href={lp(href)}>{label}</a>)}
     </nav>
     <div class="nav__actions sg-nav-actions">
       <div class="language-switcher" data-language-switcher><button class="language-switcher__button" type="button" aria-haspopup="true" aria-expanded="false" data-language-button><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 12h17M12 3c2.4 2.5 3.6 5.5 3.6 9S14.4 18.5 12 21M12 3C9.6 5.5 8.4 8.5 8.4 12S9.6 18.5 12 21" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span>{localeInfo.short}</span><i>⌄</i></button><div class="language-switcher__menu" data-language-menu>{Object.entries(i18nConfig.locales).filter(([code]) => code === 'uk' || code === 'ru').map(([code,item]) => <a class:list={['language-switcher__option', code === locale && 'is-active']} href={localeSwitchPath(code as 'uk'|'ru')} hreflang={code} lang={code} data-locale={code}><b>{item.short}</b><span>{item.label}</span>{code===locale && <i>✓</i>}</a>)}</div></div>
@@ -103,8 +104,15 @@ const menuData = {
   </div>
   <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden><div class="sg-mobile-menu__panel"><a class="sg-mobile-menu__primary" href={lp("/catalog/")}>Каталог</a>{links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}<a href={lp("/compare/")}>Порівняння</a><a href={lp("/cart/")}>Кошик</a><a href="tel:+380734251400">+38 (073) 425 14 00</a><a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a></div></div>
 </header>
+<style>
+  .sg-categories-trigger{display:inline-flex;flex-direction:column;justify-content:center;gap:4px;width:32px;height:32px;padding:6px;border:0;background:transparent;cursor:pointer}
+  .sg-categories-trigger span{display:block;width:20px;height:1.5px;background:currentColor;border-radius:2px}
+  .mega-trigger--menu .catalog-mega{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+  .mega-trigger--menu.is-open .catalog-mega{opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+</style>
 <script>
   const mobileButton=document.querySelector('[data-mobile-menu-button]'); const mobileMenu=document.querySelector('[data-mobile-menu]'); mobileButton?.addEventListener('click',()=>{const isOpen=mobileButton.getAttribute('aria-expanded')!=='true'; mobileButton.setAttribute('aria-expanded',String(isOpen)); mobileButton.classList.toggle('is-open',isOpen); if(mobileMenu) mobileMenu.hidden=!isOpen;});
+  const megaTrigger=document.querySelector('[data-mega-trigger]'); const megaButton=megaTrigger?.querySelector('[data-mega-button]'); megaButton?.addEventListener('click',(event)=>{event.stopPropagation();const isOpen=!megaTrigger.classList.contains('is-open');megaTrigger.classList.toggle('is-open',isOpen);megaButton.setAttribute('aria-expanded',String(isOpen));}); document.addEventListener('click',(event)=>{if(megaTrigger && !megaTrigger.contains(event.target)){megaTrigger.classList.remove('is-open');megaButton?.setAttribute('aria-expanded','false');}}); document.addEventListener('keydown',(event)=>{if(event.key==='Escape'){megaTrigger?.classList.remove('is-open');megaButton?.setAttribute('aria-expanded','false');}});
   const updateProjectHeaderCount=()=>{let count=0;try{const project=JSON.parse(localStorage.getItem('spaceGlassProject')||'{"items":[]}');count=project.items.reduce((sum,item)=>sum+Number(item.quantity||1),0);}catch{} document.querySelectorAll('[data-project-header-count]').forEach(el=>el.textContent=count);};
   const updateCompareHeaderCount=()=>{let count=0;try{const compare=JSON.parse(localStorage.getItem('spaceGlassCompare')||'{"items":[]}');count=Array.isArray(compare.items)?compare.items.length:0;}catch{} document.querySelectorAll('[data-compare-header-count]').forEach(el=>el.textContent=count);};
   updateProjectHeaderCount(); updateCompareHeaderCount(); window.addEventListener('storage',()=>{updateProjectHeaderCount();updateCompareHeaderCount();}); window.addEventListener('focus',updateProjectHeaderCount); window.addEventListener('space-glass-project-updated',updateProjectHeaderCount); window.addEventListener('space-glass-compare-updated',updateCompareHeaderCount); setInterval(updateProjectHeaderCount,1500);
