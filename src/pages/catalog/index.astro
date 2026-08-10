@@ -3,66 +3,62 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import catalog from '../../data/catalog.json';
-
-const categoryImages: Record<string, string> = {
-  'dushovi-kabiny': '/images/s24-menu/showers.webp',
-  'sklyani-perehorodky': '/images/s24-menu/partitions.webp',
-  'sklyani-dveri': '/images/s24-menu/doors.webp',
-  'sklyani-ohorozhi': '/images/s24-menu/railings.webp',
-  dzerkala: '/images/s24-menu/mirrors.webp',
-  'alyuminiievi-konstruktsii': '/images/s24-menu/aluminium.webp',
-  'arkhitekturni-systemy': '/images/s24-menu/facades.webp'
-};
 ---
-<BaseLayout title="Каталог Space Glass" description="Каталог скляних конструкцій Space Glass: душові, перегородки, двері, огорожі, дзеркала та алюмінієві системи. Пошук, категорії та товари з індивідуальним розрахунком.">
+<BaseLayout title="Каталог Space Glass" description="Каталог скляних конструкцій Space Glass: душові, перегородки, двері, огорожі, дзеркала та алюмінієві системи.">
 <div class="sg-page-shell">
   <Header />
-  <main id="main">
-    <section class="inner-hero">
-      <div class="inner-hero__copy">
+  <main id="main" class="catalog-page">
+    <section class="catalog-head">
+      <div>
         <p class="eyebrow">Каталог</p>
-        <h1>Каталог скляних конструкцій</h1>
-        <p class="lead">Готові товари та індивідуальні конструкції Space Glass. Доставка по Україні та Європі.</p>
-        <div class="catalog-v14-search"><input type="search" placeholder="Пошук за назвою або артикулом" /><button class="button button--mint">Знайти</button></div>
+        <h1>Скляні конструкції</h1>
+        <p>Товари та індивідуальні рішення Space Glass. Доставка по Україні та Європі.</p>
       </div>
-      <div class="inner-hero__visual"><span>SPACE GLASS</span></div>
+      <div class="catalog-search" role="search">
+        <input type="search" placeholder="Пошук за назвою або артикулом" aria-label="Пошук за назвою або артикулом" />
+        <button type="button">Знайти</button>
+      </div>
     </section>
 
-    <section class="catalog-product-area">
-      <aside class="catalog-filter" aria-label="Фільтр товарів">
-        <h2>Фільтр</h2>
-        <label>Категорія<select><option>Усі товари</option><option>Душові кабіни</option><option>Скляні перегородки</option><option>Скляні двері</option><option>Скляні огорожі</option></select></label>
-        <label>Тип скла<select><option>Будь-який</option><option>Прозоре</option><option>Матове</option><option>Тоноване</option></select></label>
-        <label>Товщина<select><option>Будь-яка</option><option>8 мм</option><option>10 мм</option><option>12 мм</option></select></label>
-        <label>Колір фурнітури<select><option>Будь-який</option><option>Чорний</option><option>Хром</option></select></label>
-        <p>Фільтри підключимо до WooCommerce Attributes під час інтеграції з WordPress.</p>
+    <div class="catalog-toolbar">
+      <button class="filter-mobile" type="button">Фільтри</button>
+      <span>1 товар</span>
+      <select aria-label="Сортування"><option>Рекомендовані</option><option>Новинки</option><option>Ціна: від нижчої</option><option>Ціна: від вищої</option></select>
+    </div>
+
+    <section class="catalog-layout">
+      <aside class="filters" aria-label="Фільтр товарів">
+        <div class="filter-title"><h2>Фільтри</h2><button type="button">Очистити</button></div>
+        <details open><summary>Категорія</summary><label><input type="checkbox" /> Душові кабіни <span>1</span></label><label><input type="checkbox" /> Перегородки <span>0</span></label><label><input type="checkbox" /> Двері <span>0</span></label><label><input type="checkbox" /> Огорожі <span>0</span></label></details>
+        <details open><summary>Тип конструкції</summary><label><input type="checkbox" /> Walk-In <span>1</span></label><label><input type="checkbox" /> Розпашна <span>0</span></label><label><input type="checkbox" /> Розсувна <span>0</span></label></details>
+        <details><summary>Скло</summary><label><input type="checkbox" /> Прозоре <span>1</span></label><label><input type="checkbox" /> Satin <span>0</span></label><label><input type="checkbox" /> Тоноване <span>0</span></label></details>
+        <details><summary>Товщина скла</summary><label><input type="checkbox" /> 8 мм <span>1</span></label><label><input type="checkbox" /> 10 мм <span>1</span></label></details>
+        <details><summary>Фурнітура</summary><label><input type="checkbox" /> Чорна матова <span>1</span></label><label><input type="checkbox" /> Хром <span>1</span></label></details>
+        <details><summary>Монтаж</summary><label><input type="checkbox" /> З монтажем <span>1</span></label><label><input type="checkbox" /> Без монтажу <span>1</span></label></details>
+        <p class="filter-note">Під час інтеграції з WooCommerce ці параметри стануть Global Attributes. Фільтри не створюватимуть індексовані SEO-дублі.</p>
       </aside>
 
-      <div class="catalog-results">
-        <div class="catalog-results__head"><div><small>Перший товар</small><h2>Товари Space Glass</h2></div><select aria-label="Сортування"><option>Рекомендовані</option><option>Ціна: від нижчої</option><option>Ціна: від вищої</option></select></div>
-        <div class="catalog-product-grid">
-          <a class="catalog-product-card" href="/catalog/dushova-perehorodka-walk-in-black/">
-            <div class="catalog-product-card__media">
-              <img src="/images/v5/product-1.webp" alt="Душова перегородка Walk-In Black із прозорого загартованого скла" width="640" height="520" loading="eager" />
-              <span>На замовлення</span>
-            </div>
-            <div class="catalog-product-card__body">
-              <small>Душові кабіни · SKU SG-WI-BL-001</small>
-              <h3>Душова перегородка Walk-In Black</h3>
-              <p>Загартоване скло ESG 8–10 мм · чорна або хромована фурнітура · індивідуальний розмір.</p>
-              <strong>від 12 900 ₴</strong>
-              <b>Розрахувати конструкцію →</b>
-            </div>
+      <div class="results">
+        <article class="product-card">
+          <a class="product-media" href="/catalog/dushova-perehorodka-walk-in-black/">
+            <img src="/images/v5/product-1.webp" alt="Душова перегородка Walk-In Black із загартованого скла" width="760" height="540" loading="eager" />
+            <span class="badge">На замовлення</span>
+            <button class="wishlist" type="button" aria-label="Додати в обране" title="Додати в обране">♡</button>
           </a>
-        </div>
+          <div class="product-info">
+            <div class="meta">Душові кабіни · SKU SG-WI-BL-001</div>
+            <h2><a href="/catalog/dushova-perehorodka-walk-in-black/">Душова перегородка Walk-In Black</a></h2>
+            <p>ESG 8–10 мм · чорна або хромована фурнітура · індивідуальні розміри</p>
+            <div class="price"><strong>від 12 900 ₴</strong><small>Орієнтовна ціна</small></div>
+            <a class="cta" href="/catalog/dushova-perehorodka-walk-in-black/">Переглянути та розрахувати →</a>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section class="catalog-category-links" aria-label="Категорії каталогу">
-      <div class="sg-section-title"><h2>Категорії</h2><p>Для переходу на SEO-сторінки категорій.</p></div>
-      <div class="catalog-category-chips">
-        {catalog.categories.map((category)=><a href={`/${category.slug}/`}>{category.title}</a>)}
-      </div>
+    <section class="category-links" aria-label="Категорії каталогу">
+      <h2>Категорії</h2>
+      <div>{catalog.categories.map((category)=><a href={`/${category.slug}/`}>{category.title}</a>)}</div>
     </section>
   </main>
   <Footer />
@@ -70,5 +66,5 @@ const categoryImages: Record<string, string> = {
 </BaseLayout>
 
 <style>
-.catalog-product-area{max-width:1320px;margin:0 auto;padding:64px 24px;display:grid;grid-template-columns:270px minmax(0,1fr);gap:34px}.catalog-filter{border:1px solid #dfe6e3;border-radius:18px;padding:22px;align-self:start;position:sticky;top:90px}.catalog-filter h2{margin-top:0}.catalog-filter label{display:grid;gap:7px;margin:16px 0;font-size:13px}.catalog-filter select,.catalog-results__head select{border:1px solid #d6dfdc;border-radius:11px;padding:11px;background:#fff;color:#1d2926}.catalog-filter p{font-size:12px;line-height:1.55;color:#74807c;margin-bottom:0}.catalog-results__head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:20px}.catalog-results__head small{color:#16876b;text-transform:uppercase;letter-spacing:.06em}.catalog-results__head h2{font-size:36px;margin:5px 0 0}.catalog-product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.catalog-product-card{border:1px solid #dfe6e3;border-radius:18px;overflow:hidden;background:#fff;color:inherit;text-decoration:none;transition:transform .2s ease,border-color .2s ease}.catalog-product-card:hover{transform:translateY(-3px);border-color:#67d8b8}.catalog-product-card__media{position:relative;background:#eef3f1;aspect-ratio:4/3;overflow:hidden}.catalog-product-card__media img{width:100%;height:100%;display:block;object-fit:cover}.catalog-product-card__media span{position:absolute;left:12px;top:12px;background:#12322d;color:#fff;border-radius:999px;padding:7px 10px;font-size:11px;text-transform:uppercase}.catalog-product-card__body{padding:18px}.catalog-product-card__body small{color:#74807c}.catalog-product-card__body h3{font-size:22px;line-height:1.15;margin:9px 0}.catalog-product-card__body p{font-size:14px;line-height:1.55;color:#53615d}.catalog-product-card__body strong{display:block;font-size:24px;margin:14px 0}.catalog-product-card__body b{display:block;color:#14856a}.catalog-category-links{max-width:1320px;margin:0 auto;padding:20px 24px 80px}.catalog-category-chips{display:flex;flex-wrap:wrap;gap:10px}.catalog-category-chips a{border:1px solid #dce5e2;border-radius:999px;padding:10px 14px;color:#27413b;background:#fff}@media(max-width:980px){.catalog-product-area{grid-template-columns:1fr}.catalog-filter{position:static}.catalog-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:620px){.catalog-product-area{padding-inline:16px}.catalog-results__head{align-items:flex-start;flex-direction:column}.catalog-product-grid{grid-template-columns:1fr}.catalog-category-links{padding-inline:16px}}
+.catalog-page{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:#18211e}.catalog-head{max-width:1320px;margin:auto;padding:56px 24px 30px;display:flex;justify-content:space-between;gap:32px;align-items:end;border-bottom:1px solid #e5ece9}.catalog-head h1{font-size:clamp(40px,5vw,64px);line-height:.98;letter-spacing:-.045em;margin:8px 0 14px}.catalog-head p{max-width:650px;color:#59645f;font-size:17px}.catalog-search{display:flex;min-width:min(460px,100%);border:1px solid #cfdad6;border-radius:14px;overflow:hidden;background:#fff}.catalog-search input{flex:1;border:0;padding:14px 16px;font-size:15px;outline:0}.catalog-search button{border:0;background:#79cfb4;padding:0 20px;font-weight:700}.catalog-toolbar{max-width:1320px;margin:auto;padding:18px 24px;display:flex;align-items:center;gap:16px;border-bottom:1px solid #edf1ef}.catalog-toolbar span{margin-right:auto;color:#66716d;font-size:14px}.catalog-toolbar select{padding:10px 12px;border:1px solid #d8e0dd;border-radius:10px;background:#fff}.filter-mobile{display:none}.catalog-layout{max-width:1320px;margin:auto;padding:28px 24px 70px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:34px}.filters{align-self:start;position:sticky;top:90px}.filter-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.filter-title h2{font-size:24px;margin:0}.filter-title button{border:0;background:none;color:#18836a;font-size:13px}.filters details{border-bottom:1px solid #e1e8e5;padding:14px 0}.filters summary{font-weight:700;font-size:15px;cursor:pointer}.filters label{display:flex;gap:9px;align-items:center;padding:8px 0;font-size:14px;color:#394440}.filters label span{margin-left:auto;color:#8c9692;font-size:12px}.filter-note{font-size:12px;line-height:1.5;color:#7b8682;margin-top:18px}.results{min-width:0}.product-card{border:1px solid #dfe6e3;border-radius:16px;overflow:hidden;background:#fff;max-width:430px}.product-media{display:block;position:relative;aspect-ratio:1.42/1;background:#f1f4f3;overflow:hidden}.product-media img{width:100%;height:100%;object-fit:cover;display:block}.badge{position:absolute;left:12px;top:12px;background:#12322d;color:white;border-radius:999px;padding:6px 9px;font-size:11px;text-transform:uppercase}.wishlist{position:absolute;right:12px;top:12px;width:38px;height:38px;border-radius:50%;border:1px solid #d5dedb;background:#fff;font-size:22px;cursor:pointer}.product-info{padding:16px}.meta{font-size:12px;color:#77827e}.product-info h2{font-size:21px;line-height:1.15;margin:8px 0}.product-info h2 a{color:inherit;text-decoration:none}.product-info p{font-size:14px;line-height:1.5;color:#59645f;margin:0 0 14px}.price{display:flex;align-items:baseline;gap:10px}.price strong{font-size:23px}.price small{font-size:12px;color:#88918e}.cta{display:inline-block;margin-top:12px;color:#147e66;font-weight:700;text-decoration:none;font-size:14px}.category-links{max-width:1320px;margin:auto;padding:0 24px 80px}.category-links h2{font-size:30px}.category-links>div{display:flex;gap:8px;flex-wrap:wrap}.category-links a{border:1px solid #dce5e2;border-radius:999px;padding:9px 13px;color:#27413b;text-decoration:none;background:#fff;font-size:14px}@media(max-width:900px){.catalog-head{display:block}.catalog-search{margin-top:24px;min-width:0}.catalog-layout{grid-template-columns:1fr}.filters{position:static;display:none}.filter-mobile{display:inline-block}.product-card{max-width:none}}@media(max-width:620px){.catalog-head,.catalog-layout,.catalog-toolbar,.category-links{padding-left:16px;padding-right:16px}.catalog-head h1{font-size:42px}}
 </style>
