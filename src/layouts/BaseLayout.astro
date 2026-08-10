@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import '../styles/home-polish.css';
+import SiteEnhancements from '../components/SiteEnhancements.astro';
 
 interface Props {
   title: string;
@@ -10,7 +11,6 @@ interface Props {
   schemaType?: 'Organization' | 'WebSite' | 'WebPage' | 'CollectionPage' | 'AboutPage' | 'ContactPage' | 'Service' | 'Article' | 'CreativeWork';
   structuredData?: import('../seo/schema').JsonLdObject | import('../seo/schema').JsonLdObject[];
 }
-
 
 const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [] } = Astro.props;
 
@@ -70,6 +70,7 @@ const schema = jsonLdGraph([
   <body>
     <a class="skip-link" href="#main">{skipLinks[resolvedLocale]}</a>
     <slot />
+    <SiteEnhancements />
     <script is:inline define:vars={{ menuLabel: menuLabels[resolvedLocale] }}>
       const mobileMenuButton = document.querySelector('[data-mobile-menu-button]');
       if (mobileMenuButton) {
