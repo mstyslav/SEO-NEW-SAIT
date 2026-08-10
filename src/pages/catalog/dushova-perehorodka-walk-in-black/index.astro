@@ -3,139 +3,165 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
 
+const gallery = [
+  ['/images/v5/product-1.webp','Душова перегородка Walk-In Black із прозорого загартованого скла'],
+  ['/images/v5/project-1.webp','Walk-In перегородка Space Glass у сучасній ванній кімнаті'],
+  ['/images/v5/project-2.webp','Душова конструкція Space Glass після монтажу']
+];
+
 const faq = [
-  ['Від чого залежить ціна Walk-In перегородки?', 'Від ширини та висоти скла, товщини, типу скла, кольору фурнітури, способу кріплення, доставки та монтажу.'],
-  ['Чи можна виготовити перегородку за моїми розмірами?', 'Так. Конструкцію виготовляємо індивідуально після перевірки розмірів або професійного заміру.'],
-  ['Яке скло використовується?', 'Для Walk-In використовуємо безпечне загартоване скло ESG відповідної товщини.'],
-  ['Яку товщину скла обрати — 8 чи 10 мм?', 'Товщину підбираємо за габаритами, способом кріплення та жорсткістю конструкції.'],
-  ['Чи можна обрати чорну фурнітуру?', 'Так. Доступні чорна матова та інші варіанти виконання.'],
-  ['Чи можливе матове або тоноване скло?', 'Так, доступні прозоре, Satin, тоноване та інші декоративні варіанти.'],
-  ['Чи потрібен професійний замір?', 'Для індивідуальної конструкції професійний замір рекомендований.'],
-  ['Чи виконуєте монтаж?', 'Так, професійний монтаж доступний у регіонах обслуговування Space Glass.'],
-  ['Чи є доставка по Україні?', 'Так, організовуємо доставку по Україні.'],
-  ['Чи доставляєте до Європи?', 'Так, для частини конструкцій доступна доставка до країн Європи.'],
-  ['Який строк виготовлення?', 'Строк залежить від комплектації, скла, фурнітури та завантаження виробництва.'],
-  ['Чи є гарантія?', 'Так, гарантійні умови зазначаються в замовленні.'],
-  ['Чи можна замовити тільки скло без монтажу?', 'Так, для частини замовлень можливе виготовлення та доставка без монтажу.'],
-  ['Чи можна встановити Walk-In на піддон?', 'Так, конструкція може бути адаптована під піддон або монтаж на підлогу.'],
-  ['Як доглядати за склом?', 'Рекомендуємо м’які неабразивні засоби та регулярне видалення води зі скла.'],
-  ['Чи можна зробити нестандартну форму?', 'Так, нестандартні рішення розглядаємо індивідуально після креслення або заміру.'],
-  ['Чи можна додати стабілізуючу штангу?', 'Так. Тип і розташування стабілізатора підбираємо під конструкцію.'],
-  ['Чи працюєте з дизайнерами й архітекторами?', 'Так, можемо працювати за кресленнями та специфікаціями.'],
-  ['Що потрібно для попереднього розрахунку?', 'Надішліть ширину, висоту, фото місця монтажу, місто та бажану комплектацію.'],
-  ['Як оформити замовлення?', 'Натисніть «Отримати розрахунок» і надішліть параметри — після технічного уточнення підготуємо пропозицію.']
+  ['Від чого залежить ціна Walk-In перегородки?','Від ширини та висоти скла, товщини, типу скла, кольору фурнітури, способу кріплення, доставки та монтажу.'],
+  ['Чи можна виготовити перегородку за моїми розмірами?','Так. Конструкцію виготовляємо індивідуально після перевірки розмірів або професійного заміру.'],
+  ['Яке скло використовується?','Використовуємо безпечне загартоване ESG відповідної товщини.'],
+  ['Яку товщину скла обрати — 8 чи 10 мм?','Товщину підбираємо за габаритами, способом кріплення та жорсткістю конструкції.'],
+  ['Чи можна обрати чорну фурнітуру?','Так. Доступні чорна матова, хром та інші варіанти виконання.'],
+  ['Чи можливе матове або тоноване скло?','Так, доступні прозоре, Satin, тоноване та інші декоративні варіанти.'],
+  ['Чи потрібен професійний замір?','Для індивідуальної конструкції професійний замір рекомендований.'],
+  ['Чи виконуєте монтаж?','Так, професійний монтаж доступний у регіонах обслуговування Space Glass.'],
+  ['Чи є доставка по Україні?','Так, організовуємо доставку по Україні.'],
+  ['Чи доставляєте до Європи?','Так, для частини конструкцій доступна доставка до країн Європи.'],
+  ['Який строк виготовлення?','Строк залежить від комплектації, скла, фурнітури та завантаження виробництва.'],
+  ['Чи є гарантія?','Так, гарантійні умови зазначаються в замовленні.'],
+  ['Чи можна замовити тільки скло без монтажу?','Так, для частини замовлень можливе виготовлення та доставка без монтажу.'],
+  ['Чи можна встановити Walk-In на піддон?','Так. Конструкцію можна адаптувати під душовий піддон або монтаж безпосередньо на підлогу.'],
+  ['Як доглядати за склом?','Рекомендуємо м’які неабразивні засоби та регулярне видалення води зі скла.'],
+  ['Чи можна зробити нестандартну форму?','Так, нестандартні рішення розглядаємо індивідуально після креслення або заміру.'],
+  ['Чи можна додати стабілізуючу штангу?','Так. Тип і розташування стабілізатора підбираємо під конструкцію.'],
+  ['Чи працюєте з дизайнерами й архітекторами?','Так, можемо працювати за кресленнями та специфікаціями.'],
+  ['Що потрібно для попереднього розрахунку?','Надішліть ширину, висоту, фото місця монтажу, місто та бажану комплектацію.'],
+  ['Як оформити замовлення?','Натисніть «Отримати розрахунок» і надішліть параметри — після технічного уточнення підготуємо пропозицію.']
 ];
 
 const productSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Product',
-  name: 'Душова перегородка Walk-In Black',
-  sku: 'SG-WI-BL-001',
-  brand: { '@type': 'Brand', name: 'Space Glass' },
-  description: 'Безрамна душова перегородка Walk-In Black із загартованого скла, індивідуальне виготовлення.',
-  image: ['/images/v5/product-1.webp'],
-  category: 'Душові кабіни',
-  offers: { '@type': 'Offer', priceCurrency: 'UAH', price: '12900', availability: 'https://schema.org/PreOrder', url: 'https://space-glass.com.ua/catalog/dushova-perehorodka-walk-in-black/' }
+  '@context':'https://schema.org',
+  '@type':'Product',
+  name:'Душова перегородка Walk-In Black',
+  sku:'SG-WI-BL-001',
+  brand:{'@type':'Brand',name:'Space Glass'},
+  description:'Безрамна душова перегородка Walk-In Black із загартованого скла, індивідуальне виготовлення.',
+  image:['/images/v5/product-1.webp'],
+  category:'Душові кабіни',
+  offers:{'@type':'Offer',priceCurrency:'UAH',price:'12900',availability:'https://schema.org/PreOrder',url:'https://space-glass.com.ua/catalog/dushova-perehorodka-walk-in-black/'}
 };
 ---
-<BaseLayout title="Душова перегородка Walk-In Black на замовлення | Space Glass" description="Душова перегородка Walk-In Black із загартованого скла 8–10 мм. Індивідуальні розміри, доставка по Україні та Європі, професійний монтаж." image="/images/v5/product-1.webp" structuredData={productSchema}>
+<BaseLayout title="Душова перегородка Walk-In Black на замовлення | Space Glass" description="Душова перегородка Walk-In Black із загартованого скла 8–10 мм. Індивідуальні розміри, душовий піддон, доставка по Україні та Європі, професійний монтаж." image="/images/v5/product-1.webp" structuredData={productSchema}>
 <div class="sg-page-shell">
   <Header />
   <main id="main" class="product-page">
-    <nav class="breadcrumbs" aria-label="Навігація"><a href="/">Головна</a><span>›</span><a href="/dushovi-kabiny/">Душові кабіни</a><span>›</span><span>Walk-In Black</span></nav>
+    <nav class="breadcrumbs"><a href="/">Головна</a><span>›</span><a href="/dushovi-kabiny/">Душові кабіни</a><span>›</span><span>Walk-In Black</span></nav>
 
-    <header class="product-title-block">
-      <p class="eyebrow">Душові кабіни · Walk-In</p>
-      <h1>Душова перегородка Walk-In Black</h1>
-      <div class="title-meta"><span>SKU: <strong>SG-WI-BL-001</strong></span><span>Виготовлення під розмір</span><span>Space Glass</span></div>
+    <header class="product-heading">
+      <div>
+        <p class="eyebrow">Душові кабіни · Walk-In</p>
+        <h1>Душова перегородка Walk-In Black</h1>
+      </div>
+      <div class="product-meta"><span>Артикул <b>SG-WI-BL-001</b></span><span>Виготовлення під розмір</span></div>
     </header>
 
-    <section class="product-main">
-      <div class="gallery">
-        <div class="main-photo">
-          <img src="/images/v5/product-1.webp" alt="Душова перегородка Walk-In Black із загартованого прозорого скла" width="1100" height="760" fetchpriority="high" />
-          <span class="badge">На замовлення</span>
-          <button id="wishlist" class="wishlist" type="button" aria-pressed="false" aria-label="Додати товар в обране">♡</button>
-        </div>
+    <section class="product-top">
+      <div class="gallery" data-gallery>
+        <button class="gallery-main" type="button" data-gallery-open aria-label="Відкрити фото у збільшеному вигляді">
+          <img src={gallery[0][0]} alt={gallery[0][1]} width="1200" height="850" fetchpriority="high" data-gallery-main />
+          <span class="status">На замовлення</span>
+          <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg></span>
+        </button>
         <div class="thumbs">
-          <button type="button" class="active"><img src="/images/v5/product-1.webp" alt="Walk-In Black — загальний вигляд" /></button>
-          <button type="button"><img src="/images/v5/project-1.webp" alt="Walk-In перегородка у ванній кімнаті" /></button>
-          <button type="button"><img src="/images/v5/project-2.webp" alt="Приклад скляної конструкції Space Glass" /></button>
-          <button class="video-thumb" type="button" aria-label="Відео з об’єкта">▶ <span>Відео</span></button>
+          {gallery.map(([src,alt],i)=><button class:list={[i===0&&'active']} type="button" data-thumb data-src={src} data-alt={alt}><img src={src} alt="" width="180" height="120" loading={i===0?'eager':'lazy'} /></button>)}
+          <button class="video-thumb" type="button"><span>▶</span><small>Відео</small></button>
         </div>
+        <dialog class="lightbox" data-lightbox><button type="button" data-close aria-label="Закрити">×</button><img src={gallery[0][0]} alt={gallery[0][1]} data-lightbox-image /></dialog>
       </div>
 
-      <aside class="buy-box">
-        <p class="lead">Безрамна душова перегородка із безпечного загартованого скла для сучасної ванної кімнати.</p>
-        <div class="price"><small>Орієнтовна ціна від</small><strong>12 900 ₴</strong><p>Точна вартість залежить від розмірів, скла, фурнітури, доставки та монтажу.</p></div>
-        <div class="quick-specs">
-          <div><span>Скло</span><strong>ESG 8 / 10 мм</strong></div>
-          <div><span>Фурнітура</span><strong>Black / Chrome</strong></div>
-          <div><span>Розмір</span><strong>Індивідуальний</strong></div>
-          <div><span>Монтаж</span><strong>Доступний</strong></div>
-        </div>
-        <a href="#configurator" class="primary">Розрахувати конструкцію →</a>
-        <button id="wishlist-secondary" type="button" class="secondary">♡ Додати в обране</button>
-        <div class="trust"><span>Власне виробництво</span><span>Доставка UA + EU</span><span>Гарантія 2 роки</span></div>
+      <aside class="buy-card">
+        <p class="product-intro">Мінімалістична безрамна перегородка із безпечного загартованого скла. Проєктуємо під конкретний розмір душової зони.</p>
+
+        <div class="price-box"><span>Орієнтовна ціна від</span><strong>12 900 ₴</strong><small>Точна вартість залежить від розмірів, типу скла, фурнітури, піддона, доставки та монтажу.</small></div>
+
+        <dl class="summary-specs">
+          <div><dt>Тип</dt><dd>Walk-In</dd></div>
+          <div><dt>Скло</dt><dd>ESG 8 / 10 мм</dd></div>
+          <div><dt>Фурнітура</dt><dd>Black / Chrome</dd></div>
+          <div><dt>Розмір</dt><dd>Індивідуальний</dd></div>
+          <div><dt>Піддон</dt><dd>Опційно</dd></div>
+          <div><dt>Монтаж</dt><dd>Доступний</dd></div>
+        </dl>
+
+        <a class="main-cta" href="#configurator">Розрахувати мою конструкцію →</a>
+        <button id="wishlist" class="wishlist-btn" type="button" aria-pressed="false">♡ Додати в обране</button>
+        <div class="buy-trust"><span>Власне виробництво</span><span>Доставка Україна + Європа</span><span>Гарантія 2 роки</span></div>
       </aside>
     </section>
 
     <section id="configurator" class="section configurator">
-      <div class="section-head"><p class="eyebrow">Конфігуратор</p><h2>Зберіть свою Walk-In перегородку</h2><p>Параметри дають попередню оцінку. Остаточну ціну підтверджуємо після технічної перевірки.</p></div>
+      <div class="section-title"><p class="eyebrow">Конфігуратор</p><h2>Зберіть свою Walk-In перегородку</h2><p>Оберіть базові параметри. Результат нижче — попередня оцінка, не публічна оферта.</p></div>
       <div class="config-grid">
         <label>Ширина, мм<input id="cfg-width" type="number" value="1200" min="400" max="2500" step="10" /></label>
         <label>Висота, мм<input id="cfg-height" type="number" value="2000" min="1200" max="2600" step="10" /></label>
         <label>Товщина скла<select id="cfg-thickness"><option value="8">8 мм</option><option value="10">10 мм</option></select></label>
         <label>Тип скла<select id="cfg-glass"><option value="clear">Прозоре ESG</option><option value="satin">Satin</option><option value="tinted">Тоноване</option></select></label>
-        <label>Колір фурнітури<select id="cfg-hardware"><option value="black">Чорна матова</option><option value="chrome">Хром</option></select></label>
-        <label>Стабілізатор<select id="cfg-stabilizer"><option value="yes">Так</option><option value="no">Ні</option></select></label>
+        <label>Фурнітура<select id="cfg-hardware"><option value="black">Чорна матова</option><option value="chrome">Хром</option><option value="graphite">Графіт</option></select></label>
+        <label>Стабілізатор<select id="cfg-stabilizer"><option value="yes">Потрібен</option><option value="no">Без стабілізатора</option></select></label>
+        <label>Душовий піддон<select id="cfg-tray"><option value="no">Без піддона</option><option value="stone">Штучний камінь</option><option value="low">Низький піддон</option></select></label>
         <label>Монтаж<select id="cfg-install"><option value="yes">Потрібен</option><option value="no">Без монтажу</option></select></label>
         <label>Доставка<select id="cfg-delivery"><option value="ua">Україна</option><option value="eu">Європа</option><option value="pickup">Самовивіз</option></select></label>
+        <label>Місто<input id="cfg-city" type="text" placeholder="Наприклад, Київ" /></label>
       </div>
-      <div class="config-result"><button id="cfg-calc" type="button">Показати орієнтовну ціну</button><div><strong id="cfg-result">від 12 900 ₴</strong><small>Не є публічною офертою</small></div></div>
+      <div class="config-footer"><button id="cfg-calc" type="button">Показати орієнтовну ціну</button><div><strong id="cfg-result">від 12 900 ₴</strong><small>Фінальну ціну підтвердимо після технічної перевірки.</small></div></div>
     </section>
 
-    <section class="section projects">
-      <div class="section-head"><p class="eyebrow">Реальні об’єкти</p><h2>Як Walk-In виглядає після монтажу</h2></div>
-      <div class="project-grid"><figure><img src="/images/v5/project-1.webp" alt="Walk-In перегородка після монтажу" loading="lazy" /><figcaption>Прозоре скло · чорна фурнітура</figcaption></figure><figure><img src="/images/v5/project-2.webp" alt="Скляна душова конструкція Space Glass" loading="lazy" /><figcaption>Індивідуальне виготовлення</figcaption></figure><button class="video-card" type="button"><span>▶</span><b>Відео з об’єкта</b><small>Відео завантажуватиметься тільки після натискання.</small></button></div>
+    <section class="section real-projects">
+      <div class="section-title"><p class="eyebrow">Реальні об’єкти</p><h2>Як конструкція виглядає після монтажу</h2></div>
+      <div class="project-grid"><figure><img src="/images/v5/project-1.webp" alt="Walk-In перегородка після монтажу" loading="lazy" /><figcaption>Прозоре скло · чорна фурнітура</figcaption></figure><figure><img src="/images/v5/project-2.webp" alt="Скляна душова конструкція Space Glass" loading="lazy" /><figcaption>Індивідуальне виготовлення</figcaption></figure><button class="video-card" type="button"><span>▶</span><b>Відео з об’єкта</b><small>Відео завантажиться тільки після натискання — без уповільнення першого екрану.</small></button></div>
     </section>
 
-    <section class="section together">
-      <div class="section-head"><p class="eyebrow">Комплект</p><h2>Разом з цим рішенням замовляють</h2></div>
-      <div class="mini-grid">
-        <a href="/catalog/"><div class="mini-photo"></div><h3>Стабілізуюча штанга</h3><p>Для жорсткості конструкції</p><strong>від 1 200 ₴</strong></a>
-        <a href="/catalog/"><div class="mini-photo"></div><h3>Скляна полиця</h3><p>Індивідуальний розмір</p><strong>від 1 800 ₴</strong></a>
-        <a href="/dzerkala/"><div class="mini-photo"></div><h3>Дзеркало на замовлення</h3><p>Під стиль ванної кімнати</p><strong>від 2 900 ₴</strong></a>
-        <a href="#quote"><div class="mini-photo service"></div><h3>Професійний монтаж</h3><p>Замір, доставка та монтаж</p><strong>Розрахувати →</strong></a>
+    <section class="section bundle">
+      <div class="section-title"><p class="eyebrow">Комплект</p><h2>Разом з цим рішенням замовляють</h2><p>Не альтернативи, а речі, які доповнюють саме цю душову конструкцію.</p></div>
+      <div class="product-strip">
+        <a href="/catalog/dushovi-piddony/"><img src="/images/s20/product-detail.webp" alt="Душовий піддон для Walk-In" loading="lazy" /><div><small>Душові піддони</small><h3>Душовий піддон</h3><p>Підбираємо під розмір та геометрію Walk-In.</p><strong>Підібрати →</strong></div></a>
+        <a href="/catalog/"><img src="/images/s19/walkin-detail.webp" alt="Стабілізатор для Walk-In" loading="lazy" /><div><small>Комплектуючі</small><h3>Стабілізуюча штанга</h3><p>Додає жорсткості великому полотну.</p><strong>Переглянути →</strong></div></a>
+        <a href="/dzerkala/"><img src="/images/v5/product-6.webp" alt="Дзеркало у ванну на замовлення" loading="lazy" /><div><small>Для ванної</small><h3>Дзеркало на замовлення</h3><p>Під розмір і стиль ванної кімнати.</p><strong>Переглянути →</strong></div></a>
+        <a href="/quote/"><img src="/images/v5/project-1.webp" alt="Монтаж душової перегородки" loading="lazy" /><div><small>Сервіс</small><h3>Замір і монтаж</h3><p>Професійна підготовка та встановлення.</p><strong>Розрахувати →</strong></div></a>
       </div>
     </section>
 
-    <section class="section specs">
-      <div class="section-head"><p class="eyebrow">Характеристики</p><h2>Технічні параметри Walk-In Black</h2></div>
-      <dl><div><dt>Тип конструкції</dt><dd>Безрамна Walk-In</dd></div><div><dt>Скло</dt><dd>Загартоване ESG</dd></div><div><dt>Товщина скла</dt><dd>8 або 10 мм</dd></div><div><dt>Колір скла</dt><dd>Прозоре / Satin / тоноване</dd></div><div><dt>Фурнітура</dt><dd>Чорна матова / хром</dd></div><div><dt>Розміри</dt><dd>Індивідуальні</dd></div><div><dt>Виробництво</dt><dd>Space Glass, Україна</dd></div><div><dt>Доставка</dt><dd>Україна та Європа</dd></div></dl>
+    <section class="section specifications">
+      <div class="spec-copy"><p class="eyebrow">Характеристики</p><h2>Технічні параметри Walk-In Black</h2><p>Базові характеристики видно одразу, а фінальну комплектацію підтверджуємо після перевірки розмірів та умов монтажу.</p></div>
+      <div class="spec-panel">
+        <dl><div><dt>Тип конструкції</dt><dd>Безрамна Walk-In</dd></div><div><dt>Скло</dt><dd>Загартоване ESG</dd></div><div><dt>Товщина скла</dt><dd>8 або 10 мм</dd></div><div><dt>Колір скла</dt><dd>Прозоре / Satin / тоноване</dd></div><div><dt>Фурнітура</dt><dd>Чорна / хром / графіт</dd></div><div><dt>Розміри</dt><dd>Індивідуальні</dd></div><div><dt>Душовий піддон</dt><dd>Опційно, підбір під конструкцію</dd></div><div><dt>Доставка</dt><dd>Україна та Європа</dd></div></dl>
+        <div class="documents"><h3>Документація</h3><a href="/quote/"><span>SVG</span><b>Схема заміру</b><i>↗</i></a><a href="/knowledge/"><span>PDF</span><b>Інструкція з догляду</b><i>↗</i></a></div>
+      </div>
     </section>
 
-    <section class="section seo-copy"><div><p class="eyebrow">Про продукт</p><h2>Безрамна душова перегородка Walk-In на замовлення</h2><p>Walk-In Black — мінімалістичне рішення без дверей для сучасної душової зони. Конструкція візуально не перевантажує простір, а прозоре загартоване скло зберігає світло та відчуття відкритості.</p><p>Кожну перегородку виготовляємо за індивідуальними розмірами. Перед виробництвом перевіряємо габарити, спосіб кріплення, товщину скла та необхідність стабілізатора.</p></div><nav><a href="/dushovi-kabiny/">Усі душові кабіни →</a><a href="/rishennya/dlya-kvartyry/">Рішення для квартири →</a><a href="/projects/">Реалізовані проєкти →</a></nav></section>
+    <section class="section editorial">
+      <div><p class="eyebrow">Про продукт</p><h2>Безрамна душова перегородка Walk-In на замовлення</h2></div>
+      <div><p>Walk-In Black — лаконічне рішення без дверей для сучасної душової зони. Прозоре загартоване скло зберігає світло та візуально не перевантажує простір.</p><p>Конструкцію виготовляємо за індивідуальними розмірами. Перед виробництвом перевіряємо габарити, спосіб кріплення, товщину скла, необхідність стабілізатора та сумісність з душовим піддоном.</p><div class="editorial-links"><a href="/dushovi-kabiny/">Усі душові кабіни →</a><a href="/catalog/dushovi-piddony/">Душові піддони →</a><a href="/projects/">Реалізовані проєкти →</a></div></div>
+    </section>
 
-    <section class="section related"><div class="section-head"><p class="eyebrow">Альтернативи</p><h2>Схожі рішення</h2></div><div class="mini-grid"><a href="/dushovi-kabiny/"><div class="mini-photo"></div><h3>Walk-In Clear</h3><p>Прозоре скло · хром</p></a><a href="/dushovi-kabiny/"><div class="mini-photo"></div><h3>Walk-In Bronze</h3><p>Тоноване скло</p></a><a href="/dushovi-kabiny/"><div class="mini-photo"></div><h3>Walk-In Satin</h3><p>Матове скло</p></a><a href="/dushovi-kabiny/"><div class="mini-photo"></div><h3>Walk-In з дверима</h3><p>Розпашне рішення</p></a></div></section>
+    <section class="section related">
+      <div class="section-title"><p class="eyebrow">Альтернативи</p><h2>Схожі рішення</h2></div>
+      <div class="product-strip"><a href="/dushovi-kabiny/"><img src="/images/v5/product-3.webp" alt="Кутова душова кабіна" loading="lazy" /><div><small>Душові кабіни</small><h3>Кутова душова</h3><p>Для компактних ванних кімнат.</p><strong>Переглянути →</strong></div></a><a href="/dushovi-kabiny/"><img src="/images/v5/product-5.webp" alt="Розсувна душова кабіна" loading="lazy" /><div><small>Душові кабіни</small><h3>Розсувна система</h3><p>Без зони відкривання дверей.</p><strong>Переглянути →</strong></div></a><a href="/dushovi-kabiny/"><img src="/images/v5/product-1.webp" alt="Walk-In прозора" loading="lazy" /><div><small>Walk-In</small><h3>Walk-In Clear</h3><p>Максимум прозорості.</p><strong>Переглянути →</strong></div></a></div>
+    </section>
 
-    <section class="section faq-section"><div class="section-head"><p class="eyebrow">FAQ</p><h2>Часті питання</h2></div><div id="faq-list" class="faq-grid">{faq.slice(0,6).map(([q,a],i)=><details data-extra={i>=6 ? '1' : '0'}><summary>{q}</summary><p>{a}</p></details>)}</div><div id="faq-extra" class="faq-grid hidden">{faq.slice(6).map(([q,a])=><details><summary>{q}</summary><p>{a}</p></details>)}</div><button id="faq-more" class="faq-more" type="button">Показати всі 20 питань</button></section>
+    <section class="section faq-wrap">
+      <div class="section-title"><p class="eyebrow">FAQ</p><h2>Часті питання про Walk-In</h2></div>
+      <div class="faq-grid">{faq.map(([q,a],i)=><details class:list={[i>5&&'extra-faq']}><summary>{q}</summary><p>{a}</p></details>)}</div>
+      <button id="faq-toggle" type="button">Показати всі 20 питань</button>
+    </section>
 
-    <section id="quote" class="quote"><div><p class="eyebrow">Space Glass</p><h2>Потрібна така конструкція?</h2><p>Надішліть фото, розміри або креслення — підготуємо попередній розрахунок.</p></div><a href="/contact/">Отримати розрахунок →</a></section>
+    <section class="final-cta" id="quote"><div><p class="eyebrow">Space Glass</p><h2>Потрібна така конструкція?</h2><p>Надішліть фото та розміри — підготуємо попередню комплектацію і розрахунок.</p></div><a href="/quote/">Отримати розрахунок →</a></section>
   </main>
   <Footer />
 </div>
 </BaseLayout>
 
-<script>
-const wishButtons=[document.getElementById('wishlist'),document.getElementById('wishlist-secondary')].filter(Boolean);
-let wished=localStorage.getItem('sg-wish-SG-WI-BL-001')==='1';
-function syncWish(){wishButtons.forEach((b)=>{b.setAttribute('aria-pressed',String(wished));b.textContent=wished?'♥ В обраному':'♡ Додати в обране';if(b.classList.contains('wishlist')) b.textContent=wished?'♥':'♡';});}
-syncWish();wishButtons.forEach((b)=>b.addEventListener('click',()=>{wished=!wished;localStorage.setItem('sg-wish-SG-WI-BL-001',wished?'1':'0');syncWish();}));
-const calc=document.getElementById('cfg-calc');calc?.addEventListener('click',()=>{const w=Number((document.getElementById('cfg-width')).value||1200);const h=Number((document.getElementById('cfg-height')).value||2000);const t=Number((document.getElementById('cfg-thickness')).value||8);const glass=(document.getElementById('cfg-glass')).value;const install=(document.getElementById('cfg-install')).value;let price=12900*(w/1200)*(h/2000);if(t===10)price*=1.14;if(glass==='satin')price*=1.12;if(glass==='tinted')price*=1.15;if(install==='yes')price+=2500;document.getElementById('cfg-result').textContent=`від ${Math.round(price/100)*100 .toLocaleString('uk-UA')} ₴`;});
-const more=document.getElementById('faq-more');const extra=document.getElementById('faq-extra');more?.addEventListener('click',()=>{extra?.classList.toggle('hidden');more.textContent=extra?.classList.contains('hidden')?'Показати всі 20 питань':'Показати менше';});
-</script>
-
 <style>
-.product-page{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:#18211e}.breadcrumbs,.product-title-block,.product-main,.section,.quote{max-width:1320px;margin-left:auto;margin-right:auto;padding-left:24px;padding-right:24px}.breadcrumbs{padding-top:26px;font-size:13px;color:#72807b;display:flex;gap:8px}.breadcrumbs a{color:inherit;text-decoration:none}.product-title-block{padding-top:30px;padding-bottom:24px}.eyebrow{color:#147b63;text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:800}.product-title-block h1{font-size:clamp(42px,5vw,64px);line-height:.98;letter-spacing:-.045em;margin:9px 0 15px;max-width:980px}.title-meta{display:flex;gap:20px;flex-wrap:wrap;color:#6d7874;font-size:13px}.product-main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(360px,.65fr);gap:34px;padding-bottom:60px}.main-photo{position:relative;aspect-ratio:1.45/1;border-radius:18px;overflow:hidden;background:#eef3f1}.main-photo img{width:100%;height:100%;display:block;object-fit:cover}.badge{position:absolute;left:16px;top:16px;background:#11342d;color:#fff;border-radius:999px;padding:7px 10px;font-size:11px;text-transform:uppercase}.wishlist{position:absolute;right:16px;top:16px;width:44px;height:44px;border-radius:50%;border:1px solid #d8e1de;background:#fff;font-size:23px;cursor:pointer}.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.thumbs button{border:1px solid #dfe6e3;border-radius:10px;overflow:hidden;background:#fff;aspect-ratio:1.4/1}.thumbs img{width:100%;height:100%;object-fit:cover}.video-thumb{font-weight:700;color:#124338}.video-thumb span{display:block;font-size:12px}.buy-box{border:1px solid #dfe6e3;border-radius:18px;padding:24px;align-self:start;position:sticky;top:90px}.lead{font-size:17px;line-height:1.55;color:#46534f}.price{border-top:1px solid #e4eae8;border-bottom:1px solid #e4eae8;padding:18px 0;margin:20px 0}.price small{display:block;color:#78827e;font-size:12px}.price strong{display:block;font-size:31px;letter-spacing:-.03em;margin:4px 0}.price p{font-size:12px;line-height:1.45;color:#7a8581;margin:0}.quick-specs{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick-specs div{background:#f7f9f8;border-radius:10px;padding:11px}.quick-specs span{display:block;font-size:11px;color:#78827e}.quick-specs strong{font-size:13px}.primary,.secondary{display:block;width:100%;box-sizing:border-box;text-align:center;border-radius:11px;padding:13px 16px;font-weight:800;text-decoration:none;margin-top:12px}.primary{background:#79cfb4;color:#10241e}.secondary{background:#fff;border:1px solid #cdd8d4;color:#17352d}.trust{display:grid;grid-template-columns:1fr;gap:7px;margin-top:16px;font-size:12px;color:#5f6b66}.section{padding-top:66px;padding-bottom:66px;border-top:1px solid #e8eeeb}.section-head{display:grid;grid-template-columns:170px minmax(0,720px);gap:20px;align-items:start;margin-bottom:28px}.section-head h2{font-size:clamp(32px,3.6vw,46px);line-height:1;letter-spacing:-.035em;margin:0}.section-head p:last-child{grid-column:2;color:#66716d;max-width:720px}.configurator{background:#f6f8f7;max-width:none;padding-left:max(24px,calc((100vw - 1320px)/2 + 24px));padding-right:max(24px,calc((100vw - 1320px)/2 + 24px))}.config-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.config-grid label{font-size:12px;color:#5d6964;font-weight:700}.config-grid input,.config-grid select{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;border:1px solid #d3ddda;border-radius:10px;background:#fff;color:#18211e}.config-result{margin-top:18px;padding-top:18px;border-top:1px solid #dde5e2;display:flex;align-items:center;gap:18px}.config-result button{border:0;border-radius:10px;background:#79cfb4;padding:13px 18px;font-weight:800}.config-result strong{display:block;font-size:22px}.config-result small{display:block;color:#7a8581;font-size:11px}.project-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}.project-grid figure{margin:0}.project-grid img,.video-card{width:100%;aspect-ratio:1.45/1;object-fit:cover;border-radius:14px;border:0}.project-grid figcaption{font-size:12px;color:#6e7975;margin-top:8px}.video-card{background:#113b32;color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px}.video-card span{font-size:36px}.video-card small{max-width:220px;text-align:center;color:#cbd7d3}.mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.mini-grid a{border:1px solid #dfe6e3;border-radius:14px;overflow:hidden;padding:12px;color:inherit;text-decoration:none}.mini-photo{aspect-ratio:1.45/1;background:linear-gradient(135deg,#e9efed,#f7f9f8);border-radius:9px}.mini-photo.service{background:linear-gradient(135deg,#d8eee7,#eff7f4)}.mini-grid h3{font-size:17px;margin:12px 0 5px}.mini-grid p{font-size:12px;color:#707b77;min-height:34px}.mini-grid strong{font-size:14px;color:#147b63}.specs dl{display:grid;grid-template-columns:1fr 1fr;gap:0 34px}.specs dl div{display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-bottom:1px solid #e1e7e4}.specs dt{color:#6d7874}.specs dd{font-weight:700;text-align:right}.seo-copy{display:grid;grid-template-columns:1.2fr .8fr;gap:70px}.seo-copy h2{font-size:40px;line-height:1.03}.seo-copy p{line-height:1.7;color:#53605b}.seo-copy nav{display:grid;align-content:start}.seo-copy nav a{padding:15px 0;border-bottom:1px solid #dde5e2;color:#17352d;text-decoration:none;font-weight:700}.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.faq-grid details{border:1px solid #dce5e2;border-radius:12px;padding:16px}.faq-grid summary{font-weight:700;cursor:pointer}.faq-grid p{color:#5f6b66;line-height:1.55}.hidden{display:none}.faq-more{display:block;margin:22px auto 0;border:0;background:#79cfb4;border-radius:10px;padding:12px 18px;font-weight:800}.quote{margin-top:30px;margin-bottom:60px;background:#0f4c3d;color:#fff;border-radius:20px;padding-top:42px;padding-bottom:42px;display:flex;justify-content:space-between;align-items:center;gap:20px}.quote h2{font-size:38px;margin:5px 0}.quote a{background:#fff;color:#12352d;padding:13px 18px;border-radius:10px;text-decoration:none;font-weight:800}@media(max-width:980px){.product-main{grid-template-columns:1fr}.buy-box{position:static}.section-head{grid-template-columns:1fr}.section-head p:last-child{grid-column:1}.config-grid{grid-template-columns:repeat(2,1fr)}.project-grid,.mini-grid{grid-template-columns:repeat(2,1fr)}.seo-copy{grid-template-columns:1fr}.faq-grid{grid-template-columns:1fr}}@media(max-width:620px){.breadcrumbs,.product-title-block,.product-main,.section,.quote{padding-left:16px;padding-right:16px}.product-title-block h1{font-size:42px}.quick-specs,.specs dl,.config-grid,.project-grid,.mini-grid{grid-template-columns:1fr}.quote{margin-left:12px;margin-right:12px;display:block}.quote a{display:inline-block;margin-top:16px}.main-photo{aspect-ratio:1.25/1}}
+.product-page{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17211e;background:#fff}.breadcrumbs{max-width:1280px;margin:auto;padding:24px 24px 0;display:flex;gap:9px;align-items:center;font-size:13px;color:#6e7975}.breadcrumbs a{color:inherit}.product-heading{max-width:1280px;margin:auto;padding:28px 24px 30px;display:flex;justify-content:space-between;gap:32px;align-items:flex-end}.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:800;color:#0d6e56;margin:0 0 10px}.product-heading h1{font-size:clamp(42px,4.6vw,64px);line-height:.98;letter-spacing:-.045em;margin:0;max-width:900px}.product-meta{display:flex;gap:16px;flex-wrap:wrap;justify-content:flex-end;color:#6c7773;font-size:13px}.product-top{max-width:1280px;margin:auto;padding:0 24px 72px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(340px,.65fr);gap:34px}.gallery-main{width:100%;border:0;padding:0;background:#f1f5f3;position:relative;overflow:hidden;border-radius:20px;cursor:zoom-in;aspect-ratio:16/11}.gallery-main img{width:100%;height:100%;object-fit:cover;display:block}.status{position:absolute;left:16px;top:16px;border-radius:999px;background:#0b3d31;color:#fff;padding:8px 11px;font-size:11px;font-weight:800;text-transform:uppercase}.zoom{position:absolute;right:16px;bottom:16px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.94);box-shadow:0 8px 24px rgba(0,0,0,.12)}.zoom svg{width:20px;fill:none;stroke:#19332c;stroke-width:1.8}.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:10px}.thumbs button{border:1px solid #dce6e2;border-radius:12px;padding:0;background:#fff;overflow:hidden;aspect-ratio:4/3}.thumbs button.active{border-color:#45a98a}.thumbs img{width:100%;height:100%;object-fit:cover}.video-thumb{display:grid;place-items:center;align-content:center;gap:3px;color:#0d5f4b}.video-thumb span{font-size:24px}.lightbox{border:0;padding:0;background:transparent;max-width:min(94vw,1400px)}.lightbox::backdrop{background:rgba(5,14,12,.86)}.lightbox img{max-height:88vh;max-width:92vw;display:block;border-radius:14px}.lightbox button{position:fixed;right:28px;top:20px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;font-size:28px}.buy-card{border:1px solid #dfe8e4;border-radius:20px;padding:26px;align-self:start;position:sticky;top:86px;background:#fff;box-shadow:0 16px 50px rgba(16,55,44,.07)}.product-intro{font-size:17px;line-height:1.62;color:#53615d;margin:0 0 22px}.price-box{padding:0 0 20px;border-bottom:1px solid #e2e9e6}.price-box>span{display:block;font-size:12px;color:#6d7874}.price-box strong{display:block;font-size:32px;letter-spacing:-.035em;margin:4px 0}.price-box small{font-size:12px;line-height:1.5;color:#7b8581}.summary-specs{margin:20px 0}.summary-specs div{display:flex;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px solid #edf1ef;font-size:13px}.summary-specs dt{color:#77827e}.summary-specs dd{margin:0;font-weight:750;text-align:right}.main-cta,.wishlist-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;border-radius:12px;font-weight:800;font-size:14px}.main-cta{background:#79cfb3;color:#102b22;text-decoration:none}.wishlist-btn{margin-top:9px;background:#fff;border:1px solid #cfdcd7;color:#20352f}.wishlist-btn.is-active{background:#eef8f4;border-color:#4fae90;color:#0a624d}.buy-trust{display:grid;grid-template-columns:1fr;gap:7px;margin-top:17px;font-size:12px;color:#5d6965}.section{max-width:1280px;margin:0 auto;padding:72px 24px;border-top:1px solid #e6ece9}.section-title{max-width:760px;margin-bottom:30px}.section-title h2,.spec-copy h2,.editorial h2{font-size:clamp(30px,3.4vw,46px);line-height:1.05;letter-spacing:-.04em;margin:0 0 12px}.section-title>p:last-child,.spec-copy>p:last-child{color:#64706c;line-height:1.65}.configurator{background:#f4f8f6;max-width:none;padding-inline:max(24px,calc((100vw - 1232px)/2))}.config-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}.config-grid label{font-size:12px;color:#596660;display:grid;gap:7px}.config-grid input,.config-grid select{width:100%;min-height:46px;border:1px solid #d1deda;border-radius:10px;background:#fff;padding:0 12px;color:#1d2a26}.config-footer{display:flex;align-items:center;gap:20px;margin-top:22px;padding-top:20px;border-top:1px solid #dce6e2}.config-footer button{border:0;border-radius:11px;padding:14px 18px;background:#79cfb3;font-weight:800}.config-footer strong{display:block;font-size:22px}.config-footer small{display:block;color:#78837f;font-size:11px;margin-top:3px}.project-grid{display:grid;grid-template-columns:1fr 1fr .8fr;gap:14px}.project-grid figure{margin:0;border-radius:16px;overflow:hidden;background:#f3f6f5}.project-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}.project-grid figcaption{padding:12px 14px;font-size:12px;color:#60706a}.video-card{border:0;border-radius:16px;background:#0a3e32;color:#fff;display:grid;place-items:center;text-align:center;padding:28px}.video-card span{font-size:40px}.video-card b{font-size:18px;margin-top:10px}.video-card small{max-width:220px;color:#cfe1da;line-height:1.5;margin-top:5px}.product-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.product-strip>a{border:1px solid #dfe7e4;border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;background:#fff}.product-strip img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}.product-strip a>div{padding:16px}.product-strip small{color:#11755b;font-size:11px;text-transform:uppercase;letter-spacing:.08em}.product-strip h3{font-size:19px;margin:7px 0}.product-strip p{font-size:13px;line-height:1.5;color:#66716d;min-height:40px}.product-strip strong{font-size:13px;color:#0c6d55}.specifications{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px;background:#f5faf7;max-width:none;padding-inline:max(24px,calc((100vw - 1232px)/2))}.spec-panel dl{margin:0}.spec-panel dl div{display:grid;grid-template-columns:1fr 1.25fr;gap:20px;padding:14px 0;border-bottom:1px solid #dbe6e2}.spec-panel dt{color:#67736e}.spec-panel dd{margin:0;font-weight:800}.documents{margin-top:28px}.documents h3{font-size:14px}.documents a{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:10px;border:1px solid #d7e6e0;border-radius:12px;padding:13px;margin-top:8px;color:inherit;text-decoration:none}.documents span{font-size:10px;font-weight:900;color:#178265}.documents i{font-style:normal;color:#178265}.editorial{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px}.editorial p{font-size:16px;line-height:1.72;color:#596762}.editorial-links{display:grid;margin-top:20px}.editorial-links a{padding:12px 0;border-bottom:1px solid #e0e7e4;color:#173a30;text-decoration:none;font-weight:750}.related .product-strip{grid-template-columns:repeat(3,1fr)}.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.faq-grid details{border:1px solid #dce7e2;border-radius:12px;padding:0 16px;background:#fff}.faq-grid summary{padding:17px 0;font-weight:750;cursor:pointer}.faq-grid details p{font-size:13px;line-height:1.6;color:#65716c;margin:0 0 16px}.extra-faq{display:none}.faq-wrap.expanded .extra-faq{display:block}.faq-wrap>button{display:block;margin:20px auto 0;border:0;border-radius:11px;padding:13px 18px;background:#79cfb3;font-weight:800}.final-cta{max-width:1280px;margin:20px auto 80px;padding:36px;border-radius:22px;background:#073f31;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:30px}.final-cta h2{font-size:36px;margin:6px 0 10px}.final-cta p{color:#d3e8e1}.final-cta a{padding:14px 19px;border-radius:11px;background:#fff;color:#0e3c31;text-decoration:none;font-weight:800}@media(max-width:1050px){.product-top{grid-template-columns:1fr}.buy-card{position:static}.config-grid{grid-template-columns:repeat(2,1fr)}.product-strip{grid-template-columns:repeat(2,1fr)}.specifications,.editorial{grid-template-columns:1fr;gap:28px}}@media(max-width:700px){.product-heading{align-items:flex-start;flex-direction:column}.product-heading h1{font-size:40px}.product-meta{justify-content:flex-start}.project-grid{grid-template-columns:1fr}.config-grid{grid-template-columns:1fr}.config-footer{align-items:flex-start;flex-direction:column}.product-strip,.related .product-strip,.faq-grid{grid-template-columns:1fr}.final-cta{align-items:flex-start;flex-direction:column}.thumbs{grid-template-columns:repeat(4,1fr)}.product-top{padding-bottom:48px}.section{padding-block:52px}}
 </style>
+
+<script>
+const gallery=document.querySelector('[data-gallery]');
+if(gallery){const main=gallery.querySelector('[data-gallery-main]');const lightbox=gallery.querySelector('[data-lightbox]');const lightImg=gallery.querySelector('[data-lightbox-image]');gallery.querySelectorAll('[data-thumb]').forEach((btn)=>btn.addEventListener('click',()=>{gallery.querySelectorAll('[data-thumb]').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const src=btn.dataset.src;const alt=btn.dataset.alt||'';if(main){main.src=src;main.alt=alt;}if(lightImg){lightImg.src=src;lightImg.alt=alt;}}));gallery.querySelector('[data-gallery-open]')?.addEventListener('click',()=>lightbox?.showModal());gallery.querySelector('[data-close]')?.addEventListener('click',()=>lightbox?.close());}
+const wish=document.getElementById('wishlist');if(wish){const key='sg-wishlist';const sku='SG-WI-BL-001';const read=()=>{try{return JSON.parse(localStorage.getItem(key)||'[]')}catch{return[]}};const render=()=>{const active=read().includes(sku);wish.classList.toggle('is-active',active);wish.setAttribute('aria-pressed',String(active));wish.textContent=active?'♥ В обраному':'♡ Додати в обране'};wish.addEventListener('click',()=>{const list=read();const next=list.includes(sku)?list.filter(x=>x!==sku):[...list,sku];localStorage.setItem(key,JSON.stringify(next));render()});render();}
+const calc=document.getElementById('cfg-calc');calc?.addEventListener('click',()=>{const w=Number(document.getElementById('cfg-width')?.value||1200);const h=Number(document.getElementById('cfg-height')?.value||2000);const t=Number(document.getElementById('cfg-thickness')?.value||8);const glass=document.getElementById('cfg-glass')?.value;const hw=document.getElementById('cfg-hardware')?.value;const tray=document.getElementById('cfg-tray')?.value;const install=document.getElementById('cfg-install')?.value;const delivery=document.getElementById('cfg-delivery')?.value;let price=12900*(w*h/(1200*2000));if(t===10)price*=1.12;if(glass==='satin')price*=1.10;if(glass==='tinted')price*=1.14;if(hw==='chrome')price*=1.04;if(hw==='graphite')price*=1.07;if(tray==='stone')price+=8900;if(tray==='low')price+=6200;if(install==='yes')price+=3500;if(delivery==='eu')price+=4500;const out=document.getElementById('cfg-result');if(out)out.textContent=`від ${Math.round(price/100)*100 .toLocaleString('uk-UA')} ₴`;});
+const faqWrap=document.querySelector('.faq-wrap');const faqToggle=document.getElementById('faq-toggle');faqToggle?.addEventListener('click',()=>{faqWrap?.classList.toggle('expanded');faqToggle.textContent=faqWrap?.classList.contains('expanded')?'Показати менше':'Показати всі 20 питань';});
+</script>
