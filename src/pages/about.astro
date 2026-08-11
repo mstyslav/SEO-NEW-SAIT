@@ -4,10 +4,10 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 const values = [
-  ['Професіоналізм','Постійно вдосконалюємо навички, вивчаємо нові системи та технології монтажу.'],
-  ['Якісні матеріали','Працюємо з перевіреним склом, профілями та фурнітурою від виробників Європи й Азії.'],
-  ['Дотримання строків','Плануємо етапи робіт і виконуємо взяті на себе зобов’язання.'],
-  ['Індивідуальний підхід','Кожен об’єкт розглядаємо як окреме технічне та дизайнерське завдання.']
+  ['Якість','Використовуємо перевірені матеріали, сертифіковане скло та надійну фурнітуру.'],
+  ['Індивідуальний підхід','Кожен проєкт прораховуємо під архітектуру, розміри та реальні умови об’єкта.'],
+  ['Сучасні технології','Поєднуємо точне виробництво, технічне проєктування та професійний монтаж.'],
+  ['Підтримка','Супроводжуємо проєкт від першої консультації до монтажу та сервісу.']
 ];
 
 const team = [
@@ -24,78 +24,100 @@ const team = [
   ['Петро','Помічник майстра з монтажу'],
   ['Максим','Комірник, логіст']
 ];
+
+const clients = ['CHOICE','GAGARINN PLAZA','MARISTELLA','NOFILTERS','ZDRAVO','CHERRY TWINS ODESSA'];
+const systems = ['ALUPROF','SADEV','DORMA','SCHÜCO','AGC','Q-railing','SIEGENIA'];
 ---
-<BaseLayout title="Про Space Glass — історія, команда та цінності" description="Історія Space Glass, команда, цінності, офіси у Києві, Одесі та Львові, власні монтажні бригади та реалізація складних скляних конструкцій.">
+<BaseLayout title="Про Space Glass — команда, історія та скляні конструкції" description="Space Glass — команда з понад 10-річним досвідом у скляних та алюмінієвих конструкціях. 5 000+ реалізованих проєктів і понад 50 000 м² скління.">
 <div class="sg-page-shell">
   <Header />
-  <main id="main">
-    <section class="about-v12-hero">
-      <div class="about-v12-hero__copy">
+  <main id="main" class="about-premium">
+    <section class="about-hero">
+      <div class="about-hero__copy">
         <p class="eyebrow">Про Space Glass</p>
-        <h1>Ми перетворюємо складні ідеї зі скла на реальні простори</h1>
-        <p class="lead">Space Glass виросла з практичного досвіду, технічної експертизи та бажання працювати інакше: уважно до деталей, чесно у комунікації та відповідально на кожному етапі.</p>
-        <div class="hero__actions">
-          <a class="button button--mint" href="/projects/">Переглянути проєкти</a>
+        <h1>Прозорі рішення<br/>для сучасного простору</h1>
+        <p class="lead">Ми створюємо скляні конструкції, які поєднують естетику, функціональність і безпеку. Від душових та перегородок до фасадів — кожен проєкт для нас це увага до деталей, точність і результат, який працює роками.</p>
+        <div class="hero-actions">
+          <a class="button button--mint" href="/projects/">Переглянути проєкти →</a>
           <a class="button button--outline" href="#about-contact">Зв’язатися з командою</a>
         </div>
       </div>
-      <div class="about-v12-hero__visual">
-        <span>SPACE GLASS</span>
+      <div class="about-hero__media">
+        <img src="/images/v5/hero.webp" alt="Скляні перегородки Space Glass у сучасному інтер’єрі" width="1200" height="900" fetchpriority="high" />
+      </div>
+      <div class="about-values-strip">
+        {values.map(([title,text],i) => <article><span>0{i+1}</span><div><b>{title}</b><p>{text}</p></div></article>)}
       </div>
     </section>
 
-    <section class="about-v12-facts">
-  <div><b>5 000+</b><span>реалізованих проєктів</span></div>
-  <div><b>50 000+ м²</b><span>виконаного скління</span></div>
-  <div><b>10+ років</b><span>досвіду у скляних та алюмінієвих конструкціях</span></div>
-  <div><b>3 міста</b><span>Одеса · Київ · Львів</span></div>
-</section>
+    <section class="about-facts" aria-label="Space Glass у цифрах">
+      <article><strong>5 000+</strong><span>реалізованих проєктів</span></article>
+      <article><strong>50 000+ м²</strong><span>виконаного скління</span></article>
+      <article><strong>10+ років</strong><span>досвіду у скляних та алюмінієвих конструкціях</span></article>
+      <article><strong>3 міста</strong><span>Одеса · Київ · Львів</span></article>
+    </section>
 
-    <section class="about-v12-story">
-      <div class="about-v12-story__intro">
-        <p class="eyebrow">Наша історія</p>
-        <h2>Від роботи з фурнітурою до комплексних скляних рішень</h2>
+    <section class="about-story section-pad">
+      <div class="section-kicker">Наша історія</div>
+      <div class="about-story__head">
+        <h2>Від фурнітури для скла до комплексних рішень</h2>
+        <p>Історія Space Glass почалася з практики. Із 2014 року майбутні засновники працювали з фурнітурою для загартованого скла, поступово накопичуючи технічний і комерційний досвід.</p>
       </div>
-      <div class="about-v12-story__copy">
-        <p>Наша історія у галузі скла почалася ще до появи Space Glass. Із 2014 року майбутні засновники компанії працювали з фурнітурою для виробів із загартованого скла, проходили різні ролі та поступово накопичували технічний і комерційний досвід.</p>
-        <p>Коли стало зрозуміло, що цього досвіду достатньо для власної справи, ми почали з нуля: без офісу, без великої команди, але з чітким бажанням будувати сервіс навколо якості, комунікації та відповідальності. На старті Space Glass складалася лише з чотирьох людей, і кожен був залучений майже в усі процеси — від менеджменту та маркетингу до технічного супроводу.</p>
-      </div>
-      <div class="about-v12-story__visual about-v12-story__visual--one"><span>01 / START</span></div>
-      <div class="about-v12-story__visual about-v12-story__visual--two"><span>02 / GROWTH</span></div>
-      <div class="about-v12-story__copy about-v12-story__copy--wide">
-        <p>Перший рік став періодом активного навчання: формування клієнтської бази, пошуку партнерів, побудови команди та створення власного робочого простору зі зразками матеріалів і фурнітури.</p>
-        <p>Поступово ми вийшли за межі Одеси, почали працювати з проєктами у Львові та Києві, а влітку 2022 року відкрили офіс у столиці. Наступним важливим кроком стало формування власних монтажних бригад замість залежності від випадкових підрядників. Це дало змогу краще контролювати строки, якість і результат.</p>
-        <p>Сьогодні Space Glass — це команда, яка проєктує, виготовляє та монтує скляні конструкції для приватних і комерційних об’єктів та готова братися за завдання різної складності.</p>
+      <div class="timeline">
+        <article><b>2014</b><span>Початок професійного шляху у сфері скла та фурнітури.</span></article>
+        <article><b>2016</b><span>Розширення напрямів, формування команди й власних процесів.</span></article>
+        <article><b>2018</b><span>Складніші приватні та комерційні об’єкти, розвиток монтажних компетенцій.</span></article>
+        <article><b>2022</b><span>Новий етап розвитку та посилення присутності у Києві.</span></article>
+        <article><b>Сьогодні</b><span>Проєктування, виготовлення та монтаж скляних і алюмінієвих конструкцій різної складності.</span></article>
       </div>
     </section>
 
-    <section class="about-v12-values">
-      <div class="about-v12-section-head">
-        <div><p class="eyebrow eyebrow--light">Місія і цінності</p><h2>Створювати простори, у яких скло працює на архітектуру й людину</h2></div>
-        <p>Ми прагнемо, щоб кожна конструкція була не просто красивою, а безпечною, продуманою та довговічною.</p>
+    <section class="about-team section-pad">
+      <div class="section-head centered">
+        <p class="section-kicker">Наша команда</p>
+        <h2>Люди, які відповідають за результат</h2>
+        <p>Від першої консультації до логістики та монтажу — за кожним етапом стоїть конкретна людина.</p>
       </div>
-      <div class="about-v12-values__grid">
-        {values.map(([title,text],i) => <article><span>{String(i+1).padStart(2,'0')}</span><h3>{title}</h3><p>{text}</p></article>)}
+      <div class="team-grid">
+        {team.map(([name,role],i) => (
+          <article class="team-card">
+            <div class="team-photo" aria-label={`Фото ${name}`}><span>{String(i+1).padStart(2,'0')}</span></div>
+            <div class="team-meta"><h3>{name}</h3><p>{role}</p></div>
+          </article>
+        ))}
       </div>
+      <p class="team-note">Фінальні портрети команди будуть підключені окремими оптимізованими WebP-файлами без зміни структури сторінки.</p>
     </section>
 
-    <section class="about-v12-team">
-      <div class="about-v12-section-head">
-        <div><p class="eyebrow">Наша команда</p><h2>Люди, які відповідають за результат</h2></div>
-        <p>Від першої консультації до логістики та монтажу — кожен етап має свою відповідальну людину.</p>
-      </div>
-      <div class="about-v12-team__grid">
-        {team.map(([name,role],i) => <article><div class="about-v12-avatar">{String(i+1).padStart(2,'0')}</div><h3>{name}</h3><p>{role}</p></article>)}
-      </div>
-    </section>
-
-    <section class="about-v12-career">
+    <section class="career-block">
       <div>
-        <p class="eyebrow">Хочу в команду</p>
-        <h2>Шукаємо людей, яким важлива якість роботи</h2>
-        <p>Надішліть коротку інформацію про себе, досвід і напрям, у якому хочете розвиватися.</p>
+        <p class="section-kicker">Кар’єра в Space Glass</p>
+        <h2>Приєднуйся до нашої команди</h2>
+        <p>Ми відкриті до людей, яким важливі якість, відповідальність і професійний розвиток. Розкажіть коротко про себе — ми зв’яжемося, коли з’явиться відповідна можливість.</p>
       </div>
-      <form class="about-v12-career__form">
+      <a class="button button--mint" href="#career-form">Надіслати заявку →</a>
+    </section>
+
+    <section class="trust section-pad">
+      <div class="section-head centered">
+        <p class="section-kicker">Нам довіряють</p>
+        <h2>Компанії та проєкти, з якими ми працювали</h2>
+      </div>
+      <div class="logo-grid logo-grid--clients">
+        {clients.map((name) => <div class="logo-word">{name}</div>)}
+      </div>
+      <div class="systems-head">
+        <p class="section-kicker">Системи та бренди</p>
+        <h2>Працюємо з перевіреними рішеннями</h2>
+      </div>
+      <div class="logo-grid logo-grid--systems">
+        {systems.map((name) => <div class="logo-word logo-word--system">{name}</div>)}
+      </div>
+    </section>
+
+    <section id="career-form" class="career-form section-pad">
+      <div><p class="section-kicker">Хочу в команду</p><h2>Розкажіть про себе</h2><p>Залиште контакт і напрям, який вас цікавить.</p></div>
+      <form>
         <label>Ім’я<input type="text" placeholder="Ваше ім’я" /></label>
         <label>Телефон<input type="tel" placeholder="+38" /></label>
         <label>Напрям<select><option>Монтаж</option><option>Продажі</option><option>Проєктування</option><option>Маркетинг</option><option>Інше</option></select></label>
@@ -103,85 +125,36 @@ const team = [
       </form>
     </section>
 
-    <section id="about-contact" class="about-v12-offices">
-      <div class="about-v12-section-head">
-        <div><p class="eyebrow">Наші офіси</p><h2>Space Glass у трьох містах</h2></div>
-        <p>Оберіть місто, щоб побачити адресу, графік і схематичне розташування офісу.</p>
+    <section id="about-contact" class="about-offices section-pad">
+      <div class="section-head"><div><p class="section-kicker">Наші офіси</p><h2>Space Glass у трьох містах</h2></div><p>Працюємо з приватними та комерційними проєктами. Зв’яжіться з нами для консультації та попереднього розрахунку.</p></div>
+      <div class="office-grid">
+        <article><span>01</span><h3>Одеса</h3><p>вул. Глиняна, 5</p><a href="tel:+380734251400">+38 (073) 425 14 00</a></article>
+        <article><span>02</span><h3>Київ</h3><p>вул. Лауреатська, 8</p><a href="tel:+380734251400">+38 (073) 425 14 00</a></article>
+        <article><span>03</span><h3>Львів</h3><p>вул. Кульпарківська, 144</p><a href="tel:+380734251400">+38 (073) 425 14 00</a></article>
       </div>
+    </section>
 
-      <div class="office-tabs">
-        <input checked type="radio" name="office" id="office-odesa" />
-        <input type="radio" name="office" id="office-kyiv" />
-        <input type="radio" name="office" id="office-lviv" />
-
-        <div class="office-tabs__labels">
-          <label for="office-odesa">Одеса</label>
-          <label for="office-kyiv">Київ</label>
-          <label for="office-lviv">Львів</label>
-        </div>
-
-        <div class="office-panel office-panel--odesa">
-          <div class="office-info">
-            <p class="eyebrow">Одеса</p>
-            <h3>вул. Глиняна, 5</h3>
-            <p>Понеділок–п’ятниця: 09:00–19:00</p>
-            <a href="tel:+380734251400">+38 (073) 425 14 00</a>
-            <a class="button button--mint" href="https://www.google.com/maps/dir/?api=1&destination=%D0%9E%D0%B4%D0%B5%D1%81%D0%B0%2C+%D0%B2%D1%83%D0%BB.+%D0%93%D0%BB%D0%B8%D0%BD%D1%8F%D0%BD%D0%B0%2C+5" target="_blank" rel="noopener noreferrer">Прокласти маршрут</a>
-          </div>
-          <div class="office-map office-map--google">
-            <iframe
-              src="https://www.google.com/maps?q=%D0%9E%D0%B4%D0%B5%D1%81%D0%B0%2C+%D0%B2%D1%83%D0%BB.+%D0%93%D0%BB%D0%B8%D0%BD%D1%8F%D0%BD%D0%B0%2C+5&output=embed"
-              title="Карта офісу Space Glass — Одеса"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen>
-            </iframe>
-            <a class="office-map__open" href="https://www.google.com/maps/dir/?api=1&destination=%D0%9E%D0%B4%D0%B5%D1%81%D0%B0%2C+%D0%B2%D1%83%D0%BB.+%D0%93%D0%BB%D0%B8%D0%BD%D1%8F%D0%BD%D0%B0%2C+5" target="_blank" rel="noopener noreferrer">Відкрити у Google Maps ↗</a>
-          </div>
-        </div>
-
-        <div class="office-panel office-panel--kyiv">
-          <div class="office-info">
-            <p class="eyebrow">Київ</p>
-            <h3>вул. Лауреатська, 8</h3>
-            <p>Понеділок–п’ятниця: 09:00–19:00</p>
-            <a href="tel:+380734251400">+38 (073) 425 14 00</a>
-            <a class="button button--mint" href="https://www.google.com/maps/dir/?api=1&destination=%D0%9A%D0%B8%D1%97%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9B%D0%B0%D1%83%D1%80%D0%B5%D0%B0%D1%82%D1%81%D1%8C%D0%BA%D0%B0%2C+8" target="_blank" rel="noopener noreferrer">Прокласти маршрут</a>
-          </div>
-          <div class="office-map office-map--google">
-            <iframe
-              src="https://www.google.com/maps?q=%D0%9A%D0%B8%D1%97%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9B%D0%B0%D1%83%D1%80%D0%B5%D0%B0%D1%82%D1%81%D1%8C%D0%BA%D0%B0%2C+8&output=embed"
-              title="Карта офісу Space Glass — Київ"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen>
-            </iframe>
-            <a class="office-map__open" href="https://www.google.com/maps/dir/?api=1&destination=%D0%9A%D0%B8%D1%97%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9B%D0%B0%D1%83%D1%80%D0%B5%D0%B0%D1%82%D1%81%D1%8C%D0%BA%D0%B0%2C+8" target="_blank" rel="noopener noreferrer">Відкрити у Google Maps ↗</a>
-          </div>
-        </div>
-
-        <div class="office-panel office-panel--lviv">
-          <div class="office-info">
-            <p class="eyebrow">Львів</p>
-            <h3>вул. Кульпарківська, 144</h3>
-            <p>Понеділок–п’ятниця: 09:00–19:00</p>
-            <a href="tel:+380734251400">+38 (073) 425 14 00</a>
-            <a class="button button--mint" href="https://www.google.com/maps/dir/?api=1&destination=%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9A%D1%83%D0%BB%D1%8C%D0%BF%D0%B0%D1%80%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0%2C+144" target="_blank" rel="noopener noreferrer">Прокласти маршрут</a>
-          </div>
-          <div class="office-map office-map--google">
-            <iframe
-              src="https://www.google.com/maps?q=%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9A%D1%83%D0%BB%D1%8C%D0%BF%D0%B0%D1%80%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0%2C+144&output=embed"
-              title="Карта офісу Space Glass — Львів"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen>
-            </iframe>
-            <a class="office-map__open" href="https://www.google.com/maps/dir/?api=1&destination=%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9A%D1%83%D0%BB%D1%8C%D0%BF%D0%B0%D1%80%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0%2C+144" target="_blank" rel="noopener noreferrer">Відкрити у Google Maps ↗</a>
-          </div>
-        </div>
-      </div>
+    <section class="about-final-cta">
+      <div><p class="section-kicker section-kicker--light">Ваш проєкт</p><h2>Готові реалізувати складне рішення зі скла?</h2><p>Надішліть фото, розміри або креслення — підберемо оптимальну конструкцію та підготуємо попередній розрахунок.</p></div>
+      <a class="button button--mint" href="/#quote">Отримати розрахунок →</a>
     </section>
   </main>
   <Footer />
 </div>
 </BaseLayout>
+
+<style>
+  .about-premium{--mint:#7ccdb2;--ink:#141917;--muted:#66716d;--line:#dbe5e1;--soft:#f5f8f7;background:#fff;color:var(--ink)}
+  .about-premium *{box-sizing:border-box}.section-pad{padding:86px 5.5%}.section-kicker,.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:800;color:#26775e}.section-head{display:flex;justify-content:space-between;gap:48px;align-items:end;margin-bottom:36px}.section-head h2,.about-story h2,.career-block h2,.career-form h2,.about-final-cta h2{font-size:clamp(32px,3.2vw,54px);line-height:1.03;letter-spacing:-.035em;margin:8px 0 0}.section-head>p{max-width:520px;color:var(--muted);font-size:17px;line-height:1.6}.section-head.centered{display:block;text-align:center;max-width:850px;margin:0 auto 42px}.section-head.centered>p{margin:14px auto 0}.button{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 22px;border-radius:10px;font-weight:800;text-decoration:none}.button--mint{background:var(--mint);color:#0d2019}.button--outline{border:1px solid #cad5d1;color:var(--ink);background:#fff}
+  .about-hero{display:grid;grid-template-columns:43% 57%;position:relative;min-height:720px;border-bottom:1px solid var(--line)}.about-hero__copy{padding:90px 7% 190px 8%;display:flex;flex-direction:column;justify-content:center}.about-hero__copy h1{font-size:clamp(54px,5.3vw,86px);line-height:.98;letter-spacing:-.055em;margin:18px 0 28px}.about-hero__copy .lead{font-size:18px;line-height:1.62;color:#4d5854;max-width:650px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.about-hero__media{min-height:620px;overflow:hidden}.about-hero__media img{width:100%;height:100%;object-fit:cover;display:block}.about-values-strip{position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}.about-values-strip article{display:flex;gap:18px;padding:26px 30px;border-right:1px solid var(--line)}.about-values-strip article:last-child{border-right:0}.about-values-strip article>span{font-size:12px;font-weight:900;color:#2d886b}.about-values-strip b{display:block;font-size:16px;margin-bottom:6px}.about-values-strip p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
+  .about-facts{display:grid;grid-template-columns:repeat(4,1fr);padding:38px 5.5%;border-bottom:1px solid var(--line)}.about-facts article{padding:10px 28px;border-right:1px solid var(--line)}.about-facts article:last-child{border-right:0}.about-facts strong{display:block;font-size:clamp(30px,3vw,46px);line-height:1;letter-spacing:-.04em}.about-facts span{display:block;color:var(--muted);margin-top:10px;line-height:1.45}
+  .about-story{background:#fff}.about-story__head{display:grid;grid-template-columns:1fr 1fr;gap:9%;align-items:start;margin-top:12px}.about-story__head p{color:var(--muted);font-size:18px;line-height:1.7;margin-top:8px}.timeline{display:grid;grid-template-columns:repeat(5,1fr);margin-top:58px;border-top:1px solid var(--line)}.timeline article{padding:26px 28px 0 0;position:relative}.timeline article:before{content:"";width:8px;height:8px;background:var(--mint);border-radius:50%;position:absolute;top:-5px;left:0}.timeline b{font-size:22px}.timeline span{display:block;margin-top:10px;color:var(--muted);line-height:1.55}
+  .about-team{background:var(--soft)}.team-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.team-card{background:#fff;border:1px solid #e2e9e6;overflow:hidden}.team-photo{aspect-ratio:4/5;background:linear-gradient(145deg,#edf2f0,#d9e1de);display:flex;align-items:center;justify-content:center;color:#94a19c;font-size:36px;font-weight:800;letter-spacing:-.05em}.team-meta{padding:16px}.team-meta h3{margin:0 0 5px;font-size:17px}.team-meta p{margin:0;color:var(--muted);font-size:13px;line-height:1.4}.team-note{font-size:12px;color:#8a9691;text-align:center;margin:18px 0 0}
+  .career-block{display:grid;grid-template-columns:1.5fr .5fr;align-items:center;gap:50px;padding:52px 5.5%;background:linear-gradient(90deg,#f6fbf9,#fff);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.career-block p{color:var(--muted);max-width:760px;line-height:1.6}.career-block .button{justify-self:end}
+  .trust{padding-top:80px}.logo-grid{display:grid;border-top:1px solid var(--line);border-left:1px solid var(--line)}.logo-grid--clients{grid-template-columns:repeat(6,1fr)}.logo-grid--systems{grid-template-columns:repeat(7,1fr)}.logo-word{min-height:116px;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);font-size:18px;font-weight:800;letter-spacing:.04em;color:#7a8480;filter:grayscale(1);transition:.2s}.logo-word:hover{color:#176f55;background:#f6fbf9;filter:none}.logo-word--system{font-size:19px;color:#28322f}.systems-head{text-align:center;margin:70px 0 30px}.systems-head h2{font-size:34px;margin:8px 0 0}
+  .career-form{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;background:#0d211a;color:#fff}.career-form .section-kicker{color:var(--mint)}.career-form p{color:#bbcbc5}.career-form form{display:grid;grid-template-columns:1fr 1fr;gap:16px}.career-form label{font-size:12px;text-transform:uppercase;letter-spacing:.08em}.career-form input,.career-form select{display:block;width:100%;height:52px;border-radius:8px;border:1px solid #365047;background:#173329;color:#fff;padding:0 14px;margin-top:7px}.career-form button{border:0;align-self:end}
+  .about-offices{background:#fff}.office-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.office-grid article{padding:32px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.office-grid article>span{color:#2a8568;font-size:12px;font-weight:800}.office-grid h3{font-size:28px;margin:30px 0 8px}.office-grid p{color:var(--muted)}.office-grid a{color:#176f55;font-weight:800;text-decoration:none}
+  .about-final-cta{display:grid;grid-template-columns:1.4fr .6fr;gap:50px;align-items:center;padding:66px 5.5%;background:#0b100e;color:#fff}.about-final-cta p{max-width:760px;color:#b9c6c1;line-height:1.6}.about-final-cta .button{justify-self:end}.section-kicker--light{color:var(--mint)}
+  @media(max-width:1100px){.about-hero{grid-template-columns:1fr;min-height:auto}.about-hero__copy{padding:70px 6% 54px}.about-hero__media{min-height:500px}.about-values-strip{position:static;grid-template-columns:1fr 1fr}.about-facts{grid-template-columns:1fr 1fr}.about-facts article:nth-child(2){border-right:0}.about-facts article{border-bottom:1px solid var(--line)}.team-grid{grid-template-columns:repeat(3,1fr)}.logo-grid--clients,.logo-grid--systems{grid-template-columns:repeat(3,1fr)}.timeline{grid-template-columns:1fr 1fr}.about-story__head{grid-template-columns:1fr}.career-form{grid-template-columns:1fr}.career-block{grid-template-columns:1fr}.career-block .button{justify-self:start}}
+  @media(max-width:680px){.section-pad{padding:58px 22px}.about-hero__copy{padding:58px 22px 42px}.about-hero__copy h1{font-size:48px}.about-hero__media{min-height:360px}.about-values-strip{grid-template-columns:1fr}.about-values-strip article{border-right:0;border-bottom:1px solid var(--line)}.about-facts{grid-template-columns:1fr;padding:20px 22px}.about-facts article{border-right:0}.about-story__head{gap:20px}.timeline{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(2,1fr)}.logo-grid--clients,.logo-grid--systems{grid-template-columns:repeat(2,1fr)}.section-head{display:block}.office-grid{grid-template-columns:1fr}.career-form form{grid-template-columns:1fr}.about-final-cta{grid-template-columns:1fr;padding:54px 22px}.about-final-cta .button{justify-self:start}}
+</style>
