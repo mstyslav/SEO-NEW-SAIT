@@ -21,172 +21,123 @@ const timeline = [
 ];
 
 const team = [
-  ['Олександр','Співвласник, співзасновник','oleksandr.webp'],
-  ['Мстислав','Співвласник, співзасновник','mstyslav.webp'],
-  ['Микола','Керівник відділу продажів','mykola.webp'],
-  ['Юлія','Контент-мейкер','yuliia-content.webp'],
-  ['Анастасія','SMM-спеціаліст','anastasiia.webp'],
-  ['Євген','Майстер з монтажу','yevhen.webp'],
-  ['Марія','Акаунт-менеджер','mariia.webp'],
-  ['Юлія','Організатор','yuliia-organizator.webp'],
-  ['Мілана','Менеджер проєкту','milana.webp'],
-  ['Артур','Майстер з монтажу','artur.webp'],
-  ['Петро','Помічник майстра з монтажу','petro.webp'],
-  ['Максим','Комірник, логіст','maksym.webp']
+  ['Олександр','Співвласник, співзасновник','/images/team/oleksandr.webp'],
+  ['Мстислав','Співвласник, співзасновник','/images/team/mstyslav.webp'],
+  ['Микола','Керівник відділу продажів','/images/team/mykola.webp'],
+  ['Юлія','Контент-мейкер','/images/team/yuliia-content.webp'],
+  ['Анастасія','SMM-спеціаліст','/images/team/anastasiia.webp'],
+  ['Євген','Майстер з монтажу','/images/team/yevhen.webp'],
+  ['Марія','Акаунт-менеджер','/images/team/mariia.webp'],
+  ['Юлія','Організатор','/images/team/yuliia-organizator.webp'],
+  ['Мілана','Менеджер проєкту','/images/team/milana.webp'],
+  ['Артур','Майстер з монтажу','/images/team/artur.webp'],
+  ['Петро','Помічник майстра з монтажу','/images/team/petro.webp'],
+  ['Максим','Комірник, логіст','/images/team/maksym.webp']
 ];
 
 const clients = [
-  ['CHOICE','choice.svg'],
-  ['GAGARINN PLAZA','gagarinn-plaza.svg'],
-  ['MARISTELLA','maristella.svg'],
-  ['NOFILTERS','nofilters.svg'],
-  ['ZDRAVO','zdravo.svg'],
-  ['CHERRY TWINS ODESSA','cherry-twins.svg']
+  ['CHOICE','/images/partners/choice.svg'],
+  ['GAGARINN PLAZA','/images/partners/gagarinn-plaza.svg'],
+  ['MARISTELLA','/images/partners/maristella.svg'],
+  ['NOFILTERS','/images/partners/nofilters.svg'],
+  ['ZDRAVO','/images/partners/zdravo.svg'],
+  ['CHERRY TWINS ODESSA','/images/partners/cherry-twins.svg']
 ];
 
 const systems = [
-  ['ALUPROF','aluprof.svg'],
-  ['SADEV','sadev.svg'],
-  ['dormakaba','dormakaba.svg'],
-  ['SCHÜCO','schueco.svg'],
-  ['AGC','agc.svg'],
-  ['Q-railing','q-railing.svg'],
-  ['SIEGENIA','siegenia.svg']
+  ['ALUPROF','/images/brands/aluprof.svg'],
+  ['SADEV','/images/brands/sadev.svg'],
+  ['DORMA','/images/brands/dorma.svg'],
+  ['SCHÜCO','/images/brands/schueco.svg'],
+  ['AGC','/images/brands/agc.svg'],
+  ['Q-railing','/images/brands/q-railing.svg'],
+  ['SIEGENIA','/images/brands/siegenia.svg']
 ];
 ---
 <BaseLayout title="Про Space Glass — команда, історія та скляні конструкції" description="Space Glass — команда з понад 10-річним досвідом у скляних та алюмінієвих конструкціях. 5 000+ реалізованих проєктів і понад 50 000 м² скління.">
-<div class="sg-page-shell">
-  <Header />
-  <main id="main" class="about-final">
-    <section class="hero">
-      <div class="hero__copy">
-        <p class="kicker">Про нас</p>
-        <h1>SPACE<br/>GLASS</h1>
-        <span class="hero__rule"></span>
-        <p class="hero__subtitle">Скляні та алюмінієві конструкції<br/>для сучасної архітектури</p>
-        <div class="hero__actions">
-          <a class="btn btn--mint" href="/projects/">Переглянути проєкти →</a>
-          <a class="btn btn--ghost" href="#contact">Зв’язатися з нами</a>
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main" class="about-premium">
+      <section class="hero">
+        <div class="hero__media" aria-hidden="true"></div>
+        <div class="hero__veil"></div>
+        <div class="hero__copy">
+          <p class="eyebrow">Про нас</p>
+          <h1>SPACE<br/>GLASS</h1>
+          <span class="hero__line"></span>
+          <p class="hero__subtitle">Скляні та алюмінієві конструкції<br/>для сучасної архітектури</p>
         </div>
-      </div>
-      <div class="hero__image">
-        <img src="/images/about/about-hero.webp" alt="Сучасний скляний фасад Space Glass на заході сонця" width="1800" height="1100" fetchpriority="high" onerror="this.onerror=null;this.src='/images/v5/hero.webp'" />
-      </div>
-    </section>
-
-    <section class="facts" aria-label="Space Glass у цифрах">
-      <article>
-        <span class="fact-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 27V12l11-7 11 7v15M10 27V16h12v11M16 5v22"/></svg></span>
-        <div><strong>5 000+</strong><p>реалізованих<br/>проєктів</p></div>
-      </article>
-      <article>
-        <span class="fact-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="5" y="5" width="22" height="22"/><path d="M16 5v22M5 16h22"/></svg></span>
-        <div><strong>50 000+ м²</strong><p>виконаного<br/>скління</p></div>
-      </article>
-      <article>
-        <span class="fact-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="3"/><path d="M16 3v5M16 24v5M3 16h5M24 16h5M7 7l4 4M21 21l4 4M25 7l-4 4M11 21l-4 4"/></svg></span>
-        <div><strong>10+ років</strong><p>досвіду у скляних<br/>конструкціях</p></div>
-      </article>
-      <article>
-        <span class="fact-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 29s9-9.5 9-17a9 9 0 1 0-18 0c0 7.5 9 17 9 17Z"/><circle cx="16" cy="12" r="3"/></svg></span>
-        <div><strong>3 міста</strong><p>Одеса · Київ · Львів</p></div>
-      </article>
-    </section>
-
-    <section class="story-values">
-      <div class="story">
-        <p class="kicker">Наша історія</p>
-        <h2>Досвід, що створює майбутнє</h2>
-        <p>Space Glass виросла з практичного досвіду у сфері скла та фурнітури. Із 2014 року ми розвивали технічну експертизу, формували команду, запускали власні процеси та поступово переходили від окремих виробів до комплексних скляних і алюмінієвих рішень.</p>
-        <p>Сьогодні ми працюємо з приватними та комерційними об’єктами, проєктуємо, виготовляємо й монтуємо конструкції різної складності та супроводжуємо замовника від першої консультації до реалізації.</p>
-      </div>
-      <div class="values">
-        <p class="kicker">Наші цінності</p>
-        {values.map(([title,text]) => <article><span>◇</span><div><h3>{title}</h3><p>{text}</p></div></article>)}
-      </div>
-      <div class="timeline-wrap">
-        <div class="timeline">
-          {timeline.map(([year,text]) => <article><b>{year}</b><span>{text}</span></article>)}
+        <div class="facts" aria-label="Space Glass у цифрах">
+          <article><span class="fact-icon fact-icon--building" aria-hidden="true"></span><div><strong>5 000+</strong><p>реалізованих<br/>проєктів</p></div></article>
+          <article><span class="fact-icon fact-icon--glass" aria-hidden="true"></span><div><strong>50 000+ м²</strong><p>виконаного<br/>скління</p></div></article>
+          <article><span class="fact-icon fact-icon--sun" aria-hidden="true"></span><div><strong>10+ років</strong><p>досвіду у скляних<br/>конструкціях</p></div></article>
+          <article><span class="fact-icon fact-icon--pin" aria-hidden="true"></span><div><strong>3 міста</strong><p>Одеса · Київ · Львів</p></div></article>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="team-section">
-      <div class="section-head">
-        <p class="kicker">Наша команда</p>
-        <h2>Люди, які створюють простір</h2>
-        <p>Реальна команда Space Glass — від консультації та проєктування до логістики й монтажу.</p>
-      </div>
-      <div class="team-grid">
-        {team.map(([name,role,file],i) => (
-          <article class="team-card">
-            <div class="team-photo">
-              <img src={`/images/team/${file}`} alt={`${name} — ${role}, Space Glass`} loading="lazy" width="720" height="900" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" />
-              <span class="team-fallback">{String(i+1).padStart(2,'0')}</span>
-            </div>
-            <div class="team-caption"><h3>{name}</h3><p>{role}</p></div>
-          </article>
-        ))}
-      </div>
-      <a class="team-join" href="#career">Приєднуйся до команди →</a>
-    </section>
+      <section class="story section-pad">
+        <div class="story__intro">
+          <div><p class="eyebrow">Наша історія</p><h2>Досвід, що створює майбутнє</h2></div>
+          <div class="story__copy">
+            <p>Space Glass виросла з практичного досвіду у сфері скла та фурнітури. Із 2014 року ми розвивали технічну експертизу, формували команду, запускали власні процеси та поступово переходили від окремих виробів до комплексних скляних і алюмінієвих рішень.</p>
+            <p>Сьогодні ми працюємо з приватними та комерційними об’єктами, проєктуємо, виготовляємо й монтуємо конструкції різної складності та супроводжуємо замовника від першої консультації до реалізації.</p>
+          </div>
+        </div>
+        <div class="timeline" aria-label="Історія розвитку Space Glass">
+          {timeline.map(([year,text],i) => <article><span class="timeline__dot"></span><b>{year}</b><p>{text}</p><div class={`timeline__image timeline__image--${i+1}`} aria-hidden="true"></div></article>)}
+        </div>
+      </section>
 
-    <section class="trust-section">
-      <div class="trust-head">
-        <p class="kicker">Нам довіряють</p>
-        <h2>Компанії та проєкти, з якими ми працювали</h2>
-      </div>
-      <div class="logo-row client-logos">
-        {clients.map(([name,file]) => <div class="brand-cell"><img src={`/images/about/logos/${file}`} alt={name} loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><span>{name}</span></div>)}
-      </div>
-      <a class="small-link" href="/projects/">Дивитися всі проєкти →</a>
-    </section>
+      <section class="values section-pad">
+        <div class="values__head"><p class="eyebrow">Наші цінності</p><h2>Будуємо довіру так само точно, як конструкції</h2></div>
+        <div class="values__grid">
+          {values.map(([title,text],i) => <article><span>0{i+1}</span><h3>{title}</h3><p>{text}</p></article>)}
+        </div>
+      </section>
 
-    <section class="career-panel" id="career">
-      <div>
-        <p class="kicker">Хочу в команду</p>
-        <h2>Розкажіть про себе</h2>
-        <p>Залиште контакт і напрям, який вас цікавить. Ми зв’яжемося, коли з’явиться відповідна можливість.</p>
-      </div>
-      <form>
-        <input type="text" aria-label="Ім’я" placeholder="Ваше ім’я" />
-        <input type="tel" aria-label="Телефон" placeholder="Телефон" />
-        <select aria-label="Напрям роботи"><option>Напрям роботи</option><option>Монтаж</option><option>Продажі</option><option>Проєктування</option><option>Маркетинг</option><option>Інше</option></select>
-        <button type="button" class="btn btn--dark">Надіслати заявку ↗</button>
-      </form>
-    </section>
+      <section class="team section-pad">
+        <div class="section-head"><div><p class="eyebrow">Наша команда</p><h2>Люди, які створюють простір</h2></div><p>Від першої консультації до логістики й монтажу — за кожним етапом стоїть конкретна людина.</p></div>
+        <div class="team-grid">
+          {team.map(([name,role,img]) => <article class="team-card"><div class="team-photo" style={`background-image:url('${img}'),linear-gradient(145deg,#f2f1ed,#e5e8e5)`}></div><div class="team-caption"><h3>{name}</h3><p>{role}</p></div></article>)}
+        </div>
+        <a class="outline-link" href="#career">Приєднуйся до команди →</a>
+      </section>
 
-    <section class="systems-section">
-      <div class="trust-head">
-        <p class="kicker">Системи та бренди</p>
-        <h2>Працюємо з перевіреними рішеннями</h2>
-      </div>
-      <div class="logo-row systems-logos">
-        {systems.map(([name,file]) => <div class="brand-cell brand-cell--system"><img src={`/images/about/logos/${file}`} alt={name} loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><span>{name}</span></div>)}
-      </div>
-    </section>
+      <section class="trust section-pad">
+        <div class="section-head section-head--compact"><div><p class="eyebrow">Нам довіряють</p><h2>Компанії та проєкти, з якими ми працювали</h2></div><a href="/projects/">Дивитися всі проєкти →</a></div>
+        <div class="logo-strip logo-strip--clients">
+          {clients.map(([name,img]) => <div class="logo-item"><img src={img} alt={name} loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /><span>{name}</span></div>)}
+        </div>
+      </section>
 
-    <section class="final-cta" id="contact">
-      <div class="final-cta__icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 27V12l11-7 11 7v15M10 27V16h12v11"/></svg></div>
-      <div><h2>Готові реалізувати ваш проєкт?</h2><p>Зв’яжіться з нами — створимо простір, який надихає.</p></div>
-      <a class="btn btn--dark" href="/#quote">Обговорити проєкт →</a>
-    </section>
-  </main>
-  <Footer />
-</div>
+      <section id="career" class="career section-pad">
+        <div class="career__copy"><p class="eyebrow">Хочу в команду</p><h2>Розкажіть про себе</h2><p>Залиште контакт і напрям, який вас цікавить. Ми зв’яжемося, коли з’явиться відповідна можливість.</p></div>
+        <form class="career__form"><input type="text" aria-label="Ім’я" placeholder="Ваше ім’я" /><input type="tel" aria-label="Телефон" placeholder="Телефон" /><select aria-label="Напрям роботи"><option>Напрям роботи</option><option>Монтаж</option><option>Продажі</option><option>Проєктування</option><option>Маркетинг</option><option>Інше</option></select><button type="button">Надіслати заявку ↗</button></form>
+      </section>
+
+      <section class="systems section-pad">
+        <div class="section-head section-head--compact"><div><p class="eyebrow">Системи та бренди</p><h2>Працюємо з перевіреними рішеннями</h2></div><a href="/catalog/">Детальніше про системи →</a></div>
+        <div class="logo-strip logo-strip--systems">
+          {systems.map(([name,img]) => <div class="logo-item logo-item--system"><img src={img} alt={name} loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /><span>{name}</span></div>)}
+        </div>
+      </section>
+
+      <section class="final-cta" id="contact"><div><p class="eyebrow">Ваш проєкт</p><h2>Готові реалізувати складне рішення зі скла?</h2><p>Надішліть фото, розміри або креслення — підберемо оптимальну конструкцію та підготуємо попередній розрахунок.</p></div><a href="/#quote">Обговорити проєкт →</a></section>
+    </main>
+    <Footer />
+  </div>
 </BaseLayout>
 
 <style>
-  .about-final{--mint:#77cbb0;--green:#0d5b46;--ink:#101413;--muted:#65706c;--line:#dce5e1;background:#fff;color:var(--ink)}
-  .about-final *{box-sizing:border-box}.kicker{margin:0 0 10px;text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:900;color:#2d8368}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;border-radius:4px;font-weight:800;text-decoration:none;border:0}.btn--mint{background:var(--mint);color:#0c201a}.btn--ghost{background:#fff;color:var(--ink);border:1px solid #cfd9d5}.btn--dark{background:var(--green);color:#fff}
-  .hero{display:grid;grid-template-columns:39% 61%;min-height:560px;border-bottom:1px solid var(--line);position:relative;overflow:hidden;background:#fff}.hero__copy{padding:76px 6.2% 68px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}.hero__copy:after{content:"";position:absolute;right:-110px;top:-15%;width:220px;height:130%;background:#fff;transform:skewX(-17deg);z-index:-1}.hero h1{font-size:clamp(68px,7vw,108px);line-height:.82;letter-spacing:-.055em;margin:8px 0 22px}.hero__rule{display:block;width:42px;height:2px;background:#1d8567;margin-bottom:22px}.hero__subtitle{font-size:22px;line-height:1.35;margin:0;color:#232a27}.hero__actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}.hero__image{overflow:hidden;min-height:560px}.hero__image img{width:100%;height:100%;object-fit:cover;display:block}
-  .facts{display:grid;grid-template-columns:repeat(4,1fr);padding:30px 5.2%;border-bottom:1px solid var(--line);background:rgba(255,255,255,.98)}.facts article{padding:4px 28px 4px 0;border-right:1px solid var(--line);display:grid;grid-template-columns:48px 1fr;gap:16px;align-items:start}.facts article:last-child{border-right:0}.fact-icon{color:#2d8368}.fact-icon svg,.final-cta__icon svg{width:32px;height:32px;fill:none;stroke:currentColor;stroke-width:1.5}.facts strong{display:block;font-size:clamp(30px,2.8vw,46px);line-height:1;color:#2c8a6d;letter-spacing:-.04em}.facts p{margin:8px 0 0;font-size:14px;line-height:1.35}
-  .story-values{display:grid;grid-template-columns:1.38fr .62fr;gap:7%;padding:58px 5.2% 54px;border-bottom:1px solid var(--line)}.story h2,.section-head h2,.trust-head h2,.career-panel h2,.final-cta h2{margin:0;font-size:clamp(30px,2.7vw,46px);line-height:1.05;letter-spacing:-.035em}.story>p:not(.kicker){max-width:860px;color:#404a46;line-height:1.65;font-size:16px}.values{padding-top:4px}.values>article{display:flex;gap:14px;padding:10px 0}.values>article>span{font-size:22px;color:#2d8a6c}.values h3{margin:0 0 4px;font-size:15px}.values p{margin:0;color:#4f5b56;font-size:12px;line-height:1.4}.timeline-wrap{grid-column:1/-1;margin-top:18px;overflow-x:auto;padding-bottom:6px}.timeline{display:grid;grid-template-columns:repeat(7,minmax(150px,1fr));min-width:1080px;border-top:1px solid #8ec2b1}.timeline article{position:relative;padding:22px 22px 0 0}.timeline article:before{content:"";width:9px;height:9px;border:3px solid #fff;box-shadow:0 0 0 2px #1d745a;border-radius:50%;background:#1d745a;position:absolute;top:-6px;left:0}.timeline b{font-size:20px}.timeline span{display:block;font-size:12px;line-height:1.45;margin-top:8px;color:#46514d}
-  .team-section{padding:50px 4.7% 34px;background:#f8faf9;border-bottom:1px solid var(--line)}.section-head{text-align:left;max-width:800px;margin-bottom:24px}.section-head>p:last-child{color:var(--muted);line-height:1.6}.team-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.team-card{min-width:0;background:#fff}.team-photo{aspect-ratio:4/5;background:linear-gradient(145deg,#e8e5dd,#f4f1e9);position:relative;overflow:hidden;border:1px solid #e1e5e2}.team-photo img{width:100%;height:100%;object-fit:cover;display:block}.team-fallback{display:none;place-items:center;width:100%;height:100%;color:#a5aca9;font-size:28px;font-weight:900}.team-caption{text-align:center;padding:9px 5px 13px}.team-caption h3{font-size:13px;margin:0 0 3px}.team-caption p{font-size:10px;margin:0;color:#606a66}.team-join{display:block;width:max-content;margin:20px auto 0;color:#22795f;border:1px solid #85cbb5;padding:9px 17px;text-decoration:none;font-size:12px;font-weight:800}
-  .trust-section,.systems-section{padding:54px 5.2%;background:#fff;border-bottom:1px solid var(--line)}.trust-head{max-width:820px;margin-bottom:28px}.logo-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;align-items:stretch}.brand-cell{min-height:104px;display:flex;align-items:center;justify-content:center;padding:22px 26px;border-bottom:1px solid #edf1ef}.brand-cell img{max-width:170px;max-height:48px;width:auto;height:auto;object-fit:contain;filter:grayscale(1);opacity:.76;transition:.2s}.brand-cell:hover img{filter:none;opacity:1}.brand-cell span{display:none;text-align:center;font-weight:800;font-size:14px;color:#606a66;letter-spacing:.04em}.brand-cell--system img{max-height:44px}.brand-cell--system span{font-size:15px;color:#303835}.small-link{display:inline-block;margin-top:22px;border:1px solid #79bba6;padding:10px 15px;color:#176b53;text-decoration:none;font-size:12px;font-weight:800}
-  .career-panel{display:grid;grid-template-columns:.82fr 1.18fr;gap:70px;align-items:center;padding:54px 5.2%;background:linear-gradient(120deg,#f3fbf8,#edf8f3);border-bottom:1px solid var(--line)}.career-panel>div>p:last-child{color:#5f6c67;line-height:1.6;max-width:600px}.career-panel form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.career-panel input,.career-panel select{height:46px;border:1px solid #ccd8d3;border-radius:4px;background:#fff;padding:0 12px;color:#2a302e}.career-panel button{min-height:46px}
-  .final-cta{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;padding:28px 17%;background:linear-gradient(90deg,#f7fbf9,#fff)}.final-cta__icon{width:58px;height:58px;border-radius:50%;background:#d9f0e8;display:flex;align-items:center;justify-content:center;color:#2d8066}.final-cta h2{font-size:29px}.final-cta p{margin:4px 0 0;color:#4d5954}
-  @media(max-width:1200px){.hero{grid-template-columns:43% 57%}.team-grid{grid-template-columns:repeat(4,1fr)}.logo-row{grid-template-columns:repeat(3,1fr)}.career-panel{grid-template-columns:1fr;gap:28px}.final-cta{padding:28px 6%}}
-  @media(max-width:900px){.hero{grid-template-columns:1fr}.hero__copy:after{display:none}.hero__image{min-height:420px}.facts{grid-template-columns:1fr 1fr}.story-values{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(3,1fr)}.logo-row{grid-template-columns:repeat(3,1fr)}}
-  @media(max-width:680px){.hero__copy{padding:48px 22px 36px}.hero h1{font-size:58px}.hero__image{min-height:330px}.facts{grid-template-columns:1fr;padding:22px}.facts article{border-right:0;border-bottom:1px solid var(--line);padding:16px 0}.story-values{padding:44px 22px}.team-section{padding:44px 22px}.team-grid{grid-template-columns:repeat(2,1fr)}.trust-section,.systems-section,.career-panel{padding:40px 22px}.logo-row{grid-template-columns:repeat(2,1fr)}.brand-cell{min-height:88px;padding:16px}.final-cta{grid-template-columns:1fr;padding:32px 22px}.final-cta__icon{display:none}}
+  .about-premium{--mint:#72cdb1;--green:#176f58;--green-deep:#0e5947;--ink:#111513;--muted:#5e6864;--line:#dce5e1;--soft:#f5f9f7;background:#fff;color:var(--ink)}
+  .about-premium *{box-sizing:border-box}.section-pad{padding:84px 5.2%}.eyebrow{margin:0 0 12px;text-transform:uppercase;letter-spacing:.2em;font-size:12px;font-weight:900;color:#2a8369}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:50px;margin-bottom:34px}.section-head h2,.story h2,.values h2,.career h2,.final-cta h2{margin:0;font-size:clamp(34px,3.2vw,56px);line-height:1.02;letter-spacing:-.045em}.section-head>p{max-width:520px;margin:0;color:var(--muted);font-size:17px;line-height:1.55}.section-head--compact{align-items:center}.section-head a,.outline-link{color:#176f58;text-decoration:none;font-weight:800;font-size:13px}.outline-link{display:block;width:max-content;margin:24px auto 0;border:1px solid #8bc9b6;padding:11px 18px}
+  .hero{position:relative;min-height:690px;overflow:hidden;background:#fff}.hero__media{position:absolute;inset:0;background-image:url('/images/about/about-hero.webp'),url('/images/v5/hero.webp');background-size:cover;background-position:72% 50%;transform:scale(1.002)}.hero__veil{position:absolute;inset:0;background:linear-gradient(104deg,#fff 0 31%,rgba(255,255,255,.97) 33%,rgba(255,255,255,.75) 41%,rgba(255,255,255,.08) 58%,rgba(255,255,255,0) 72%);clip-path:polygon(0 0,58% 0,39% 100%,0 100%)}.hero:after{content:"";position:absolute;left:35.2%;top:-8%;width:3px;height:118%;background:rgba(255,255,255,.86);transform:rotate(24deg);transform-origin:center;box-shadow:-110px 0 0 rgba(114,205,177,.7)}.hero__copy{position:relative;z-index:2;padding:88px 5.2% 210px;width:min(570px,48%)}.hero__copy h1{font-size:clamp(76px,7.6vw,124px);line-height:.78;letter-spacing:-.065em;margin:14px 0 26px}.hero__line{display:block;width:42px;height:2px;background:var(--green);margin-bottom:24px}.hero__subtitle{font-size:21px;line-height:1.35;margin:0}.facts{position:absolute;z-index:3;left:4.8%;right:4.8%;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 12px 35px rgba(20,40,32,.08)}.facts article{min-height:118px;display:flex;align-items:center;gap:22px;padding:22px 32px;border-right:1px solid var(--line)}.facts article:last-child{border-right:0}.facts strong{display:block;font-size:clamp(28px,2.6vw,44px);line-height:1;color:#2c8a6d;letter-spacing:-.04em}.facts p{margin:7px 0 0;font-size:13px;line-height:1.35}.fact-icon{width:44px;height:44px;flex:0 0 44px;position:relative;color:#2c8a6d}.fact-icon--building{border:2px solid currentColor;border-top:0;margin-top:7px}.fact-icon--building:before,.fact-icon--building:after{content:"";position:absolute;bottom:0;border:2px solid currentColor;border-bottom:0}.fact-icon--building:before{width:13px;height:31px;left:4px}.fact-icon--building:after{width:14px;height:39px;right:4px}.fact-icon--glass{border:2px solid currentColor}.fact-icon--glass:before,.fact-icon--glass:after{content:"";position:absolute;background:currentColor}.fact-icon--glass:before{left:50%;top:0;bottom:0;width:1px}.fact-icon--glass:after{top:50%;left:0;right:0;height:1px}.fact-icon--sun{border:2px solid currentColor;border-radius:50%;transform:scale(.52)}.fact-icon--sun:before{content:"";position:absolute;inset:-18px;border:2px dashed currentColor;border-radius:50%}.fact-icon--pin{border:2px solid currentColor;border-radius:50% 50% 50% 0;transform:rotate(-45deg) scale(.7)}.fact-icon--pin:after{content:"";position:absolute;width:9px;height:9px;border:2px solid currentColor;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
+  .story{border-bottom:1px solid var(--line)}.story__intro{display:grid;grid-template-columns:.75fr 1.25fr;gap:8%;align-items:start}.story__copy{color:#404a46;font-size:17px;line-height:1.66}.story__copy p:first-child{margin-top:0}.timeline{display:grid;grid-template-columns:repeat(7,1fr);margin-top:56px;border-top:2px solid #9ccdbd}.timeline article{position:relative;padding:22px 20px 0 0;min-width:0}.timeline__dot{position:absolute;width:10px;height:10px;background:#fff;border:3px solid #257d63;border-radius:50%;top:-6px;left:0}.timeline b{font-size:20px}.timeline p{font-size:12px;line-height:1.42;color:#46514d;min-height:50px}.timeline__image{height:92px;margin-top:14px;background-size:cover;background-position:center;border:1px solid #e1e8e5}.timeline__image--1{background-image:url('/images/v5/product-1.webp')}.timeline__image--2{background-image:url('/images/v5/hero.webp')}.timeline__image--3{background-image:url('/images/v5/product-2.webp')}.timeline__image--4{background-image:url('/images/v5/product-3.webp')}.timeline__image--5{background-image:url('/images/v5/product-4.webp')}.timeline__image--6{background-image:url('/images/v5/product-5.webp')}.timeline__image--7{background-image:linear-gradient(135deg,#edf5f2,#dcece6)}
+  .values{background:var(--soft);border-bottom:1px solid var(--line)}.values__head{max-width:760px;margin-bottom:42px}.values__grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.values__grid article{padding:30px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.values__grid article>span{display:block;color:#2d8268;font-size:12px;font-weight:900;margin-bottom:28px}.values__grid h3{font-size:20px;margin:0 0 10px}.values__grid p{margin:0;color:var(--muted);line-height:1.5}
+  .team{border-bottom:1px solid var(--line)}.team-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.team-card{background:#fff}.team-photo{aspect-ratio:4/5;background-size:cover;background-position:50% 34%;border:1px solid #e0e7e4}.team-caption{text-align:center;padding:10px 4px 8px}.team-caption h3{font-size:15px;margin:0 0 4px}.team-caption p{font-size:11px;line-height:1.35;margin:0;color:#63706b}
+  .trust{border-bottom:1px solid var(--line)}.logo-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0}.logo-item{min-height:116px;display:flex;align-items:center;justify-content:center;padding:24px;border-bottom:1px solid #edf1ef}.logo-item img{display:block;max-width:170px;max-height:52px;width:auto;height:auto;filter:grayscale(1);opacity:.74;transition:.2s}.logo-item:hover img{filter:none;opacity:1}.logo-item span{display:none;font-size:16px;font-weight:800;color:#77807c;text-align:center;letter-spacing:.035em}.logo-item--system img{max-width:150px;max-height:46px}
+  .career{display:grid;grid-template-columns:.8fr 1.2fr;gap:72px;align-items:center;background:linear-gradient(105deg,#f3faf7,#fff);border-bottom:1px solid var(--line)}.career__copy>p:not(.eyebrow){color:var(--muted);font-size:17px;line-height:1.55}.career__form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.career__form input,.career__form select,.career__form button{height:52px;border-radius:4px}.career__form input,.career__form select{border:1px solid #ccd9d4;background:#fff;padding:0 14px}.career__form button{border:0;background:var(--green-deep);color:#fff;font-weight:800;font-size:15px}
+  .systems{border-bottom:1px solid var(--line)}.final-cta{display:grid;grid-template-columns:1.5fr .5fr;gap:60px;align-items:center;padding:68px 7%;background:linear-gradient(90deg,#f5faf8,#fff)}.final-cta p:not(.eyebrow){max-width:760px;color:var(--muted);font-size:17px;line-height:1.55}.final-cta a{justify-self:end;background:var(--green-deep);color:#fff;text-decoration:none;font-weight:800;padding:17px 26px;border-radius:4px}
+  @media(max-width:1180px){.hero{min-height:760px}.hero__copy{width:58%}.facts{grid-template-columns:1fr 1fr}.facts article:nth-child(2){border-right:0}.facts article:nth-child(-n+2){border-bottom:1px solid var(--line)}.story__intro{grid-template-columns:1fr}.timeline{grid-template-columns:repeat(4,1fr);border-top:0;gap:24px}.timeline article{border-top:2px solid #9ccdbd}.timeline__dot{top:-6px}.values__grid{grid-template-columns:1fr 1fr}.team-grid{grid-template-columns:repeat(4,1fr)}.logo-strip{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:760px){.section-pad{padding:58px 22px}.hero{min-height:760px}.hero__media{background-position:68% 50%}.hero__veil{background:linear-gradient(180deg,rgba(255,255,255,.98) 0 38%,rgba(255,255,255,.56) 56%,rgba(255,255,255,0) 74%);clip-path:none}.hero:after{display:none}.hero__copy{padding:54px 22px 0;width:100%}.hero__copy h1{font-size:68px}.hero__subtitle{font-size:18px}.facts{left:16px;right:16px;grid-template-columns:1fr 1fr}.facts article{min-height:98px;padding:16px;gap:12px}.fact-icon{width:34px;height:34px;flex-basis:34px}.facts strong{font-size:25px}.facts p{font-size:11px}.section-head{display:block}.section-head>p{margin-top:14px}.timeline{grid-template-columns:1fr 1fr}.values__grid{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(2,1fr)}.logo-strip{grid-template-columns:repeat(2,1fr)}.career{grid-template-columns:1fr}.career__form{grid-template-columns:1fr}.final-cta{grid-template-columns:1fr;padding:54px 22px}.final-cta a{justify-self:start}}
 </style>
