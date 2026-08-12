@@ -16,9 +16,7 @@ const generatedPaths = Object.keys(modules)
     (file) =>
       !excluded.test(file) &&
       !file.includes('[') &&
-      file !== '../catalog/index.astro' &&
-      file !== '../rishennya/index.astro' &&
-      !file.endsWith('../index.astro')
+      file !== '../index.astro'
   )
   .map((file) => {
     const path = file
@@ -30,6 +28,7 @@ const generatedPaths = Object.keys(modules)
 
 return [
   { params: { path: undefined } },
+  { params: { path: 'catalog' } },
   ...generatedPaths
 ];
 }
