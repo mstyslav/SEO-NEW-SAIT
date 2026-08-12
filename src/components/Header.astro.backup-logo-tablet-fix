@@ -1,0 +1,204 @@
+---
+import translations from '../i18n/translations.json';
+import i18nConfig from '../i18n/config.json';
+import { localeFromPath, localizedPath, normalizeLocale } from '../i18n/helpers';
+
+const requestedLocale = Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname);
+const locale = normalizeLocale(requestedLocale);
+const t = translations[locale] ?? translations.uk;
+const localeInfo = i18nConfig.locales[locale] ?? i18nConfig.locales.uk;
+const currentPath = Astro.url.pathname;
+const lp = (path: string) => localizedPath(path, locale);
+
+const russianRoutes = new Set([
+  '/', '/about/', '/bezramne-configurator/', '/cart/', '/catalog/', '/rishennya/', '/compare/', '/contacts/',
+  '/dzerkala-configurator/', '/fasadne-configurator/', '/loft-configurator/', '/ogorozhi-configurator/',
+  '/peregorodky-configurator/', '/projects/', '/quote/', '/services/'
+]);
+const localeSwitchPath = (targetLocale: 'uk' | 'ru') => {
+  const unlocalizedPath = currentPath.replace(/^\/(uk|ru|en|de)(?=\/|$)/, '') || '/';
+  if (targetLocale === 'ru' && !russianRoutes.has(unlocalizedPath)) return '/ru/';
+  return localizedPath(currentPath, targetLocale);
+};
+
+const links = [
+  [t.services, locale === 'uk' ? '/poslugy/' : '/services/'],
+  [t.solutions, '/rishennya/'],
+  [t.projects, '/projects/'],
+  [t.knowledge, '/knowledge/'],
+  [t.about, '/about/'],
+  [t.contacts, '/contacts/'],
+];
+
+const menuGroups = [
+  { section: 'Для дому', icon: '⌂', groups: [
+    { key:'showers', title:'Душові кабіни', href:'/dushovi-kabiny/', items:['Душові Walk-in','Кутові душові','Розсувні душові','Душові в нішу','Шторки для ванни','Душові піддони'] },
+    { key:'mirrors', title:'Дзеркала', href:'/dzerkala/', items:['LED-дзеркала','Дзеркала у ванну','Дзеркала в повний зріст','Дзеркала на стіну','Дзеркальні панно'] },
+    { key:'doors', title:'Скляні двері', href:'/sklyani-dveri/', items:['Міжкімнатні скляні двері','Розсувні скляні двері','Маятникові скляні двері','Двері в душову','Офісні скляні двері'] },
+    { key:'railings', title:'Скляні огорожі', href:'/sklyani-ohorozhi/', items:['Скляні перила','Огорожі на стійках','Безрамні огорожі','Балконні огорожі','Огорожі для сходів'] }
+  ]},
+  { section:'Для бізнесу', icon:'▣', groups:[
+    { key:'partitions', title:'Скляні перегородки', href:'/sklyani-perehorodky/', items:['Loft-перегородки','Офісні перегородки','Для магазинів','Для ресторанів','Для готелів','Мобільні перегородки'] },
+    { key:'facades', title:'Скляні фасади', href:'/arkhitekturni-systemy/', items:['Структурне скління','Напівструктурне скління','Безрамне скління','Накладне скління','Слайдерні системи'] },
+    { key:'aluminium', title:'Алюмінієві конструкції', href:'/alyuminiievi-konstruktsii/', items:['Алюмінієві вікна','Алюмінієві двері','Розсувні системи','Фасадні системи','Зимові сади'] },
+    { key:'pvc', title:'Металопластикові конструкції', href:'/metaloplastykovi-konstruktsii/', items:['Металопластикові вікна','Металопластикові двері','Розсувні системи','Балконні системи'] }
+  ]}
+];
+
+const architectureItems = [
+  ['frameless','Безрамне скління','/arkhitekturni-systemy/'],
+  ['loft','Loft-системи','/sklyani-perehorodky/'],
+  ['partitions','Скляні перегородки','/sklyani-perehorodky/'],
+  ['doors','Скляні двері','/sklyani-dveri/'],
+  ['facades','Скляні фасади','/arkhitekturni-systemy/'],
+  ['railings','Скляні огорожі','/sklyani-ohorozhi/'],
+  ['hardware','Фурнітура та аксесуари','/catalog/'],
+  ['profiles','Профільні системи','/arkhitekturni-systemy/'],
+  ['glass','Скло та матеріали','/knowledge/']
+];
+
+const menuData = {
+  showers:{eyebrow:'Для дому',title:'Душові кабіни',text:'Walk-in, кутові та розсувні душові за індивідуальними розмірами.',button:'Переглянути душові',href:'/dushovi-kabiny/',image:'/images/s24-menu/showers.webp',popular:[['Walk-in Premium','Лаконічно та просторо','/images/v5/product-1.webp','/dushovi-kabiny/'],['Кутова душова','Для компактних ванних','/images/v5/product-3.webp','/dushovi-kabiny/'],['Розсувна система','Зручно для щоденного використання','/images/v5/product-5.webp','/dushovi-kabiny/']]},
+  mirrors:{eyebrow:'Для дому',title:'LED-дзеркала',text:'Дзеркала для ванних, інтер’єрів і комерційних просторів.',button:'Переглянути дзеркала',href:'/dzerkala/',image:'/images/s24-menu/mirrors.webp',popular:[['LED-дзеркало','Функціональне підсвічування','/images/v5/product-6.webp','/dzerkala/'],['Дзеркало у ванну','Індивідуальні розміри','/images/v5/product-1.webp','/dzerkala/'],['Дзеркало на стіну','Для сучасного інтер’єру','/images/v5/product-2.webp','/dzerkala/']]},
+  doors:{eyebrow:'Для дому та бізнесу',title:'Скляні двері',text:'Розпашні, розсувні, маятникові та приховані системи.',button:'Переглянути двері',href:'/sklyani-dveri/',image:'/images/s24-menu/doors.webp',popular:[['Розсувні двері','Економія простору','/images/v5/product-3.webp','/sklyani-dveri/'],['Маятникові двері','Для офісів і магазинів','/images/v5/product-2.webp','/sklyani-dveri/'],['Міжкімнатні двері','Легкість і світло','/images/v5/product-5.webp','/sklyani-dveri/']]},
+  railings:{eyebrow:'Безпека та дизайн',title:'Скляні огорожі',text:'Огорожі для сходів, балконів, терас і комерційних просторів.',button:'Переглянути огорожі',href:'/sklyani-ohorozhi/',image:'/images/s24-menu/railings.webp',popular:[['Безрамна огорожа','Максимум прозорості','/images/v5/product-4.webp','/sklyani-ohorozhi/'],['Огорожа на стійках','Надійне рішення','/images/v5/product-5.webp','/sklyani-ohorozhi/'],['Огорожа для сходів','Безпечно та елегантно','/images/v5/product-4.webp','/sklyani-ohorozhi/']]},
+  partitions:{eyebrow:'Для бізнесу',title:'Скляні перегородки',text:'Loft, офісні, мобільні та стаціонарні системи для зонування.',button:'Переглянути перегородки',href:'/sklyani-perehorodky/',image:'/images/s24-menu/loft.webp',popular:[['Loft-перегородка','Акцентний чорний профіль','/images/v5/product-2.webp','/sklyani-perehorodky/'],['Офісна перегородка','Світлий робочий простір','/images/v5/product-5.webp','/sklyani-perehorodky/'],['Мобільна система','Гнучке зонування','/images/v5/product-3.webp','/sklyani-perehorodky/']]},
+  facades:{eyebrow:'Архітектурні системи',title:'Скляні фасади',text:'Структурне, напівструктурне та безрамне фасадне скління.',button:'Переглянути фасади',href:'/arkhitekturni-systemy/',image:'/images/s24-menu/facades.webp',popular:[['Структурне скління','Чистий сучасний фасад','/images/v5/hero.webp','/arkhitekturni-systemy/'],['Безрамний фасад','Максимум світла','/images/v5/product-2.webp','/arkhitekturni-systemy/'],['Слайдерні системи','Великі панорамні отвори','/images/v5/product-5.webp','/arkhitekturni-systemy/']]},
+  aluminium:{eyebrow:'Архітектурні системи',title:'Алюмінієві конструкції',text:'Вікна, двері, фасади, зимові сади та розсувні системи.',button:'Переглянути алюміній',href:'/alyuminiievi-konstruktsii/',image:'/images/s24-menu/aluminium.webp',popular:[['Алюмінієві вікна','Теплі та панорамні','/images/v5/product-5.webp','/alyuminiievi-konstruktsii/'],['Розсувні двері','Великі світлові отвори','/images/v5/product-2.webp','/alyuminiievi-konstruktsii/'],['Зимовий сад','Простір у будь-яку пору року','/images/v5/hero.webp','/alyuminiievi-konstruktsii/']]},
+  pvc:{eyebrow:'Віконні системи',title:'Металопластикові конструкції',text:'Металопластикові вікна, двері, балконні блоки та розсувні ПВХ-системи для дому й квартири.',button:'Переглянути металопластик',href:'/metaloplastykovi-konstruktsii/',image:'/images/s24-menu/doors.webp',popular:[['Металопластикові вікна','Енергоефективність і комфорт','/images/v5/product-5.webp','/metaloplastykovi-konstruktsii/'],['Балконні системи','Комплексне скління','/images/v5/product-3.webp','/metaloplastykovi-konstruktsii/'],['Розсувні двері','Більше світла та простору','/images/v5/product-2.webp','/metaloplastykovi-konstruktsii/']]},
+  frameless:{eyebrow:'Архітектурні системи',title:'Безрамне скління',text:'Панорамні рішення для терас, балконів, офісів і приватних будинків.',button:'Переглянути безрамне скління',href:'/arkhitekturni-systemy/',image:'/images/s24-menu/frameless.webp',popular:[['Скління тераси','Захист без втрати світла','/images/v5/product-5.webp','/arkhitekturni-systemy/'],['Скління балкона','Панорамний вигляд','/images/v5/hero.webp','/arkhitekturni-systemy/'],['Скління офісу','Відкрита архітектура','/images/v5/product-2.webp','/arkhitekturni-systemy/']]},
+  loft:{eyebrow:'Архітектурні системи',title:'Loft-системи',text:'Сучасні перегородки в чорному профілі для дому та бізнесу.',button:'Переглянути Loft-системи',href:'/sklyani-perehorodky/',image:'/images/s24-menu/loft.webp',popular:[['Loft Slim','Тонкий профіль','/images/v5/product-2.webp','/sklyani-perehorodky/'],['Loft Double','Подвійне зонування','/images/v5/product-5.webp','/sklyani-perehorodky/'],['Loft Office','Для робочих просторів','/images/v5/product-3.webp','/sklyani-perehorodky/']]},
+  hardware:{eyebrow:'Комплектуючі',title:'Фурнітура та аксесуари',text:'Петлі, ручки, профілі, ущільнювачі та монтажні комплектуючі.',button:'Переглянути фурнітуру',href:'/catalog/',image:'/images/s20/product-detail.webp',popular:[['Петлі для скла','Надійна механіка','/images/v5/product-1.webp','/catalog/'],['Ручки та замки','Для дверей і душових','/images/v5/product-3.webp','/catalog/'],['Профілі','Алюмінієві системи','/images/v5/product-2.webp','/catalog/']]},
+  profiles:{eyebrow:'Архітектурні системи',title:'Профільні системи',text:'Алюмінієві профілі для фасадів, перегородок і розсувних конструкцій.',button:'Переглянути профілі',href:'/arkhitekturni-systemy/',image:'/images/s24-menu/aluminium.webp',popular:[['Фасадні профілі','Для великих площ','/images/v5/hero.webp','/arkhitekturni-systemy/'],['Loft профілі','Чорний архітектурний акцент','/images/v5/product-2.webp','/sklyani-perehorodky/'],['Розсувні профілі','Для панорамних систем','/images/v5/product-5.webp','/arkhitekturni-systemy/']]},
+  glass:{eyebrow:'Матеріали',title:'Скло та матеріали',text:'Загартоване скло, триплекс, декоративне та спеціальне скло.',button:'Перейти до матеріалів',href:'/knowledge/',image:'/images/s20/product-main.webp',popular:[['Загартоване скло','Міцність і безпека','/images/v5/product-4.webp','/knowledge/'],['Триплекс','Багатошарова безпека','/images/v5/product-5.webp','/knowledge/'],['Матове скло','Приватність і світло','/images/v5/product-3.webp','/knowledge/']]}
+};
+---
+<header class="site-header sg-header">
+  <div class="container nav sg-nav">
+    <a class="brand-logo" href={lp("/")} aria-label="Space Glass — головна"><img src="/images/space-glass-brand-logo.jpg" width="220" height="178" alt="Space Glass" /></a>
+    <button class="sg-mobile-toggle" type="button" aria-controls="sg-mobile-menu" aria-expanded="false" data-mobile-menu-button><b>Menu</b></button>
+    <nav class="nav__links sg-nav-links" aria-label="Головна навігація">
+      <a class="nav-link nav-link--catalog" href={lp("/catalog/")}>Каталог</a>
+      {links.map(([label, href]) => <a class="nav-link" href={lp(href)}>{label}</a>)}
+      <div class="mega-trigger mega-trigger--catalog mega-trigger--menu" data-mega-trigger>
+        <button class="nav-link sg-categories-trigger" type="button" aria-label="Всі категорії" aria-haspopup="true" aria-expanded="false" data-mega-button><span></span><span></span><span></span></button>
+        <div class="catalog-mega catalog-mega--dynamic" data-catalog-mega>
+          <div class="catalog-mega__main">
+            {menuGroups.map(section => <section class="catalog-mega__column"><h3>{section.icon} {section.section}</h3>{section.groups.map(group => <div class="catalog-mega__group" data-menu-key={group.key}><a class="catalog-mega__group-title" href={group.href}>{group.title}</a>{group.items.map(item => <a href={group.href}>{item}</a>)}</div>)}</section>)}
+            <section class="catalog-mega__column catalog-mega__architecture"><h3>◇ Архітектурні системи</h3><div class="catalog-mega__architecture-list">{architectureItems.map(([key,label,href]) => <a href={href} data-menu-key={key}><span>{label}</span><b>›</b></a>)}</div><div class="catalog-mega__popular" data-popular-list>{menuData.partitions.popular.map(([title,text,image,href]) => <a href={href}><img src={image} width="84" height="66" alt="" loading="lazy" /><span><b>{title}</b><small>{text}</small></span></a>)}</div></section>
+            <aside class="catalog-mega__promo" data-promo><img src={menuData.partitions.image} width="560" height="700" alt="Скляні перегородки Space Glass" data-promo-image /><div class="catalog-mega__promo-overlay"></div><div class="catalog-mega__promo-copy"><p data-promo-eyebrow>{menuData.partitions.eyebrow}</p><h2 data-promo-title>{menuData.partitions.title}</h2><span data-promo-text>{menuData.partitions.text}</span><a class="button button--mint" href={menuData.partitions.href} data-promo-button>{menuData.partitions.button} →</a></div></aside>
+          </div>
+          <div class="catalog-mega__cities"><strong>⌖ Пошук за містами</strong><a href="/city/kyiv/">Київ</a><a href="/city/lviv/">Львів</a><a href="/city/odesa/">Одеса</a><a href="#">Дніпро</a><a href="#">Харків</a><a href="#">Вінниця</a><a href="#">Івано-Франківськ</a><a href={lp("/catalog/")}>Вся Україна →</a></div>
+          <div class="catalog-mega__benefits"><div><span>⚙</span><b>Власне виробництво</b><small>Сучасне обладнання</small></div><div><span>◇</span><b>{t.warrantyShort ?? 'Гарантія 2 роки'}</b><small>На конструкції та монтаж</small></div><div><span>♙</span><b>Професійний монтаж</b><small>Досвідчені бригади</small></div><div><img src="/images/icons/delivery-truck.png" alt="" width="42" height="30" /><b>Доставка по Україні</b><small>Надійно та в строк</small></div></div>
+        </div>
+      </div>
+    </nav>
+    <div class="nav__actions sg-nav-actions">
+      <div class="language-switcher" data-language-switcher><button class="language-switcher__button" type="button" aria-haspopup="true" aria-expanded="false" data-language-button><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 12h17M12 3c2.4 2.5 3.6 5.5 3.6 9S14.4 18.5 12 21M12 3C9.6 5.5 8.4 8.5 8.4 12S9.6 18.5 12 21" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span>{localeInfo.short}</span><i>⌄</i></button><div class="language-switcher__menu" data-language-menu>{Object.entries(i18nConfig.locales).filter(([code]) => code === 'uk' || code === 'ru').map(([code,item]) => <a class:list={['language-switcher__option', code === locale && 'is-active']} href={localeSwitchPath(code as 'uk'|'ru')} hreflang={code} lang={code} data-locale={code}><b>{item.short}</b><span>{item.label}</span>{code===locale && <i>✓</i>}</a>)}</div></div>
+      <a class="nav-icon" href={lp("/catalog/")} aria-label="Пошук">⌕</a>
+      <a class="nav-icon nav-icon--compare" href={lp("/compare/")} aria-label="Порівняння"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M17 4v16M4 8h6M14 16h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><small data-compare-header-count>0</small></a>
+      <a class="nav-icon nav-icon--cart" href={lp("/cart/")} aria-label="Кошик"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21 8H7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="18" cy="20" r="1.4" fill="currentColor"/></svg><small data-project-header-count>0</small></a>
+      <a class="nav-icon" href="tel:+380734251400" aria-label="Зателефонувати">☎</a>
+      <a class="button button--mint sg-header-cta" href={lp("/contacts/")}>{t.quote}</a>
+    </div>
+  </div>
+  <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden><div class="sg-mobile-menu__panel"><a class="sg-mobile-menu__primary" href={lp("/catalog/")}>Каталог</a>{links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}<a href={lp("/compare/")}>Порівняння</a><a href={lp("/cart/")}>Кошик</a><a href="tel:+380734251400">+38 (073) 425 14 00</a><a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a></div></div>
+</header>
+<style>
+  .sg-categories-trigger{display:inline-flex;flex-direction:column;justify-content:center;gap:4px;width:32px;height:32px;padding:6px;border:0;background:transparent;cursor:pointer}
+  .sg-categories-trigger span{display:block;width:20px;height:1.5px;background:currentColor;border-radius:2px}
+  .mega-trigger--menu .catalog-mega{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+  .mega-trigger--menu.is-open .catalog-mega{opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+</style>
+<script>
+  const mobileButton=document.querySelector('[data-mobile-menu-button]'); const mobileMenu=document.querySelector('[data-mobile-menu]'); mobileButton?.addEventListener('click',()=>{const isOpen=mobileButton.getAttribute('aria-expanded')!=='true'; mobileButton.setAttribute('aria-expanded',String(isOpen)); mobileButton.classList.toggle('is-open',isOpen); if(mobileMenu) mobileMenu.hidden=!isOpen;});
+  const megaTrigger=document.querySelector('[data-mega-trigger]'); const megaButton=megaTrigger?.querySelector('[data-mega-button]'); megaButton?.addEventListener('click',(event)=>{event.stopPropagation();const isOpen=!megaTrigger.classList.contains('is-open');megaTrigger.classList.toggle('is-open',isOpen);megaButton.setAttribute('aria-expanded',String(isOpen));}); document.addEventListener('click',(event)=>{if(megaTrigger && !megaTrigger.contains(event.target)){megaTrigger.classList.remove('is-open');megaButton?.setAttribute('aria-expanded','false');}}); document.addEventListener('keydown',(event)=>{if(event.key==='Escape'){megaTrigger?.classList.remove('is-open');megaButton?.setAttribute('aria-expanded','false');}});
+  const updateProjectHeaderCount=()=>{let count=0;try{const project=JSON.parse(localStorage.getItem('spaceGlassProject')||'{"items":[]}');count=project.items.reduce((sum,item)=>sum+Number(item.quantity||1),0);}catch{} document.querySelectorAll('[data-project-header-count]').forEach(el=>el.textContent=count);};
+  const updateCompareHeaderCount=()=>{let count=0;try{const compare=JSON.parse(localStorage.getItem('spaceGlassCompare')||'{"items":[]}');count=Array.isArray(compare.items)?compare.items.length:0;}catch{} document.querySelectorAll('[data-compare-header-count]').forEach(el=>el.textContent=count);};
+  updateProjectHeaderCount(); updateCompareHeaderCount(); window.addEventListener('storage',()=>{updateProjectHeaderCount();updateCompareHeaderCount();}); window.addEventListener('focus',updateProjectHeaderCount); window.addEventListener('space-glass-project-updated',updateProjectHeaderCount); window.addEventListener('space-glass-compare-updated',updateCompareHeaderCount); setInterval(updateProjectHeaderCount,1500);
+</script>
+<script define:vars={{ menuData }}>
+  const mega=document.querySelector('[data-catalog-mega]'); if(mega){const image=mega.querySelector('[data-promo-image]');const eyebrow=mega.querySelector('[data-promo-eyebrow]');const title=mega.querySelector('[data-promo-title]');const text=mega.querySelector('[data-promo-text]');const button=mega.querySelector('[data-promo-button]');const popularList=mega.querySelector('[data-popular-list]');let currentKey='partitions';const renderPopular=(items)=>{popularList.innerHTML=items.map(([itemTitle,itemText,itemImage,itemHref])=>`<a href="${itemHref}"><img src="${itemImage}" width="84" height="66" alt="" loading="lazy" /><span><b>${itemTitle}</b><small>${itemText}</small></span></a>`).join('');};const updateMenu=(key)=>{if(!menuData[key]||key===currentKey)return;currentKey=key;const data=menuData[key];image?.classList.add('is-changing');setTimeout(()=>{if(image){image.src=data.image;image.alt=data.title;}eyebrow.textContent=data.eyebrow;title.textContent=data.title;text.textContent=data.text;button.textContent=`${data.button} →`;button.href=data.href;renderPopular(data.popular);requestAnimationFrame(()=>image?.classList.remove('is-changing'));},120);};mega.querySelectorAll('[data-menu-key]').forEach((item)=>{item.addEventListener('mouseenter',()=>{mega.querySelectorAll('[data-menu-key]').forEach(el=>el.classList.remove('is-active'));item.classList.add('is-active');updateMenu(item.dataset.menuKey);});item.addEventListener('focusin',()=>updateMenu(item.dataset.menuKey));});}
+</script>
+<script>
+  const languageSwitcher=document.querySelector('[data-language-switcher]'); const languageButton=languageSwitcher?.querySelector('[data-language-button]'); languageButton?.addEventListener('click',(event)=>{event.stopPropagation();const isOpen=languageSwitcher.classList.toggle('is-open');languageButton.setAttribute('aria-expanded',String(isOpen));}); document.addEventListener('click',(event)=>{if(!languageSwitcher?.contains(event.target)){languageSwitcher?.classList.remove('is-open');languageButton?.setAttribute('aria-expanded','false');}}); languageSwitcher?.querySelectorAll('[data-locale]').forEach((link)=>{link.addEventListener('click',()=>{localStorage.setItem('spaceGlassLocale',link.dataset.locale);});}); if(!localStorage.getItem('spaceGlassLocale')){const browserLocale=(navigator.language||'').toLowerCase();const detected=browserLocale.startsWith('ru')?'ru':'uk';localStorage.setItem('spaceGlassLocale',detected);}
+</script>
+<style>
+/* Social icons — match existing header controls */
+.sg-header-social {
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  padding: 0 !important;
+}
+
+.sg-header-social svg {
+  width: 21px !important;
+  height: 21px !important;
+  display: block;
+}
+</style>
+
+
+<style>
+/* ===== HEADER LOGO RESPONSIVE FIX ===== */
+
+.sg-header .brand-logo{
+  display:flex !important;
+  align-items:center !important;
+  flex:0 1 auto !important;
+  min-width:0 !important;
+  max-width:220px !important;
+}
+
+.sg-header .brand-logo img{
+  display:block !important;
+  width:auto !important;
+  height:auto !important;
+  max-width:100% !important;
+  max-height:100% !important;
+  object-fit:contain !important;
+}
+
+@media (max-width:1100px){
+  .sg-header .brand-logo{
+    width:clamp(90px, 14vw, 170px) !important;
+    max-width:170px !important;
+  }
+
+  .sg-header .brand-logo img{
+    width:100% !important;
+    height:auto !important;
+  }
+}
+
+@media (max-width:700px){
+  .sg-header .sg-nav{
+    grid-template-columns:96px auto minmax(0,1fr) !important;
+    min-width:0 !important;
+    overflow:hidden !important;
+  }
+
+  .sg-header .brand-logo{
+    width:92px !important;
+    max-width:92px !important;
+    min-width:0 !important;
+    height:60px !important;
+    flex:0 0 92px !important;
+    overflow:hidden !important;
+  }
+
+  .sg-header .brand-logo img{
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:100% !important;
+    max-height:100% !important;
+    object-fit:contain !important;
+  }
+
+  .sg-header .sg-nav-actions{
+    min-width:0 !important;
+  }
+}
+</style>

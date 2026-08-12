@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const values = [
+  ['Якість','Перевірені матеріали, сертифіковане скло та надійна фурнітура.'],
+  ['Професіоналізм','Досвід, технічна точність і контроль деталей на кожному етапі.'],
+  ['Надійність','Плануємо строки, фіксуємо рішення та відповідаємо за результат.'],
+  ['Індивідуальний підхід','Кожен проєкт адаптуємо під архітектуру, розміри й задачу.']
+];
+
+const timeline = [
+  ['2014','Початок професійного шляху у сфері скла','https://space-glass.com.ua/wp-content/uploads/2023/05/photo_2_2023-05-11_13-14-26-819x1024.jpg','Скляна конструкція та фурнітура — початок професійного шляху'],
+  ['2016','Розширення напрямів та формування команди','https://space-glass.com.ua/wp-content/uploads/2023/05/photo_9_2023-05-11_13-20-48-768x1024.jpg','Командна робота над скляними конструкціями Space Glass'],
+  ['2018','Перші великі приватні й комерційні об’єкти','https://space-glass.com.ua/wp-content/uploads/2023/08/photo_2023-08-28_14-27-54-768x1024.jpg','Комерційний проєкт зі скління Space Glass'],
+  ['2020','Посилення виробничих і монтажних процесів','https://space-glass.com.ua/wp-content/uploads/2023/08/photo_2023-06-02_14-42-53-768x1024.jpg','Монтаж фасадного скління Space Glass'],
+  ['2022','Новий етап розвитку та масштабні проєкти','https://space-glass.com.ua/wp-content/uploads/2023/08/photo_2023-07-05_16-24-38-768x1024.jpg','Скляні перегородки у масштабному проєкті Space Glass'],
+  ['2024','Розширення географії та комплексних рішень','https://space-glass.com.ua/wp-content/uploads/2024/03/photo_2024-03-17-17.02.09-768x1024.jpeg','Комплексне скління Space Glass'],
+  ['2026','Європейський розвиток Space Glass','/images/about/about-hero.webp','Європейський напрям розвитку Space Glass']
+];
+
+const team = [
+  ['Олександр','Співвласник, співзасновник','/images/team/Олександр.jpg'],
+  ['Мстислав','Співвласник, співзасновник','/images/team/Мстислав.jpg'],
+  ['Микола','Керівник відділу продажів','/images/team/Микола.jpg'],
+  ['Юлія','Контент-менеджер','/images/team/yuliia-content.webp'],
+  ['Анастасія','SMM-спеціаліст','/images/team/Анастасія.jpeg'],
+  ['Євген','Майстер з монтажу','/images/team/Євген.jpg'],
+  ['Марія','Акаунт-менеджер','/images/team/Марія Акаунт-менеджер.jpeg'],
+  ['Юлія','Організатор','/images/team/Юлія - організатор.jpg'],
+  ['Мілана','Менеджер проекту','/images/team/Мілана.jpg'],
+  ['Артур','Майстер з монтажу','/images/team/Артур.jpg'],
+  ['Петро','Помічник майстра з монтажу','/images/team/Петя.jpg'],
+  ['Максим','Комірник, логіст','/images/team/Максим.jpg']
+];
+
+// Кольорові логотипи з чинного сайту Space Glass — той самий набір, який уже використовується у блоці співпраці.
+const clients = [
+  ['Партнер Space Glass','https://vikna.space-glass.com.ua/wp-content/uploads/2024/08/cooperationslider1.png.png'],
+  ['Партнер Space Glass','https://vikna.space-glass.com.ua/wp-content/uploads/2024/08/cooperationslider2.png.png'],
+  ['Партнер Space Glass','https://vikna.space-glass.com.ua/wp-content/uploads/2024/08/cooperationslider3.png.png'],
+  ['Партнер Space Glass','https://vikna.space-glass.com.ua/wp-content/uploads/2024/08/cooperationslider4.png.png'],
+  ['Партнер Space Glass','https://vikna.space-glass.com.ua/wp-content/uploads/2024/08/cooperationslider5.png.png'],
+  ['Партнер Space Glass','https://vikna.space-glass.com.ua/wp-content/uploads/2024/08/5555.jpg.png'],
+  ['Cherry Twins Odessa','https://vikna.space-glass.com.ua/wp-content/uploads/2024/08/cherry_twins_odessa_logo.png.png'],
+  ['Kselena','https://vikna.space-glass.com.ua/wp-content/uploads/2024/08/kselen_logo-1.png.png'],
+  ['Nofilters','https://vikna.space-glass.com.ua/wp-content/uploads/2024/08/notfilters_logo.png.png'],
+  ['Партнер Space Glass','https://vikna.space-glass.com.ua/wp-content/uploads/2024/08/logo.png.png'],
+  ['Партнер Space Glass','https://vikna.space-glass.com.ua/wp-content/uploads/2024/08/yzobrazhenye_2023-08-31_233442748-removebg-preview.png.png']
+];
+
+// Для брендів ставимо кольорові логотипи; де є прямий офіційний asset — використовуємо його,
+// для решти залишаємо стабільний доменний logo endpoint і ведемо картку на офіційний сайт виробника.
+const systems = [
+  ['ALUPROF','https://logo.clearbit.com/aluprof.com?size=320','https://aluprof.com/'],
+  ['SADEV','https://logo.clearbit.com/sadev.com?size=320','https://www.sadev.com/'],
+  ['dormakaba','https://amer.dormakaba.com/wp-content/uploads/2020/07/DOKA_Logo_one_line_Color-1.png','https://www.dormakaba.com/'],
+  ['Schüco','https://login-ext.schueco.com/auth/resources/644aa/login/schueco/img/schueco-logo-svg-data.svg','https://www.schueco.com/'],
+  ['AGC','https://logo.clearbit.com/agc-yourglass.com?size=320','https://www.agc-yourglass.com/'],
+  ['Q-railing','https://logo.clearbit.com/q-railing.com?size=320','https://q-railing.com/'],
+  ['SIEGENIA','https://shop.siegenia.com/_ui/responsive/theme-siegenia/images/siegenia_logo.svg','https://www.siegenia.com/']
+];
+---
+<BaseLayout title="Про Space Glass — команда, історія та скляні конструкції" description="Space Glass — команда з понад 10-річним досвідом у скляних та алюмінієвих конструкціях. 5 000+ реалізованих проєктів і понад 50 000 м² скління.">
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main" class="about-premium">
+      <section class="hero">
+        <div class="hero__media" aria-hidden="true"></div>
+        <div class="hero__veil"></div>
+        <div class="hero__copy">
+          <p class="eyebrow">Про нас</p>
+          <h1>SPACE<br/>GLASS</h1>
+          <span class="hero__line"></span>
+          <p class="hero__subtitle">Скляні та алюмінієві конструкції<br/>для сучасної архітектури</p>
+        </div>
+        <div class="facts" aria-label="Space Glass у цифрах">
+          <article><span class="fact-icon fact-icon--building" aria-hidden="true"></span><div><strong>5 000+</strong><p>реалізованих<br/>проєктів</p></div></article>
+          <article><span class="fact-icon fact-icon--glass" aria-hidden="true"></span><div><strong>50 000+ м²</strong><p>виконаного<br/>скління</p></div></article>
+          <article><span class="fact-icon fact-icon--sun" aria-hidden="true"></span><div><strong>10+ років</strong><p>досвіду у скляних<br/>конструкціях</p></div></article>
+          <article><span class="fact-icon fact-icon--pin" aria-hidden="true"></span><div><strong>3 міста</strong><p>Одеса · Київ · Львів</p></div></article>
+        </div>
+      </section>
+
+      <section class="story section-pad">
+        <div class="story__intro">
+          <div><p class="eyebrow">Наша історія</p><h2>Досвід, що створює майбутнє</h2></div>
+          <div class="story__copy">
+            <p>Space Glass виросла з практичного досвіду у сфері скла та фурнітури. Із 2014 року ми розвивали технічну експертизу, формували команду, запускали власні процеси та поступово переходили від окремих виробів до комплексних скляних і алюмінієвих рішень.</p>
+            <p>Сьогодні ми працюємо з приватними та комерційними об’єктами, проєктуємо, виготовляємо й монтуємо конструкції різної складності та супроводжуємо замовника від першої консультації до реалізації.</p>
+          </div>
+        </div>
+        <div class="timeline" aria-label="Історія розвитку Space Glass">
+          {timeline.map(([year,text,img,alt]) => (
+            <article>
+              <span class="timeline__dot"></span>
+              <b>{year}</b>
+              <p>{text}</p>
+              <div class="timeline__image"><img src={img} alt={alt} loading="lazy" /></div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="values section-pad">
+        <div class="values__head"><p class="eyebrow">Наші цінності</p><h2>Будуємо довіру так само точно, як конструкції</h2></div>
+        <div class="values__grid">
+          {values.map(([title,text],i) => <article><span>0{i+1}</span><h3>{title}</h3><p>{text}</p></article>)}
+        </div>
+      </section>
+
+      <section class="team section-pad">
+        <div class="section-head"><div><p class="eyebrow">Наша команда</p><h2>Люди, які створюють простір</h2></div><p>Від першої консультації до логістики й монтажу — за кожним етапом стоїть конкретна людина.</p></div>
+        <div class="team-grid">
+          {team.map(([name,role,img]) => <article class="team-card"><div class="team-photo" style={`background-image:url('${img}'),linear-gradient(145deg,#f2f1ed,#e5e8e5)`}></div><div class="team-caption"><h3>{name}</h3><p>{role}</p></div></article>)}
+        </div>
+        <a class="outline-link" href="#career">Приєднуйся до команди →</a>
+      </section>
+
+      <section class="trust section-pad">
+        <div class="section-head section-head--compact"><div><p class="eyebrow">Нам довіряють</p><h2>Компанії та проєкти, з якими ми працювали</h2></div><a href="/projects/">Дивитися всі проєкти →</a></div>
+        <div class="logo-strip logo-strip--clients">
+          {clients.map(([name,img]) => <div class="logo-item"><img src={img} alt={name} loading="lazy" /><span>{name}</span></div>)}
+        </div>
+      </section>
+
+      <section id="career" class="career section-pad">
+        <div class="career__copy"><p class="eyebrow">Хочу в команду</p><h2>Розкажіть про себе</h2><p>Залиште контакт і напрям, який вас цікавить. Ми зв’яжемося, коли з’явиться відповідна можливість.</p></div>
+        <form class="career__form"><input type="text" aria-label="Ім’я" placeholder="Ваше ім’я" /><input type="tel" aria-label="Телефон" placeholder="Телефон" /><select aria-label="Напрям роботи"><option>Напрям роботи</option><option>Монтаж</option><option>Продажі</option><option>Проєктування</option><option>Маркетинг</option><option>Інше</option></select><button type="button">Надіслати заявку ↗</button></form>
+      </section>
+
+      <section class="systems section-pad">
+        <div class="section-head section-head--compact"><div><p class="eyebrow">Системи та бренди</p><h2>Працюємо з перевіреними рішеннями</h2></div><a href="/catalog/">Детальніше про системи →</a></div>
+        <div class="logo-strip logo-strip--systems">
+          {systems.map(([name,img,url]) => <a class="logo-item logo-item--system" href={url} target="_blank" rel="noopener noreferrer" aria-label={`${name} — офіційний сайт`}><img src={img} alt={`Логотип ${name}`} loading="lazy" /><span>{name}</span></a>)}
+        </div>
+      </section>
+
+      <section class="final-cta" id="contact"><div><p class="eyebrow">Ваш проєкт</p><h2>Готові реалізувати складне рішення зі скла?</h2><p>Надішліть фото, розміри або креслення — підберемо оптимальну конструкцію та підготуємо попередній розрахунок.</p></div><a href="/#quote">Обговорити проєкт →</a></section>
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .about-premium{--mint:#72cdb1;--green:#176f58;--green-deep:#0e5947;--ink:#111513;--muted:#5e6864;--line:#dce5e1;--soft:#f5f9f7;background:#fff;color:var(--ink)}
+  .about-premium *{box-sizing:border-box}.section-pad{padding:84px 5.2%}.eyebrow{margin:0 0 12px;text-transform:uppercase;letter-spacing:.2em;font-size:12px;font-weight:900;color:#2a8369}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:50px;margin-bottom:34px}.section-head h2,.story h2,.values h2,.career h2,.final-cta h2{margin:0;font-size:clamp(34px,3.2vw,56px);line-height:1.02;letter-spacing:-.045em}.section-head>p{max-width:520px;margin:0;color:var(--muted);font-size:17px;line-height:1.55}.section-head--compact{align-items:center}.section-head a,.outline-link{color:#176f58;text-decoration:none;font-weight:800;font-size:13px}.outline-link{display:block;width:max-content;margin:24px auto 0;border:1px solid #8bc9b6;padding:11px 18px}
+  .hero{position:relative;min-height:690px;overflow:hidden;background:#fff}.hero__media{position:absolute;inset:0;background-image:url('/images/about/about-hero.webp'),url('/images/about/about-hero.webp');background-size:cover;background-position:72% 50%;transform:scale(1.002)}.hero__veil{position:absolute;inset:0;background:linear-gradient(104deg,#fff 0 31%,rgba(255,255,255,.97) 33%,rgba(255,255,255,.75) 41%,rgba(255,255,255,.08) 58%,rgba(255,255,255,0) 72%);clip-path:polygon(0 0,58% 0,39% 100%,0 100%)}.hero:after{content:"";position:absolute;left:35.2%;top:-8%;width:3px;height:118%;background:rgba(255,255,255,.86);transform:rotate(24deg);transform-origin:center;box-shadow:-110px 0 0 rgba(114,205,177,.7)}.hero__copy{position:relative;z-index:2;padding:88px 5.2% 210px;width:min(570px,48%)}.hero__copy h1{font-size:clamp(76px,7.6vw,124px);line-height:.78;letter-spacing:-.065em;margin:14px 0 26px}.hero__line{display:block;width:42px;height:2px;background:var(--green);margin-bottom:24px}.hero__subtitle{font-size:21px;line-height:1.35;margin:0}.facts{position:absolute;z-index:3;left:4.8%;right:4.8%;bottom:0;background:rgba(255,255,255,.96);backdrop-display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 12px 35px rgba(20,40,32,.08)}.facts article{min-height:118px;display:flex;align-items:center;gap:22px;padding:22px 32px;border-right:1px solid var(--line)}.facts article:last-child{border-right:0}.facts strong{display:block;font-size:clamp(28px,2.6vw,44px);line-height:1;color:#2c8a6d;letter-spacing:-.04em}.facts p{margin:7px 0 0;font-size:13px;line-height:1.35}.fact-icon{width:44px;height:44px;flex:0 0 44px;position:relative;color:#2c8a6d}.fact-icon--building{border:2px solid currentColor;border-top:0;margin-top:7px}.fact-icon--building:before,.fact-icon--building:after{content:"";position:absolute;bottom:0;border:2px solid currentColor;border-bottom:0}.fact-icon--building:before{width:13px;height:31px;left:4px}.fact-icon--building:after{width:14px;height:39px;right:4px}.fact-icon--glass{border:2px solid currentColor}.fact-icon--glass:before,.fact-icon--glass:after{content:"";position:absolute;background:currentColor}.fact-icon--glass:before{left:50%;top:0;bottom:0;width:1px}.fact-icon--glass:after{top:50%;left:0;right:0;height:1px}.fact-icon--sun{border:2px solid currentColor;border-radius:50%;transform:scale(.52)}.fact-icon--sun:before{content:"";position:absolute;inset:-18px;border:2px dashed currentColor;border-radius:50%}.fact-icon--pin{border:2px solid currentColor;border-radius:50% 50% 50% 0;transform:rotate(-45deg) scale(.7)}.fact-icon--pin:after{content:"";position:absolute;width:9px;height:9px;border:2px solid currentColor;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
+  .story{border-bottom:1px solid var(--line)}.story__intro{display:grid;grid-template-columns:.75fr 1.25fr;gap:8%;align-items:start}.story__copy{color:#404a46;font-size:17px;line-height:1.66}.story__copy p:first-child{margin-top:0}.timeline{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-top:56px;border-top:2px solid #9ccdbd}.timeline article{position:relative;padding:22px 14px 0 0;min-width:0}.timeline__dot{position:absolute;width:10px;height:10px;background:#fff;border:3px solid #257d63;border-radius:50%;top:-6px;left:0}.timeline b{font-size:20px}.timeline p{font-size:12px;line-height:1.42;color:#46514d;min-height:52px}.timeline__image{height:112px;margin-top:14px;overflow:hidden;background:#eef3f1;border:1px solid #e1e8e5}.timeline__image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .35s ease}.timeline article:hover .timeline__image img{transform:scale(1.035)}
+  .values{background:var(--soft);border-bottom:1px solid var(--line)}.values__head{max-width:760px;margin-bottom:42px}.values__grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.values__grid article{padding:30px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.values__grid article>span{display:block;color:#2d8268;font-size:12px;font-weight:900;margin-bottom:28px}.values__grid h3{font-size:20px;margin:0 0 10px}.values__grid p{margin:0;color:var(--muted);line-height:1.5}
+  .team{border-bottom:1px solid var(--line)}.team-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.team-card{background:#fff}.team-photo{aspect-ratio:4/5;background-size:cover;background-position:50% 34%;border:1px solid #e0e7e4}.team-caption{text-align:center;padding:10px 4px 8px}.team-caption h3{font-size:15px;margin:0 0 4px}.team-caption p{font-size:11px;line-height:1.35;margin:0;color:#63706b}
+  .trust{border-bottom:1px solid var(--line)}.logo-strip{display:grid;align-items:center}.logo-strip--clients{grid-template-columns:repeat(5,minmax(0,1fr));gap:18px 34px}.logo-strip--systems{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 42px}.logo-item{min-height:94px;display:flex;align-items:center;justify-content:center;padding:14px 18px;text-decoration:none;background:#fff}.logo-item img{display:block;max-width:100%;width:auto;height:auto;max-height:62px;object-fit:contain;filter:none;opacity:1}.logo-item span{display:none;font-size:15px;font-weight:800;color:#77807c;text-align:center}.logo-item--system{min-height:104px;border:1px solid #edf1ef}.logo-item--system img{max-width:176px;max-height:58px}.logo-item--system:hover{background:#f8fbfa;transform:translateY(-1px)}
+  .career{display:grid;grid-template-columns:.8fr 1.2fr;gap:72px;align-items:center;background:linear-gradient(105deg,#f3faf7,#fff);border-bottom:1px solid var(--line)}.career__copy>p:not(.eyebrow){color:var(--muted);font-size:17px;line-height:1.55}.career__form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.career__form input,.career__form select,.career__form button{height:52px;border-radius:4px}.career__form input,.career__form select{border:1px solid #ccd9d4;background:#fff;padding:0 14px}.career__form button{border:0;background:var(--green-deep);color:#fff;font-weight:800;font-size:15px}
+  .systems{border-bottom:1px solid var(--line)}.final-cta{display:grid;grid-template-columns:1.5fr .5fr;gap:60px;align-items:center;padding:68px 7%;background:linear-gradient(90deg,#f5faf8,#fff)}.final-cta p:not(.eyebrow){max-width:760px;color:var(--muted);font-size:17px;line-height:1.55}.final-cta a{justify-self:end;background:var(--green-deep);color:#fff;text-decoration:none;font-weight:800;padding:17px 26px;border-radius:4px}
+  @media(max-width:1180px){.hero{min-height:760px}.hero__copy{width:58%}.facts{grid-template-columns:1fr 1fr}.facts article:nth-child(2){border-right:0}.facts article:nth-child(-n+2){border-bottom:1px solid var(--line)}.story__intro{grid-template-columns:1fr}.timeline{grid-template-columns:repeat(4,1fr);border-top:0;gap:24px}.timeline article{border-top:2px solid #9ccdbd}.timeline__dot{top:-6px}.values__grid{grid-template-columns:1fr 1fr}.team-grid{grid-template-columns:repeat(4,1fr)}.logo-strip--clients{grid-template-columns:repeat(4,1fr)}.logo-strip--systems{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:760px){.section-pad{padding:58px 22px}.hero{min-height:760px}.hero__media{background-position:68% 50%}.hero__veil{background:linear-gradient(180deg,rgba(255,255,255,.98) 0 38%,rgba(255,255,255,.56) 56%,rgba(255,255,255,0) 74%);clip-path:none}.hero:after{display:none}.hero__copy{padding:54px 22px 0;width:100%}.hero__copy h1{font-size:68px}.hero__subtitle{font-size:18px}.facts{left:16px;right:16px;grid-template-columns:1fr 1fr}.facts article{min-height:98px;padding:16px;gap:12px}.fact-icon{width:34px;height:34px;flex-basis:34px}.facts strong{font-size:25px}.facts p{font-size:11px}.section-head{display:block}.section-head>p{margin-top:14px}.timeline{grid-template-columns:1fr 1fr}.values__grid{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(2,1fr)}.logo-strip--clients,.logo-strip--systems{grid-template-columns:repeat(2,1fr);gap:14px}.career{grid-template-columns:1fr}.career__form{grid-template-columns:1fr}.final-cta{grid-template-columns:1fr;padding:54px 22px}.final-cta a{justify-self:start}}
+</style>
+<style>
+@media (min-width: 1100px) {
+  .values h2,
+  .values-title {
+    white-space: nowrap !important;
+    font-size: clamp(42px, 4vw, 68px) !important;
+    letter-spacing: -0.04em;
+  }
+}
+</style>
