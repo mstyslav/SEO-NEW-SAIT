@@ -39,7 +39,25 @@ const projects = defineCollection({
     gallery: z.array(projectImage).min(1),
     faq: z.array(z.object({ question: z.string(), answer: z.string().min(30) })).min(3),
     serviceLink: z.object({ label: z.string(), href: z.string().startsWith('/') }),
-    relatedProjectSlugs: z.array(z.string()).default([])
+    relatedProjectSlugs: z.array(z.string()).default([]),
+    // Optional real project facts. Only rendered when present — never invented,
+    // never defaulted to placeholder text like "не вказано".
+    year: z.number().int().positive().optional(),
+    district: z.string().min(1).optional(),
+    residentialComplex: z.string().min(1).optional(),
+    dimensions: z.string().min(1).optional(),
+    area: z.string().min(1).optional(),
+    glassThickness: z.string().min(1).optional(),
+    glassType: z.string().min(1).optional(),
+    profile: z.string().min(1).optional(),
+    profileColor: z.string().min(1).optional(),
+    openingType: z.string().min(1).optional(),
+    panelsCount: z.number().int().positive().optional(),
+    productionTime: z.string().min(1).optional(),
+    installationTime: z.string().min(1).optional(),
+    hardware: z.string().min(1).optional(),
+    priceFromPerM2: z.number().positive().optional(),
+    priceNote: z.string().min(1).optional()
   })
 });
 

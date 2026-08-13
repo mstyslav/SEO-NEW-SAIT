@@ -10,7 +10,7 @@ const projects = (await getCollection('projects', ({ data }) => data.status === 
 ---
 <div class="projects-index-v2">
   <div class="projects-index-v2__wrap">
-    <Breadcrumbs items={[{ label: 'Головна', href: '/uk/' }, { label: 'Наші проєкти' }]} />
+    <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: 'Наші проєкти' }]} />
     <header class="projects-index-v2__hero">
       <p class="eyebrow">Наші проєкти</p>
       <h1>Реалізовані конструкції Space Glass</h1>
@@ -18,7 +18,7 @@ const projects = (await getCollection('projects', ({ data }) => data.status === 
     </header>
     <ProjectFilters projects={projects} />
     <section class="projects-index-v2__grid" aria-label="Реалізовані проєкти">
-      {projects.map((project) => <ProjectCard project={project} hrefPrefix="/uk/projects" />)}
+      {projects.map((project) => <ProjectCard project={project} hrefPrefix="/projects" />)}
     </section>
     <p class="projects-index-v2__empty" data-projects-empty hidden>У цій категорії проєкти ще готуються до публікації.</p>
   </div>

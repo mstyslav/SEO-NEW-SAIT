@@ -9,17 +9,24 @@ import ProjectCard from './ProjectCard.astro';
 import ProjectRequestForm from './ProjectRequestForm.astro';
 import { projectCategoryMap } from '../../data/project-taxonomy';
 import { buildProjectFaq } from '../../data/project-faq';
+import { buildProjectFacts } from '../../data/project-facts';
 import { projectRequestExample } from '../../data/project-request-examples';
 import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
 
 const { project, relatedProjects = [], locale = 'uk' } = Astro.props;
 const origin = Astro.site ?? Astro.url.origin;
-const projectPath = `/uk/projects/${project.slug}/`;
+// Unprefixed path: this is the canonical (uk) URL regardless of which route
+// (/projects/ or the /uk/projects/ duplicate) actually rendered the page —
+// matches BaseLayout's own stripLocale()/localizedPath() canonical logic and
+// what sitemap.xml.ts lists, so structured data always describes the real
+// canonical URL instead of the redundant /uk/-prefixed one.
+const projectPath = `/projects/${project.slug}/`;
 const canonical = absoluteUrl(projectPath, origin);
 const category = projectCategoryMap[project.category];
 const projectFaq = buildProjectFaq(project);
 const faqItems = projectFaq.map(({ question, answer }) => [question, answer] as [string, string]);
 const requestExample = projectRequestExample(project);
+const projectFacts = buildProjectFacts(project);
 
 const projectSchema: JsonLdObject = {
   '@type': 'CreativeWork',
@@ -41,13 +48,15 @@ const projectSchema: JsonLdObject = {
   about: [project.constructionType, category.label]
 };
 
+const breadcrumbItems = [
+  { label: 'Головна', href: '/' },
+  { label: 'Наші проєкти', href: '/projects/' },
+  { label: project.h1, href: projectPath }
+];
+
 const structuredData = [
   projectSchema,
-  breadcrumbSchema([
-    { label: 'Головна', href: absoluteUrl('/uk/', origin) },
-    { label: 'Наші проєкти', href: absoluteUrl('/uk/projects/', origin) },
-    { label: project.h1, href: canonical }
-  ]),
+  breadcrumbSchema(breadcrumbItems.map((item) => ({ label: item.label, href: absoluteUrl(item.href, origin) }))),
   faqSchema(projectFaq)
 ].filter(Boolean) as JsonLdObject[];
 ---
@@ -62,6 +71,17 @@ const structuredData = [
   <div class="sg-page-shell">
     <Header locale={locale} />
     <main id="main" class="project-detail-v2">
+      <nav class="project-detail-v2__breadcrumbs" aria-label="Хлібні крихти">
+        {breadcrumbItems.map((item, index) => (
+          <>
+            {index > 0 && <span aria-hidden="true">/</span>}
+            {index === breadcrumbItems.length - 1
+              ? <span aria-current="page">{item.label}</span>
+              : <a href={item.href}>{item.label}</a>}
+          </>
+        ))}
+      </nav>
+
       <section class="project-detail-v2__hero">
         <div class="project-detail-v2__hero-copy">
           <p class="eyebrow">{project.city} / {project.objectType}</p>
@@ -84,12 +104,34 @@ const structuredData = [
           <article><p class="eyebrow">Рішення Space Glass</p><h2>{project.solution.title}</h2><p>{project.solution.text}</p></article>
         </section>
 
-        <ProjectGallery images={project.gallery} cover={project.cover} title="Деталі реалізованої конструкції" />
+        <ProjectGallery images={project.gallery} cover={project.cover} title={`Фото в інтер’єрі: ${project.constructionType}`} />
 
         <section class="project-detail-v2__technical">
-          <article><p class="eyebrow">Матеріали</p><h2>Що використали у конструкції</h2><ul>{project.materials.map((material) => <li>{material}</li>)}</ul></article>
+          <article><p class="eyebrow">Матеріали</p><h2>Матеріали: {project.constructionType}</h2><ul>{project.materials.map((material) => <li>{material}</li>)}</ul></article>
           <article><p class="eyebrow">Монтаж</p><h2>{project.installation.title}</h2><p>{project.installation.text}</p></article>
           <article><p class="eyebrow">Результат</p><h2>{project.result.title}</h2><p>{project.result.text}</p></article>
+        </section>
+
+        {projectFacts.length > 0 && (
+          <section class="project-detail-v2__data" aria-label="Дані реалізованого проєкту">
+            <p class="eyebrow">Дані реалізованого проєкту</p>
+            <dl>
+              {projectFacts.map(({ label, value }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
+            </dl>
+          </section>
+        )}
+
+        <section class="project-detail-v2__price">
+          <p class="eyebrow">Вартість</p>
+          <h2>Вартість подібного рішення</h2>
+          {project.priceFromPerM2 && (
+            <p class="project-detail-v2__price-value">Від {project.priceFromPerM2.toLocaleString('uk-UA')} грн/м²</p>
+          )}
+          <p>
+            Вартість розраховується індивідуально та залежить від розмірів конструкції, типу скла, профілю, фурнітури та складності монтажу.
+            {project.priceNote && ` ${project.priceNote}`}
+          </p>
+          <a class="button button--mint" href="#project-request">Розрахувати вартість за моїми розмірами</a>
         </section>
 
         <aside class="project-detail-v2__service-link">
@@ -98,13 +140,13 @@ const structuredData = [
         </aside>
 
         <section class="project-detail-v2__faq">
-          <FAQBlock title={`Питання про подібні ${project.constructionType.toLowerCase()}`} intro="Відповіді про розрахунок, індивідуальні розміри, матеріали, монтаж і догляд." items={faqItems} visibleCount={6} locale={locale} />
+          <FAQBlock title={`Питання: ${project.constructionType}`} intro="Відповіді про розрахунок, індивідуальні розміри, матеріали, монтаж і догляд." items={faqItems} visibleCount={6} locale={locale} />
         </section>
 
         {relatedProjects.length > 0 && (
           <section class="project-detail-v2__related">
             <div class="project-section-head-v2"><p class="eyebrow">Схожі проєкти</p><h2>Інші реалізовані рішення</h2></div>
-            <div class="projects-index-v2__grid">{relatedProjects.map((item) => <ProjectCard project={item} hrefPrefix="/uk/projects" />)}</div>
+            <div class="projects-index-v2__grid">{relatedProjects.map((item) => <ProjectCard project={item} hrefPrefix="/projects" />)}</div>
           </section>
         )}
       </div>
@@ -116,3 +158,84 @@ const structuredData = [
     <Footer locale={locale} />
   </div>
 </BaseLayout>
+
+<style>
+  /* Project-specific additions kept local to this component rather than global.css. */
+  .project-detail-v2__breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px max(58px, calc((100vw - 1380px) / 2)) 0;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .project-detail-v2__breadcrumbs a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .project-detail-v2__breadcrumbs a:hover {
+    color: var(--mint-dark);
+  }
+  .project-detail-v2__breadcrumbs span[aria-current] {
+    color: var(--ink, #15201c);
+    font-weight: 600;
+  }
+  @media (max-width: 760px) {
+    .project-detail-v2__breadcrumbs {
+      padding: 14px 24px 0;
+      font-size: 11px;
+    }
+  }
+
+  .project-detail-v2__data {
+    margin-bottom: 60px;
+    padding: 30px 34px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fbfdfc;
+  }
+  .project-detail-v2__data dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px 28px;
+    margin: 16px 0 0;
+  }
+  .project-detail-v2__data dl > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .project-detail-v2__data dt {
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .project-detail-v2__data dd {
+    margin: 0;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .project-detail-v2__price {
+    margin-bottom: 60px;
+    padding: 34px;
+    border: 1px solid var(--green-line);
+    border-radius: 14px;
+    background: #eff9f4;
+  }
+  .project-detail-v2__price h2 {
+    margin: 6px 0 12px;
+  }
+  .project-detail-v2__price-value {
+    margin: 0 0 10px;
+    color: var(--mint-dark);
+    font-size: 22px;
+    font-weight: 800;
+  }
+  .project-detail-v2__price p {
+    max-width: 70ch;
+    margin: 0 0 20px;
+    color: var(--muted);
+  }
+</style>
