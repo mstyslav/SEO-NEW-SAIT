@@ -936,6 +936,12 @@ body{background:#202020}
 .knowledge-card__link{
   padding-top:18px;
   font-size:12px;
+  position:static;
+}
+.knowledge-card__link::after{
+  content:"";
+  position:absolute;
+  inset:0;
 }
 @media(max-width:1100px){
   .knowledge-library__grid{grid-template-columns:repeat(4,minmax(0,1fr))}
@@ -5983,12 +5989,19 @@ img[loading="lazy"]{content-visibility:auto}
   .footer-refined__contacts > span,
   .footer-refined__col a{
     font-size:10.5px !important;
+    min-height:32px !important;
+    padding-block:6px !important;
+    align-items:center !important;
   }
 
   .footer-refined__contacts .footer-refined__call{
     width:100% !important;
     min-height:44px !important;
     padding-inline:10px !important;
+  }
+
+  .footer-refined__call-secondary{
+    min-height:36px !important;
   }
 
   .footer-refined__cities .footer-nowrap{
