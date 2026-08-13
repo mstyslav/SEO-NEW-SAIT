@@ -31,8 +31,12 @@ function routeExists(href) {
   }
 
   const key = clean.replace(/^\//, '').replace(/\/$/, '');
-  const localizedKey = key.replace(/^(ru|en|de)\//, '');
+  const localizedKey = key.replace(/^(uk|ru|en|de)\//, '');
   if (seoSlugs.has(localizedKey)) return true;
+  if (key.startsWith('uk/') && (
+    fs.existsSync(path.join(pages, `${localizedKey}.astro`)) ||
+    fs.existsSync(path.join(pages, localizedKey, 'index.astro'))
+  )) return true;
   return fs.existsSync(path.join(pages, `${key}.astro`)) ||
     fs.existsSync(path.join(pages, key, 'index.astro'));
 }

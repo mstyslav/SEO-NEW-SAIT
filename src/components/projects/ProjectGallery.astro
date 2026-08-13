@@ -1,0 +1,32 @@
+---
+const { images, cover, title = 'Галерея проєкту' } = Astro.props;
+const remainder = images.length % 3;
+const shouldAddCover = Boolean(cover) && remainder !== 0;
+const galleryItems = [
+  ...images.map((image) => ({ image, addedCover: false, fillTwo: false })),
+  ...(shouldAddCover ? [{ image: cover, addedCover: true, fillTwo: remainder === 1 }] : [])
+];
+---
+<section class="project-gallery-v2" aria-labelledby="project-gallery-title">
+  <div class="project-section-head-v2">
+    <p class="eyebrow">Галерея</p>
+    <h2 id="project-gallery-title">{title}</h2>
+  </div>
+  <div class:list={['project-gallery-v2__grid', galleryItems.length === 1 && 'project-gallery-v2__grid--single']}>
+    {galleryItems.map(({ image, addedCover, fillTwo }) => (
+      <figure class:list={[
+        addedCover && 'project-gallery-v2__figure--added-cover',
+        fillTwo && 'project-gallery-v2__figure--fill-two'
+      ]}>
+        <img
+          src={image.src}
+          width={image.width}
+          height={image.height}
+          alt={image.alt}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    ))}
+  </div>
+</section>

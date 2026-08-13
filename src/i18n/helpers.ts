@@ -12,6 +12,7 @@ export function stripLocale(pathname: string): string {
 
 export function localizedPath(pathname: string, locale: Locale): string {
   const base = stripLocale(pathname);
+  if (locale === 'uk') return base;
   return `/${locale}${base === '/' ? '/' : base}`;
 }
 

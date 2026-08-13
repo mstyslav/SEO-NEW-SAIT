@@ -1,0 +1,33 @@
+---
+interface Props {
+  solutionTitle: string;
+  example?: string;
+}
+
+const {
+  solutionTitle,
+  example = 'Скляна конструкція за індивідуальними розмірами',
+} = Astro.props;
+---
+
+<section class="solution-request-form" id="solution-request" aria-labelledby="solution-request-title">
+  <div class="solution-request-form__intro">
+    <p class="eyebrow">Заявка на розрахунок</p>
+    <h2 id="solution-request-title">Покажіть нам ваш простір</h2>
+    <p>Залиште контакти й коротко опишіть потрібну конструкцію. Менеджер уточнить деталі та підготує попередню оцінку.</p>
+    <p class="solution-request-form__example"><b>Наприклад:</b> {example}</p>
+  </div>
+
+  <form class="quote-form contacts-v15-form solution-request-form__form" data-lead-form data-success-url="/thank-you/">
+    <input name="product" type="hidden" value={solutionTitle} />
+    <div class="contacts-form-grid">
+      <label>Ім’я<input name="name" type="text" autocomplete="name" placeholder="Ваше ім’я" required /></label>
+      <label>Телефон<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
+    </div>
+    <label>Місто<input name="city" autocomplete="address-level2" type="text" placeholder="Київ, Львів, Одеса..." /></label>
+    <label>Що потрібно<textarea name="comment" rows="5" placeholder={example}></textarea></label>
+    <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>Погоджуюсь із <a href="/privacy-policy/">політикою конфіденційності</a>.</span></label>
+    <button class="button button--mint" type="submit">Надіслати запит</button>
+    <p data-form-status hidden role="status"></p>
+  </form>
+</section>

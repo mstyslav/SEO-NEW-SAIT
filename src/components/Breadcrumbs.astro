@@ -10,9 +10,4 @@ const schema = {
   }))
 };
 ---
-<nav class="seo-breadcrumbs" aria-label="Навігаційний ланцюжок">
-  <ol>
-    {items.map((item, index) => <li>{item.href && index < items.length - 1 ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}</li>)}
-  </ol>
-</nav>
 <script type="application/ld+json" set:html={JSON.stringify(schema)} />

@@ -2,21 +2,40 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { localeFromPath, normalizeLocale } from '../i18n/helpers';
+
+const locale = normalizeLocale(Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
+const ru = locale === 'ru';
+const copy = ru ? {
+  title: 'Контакты Space Glass', description: 'Офисы Space Glass в Киеве, Одессе и Львове. Телефон, email, график работы и Google Maps.',
+  eyebrow: 'Контакты', heading: 'Обсудим ваш проект', intro: 'Отправьте приблизительные размеры и опишите задачу — подготовим предварительную оценку.',
+  name: 'Имя', namePlaceholder: 'Ваше имя', phone: 'Телефон', city: 'Город', cityPlaceholder: 'Киев, Львов, Одесса...',
+  need: 'Что требуется', needPlaceholder: 'Кратко опишите конструкцию', file: 'Фото или чертёж', chooseFile: 'Выбрать файл', noFile: 'Файл не выбран',
+  consent: 'Соглашаюсь с', privacy: 'политикой конфиденциальности', submit: 'Отправить запрос', offices: 'Наши офисы', chooseCity: 'Выберите город',
+  schedule: 'График', route: 'Проложить маршрут', map: 'Открыть карту'
+} : {
+  title: 'Контакти Space Glass', description: 'Офіси Space Glass у Києві, Одесі та Львові. Телефон, email, графік та Google Maps.',
+  eyebrow: 'Контакти', heading: 'Обговоримо ваш проєкт', intro: 'Надішліть приблизні розміри й опишіть задачу — підготуємо попередню оцінку.',
+  name: 'Ім’я', namePlaceholder: 'Ваше ім’я', phone: 'Телефон', city: 'Місто', cityPlaceholder: 'Київ, Львів, Одеса...',
+  need: 'Що потрібно', needPlaceholder: 'Коротко опишіть конструкцію', file: 'Фото або креслення', chooseFile: 'Вибрати файл', noFile: 'Файл не вибрано',
+  consent: 'Погоджуюсь із', privacy: 'політикою конфіденційності', submit: 'Надіслати запит', offices: 'Наші офіси', chooseCity: 'Оберіть місто',
+  schedule: 'Графік', route: 'Прокласти маршрут', map: 'Відкрити карту'
+};
 
 const offices = [
   {
     id: 'odesa',
-    city: 'Одеса',
-    address: 'вул. Глиняна, 5',
+    city: ru ? 'Одесса' : 'Одеса',
+    address: ru ? 'ул. Глиняная, 5' : 'вул. Глиняна, 5',
     phone: '+38 (073) 425 14 00',
     email: 'info@space-glass.com.ua',
-    hours: 'Пн–Пт: 09:00–19:00',
+    hours: ru ? 'Пн–Пт: 09:00–19:00' : 'Пн–Пт: 09:00–19:00',
     query: 'Одеса, вул. Глиняна, 5'
   },
   {
     id: 'kyiv',
-    city: 'Київ',
-    address: 'вул. Лауреатська, 8',
+    city: ru ? 'Киев' : 'Київ',
+    address: ru ? 'ул. Лауреатская, 8' : 'вул. Лауреатська, 8',
     phone: '+38 (073) 425 14 00',
     email: 'info@space-glass.com.ua',
     hours: 'Пн–Пт: 09:00–19:00',
@@ -24,8 +43,8 @@ const offices = [
   },
   {
     id: 'lviv',
-    city: 'Львів',
-    address: 'вул. Кульпарківська, 144',
+    city: ru ? 'Львов' : 'Львів',
+    address: ru ? 'ул. Кульпарковская, 144' : 'вул. Кульпарківська, 144',
     phone: '+38 (073) 425 14 00',
     email: 'info@space-glass.com.ua',
     hours: 'Пн–Пт: 09:00–19:00',
@@ -33,26 +52,33 @@ const offices = [
   }
 ];
 ---
-<BaseLayout title="Контакти Space Glass" description="Офіси Space Glass у Києві, Одесі та Львові. Телефон, email, графік та Google Maps.">
+<BaseLayout title={copy.title} description={copy.description} locale={locale}>
 <div class="sg-page-shell">
   <Header />
   <main id="main">
     <section class="contacts-v15-hero">
       <div>
-        <p class="eyebrow">Контакти</p>
-        <h1>Обговоримо ваш проєкт</h1>
-        <p class="lead">Надішліть фото, приблизні розміри або креслення — підготуємо попередню оцінку.</p>
+        <p class="eyebrow">{copy.eyebrow}</p>
+        <h1>{copy.heading}</h1>
+        <p class="lead">{copy.intro}</p>
       </div>
       <form class="quote-form contacts-v15-form" data-lead-form data-success-url="/thank-you/">
         <div class="contacts-form-grid">
-          <label>Ім’я<input name="name" type="text" autocomplete="name" placeholder="Ваше ім’я" required /></label>
-          <label>Телефон<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
+          <label>{copy.name}<input name="name" type="text" autocomplete="name" placeholder={copy.namePlaceholder} required /></label>
+          <label>{copy.phone}<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
         </div>
-        <label>Місто<input name="city" autocomplete="address-level2" type="text" placeholder="Київ, Львів, Одеса..." /></label>
-        <label>Що потрібно<textarea name="comment" rows="5" placeholder="Коротко опишіть конструкцію"></textarea></label>
-        <label class="contacts-file-field">Фото або креслення<input name="attachment" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf,.dwg" /></label>
-        <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>Погоджуюсь із <a href="/privacy-policy/">політикою конфіденційності</a>.</span></label>
-        <button class="button button--mint" type="submit">Надіслати запит</button>
+        <label>{copy.city}<input name="city" autocomplete="address-level2" type="text" placeholder={copy.cityPlaceholder} /></label>
+        <label>{copy.need}<textarea name="comment" rows="5" placeholder={copy.needPlaceholder}></textarea></label>
+        <label class="contacts-file-field">
+          <span>{copy.file}</span>
+          <span class="contacts-file-control">
+            <span class="contacts-file-button">{copy.chooseFile}</span>
+            <span class="contacts-file-name" data-file-name data-empty-label={copy.noFile}>{copy.noFile}</span>
+          </span>
+          <input class="contacts-file-input" name="attachment" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf,.dwg" data-file-input />
+        </label>
+        <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>{copy.consent} <a href={ru ? '/ru/privacy-policy/' : '/privacy-policy/'}>{copy.privacy}</a>.</span></label>
+        <button class="button button--mint" type="submit">{copy.submit}</button>
         <p data-form-status hidden role="status"></p>
       </form>
     </section>
@@ -60,14 +86,13 @@ const offices = [
     <section class="contacts-v15-section">
       <div class="contacts-v15-head">
         <div>
-          <p class="eyebrow">Наші офіси</p>
-          <h2>Оберіть місто</h2>
+          <p class="eyebrow">{copy.offices}</p>
+          <h2>{copy.chooseCity}</h2>
         </div>
-        <p>Контакти, графік роботи та інтерактивна Google Map змінюються без перезавантаження сторінки.</p>
       </div>
 
       <div class="contacts-tabs" data-contact-tabs>
-        <div class="contacts-tabs__buttons" role="tablist" aria-label="Офіси Space Glass">
+        <div class="contacts-tabs__buttons" role="tablist" aria-label={copy.offices}>
           {offices.map((office, index) => (
             <button
               class:list={['contacts-tab-button', index === 0 && 'is-active']}
@@ -98,7 +123,7 @@ const offices = [
 
                 <div class="contacts-office-info__rows">
                   <div>
-                    <span>Телефон</span>
+                    <span>{copy.phone}</span>
                     <a href={`tel:${office.phone.replace(/\s|\(|\)|-/g,'')}`}>{office.phone}</a>
                   </div>
                   <div>
@@ -106,7 +131,7 @@ const offices = [
                     <a href={`mailto:${office.email}`}>{office.email}</a>
                   </div>
                   <div>
-                    <span>Графік</span>
+                    <span>{copy.schedule}</span>
                     <b>{office.hours}</b>
                   </div>
                 </div>
@@ -117,14 +142,14 @@ const offices = [
                     target="_blank"
                     rel="noopener noreferrer"
                     href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(office.query)}`}>
-                    Прокласти маршрут
+                    {copy.route}
                   </a>
                   <a
                     class="button button--outline"
                     target="_blank"
                     rel="noopener noreferrer"
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.query)}`}>
-                    Відкрити карту
+                    {copy.map}
                   </a>
                 </div>
 
@@ -179,11 +204,21 @@ const offices = [
       </div>
     </section>
   </main>
-  <Footer />
+  <Footer locale={locale} />
 </div>
 </BaseLayout>
 
 <script>
+  document.querySelectorAll('[data-file-input]').forEach((input) => {
+    const field = input.closest('.contacts-file-field');
+    const name = field?.querySelector('[data-file-name]');
+    input.addEventListener('change', () => {
+      if (!name) return;
+      name.textContent = input.files?.[0]?.name || name.dataset.emptyLabel || '';
+      name.classList.toggle('has-file', Boolean(input.files?.length));
+    });
+  });
+
   document.querySelectorAll('[data-contact-tabs]').forEach((tabs) => {
     const buttons = tabs.querySelectorAll('[data-office-button]');
     const panels = tabs.querySelectorAll('[data-office-panel]');

@@ -10,7 +10,8 @@
     "check:routes": "node scripts/check-routes.mjs",
     "check:links": "node scripts/check-links.mjs",
     "check:seo": "node scripts/check-seo-pages.mjs",
-    "check:production": "npm run check:routes && npm run check:links && npm run check:configurator",
+    "check:projects": "node scripts/check-projects.mjs",
+    "check:production": "npm run check:routes && npm run check:links && npm run check:configurator && npm run check:projects",
     "check:configurator": "node scripts/check-configurator.mjs"
   },
   "dependencies": {

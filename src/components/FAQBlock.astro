@@ -19,6 +19,7 @@ const {
 } = Astro.props;
 
 import { localeFromPath, normalizeLocale } from '../i18n/helpers';
+import { expandFaq } from '../data/expand-faq';
 const locale = normalizeLocale(localeProp ?? localeFromPath(Astro.url.pathname));
 const labels = {
   uk: { all: 'Показати всі питання', less: 'Показати менше' },
@@ -28,6 +29,7 @@ const labels = {
 }[locale];
 
 const id = `faq-${Math.random().toString(36).slice(2, 9)}`;
+const expandedItems = expandFaq(items, title, locale, 20);
 ---
 <section class={`faq-block faq-block--${variant}`} data-faq-block id={id}>
   <div class="faq-block__head">
@@ -37,7 +39,7 @@ const id = `faq-${Math.random().toString(36).slice(2, 9)}`;
   </div>
 
   <div class="faq-block__grid">
-    {items.map(([q,a],i) => (
+    {expandedItems.map(([q,a],i) => (
       <details class:list={['faq-item', i >= visibleCount && 'faq-item--extra']} data-faq-extra={i >= visibleCount ? 'true' : undefined}>
         <summary>
           <span>{q}</span>
@@ -48,7 +50,7 @@ const id = `faq-${Math.random().toString(36).slice(2, 9)}`;
     ))}
   </div>
 
-  {items.length > visibleCount && (
+  {expandedItems.length > visibleCount && (
     <div class="faq-block__actions">
       <button class="button button--mint faq-toggle" type="button" aria-expanded="false">
         {labels.all}

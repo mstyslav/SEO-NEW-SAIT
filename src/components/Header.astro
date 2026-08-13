@@ -2,6 +2,7 @@
 import translations from '../i18n/translations.json';
 import i18nConfig from '../i18n/config.json';
 import { localeFromPath, localizedPath, normalizeLocale } from '../i18n/helpers';
+import { showerServiceNavigation } from '../data/service-navigation';
 
 const requestedLocale = Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname);
 const locale = normalizeLocale(requestedLocale);
@@ -20,6 +21,9 @@ const localeSwitchPath = (targetLocale: 'uk' | 'ru') => {
   if (targetLocale === 'ru' && !russianRoutes.has(unlocalizedPath)) return '/ru/';
   return localizedPath(currentPath, targetLocale);
 };
+const nextLocale: 'uk' | 'ru' = locale === 'ru' ? 'uk' : 'ru';
+const directLocaleHref = localeSwitchPath(nextLocale);
+const directLocaleLabel = nextLocale === 'uk' ? 'Перейти українською' : 'Перейти російською';
 
 const links = [
   [t.services, locale === 'uk' ? '/poslugy/' : '/services/'],
@@ -32,7 +36,7 @@ const links = [
 
 const menuGroups = [
   { section: 'Для дому', icon: '⌂', groups: [
-    { key:'showers', title:'Душові кабіни', href:'/dushovi-kabiny/', items:['Душові Walk-in','Кутові душові','Розсувні душові','Душові в нішу','Шторки для ванни','Душові піддони'] },
+    { key:'showers', title:'Душові кабіни', href:'/dushovi-kabiny/', items:showerServiceNavigation },
     { key:'mirrors', title:'Дзеркала', href:'/dzerkala/', items:['LED-дзеркала','Дзеркала у ванну','Дзеркала в повний зріст','Дзеркала на стіну','Дзеркальні панно'] },
     { key:'doors', title:'Скляні двері', href:'/sklyani-dveri/', items:['Міжкімнатні скляні двері','Розсувні скляні двері','Маятникові скляні двері','Двері в душову','Офісні скляні двері'] },
     { key:'railings', title:'Скляні огорожі', href:'/sklyani-ohorozhi/', items:['Скляні перила','Огорожі на стійках','Безрамні огорожі','Балконні огорожі','Огорожі для сходів'] }
@@ -73,7 +77,7 @@ const menuData = {
 ---
 <header class="site-header sg-header">
   <div class="container nav sg-nav">
-    <a class="brand-logo" href={lp("/")} aria-label="Space Glass — головна"><img src="/images/space-glass-brand-logo.jpg" width="220" height="178" alt="Space Glass" /></a>
+    <a class="brand-logo" href={lp("/")} aria-label="Space Glass — головна"><img src="/images/space-glass-logo-header.webp" width="101" height="82" alt="Space Glass" /></a>
     <button class="sg-mobile-toggle" type="button" aria-controls="sg-mobile-menu" aria-expanded="false" data-mobile-menu-button><b>Menu</b></button>
     <nav class="nav__links sg-nav-links" aria-label="Головна навігація">
       <a class="nav-link nav-link--catalog" href={lp("/catalog/")}>Каталог</a>
@@ -82,7 +86,7 @@ const menuData = {
         <button class="nav-link sg-categories-trigger" type="button" aria-label="Всі категорії" aria-haspopup="true" aria-expanded="false" data-mega-button><span></span><span></span><span></span></button>
         <div class="catalog-mega catalog-mega--dynamic" data-catalog-mega>
           <div class="catalog-mega__main">
-            {menuGroups.map(section => <section class="catalog-mega__column"><h3>{section.icon} {section.section}</h3>{section.groups.map(group => <div class="catalog-mega__group" data-menu-key={group.key}><a class="catalog-mega__group-title" href={group.href}>{group.title}</a>{group.items.map(item => <a href={group.href}>{item}</a>)}</div>)}</section>)}
+            {menuGroups.map(section => <section class="catalog-mega__column"><h3>{section.icon} {section.section}</h3>{section.groups.map(group => <div class="catalog-mega__group" data-menu-key={group.key}><a class="catalog-mega__group-title" href={group.href}>{group.title}</a>{group.items.map(item => typeof item === 'string' ? <a href={group.href}>{item}</a> : <a href={item.href}>{item.label}</a>)}</div>)}</section>)}
             <section class="catalog-mega__column catalog-mega__architecture"><h3>◇ Архітектурні системи</h3><div class="catalog-mega__architecture-list">{architectureItems.map(([key,label,href]) => <a href={href} data-menu-key={key}><span>{label}</span><b>›</b></a>)}</div><div class="catalog-mega__popular" data-popular-list>{menuData.partitions.popular.map(([title,text,image,href]) => <a href={href}><img src={image} width="84" height="66" alt="" loading="lazy" /><span><b>{title}</b><small>{text}</small></span></a>)}</div></section>
             <aside class="catalog-mega__promo" data-promo><img src={menuData.partitions.image} width="560" height="700" alt="Скляні перегородки Space Glass" data-promo-image /><div class="catalog-mega__promo-overlay"></div><div class="catalog-mega__promo-copy"><p data-promo-eyebrow>{menuData.partitions.eyebrow}</p><h2 data-promo-title>{menuData.partitions.title}</h2><span data-promo-text>{menuData.partitions.text}</span><a class="button button--mint" href={menuData.partitions.href} data-promo-button>{menuData.partitions.button} →</a></div></aside>
           </div>
@@ -92,11 +96,11 @@ const menuData = {
       </div>
     </nav>
     <div class="nav__actions sg-nav-actions">
-      <div class="language-switcher" data-language-switcher><button class="language-switcher__button" type="button" aria-haspopup="true" aria-expanded="false" data-language-button><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 12h17M12 3c2.4 2.5 3.6 5.5 3.6 9S14.4 18.5 12 21M12 3C9.6 5.5 8.4 8.5 8.4 12S9.6 18.5 12 21" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span>{localeInfo.short}</span><i>⌄</i></button><div class="language-switcher__menu" data-language-menu>{Object.entries(i18nConfig.locales).filter(([code]) => code === 'uk' || code === 'ru').map(([code,item]) => <a class:list={['language-switcher__option', code === locale && 'is-active']} href={localeSwitchPath(code as 'uk'|'ru')} hreflang={code} lang={code} data-locale={code}><b>{item.short}</b><span>{item.label}</span>{code===locale && <i>✓</i>}</a>)}</div></div>
+      <div class="language-switcher" data-language-switcher><a class="language-switcher__button language-switcher__button--direct" href={directLocaleHref} hreflang={nextLocale} lang={nextLocale} aria-label={directLocaleLabel} title={directLocaleLabel} data-language-button data-target-locale={nextLocale}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 12h17M12 3c2.4 2.5 3.6 5.5 3.6 9S14.4 18.5 12 21M12 3C9.6 5.5 8.4 8.5 8.4 12S9.6 18.5 12 21" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span>{localeInfo.short}</span></a></div>
       <a class="nav-icon" href={lp("/catalog/")} aria-label="Пошук">⌕</a>
       <a class="nav-icon nav-icon--compare" href={lp("/compare/")} aria-label="Порівняння"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M17 4v16M4 8h6M14 16h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><small data-compare-header-count>0</small></a>
       <a class="nav-icon nav-icon--cart" href={lp("/cart/")} aria-label="Кошик"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21 8H7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="18" cy="20" r="1.4" fill="currentColor"/></svg><small data-project-header-count>0</small></a>
-      <a class="nav-icon" href="tel:+380734251400" aria-label="Зателефонувати">☎</a>
+      <a class="nav-icon nav-icon--phone" href="tel:+380734251400" aria-label="Зателефонувати"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a class="button button--mint sg-header-cta" href={lp("/contacts/")}>{t.quote}</a>
     </div>
   </div>
@@ -107,6 +111,7 @@ const menuData = {
   .sg-categories-trigger span{display:block;width:20px;height:1.5px;background:currentColor;border-radius:2px}
   .mega-trigger--menu .catalog-mega{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
   .mega-trigger--menu.is-open .catalog-mega{opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+  .nav-icon--phone svg{width:20px;height:20px;display:block}
 </style>
 <script>
   const mobileButton=document.querySelector('[data-mobile-menu-button]');
@@ -144,7 +149,7 @@ const menuData = {
   const mega=document.querySelector('[data-catalog-mega]'); if(mega){const image=mega.querySelector('[data-promo-image]');const eyebrow=mega.querySelector('[data-promo-eyebrow]');const title=mega.querySelector('[data-promo-title]');const text=mega.querySelector('[data-promo-text]');const button=mega.querySelector('[data-promo-button]');const popularList=mega.querySelector('[data-popular-list]');let currentKey='partitions';const renderPopular=(items)=>{popularList.innerHTML=items.map(([itemTitle,itemText,itemImage,itemHref])=>`<a href="${itemHref}"><img src="${itemImage}" width="84" height="66" alt="" loading="lazy" /><span><b>${itemTitle}</b><small>${itemText}</small></span></a>`).join('');};const updateMenu=(key)=>{if(!menuData[key]||key===currentKey)return;currentKey=key;const data=menuData[key];image?.classList.add('is-changing');setTimeout(()=>{if(image){image.src=data.image;image.alt=data.title;}eyebrow.textContent=data.eyebrow;title.textContent=data.title;text.textContent=data.text;button.textContent=`${data.button} →`;button.href=data.href;renderPopular(data.popular);requestAnimationFrame(()=>image?.classList.remove('is-changing'));},120);};mega.querySelectorAll('[data-menu-key]').forEach((item)=>{item.addEventListener('mouseenter',()=>{mega.querySelectorAll('[data-menu-key]').forEach(el=>el.classList.remove('is-active'));item.classList.add('is-active');updateMenu(item.dataset.menuKey);});item.addEventListener('focusin',()=>updateMenu(item.dataset.menuKey));});}
 </script>
 <script>
-  const languageSwitcher=document.querySelector('[data-language-switcher]'); const languageButton=languageSwitcher?.querySelector('[data-language-button]'); languageButton?.addEventListener('click',(event)=>{event.stopPropagation();const isOpen=languageSwitcher.classList.toggle('is-open');languageButton.setAttribute('aria-expanded',String(isOpen));}); document.addEventListener('click',(event)=>{if(!languageSwitcher?.contains(event.target)){languageSwitcher?.classList.remove('is-open');languageButton?.setAttribute('aria-expanded','false');}}); languageSwitcher?.querySelectorAll('[data-locale]').forEach((link)=>{link.addEventListener('click',()=>{localStorage.setItem('spaceGlassLocale',link.dataset.locale);});}); if(!localStorage.getItem('spaceGlassLocale')){const browserLocale=(navigator.language||'').toLowerCase();const detected=browserLocale.startsWith('ru')?'ru':'uk';localStorage.setItem('spaceGlassLocale',detected);}
+  const languageButton=document.querySelector('[data-language-button]'); languageButton?.addEventListener('click',()=>{localStorage.setItem('spaceGlassLocale',languageButton.dataset.targetLocale||'uk');}); if(!localStorage.getItem('spaceGlassLocale')){const browserLocale=(navigator.language||'').toLowerCase();const detected=browserLocale.startsWith('ru')?'ru':'uk';localStorage.setItem('spaceGlassLocale',detected);}
 </script>
 <style>
 /* Social icons — match existing header controls */
@@ -164,49 +169,31 @@ const menuData = {
 
 
 <style>
-/* ===== HEADER LOGO RESPONSIVE FIX ===== */
+/* ===== HEADER LOGO — optimized WebP asset, stable width, height:auto ===== */
 
 .sg-header .brand-logo{
   display:flex !important;
   align-items:center !important;
-  width:138px !important;
-  min-width:138px !important;
-  max-width:138px !important;
-  height:82px !important;
-  max-height:82px !important;
-  flex:0 0 138px !important;
-  overflow:hidden !important;
+  flex-shrink:0 !important;
+  width:auto !important;
+  min-width:0 !important;
+  max-width:none !important;
+  margin:0 !important;
+  overflow:visible !important;
 }
 
 .sg-header .brand-logo img{
   display:block !important;
-  width:auto !important;
+  width:101px !important;
   height:auto !important;
-  max-width:100% !important;
-  max-height:100% !important;
+  max-width:none !important;
+  max-height:none !important;
   object-fit:contain !important;
 }
 
 @media (max-width:1100px){
-  .sg-header .brand-logo{
-    width:clamp(100px, 12vw, 132px) !important;
-    max-width:132px !important;
-    height:72px !important;
-    max-height:72px !important;
-    min-width:0 !important;
-    flex-shrink:0 !important;
-    overflow:hidden !important;
-    align-self:center !important;
-  }
-
   .sg-header .brand-logo img{
-    display:block !important;
-    width:100% !important;
-    max-width:100% !important;
-    height:100% !important;
-    max-height:100% !important;
-    object-fit:contain !important;
-    object-position:center !important;
+    width:89px !important;
   }
 }
 
@@ -217,26 +204,24 @@ const menuData = {
     overflow:hidden !important;
   }
 
-  .sg-header .brand-logo{
-    width:92px !important;
-    max-width:92px !important;
-    min-width:0 !important;
-    height:60px !important;
-    flex:0 0 92px !important;
-    overflow:hidden !important;
-  }
-
   .sg-header .brand-logo img{
-    display:block !important;
-    width:100% !important;
-    max-width:100% !important;
-    height:100% !important;
-    max-height:100% !important;
-    object-fit:contain !important;
+    width:74px !important;
   }
 
   .sg-header .sg-nav-actions{
     min-width:0 !important;
+  }
+}
+
+@media (max-width:400px){
+  .sg-header .sg-nav{
+    grid-template-columns:56px auto minmax(0,1fr) !important;
+    column-gap:8px !important;
+    padding-inline:8px !important;
+  }
+
+  .sg-header .brand-logo img{
+    width:52px !important;
   }
 }
 </style>

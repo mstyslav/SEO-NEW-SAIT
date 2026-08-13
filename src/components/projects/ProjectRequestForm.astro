@@ -1,0 +1,31 @@
+---
+interface Props {
+  projectTitle: string;
+  city: string;
+  requestExample: string;
+}
+
+const { projectTitle, city, requestExample } = Astro.props;
+---
+
+<section class="project-request-form" id="project-request" aria-labelledby="project-request-title">
+  <div class="project-request-form__intro">
+    <p class="eyebrow">Заявка на розрахунок</p>
+    <h2 id="project-request-title">Розрахувати подібний проєкт</h2>
+    <p>Залиште контакти й коротко опишіть потрібну конструкцію. Менеджер уточнить деталі та підготує попередню оцінку.</p>
+    <p class="project-request-form__project"><b>Наприклад:</b> {requestExample}</p>
+  </div>
+
+  <form class="quote-form contacts-v15-form project-request-form__form" data-lead-form data-success-url="/uk/thank-you/">
+    <input name="product" type="hidden" value={projectTitle} />
+    <div class="contacts-form-grid">
+      <label>Ім’я<input name="name" type="text" autocomplete="name" placeholder="Ваше ім’я" required /></label>
+      <label>Телефон<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
+    </div>
+    <label>Місто<input name="city" autocomplete="address-level2" type="text" value={city} placeholder="Київ, Львів, Одеса..." /></label>
+    <label>Що потрібно<textarea name="comment" rows="5" placeholder="Орієнтовні розміри та побажання до конструкції"></textarea></label>
+    <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>Погоджуюсь із <a href="/uk/privacy-policy/">політикою конфіденційності</a>.</span></label>
+    <button class="button button--mint" type="submit">Надіслати запит</button>
+    <p data-form-status hidden role="status"></p>
+  </form>
+</section>

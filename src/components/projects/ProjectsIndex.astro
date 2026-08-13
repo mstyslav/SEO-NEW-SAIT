@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import ProjectCard from './ProjectCard.astro';
+import ProjectFilters from './ProjectFilters.astro';
+
+const projects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk'))
+  .map(({ data }) => data)
+  .sort((a, b) => a.sortOrder - b.sortOrder);
+---
+<div class="projects-index-v2">
+  <div class="projects-index-v2__wrap">
+    <Breadcrumbs items={[{ label: 'Головна', href: '/uk/' }, { label: 'Наші проєкти' }]} />
+    <header class="projects-index-v2__hero">
+      <p class="eyebrow">Наші проєкти</p>
+      <h1>Реалізовані конструкції Space Glass</h1>
+      <p class="lead">Показуємо задачі, технічні рішення, матеріали й результат на готових об’єктах.</p>
+    </header>
+    <ProjectFilters projects={projects} />
+    <section class="projects-index-v2__grid" aria-label="Реалізовані проєкти">
+      {projects.map((project) => <ProjectCard project={project} hrefPrefix="/uk/projects" />)}
+    </section>
+    <p class="projects-index-v2__empty" data-projects-empty hidden>У цій категорії проєкти ще готуються до публікації.</p>
+  </div>
+</div>
