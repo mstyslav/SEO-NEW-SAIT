@@ -94,27 +94,5 @@
     [search,compare,wishlist,cart,phone,language,quote].forEach((item) => item && actions.appendChild(item));
   }
 
-  /* Replace all nine homepage category pictograms with consistent custom SVGs. */
-  const icons = {
-    'Душові кабіни':'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M12 41V17c0-7 5-11 12-11h8v35"/><path d="M21 13h11M25 18v5m-6-2 2 4m10-4-2 4"/></svg>',
-    'Скляні перегородки':'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 8h34v32H7zM18 8v32M30 8v32"/><path d="M7 25h34"/></svg>',
-    'Скляні двері':'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M9 42V6h30v36M15 42V11h18v31"/><circle cx="29" cy="26" r="1"/></svg>',
-    'Скляні огорожі':'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 39h11V29h10V19h13"/><path d="M9 33 39 9M15 31V22m10 1v-9m9 1V7"/></svg>',
-    'Дзеркала':'<svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="24" rx="14" ry="18"/><ellipse cx="24" cy="24" rx="10" ry="14"/><path d="m18 23 7-9m-5 16 9-12"/></svg>',
-    'Скляні фасади':'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 41V9h36v32M18 9v32M30 9v32M6 24h36"/><path d="M10 5h28"/></svg>',
-    'Алюмінієві конструкції':'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 40V8h36v32H6zM24 8v32M6 24h36"/><path d="M27 14h9v8h-9zM12 28h9v7h-9z"/></svg>',
-    'Металопластикові конструкції':'<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="8" width="34" height="32" rx="1"/><path d="M24 8v32M7 24h34"/><path d="m29 15 6 5-6 5"/></svg>',
-    'Безрамне скління':'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 40 13 8h22l6 32"/><path d="M13 8v32m11-32v32m11-32v32"/><path d="M7 40h34"/></svg>'
-  };
-
-  const patchCategoryIcons = () => {
-    document.querySelectorAll('.sg-home-category-grid .sg-category-card').forEach((card) => {
-      const title = card.querySelector('h2')?.textContent?.trim();
-      const icon = card.querySelector('.sg-category-card__icon');
-      if (title && icon && icons[title]) icon.innerHTML = icons[title];
-    });
-  };
-  patchCategoryIcons();
-  requestAnimationFrame(patchCategoryIcons);
 })();
 </script>

@@ -1700,12 +1700,6 @@ body{background:#202020}
 
 /* Responsive fallback only when the screen is genuinely too narrow */
 @media(max-width:1350px){
-  .footer-v7__main{
-    grid-template-columns:repeat(4,minmax(0,1fr))!important;
-  }
-  .footer-v7__brand{
-    grid-column:span 2;
-  }
 }
 
 @media(max-width:900px){
@@ -1716,39 +1710,10 @@ body{background:#202020}
 
 /* Desktop stays one line — no wrapping */
 @media(min-width:1281px){
-  .footer-final__main{
-    grid-template-columns:
-      minmax(220px,1.3fr)
-      repeat(5,minmax(118px,1fr))
-      minmax(200px,1.15fr);
-  }
 }
 
 /* Only tablets/mobile reflow */
 @media(max-width:1280px){
-  .footer-final__benefits{
-    grid-template-columns:repeat(2,1fr);
-  }
-  .footer-final__quote{
-    grid-column:1/-1;
-    margin:12px 0;
-  }
-  .footer-final__main{
-    grid-template-columns:repeat(4,minmax(0,1fr));
-  }
-  .footer-final__brand{
-    grid-column:span 2;
-  }
-  .footer-final__product-grid{
-    grid-template-columns:repeat(4,1fr);
-  }
-  .footer-final__bottom{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-  .footer-final__bottom>span:last-child{
-    text-align:center;
-  }
 }
 
 @media(max-width:760px){
@@ -5271,20 +5236,6 @@ img[loading="lazy"]{content-visibility:auto}
    --------------------------------------------------------- */
 
 @media(max-width:1100px){
-
-  .about-real-client-logos{
-    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-  }
-
-  .about-real-client-logos > div{
-    min-height:150px;
-    padding:24px 18px;
-  }
-
-  .about-real-client-logos img{
-    max-width:78% !important;
-    max-height:75px !important;
-  }
 }
 
 /* ---------------------------------------------------------
@@ -5292,22 +5243,6 @@ img[loading="lazy"]{content-visibility:auto}
    --------------------------------------------------------- */
 
 @media(max-width:700px){
-
-  .about-real-client-logos{
-    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-    width:100% !important;
-    margin-top:28px !important;
-  }
-
-  .about-real-client-logos > div{
-    min-height:112px;
-    padding:18px 12px;
-  }
-
-  .about-real-client-logos img{
-    max-width:86% !important;
-    max-height:58px !important;
-  }
 }
 
 @media(max-width:380px){
@@ -5324,17 +5259,6 @@ img[loading="lazy"]{content-visibility:auto}
 
 /* На мобильном никаких элементов шире viewport */
 @media(max-width:700px){
-  .about-main-clients,
-  .about-main-partners,
-  .about-real-client-logos{
-    max-width:100%;
-    overflow:hidden;
-  }
-
-  .about-main-clients a,
-  .about-main-partners a{
-    white-space:normal;
-  }
 }
 
 
@@ -5585,9 +5509,6 @@ img[loading="lazy"]{content-visibility:auto}
 
 /* ABOUT CLIENTS — CTA TOP RIGHT ABOVE LOGOS */
 @media (min-width:901px){
-  .about-main-clients{
-    position:relative !important;
-  }
 
   .about-main-clients .section-head,
   .about-main-clients [class*="section-head"]{
