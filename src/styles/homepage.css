@@ -1,0 +1,259 @@
+.quote-v4{background:#063d2b;color:#fff;border-bottom:1px solid #138a62}
+
+.quote-v4__grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px}
+
+@media(max-width:980px) {
+
+.hero-v4__grid,.about-preview,.quote-v4__grid{grid-template-columns:1fr}
+
+}
+
+.sg-benefits{display:grid;grid-template-columns:repeat(4,1fr);padding:28px 58px;border-bottom:1px solid var(--line)}
+
+.sg-benefits div{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:center;padding:0 24px;border-right:1px solid var(--line)}
+
+.sg-benefits div:last-child{border:0}
+
+.sg-benefits span{grid-row:1/3;font-size:32px;color:var(--mint-dark)}
+
+.sg-benefits b,.sg-benefits small{display:block}
+
+.sg-benefits small{color:var(--muted)}
+
+.sg-all-link{display:block;text-align:center;padding:20px 0 0;color:var(--mint-dark);font-weight:700;font-size:13px;text-transform:uppercase}
+
+.sg-products{padding:0 58px 34px}
+
+.sg-product-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+
+.sg-product-card{border:1px solid var(--line);background:#fff}
+
+.sg-product-card__media{position:relative;aspect-ratio:1.15/1;overflow:hidden;background:#eee}
+
+.sg-product-card__media img{width:100%;height:100%;object-fit:cover}
+
+.sg-heart{position:absolute;right:10px;top:7px;color:#fff;font-size:22px;text-shadow:0 1px 3px #000}
+
+.sg-product-card__body{padding:12px}
+
+.sg-product-card__body small{font-size:10px;color:#279c67;text-transform:uppercase}
+
+.sg-product-card__body small.is-order{color:#d7782c}
+
+.sg-product-card__body h3{font-size:13px;line-height:1.35;min-height:52px;margin:8px 0}
+
+.sg-product-card__body strong{display:block;font-size:15px}
+
+.sg-product-button{display:flex;justify-content:space-between;margin-top:14px;border:1px solid #c9dcd3;padding:10px;font-size:11px;text-transform:uppercase;font-weight:700}
+
+.sg-projects__controls{display:flex;gap:8px;margin-top:20px}
+
+.sg-projects__controls button{width:42px;height:42px;border:1px solid var(--green-line);border-radius:50%;background:#fff;color:var(--green-dark);font-size:19px;cursor:pointer;transition:.2s}
+
+.sg-projects__controls button:hover{background:var(--mint);border-color:var(--mint)}
+
+.sg-projects__viewport{min-width:0;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--mint-dark) #edf5f1;overscroll-behavior-inline:contain;cursor:grab;touch-action:pan-y}
+
+.sg-projects__viewport.is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}
+
+.sg-projects__viewport::-webkit-scrollbar{display:block;height:6px}
+
+.sg-projects__viewport::-webkit-scrollbar-track{border-radius:999px;background:#edf5f1}
+
+.sg-projects__viewport::-webkit-scrollbar-thumb{border-radius:999px;background:var(--mint-dark)}
+
+.sg-projects__viewport::-webkit-scrollbar-thumb:hover{background:var(--green-dark)}
+
+.sg-projects__track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 30px)/4);gap:10px}
+
+@media(max-width:1200px) {
+
+.sg-product-grid{grid-template-columns:repeat(3,1fr)}
+
+.sg-projects__track{grid-auto-columns:calc((100% - 20px)/3)}
+
+}
+
+@media(max-width:900px) {
+
+.sg-projects__track{grid-auto-columns:calc((100% - 10px)/2)}
+
+}
+
+@media(max-width:620px) {
+
+.sg-projects__track{grid-auto-columns:86%}
+
+}
+
+/* FAQ home uses same approved component width */
+.sg-faq--home{
+  padding:60px 58px;
+  background:#fff;
+}
+
+.sg-faq--home .faq-block{
+  max-width:1480px;
+}
+
+@media(max-width:700px) {
+
+.sg-faq--home{
+    padding:46px 22px;
+  }
+
+}
+
+/* Sprint 27 — точкові правки + порівняння */
+
+/* Головна форма:
+   Ім’я | Телефон
+   Місто | Що потрібно
+           Кнопка
+*/
+.quote-v4 .quote-form--home-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:22px 30px!important;
+  align-items:end;
+}
+
+.quote-v4 .quote-form--home-grid label{
+  display:grid!important;
+  gap:10px!important;
+  min-width:0;
+}
+
+.quote-v4 .quote-form--home-grid label > span{
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+}
+
+.quote-v4 .quote-form--home-grid input{
+  width:100%!important;
+  height:64px!important;
+  min-height:64px!important;
+  padding:0 18px!important;
+  border:1px solid rgba(147,209,186,.58)!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  color:#111!important;
+  font:inherit;
+  outline:none;
+}
+
+@media(max-width:760px) {
+
+.quote-v4 .quote-form--home-grid{
+    grid-template-columns:1fr!important;
+  }
+
+}
+
+/* Форма:
+   Ім'я | Телефон | Місто
+   Що потрібно | Кнопка на дві колонки
+*/
+.quote-v4 .quote-form--home-final{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:14px 16px!important;
+  align-items:end!important;
+  width:min(100%,820px)!important;
+  justify-self:end!important;
+  padding:22px!important;
+  border:1px solid rgba(147,209,186,.58)!important;
+  border-radius:18px!important;
+  background:#fff!important;
+}
+
+.quote-v4 .quote-form--home-final label{
+  display:grid!important;
+  gap:7px!important;
+  min-width:0!important;
+}
+
+.quote-v4 .quote-form--home-final label > span{
+  color:#17211e!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  line-height:1.2!important;
+}
+
+.quote-v4 .quote-form--home-final input{
+  width:100%!important;
+  height:52px!important;
+  min-height:52px!important;
+  padding:0 15px!important;
+  border:1px solid rgba(147,209,186,.58)!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  color:#111!important;
+  font:inherit!important;
+  outline:none!important;
+  box-sizing:border-box!important;
+}
+
+/* 4-те поле однакове за шириною з 1,2,3 */
+.quote-form--home-final__need{
+  grid-column:auto!important;
+  grid-row:auto!important;
+}
+
+/* Кнопка замість зайвого поля */
+.quote-form--home-final__submit{
+  grid-column:1 / -1!important;
+  grid-row:auto!important;
+  justify-self:stretch!important;
+  align-self:end!important;
+  width:100%!important;
+  min-height:52px!important;
+  margin:0!important;
+  border-color:var(--mint)!important;
+  background:var(--mint)!important;
+  color:#07120e!important;
+}
+
+/* Російська/англійська/німецька версії не ламають сітку */
+html[lang="ru"] .quote-form--home-final__submit,
+html[lang="en"] .quote-form--home-final__submit,
+html[lang="de"] .quote-form--home-final__submit{
+  white-space:normal!important;
+  text-align:center!important;
+  line-height:1.2!important;
+}
+
+@media(max-width:980px) {
+
+.quote-v4 .quote-form--home-final{
+    grid-template-columns:1fr!important;
+    width:100%!important;
+    justify-self:stretch!important;
+  }
+
+.quote-form--home-final__need{
+    grid-column:1!important;
+    grid-row:auto!important;
+  }
+
+.quote-form--home-final__submit{
+    grid-column:1!important;
+    grid-row:auto!important;
+  }
+
+}
+
+@media(max-width:700px) {
+
+.quote-v4 .quote-form--home-final{
+    grid-template-columns:1fr!important;
+  }
+
+.quote-form--home-final__need,
+  .quote-form--home-final__submit{
+    grid-column:1!important;
+    grid-row:auto!important;
+  }
+
+}

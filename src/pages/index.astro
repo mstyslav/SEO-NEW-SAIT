@@ -6,6 +6,7 @@ const pageLocale = normalizeLocale(Astro.url.searchParams.get('lang') ?? localeF
 const pageT = translations[pageLocale] ?? translations.uk;
 const lp = (path: string) => localizedPath(path, pageLocale);
 import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/homepage.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FAQBlock from '../components/FAQBlock.astro';
