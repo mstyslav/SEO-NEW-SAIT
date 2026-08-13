@@ -56,7 +56,7 @@ const projects = defineCollection({
     productionTime: z.string().min(1).optional(),
     installationTime: z.string().min(1).optional(),
     hardware: z.string().min(1).optional(),
-    priceFrom: z.number().int().positive().optional(),
+    priceFromPerM2: z.number().positive().optional(),
     priceNote: z.string().min(1).optional()
   })
 });

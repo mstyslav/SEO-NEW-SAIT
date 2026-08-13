@@ -124,8 +124,10 @@ const structuredData = [
         <section class="project-detail-v2__price">
           <p class="eyebrow">Вартість</p>
           <h2>Вартість подібного рішення</h2>
+          {project.priceFromPerM2 && (
+            <p class="project-detail-v2__price-value">Від {project.priceFromPerM2.toLocaleString('uk-UA')} грн/м²</p>
+          )}
           <p>
-            {project.priceFrom && `Подібні рішення починаються від ${project.priceFrom.toLocaleString('uk-UA')} грн. `}
             Вартість розраховується індивідуально та залежить від розмірів конструкції, типу скла, профілю, фурнітури та складності монтажу.
             {project.priceNote && ` ${project.priceNote}`}
           </p>
@@ -224,6 +226,12 @@ const structuredData = [
   }
   .project-detail-v2__price h2 {
     margin: 6px 0 12px;
+  }
+  .project-detail-v2__price-value {
+    margin: 0 0 10px;
+    color: var(--mint-dark);
+    font-size: 22px;
+    font-weight: 800;
   }
   .project-detail-v2__price p {
     max-width: 70ch;
