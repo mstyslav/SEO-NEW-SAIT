@@ -73,21 +73,9 @@
     });
   };
 
+  // Homepage category grid (specific hrefs, SVG icons, sg-home-category-grid layout)
+  // is now rendered server-side directly in src/pages/index.astro — no client rebuild needed.
   const basePath = location.pathname.replace(/^\/(uk|ru|en|de)(?=\/|$)/,'') || '/';
-  if (basePath === '/') {
-    const grid = document.querySelector('.sg-categories__grid');
-    const allLink = document.querySelector('.sg-categories .sg-all-link');
-    if (grid) {
-      grid.classList.add('sg-home-category-grid');
-      const icon = (type) => ({
-        shower:'<svg viewBox="0 0 48 48"><path d="M12 41V18c0-7 5-11 12-11h7v34"/><path d="M21 13h10M25 18v5m-6-2 2 4m10-4-2 4"/></svg>',mirror:'<svg viewBox="0 0 48 48"><ellipse cx="24" cy="24" rx="14" ry="18"/><ellipse cx="24" cy="24" rx="10" ry="14"/><path d="m18 23 7-9m-5 16 9-12"/></svg>',door:'<svg viewBox="0 0 48 48"><path d="M10 42V6h27v36M16 42V11h15v31"/><circle cx="27" cy="26" r="1"/></svg>',rail:'<svg viewBox="0 0 48 48"><path d="M8 38h10V28h10V18h12"/><path d="M9 33 38 10M15 31V22m9 1v-9m9 1V7"/></svg>',partition:'<svg viewBox="0 0 48 48"><path d="M8 8h32v32H8zM24 8v32M8 24h32"/></svg>',facade:'<svg viewBox="0 0 48 48"><path d="M7 41V9h34v32M18 9v32M30 9v32M7 22h34"/></svg>',aluminium:'<svg viewBox="0 0 48 48"><path d="M7 39 20 9h8l13 30M12 30h24M24 9v30"/></svg>',pvc:'<svg viewBox="0 0 48 48"><rect x="8" y="9" width="32" height="30"/><path d="M24 9v30M8 24h32"/><path d="m29 16 5 5-5 5"/></svg>',frameless:'<svg viewBox="0 0 48 48"><path d="M6 38 14 9h20l8 29"/><path d="M14 9v29m20-29v29"/></svg>','business-glass':'<svg viewBox="0 0 48 48"><path d="M6 44V20l6-10h24l6 10v24"/><path d="M6 44h36M14 44V28h8v16M28 44V28h8v16"/></svg>'}[type] || '◇');
-      const items = [
-        ['Душові кабіни','Walk-in, двері, кабіни в нішу, шторки та душові піддони','/dushovi-kabiny/','shower'],['Скляні перегородки','Loft, офісні, міжкімнатні, мобільні та безрамні системи','/sklyani-perehorodky/','partition'],['Скляні двері','Розпашні, розсувні, маятникові та двері в профілі','/sklyani-dveri/','door'],['Скляні огорожі','Сходи, балкони, тераси, безрамні та стійкові рішення','/sklyani-ohorozhi/','rail'],['Дзеркала','LED, у ванну, в рамі, панно та індивідуальні розміри','/dzerkala/','mirror'],['Скляні фасади','Вітринне, структурне та стійково-ригельне скління','/arkhitekturni-systemy/','facade'],['Безрамне скління','Тераси, балкони, альтанки та панорамні розсувні системи','/poslugy/bezramne-sklinnya/','frameless'],['Алюмінієві конструкції','Вікна, двері, розсувні та фасадні системи, зимові сади','/alyuminiievi-konstruktsii/','aluminium'],['Металопластикові конструкції','Вікна, двері, балконні та розсувні системи','/metaloplastykovi-konstruktsii/','pvc'],['Скло для бізнесу','Скляні рішення для магазинів, офісів, ресторанів та комерційних просторів.','/poslugy/sklo-dlia-biznesu/','business-glass',true]
-      ];
-      grid.innerHTML = items.map(([title,text,href,type,tabletMobileOnly]) => `<a class="sg-category-card${tabletMobileOnly ? ' sg-category-card--tablet-mobile-only' : ''}" href="${href}"><span class="sg-category-card__icon">${icon(type)}</span><h2>${title}</h2><p>${text}</p><b>→</b></a>`).join('');
-    }
-    if (allLink) { allLink.href = '/poslugy/'; allLink.textContent = 'Переглянути всі напрямки та послуги →'; }
-  }
 
   if (basePath === '/catalog/dushova-perehorodka-walk-in-black/') {
     const mainImg = document.querySelector('.main-photo img'); const lightbox = document.getElementById('product-lightbox'); const lightboxImg = lightbox?.querySelector('img');
