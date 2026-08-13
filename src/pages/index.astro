@@ -284,14 +284,16 @@ const faq = [
           dragStartX = event.clientX;
           dragStartScroll = projectsCarousel.scrollLeft;
           hasDragged = false;
-          projectsCarousel.classList.add('is-dragging');
-          projectsCarousel.setPointerCapture(event.pointerId);
         });
         projectsCarousel.addEventListener('pointermove', (event) => {
           if (pointerId !== event.pointerId) return;
           const distance = event.clientX - dragStartX;
-          if (Math.abs(distance) > 5) hasDragged = true;
-          projectsCarousel.scrollLeft = dragStartScroll - distance;
+          if (!hasDragged && Math.abs(distance) > 5) {
+            hasDragged = true;
+            projectsCarousel.classList.add('is-dragging');
+            projectsCarousel.setPointerCapture(event.pointerId);
+          }
+          if (hasDragged) projectsCarousel.scrollLeft = dragStartScroll - distance;
         });
         const endProjectDrag = (event) => {
           if (pointerId !== event.pointerId) return;
