@@ -1,0 +1,460 @@
+/* Sprint 24 — commercial proposal flow */
+.quote-page{
+  background:#fff;
+}
+
+.quote-page__hero{
+  padding:72px 0 58px;
+  background:#07150f;
+  color:#fff;
+}
+
+.quote-page__hero-grid{
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:60px;
+  align-items:end;
+}
+
+.quote-page__hero h1{
+  max-width:760px;
+  margin:12px 0 18px;
+  font-size:clamp(46px,6vw,86px);
+  line-height:.92;
+}
+
+.quote-page__steps{
+  display:grid;
+  gap:12px;
+  justify-items:start;
+}
+
+.quote-page__steps span{
+  color:#66736c;
+  font-size:12px;
+  font-weight:750;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.quote-layout{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:30px;
+  align-items:stretch;
+}
+
+.quote-summary,
+.quote-form-card{
+  border:1px solid var(--green-line);
+  border-radius:20px;
+  background:#fff;
+  overflow:hidden;
+  box-shadow:0 18px 60px rgba(16,40,29,.06);
+}
+
+.quote-summary{
+  position:sticky;
+  top:112px;
+}
+
+.quote-summary__image{
+  height:330px;
+  overflow:hidden;
+  background:#edf3f0;
+}
+
+.quote-summary__image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.quote-summary__head,
+.quote-summary__parameters,
+.quote-summary__price,
+.quote-summary__notice{
+  margin-left:26px;
+  margin-right:26px;
+}
+
+.quote-summary--guide{
+  position:static;
+  height:100%;
+  padding:34px;
+}
+
+.quote-summary--guide h2{
+  margin:10px 0 26px;
+  font-size:clamp(28px,3vw,38px);
+}
+
+.quote-guide{
+  display:grid;
+  gap:0;
+  margin:0;
+  padding:0;
+  list-style:none;
+  counter-reset:quote-step;
+}
+
+.quote-guide li{
+  display:grid;
+  grid-template-columns:42px 1fr;
+  gap:3px 14px;
+  padding:18px 0;
+  border-top:1px solid #e3e9e5;
+  counter-increment:quote-step;
+}
+
+.quote-guide li::before{
+  content:"0" counter(quote-step);
+  grid-row:1/3;
+  color:var(--mint-dark);
+  font-weight:800;
+}
+
+.quote-guide b{font-size:16px}
+
+.quote-guide span{grid-column:2;color:var(--muted);font-size:13px;line-height:1.55}
+
+.quote-summary--guide .quote-summary__notice{
+  margin:24px 0 0;
+  padding-top:20px;
+  border-top:1px solid #e3e9e5;
+  font-size:12px;
+}
+
+.quote-summary__head{
+  padding:26px 0 20px;
+  border-bottom:1px solid #e3e9e5;
+}
+
+.quote-summary__head small{
+  color:var(--mint-dark);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.quote-summary__head h2{
+  margin:8px 0 6px;
+  font-size:30px;
+}
+
+.quote-summary__head span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.quote-summary__parameters{
+  margin-top:20px;
+  margin-bottom:20px;
+}
+
+.quote-summary__parameters div{
+  display:grid;
+  grid-template-columns:130px 1fr;
+  gap:18px;
+  padding:10px 0;
+  border-bottom:1px solid #edf0ee;
+}
+
+.quote-summary__parameters dt{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.quote-summary__parameters dd{
+  margin:0;
+  font-size:12px;
+  font-weight:750;
+}
+
+.quote-summary__price{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:20px;
+  padding:18px 0;
+  border-top:1px solid #e3e9e5;
+}
+
+.quote-summary__price span{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+}
+
+.quote-summary__price strong{
+  font-size:28px;
+}
+
+.quote-summary__notice{
+  margin-bottom:26px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.55;
+}
+
+.quote-form-card{
+  display:flex;
+  min-width:0;
+  height:100%;
+  flex-direction:column;
+  padding:34px;
+}
+
+.quote-form-card h2{
+  margin:9px 0 28px;
+  font-size:40px;
+}
+
+.quote-form__submit{
+  min-height:58px;
+}
+
+.quote-form__status{
+  margin:0;
+  padding:14px 16px;
+  border-radius:10px;
+  font-size:12px;
+}
+
+.quote-form__status.is-success{
+  background:#edf8f3;
+  color:#0b6b4a;
+}
+
+@media(max-width:900px) {
+
+.quote-page__hero-grid,
+  .quote-layout{
+    grid-template-columns:1fr;
+  }
+
+.quote-summary{
+    position:static;
+  }
+
+}
+
+@media(max-width:620px) {
+
+.quote-page__hero{
+    padding:52px 0 42px;
+  }
+
+.quote-form-card{
+    padding:24px;
+  }
+
+}
+
+/* Simplified quote form and consistent brand eyebrow in light CTA cards */
+.quote-form--simple{
+  width:100%;
+  gap:18px;
+}
+
+.quote-form--simple .quote-form__row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.quote-form--simple textarea{
+  min-height:142px;
+  resize:vertical;
+}
+
+.quote-form--simple label{
+  min-width:0;
+}
+
+.quote-form--simple label>span{
+  color:#111;
+}
+
+.quote-form--simple input:not([type="checkbox"]),
+.quote-form--simple select{
+  height:54px;
+}
+
+.quote-form--simple .quote-form__submit{
+  width:max-content;
+  max-width:100%;
+  justify-content:center;
+  padding-inline:24px;
+}
+
+@media(max-width:620px) {
+
+.quote-form--simple .quote-form__row{grid-template-columns:1fr}
+
+.quote-form--simple .quote-form__submit{width:100%}
+
+}
+
+/* Порівняння */
+.compare-page{
+  background:#fff;
+}
+
+.compare-hero{
+  padding:72px 0 58px;
+  background:#07150f;
+  color:#fff;
+}
+
+.compare-hero h1{
+  max-width:900px;
+  margin:12px 0 16px;
+  font-size:clamp(48px,6vw,86px);
+  line-height:.94;
+}
+
+.compare-toolbar{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  align-items:end;
+  margin-bottom:26px;
+}
+
+.compare-toolbar h2{
+  margin:8px 0 0;
+}
+
+.compare-toolbar button{
+  border:0;
+  background:transparent;
+  color:#8b4b37;
+  cursor:pointer;
+}
+
+.compare-empty{
+  display:grid;
+  place-items:center;
+  min-height:420px;
+  padding:40px;
+  border:1px dashed var(--green-line);
+  border-radius:18px;
+  background:#f8fcfa;
+  text-align:center;
+}
+
+.compare-empty h3{
+  margin:0;
+  font-size:30px;
+}
+
+.compare-empty p{
+  max-width:530px;
+  color:var(--muted);
+}
+
+.compare-table-wrap{
+  overflow-x:auto;
+  padding-bottom:10px;
+}
+
+.compare-grid{
+  display:grid;
+  grid-template-columns:repeat(var(--compare-columns),minmax(260px,1fr));
+  gap:14px;
+  min-width:max-content;
+}
+
+.compare-card{
+  position:relative;
+  width:min(320px,80vw);
+  overflow:hidden;
+  border:1px solid var(--green-line);
+  border-radius:16px;
+  background:#fff;
+}
+
+.compare-card__remove{
+  position:absolute;
+  z-index:2;
+  top:12px;
+  right:12px;
+  width:34px;
+  height:34px;
+  border:1px solid rgba(255,255,255,.6);
+  border-radius:50%;
+  background:rgba(0,0,0,.55);
+  color:#fff;
+  cursor:pointer;
+}
+
+.compare-card__image{
+  height:240px;
+  background:#edf3f0;
+}
+
+.compare-card__image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.compare-card > small,
+.compare-card > h3,
+.compare-card > strong,
+.compare-card > dl,
+.compare-card > a{
+  margin-left:20px;
+  margin-right:20px;
+}
+
+.compare-card > small{
+  display:block;
+  margin-top:18px;
+  color:var(--mint-dark);
+  text-transform:uppercase;
+  font-size:10px;
+}
+
+.compare-card > h3{
+  margin-top:7px;
+  margin-bottom:8px;
+  font-size:24px;
+}
+
+.compare-card__price{
+  display:block;
+  margin-bottom:18px;
+  font-size:21px;
+}
+
+.compare-card dl{
+  margin-top:0;
+  margin-bottom:18px;
+}
+
+.compare-card dl div{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  padding:10px 0;
+  border-top:1px solid #e7ece9;
+}
+
+.compare-card dt{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.compare-card dd{
+  margin:0;
+  font-size:11px;
+  font-weight:750;
+  text-align:right;
+}
+
+.compare-card > a{
+  width:calc(100% - 40px);
+  justify-content:center;
+  margin-bottom:20px;
+}
