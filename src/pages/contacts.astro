@@ -2,9 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { localeFromPath, normalizeLocale } from '../i18n/helpers';
+import { localeFromPath, normalizeLocale, localizedPath } from '../i18n/helpers';
 
 const locale = normalizeLocale(Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
+const lp = (path: string) => localizedPath(path, locale);
 const ru = locale === 'ru';
 const copy = ru ? {
   title: 'Контакты Space Glass', description: 'Офисы Space Glass в Киеве, Одессе и Львове. Телефон, email, график работы и Google Maps.',
@@ -77,7 +78,7 @@ const offices = [
           </span>
           <input class="contacts-file-input" name="attachment" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf,.dwg" data-file-input />
         </label>
-        <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>{copy.consent} <a href={ru ? '/ru/privacy-policy/' : '/privacy-policy/'}>{copy.privacy}</a>.</span></label>
+        <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>{copy.consent} <a href={lp('/privacy-policy/')}>{copy.privacy}</a>.</span></label>
         <button class="button button--mint" type="submit">{copy.submit}</button>
         <p data-form-status hidden role="status"></p>
       </form>

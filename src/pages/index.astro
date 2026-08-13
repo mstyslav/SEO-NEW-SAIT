@@ -129,7 +129,16 @@ const faq = [
           </div>
         </div>
         <div class="sg-hero__image">
-          <img src="/images/v5/hero.webp" width="1200" height="900" alt="Скляна перегородка Space Glass" fetchpriority="high" />
+          <img
+            src="/images/v5/hero.webp"
+            srcset="/images/v5/hero-480.webp 480w, /images/v5/hero-800.webp 800w, /images/v5/hero-1200.webp 1200w, /images/v5/hero.webp 1600w"
+            sizes="(max-width: 900px) 100vw, 50vw"
+            width="1600" height="987"
+            alt="Скляна перегородка Space Glass"
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+          />
           <span class="sg-glass-line" aria-hidden="true"></span>
         </div>
       </section>
@@ -161,7 +170,7 @@ const faq = [
           {products.map(([title,price,image,status],i) => (
             <a class="sg-product-card" href="/catalog/piddon/">
               <div class="sg-product-card__media">
-                <img src={image} alt={title} loading="lazy" />
+                <img src={image} alt={title} width="152" height="121" loading="lazy" />
                 <span class="sg-heart">♡</span>
               </div>
               <div class="sg-product-card__body">

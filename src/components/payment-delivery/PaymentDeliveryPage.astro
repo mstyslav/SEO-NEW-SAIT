@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../Header.astro';
 import Footer from '../Footer.astro';
 import { breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
-import type { Locale } from '../../i18n/helpers';
+import { localizedPath, type Locale } from '../../i18n/helpers';
 
 type LinkItem = { label: string; href: string };
 type Copy = {
@@ -52,21 +52,21 @@ const localizedOverrides: Partial<Record<Locale, Partial<Copy>>> = {
 for (const locale of ['ru','en','de'] as Locale[]) Object.assign(copies[locale], localizedOverrides[locale]);
 
 const copy = copies[Astro.props.locale as Locale];
-const localizedPrefix = copy.locale === 'uk' ? '' : `/${copy.locale}`;
+const lp = (path: string) => localizedPath(path, copy.locale);
 copy.links = [
   ['Каталог','/catalog/'],['Душові кабіни','/dushovi-kabiny/'],['Скляні перегородки','/sklyani-perehorodky/'],['Скляні двері','/sklyani-dveri/'],['Скляні огорожі','/sklyani-ohorozhi/'],['Дзеркала','/dzerkala/'],['Безрамне скління','/bezramne-configurator/'],['Перголи','/alyuminiievi-konstruktsii/'],['Проєкти','/projects/'],['Конфігуратор','/quote/'],['Гарантія','/services/servis/'],['Публічна оферта','/terms/'],['Політика конфіденційності','/privacy-policy/'],['Контакти','/contacts/']
-].map(([label,href])=>({label,href: localizedPrefix + href}));
+].map(([label,href])=>({label,href: lp(href)}));
 const origin = Astro.site ?? Astro.url.origin;
 const canonical = new URL(Astro.url.pathname, origin).href;
 const structuredData: JsonLdObject[] = [
-  breadcrumbSchema([{label:copy.home,href:new URL(localizedPrefix+'/',origin).href},{label:copy.serviceName,href:canonical}]),
+  breadcrumbSchema([{label:copy.home,href:new URL(lp('/'),origin).href},{label:copy.serviceName,href:canonical}]),
   faqSchema(copy.faq)!,
   {'@type':'Service','@id':`${canonical}#service`,name:copy.serviceName,serviceType:'Payment and delivery for custom glass structures',provider:{'@id':`${new URL('/',origin).href}#organization`},areaServed:{'@type':'Country',name:'Ukraine'},url:canonical,description:copy.description}
 ];
 ---
 <BaseLayout title={copy.title} description={copy.description} locale={copy.locale} structuredData={structuredData}>
   <div class="sg-page-shell"><Header/><main id="main" class="pay-delivery">
-    <section class="inner-hero pay-delivery__hero"><div class="inner-hero__copy"><p class="eyebrow">{copy.eyebrow}</p><h1>{copy.h1}</h1><p class="lead">{copy.lead}</p><div class="pay-delivery__actions"><a class="button button--mint" href={`${localizedPrefix}/contacts/`}>{copy.ctaPrimary}</a><a class="button button--outline" href="#faq">{copy.ctaSecondary}</a></div></div><div class="inner-hero__visual"><span>15–30</span><small>working days</small></div></section>
+    <section class="inner-hero pay-delivery__hero"><div class="inner-hero__copy"><p class="eyebrow">{copy.eyebrow}</p><h1>{copy.h1}</h1><p class="lead">{copy.lead}</p><div class="pay-delivery__actions"><a class="button button--mint" href={lp("/contacts/")}>{copy.ctaPrimary}</a><a class="button button--outline" href="#faq">{copy.ctaSecondary}</a></div></div><div class="inner-hero__visual"><span>15–30</span><small>working days</small></div></section>
     <section class="inner-section"><h2>{copy.sections.quick}</h2><div class="pay-delivery__facts">{copy.quickFacts.map((item)=><article>{item}</article>)}</div></section>
     {[['payment',copy.payment],['prepayment',copy.prepayment],['delivery',copy.delivery],['nova',copy.nova],['courier',copy.courier],['pickup',copy.pickup]].map(([key,items])=><section class="inner-section pay-delivery__text"><h2>{copy.sections[key]}</h2><ul>{items.map((item)=><li>{item}</li>)}</ul></section>)}
     <section class="inner-section pay-delivery__text"><h2>{copy.sections.tracking}</h2><p>{copy.tracking}</p><a class="button button--mint" href="https://novaposhta.ua/tracking" target="_blank" rel="noopener noreferrer nofollow">{copy.trackingButton}</a></section>
@@ -75,6 +75,6 @@ const structuredData: JsonLdObject[] = [
     <section class="inner-section pay-delivery__warning"><h2>{copy.warningTitle}</h2><ul>{copy.warning.map((item)=><li>{item}</li>)}</ul></section>
     <section id="faq" class="inner-section pay-delivery__faq"><h2>{copy.sections.faq}</h2>{copy.faq.map((item)=><details open><summary>{item.question}</summary><p>{item.answer}</p></details>)}</section>
     <section class="inner-section"><h2>{copy.relatedTitle}</h2><div class="pay-delivery__links">{copy.links.map((link)=><a href={link.href}>{link.label}</a>)}</div></section>
-    <section class="inner-cta"><div><p class="eyebrow">Space Glass</p><h2>{copy.ctaTitle}</h2><p>{copy.ctaText}</p></div><a class="button button--white" href={`${localizedPrefix}/contacts/`}>{copy.ctaPrimary}</a></section>
+    <section class="inner-cta"><div><p class="eyebrow">Space Glass</p><h2>{copy.ctaTitle}</h2><p>{copy.ctaText}</p></div><a class="button button--white" href={lp("/contacts/")}>{copy.ctaPrimary}</a></section>
   </main><Footer/></div>
 </BaseLayout>
