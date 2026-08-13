@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FAQBlock from '../../components/FAQBlock.astro';
+import { knowledgeArticles, getKnowledgeArticle } from '../../data/knowledge-articles';
+import { getFullKnowledgeSections } from '../../data/knowledge-expert-sections';
+import { breadcrumbSchema, faqSchema } from '../../seo/schema';
+import { expandFaq } from '../../data/expand-faq';
+
+export function getStaticPaths() {
+  return knowledgeArticles.map((article) => ({ params: { slug: article.slug }, props: { article } }));
+}
+
+const { article } = Astro.props;
+const origin = Astro.site ?? Astro.url.origin;
+const url = new URL(`/knowledge/${article.slug}/`, origin);
+const related = article.related.map(getKnowledgeArticle).filter(Boolean);
+const sections = getFullKnowledgeSections(article);
+const readingTime = Math.max(article.readingTime, Math.ceil(sections.length * 1.15));
+const expandedFaq = expandFaq(article.faq, article.title, 'uk', 20);
+const structuredData = [
+  {
+    '@type': 'Article',
+    '@id': `${url.href}#article`,
+    headline: article.title,
+    description: article.description,
+    datePublished: '2026-08-12',
+    dateModified: '2026-08-12',
+    inLanguage: 'uk',
+    mainEntityOfPage: { '@id': `${url.href}#webpage` },
+    author: { '@type': 'Organization', name: 'Space Glass', url: new URL('/', origin).href },
+    publisher: { '@id': `${new URL('/', origin).href}#organization` }
+  },
+  breadcrumbSchema([
+    { label: 'Головна', href: new URL('/', origin) },
+    { label: 'База знань', href: new URL('/knowledge/', origin) },
+    { label: article.title, href: url }
+  ]),
+  faqSchema(expandedFaq.map(([question, answer]) => ({ question, answer })))
+].filter(Boolean);
+---
+<BaseLayout
+  title={`${article.title} | Space Glass`}
+  description={article.description}
+  schemaType="Article"
+  structuredData={structuredData}
+  alternateLocales={['uk']}
+>
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main">
+      <article>
+        <header class="knowledge-article-hero knowledge-article-hero--compact">
+          <div class="knowledge-article-hero__copy">
+            <p class="eyebrow">База знань · {article.category}</p>
+            <h1>{article.title}</h1>
+            <p class="lead">{article.intro}</p>
+            <div class="article-meta"><span>Оновлено: серпень 2026</span><span>{readingTime} хв читання</span><span>{sections.length} експертних блоків</span></div>
+          </div>
+          <div class="knowledge-article-hero__visual" aria-hidden="true"><span>SPACE GLASS GUIDE</span></div>
+        </header>
+
+        <nav class="article-path" aria-label="Корисні наступні кроки">
+          <a href={article.serviceHref}><span>01 · Відповідна послуга</span><strong>{article.serviceLabel}</strong></a>
+          <a href="/projects/"><span>02 · Практичний досвід</span><strong>Переглянути реалізовані проєкти</strong></a>
+          <a href="/quote/"><span>03 · Ваш об’єкт</span><strong>Отримати попередній розрахунок</strong></a>
+        </nav>
+
+        <div class="article-layout">
+          <aside class="article-toc">
+            <strong>У матеріалі</strong>
+            {sections.map((section) => <a href={`#${section.id}`}>{section.title}</a>)}
+          </aside>
+          <div class="article-content">
+            {sections.map((section, index) => (
+              <section>
+                <h2 id={section.id}>{section.title}</h2>
+                {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+                {section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}
+                {index === 0 && <div class="article-callout"><strong>Порада Space Glass</strong><p>Фінальне рішення приймайте після перевірки розмірів, основи та сценарію користування. Однаковий вигляд не означає однаковий конструктив.</p></div>}
+                {index === 4 && <div class="article-service-card"><p class="eyebrow">Пов’язане рішення Space Glass</p><h3>{article.serviceLabel}</h3><p>Перегляньте варіанти конструкцій, вимоги до заміру та можливості індивідуального виготовлення.</p><a href={article.serviceHref}>Перейти на сторінку послуги →</a></div>}
+              </section>
+            ))}
+          </div>
+          <aside class="article-side">
+            <p class="eyebrow eyebrow--light">Потрібна допомога?</p>
+            <h2>Розберемо ваше завдання</h2>
+            <p>Надішліть фото, приблизні розміри та місто — підкажемо наступний крок.</p>
+            <a class="button button--white" href="/quote/">Отримати консультацію</a>
+            <a class="article-side__service" href={article.serviceHref}>{article.serviceLabel} →</a>
+          </aside>
+        </div>
+
+        <section class="article-related">
+          <div class="category-heading"><div><p class="eyebrow">Продовжити читання</p><h2>Матеріали за темою</h2></div><a href="/knowledge/">Усі матеріали →</a></div>
+          <div class="article-related-grid">
+            {related.map((item, index) => item && <a class="article-related-card" href={`/knowledge/${item.slug}/`}><span>{String(index + 1).padStart(2, '0')}</span><h3>{item.title}</h3><p>{item.description}</p></a>)}
+          </div>
+        </section>
+
+        <section class="article-related article-faq-section">
+          <FAQBlock title={`Поширені запитання: ${article.title}`} intro="20 практичних відповідей перед замовленням. Перші 6 відкриті для швидкого перегляду, решту можна розгорнути кнопкою." items={expandedFaq} visibleCount={6} />
+        </section>
+
+        <section class="inner-cta">
+          <div><p class="eyebrow eyebrow--light">Наступний крок</p><h2>Отримайте розрахунок під ваші розміри</h2><p>Форма пояснює, які дані потрібні, і дозволяє додати фото або креслення.</p></div>
+          <a class="button button--white" href="/quote/">Перейти до розрахунку</a>
+        </section>
+      </article>
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>

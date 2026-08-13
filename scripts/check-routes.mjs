@@ -12,6 +12,8 @@ const routes = [
   '/dzerkala-configurator/',
   '/uk/catalog/',
   '/uk/rishennya/',
+  '/uk/projects/',
+  '/uk/projects/loft-kyiv/',
   '/ru/catalog/',
   '/ru/rishennya/',
   '/sklyani-perehorodky/loft/',
@@ -45,9 +47,14 @@ for (const route of routes) {
   const key = route.replace(/^\//, '').replace(/\/$/, '');
   const direct = path.join(pages, `${key}.astro`);
   const index = path.join(pages, key, 'index.astro');
+  const unprefixedKey = key.replace(/^uk\//, '');
+  const localizedSource = key.startsWith('uk/') && (
+    fs.existsSync(path.join(pages, `${unprefixedKey}.astro`)) ||
+    fs.existsSync(path.join(pages, unprefixedKey, 'index.astro'))
+  );
 
   const isGeneratedSeoRoute = generatedSeoRoutes.some((slug) => key === slug || key.endsWith(`/${slug}`));
-  if (!fs.existsSync(direct) && !fs.existsSync(index) && !isGeneratedSeoRoute) {
+  if (!fs.existsSync(direct) && !fs.existsSync(index) && !localizedSource && !isGeneratedSeoRoute) {
     missing.push(route);
   }
 }

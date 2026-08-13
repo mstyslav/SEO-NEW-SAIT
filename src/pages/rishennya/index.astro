@@ -37,15 +37,31 @@ const solutions = [
 
 <style>
   .projects-v14-grid > a {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
     overflow: hidden;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #fff 80%, #f2faf6);
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  }
+
+  .projects-v14-grid > a:hover {
+    border-color: #96cdb9;
+    box-shadow: 0 16px 38px rgba(10, 70, 50, .08);
+    transform: translateY(-2px);
   }
 
   .projects-v14-grid .solution-image {
+    display: block;
     width: calc(100% + 2px);
+    height: auto;
+    min-height: 0;
     margin: -1px -1px 0;
     padding: 0;
     overflow: hidden;
-    aspect-ratio: 640 / 416;
+    aspect-ratio: 20 / 13;
+    background: none;
     line-height: 0;
   }
 
@@ -58,5 +74,16 @@ const solutions = [
     padding: 0;
     object-fit: cover;
     object-position: center;
+    transform: scale(1.005);
+  }
+
+  @media (max-width: 760px) {
+    .projects-v14-grid > a {
+      border-radius: 14px;
+    }
+
+    .projects-v14-grid .solution-image {
+      aspect-ratio: 16 / 9;
+    }
   }
 </style>

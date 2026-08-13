@@ -1,0 +1,28 @@
+---
+import { projectCategoryMap } from '../../data/project-taxonomy';
+
+const { project, hrefPrefix = '/projects' } = Astro.props;
+const category = projectCategoryMap[project.category];
+const href = `${hrefPrefix}/${project.slug}/`;
+---
+<article class="project-card-v2" data-project-card data-category={project.category} data-city={project.city}>
+  <a href={href} aria-label={`Переглянути проєкт: ${project.cardTitle}`}>
+    <div class="project-card-v2__media">
+      <img
+        src={project.cover.src}
+        width={project.cover.width}
+        height={project.cover.height}
+        alt={project.cover.alt}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="project-card-v2__body">
+      <p>{project.city} <span aria-hidden="true">/</span> {category.label}</p>
+      <h2>{project.cardTitle}</h2>
+      <span class="project-card-v2__type">{project.constructionType}</span>
+      <span class="project-card-v2__description">{project.shortDescription}</span>
+      <b>Переглянути проєкт <span aria-hidden="true">→</span></b>
+    </div>
+  </a>
+</article>

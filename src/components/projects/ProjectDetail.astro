@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import FAQBlock from '../FAQBlock.astro';
+import GoogleReviews from '../GoogleReviews.astro';
+import ProjectGallery from './ProjectGallery.astro';
+import ProjectCard from './ProjectCard.astro';
+import ProjectRequestForm from './ProjectRequestForm.astro';
+import { projectCategoryMap } from '../../data/project-taxonomy';
+import { buildProjectFaq } from '../../data/project-faq';
+import { projectRequestExample } from '../../data/project-request-examples';
+import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
+
+const { project, relatedProjects = [], locale = 'uk' } = Astro.props;
+const origin = Astro.site ?? Astro.url.origin;
+const projectPath = `/uk/projects/${project.slug}/`;
+const canonical = absoluteUrl(projectPath, origin);
+const category = projectCategoryMap[project.category];
+const projectFaq = buildProjectFaq(project);
+const faqItems = projectFaq.map(({ question, answer }) => [question, answer] as [string, string]);
+const requestExample = projectRequestExample(project);
+
+const projectSchema: JsonLdObject = {
+  '@type': 'CreativeWork',
+  '@id': `${canonical}#project`,
+  url: canonical,
+  name: project.h1,
+  headline: project.h1,
+  description: project.seo.description,
+  inLanguage: locale,
+  image: [project.cover, ...project.gallery].map((image) => ({
+    '@type': 'ImageObject',
+    url: absoluteUrl(image.src, origin),
+    width: image.width,
+    height: image.height,
+    caption: image.caption ?? image.alt
+  })),
+  creator: { '@id': `${new URL('/', origin).href}#organization` },
+  locationCreated: { '@type': 'Place', name: project.city },
+  about: [project.constructionType, category.label]
+};
+
+const structuredData = [
+  projectSchema,
+  breadcrumbSchema([
+    { label: 'Головна', href: absoluteUrl('/uk/', origin) },
+    { label: 'Наші проєкти', href: absoluteUrl('/uk/projects/', origin) },
+    { label: project.h1, href: canonical }
+  ]),
+  faqSchema(projectFaq)
+].filter(Boolean) as JsonLdObject[];
+---
+<BaseLayout
+  title={project.seo.title}
+  description={project.seo.description}
+  locale={locale}
+  image={project.cover.src}
+  structuredData={structuredData}
+  alternateLocales={['uk']}
+>
+  <div class="sg-page-shell">
+    <Header locale={locale} />
+    <main id="main" class="project-detail-v2">
+      <section class="project-detail-v2__hero">
+        <div class="project-detail-v2__hero-copy">
+          <p class="eyebrow">{project.city} / {project.objectType}</p>
+          <h1>{project.h1}</h1>
+          <p class="lead">{project.shortDescription}</p>
+          <a class="button button--mint" href="#project-request">Розрахувати подібний проєкт</a>
+        </div>
+        <div class="project-detail-v2__hero-media">
+          <img src={project.cover.src} width={project.cover.width} height={project.cover.height} alt={project.cover.alt} loading="eager" decoding="async" fetchpriority="high" />
+        </div>
+      </section>
+
+      <section class="project-detail-v2__facts" aria-label="Характеристики проєкту">
+        {project.characteristics.map(({ label, value }) => <div><b>{label}</b><span>{value}</span></div>)}
+      </section>
+
+      <div class="project-detail-v2__wrap">
+        <section class="project-detail-v2__story">
+          <article><p class="eyebrow">Задача клієнта</p><h2>{project.clientTask.title}</h2><p>{project.clientTask.text}</p></article>
+          <article><p class="eyebrow">Рішення Space Glass</p><h2>{project.solution.title}</h2><p>{project.solution.text}</p></article>
+        </section>
+
+        <ProjectGallery images={project.gallery} cover={project.cover} title="Деталі реалізованої конструкції" />
+
+        <section class="project-detail-v2__technical">
+          <article><p class="eyebrow">Матеріали</p><h2>Що використали у конструкції</h2><ul>{project.materials.map((material) => <li>{material}</li>)}</ul></article>
+          <article><p class="eyebrow">Монтаж</p><h2>{project.installation.title}</h2><p>{project.installation.text}</p></article>
+          <article><p class="eyebrow">Результат</p><h2>{project.result.title}</h2><p>{project.result.text}</p></article>
+        </section>
+
+        <aside class="project-detail-v2__service-link">
+          <div><p class="eyebrow">Від рішення до замовлення</p><h2>Потрібне схоже рішення?</h2></div>
+          <a href={project.serviceLink.href}>{project.serviceLink.label} <span aria-hidden="true">→</span></a>
+        </aside>
+
+        <section class="project-detail-v2__faq">
+          <FAQBlock title={`Питання про подібні ${project.constructionType.toLowerCase()}`} intro="Відповіді про розрахунок, індивідуальні розміри, матеріали, монтаж і догляд." items={faqItems} visibleCount={6} locale={locale} />
+        </section>
+
+        {relatedProjects.length > 0 && (
+          <section class="project-detail-v2__related">
+            <div class="project-section-head-v2"><p class="eyebrow">Схожі проєкти</p><h2>Інші реалізовані рішення</h2></div>
+            <div class="projects-index-v2__grid">{relatedProjects.map((item) => <ProjectCard project={item} hrefPrefix="/uk/projects" />)}</div>
+          </section>
+        )}
+      </div>
+
+      <GoogleReviews />
+
+      <ProjectRequestForm projectTitle={project.cardTitle} city={project.city} requestExample={requestExample} />
+    </main>
+    <Footer locale={locale} />
+  </div>
+</BaseLayout>

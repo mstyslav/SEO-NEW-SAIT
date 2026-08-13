@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import SolutionRequestForm from '../../components/SolutionRequestForm.astro';
 
 const services = [
   ['Скляні вітрини', 'Панорамні вітрини для магазинів, бутиків і шоурумів з акцентом на максимальну прозорість та огляд товару.'],
@@ -28,7 +29,7 @@ const faq = [
         <h1>Скляні конструкції для магазинів, бутиків і шоурумів</h1>
         <p class="lead">Вітрини, фасадне скління, вхідні групи, двері та перегородки на замовлення. Створюємо прозорі комерційні простори, які відкривають товар покупцеві та підкреслюють архітектуру бренду.</p>
         <div class="hero__actions">
-          <a class="button button--mint" href="#quote">Отримати розрахунок →</a>
+          <a class="button button--mint" href="#solution-request">Отримати розрахунок →</a>
           <a class="button button--outline" href="/projects/">Переглянути проєкти</a>
         </div>
       </section>
@@ -39,14 +40,14 @@ const faq = [
           <h2>Вітрина, яка працює на продаж</h2>
           <p>Скло дає максимум світла й огляду, а правильно спроєктовані профілі, двері та вузли створюють чистий сучасний фасад. Підбираємо рішення з урахуванням розмірів, безпеки, інтенсивності використання та дизайну приміщення.</p>
         </div>
-        <a class="sg-project-image" href="#quote"><img src="/images/solutions/solution-shop.webp" width="1280" height="832" alt="Преміальний магазин зі скляною вітриною, фасадом та вхідною групою" fetchpriority="high" decoding="async" /></a>
+        <a class="sg-project-image" href="#solution-request"><img src="/images/solutions/solution-shop.webp" width="1280" height="832" alt="Преміальний магазин зі скляною вітриною, фасадом та вхідною групою" fetchpriority="high" decoding="async" /></a>
       </section>
 
       <section class="sg-categories">
         <div class="sg-section-title"><h2>Що можемо реалізувати</h2></div>
         <div class="sg-categories__grid">
           {services.map(([title,text]) => (
-            <a class="sg-category-card" href="#quote">
+            <a class="sg-category-card" href="#solution-request">
               <span class="sg-category-card__icon">◇</span>
               <h2>{title}</h2>
               <p>{text}</p>
@@ -73,16 +74,7 @@ const faq = [
         </div>
       </section>
 
-      <section id="quote" class="section quote-v4">
-        <div class="container quote-v4__grid">
-          <div>
-            <p class="eyebrow eyebrow--light">Розрахунок</p>
-            <h2>Плануєте скління магазину?</h2>
-            <p>Надішліть фото, креслення або приблизні розміри. Допоможемо підібрати конструкцію та підготуємо попередній розрахунок.</p>
-          </div>
-          <div><a class="button button--mint" href="/contacts/">Отримати розрахунок →</a></div>
-        </div>
-      </section>
+      <SolutionRequestForm solutionTitle="Скляні конструкції для магазину" example="Скляна вітрина та вхідна група для магазину у Львові" />
     </main>
     <Footer />
   </div>

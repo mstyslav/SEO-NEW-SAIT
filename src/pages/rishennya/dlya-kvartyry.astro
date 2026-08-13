@@ -2,11 +2,12 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import SolutionRequestForm from '../../components/SolutionRequestForm.astro';
 const items = ['Консультація і підбір рішення','Замір та технічна перевірка','Індивідуальне виготовлення','Доставка та монтаж','Гарантія та сервіс','Пов’язані товари й проєкти'];
 ---
 <BaseLayout title="Скляні рішення для квартири — Space Glass" description="Душові, перегородки, двері, дзеркала та огорожі для сучасної квартири.">
 <div class="sg-page-shell"><Header/><main id="main">
 <section class="inner-hero"><div class="inner-hero__copy"><p class="eyebrow">Готові рішення</p><h1>Скляні рішення для квартири</h1><p class="lead">Душові, перегородки, двері, дзеркала та огорожі для сучасної квартири.</p><a class="button button--mint" href="#solution-request">Отримати розрахунок</a></div><div class="inner-hero__visual"><span>SPACE GLASS</span></div></section>
-<section class="inner-section"><div class="inner-section__heading"><p class="eyebrow">Комплексний підхід</p><h2>Від ідеї до готової конструкції</h2></div><div class="inner-card-grid">{items.map((item,i)=><article class="inner-card"><span>{String(i+1).padStart(2,'0')}</span><h3>{item}</h3><p>Підбираємо формат роботи під конкретний об’єкт і задачу.</p><a href="#">Детальніше →</a></article>)}</div></section>
-<section id="solution-request" class="inner-cta"><div><p class="eyebrow eyebrow--light">Проєкт</p><h2>Покажіть нам ваш простір</h2><p>Надішліть фото, розміри або креслення.</p></div><a class="button button--white" href="mailto:info@space-glass.com.ua">Надіслати запит</a></section>
+<section class="inner-section"><div class="inner-section__heading"><p class="eyebrow">Комплексний підхід</p><h2>Від ідеї до готової конструкції</h2></div><div class="inner-card-grid">{items.map((item,i)=><article class="inner-card"><span>{String(i+1).padStart(2,'0')}</span><h3>{item}</h3><p>Підбираємо формат роботи під конкретний об’єкт і задачу.</p><a href="#solution-request">Детальніше →</a></article>)}</div></section>
+<SolutionRequestForm solutionTitle="Скляні рішення для квартири" example="Loft-перегородка для кухні з матовим склом у Києві" />
 </main><Footer/></div></BaseLayout>

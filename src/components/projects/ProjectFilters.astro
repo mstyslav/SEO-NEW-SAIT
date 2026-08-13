@@ -1,0 +1,47 @@
+---
+import { projectCategories } from '../../data/project-taxonomy';
+
+const { projects } = Astro.props;
+const counts = Object.fromEntries(projectCategories.map(({ id }) => [
+  id,
+  projects.filter((project) => project.category === id).length
+]));
+---
+<div class="project-filters-v2" data-project-filters aria-label="Фільтри проєктів">
+  <button class="is-active" type="button" data-project-filter="all" aria-pressed="true">
+    Всі <span>{projects.length}</span>
+  </button>
+  {projectCategories.map((category) => (
+    <button type="button" data-project-filter={category.id} aria-pressed="false">
+      {category.label} <span>{counts[category.id]}</span>
+    </button>
+  ))}
+</div>
+
+<script>
+  const filters = document.querySelector('[data-project-filters]');
+  const cards = Array.from(document.querySelectorAll('[data-project-card]'));
+  const emptyState = document.querySelector('[data-projects-empty]');
+
+  filters?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-project-filter]');
+    if (!(button instanceof HTMLButtonElement)) return;
+
+    const selected = button.dataset.projectFilter;
+    let visible = 0;
+
+    filters.querySelectorAll('[data-project-filter]').forEach((item) => {
+      const isActive = item === button;
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-pressed', String(isActive));
+    });
+
+    cards.forEach((card) => {
+      const matches = selected === 'all' || card.getAttribute('data-category') === selected;
+      card.toggleAttribute('hidden', !matches);
+      if (matches) visible += 1;
+    });
+
+    emptyState?.toggleAttribute('hidden', visible > 0);
+  });
+</script>

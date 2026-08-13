@@ -20,26 +20,24 @@ import catalog from '../../data/catalog.json';
       </div>
     </section>
 
-    <div class="catalog-toolbar">
-      <button class="filter-mobile" type="button">Фільтри</button>
-      <span>1 товар</span>
-      <select aria-label="Сортування"><option>Рекомендовані</option><option>Новинки</option><option>Ціна: від нижчої</option><option>Ціна: від вищої</option></select>
+    <div class="catalog-filter-controls">
+      <button class="filter-mobile" type="button" data-filter-mobile aria-expanded="false" aria-controls="catalog-filters">Підібрати рішення</button>
+      <p><strong data-results-count>1</strong> доступне рішення</p>
     </div>
 
     <section class="catalog-layout">
-      <aside class="filters" aria-label="Фільтр товарів">
-        <div class="filter-title"><h2>Фільтри</h2><button type="button">Очистити</button></div>
-        <details open><summary>Категорія</summary><label><input type="checkbox" /> Душові кабіни <span>1</span></label><label><input type="checkbox" /> Перегородки <span>0</span></label><label><input type="checkbox" /> Двері <span>0</span></label><label><input type="checkbox" /> Огорожі <span>0</span></label></details>
-        <details open><summary>Тип конструкції</summary><label><input type="checkbox" /> Душова перегородка <span>1</span></label><label><input type="checkbox" /> Розпашна <span>0</span></label><label><input type="checkbox" /> Розсувна <span>0</span></label></details>
-        <details><summary>Скло</summary><label><input type="checkbox" /> Прозоре <span>1</span></label><label><input type="checkbox" /> Satin <span>1</span></label><label><input type="checkbox" /> Сіре <span>1</span></label><label><input type="checkbox" /> Бронза <span>1</span></label></details>
-        <details><summary>Товщина скла</summary><label><input type="checkbox" /> 8 мм <span>1</span></label><label><input type="checkbox" /> 10 мм <span>1</span></label></details>
-        <details><summary>Фурнітура</summary><label><input type="checkbox" /> Чорна матова <span>1</span></label><label><input type="checkbox" /> Хром <span>1</span></label><label><input type="checkbox" /> Брашована <span>1</span></label></details>
-        <details><summary>Монтаж</summary><label><input type="checkbox" /> З монтажем <span>1</span></label><label><input type="checkbox" /> Без монтажу <span>1</span></label></details>
-        <p class="filter-note">Під час інтеграції з WooCommerce ці параметри стануть Global Attributes. Фільтри не створюватимуть індексовані SEO-дублі.</p>
+      <aside class="filters" id="catalog-filters" aria-label="Підбір конструкції" data-catalog-filters>
+        <div class="filter-title"><div><p class="eyebrow">Параметри</p><h2>Підібрати рішення</h2></div><button type="button" data-filter-reset hidden>Скинути</button></div>
+        <details open><summary>Тип конструкції</summary><label><input type="checkbox" name="construction" value="fixed" /> Стаціонарна</label><label><input type="checkbox" name="construction" value="hinged" /> Розпашна</label><label><input type="checkbox" name="construction" value="sliding" /> Розсувна</label><label><input type="checkbox" name="construction" value="folding" /> Складна</label><label><input type="checkbox" name="construction" value="frameless" /> Безрамна</label></details>
+        <details open><summary>Вигляд скла</summary><label><input type="checkbox" name="glass" value="clear" /> Прозоре</label><label><input type="checkbox" name="glass" value="extra-clear" /> Просвітлене</label><label><input type="checkbox" name="glass" value="satin" /> Матове / Satin</label><label><input type="checkbox" name="glass" value="tinted" /> Тоноване сіре або бронза</label><label><input type="checkbox" name="glass" value="fluted" /> Рифлене</label></details>
+        <details><summary>Товщина скла</summary><label><input type="checkbox" name="thickness" value="8" /> 8 мм</label><label><input type="checkbox" name="thickness" value="10" /> 10 мм</label><label><input type="checkbox" name="thickness" value="12" /> 12 мм</label><label><input type="checkbox" name="thickness" value="calculated" /> За технічним розрахунком</label></details>
+        <details><summary>Колір фурнітури</summary><label><input type="checkbox" name="hardware" value="black" /> Чорний матовий</label><label><input type="checkbox" name="hardware" value="chrome" /> Хром</label><label><input type="checkbox" name="hardware" value="brushed" /> Брашована сталь</label><label><input type="checkbox" name="hardware" value="brass" /> Латунь / золото</label></details>
+        <details><summary>Потрібні послуги</summary><label><input type="checkbox" name="service" value="measurement" /> Професійний замір</label><label><input type="checkbox" name="service" value="manufacture" /> Виготовлення</label><label><input type="checkbox" name="service" value="delivery" /> Доставка</label><label><input type="checkbox" name="service" value="installation" /> Монтаж</label></details>
+        <a class="filter-help" href="/quote/">Не впевнені у параметрах? Допоможемо підібрати →</a>
       </aside>
 
       <div class="results">
-        <article class="product-card">
+        <article class="product-card" data-catalog-product data-search="душова скляна перегородка walk-in sg-00001" data-construction="fixed frameless" data-glass="clear extra-clear satin tinted" data-thickness="8 10" data-hardware="black chrome brushed" data-service="measurement manufacture delivery installation">
           <div class="product-media-wrap">
             <a class="product-media" href="/catalog/dushova-perehorodka-walk-in-black/">
               <img src="/images/v5/product-1.webp" alt="Душова скляна перегородка із загартованого скла" width="760" height="540" loading="eager" />
@@ -55,6 +53,7 @@ import catalog from '../../data/catalog.json';
             <a class="cta" href="/catalog/dushova-perehorodka-walk-in-black/">Переглянути та розрахувати →</a>
           </div>
         </article>
+        <p class="catalog-empty" data-catalog-empty hidden>За вибраними параметрами готової картки поки немає. Надішліть запит — ми підберемо індивідуальну конструкцію.</p>
       </div>
     </section>
 
@@ -65,8 +64,188 @@ import catalog from '../../data/catalog.json';
   </main>
   <Footer />
 </div>
+
+<script>
+  const search = document.querySelector<HTMLInputElement>('.catalog-search input');
+  const searchButton = document.querySelector<HTMLButtonElement>('.catalog-search button');
+  const filterRoot = document.querySelector<HTMLElement>('[data-catalog-filters]');
+  const products = [...document.querySelectorAll<HTMLElement>('[data-catalog-product]')];
+  const reset = document.querySelector<HTMLButtonElement>('[data-filter-reset]');
+  const empty = document.querySelector<HTMLElement>('[data-catalog-empty]');
+  const count = document.querySelector<HTMLElement>('[data-results-count]');
+  const mobileToggle = document.querySelector<HTMLButtonElement>('[data-filter-mobile]');
+  const updateCatalog = () => {
+    const query = search?.value.trim().toLocaleLowerCase('uk') ?? '';
+    const checked = [...filterRoot?.querySelectorAll<HTMLInputElement>('input:checked') ?? []];
+    const groups = new Map<string, string[]>();
+    checked.forEach((input) => groups.set(input.name, [...(groups.get(input.name) ?? []), input.value]));
+    let visible = 0;
+    products.forEach((product) => {
+      const matchesSearch = !query || (product.dataset.search ?? '').includes(query);
+      const matchesFilters = [...groups].every(([name, values]) => {
+        const available = (product.dataset[name] ?? '').split(' ');
+        return values.some((value) => available.includes(value));
+      });
+      product.hidden = !(matchesSearch && matchesFilters);
+      if (!product.hidden) visible += 1;
+    });
+    if (empty) empty.hidden = visible > 0;
+    if (count) count.textContent = String(visible);
+    if (reset) reset.hidden = checked.length === 0 && !query;
+  };
+  filterRoot?.addEventListener('change', updateCatalog);
+  search?.addEventListener('input', updateCatalog);
+  searchButton?.addEventListener('click', updateCatalog);
+  reset?.addEventListener('click', () => {
+    filterRoot?.querySelectorAll<HTMLInputElement>('input:checked').forEach((input) => input.checked = false);
+    if (search) search.value = '';
+    updateCatalog();
+  });
+  mobileToggle?.addEventListener('click', () => {
+    const open = filterRoot?.classList.toggle('is-open') ?? false;
+    mobileToggle.setAttribute('aria-expanded', String(open));
+  });
+</script>
 </BaseLayout>
 
 <style>
-.catalog-page{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:#18211e;--brand:var(--sg-brand-mint,#7fd7bd)}.catalog-head{max-width:1320px;margin:auto;padding:56px 24px 30px;display:flex;justify-content:space-between;gap:32px;align-items:end;border-bottom:1px solid #e5ece9}.catalog-head h1{font-size:clamp(40px,5vw,64px);line-height:.98;letter-spacing:-.045em;margin:8px 0 14px}.catalog-head p{max-width:650px;color:#59645f;font-size:17px}.catalog-search{display:flex;min-width:min(460px,100%);border:1px solid #cfdad6;border-radius:10px;overflow:hidden;background:#fff}.catalog-search input{flex:1;border:0;padding:14px 16px;font-size:15px;outline:0}.catalog-search button{border:0;background:var(--brand);padding:0 20px;font-weight:700}.catalog-toolbar{max-width:1320px;margin:auto;padding:18px 24px;display:flex;align-items:center;gap:16px;border-bottom:1px solid #edf1ef}.catalog-toolbar span{margin-right:auto;color:#66716d;font-size:14px}.catalog-toolbar select{padding:10px 12px;border:1px solid #d8e0dd;border-radius:8px;background:#fff}.filter-mobile{display:none}.catalog-layout{max-width:1320px;margin:auto;padding:28px 24px 70px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:34px}.filters{align-self:start;position:sticky;top:90px}.filter-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.filter-title h2{font-size:24px;margin:0}.filter-title button{border:0;background:none;color:#18836a;font-size:13px}.filters details{border-bottom:1px solid #e1e8e5;padding:14px 0}.filters summary{font-weight:700;font-size:15px;cursor:pointer}.filters label{display:flex;gap:9px;align-items:center;padding:8px 0;font-size:14px;color:#394440}.filters label span{margin-left:auto;color:#8c9692;font-size:12px}.filter-note{font-size:12px;line-height:1.5;color:#7b8682;margin-top:18px}.results{min-width:0}.product-card{border:1px solid #dfe6e3;border-radius:12px;overflow:hidden;background:#fff;max-width:430px}.product-media-wrap{position:relative}.product-media{display:block;position:relative;aspect-ratio:1.5/1;background:#f1f4f3;overflow:hidden}.product-media img{width:100%;height:100%;object-fit:cover;display:block}.badge{position:absolute;left:12px;top:12px;background:#12322d;color:white;border-radius:7px;padding:6px 9px;font-size:11px;text-transform:uppercase}.wishlist{position:absolute;right:12px;top:12px;z-index:3;width:40px;height:40px;border-radius:8px;border:1px solid #d5dedb;background:#fff;font-size:22px;cursor:pointer;display:grid;place-items:center;color:#163029}.wishlist.is-active{border-color:var(--brand);background:#effaf6;color:#0d5e48}.product-info{padding:16px}.meta{font-size:12px;color:#77827e}.product-info h2{font-size:21px;line-height:1.15;margin:8px 0}.product-info h2 a{color:inherit;text-decoration:none}.product-info p{font-size:14px;line-height:1.5;color:#59645f;margin:0 0 14px}.price{display:flex;align-items:baseline;gap:10px}.price strong{font-size:23px}.price small{font-size:12px;color:#88918e}.cta{display:inline-block;margin-top:12px;color:#0f6f59;font-weight:700;text-decoration:none;font-size:14px}.category-links{max-width:1320px;margin:auto;padding:0 24px 80px}.category-links h2{font-size:30px}.category-links>div{display:flex;gap:8px;flex-wrap:wrap}.category-links a{border:1px solid #dce5e2;border-radius:8px;padding:9px 13px;color:#27413b;text-decoration:none;background:#fff;font-size:14px}@media(max-width:900px){.catalog-head{display:block}.catalog-search{margin-top:24px;min-width:0}.catalog-layout{grid-template-columns:1fr}.filters{position:static;display:none}.filter-mobile{display:inline-block}.product-card{max-width:none}}@media(max-width:620px){.catalog-head,.catalog-layout,.catalog-toolbar,.category-links{padding-left:16px;padding-right:16px}.catalog-head h1{font-size:42px}}
+  .catalog-page {
+    --brand: var(--sg-brand-mint, #7fd7bd);
+    --brand-dark: #0f684f;
+    --ink: #18211e;
+    --muted: #59645f;
+    --line: #dce7e2;
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+
+  .eyebrow {
+    margin: 0 0 9px;
+    color: var(--brand-dark) !important;
+    font-size: 12px !important;
+    font-weight: 800;
+    letter-spacing: .17em;
+    text-transform: uppercase;
+  }
+
+  .catalog-head,
+  .catalog-filter-controls,
+  .catalog-layout {
+    width: min(100%, 1320px);
+    margin-inline: auto;
+  }
+
+  .catalog-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 460px);
+    gap: 44px;
+    align-items: end;
+    padding: 54px 24px 34px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .catalog-head h1 {
+    max-width: 780px;
+    margin: 0 0 14px;
+    font-size: clamp(40px, 4.2vw, 58px);
+    line-height: 1.02;
+    letter-spacing: -.04em;
+  }
+
+  .catalog-head p:not(.eyebrow) {
+    max-width: 660px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .catalog-search {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-height: 52px;
+    overflow: hidden;
+    border: 1px solid #c9d8d2;
+    border-radius: 12px;
+    background: #fff;
+  }
+
+  .catalog-search:focus-within { box-shadow: 0 0 0 3px rgb(127 215 189 / 24%); }
+  .catalog-search input { min-width: 0; padding: 0 17px; border: 0; outline: 0; color: var(--ink); font: inherit; }
+  .catalog-search input::placeholder { color: #7b8581; opacity: 1; }
+  .catalog-search button { padding: 0 23px; border: 0; background: var(--brand); color: #071d17; font: inherit; font-weight: 800; cursor: pointer; }
+
+  .catalog-filter-controls { display: flex; align-items: center; justify-content: flex-end; padding: 24px 24px 0; }
+  .catalog-filter-controls p { margin: 0; color: #69736f; font-size: 14px; }
+  .catalog-filter-controls strong { color: var(--ink); }
+  .filter-mobile { display: none; }
+
+  .catalog-layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 28px; padding: 18px 24px 78px; }
+  .filters {
+    position: sticky;
+    top: 92px;
+    align-self: start;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: #fff;
+  }
+  .filter-title { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; padding-bottom: 12px; }
+  .filter-title h2 { margin: 0; font-size: 23px; line-height: 1.08; letter-spacing: -.025em; }
+  .filter-title button { padding: 3px 0; border: 0; background: transparent; color: var(--brand-dark); font: inherit; font-size: 12px; font-weight: 750; cursor: pointer; }
+  .filters details { padding: 15px 0; border-top: 1px solid #e6ece9; }
+  .filters summary { cursor: pointer; font-size: 14px; font-weight: 800; list-style-position: outside; }
+  .filters label { display: flex; gap: 10px; align-items: flex-start; padding-top: 11px; color: #3f4b46; font-size: 13px; line-height: 1.35; cursor: pointer; }
+  .filters input { width: 16px; height: 16px; flex: 0 0 16px; margin: 1px 0 0; accent-color: var(--brand-dark); }
+  .filter-help { display: block; margin-top: 8px; padding: 14px; border-radius: 10px; background: #eff8f4; color: var(--brand-dark); font-size: 13px; font-weight: 750; line-height: 1.4; text-decoration: none; }
+
+  .results { display: grid; min-width: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-content: start; }
+  .product-card { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+  .product-media-wrap { position: relative; }
+  .product-media { position: relative; display: block; overflow: hidden; aspect-ratio: 1.24 / 1; background: #eef3f1; }
+  .product-media img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
+  .product-card:hover .product-media img { transform: scale(1.025); }
+  .badge { position: absolute; top: 12px; left: 12px; padding: 6px 9px; border-radius: 7px; background: #12322d; color: #fff; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+  .wishlist { position: absolute; z-index: 3; top: 12px; right: 12px; display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid #d5dedb; border-radius: 9px; background: #fff; color: #163029; font-size: 22px; cursor: pointer; }
+  .wishlist.is-active { border-color: var(--brand); background: #effaf6; color: #0d5e48; }
+  .product-info { padding: 18px; }
+  .meta { color: #6f7b76; font-size: 11px; line-height: 1.4; }
+  .product-info h2 { margin: 9px 0; font-size: 22px; line-height: 1.12; letter-spacing: -.025em; }
+  .product-info h2 a { color: inherit; text-decoration: none; }
+  .product-info p { margin: 0 0 15px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+  .price { display: flex; flex-wrap: wrap; gap: 5px 10px; align-items: baseline; }
+  .price strong { font-size: 22px; }
+  .price small { color: #7c8782; font-size: 11px; }
+  .cta { display: inline-block; margin-top: 14px; color: var(--brand-dark); font-size: 13px; font-weight: 800; line-height: 1.35; text-decoration: none; }
+  .catalog-empty { grid-column: 1 / -1; margin: 0; padding: 28px; border: 1px dashed #bfd8ce; border-radius: 14px; background: #f6fbf9; color: var(--muted); line-height: 1.55; }
+  .category-links { width:min(100%,1320px); margin:0 auto; padding:0 24px 80px; }
+  .category-links h2 { margin:0 0 18px; font-size:30px; line-height:1.1; letter-spacing:-.025em; }
+  .category-links>div { display:flex; gap:8px; flex-wrap:wrap; }
+  .category-links a { padding:10px 14px; border:1px solid var(--line); border-radius:9px; background:#fff; color:#27413b; font-size:14px; font-weight:700; text-decoration:none; }
+  .category-links a:hover { border-color:var(--brand-dark); color:var(--brand-dark); }
+
+  @media (max-width: 1100px) {
+    .results { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 900px) {
+    .catalog-head { grid-template-columns: 1fr; gap: 24px; }
+    .catalog-layout { grid-template-columns: 1fr; padding-top: 14px; }
+    .catalog-filter-controls { justify-content: space-between; }
+    .filter-mobile { display: inline-flex; min-height: 44px; align-items: center; padding: 0 16px; border: 1px solid var(--brand-dark); border-radius: 10px; background: #fff; color: var(--brand-dark); font: inherit; font-size: 14px; font-weight: 800; }
+    .filters { position: static; display: none; }
+    .filters.is-open { display: block; }
+  }
+
+  @media (max-width: 620px) {
+    .catalog-head, .catalog-filter-controls, .catalog-layout, .category-links { padding-right: 16px; padding-left: 16px; }
+    .catalog-head { padding-top: 38px; }
+    .catalog-head h1 { font-size: 40px; }
+    .catalog-search { grid-template-columns: 1fr; }
+    .catalog-search input { min-height: 50px; }
+    .catalog-search button { min-height: 46px; }
+    .results { grid-template-columns: 1fr; }
+    .catalog-filter-controls { gap: 12px; }
+    .catalog-filter-controls p { text-align: right; }
+  }
 </style>

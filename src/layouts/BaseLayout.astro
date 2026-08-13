@@ -10,11 +10,12 @@ interface Props {
   description: string;
   locale?: import('../i18n/helpers').Locale;
   image?: string;
+  alternateLocales?: import('../i18n/helpers').Locale[];
   schemaType?: 'Organization' | 'WebSite' | 'WebPage' | 'CollectionPage' | 'AboutPage' | 'ContactPage' | 'Service' | 'Article' | 'CreativeWork';
   structuredData?: import('../seo/schema').JsonLdObject | import('../seo/schema').JsonLdObject[];
 }
 
-const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [] } = Astro.props;
+const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales } = Astro.props;
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales } from '../i18n/helpers';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
@@ -43,6 +44,7 @@ const schema = jsonLdGraph([
   ...extraStructuredData
 ]);
 const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
+const availableAlternateLocales = alternateLocales ?? supportedLocales;
 ---
 <!doctype html>
 <html lang={resolvedLocale}>
@@ -53,9 +55,8 @@ const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
     <meta name="theme-color" content="#ffffff" />
     <title>{title}</title>
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="uk" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="ru" href={new URL(localizedPath(basePath, 'ru'), Astro.site ?? Astro.url.origin)} />
-    <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />
+    {availableAlternateLocales.map((item) => <link rel="alternate" hreflang={item} href={new URL(localizedPath(basePath, item), Astro.site ?? Astro.url.origin)} />)}
+    {availableAlternateLocales.includes('uk') && <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Space Glass" />
     <meta property="og:title" content={title} />
@@ -94,5 +95,6 @@ const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
       }
     </script>
     <script src="/js/i18n-client.js" defer></script>
+    <script src="/js/forms.js" defer></script>
   </body>
 </html>

@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import translations from '../i18n/translations.json';
 import { localeFromPath, normalizeLocale } from '../i18n/helpers';
 const pageLocale = normalizeLocale(Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
@@ -24,6 +25,11 @@ const products = [
   ['Душова кабіна у нішу Minimal','від 15 990 грн','/images/v5/product-5.webp','В наявності'],
   ['Loft-перегородка Slim Line','від 21 300 грн','/images/v5/product-6.webp','Під замовлення'],
 ];
+
+const publishedProjects = await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk');
+const homeProjects = publishedProjects
+  .map(({ data }) => data)
+  .sort((a, b) => a.sortOrder - b.sortOrder);
 
 const faq = [
   [
@@ -174,10 +180,27 @@ const faq = [
           <h2>Наші проєкти</h2>
           <p>Реалізовані рішення для квартир, будинків, офісів, ресторанів та готелів.</p>
           <a href="/projects/">Дивитися всі реалізовані проєкти →</a>
+          <div class="sg-projects__controls" aria-label="Керування каруселлю проєктів">
+            <button type="button" data-projects-prev aria-label="Попередні проєкти">←</button>
+            <button type="button" data-projects-next aria-label="Наступні проєкти">→</button>
+          </div>
         </div>
-        {['project-1.webp','project-2.webp','project-3.webp','project-4.webp'].map((image) => (
-          <a class="sg-project-image" href="/projects/"><img src={`/images/v5/${image}`} alt="Реалізований проєкт Space Glass" loading="lazy" /></a>
-        ))}
+        <div class="sg-projects__viewport" data-projects-carousel tabindex="0" aria-label="Реалізовані проєкти Space Glass">
+          <div class="sg-projects__track">
+            {homeProjects.map((project) => (
+              <a class="sg-project-image" href={`/projects/${project.slug}/`} aria-label={`Переглянути проєкт: ${project.cardTitle}`}>
+                <img
+                  src={project.cover.src}
+                  width={project.cover.width}
+                  height={project.cover.height}
+                  alt={project.cover.alt}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section class="sg-final-benefits">
@@ -229,6 +252,59 @@ const faq = [
     </main>
     <Footer />
     <script>
+      const projectsCarousel = document.querySelector('[data-projects-carousel]');
+      const scrollProjects = (direction) => {
+        if (!projectsCarousel) return;
+        const card = projectsCarousel.querySelector('.sg-project-image');
+        const gap = 10;
+        const distance = card ? card.getBoundingClientRect().width + gap : projectsCarousel.clientWidth;
+        projectsCarousel.scrollBy({ left: direction * distance, behavior: 'smooth' });
+      };
+      document.querySelector('[data-projects-prev]')?.addEventListener('click', () => scrollProjects(-1));
+      document.querySelector('[data-projects-next]')?.addEventListener('click', () => scrollProjects(1));
+      if (projectsCarousel) {
+        let pointerId = null;
+        let dragStartX = 0;
+        let dragStartScroll = 0;
+        let hasDragged = false;
+
+        projectsCarousel.addEventListener('pointerdown', (event) => {
+          if (event.pointerType === 'mouse' && event.button !== 0) return;
+          pointerId = event.pointerId;
+          dragStartX = event.clientX;
+          dragStartScroll = projectsCarousel.scrollLeft;
+          hasDragged = false;
+          projectsCarousel.classList.add('is-dragging');
+          projectsCarousel.setPointerCapture(event.pointerId);
+        });
+        projectsCarousel.addEventListener('pointermove', (event) => {
+          if (pointerId !== event.pointerId) return;
+          const distance = event.clientX - dragStartX;
+          if (Math.abs(distance) > 5) hasDragged = true;
+          projectsCarousel.scrollLeft = dragStartScroll - distance;
+        });
+        const endProjectDrag = (event) => {
+          if (pointerId !== event.pointerId) return;
+          if (projectsCarousel.hasPointerCapture(event.pointerId)) projectsCarousel.releasePointerCapture(event.pointerId);
+          pointerId = null;
+          projectsCarousel.classList.remove('is-dragging');
+        };
+        projectsCarousel.addEventListener('pointerup', endProjectDrag);
+        projectsCarousel.addEventListener('pointercancel', endProjectDrag);
+        projectsCarousel.addEventListener('click', (event) => {
+          if (!hasDragged) return;
+          event.preventDefault();
+          event.stopPropagation();
+          hasDragged = false;
+        }, true);
+      }
+      projectsCarousel?.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault();
+          scrollProjects(event.key === 'ArrowRight' ? 1 : -1);
+        }
+      });
+
       const homeQuoteForm = document.querySelector('[data-home-quote-form]');
       homeQuoteForm?.addEventListener('submit', (event) => {
         event.preventDefault();

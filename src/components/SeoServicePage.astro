@@ -29,7 +29,7 @@ const schema = {
         </section>
         <section class="seo-benefit"><p class="eyebrow eyebrow--light">Головна перевага</p><h2>{service.benefit.charAt(0).toUpperCase() + service.benefit.slice(1)}</h2><p>Вартість залежить від площі, обробки скла, конфігурації та кріплень. Надішліть орієнтовні розміри — підготуємо прозорий попередній кошторис.</p></section>
         <section class="seo-related"><div class="category-heading"><div><p class="eyebrow">Внутрішня навігація</p><h2>Пов’язані рішення</h2></div><a href={`/poslugy/${service.categorySlug}/`}>Усі послуги категорії →</a></div><div class="seo-related-grid">{related.map((item) => <a href={item.path}><span>{item.categoryName}</span><strong>{item.shortName}</strong><small>Докладніше про послугу →</small></a>)}</div></section>
-        <section class="inner-cta"><div><p class="eyebrow eyebrow--light">Ваш проєкт</p><h2>Потрібна точна вартість?</h2><p>Підготуємо рішення під розміри, стиль і бюджет.</p></div><a class="button button--white" href="/quote/">Отримати пропозицію</a></section>
+        <section class="inner-cta"><div><p class="eyebrow eyebrow--light">Ваш проєкт</p><h2>Потрібен попередній розрахунок?</h2><p>Опишіть конструкцію та приблизні розміри — менеджер уточнить деталі й підготує попередню вартість.</p></div><a class="button button--white" href="/quote/">Заповнити заявку</a></section>
       </div>
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     </main><Footer />
