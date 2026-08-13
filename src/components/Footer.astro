@@ -1,77 +1,156 @@
 ---
-const categories = [
-  ['Душові конструкції','/dushovi-kabiny/'],
-  ['Дзеркала','/dzerkala/'],
-  ['Скляні перегородки','/sklyani-perehorodky/'],
-  ['Скляні двері','/sklyani-dveri/'],
-  ['Скляні огорожі','/sklyani-ohorozhi/'],
-  ['Безрамне скління','/poslugy/bezramne-sklinnya/'],
-  ['Алюмінієві конструкції','/alyuminiievi-konstruktsii/'],
-  ['Скляні фасади','/arkhitekturni-systemy/'],
-  ['Металопластикові конструкції','/metaloplastykovi-konstruktsii/'],
-  ['Скло для бізнесу','/poslugy/sklo-dlia-biznesu/']
-];
-
-const services = [
-  ['Виготовлення','/services/vyhotovlennya/'],
-  ['Доставка','/services/dostavka/'],
-  ['Монтаж','/services/montazh/'],
-  ['Замір та проєктування','/services/proektuvannya/'],
-  ['Гарантія та сервіс','/services/servis/'],
-  ['Післягарантійне обслуговування','/services/servis/']
-];
-
-const company = [
-  ['Про нас','/about/'],
-  ['Наше виробництво','/about/'],
-  ['Матеріали','/knowledge/'],
-  ['Технології','/knowledge/'],
-  ['Вакансії','/about/#career'],
-  ['Партнери','/about/'],
-  ['Відгуки','/projects/'],
-  ['Контакти','/contacts/']
-];
-
-const cities = [
-  ['Скляні конструкції Київ','/city/kyiv/'],
-  ['Скляні конструкції Львів','/city/lviv/'],
-  ['Скляні конструкції Одеса','/city/odesa/'],
-  ['Скляні конструкції Дніпро','#'],
-  ['Скляні конструкції Харків','#'],
-  ['Скляні конструкції Івано-Франківськ','#'],
-  ['Всі міста','/catalog/']
-];
-
-const productStrip = [
-  ['Душові конструкції','/dushovi-kabiny/','shower'],
-  ['Дзеркала','/dzerkala/','mirror'],
-  ['Скляні перегородки','/sklyani-perehorodky/','partition'],
-  ['Скляні двері','/sklyani-dveri/','door'],
-  ['Скляні огорожі','/sklyani-ohorozhi/','railing'],
-  ['Безрамне скління','/poslugy/bezramne-sklinnya/','frameless'],
-  ['Алюмінієві конструкції','/alyuminiievi-konstruktsii/','aluminium'],
-  ['Скляні фасади','/arkhitekturni-systemy/','facade'],
-  ['Металопластикові конструкції','/metaloplastykovi-konstruktsii/','pvc'],
-  ['Скло для бізнесу','/poslugy/sklo-dlia-biznesu/','business-glass']
-];
-
 import { localeFromPath, localizedPath, normalizeLocale } from '../i18n/helpers';
+
 const locale = normalizeLocale(Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
 const lp = (path: string) => localizedPath(path, locale);
+
+const categoryLabelsByLocale = {
+  uk: ['Душові конструкції','Дзеркала','Скляні перегородки','Скляні двері','Скляні огорожі','Безрамне скління','Алюмінієві конструкції','Скляні фасади','Металопластикові конструкції','Скло для бізнесу'],
+  ru: ['Душевые конструкции','Зеркала','Стеклянные перегородки','Стеклянные двери','Стеклянные ограждения','Безрамное остекление','Алюминиевые конструкции','Стеклянные фасады','Металлопластиковые конструкции','Стекло для бизнеса']
+};
+const categoryLabels = categoryLabelsByLocale[locale] ?? categoryLabelsByLocale.uk;
+const categoryHrefs = ['/dushovi-kabiny/','/dzerkala/','/sklyani-perehorodky/','/sklyani-dveri/','/sklyani-ohorozhi/','/poslugy/bezramne-sklinnya/','/alyuminiievi-konstruktsii/','/arkhitekturni-systemy/','/metaloplastykovi-konstruktsii/','/poslugy/sklo-dlia-biznesu/'];
+const categoryTypes = ['shower','mirror','partition','door','railing','frameless','aluminium','facade','pvc','business-glass'];
+const categories = categoryLabels.map((label, i) => [label, categoryHrefs[i]]);
+const productStrip = categoryLabels.map((label, i) => [label, categoryHrefs[i], categoryTypes[i]]);
+
+const servicesByLocale = {
+  uk: [
+    ['Виготовлення','/services/vyhotovlennya/'],
+    ['Доставка','/services/dostavka/'],
+    ['Монтаж','/services/montazh/'],
+    ['Замір та проєктування','/services/proektuvannya/'],
+    ['Гарантія та сервіс','/services/servis/'],
+    ['Післягарантійне обслуговування','/services/servis/']
+  ],
+  ru: [
+    ['Изготовление','/services/vyhotovlennya/'],
+    ['Доставка','/services/dostavka/'],
+    ['Монтаж','/services/montazh/'],
+    ['Замер и проектирование','/services/proektuvannya/'],
+    ['Гарантия и сервис','/services/servis/'],
+    ['Послегарантийное обслуживание','/services/servis/']
+  ]
+};
+const services = servicesByLocale[locale] ?? servicesByLocale.uk;
+
+const companyByLocale = {
+  uk: [
+    ['Про нас','/about/'],
+    ['Наше виробництво','/about/'],
+    ['Матеріали','/knowledge/'],
+    ['Технології','/knowledge/'],
+    ['Вакансії','/about/#career'],
+    ['Партнери','/about/'],
+    ['Відгуки','/projects/'],
+    ['Контакти','/contacts/']
+  ],
+  ru: [
+    ['О нас','/about/'],
+    ['Наше производство','/about/'],
+    ['Материалы','/knowledge/'],
+    ['Технологии','/knowledge/'],
+    ['Вакансии','/about/#career'],
+    ['Партнёры','/about/'],
+    ['Отзывы','/projects/'],
+    ['Контакты','/contacts/']
+  ]
+};
+const company = companyByLocale[locale] ?? companyByLocale.uk;
+
+const citiesByLocale = {
+  uk: [
+    ['Скляні конструкції Київ','/city/kyiv/'],
+    ['Скляні конструкції Львів','/city/lviv/'],
+    ['Скляні конструкції Одеса','/city/odesa/'],
+    ['Скляні конструкції Дніпро','#'],
+    ['Скляні конструкції Харків','#'],
+    ['Скляні конструкції Івано-Франківськ','#'],
+    ['Всі міста','/catalog/']
+  ],
+  ru: [
+    ['Стеклянные конструкции Киев','/city/kyiv/'],
+    ['Стеклянные конструкции Львов','/city/lviv/'],
+    ['Стеклянные конструкции Одесса','/city/odesa/'],
+    ['Стеклянные конструкции Днепр','#'],
+    ['Стеклянные конструкции Харьков','#'],
+    ['Стеклянные конструкции Ивано-Франковск','#'],
+    ['Все города','/catalog/']
+  ]
+};
+const cities = citiesByLocale[locale] ?? citiesByLocale.uk;
+const citiesNowrapMarker = locale === 'ru' ? 'Ивано-Франковск' : 'Івано-Франківськ';
+
+const footerTextByLocale = {
+  uk: {
+    categoriesTitle: 'Категорії',
+    servicesTitle: 'Послуги',
+    companyTitle: 'Компанія',
+    citiesTitle: 'Міста',
+    contactsTitle: 'Контакти',
+    productsTitle: 'Наша продукція',
+    callSecondary: 'Замовити дзвінок',
+    hours: 'Пн–Пт: 09:00–19:00',
+    citiesLine: 'Київ · Львів · Одеса',
+    brandDescription: 'Скляні конструкції преміум-класу для дому, бізнесу та архітектурних проєктів.',
+    copyright: '© 2026 Space Glass. Усі права захищені.',
+    privacyPolicy: 'Політика конфіденційності',
+    terms: 'Умови використання',
+    cookies: 'Cookies',
+    sitemap: 'Карта сайту',
+    benefits: [
+      ['Власне виробництво','Повний контроль якості'],
+      ['Гарантія 2 роки','На всі конструкції'],
+      ['Доставка по Україні та Європі','Швидко та надійно'],
+      ['Індивідуальні рішення','Під ваш проєкт']
+    ],
+    quoteCta: ['Отримати розрахунок','Надішліть проєкт або фото']
+  },
+  ru: {
+    categoriesTitle: 'Категории',
+    servicesTitle: 'Услуги',
+    companyTitle: 'Компания',
+    citiesTitle: 'Города',
+    contactsTitle: 'Контакты',
+    productsTitle: 'Наша продукция',
+    callSecondary: 'Заказать звонок',
+    hours: 'Пн–Пт: 09:00–19:00',
+    citiesLine: 'Киев · Львов · Одесса',
+    brandDescription: 'Стеклянные конструкции премиум-класса для дома, бизнеса и архитектурных проектов.',
+    copyright: '© 2026 Space Glass. Все права защищены.',
+    privacyPolicy: 'Политика конфиденциальности',
+    terms: 'Условия использования',
+    cookies: 'Cookies',
+    sitemap: 'Карта сайта',
+    benefits: [
+      ['Собственное производство','Полный контроль качества'],
+      ['Гарантия 2 года','На все конструкции'],
+      ['Доставка по Украине и Европе','Быстро и надёжно'],
+      ['Индивидуальные решения','Под ваш проект']
+    ],
+    quoteCta: ['Получить расчёт','Отправьте проект или фото']
+  }
+};
+const ft = footerTextByLocale[locale] ?? footerTextByLocale.uk;
 ---
 <footer class="site-footer footer-refined">
   <div class="footer-refined__benefits">
-    <div class="footer-refined__benefit"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 39 10v12c0 9.5-6.2 17.5-15 22-8.8-4.5-15-12.5-15-22V10l15-6Z"/><path d="m17 23 5 5 10-11"/></svg><div><b>Власне виробництво</b><small>Повний контроль якості</small></div></div>
-    <div class="footer-refined__benefit"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="18" r="10"/><path d="m18 30-3 14 9-5 9 5-3-14"/><path d="m19 18 3 3 7-7"/></svg><div><b>Гарантія 2 роки</b><small>На всі конструкції</small></div></div>
-    <div class="footer-refined__benefit"><svg viewBox="0 0 56 48" aria-hidden="true"><path d="M3 12h30v22H3z"/><path d="M33 20h11l8 9v5H33z"/><circle cx="14" cy="38" r="4"/><circle cx="43" cy="38" r="4"/></svg><div><b>Доставка по Україні та Європі</b><small>Швидко та надійно</small></div></div>
-    <div class="footer-refined__benefit"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="14" r="8"/><path d="M11 42c1-10 7-16 13-16s12 6 13 16"/></svg><div><b>Індивідуальні рішення</b><small>Під ваш проєкт</small></div></div>
-    <a class="footer-refined__quote" href={lp("/contacts/")}><svg viewBox="0 0 48 48" aria-hidden="true"><path d="m5 24 37-17-12 34-8-13-17-4Z"/><path d="m22 28 20-21"/></svg><div><b>Отримати розрахунок</b><small>Надішліть проєкт або фото</small></div></a>
+    <div class="footer-refined__benefit"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 39 10v12c0 9.5-6.2 17.5-15 22-8.8-4.5-15-12.5-15-22V10l15-6Z"/><path d="m17 23 5 5 10-11"/></svg><div><b>{ft.benefits[0][0]}</b><small>{ft.benefits[0][1]}</small></div></div>
+    <div class="footer-refined__benefit"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="18" r="10"/><path d="m18 30-3 14 9-5 9 5-3-14"/><path d="m19 18 3 3 7-7"/></svg><div><b>{ft.benefits[1][0]}</b><small>{ft.benefits[1][1]}</small></div></div>
+    <div class="footer-refined__benefit"><svg viewBox="0 0 56 48" aria-hidden="true"><path d="M3 12h30v22H3z"/><path d="M33 20h11l8 9v5H33z"/><circle cx="14" cy="38" r="4"/><circle cx="43" cy="38" r="4"/></svg><div><b>{ft.benefits[2][0]}</b><small>{ft.benefits[2][1]}</small></div></div>
+    <div class="footer-refined__benefit"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="14" r="8"/><path d="M11 42c1-10 7-16 13-16s12 6 13 16"/></svg><div><b>{ft.benefits[3][0]}</b><small>{ft.benefits[3][1]}</small></div></div>
+    <a class="footer-refined__quote" href={lp("/contacts/")}><svg viewBox="0 0 48 48" aria-hidden="true"><path d="m5 24 37-17-12 34-8-13-17-4Z"/><path d="m22 28 20-21"/></svg><div><b>{ft.quoteCta[0]}</b><small>{ft.quoteCta[1]}</small></div></a>
   </div>
 
   <div class="footer-refined__main">
     <div class="footer-refined__brand">
-      <a href="/" class="footer-refined__logo"><img src="/images/space-glass-brand-logo.jpg" width="220" height="178" alt="Space Glass" /></a>
-      <p>Скляні конструкції преміум-класу для дому, бізнесу та архітектурних проєктів.</p>
+      <a href="/" class="footer-refined__logo"><img
+        src="/images/space-glass-brand-logo-400.jpg"
+        srcset="/images/space-glass-brand-logo-250.jpg 250w, /images/space-glass-brand-logo-400.jpg 400w"
+        sizes="(max-width: 760px) 125px, (max-width: 1280px) 150px, 185px"
+        width="220" height="178" alt="Space Glass" loading="lazy" decoding="async"
+      /></a>
+      <p>{ft.brandDescription}</p>
       <div class="footer-refined__socials">
         <a href="https://www.instagram.com/spaceglass_od/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg></a>
         <a href="https://t.me/spaceglass" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4 3.8 10.6c-.8.3-.8 1.4 0 1.7l4.3 1.4 1.6 5c.2.7 1.1.9 1.6.4l2.4-2.5 4.1 3c.6.4 1.4.1 1.6-.6L22 5.2c.2-.8-.3-1.4-1-1.2Z"></path><path d="m8.1 13.7 9.8-6.2-7.6 8.1"></path></svg></a>
@@ -81,17 +160,17 @@ const lp = (path: string) => localizedPath(path, locale);
       </div>
     </div>
     <div class="footer-refined__col footer-refined__categories">
-      <strong>Категорії</strong>
+      <strong>{ft.categoriesTitle}</strong>
       {categories.map(([label,href]) => <a href={lp(href)}>{label}</a>)}
     </div>
-    <div class="footer-refined__col"><strong>Послуги</strong>{services.map(([label,href]) => <a href={href}>{label}</a>)}</div>
-    <div class="footer-refined__col"><strong>Компанія</strong>{company.map(([label,href]) => <a href={href}>{label}</a>)}</div>
-    <div class="footer-refined__col footer-refined__cities"><strong>Міста</strong>{cities.map(([label,href]) => <a class={label.includes('Івано-Франківськ') ? 'footer-nowrap' : undefined} href={href}>{label}</a>)}</div>
-    <div class="footer-refined__contacts"><strong>Контакти</strong><a href="tel:+380734251400"><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>+38 (073) 425 14 00</span></a><a href="mailto:info@space-glass.com.ua"><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4V6Zm0 0 8 7 8-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>info@space-glass.com.ua</span></a><span><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><b>Київ · Львів · Одеса</b></span><span><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5v4.7l3.2 1.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Пн–Пт: 09:00–19:00</b></span><a class="footer-refined__call-secondary" href={lp("/contacts/")}><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Замовити дзвінок</b><i>→</i></a></div>
+    <div class="footer-refined__col"><strong>{ft.servicesTitle}</strong>{services.map(([label,href]) => <a href={href}>{label}</a>)}</div>
+    <div class="footer-refined__col"><strong>{ft.companyTitle}</strong>{company.map(([label,href]) => <a href={href}>{label}</a>)}</div>
+    <div class="footer-refined__col footer-refined__cities"><strong>{ft.citiesTitle}</strong>{cities.map(([label,href]) => <a class={label.includes(citiesNowrapMarker) ? 'footer-nowrap' : undefined} href={href}>{label}</a>)}</div>
+    <div class="footer-refined__contacts"><strong>{ft.contactsTitle}</strong><a href="tel:+380734251400"><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>+38 (073) 425 14 00</span></a><a href="mailto:info@space-glass.com.ua"><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4V6Zm0 0 8 7 8-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>info@space-glass.com.ua</span></a><span><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><b>{ft.citiesLine}</b></span><span><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5v4.7l3.2 1.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>{ft.hours}</b></span><a class="footer-refined__call-secondary" href={lp("/contacts/")}><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>{ft.callSecondary}</b><i>→</i></a></div>
   </div>
 
   <div class="footer-refined__products">
-    <h3>Наша продукція</h3>
+    <h3>{ft.productsTitle}</h3>
     <div class="footer-refined__product-grid">
       {productStrip.map(([label,href,type]) => (
         <a href={href}>
@@ -128,5 +207,5 @@ const lp = (path: string) => localizedPath(path, locale);
     </div>
   </div>
 
-  <div class="footer-refined__bottom"><span>© 2026 Space Glass. Усі права захищені.</span><div><a href="/privacy-policy/">Політика конфіденційності</a><a href="/terms/">Умови використання</a><a href="/cookies-policy/">Cookies</a><a href="/sitemap.xml">Карта сайту</a></div></div>
+  <div class="footer-refined__bottom"><span>{ft.copyright}</span><div><a href="/privacy-policy/">{ft.privacyPolicy}</a><a href="/terms/">{ft.terms}</a><a href="/cookies-policy/">{ft.cookies}</a><a href="/sitemap.xml">{ft.sitemap}</a></div></div>
 </footer>

@@ -77,7 +77,12 @@ const menuData = {
 ---
 <header class="site-header sg-header">
   <div class="container nav sg-nav">
-    <a class="brand-logo" href={lp("/")} aria-label="Space Glass — головна"><img src="/images/space-glass-logo-header.webp" width="101" height="82" alt="Space Glass" /></a>
+    <a class="brand-logo" href={lp("/")} aria-label="Space Glass — головна"><img
+      src="/images/space-glass-logo-header.webp"
+      srcset="/images/space-glass-logo-header-148.webp 148w, /images/space-glass-logo-header.webp 202w"
+      sizes="(max-width: 700px) 74px, (max-width: 1100px) 89px, 101px"
+      width="101" height="82" alt="Space Glass" decoding="async"
+    /></a>
     <button class="sg-mobile-toggle" type="button" aria-controls="sg-mobile-menu" aria-expanded="false" data-mobile-menu-button><b>Menu</b></button>
     <nav class="nav__links sg-nav-links" aria-label="Головна навігація">
       <a class="nav-link nav-link--catalog" href={lp("/catalog/")}>Каталог</a>
