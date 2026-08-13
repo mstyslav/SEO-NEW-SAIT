@@ -1,9 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import translations from '../i18n/translations.json';
-import { localeFromPath, normalizeLocale } from '../i18n/helpers';
+import { localeFromPath, normalizeLocale, localizedPath } from '../i18n/helpers';
 const pageLocale = normalizeLocale(Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
 const pageT = translations[pageLocale] ?? translations.uk;
+const lp = (path: string) => localizedPath(path, pageLocale);
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -188,7 +189,7 @@ const faq = [
         <div class="sg-projects__intro">
           <h2>Наші проєкти</h2>
           <p>Реалізовані рішення для квартир, будинків, офісів, ресторанів та готелів.</p>
-          <a href="/projects/">Дивитися всі реалізовані проєкти →</a>
+          <a href={lp('/projects/')}>Дивитися всі реалізовані проєкти →</a>
           <div class="sg-projects__controls" aria-label="Керування каруселлю проєктів">
             <button type="button" data-projects-prev aria-label="Попередні проєкти">←</button>
             <button type="button" data-projects-next aria-label="Наступні проєкти">→</button>
@@ -197,7 +198,7 @@ const faq = [
         <div class="sg-projects__viewport" data-projects-carousel tabindex="0" aria-label="Реалізовані проєкти Space Glass">
           <div class="sg-projects__track">
             {homeProjects.map((project) => (
-              <a class="sg-project-image" href={`/projects/${project.slug}/`} aria-label={`Переглянути проєкт: ${project.cardTitle}`}>
+              <a class="sg-project-image" href={lp(`/projects/${project.slug}/`)} aria-label={`Переглянути проєкт: ${project.cardTitle}`}>
                 <img
                   src={project.cover.src}
                   width={project.cover.width}
