@@ -21,18 +21,18 @@ const timeline = [
 ];
 
 const team = [
-  ['Олександр','Співвласник, співзасновник','/images/team/Олександр.jpg'],
-  ['Мстислав','Співвласник, співзасновник','/images/team/Мстислав.jpg'],
-  ['Микола','Керівник відділу продажів','/images/team/Микола.jpg'],
-  ['Юлія','Контент-мейкер','/images/team/yuliia-content.webp'],
-  ['Анастасія','SMM-спеціаліст','/images/team/Анастасія.jpeg'],
-  ['Євген','Майстер з монтажу','/images/team/Євген.jpg'],
-  ['Марія','Акаунт-менеджер','/images/team/Марія Акаунт-менеджер.jpeg'],
-  ['Юлія','Організатор','/images/team/Юлія - організатор.jpg'],
-  ['Мілана','Менеджер проєкту','/images/team/Мілана.jpg'],
-  ['Артур','Майстер з монтажу','/images/team/Артур.jpg'],
-  ['Петро','Помічник майстра з монтажу','/images/team/Петя.jpg'],
-  ['Максим','Комірник, логіст','/images/team/Максим.jpg']
+  ['Олександр','Співвласник, співзасновник','/images/team/Олександр-450.webp'],
+  ['Мстислав','Співвласник, співзасновник','/images/team/Мстислав-450.webp'],
+  ['Микола','Керівник відділу продажів','/images/team/Микола-450.webp'],
+  ['Юлія','Контент-мейкер','/images/team/yuliia-content-450.webp'],
+  ['Анастасія','SMM-спеціаліст','/images/team/Анастасія-450.webp'],
+  ['Євген','Майстер з монтажу','/images/team/Євген-450.webp'],
+  ['Марія','Акаунт-менеджер','/images/team/Марія Акаунт-менеджер-450.webp'],
+  ['Юлія','Організатор','/images/team/Юлія - організатор-450.webp'],
+  ['Мілана','Менеджер проєкту','/images/team/Мілана-450.webp'],
+  ['Артур','Майстер з монтажу','/images/team/Артур-450.webp'],
+  ['Петро','Помічник майстра з монтажу','/images/team/Петя-450.webp'],
+  ['Максим','Комірник, логіст','/images/team/Максим-450.webp']
 ];
 
 const clients = [
@@ -75,11 +75,15 @@ const systems = [
 
   <div class="sg-hero__image">
     <img
-      src="/images/about/about-hero.png"
+      src="/images/about/about-hero.webp"
+      srcset="/images/about/about-hero-480.webp 480w, /images/about/about-hero-800.webp 800w, /images/about/about-hero-1200.webp 1200w, /images/about/about-hero.webp 1536w"
+      sizes="(max-width: 760px) 100vw, (max-width: 1180px) 58vw, min(62vw, 918px)"
       alt="Space Glass — скляні та алюмінієві конструкції"
-      width="1200"
-      height="900"
+      width="1536"
+      height="1024"
+      loading="eager"
       fetchpriority="high"
+      decoding="async"
     />
     <span class="sg-glass-line" aria-hidden="true"></span>
   </div>
@@ -167,7 +171,7 @@ const systems = [
   .about-premium{--mint:#72cdb1;--green:#176f58;--green-deep:#0e5947;--ink:#111513;--muted:#5e6864;--line:#dce5e1;--soft:#f5f9f7;background:#fff;color:var(--ink)}
   .about-premium *{box-sizing:border-box}.section-pad{padding:84px 5.2%}.eyebrow{margin:0 0 12px;text-transform:uppercase;letter-spacing:.2em;font-size:12px;font-weight:900;color:#2a8369}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:50px;margin-bottom:34px}.section-head h2,.story h2,.values h2,.career h2,.final-cta h2{margin:0;font-size:clamp(34px,3.2vw,56px);line-height:1.02;letter-spacing:-.045em}.section-head>p{max-width:520px;margin:0;color:var(--muted);font-size:17px;line-height:1.55}.section-head--compact{align-items:center}.section-head a,.outline-link{color:#176f58;text-decoration:none;font-weight:800;font-size:13px}.outline-link{display:block;width:max-content;margin:24px auto 0;border:1px solid #8bc9b6;padding:11px 18px}
   .hero{position:relative;min-height:690px;overflow:hidden;background:#fff}.hero__media{position:absolute;inset:0;background-image:url('/images/about/about-hero.png'),url('/images/about/history/2016.jpg');background-size:cover;background-position:72% 50%;transform:scale(1.002)}.hero__veil{position:absolute;inset:0;background:linear-gradient(104deg,#fff 0 31%,rgba(255,255,255,.97) 33%,rgba(255,255,255,.75) 41%,rgba(255,255,255,.08) 58%,rgba(255,255,255,0) 72%);clip-path:polygon(0 0,58% 0,39% 100%,0 100%)}.hero:after{content:"";position:absolute;left:35.2%;top:-8%;width:3px;height:118%;background:rgba(255,255,255,.86);transform:rotate(24deg);transform-origin:center;box-shadow:-110px 0 0 rgba(114,205,177,.7)}.hero__copy{position:relative;z-index:2;padding:88px 5.2% 210px;width:min(570px,48%)}.hero__copy h1{font-size:clamp(76px,7.6vw,124px);line-height:.78;letter-spacing:-.065em;margin:14px 0 26px}.hero__line{display:block;width:42px;height:2px;background:var(--green);margin-bottom:24px}.hero__subtitle{font-size:21px;line-height:1.35;margin:0}.facts{position:absolute;z-index:3;left:4.8%;right:4.8%;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 12px 35px rgba(20,40,32,.08)}.facts article{min-height:118px;display:flex;align-items:center;gap:22px;padding:22px 32px;border-right:1px solid var(--line)}.facts article:last-child{border-right:0}.facts strong{display:block;font-size:clamp(28px,2.6vw,44px);line-height:1;color:#2c8a6d;letter-spacing:-.04em}.facts p{margin:7px 0 0;font-size:13px;line-height:1.35}.fact-icon{width:44px;height:44px;flex:0 0 44px;position:relative;color:#2c8a6d}.fact-icon--building{border:2px solid currentColor;border-top:0;margin-top:7px}.fact-icon--building:before,.fact-icon--building:after{content:"";position:absolute;bottom:0;border:2px solid currentColor;border-bottom:0}.fact-icon--building:before{width:13px;height:31px;left:4px}.fact-icon--building:after{width:14px;height:39px;right:4px}.fact-icon--glass{border:2px solid currentColor}.fact-icon--glass:before,.fact-icon--glass:after{content:"";position:absolute;background:currentColor}.fact-icon--glass:before{left:50%;top:0;bottom:0;width:1px}.fact-icon--glass:after{top:50%;left:0;right:0;height:1px}.fact-icon--sun{border:2px solid currentColor;border-radius:50%;transform:scale(.52)}.fact-icon--sun:before{content:"";position:absolute;inset:-18px;border:2px dashed currentColor;border-radius:50%}.fact-icon--pin{border:2px solid currentColor;border-radius:50% 50% 50% 0;transform:rotate(-45deg) scale(.7)}.fact-icon--pin:after{content:"";position:absolute;width:9px;height:9px;border:2px solid currentColor;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
-  .story{border-bottom:1px solid var(--line)}.story__intro{display:grid;grid-template-columns:.75fr 1.25fr;gap:8%;align-items:start}.story__copy{color:#404a46;font-size:17px;line-height:1.66}.story__copy p:first-child{margin-top:0}.timeline{display:grid;grid-template-columns:repeat(7,1fr);margin-top:56px;border-top:2px solid #9ccdbd}.timeline article{position:relative;padding:22px 20px 0 0;min-width:0}.timeline__dot{position:absolute;width:10px;height:10px;background:#fff;border:3px solid #257d63;border-radius:50%;top:-6px;left:0}.timeline b{font-size:20px}.timeline p{font-size:12px;line-height:1.42;color:#46514d;min-height:50px}.timeline__image{height:92px;margin-top:14px;background-size:cover;background-position:center;border:1px solid #e1e8e5}.timeline__image--1{background-image:url('/images/about/history/2014.jpg')}.timeline__image--2{background-image:url('/images/about/history/2016.jpg')}.timeline__image--3{background-image:url('/images/about/history/2018.jpg')}.timeline__image--4{background-image:url('/images/about/history/2020.jpg')}.timeline__image--5{background-image:url('/images/about/history/2022.jpg')}.timeline__image--6{background-image:url('/images/about/history/2024.jpg')}.timeline__image--7{background-image:url('/images/about/history/2026.jpg')}
+  .story{border-bottom:1px solid var(--line)}.story__intro{display:grid;grid-template-columns:.75fr 1.25fr;gap:8%;align-items:start}.story__copy{color:#404a46;font-size:17px;line-height:1.66}.story__copy p:first-child{margin-top:0}.timeline{display:grid;grid-template-columns:repeat(7,1fr);margin-top:56px;border-top:2px solid #9ccdbd}.timeline article{position:relative;padding:22px 20px 0 0;min-width:0}.timeline__dot{position:absolute;width:10px;height:10px;background:#fff;border:3px solid #257d63;border-radius:50%;top:-6px;left:0}.timeline b{font-size:20px}.timeline p{font-size:12px;line-height:1.42;color:#46514d;min-height:50px}.timeline__image{height:92px;margin-top:14px;background-size:cover;background-position:center;border:1px solid #e1e8e5}.timeline__image--1{background-image:url('/images/about/history/2014-400.webp')}.timeline__image--2{background-image:url('/images/about/history/2016-400.webp')}.timeline__image--3{background-image:url('/images/about/history/2018-400.webp')}.timeline__image--4{background-image:url('/images/about/history/2020-400.webp')}.timeline__image--5{background-image:url('/images/about/history/2022-400.webp')}.timeline__image--6{background-image:url('/images/about/history/2024-400.webp')}.timeline__image--7{background-image:url('/images/about/history/2026-400.webp')}
   .values{background:var(--soft);border-bottom:1px solid var(--line)}.values__head{max-width:760px;margin-bottom:42px}.values__grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.values__grid article{padding:30px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.values__grid article>span{display:block;color:#2d8268;font-size:12px;font-weight:900;margin-bottom:28px}.values__grid h3{font-size:20px;margin:0 0 10px}.values__grid p{margin:0;color:var(--muted);line-height:1.5}
   .team{border-bottom:1px solid var(--line)}.team-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.team-card{background:#fff}.team-photo{aspect-ratio:4/5;background-size:cover;background-position:50% 34%;border:1px solid #e0e7e4}.team-caption{text-align:center;padding:10px 4px 8px}.team-caption h3{font-size:15px;margin:0 0 4px}.team-caption p{font-size:11px;line-height:1.35;margin:0;color:#63706b}
   .trust{border-bottom:1px solid var(--line)}.logo-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0}.logo-item{min-height:116px;display:flex;align-items:center;justify-content:center;padding:24px;border-bottom:1px solid #edf1ef}.logo-item img{display:block;max-width:170px;max-height:52px;width:auto;height:auto;filter:grayscale(1);opacity:.74;transition:.2s}.logo-item:hover img{filter:none;opacity:1}.logo-item span{display:none;font-size:16px;font-weight:800;color:#77807c;text-align:center;letter-spacing:.035em}.logo-item--system img{max-width:150px;max-height:46px}
