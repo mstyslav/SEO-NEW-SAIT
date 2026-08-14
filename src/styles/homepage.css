@@ -20,6 +20,18 @@
 
 .sg-benefits small{color:var(--muted)}
 
+/* Homepage.css loads after global.css (imported later in index.astro), so its
+   unconditional .sg-benefits base rule above wins the cascade at every width
+   and was silencing global.css's .sg-benefits responsive overrides. Re-assert
+   them here, in the file that actually wins, to restore the intended mobile layout. */
+@media(max-width:900px){
+  .sg-benefits{grid-template-columns:1fr 1fr;padding:24px}
+  .sg-benefits div{padding:14px;border-bottom:1px solid var(--line)}
+}
+@media(max-width:620px){
+  .sg-benefits{grid-template-columns:1fr}
+}
+
 .sg-all-link{display:block;text-align:center;padding:20px 0 0;color:var(--mint-dark);font-weight:700;font-size:13px;text-transform:uppercase}
 
 .sg-products{padding:0 58px 34px}
@@ -71,6 +83,15 @@
 .sg-product-grid{grid-template-columns:repeat(3,1fr)}
 
 .sg-projects__track{grid-auto-columns:calc((100% - 20px)/3)}
+
+}
+
+/* Same cascade-order issue as .sg-benefits above: global.css's intended
+   single-column mobile override for .sg-product-grid loads before this file
+   and was losing to the repeat(3,1fr) rule directly above. Restore it here. */
+@media(max-width:620px) {
+
+.sg-product-grid{grid-template-columns:1fr}
 
 }
 
