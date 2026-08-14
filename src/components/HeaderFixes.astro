@@ -81,18 +81,10 @@
 
   header.querySelectorAll('a[href="#"]').forEach((link) => link.setAttribute('href','/contacts/'));
 
-  /* Add stable hooks and enforce requested action order even if the markup changes later. */
-  const actions = header.querySelector('.sg-nav-actions');
-  if (actions) {
-    const search = actions.querySelector('a[aria-label="Пошук"]');
-    const compare = actions.querySelector('.nav-icon--compare');
-    const wishlist = actions.querySelector('.sg-wishlist-header');
-    const cart = actions.querySelector('.nav-icon--cart');
-    const phone = actions.querySelector('a[aria-label="Зателефонувати"]');
-    const language = actions.querySelector('.language-switcher');
-    const quote = actions.querySelector('.sg-header-cta');
-    [search,compare,wishlist,cart,phone,language,quote].forEach((item) => item && actions.appendChild(item));
-  }
+  /* .sg-nav-actions DOM order (and the resulting visual order, enforced by the
+     CSS `order` rules above) is already established by SiteEnhancements.astro,
+     which runs first and also creates the wishlist icon — reordering it again
+     here was a redundant no-op pass over the same nodes. */
 
 })();
 </script>
