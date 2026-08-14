@@ -3,13 +3,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 
+// Base-file width varies per image (974 vs 1000) because a few sources had
+// their existing external white-margin artifact cropped out — the -640
+// variant is regenerated from the same cropped source, so it's always
+// exactly 640w, but the "full" srcset candidate's real w-descriptor must
+// match its actual pixel width or the browser's responsive-selection math
+// is (very slightly) wrong. See git history for the crop rationale/pixels.
 const solutions = [
-  ['Для квартири', 'Скляні перегородки, душові кабіни, двері, дзеркала та огородження для сучасних квартир.', '/images/solutions/solution-apartment.webp', '/rishennya/dlya-kvartyry/', 'Сучасна квартира зі скляною перегородкою в чорному алюмінієвому профілі'],
-  ['Для будинку', 'Скляні огородження, тераси, душові, перегородки, фасадне скління та вхідні групи.', '/images/solutions/solution-house.webp', '/rishennya/dlya-budynku/', 'Сучасний приватний будинок з панорамним фасадним склінням і скляною терасою'],
-  ['Для офісу', 'Скляні офісні перегородки, двері, мобільні системи та фасадне скління для бізнес-просторів.', '/images/solutions/solution-office.webp', '/rishennya/dlya-ofisu/', 'Сучасний офіс зі скляними перегородками та дверима в алюмінієвому профілі'],
-  ['Для готелю', 'Скляні душові, перегородки, огородження, дзеркала, вхідні групи та фасадне скління.', '/images/solutions/solution-hotel.webp', '/rishennya/dlya-hotelyu/', 'Преміальний готель зі скляною вхідною групою та панорамним фасадним склінням'],
-  ['Для ресторану', 'Скляні перегородки, фасади, вхідні групи, двері, тераси, дзеркала та декоративне скло.', '/images/solutions/solution-restaurant.webp', '/rishennya/dlya-restoranu/', 'Сучасний ресторан з панорамним скляним фасадом і скляними перегородками'],
-  ['Для магазину', 'Скляні вітрини, фасадне скління, вхідні групи, двері та перегородки для магазинів і шоурумів.', '/images/solutions/solution-shop.webp', '/rishennya/dlya-magazynu/', 'Преміальний магазин зі скляною вітриною, фасадом та вхідною групою']
+  ['Для квартири', 'Скляні перегородки, душові кабіни, двері, дзеркала та огородження для сучасних квартир.', '/images/solutions/solution-apartment.webp', '/rishennya/dlya-kvartyry/', 'Сучасна квартира зі скляною перегородкою в чорному алюмінієвому профілі', 1000],
+  ['Для будинку', 'Скляні огородження, тераси, душові, перегородки, фасадне скління та вхідні групи.', '/images/solutions/solution-house.webp', '/rishennya/dlya-budynku/', 'Сучасний приватний будинок з панорамним фасадним склінням і скляною терасою', 974],
+  ['Для офісу', 'Скляні офісні перегородки, двері, мобільні системи та фасадне скління для бізнес-просторів.', '/images/solutions/solution-office.webp', '/rishennya/dlya-ofisu/', 'Сучасний офіс зі скляними перегородками та дверима в алюмінієвому профілі', 1000],
+  ['Для готелю', 'Скляні душові, перегородки, огородження, дзеркала, вхідні групи та фасадне скління.', '/images/solutions/solution-hotel.webp', '/rishennya/dlya-hotelyu/', 'Преміальний готель зі скляною вхідною групою та панорамним фасадним склінням', 1000],
+  ['Для ресторану', 'Скляні перегородки, фасади, вхідні групи, двері, тераси, дзеркала та декоративне скло.', '/images/solutions/solution-restaurant.webp', '/rishennya/dlya-restoranu/', 'Сучасний ресторан з панорамним скляним фасадом і скляними перегородками', 974],
+  ['Для магазину', 'Скляні вітрини, фасадне скління, вхідні групи, двері та перегородки для магазинів і шоурумів.', '/images/solutions/solution-shop.webp', '/rishennya/dlya-magazynu/', 'Преміальний магазин зі скляною вітриною, фасадом та вхідною групою', 1000]
 ];
 ---
 <BaseLayout title="Скляні конструкції для дому та бізнесу | Space Glass" description="Скляні конструкції на замовлення для квартир, будинків, офісів, готелів, ресторанів і магазинів: перегородки, двері, душові, огородження, вітрини та фасадне скління Space Glass.">
@@ -22,8 +28,18 @@ const solutions = [
         <p class="lead">Готові рішення Space Glass для житлових і комерційних просторів: від проєктування та виготовлення до професійного монтажу скляних конструкцій.</p>
       </section>
       <section class="projects-v14-grid" aria-label="Скляні рішення за типом об’єкта">
-        {solutions.map(([title, description, image, href, alt]) => <a href={href}>
-          <div class="solution-image"><img src={image} alt={alt} width="640" height="416" loading="lazy" decoding="async" /></div>
+        {solutions.map(([title, description, image, href, alt, fullWidth], index) => <a href={href}>
+          <div class="solution-image"><img
+            src={image}
+            srcset={`${image.replace('.webp', '-640.webp')} 640w, ${image} ${fullWidth}w`}
+            sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
+            alt={alt}
+            width="640"
+            height="416"
+            loading={index === 0 ? 'eager' : 'lazy'}
+            fetchpriority={index === 0 ? 'high' : undefined}
+            decoding="async"
+          /></div>
           <small>Готове рішення</small>
           <h2>{title}</h2>
           <p>{description}</p>

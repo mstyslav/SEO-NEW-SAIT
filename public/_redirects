@@ -1,0 +1,75 @@
+# Cloudflare edge-level 301s for the /uk/* legacy compatibility layer.
+# Generated to exactly match src/pages/uk/[...path].astro getStaticPaths()
+# (same exclude list: uk/ru/api subtrees, dynamic [..] routes, /uk/catalog/
+# and /uk/rishennya/ which have real static overrides and must NOT redirect).
+# Astro.redirect(target, 301) in that file is the fallback for any path this
+# list does not cover (e.g. if a new page is added before this file is
+# regenerated) — it now also renders an instant (0s) meta-refresh, not the
+# previous 2s delay, so the fallback itself is safe even if this file is stale.
+
+/uk/ / 301
+/uk/404/ /404/ 301
+/uk/about/ /about/ 301
+/uk/alyuminiievi-konstruktsii/ /alyuminiievi-konstruktsii/ 301
+/uk/arkhitekturni-systemy/ /arkhitekturni-systemy/ 301
+/uk/bezramne-configurator/ /bezramne-configurator/ 301
+/uk/cart/ /cart/ 301
+/uk/catalog/dushova-perehorodka-walk-in-black/ /catalog/dushova-perehorodka-walk-in-black/ 301
+/uk/catalog/dushovi-piddony/ /catalog/dushovi-piddony/ 301
+/uk/catalog/piddon/ /catalog/piddon/ 301
+/uk/city/kyiv/ /city/kyiv/ 301
+/uk/city/lviv/ /city/lviv/ 301
+/uk/city/odesa/ /city/odesa/ 301
+/uk/compare/ /compare/ 301
+/uk/contacts/ /contacts/ 301
+/uk/cookies-policy/ /cookies-policy/ 301
+/uk/dushovi-kabiny/ /dushovi-kabiny/ 301
+/uk/dushovi-kabiny/dushovi-dveri/ /dushovi-kabiny/dushovi-dveri/ 301
+/uk/dushovi-kabiny/kutovi/ /dushovi-kabiny/kutovi/ 301
+/uk/dushovi-kabiny/rozsuvni/ /dushovi-kabiny/rozsuvni/ 301
+/uk/dushovi-kabiny/shtorky-dlia-vanny/ /dushovi-kabiny/shtorky-dlia-vanny/ 301
+/uk/dushovi-kabiny/u-nishu/ /dushovi-kabiny/u-nishu/ 301
+/uk/dushovi-kabiny/walk-in/ /dushovi-kabiny/walk-in/ 301
+/uk/dzerkala/ /dzerkala/ 301
+/uk/dzerkala-configurator/ /dzerkala-configurator/ 301
+/uk/fasadne-configurator/ /fasadne-configurator/ 301
+/uk/knowledge/ /knowledge/ 301
+/uk/knowledge/yake-sklo-krashche/ /knowledge/yake-sklo-krashche/ 301
+/uk/loft-configurator/ /loft-configurator/ 301
+/uk/metaloplastykovi-konstruktsii/ /metaloplastykovi-konstruktsii/ 301
+/uk/ogorozhi-configurator/ /ogorozhi-configurator/ 301
+/uk/oplata-dostavka/ /oplata-dostavka/ 301
+/uk/peregorodky-configurator/ /peregorodky-configurator/ 301
+/uk/poslugy/ /poslugy/ 301
+/uk/privacy-policy/ /privacy-policy/ 301
+/uk/project-print/ /project-print/ 301
+/uk/projects/ /projects/ 301
+/uk/projects/loft-kyiv/ /projects/loft-kyiv/ 301
+/uk/proposal/ /proposal/ 301
+/uk/quote/ /quote/ 301
+/uk/rishennya/dlya-budynku/ /rishennya/dlya-budynku/ 301
+/uk/rishennya/dlya-hotelyu/ /rishennya/dlya-hotelyu/ 301
+/uk/rishennya/dlya-kvartyry/ /rishennya/dlya-kvartyry/ 301
+/uk/rishennya/dlya-magazynu/ /rishennya/dlya-magazynu/ 301
+/uk/rishennya/dlya-ofisu/ /rishennya/dlya-ofisu/ 301
+/uk/rishennya/dlya-restoranu/ /rishennya/dlya-restoranu/ 301
+/uk/services/ /services/ 301
+/uk/services/dostavka/ /services/dostavka/ 301
+/uk/services/montazh/ /services/montazh/ 301
+/uk/services/proektuvannya/ /services/proektuvannya/ 301
+/uk/services/servis/ /services/servis/ 301
+/uk/services/vyhotovlennya/ /services/vyhotovlennya/ 301
+/uk/services/zamer/ /services/zamer/ 301
+/uk/sklyani-dveri/ /sklyani-dveri/ 301
+/uk/sklyani-ohorozhi/ /sklyani-ohorozhi/ 301
+/uk/sklyani-perehorodky/ /sklyani-perehorodky/ 301
+/uk/sklyani-perehorodky/loft/ /sklyani-perehorodky/loft/ 301
+/uk/sklyani-perehorodky/mizhkimnatni/ /sklyani-perehorodky/mizhkimnatni/ 301
+/uk/sklyani-perehorodky/ofisni/ /sklyani-perehorodky/ofisni/ 301
+/uk/sklyani-perehorodky/pivot/ /sklyani-perehorodky/pivot/ 301
+/uk/sklyani-perehorodky/rozsuvni/ /sklyani-perehorodky/rozsuvni/ 301
+/uk/sklyani-perehorodky/teleskopichni/ /sklyani-perehorodky/teleskopichni/ 301
+/uk/terms/ /terms/ 301
+/uk/thank-you/ /thank-you/ 301
+/uk/ui-kit/ /ui-kit/ 301
+/uk/wishlist/ /wishlist/ 301
