@@ -52,5 +52,10 @@ return [
 }
 
 const target = Astro.params.path ? `/${Astro.params.path}/` : '/';
-return Astro.redirect(target);
+// Explicit 301 (not the default 302) matters here beyond correctness: in
+// output:'static' builds Astro's own redirectTemplate() hardcodes a 2-second
+// meta-refresh delay specifically for status 302, and 0 (instant) for every
+// other status (node_modules/astro/dist/core/routing/3xx.js). 301 is also
+// the semantically correct code for a permanent, canonical-confirmed alias.
+return Astro.redirect(target, 301);
 ---
