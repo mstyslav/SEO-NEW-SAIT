@@ -13,9 +13,12 @@ interface Props {
   alternateLocales?: import('../i18n/helpers').Locale[];
   schemaType?: 'Organization' | 'WebSite' | 'WebPage' | 'CollectionPage' | 'AboutPage' | 'ContactPage' | 'Service' | 'Article' | 'CreativeWork';
   structuredData?: import('../seo/schema').JsonLdObject | import('../seo/schema').JsonLdObject[];
+  heroPreloadSrc?: string;
+  heroPreloadSrcset?: string;
+  heroPreloadSizes?: string;
 }
 
-const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales } = Astro.props;
+const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes } = Astro.props;
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales } from '../i18n/helpers';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
@@ -51,6 +54,7 @@ const availableAlternateLocales = alternateLocales ?? supportedLocales;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    {heroPreloadSrc && <link rel="preload" as="image" href={heroPreloadSrc} imagesrcset={heroPreloadSrcset} imagesizes={heroPreloadSizes} fetchpriority="high" />}
     <meta name="description" content={description} />
     <meta name="theme-color" content="#ffffff" />
     <title>{title}</title>

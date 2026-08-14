@@ -33,6 +33,10 @@ const products = [
   ['Loft-перегородка Slim Line','від 21 300 грн','/images/v5/product-6.webp','Під замовлення'],
 ];
 
+const heroSrc = '/images/v5/hero.webp';
+const heroSrcset = '/images/v5/hero-480.webp 480w, /images/v5/hero-800.webp 800w, /images/v5/hero-1200.webp 1200w, /images/v5/hero.webp 1600w';
+const heroSizes = '(max-width: 900px) 100vw, min(50vw, 748px)';
+
 const publishedProjects = await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk');
 const homeProjects = publishedProjects
   .map(({ data }) => data)
@@ -121,7 +125,7 @@ const faq = [
   ]
 ];
 ---
-<BaseLayout title="Space Glass — скляні конструкції в Україні" description="Скляні перегородки, душові, огорожі, фасади та готові товари. Монтаж у Києві, Львові й Одесі. Доставка по Україні.">
+<BaseLayout title="Space Glass — скляні конструкції в Україні" description="Скляні перегородки, душові, огорожі, фасади та готові товари. Монтаж у Києві, Львові й Одесі. Доставка по Україні." heroPreloadSrc={heroSrc} heroPreloadSrcset={heroSrcset} heroPreloadSizes={heroSizes}>
   <div class="sg-page-shell">
     <Header />
     <main id="main">
@@ -137,9 +141,9 @@ const faq = [
         </div>
         <div class="sg-hero__image">
           <img
-            src="/images/v5/hero.webp"
-            srcset="/images/v5/hero-480.webp 480w, /images/v5/hero-800.webp 800w, /images/v5/hero-1200.webp 1200w, /images/v5/hero.webp 1600w"
-            sizes="(max-width: 900px) 100vw, min(50vw, 748px)"
+            src={heroSrc}
+            srcset={heroSrcset}
+            sizes={heroSizes}
             width="1600" height="987"
             alt="Скляна перегородка Space Glass"
             fetchpriority="high"
