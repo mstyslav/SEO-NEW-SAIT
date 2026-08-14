@@ -16,7 +16,7 @@
 }
 
 /* Scalable SEO service directory */
-.seo-service-wrap{width:min(1180px,calc(100% - 40px));margin:0 auto}.seo-service-hero,.seo-list-hero{padding:70px 0 80px;max-width:880px}.seo-service-hero h1,.seo-list-hero h1{font-size:clamp(2.5rem,6vw,5.2rem);line-height:.98;margin:12px 0 24px}.seo-service-content{display:grid;grid-template-columns:1.3fr 1fr;gap:70px;padding:80px 0;border-top:1px solid #dfe5e2}.seo-service-content h2,.seo-benefit h2{font-size:clamp(2rem,4vw,3.5rem);margin:10px 0 20px}.seo-service-content li{padding:16px 0;border-bottom:1px solid #dfe5e2}.seo-benefit{padding:70px;border-radius:28px;background:#12372f;color:#fff}.seo-related{padding:90px 0}.seo-related-grid,.seo-index-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.seo-related-grid>a,.seo-index-grid>a,.seo-category-grid article{padding:28px;border:1px solid #dfe5e2;border-radius:18px;color:inherit;text-decoration:none;background:#fff}.seo-related-grid span,.seo-related-grid small,.seo-index-grid span{display:block;color:#687570;font-size:.78rem}.seo-related-grid strong{display:block;font-size:1.15rem;margin:12px 0 30px}.seo-index-grid{padding-bottom:100px;grid-template-columns:repeat(3,1fr)}.seo-index-grid h2{margin:12px 0}@media(max-width:800px){.seo-service-content{grid-template-columns:1fr;gap:30px;padding:50px 0}.seo-benefit{padding:36px 24px}.seo-related-grid,.seo-index-grid,.seo-category-grid{grid-template-columns:1fr}.seo-service-hero,.seo-list-hero{padding:45px 0 55px}}
+.seo-service-wrap{width:min(1180px,calc(100% - 40px));margin:0 auto}.seo-service-hero,.seo-list-hero{padding:70px 0 80px;max-width:880px}.seo-service-hero h1,.seo-list-hero h1{font-size:clamp(2.5rem,6vw,5.2rem);line-height:.98;margin:12px 0 24px}.seo-related{padding:90px 0}.seo-related-grid,.seo-index-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.seo-related-grid>a,.seo-index-grid>a,.seo-category-grid article{padding:28px;border:1px solid #dfe5e2;border-radius:18px;color:inherit;text-decoration:none;background:#fff}.seo-related-grid span,.seo-related-grid small,.seo-index-grid span{display:block;color:#687570;font-size:.78rem}.seo-related-grid strong{display:block;font-size:1.15rem;margin:12px 0 30px}.seo-index-grid{padding-bottom:100px;grid-template-columns:repeat(3,1fr)}.seo-index-grid h2{margin:12px 0}@media(max-width:800px){.seo-related-grid,.seo-index-grid,.seo-category-grid{grid-template-columns:1fr}.seo-service-hero,.seo-list-hero{padding:45px 0 55px}}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--white);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
@@ -204,31 +204,9 @@ body{background:#202020}
 @media(max-width:980px){.inner-hero,.product-v6{grid-template-columns:1fr}.inner-card-grid,.catalog-product-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.inner-hero__copy,.inner-section,.inner-cta,.product-v6__info{padding:54px 24px}.inner-card-grid,.catalog-product-grid,.inner-band,.footer-v6__top,.footer-v6__products{grid-template-columns:1fr}.inner-cta{align-items:flex-start;flex-direction:column}}
 
-/* Shared request form for solution pages */
-.solution-request-form{
-  display:grid;
-  grid-template-columns:minmax(0,.8fr) minmax(420px,1.2fr);
-  gap:clamp(32px,6vw,84px);
-  align-items:center;
-  padding:clamp(56px,8vw,104px) 58px;
-  background:#fff;
-  border-top:1px solid var(--line);
-}
-.solution-request-form__intro{max-width:620px}
-.solution-request-form__intro>p:not(.eyebrow){color:var(--muted)}
-.solution-request-form__example{margin-top:26px;padding-top:22px;border-top:1px solid var(--green-line)}
-.solution-request-form__form{width:100%;max-width:760px;justify-self:end}
-.solution-request-form__form .quote-consent{display:flex;grid-template-columns:none;align-items:flex-start;gap:10px}
-.solution-request-form__form .quote-consent input{width:22px;min-width:22px;height:22px;margin:0}
-
 @media(max-width:900px){
-  .solution-request-form{grid-template-columns:1fr;padding-inline:38px}
-  .solution-request-form__form{max-width:none;justify-self:stretch}
 }
 @media(max-width:640px){
-  .solution-request-form{padding:54px 22px;gap:30px}
-  .solution-request-form__form{padding:24px 18px}
-  .solution-request-form__form .button{width:100%;justify-content:center}
   .inner-card{min-height:0;padding:24px}
   .inner-card h3{margin-top:20px}
 }
