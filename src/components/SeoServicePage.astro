@@ -35,3 +35,14 @@ const schema = {
     </main><Footer />
   </div>
 </BaseLayout>
+
+<style>
+  .seo-service-content{display:grid;grid-template-columns:1.3fr 1fr;gap:70px;padding:80px 0;border-top:1px solid #dfe5e2}
+  .seo-service-content h2,.seo-benefit h2{font-size:clamp(2rem,4vw,3.5rem);margin:10px 0 20px}
+  .seo-service-content li{padding:16px 0;border-bottom:1px solid #dfe5e2}
+  .seo-benefit{padding:70px;border-radius:28px;background:#12372f;color:#fff}
+  @media (max-width: 800px) {
+    .seo-service-content{grid-template-columns:1fr;gap:30px;padding:50px 0}
+    .seo-benefit{padding:36px 24px}
+  }
+</style>
