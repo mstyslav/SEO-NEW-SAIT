@@ -1,4 +1,4 @@
-export const supportedLocales = ['uk', 'ru', 'en', 'de'] as const;
+export const supportedLocales = ['uk', 'ru'] as const;
 export type Locale = typeof supportedLocales[number];
 
 export function normalizeLocale(locale?: string): Locale {
@@ -6,22 +6,22 @@ export function normalizeLocale(locale?: string): Locale {
 }
 
 export function stripLocale(pathname: string): string {
-  const stripped = pathname.replace(/^\/(uk|ru|en|de)(?=\/|$)/, '');
+  const stripped = pathname.replace(/^\/(uk|ru)(?=\/|$)/, '');
   return stripped || '/';
 }
 
 /**
  * Unprefixed (uk) paths that actually have a real, non-redirect page under
- * /ru/, /en/, /de/. This is the single source of truth for "does a localized
+ * /ru/. This is the single source of truth for "does a localized
  * version of this route exist" — every localized link in the site (Header,
  * Footer, related links, CTAs, ...) must go through localizedPath()/lp()
  * instead of hand-building `/${locale}${path}`, so that adding or removing a
  * localized page only requires updating this list in one place.
  *
- * Keep in sync with src/pages/ru|en|de/**: a path belongs here only if the
+ * Keep in sync with src/pages/ru/**: a path belongs here only if the
  * matching page renders real localized content (not `Astro.redirect(...)`).
  */
-const LOCALIZED_ROUTES: Record<'ru' | 'en' | 'de', ReadonlySet<string>> = {
+const LOCALIZED_ROUTES: Record<'ru', ReadonlySet<string>> = {
   ru: new Set([
     '/',
     '/catalog/',
@@ -29,32 +29,6 @@ const LOCALIZED_ROUTES: Record<'ru' | 'en' | 'de', ReadonlySet<string>> = {
     '/oplata-dostavka/',
     '/projects/',
     '/rishennya/',
-    '/services/',
-    '/sklyani-perehorodky/ofisni/',
-    '/bezramne-configurator/',
-    '/dzerkala-configurator/',
-    '/fasadne-configurator/',
-    '/loft-configurator/',
-    '/ogorozhi-configurator/',
-    '/peregorodky-configurator/'
-  ]),
-  en: new Set([
-    '/',
-    '/oplata-dostavka/',
-    '/projects/',
-    '/services/',
-    '/sklyani-perehorodky/ofisni/',
-    '/bezramne-configurator/',
-    '/dzerkala-configurator/',
-    '/fasadne-configurator/',
-    '/loft-configurator/',
-    '/ogorozhi-configurator/',
-    '/peregorodky-configurator/'
-  ]),
-  de: new Set([
-    '/',
-    '/oplata-dostavka/',
-    '/projects/',
     '/services/',
     '/sklyani-perehorodky/ofisni/',
     '/bezramne-configurator/',
@@ -85,6 +59,6 @@ export function localizedPath(pathname: string, locale: Locale): string {
 }
 
 export function localeFromPath(pathname: string): Locale {
-  const match = pathname.match(/^\/(uk|ru|en|de)(?=\/|$)/);
+  const match = pathname.match(/^\/(uk|ru)(?=\/|$)/);
   return match ? (match[1] as Locale) : 'uk';
 }

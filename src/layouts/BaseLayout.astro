@@ -25,9 +25,9 @@ const basePath = stripLocale(Astro.url.pathname);
 const origin = Astro.site ?? Astro.url.origin;
 const canonical = new URL(localizedPath(basePath, resolvedLocale), origin);
 const socialImage = new URL(image, origin);
-const localeNames = { uk: 'uk_UA', ru: 'ru_UA', en: 'en_US', de: 'de_DE' } as const;
-const skipLinks = { uk: 'Перейти до змісту', ru: 'Перейти к содержанию', en: 'Skip to content', de: 'Zum Inhalt springen' } as const;
-const menuLabels = { uk: 'Відкрити меню', ru: 'Открыть меню', en: 'Open menu', de: 'Menü öffnen' } as const;
+const localeNames = { uk: 'uk_UA', ru: 'ru_UA' } as const;
+const skipLinks = { uk: 'Перейти до змісту', ru: 'Перейти к содержанию' } as const;
+const menuLabels = { uk: 'Відкрити меню', ru: 'Открыть меню' } as const;
 const pageSchema = webPageSchema({
   canonical: canonical.href,
   title,

@@ -1,4 +1,4 @@
-export const supportedSeoLocales = ['uk', 'en', 'de', 'ru'] as const;
+export const supportedSeoLocales = ['uk', 'ru'] as const;
 export type SeoLocale = (typeof supportedSeoLocales)[number];
 
 export interface LocalizedSeoCopy {
