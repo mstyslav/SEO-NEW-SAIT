@@ -22,8 +22,18 @@ const solutions = [
         <p class="lead">Готові рішення Space Glass для житлових і комерційних просторів: від проєктування та виготовлення до професійного монтажу скляних конструкцій.</p>
       </section>
       <section class="projects-v14-grid" aria-label="Скляні рішення за типом об’єкта">
-        {solutions.map(([title, description, image, href, alt]) => <a href={href}>
-          <div class="solution-image"><img src={image} alt={alt} width="640" height="416" loading="lazy" decoding="async" /></div>
+        {solutions.map(([title, description, image, href, alt], index) => <a href={href}>
+          <div class="solution-image"><img
+            src={image}
+            srcset={`${image.replace('.webp', '-640.webp')} 640w, ${image} 1000w`}
+            sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
+            alt={alt}
+            width="640"
+            height="416"
+            loading={index === 0 ? 'eager' : 'lazy'}
+            fetchpriority={index === 0 ? 'high' : undefined}
+            decoding="async"
+          /></div>
           <small>Готове рішення</small>
           <h2>{title}</h2>
           <p>{description}</p>
