@@ -1,5 +1,5 @@
 /* Homepage visual polish: premium category pictograms. */
-.sg-categories .sg-category-card__icon {
+.sg-home-category-grid .sg-category-card__icon {
   display: block;
   width: 64px;
   height: 64px;
@@ -12,32 +12,32 @@
 }
 
 /* Shower cabin */
-.sg-categories .sg-category-card:nth-child(1) .sg-category-card__icon {
+.sg-home-category-grid .sg-category-card:nth-child(1) .sg-category-card__icon {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%231b2722' stroke-width='2'%3E%3Cpath d='M20 68V14h38v54M20 14l12-6h38v60H58'/%3E%3Cpath d='M36 20h15v4H36zM43 24v7M36 31l-4 6M43 31v7M50 31l4 6'/%3E%3C/g%3E%3Cpath d='M24 18h30v46H24z' fill='%23dff5ee' fill-opacity='.75'/%3E%3C/svg%3E");
 }
 
 /* Glass partition */
-.sg-categories .sg-category-card:nth-child(2) .sg-category-card__icon {
+.sg-home-category-grid .sg-category-card:nth-child(2) .sg-category-card__icon {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%231b2722' stroke-width='2'%3E%3Cpath d='M12 68V12h56v56M31 12v56M50 12v56M12 35h56'/%3E%3C/g%3E%3Cpath d='M14 14h15v19H14zm19 0h15v19H33zm19 0h14v19H52zM14 37h15v29H14zm19 0h15v29H33zm19 0h14v29H52z' fill='%23dff5ee' fill-opacity='.65'/%3E%3C/svg%3E");
 }
 
 /* Glass door */
-.sg-categories .sg-category-card:nth-child(3) .sg-category-card__icon {
+.sg-home-category-grid .sg-category-card:nth-child(3) .sg-category-card__icon {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%231b2722' stroke-width='2'%3E%3Cpath d='M19 68V10h42v58M27 18h26v50H27z'/%3E%3Ccircle cx='48' cy='43' r='1.8'/%3E%3C/g%3E%3Cpath d='M29 20h22v46H29z' fill='%23dff5ee' fill-opacity='.7'/%3E%3C/svg%3E");
 }
 
 /* Glass railing */
-.sg-categories .sg-category-card:nth-child(4) .sg-category-card__icon {
+.sg-home-category-grid .sg-category-card:nth-child(4) .sg-category-card__icon {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%231b2722' stroke-width='2'%3E%3Cpath d='M10 61h17V50h14V39h14V28h15M14 57l50-37M22 52v-9M36 42V33M50 32v-9M64 22v-9'/%3E%3C/g%3E%3Cpath d='M24 45l12-9v6l-12 9zm14-11l12-9v6l-12 9zm14-11l12-9v6l-12 9z' fill='%23dff5ee' fill-opacity='.75'/%3E%3C/svg%3E");
 }
 
 /* Mirror */
-.sg-categories .sg-category-card:nth-child(5) .sg-category-card__icon {
+.sg-home-category-grid .sg-category-card:nth-child(5) .sg-category-card__icon {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cellipse cx='40' cy='40' rx='24' ry='30' fill='%23dff5ee' fill-opacity='.6' stroke='%231b2722' stroke-width='2'/%3E%3Cellipse cx='40' cy='40' rx='19' ry='25' fill='none' stroke='%231b2722' stroke-width='1.5'/%3E%3Cpath d='M31 26l-7 12m20-17L29 47' stroke='%231b2722' stroke-width='1.5'/%3E%3C/svg%3E");
 }
 
 /* Storefront / facade, ready if a sixth card is present */
-.sg-categories .sg-category-card:nth-child(6) .sg-category-card__icon {
+.sg-home-category-grid .sg-category-card:nth-child(6) .sg-category-card__icon {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%231b2722' stroke-width='2'%3E%3Cpath d='M12 30h56v38H12zM9 30l7-16h48l7 16M20 30v38M47 30v38M20 49h27'/%3E%3Cpath d='M13 30c0 5 8 5 8 0 0 5 8 5 8 0 0 5 8 5 8 0 0 5 8 5 8 0 0 5 8 5 8 0 0 5 8 5 8 0 0 5 8 5 8 0'/%3E%3C/g%3E%3Cpath d='M22 32h23v15H22zm27 0h17v34H49z' fill='%23dff5ee' fill-opacity='.7'/%3E%3C/svg%3E");
 }
 
@@ -82,5 +82,5 @@
 }
 
 @media (max-width: 760px) {
-  .sg-categories .sg-category-card__icon { width: 52px; height: 52px; margin-bottom: 12px; }
+  .sg-home-category-grid .sg-category-card__icon { width: 52px; height: 52px; margin-bottom: 12px; }
 }
