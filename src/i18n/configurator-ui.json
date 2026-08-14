@@ -36,43 +36,5 @@
     "add": "Добавить",
     "included": "Добавлено",
     "disclaimer": "Предварительный расчёт не является офертой. Финальная стоимость подтверждается после проверки размеров и технического задания."
-  },
-  "en": {
-    "smartConfigurator": "Smart configurator",
-    "configureText": "Choose the parameters and get a preliminary price in real time.",
-    "preliminaryCalculation": "Preliminary estimate",
-    "area": "Area",
-    "product": "Product",
-    "options": "Additional options",
-    "installation": "Installation",
-    "rate": "Exchange rate",
-    "total": "Total",
-    "getQuote": "Get proposal",
-    "addProject": "Add to project",
-    "added": "Added to project.",
-    "open": "Open",
-    "notSelected": "Not selected",
-    "add": "Add",
-    "included": "Added",
-    "disclaimer": "This is a preliminary estimate and not a binding offer. The final price is confirmed after dimensions and technical requirements are checked."
-  },
-  "de": {
-    "smartConfigurator": "Intelligenter Konfigurator",
-    "configureText": "Wählen Sie die Parameter und erhalten Sie sofort eine vorläufige Preisberechnung.",
-    "preliminaryCalculation": "Vorläufige Berechnung",
-    "area": "Fläche",
-    "product": "Produkt",
-    "options": "Zusatzoptionen",
-    "installation": "Montage",
-    "rate": "Umrechnungskurs",
-    "total": "Gesamt",
-    "getQuote": "Angebot erhalten",
-    "addProject": "Zum Projekt hinzufügen",
-    "added": "Zum Projekt hinzugefügt.",
-    "open": "Öffnen",
-    "notSelected": "Nicht gewählt",
-    "add": "Hinzufügen",
-    "included": "Hinzugefügt",
-    "disclaimer": "Die Berechnung ist unverbindlich. Der Endpreis wird nach Prüfung der Maße und technischen Anforderungen bestätigt."
   }
 }

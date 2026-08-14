@@ -4,7 +4,7 @@ import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 const pages = import.meta.glob<{ default: AstroComponentFactory }>('../**/*.astro', { eager: true });
 
 export function getStaticPaths() {
-  const excluded = /\.\.\/(?:uk|ru|en|de|api)\//;
+  const excluded = /\.\.\/(?:uk|ru|api)\//;
 
   const modules = import.meta.glob<{ default: AstroComponentFactory }>(
   '../**/*.astro',

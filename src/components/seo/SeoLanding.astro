@@ -15,7 +15,7 @@ import type { Locale } from '../../i18n/helpers';
 const { page, locale } = Astro.props;
 
 const safeLocale: Locale =
-  locale === 'ru' || locale === 'en' || locale === 'de'
+  locale === 'ru'
     ? locale
     : 'uk';
 

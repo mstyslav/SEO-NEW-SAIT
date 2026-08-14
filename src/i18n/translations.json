@@ -36,43 +36,5 @@
     "need": "Что нужно",
     "preliminaryQuote": "Получить предварительный расчёт",
     "warrantyShort": "Гарантия 2 года"
-  },
-  "en": {
-    "catalog": "Catalog",
-    "services": "Services",
-    "solutions": "Solutions",
-    "projects": "Projects",
-    "knowledge": "Knowledge Hub",
-    "about": "About us",
-    "contacts": "Contacts",
-    "quote": "Get a quote",
-    "language": "Website language",
-    "project": "My project",
-    "compare": "Compare",
-    "city": "City",
-    "name": "Name",
-    "phone": "Phone",
-    "need": "What do you need?",
-    "preliminaryQuote": "Get a preliminary estimate",
-    "warrantyShort": "2-year warranty"
-  },
-  "de": {
-    "catalog": "Katalog",
-    "services": "Leistungen",
-    "solutions": "Lösungen",
-    "projects": "Projekte",
-    "knowledge": "Wissenszentrum",
-    "about": "Über uns",
-    "contacts": "Kontakt",
-    "quote": "Angebot erhalten",
-    "language": "Seitensprache",
-    "project": "Mein Projekt",
-    "compare": "Vergleich",
-    "city": "Stadt",
-    "name": "Name",
-    "phone": "Telefon",
-    "need": "Was benötigen Sie?",
-    "preliminaryQuote": "Vorläufiges Angebot erhalten",
-    "warrantyShort": "2 Jahre Garantie"
   }
 }

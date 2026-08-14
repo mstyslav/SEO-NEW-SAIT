@@ -10,16 +10,6 @@
       "label": "Русский",
       "short": "RU",
       "htmlLang": "ru"
-    },
-    "en": {
-      "label": "English",
-      "short": "EN",
-      "htmlLang": "en"
-    },
-    "de": {
-      "label": "Deutsch",
-      "short": "DE",
-      "htmlLang": "de"
     }
   }
 }
