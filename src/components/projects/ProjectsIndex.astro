@@ -18,7 +18,7 @@ const projects = (await getCollection('projects', ({ data }) => data.status === 
     </header>
     <ProjectFilters projects={projects} />
     <section class="projects-index-v2__grid" aria-label="Реалізовані проєкти">
-      {projects.map((project) => <ProjectCard project={project} hrefPrefix="/projects" />)}
+      {projects.map((project, index) => <ProjectCard project={project} hrefPrefix="/projects" priority={index === 0} />)}
     </section>
     <p class="projects-index-v2__empty" data-projects-empty hidden>У цій категорії проєкти ще готуються до публікації.</p>
   </div>
