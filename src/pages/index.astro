@@ -33,8 +33,8 @@ const products = [
   ['Loft-перегородка Slim Line','від 21 300 грн','/images/v5/product-6.webp','Під замовлення'],
 ];
 
-const heroSrc = '/images/v5/hero.webp';
-const heroSrcset = '/images/v5/hero-480.webp 480w, /images/v5/hero-800.webp 800w, /images/v5/hero-1200.webp 1200w, /images/v5/hero.webp 1600w';
+const heroSrc = '/images/v5/hero-new.webp';
+const heroSrcset = '/images/v5/hero-480-new.webp 480w, /images/v5/hero-800-new.webp 800w, /images/v5/hero-1200-new.webp 1200w, /images/v5/hero-new.webp 1536w';
 const heroSizes = '(max-width: 900px) 100vw, min(50vw, 748px)';
 
 const publishedProjects = await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk');
@@ -144,7 +144,7 @@ const faq = [
             src={heroSrc}
             srcset={heroSrcset}
             sizes={heroSizes}
-            width="1600" height="987"
+            width="1536" height="768"
             alt="Скляна перегородка Space Glass"
             fetchpriority="high"
             loading="eager"
