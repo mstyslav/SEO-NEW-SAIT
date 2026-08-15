@@ -4005,3 +4005,62 @@ body main .config-demo-hero~.section h2{
     justify-content:center!important;
   }
 }
+
+/* ===== Compact header (≤1120px): phone → language → hamburger only.
+   Reuses the existing .sg-mobile-toggle / data-mobile-menu-button element
+   and its existing click logic — only its position, content and style change. ===== */
+@media(max-width:1120px){
+  .sg-header .sg-nav{
+    display:flex!important;
+    justify-content:space-between!important;
+    align-items:center!important;
+  }
+  .sg-header .sg-nav-actions{
+    min-width:0!important;
+    flex:0 0 auto!important;
+  }
+  .sg-header .sg-nav-actions a[aria-label="Пошук"],
+  .sg-header .sg-nav-actions .nav-icon--compare,
+  .sg-header .sg-wishlist-header,
+  .sg-header .sg-nav-actions .nav-icon--cart,
+  .sg-header .sg-header-cta{display:none!important}
+  .sg-header .sg-nav-actions>a[aria-label="Зателефонувати"]{order:1!important}
+  .sg-header .sg-nav-actions>.language-switcher{order:2!important}
+  .sg-header .sg-nav-actions>.sg-mobile-toggle{order:3!important}
+  .sg-header .language-switcher__button{
+    display:inline-grid!important;
+    place-items:center!important;
+    width:40px!important;
+    height:40px!important;
+    min-width:40px!important;
+    min-height:40px!important;
+    padding:0!important;
+    border:1px solid rgba(255,255,255,.16)!important;
+    border-radius:50%!important;
+    background:transparent!important;
+  }
+  .sg-header .sg-mobile-toggle{
+    display:inline-flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:4px!important;
+    width:40px!important;
+    height:40px!important;
+    min-width:40px!important;
+    min-height:40px!important;
+    flex:0 0 auto!important;
+    padding:0!important;
+    border:1px solid rgba(255,255,255,.16)!important;
+    border-radius:50%!important;
+    background:transparent!important;
+    color:#fff!important;
+  }
+  .sg-header .sg-mobile-toggle span{
+    display:block!important;
+    width:16px!important;
+    height:1.5px!important;
+    background:currentColor!important;
+    border-radius:2px!important;
+  }
+}
