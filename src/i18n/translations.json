@@ -16,7 +16,8 @@
     "city": "Місто",
     "need": "Що потрібно",
     "preliminaryQuote": "Отримати попередній розрахунок",
-    "warrantyShort": "Гарантія 2 роки"
+    "warrantyShort": "Гарантія 2 роки",
+    "menu": "Меню"
   },
   "ru": {
     "catalog": "Каталог",
@@ -35,6 +36,7 @@
     "phone": "Телефон",
     "need": "Что нужно",
     "preliminaryQuote": "Получить предварительный расчёт",
-    "warrantyShort": "Гарантия 2 года"
+    "warrantyShort": "Гарантия 2 года",
+    "menu": "Меню"
   }
 }

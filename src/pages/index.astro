@@ -343,3 +343,12 @@ const faq = [
     </script>
   </div>
 </BaseLayout>
+
+<style>
+  /* Homepage-only: make the shorter hero CTA match the width of the longer one.
+     Scoped via .sg-hero (homepage-exclusive) so other pages' .hero__actions are untouched. */
+  .sg-hero .hero__actions{
+    display:grid;
+    grid-template-columns:minmax(0,max-content);
+  }
+</style>
