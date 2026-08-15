@@ -179,7 +179,7 @@ body{background:#202020}
   .sg-hero__image{min-height:430px;height:430px}
   .sg-hero__lead--desktop{display:none}
   .sg-hero__lead--mobile{display:block}
-  .sg-hero__lead{font-size:15px;line-height:1.42;margin-bottom:0}
+  .sg-hero__lead{font-size:15px;line-height:1.42;margin-bottom:0;max-width:85%}
   .sg-hero__cta-secondary--desktop{display:none}
   .sg-hero__cta-secondary-mobile{display:grid;padding:0 28px;margin:20px 0 28px}
   .sg-benefits,.sg-final-benefits{grid-template-columns:1fr 1fr;padding:24px}
