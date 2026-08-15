@@ -546,7 +546,7 @@ body .sg-page-shell main .project-detail-v2__service-link h2{
     height:18px!important;
   }.sg-header .language-switcher__button{
     min-height:40px!important;
-  }}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}@media(max-width:900px){.sg-page-shell{width:100%;margin:0;border-radius:0}.sg-header .container{padding:0 20px}.sg-hero{grid-template-columns:1fr}.sg-hero__copy{padding:56px 28px}.sg-hero__image{min-height:430px}.sg-nav{
+  }}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}@media(max-width:900px){.sg-page-shell{width:100%;margin:0;border-radius:0}.sg-header .container{padding:0 20px}.sg-hero{grid-template-columns:1fr}.sg-hero__copy{padding:56px 28px}.sg-hero__image{min-height:430px;height:430px}.sg-nav{
     grid-template-columns:150px 1fr auto;
     min-height:88px;
   }.sg-nav-links{display:none}.sg-header-cta{min-height:44px}}@media(max-width:620px){.sg-hero__copy h1{font-size:3.5rem}.contacts-office-actions .button{

@@ -170,7 +170,7 @@ body{background:#202020}
   .sg-header .container{padding:0 20px}
   .sg-hero{grid-template-columns:1fr}
   .sg-hero__copy{padding:56px 28px}
-  .sg-hero__image{min-height:430px}
+  .sg-hero__image{min-height:430px;height:430px}
   .sg-benefits,.sg-final-benefits{grid-template-columns:1fr 1fr;padding:24px}
   .sg-benefits div,.sg-final-benefits div{padding:14px;border-bottom:1px solid var(--line)}
   .sg-categories,.sg-products,.sg-projects{padding-left:24px;padding-right:24px}

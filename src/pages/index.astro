@@ -36,6 +36,8 @@ const products = [
 const heroSrc = '/images/v5/hero-new.webp';
 const heroSrcset = '/images/v5/hero-480-new.webp 480w, /images/v5/hero-800-new.webp 800w, /images/v5/hero-1200-new.webp 1200w, /images/v5/hero-new.webp 1536w';
 const heroSizes = '(max-width: 900px) 100vw, min(50vw, 748px)';
+const heroMobileSrc = '/images/v5/hero-mobile-800.webp';
+const heroMobileSrcset = '/images/v5/hero-mobile-480.webp 480w, /images/v5/hero-mobile-800.webp 800w';
 
 const publishedProjects = await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk');
 const homeProjects = publishedProjects
@@ -125,7 +127,7 @@ const faq = [
   ]
 ];
 ---
-<BaseLayout title="Space Glass — скляні конструкції в Україні" description="Скляні перегородки, душові, огорожі, фасади та готові товари. Монтаж у Києві, Львові й Одесі. Доставка по Україні." heroPreloadSrc={heroSrc} heroPreloadSrcset={heroSrcset} heroPreloadSizes={heroSizes}>
+<BaseLayout title="Space Glass — скляні конструкції в Україні" description="Скляні перегородки, душові, огорожі, фасади та готові товари. Монтаж у Києві, Львові й Одесі. Доставка по Україні." heroPreloadSrc={heroSrc} heroPreloadSrcset={heroSrcset} heroPreloadSizes={heroSizes} heroPreloadMobileSrc={heroMobileSrc} heroPreloadMobileSrcset={heroMobileSrcset}>
   <div class="sg-page-shell">
     <Header />
     <main id="main">
@@ -140,16 +142,19 @@ const faq = [
           </div>
         </div>
         <div class="sg-hero__image">
-          <img
-            src={heroSrc}
-            srcset={heroSrcset}
-            sizes={heroSizes}
-            width="1536" height="768"
-            alt="Скляна перегородка Space Glass"
-            fetchpriority="high"
-            loading="eager"
-            decoding="async"
-          />
+          <picture>
+            <source media="(max-width: 900px)" srcset={heroMobileSrcset} sizes="100vw" />
+            <img
+              src={heroSrc}
+              srcset={heroSrcset}
+              sizes={heroSizes}
+              width="1536" height="768"
+              alt="Скляна перегородка Space Glass"
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
           <span class="sg-glass-line" aria-hidden="true"></span>
         </div>
       </section>
