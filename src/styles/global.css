@@ -34,7 +34,7 @@ button,input,textarea{font:inherit}
 .nav__links a:hover:after{transform:scaleX(1)}
 .nav__actions{display:flex;align-items:center;gap:18px}
 
-.button{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 22px;border-radius:999px;border:1px solid transparent;font-weight:700;transition:.2s}
+.button{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 22px;border-radius:999px;border:1px solid transparent;font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:700;line-height:1.3;letter-spacing:normal;transition:.2s}
 .button:hover{transform:translateY(-2px)}
 .button--outline{background:#fff;color:var(--text);border-color:var(--line)}
 .button--white{background:#fff;color:var(--green-dark);border-color:#fff}
@@ -48,7 +48,7 @@ h1{font-size:clamp(3.2rem,6.2vw,6.7rem);line-height:.92;letter-spacing:-.065em;m
 h2{font-size:clamp(2.3rem,4.5vw,4.7rem);line-height:.98;letter-spacing:-.055em}
 h3{font-size:1.25rem;line-height:1.2}
 .lead{font-size:clamp(1.05rem,1.4vw,1.25rem);line-height:1.7;color:var(--muted);max-width:690px}
-.hero__actions{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0}
+.hero__actions{display:grid;grid-template-columns:minmax(0,max-content);gap:12px;margin:28px 0}
 
 .section{padding:108px 0}
 
@@ -88,6 +88,7 @@ h3{font-size:1.25rem;line-height:1.2}
 @media(max-width:640px){
   .container{width:min(100% - 28px,var(--container))}.nav{height:66px}.brand-logo img{width:132px}
   .nav__actions .text-link{display:none}.nav__actions .button{padding:0 15px;min-height:44px;font-size:12px}
+  .button{font-size:12px;padding-inline:18px!important}
   .hero{padding-top:42px}
   .section{padding:72px 0}.service-grid,.product-grid,.knowledge-grid,.quote-form{grid-template-columns:1fr}
   .quote-form label:nth-child(4){grid-column:auto}
@@ -255,7 +256,7 @@ body{background:#202020}
 .product-price-row{display:flex;justify-content:space-between;gap:20px;align-items:end;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:18px 0}
 .product-price-row strong{font-size:30px}.product-price-row span{color:var(--muted);font-size:13px}
 .option{padding:10px 14px;background:#fff;border:1px solid var(--line)}.option.is-active{border-color:var(--mint-dark);background:#eff9f4}
-.product-actions{display:flex;gap:10px;flex-wrap:wrap}
+.product-actions{display:grid;grid-template-columns:minmax(0,max-content);gap:10px}
 
 .product-spec-section{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;padding:90px 58px;background:#fff;border-top:1px solid var(--line)}
 .product-spec-intro p{color:var(--muted)}
@@ -2466,12 +2467,6 @@ body{background:#202020}
   line-height:1.6;
 }
 
-.localized-home__hero > .container > div{
-  display:flex;
-  gap:12px;
-  margin-top:28px;
-}
-
 .localized-home__notice{
   text-align:center;
   color:var(--muted);
@@ -3202,7 +3197,7 @@ img[loading="lazy"]{content-visibility:auto}
 .sg-project-image img{display:block;max-width:none;width:100%;height:100%;object-fit:cover}
 @media(max-width:640px){.nav__actions .button{min-height:48px!important}.sg-header .sg-nav{min-height:76px!important}.sg-header .brand-logo{width:128px!important}}
 
-.pay-delivery__actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:24px}.pay-delivery__hero .inner-hero__visual{display:flex;flex-direction:column;align-items:center;justify-content:center}.pay-delivery__hero .inner-hero__visual span{font-size:clamp(3rem,8vw,6rem);font-weight:800}.pay-delivery__hero .inner-hero__visual small{text-transform:uppercase;letter-spacing:.18em}.pay-delivery__facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.pay-delivery__facts article,.pay-delivery__text,.pay-delivery__faq details,.pay-delivery__warning{border:1px solid rgba(15,23,42,.12);border-radius:24px;background:#fff;padding:22px;box-shadow:0 14px 40px rgba(15,23,42,.06)}.pay-delivery__text ul,.pay-delivery__warning ul{margin:16px 0 0;padding-left:22px}.pay-delivery__text li,.pay-delivery__warning li{margin:10px 0}.pay-delivery__warning{background:#fff7ed;border-color:#fed7aa}.pay-delivery__warning h2{color:#9a3412}.pay-delivery__faq{display:grid;gap:14px}.pay-delivery__faq details{padding:18px 22px}.pay-delivery__faq summary{cursor:pointer;font-weight:700}.pay-delivery__faq p{margin:12px 0 0}.pay-delivery__links{display:flex;flex-wrap:wrap;gap:12px}.pay-delivery__links a{border:1px solid rgba(15,23,42,.14);border-radius:999px;padding:10px 14px;background:#fff;text-decoration:none;color:inherit}.pay-delivery__links a:hover{border-color:#0f766e;color:#0f766e}@media(max-width:640px){.pay-delivery__actions{flex-direction:column}.pay-delivery__actions .button{width:100%;justify-content:center}}
+.pay-delivery__actions{display:grid;grid-template-columns:minmax(0,max-content);gap:14px;margin-top:24px}.pay-delivery__hero .inner-hero__visual{display:flex;flex-direction:column;align-items:center;justify-content:center}.pay-delivery__hero .inner-hero__visual span{font-size:clamp(3rem,8vw,6rem);font-weight:800}.pay-delivery__hero .inner-hero__visual small{text-transform:uppercase;letter-spacing:.18em}.pay-delivery__facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.pay-delivery__facts article,.pay-delivery__text,.pay-delivery__faq details,.pay-delivery__warning{border:1px solid rgba(15,23,42,.12);border-radius:24px;background:#fff;padding:22px;box-shadow:0 14px 40px rgba(15,23,42,.06)}.pay-delivery__text ul,.pay-delivery__warning ul{margin:16px 0 0;padding-left:22px}.pay-delivery__text li,.pay-delivery__warning li{margin:10px 0}.pay-delivery__warning{background:#fff7ed;border-color:#fed7aa}.pay-delivery__warning h2{color:#9a3412}.pay-delivery__faq{display:grid;gap:14px}.pay-delivery__faq details{padding:18px 22px}.pay-delivery__faq summary{cursor:pointer;font-weight:700}.pay-delivery__faq p{margin:12px 0 0}.pay-delivery__links{display:flex;flex-wrap:wrap;gap:12px}.pay-delivery__links a{border:1px solid rgba(15,23,42,.14);border-radius:999px;padding:10px 14px;background:#fff;text-decoration:none;color:inherit}.pay-delivery__links a:hover{border-color:#0f766e;color:#0f766e}@media(max-width:640px){.pay-delivery__actions{flex-direction:column}.pay-delivery__actions .button{width:100%;justify-content:center}}
 /* Production UI regression fixes — readable desktop mega menu and tablet/mobile header */
 .sg-mobile-toggle{display:none}
 .sg-mobile-menu[hidden]{display:none!important}
