@@ -651,9 +651,6 @@ body{background:#202020}
   background:var(--mint);
   color:#07130e;
 }
-.contacts-office-panel.is-active{
-  display:grid;
-}
 .contacts-office-actions .button{
   min-height:46px;
   border-radius:9px;
