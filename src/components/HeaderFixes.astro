@@ -81,10 +81,9 @@
 
   header.querySelectorAll('a[href="#"]').forEach((link) => link.setAttribute('href','/contacts/'));
 
-  /* .sg-nav-actions DOM order (and the resulting visual order, enforced by the
-     CSS `order` rules above) is already established by SiteEnhancements.astro,
-     which runs first and also creates the wishlist icon — reordering it again
-     here was a redundant no-op pass over the same nodes. */
+  /* .sg-nav-actions visual order is fully controlled by the CSS `order` rules
+     above; the wishlist icon is server-rendered in Header.astro, so no JS
+     needs to create or reposition any node here. */
 
 })();
 </script>

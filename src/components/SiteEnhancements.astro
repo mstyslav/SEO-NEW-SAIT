@@ -23,24 +23,6 @@
     document.querySelectorAll('[data-wishlist-count]').forEach((el) => { el.textContent = String(count); el.hidden = count === 0; });
   };
 
-  const header = document.querySelector('header');
-  let heart = header?.querySelector('.sg-wishlist-header');
-  if (header && !heart) {
-    heart = document.createElement('a');
-    heart.className = 'sg-wishlist-header'; heart.href = '/wishlist/'; heart.setAttribute('aria-label','Обране'); heart.title = 'Обране';
-    heart.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg><span class="sg-wishlist-count" data-wishlist-count hidden>0</span>';
-  }
-  const actions = header?.querySelector('.sg-nav-actions');
-  if (actions) {
-    const quote = actions.querySelector('.sg-header-cta');
-    const search = actions.querySelector('[aria-label="Пошук"]');
-    const compare = actions.querySelector('[aria-label="Порівняння"]');
-    const cart = actions.querySelector('[aria-label="Кошик"]');
-    const phone = actions.querySelector('[aria-label="Зателефонувати"]');
-    const language = actions.querySelector('.language-switcher');
-    [search,compare,heart,cart,phone,language].forEach((node) => { if(node) actions.insertBefore(node,quote); });
-  }
-
   const bindWishlistButtons = () => {
     document.querySelectorAll('[data-wishlist-product]').forEach((button) => {
       if (button.dataset.wishlistBound === '1') return;
