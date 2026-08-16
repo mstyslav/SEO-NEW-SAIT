@@ -679,3 +679,35 @@ body .sg-page-shell main .project-detail-v2__service-link h2{
 }
 
 .sg-wishlist-header{transition:none}
+
+/* Keep the deferred desktop Header cascade identical at the 1450px breakpoint. */
+@media (min-width:1121px) and (max-width:1450px) {
+  .sg-header .sg-nav {
+    grid-template-columns:142px minmax(0,1fr) max-content!important;
+    padding-left:24px!important;
+    padding-right:20px!important;
+  }
+
+  .sg-header .sg-nav-links {
+    gap:13px!important;
+  }
+
+  .sg-header .sg-nav-links .nav-link,
+  .sg-header .sg-nav-links .mega-trigger > .nav-link {
+    font-size:12px!important;
+  }
+
+  .sg-header .language-switcher__button,
+  .sg-header .sg-nav-actions .nav-icon,
+  .nav-icon {
+    width:48px!important;
+    height:48px!important;
+    min-width:48px!important;
+    min-height:48px!important;
+  }
+
+  .sg-header .language-switcher__button {
+    width:auto!important;
+    padding-inline:14px!important;
+  }
+}
