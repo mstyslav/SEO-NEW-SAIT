@@ -60,7 +60,7 @@
 
 .sg-projects__controls{display:flex;gap:8px;margin-top:20px}
 
-.sg-projects__controls button{width:42px;height:42px;border:1px solid var(--green-line);border-radius:50%;background:#fff;color:var(--green-dark);font-size:19px;cursor:pointer;transition:.2s}
+.sg-projects__controls button{width:42px;height:42px;border:1px solid var(--green-line);border-radius:50%;background:#fff;color:var(--green-dark);font-size:19px;cursor:pointer;transition:none}
 
 .sg-projects__controls button:hover{background:var(--mint);border-color:var(--mint)}
 
@@ -234,6 +234,7 @@
   border-color:var(--mint)!important;
   background:var(--mint)!important;
   color:#07120e!important;
+  transition:transform .2s ease;
 }
 
 /* Російська/англійська/німецька версії не ламають сітку */

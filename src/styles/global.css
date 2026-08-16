@@ -542,11 +542,7 @@ body{background:#202020}
   border:1px solid var(--green-line);
   border-radius:14px;
   background:#fff;
-  transition:
-    background .18s ease,
-    border-color .18s ease,
-    box-shadow .18s ease,
-    transform .18s ease;
+  transition:transform .18s ease;
 }
 
 .faq-item:hover{
