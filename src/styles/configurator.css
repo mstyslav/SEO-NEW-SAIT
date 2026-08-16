@@ -1,0 +1,27 @@
+/* Sprint 35 — category configurators */
+.config-demo-hero{padding:72px 0 56px;background:#07150f;color:#fff}
+.config-demo-hero h1{margin:12px 0;font-size:clamp(48px,6vw,88px);line-height:.95}
+.config-demo-hero p:not(.eyebrow){color:#aab5af}
+.dyn-config__grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);gap:24px;align-items:start}
+.dyn-config__fields{display:grid;gap:12px}
+.dyn-field{padding:20px;border:1px solid var(--green-line);border-radius:14px;background:#fff}
+.dyn-field__title{display:grid;grid-template-columns:40px 1fr;gap:10px;margin-bottom:15px;font-weight:800}
+.dyn-field__title b{color:var(--mint-dark)}
+.dyn-number{display:flex;align-items:center;gap:10px}
+.dyn-number input{width:100%;min-height:50px;padding:0 13px;border:1px solid var(--green-line);border-radius:9px}
+.dyn-options{display:flex;flex-wrap:wrap;gap:8px}
+.dyn-option{min-height:42px;padding:0 13px;border:1px solid var(--green-line);border-radius:9px;background:#fff;cursor:pointer}
+.dyn-option.is-active,.dyn-option:hover{background:#edf8f3;border-color:var(--mint-dark);color:#0b5d43}
+.dyn-toggle{display:flex;align-items:center;gap:10px;cursor:pointer}.dyn-toggle input{position:absolute;opacity:0}
+.dyn-toggle>span{position:relative;width:48px;height:26px;border-radius:99px;background:#d9e1dd}
+.dyn-toggle>span:after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}
+.dyn-toggle input:checked+span{background:var(--mint-dark)}.dyn-toggle input:checked+span:after{transform:translateX(22px)}
+.dyn-summary{position:sticky;top:118px;padding:26px;border:1px solid var(--green-line);border-radius:16px;background:#fff;box-shadow:0 18px 60px rgba(16,40,29,.07)}
+.dyn-summary h2{margin:8px 0 20px}.dyn-summary dl{margin:0}
+.dyn-summary dl div{display:flex;justify-content:space-between;gap:20px;padding:11px 0;border-bottom:1px solid #e7ece9}
+.dyn-summary dt{color:var(--muted);font-size:11px}.dyn-summary dd{margin:0;font-size:12px;font-weight:800;text-align:right}
+.dyn-total{margin:20px 0;padding:18px;border-radius:12px;background:#07150f;color:#fff}
+.dyn-total span,.dyn-total strong,.dyn-total small{display:block}.dyn-total strong{margin-top:7px;color:var(--mint);font-size:31px}
+.dyn-actions{display:grid;gap:9px}.dyn-actions .button{width:100%;justify-content:center}
+.dyn-status{padding:10px 12px;border-radius:8px;background:#edf8f3;color:#0b6b4a;font-size:11px}
+@media(max-width:900px){.dyn-config__grid{grid-template-columns:1fr}.dyn-summary{position:static}}

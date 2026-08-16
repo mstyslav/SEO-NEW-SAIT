@@ -1,0 +1,123 @@
+/* Production Fix 5 — complete shower product pages */
+.product-detail-hero{
+  display:grid;
+  grid-template-columns:minmax(0,1.08fr) minmax(420px,.92fr);
+  gap:42px;
+  align-items:center;
+  padding:36px clamp(24px,5vw,84px) 72px;
+}
+.product-detail-hero__media{
+  min-height:600px;
+  border-radius:22px;
+  overflow:hidden;
+  background:#edf6f2;
+}
+.product-detail-hero__media img{
+  width:100%;
+  height:100%;
+  min-height:600px;
+  display:block;
+  object-fit:cover;
+}
+.product-detail-hero__copy h1{
+  margin:12px 0 20px;
+}
+.product-detail-price{
+  margin:28px 0;
+  padding:18px 0;
+  border-top:1px solid var(--green-line);
+  border-bottom:1px solid var(--green-line);
+  font-size:clamp(24px,2.4vw,38px);
+  font-weight:800;
+}
+.product-detail-section,
+.product-spec-section{
+  padding:76px clamp(24px,5vw,84px);
+}
+.product-feature-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  border:1px solid var(--green-line);
+  border-radius:18px;
+  overflow:hidden;
+}
+.product-feature-grid article{
+  min-height:190px;
+  padding:26px;
+  border-right:1px solid var(--green-line);
+}
+.product-feature-grid article:last-child{border-right:0}
+.product-feature-grid span{
+  color:var(--mint-dark);
+  font-size:12px;
+  font-weight:800;
+}
+.product-feature-grid h3{
+  margin:44px 0 0;
+  font-size:19px;
+}
+.product-spec-section{
+  display:grid;
+  grid-template-columns:minmax(280px,.65fr) minmax(0,1.35fr);
+  gap:70px;
+  background:#f2faf6;
+}
+.product-spec-list{
+  margin:0;
+}
+.product-spec-list div{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  padding:18px 0;
+  border-bottom:1px solid #cfddd6;
+}
+.product-spec-list dt{
+  color:var(--muted);
+}
+.product-spec-list dd{
+  margin:0;
+  font-weight:800;
+}
+.product-gallery-strip{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  padding:76px clamp(24px,5vw,84px);
+}
+.product-gallery-strip img{
+  width:100%;
+  height:380px;
+  object-fit:cover;
+  border-radius:16px;
+}
+@media(max-width:900px){
+  .product-detail-hero,
+  .product-spec-section{
+    grid-template-columns:1fr;
+  }
+  .product-detail-hero__media,
+  .product-detail-hero__media img{
+    min-height:420px;
+  }
+  .product-feature-grid{
+    grid-template-columns:1fr 1fr;
+  }
+  .product-feature-grid article:nth-child(2){
+    border-right:0;
+  }
+  .product-feature-grid article{
+    border-bottom:1px solid var(--green-line);
+  }
+  .product-gallery-strip{
+    grid-template-columns:1fr;
+  }
+}
+@media(max-width:560px){
+  .product-feature-grid{
+    grid-template-columns:1fr;
+  }
+  .product-feature-grid article{
+    border-right:0;
+  }
+}

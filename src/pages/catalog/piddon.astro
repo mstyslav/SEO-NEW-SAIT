@@ -782,4 +782,35 @@ const faq = [
     updateConfiguration();
   }
 </script>
+
+<style>
+/* Page-only configurator state styles */
+.configurator-presets button:hover,
+.configurator-presets button.is-active{
+  border-color:var(--mint-dark);
+  background:#edf8f3;
+  color:#0b5d43;
+}
+.configurator-progress span.is-active{
+  border-color:var(--mint-dark);
+  color:var(--mint-dark);
+}
+.configurator-step.is-open{
+  padding-bottom:16px!important;
+}
+.configurator-step.is-open > .option-row,
+.configurator-step.is-open > span,
+.configurator-step.is-open > .product-dimensions{
+  display:flex;
+  margin-left:14px;
+  margin-right:14px;
+}
+.configurator-step.is-open > span{
+  margin-top:14px;
+}
+.configurator-step.is-open > .product-dimensions{
+  display:grid;
+}
+</style>
+
 </BaseLayout>

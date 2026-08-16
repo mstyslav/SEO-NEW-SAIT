@@ -25,34 +25,3 @@ import Footer from '../../components/Footer.astro';
   </main>
   <Footer locale="ru" />
 </BaseLayout>
-
-<style>
-.localized-home__hero{
-  min-height:720px;
-  display:grid;
-  align-items:center;
-  padding:100px 0;
-  background:
-    linear-gradient(90deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.92) 43%,rgba(255,255,255,.18) 72%),
-    url('/images/s24-menu/partitions.webp') center/cover;
-}
-
-.localized-home__hero h1{
-  max-width:850px;
-  margin:16px 0 24px;
-  font-size:clamp(52px,7vw,104px);
-  line-height:.9;
-}
-
-.localized-home__hero p:not(.eyebrow){
-  max-width:650px;
-  color:#56605b;
-  font-size:18px;
-  line-height:1.6;
-}
-
-.localized-home__notice{
-  text-align:center;
-  color:var(--muted);
-}
-</style>

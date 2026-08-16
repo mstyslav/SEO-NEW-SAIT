@@ -1,5 +1,4 @@
 ---
-import '../../styles/configurator.css';
 import uiAll from '../../i18n/configurator-ui.json';
 import labelsAll from '../../i18n/configurator-labels.json';
 import { localeFromPath, normalizeLocale, localizedPath } from '../../i18n/helpers';
