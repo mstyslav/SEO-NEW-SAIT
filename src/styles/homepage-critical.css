@@ -711,3 +711,12 @@ body .sg-page-shell main .project-detail-v2__service-link h2{
     padding-inline:14px!important;
   }
 }
+
+/* About page hero grid — must match src/pages/about.astro exactly to avoid
+   a layout snap when about.tXuTorG8.css finishes loading (deferred). */
+.about-main-hero{grid-template-columns:38% 62%}
+@media(max-width:1180px){.about-main-hero{grid-template-columns:42% 58%}}
+@media(max-width:760px){
+  .about-main-hero{grid-template-columns:1fr}
+  .about-main-hero .sg-hero__image{min-height:0;height:clamp(320px,92vw,420px)}
+}
