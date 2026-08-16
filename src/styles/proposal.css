@@ -1,0 +1,20 @@
+.proposal-page{width:min(100%,1080px);margin:0 auto;padding:40px;background:#fff;color:#111}
+.proposal-header{display:flex;justify-content:space-between;gap:30px;align-items:center;padding-bottom:24px;border-bottom:2px solid #8ed0b9}
+.proposal-header img{width:150px;height:auto}
+.proposal-header p{margin:0;color:#65b89d;font-weight:800;letter-spacing:.12em}
+.proposal-header h1{margin:8px 0;font-size:44px!important}
+.proposal-client{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:26px 0}
+.proposal-client div{padding:14px;border:1px solid #dce9e3;border-radius:10px}
+.proposal-client span,.proposal-client b{display:block}.proposal-client span{color:#748079;font-size:9px;text-transform:uppercase}.proposal-client b{margin-top:6px}
+.proposal-items{display:grid;gap:12px}
+.proposal-item{display:grid;grid-template-columns:46px 1fr 180px;gap:18px;align-items:center;padding:18px;border:1px solid #dce9e3;border-radius:12px;page-break-inside:avoid}
+.proposal-item__number{color:#65b89d;font-weight:800}
+.proposal-item small{color:#65b89d;text-transform:uppercase;font-size:9px}.proposal-item h2{margin:6px 0;font-size:22px!important}.proposal-item p{margin:0;color:#5f6964;font-size:11px;line-height:1.5}
+.proposal-item__price{text-align:right}.proposal-item__price span,.proposal-item__price strong{display:block}.proposal-item__price span{color:#748079;font-size:10px}.proposal-item__price strong{margin-top:6px;font-size:18px}
+.proposal-total{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-top:22px;padding:22px;border-radius:12px;background:#07150f;color:#fff}
+.proposal-total strong{color:#8ed0b9;font-size:30px}
+.proposal-note{margin-top:20px;padding:18px;border:1px solid #dce9e3;border-radius:12px}.proposal-note h2{margin:0 0 8px;font-size:20px!important}.proposal-note p{margin:0;color:#5f6964;font-size:11px;line-height:1.6}
+.proposal-footer{display:flex;justify-content:space-between;gap:20px;margin-top:24px;padding-top:16px;border-top:2px solid #8ed0b9;color:#65716b;font-size:10px}
+.proposal-print{display:block;margin:26px auto 0;min-height:50px;padding:0 22px;border:0;border-radius:10px;background:#8ed0b9;font-weight:800;cursor:pointer}
+@media print{.proposal-print{display:none}.proposal-page{width:100%;padding:0}@page{size:A4;margin:12mm}}
+@media(max-width:700px){.proposal-client{grid-template-columns:1fr 1fr}.proposal-item{grid-template-columns:36px 1fr}.proposal-item__price{grid-column:2;text-align:left}.proposal-footer{flex-direction:column}}

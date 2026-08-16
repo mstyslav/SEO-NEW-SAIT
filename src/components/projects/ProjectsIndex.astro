@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Breadcrumbs from '../Breadcrumbs.astro';
 import ProjectCard from './ProjectCard.astro';
 import ProjectFilters from './ProjectFilters.astro';
+import '../../styles/projects-v2.css';
 
 const projects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk'))
   .map(({ data }) => data)
