@@ -3536,7 +3536,7 @@ body .sg-page-shell main .project-card-v2__body h2{
   .seo-related__grid > a,
   .article-related-card
 ){
-  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+  transition:transform .2s ease;
 }
 :where(
   .inner-card,
