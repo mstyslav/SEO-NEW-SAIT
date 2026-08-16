@@ -33,9 +33,9 @@ const products = [
   ['Loft-перегородка Slim Line','від 21 300 грн','/images/v5/product-6.webp','Під замовлення'],
 ];
 
-const heroSrc = '/images/v5/hero-new.webp';
-const heroSrcset = '/images/v5/hero-480-new.webp 480w, /images/v5/hero-800-new.webp 800w, /images/v5/hero-1200-new.webp 1200w, /images/v5/hero-new.webp 1536w';
-const heroSizes = '(max-width: 900px) 100vw, min(50vw, 748px)';
+const heroSrc = '/images/v5/hero-desktop.webp';
+const heroSrcset = '/images/v5/hero-desktop-480.webp 480w, /images/v5/hero-desktop-800.webp 800w, /images/v5/hero-desktop-960.webp 960w, /images/v5/hero-desktop-1200.webp 1200w, /images/v5/hero-desktop.webp 1536w';
+const heroSizes = '(max-width: 900px) 100vw, (max-width: 1535px) 55vw, 825px';
 const heroMobileSrc = '/images/v5/hero-mobile-800.webp';
 const heroMobileSrcset = '/images/v5/hero-mobile-480.webp 480w, /images/v5/hero-mobile-800.webp 800w';
 
@@ -131,12 +131,11 @@ const faq = [
   <div class="sg-page-shell">
     <Header />
     <main id="main">
-      <section class="sg-hero">
+      <section class="sg-hero sg-home-hero">
         <div class="sg-hero__copy">
           <p class="eyebrow">Скляні конструкції преміум-класу</p>
           <h1>Скляні конструкції<br>для дому та бізнесу</h1>
-          <p class="sg-hero__lead sg-hero__lead--desktop">Виготовляємо скляні конструкції для дому, бізнесу та комерційних проєктів будь-якої складності.</p>
-          <p class="sg-hero__lead sg-hero__lead--mobile">Проєктуємо та виготовляємо скляні перегородки, душові, огородження, двері та фасадне скління в Одесі, Києві та Львові.</p>
+          <p class="sg-hero__lead">Проєктуємо та виготовляємо скляні перегородки, душові, огородження, двері та фасадне скління в Одесі, Києві та Львові.</p>
         </div>
         <div class="sg-hero__image">
           <picture>
@@ -145,7 +144,7 @@ const faq = [
               src={heroSrc}
               srcset={heroSrcset}
               sizes={heroSizes}
-              width="1536" height="768"
+              width="1536" height="1024"
               alt="Скляна перегородка Space Glass"
               fetchpriority="high"
               loading="eager"
