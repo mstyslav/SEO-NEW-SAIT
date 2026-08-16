@@ -2,23 +2,28 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-// Defers render-blocking CSS on selected pages by inlining a small, manually
-// verified critical subset and loading the full generated stylesheets via
-// preload+onload instead of a blocking <link rel="stylesheet">. Runs once,
-// after Astro has finished writing dist/, and touches only the listed pages —
-// every other generated page is left byte-for-byte as Astro produced it.
+// Defers manually verified page-specific critical CSS. Each target has its
+// own source and marker; every other generated page is left unchanged.
 //
 // The stylesheet URLs are never guessed or hardcoded: this hook reads them
-// straight out of the already-built HTML, so it stays correct across
-// content-hash changes without knowing anything about Astro's chunking
-// internals.
+// from each already-built target page, so it stays correct across content-hash
+// changes without knowing anything about Astro's chunking internals.
 
-const CRITICAL_CSS_SOURCE = path.join('src', 'styles', 'homepage-critical.css');
-const MARKER = 'data-homepage-critical';
 const STYLESHEET_LINK_RE = /<link rel="stylesheet" href="([^"]+)">/g;
-
-// Pages this transform is allowed to touch, relative to dist/.
-const TARGET_PAGES = ['index.html'];
+const TARGET_PAGES = [
+  {
+    output: 'index.html',
+    criticalSource: path.join('src', 'styles', 'homepage-critical.css'),
+    marker: 'data-homepage-critical',
+    label: 'Homepage'
+  },
+  {
+    output: path.join('about', 'index.html'),
+    criticalSource: path.join('src', 'styles', 'about-critical.css'),
+    marker: 'data-about-critical',
+    label: 'About'
+  }
+];
 
 function deferStylesheet(href) {
   return (
@@ -34,42 +39,40 @@ export default function homepageCriticalCss() {
       'astro:build:done': async ({ dir }) => {
         const outDir = fileURLToPath(dir);
 
-        if (!fs.existsSync(CRITICAL_CSS_SOURCE)) {
-          throw new Error(
-            `Homepage CSS defer transform aborted: critical CSS source ${CRITICAL_CSS_SOURCE} not found.`
-          );
-        }
-        const criticalCss = fs.readFileSync(CRITICAL_CSS_SOURCE, 'utf8').trim();
-        if (!criticalCss) {
-          throw new Error(
-            `Homepage CSS defer transform aborted: critical CSS source ${CRITICAL_CSS_SOURCE} is empty.`
-          );
-        }
-        const styleTag = `<style ${MARKER}>${criticalCss}</style>`;
-
-        for (const relativePath of TARGET_PAGES) {
-          const pagePath = path.join(outDir, relativePath);
+        for (const target of TARGET_PAGES) {
+          const pagePath = path.join(outDir, target.output);
 
           if (!fs.existsSync(pagePath)) {
             throw new Error(
-              `Homepage CSS defer transform aborted: ${pagePath} was not found after build.`
+              `${target.label} CSS defer transform aborted: ${pagePath} was not found after build.`
             );
           }
 
           let html = fs.readFileSync(pagePath, 'utf8');
 
-          if (html.includes(MARKER)) {
-            continue;
-          }
+          if (html.includes(target.marker)) continue;
 
           const matches = [...html.matchAll(STYLESHEET_LINK_RE)];
           if (matches.length !== 2) {
             throw new Error(
-              `Homepage CSS defer transform aborted: expected 2 generated stylesheet links ` +
-              `in ${pagePath}, found ${matches.length}. Refusing to guess — investigate this ` +
+              `${target.label} CSS defer transform aborted: expected 2 generated stylesheet links ` +
+              `in ${pagePath}, found ${matches.length}. Refusing to guess — investigate the ` +
               `page's CSS import structure before re-running the build.`
             );
           }
+
+          if (!fs.existsSync(target.criticalSource)) {
+            throw new Error(
+              `${target.label} CSS defer transform aborted: critical CSS source ${target.criticalSource} not found.`
+            );
+          }
+          const criticalCss = fs.readFileSync(target.criticalSource, 'utf8').trim();
+          if (!criticalCss) {
+            throw new Error(
+              `${target.label} CSS defer transform aborted: critical CSS source ${target.criticalSource} is empty.`
+            );
+          }
+          const styleTag = `<style ${target.marker}>${criticalCss}</style>`;
 
           const firstLinkIndex = html.indexOf(matches[0][0]);
           html = html.slice(0, firstLinkIndex) + styleTag + html.slice(firstLinkIndex);
