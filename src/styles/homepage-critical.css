@@ -720,3 +720,8 @@ body .sg-page-shell main .project-detail-v2__service-link h2{
   .about-main-hero{grid-template-columns:1fr}
   .about-main-hero .sg-hero__image{min-height:0;height:clamp(320px,92vw,420px)}
 }
+
+/* Lighthouse: keep homepage quote submit animation composited */
+.quote-form--home-final__submit{
+  transition:transform .2s ease!important;
+}
