@@ -100,14 +100,14 @@ const systems = [
         </div>
         <nav aria-label="Основні напрямки Space Glass">
           <ul class="about-directions__list">
-            <li><a href="/sklyani-perehorodky/">Скляні перегородки</a></li>
-            <li><a href="/sklyani-dveri/">Скляні двері</a></li>
-            <li><a href="/dushovi-kabiny/">Душові кабіни</a></li>
-            <li><a href="/sklyani-ohorozhi/">Скляні огорожі</a></li>
-            <li><a href="/arkhitekturni-systemy/">Скляні навіси</a></li>
-            <li><a href="/arkhitekturni-systemy/">Безрамне скління</a></li>
-            <li><a href="/fasadne-configurator/">Фасадне скління</a></li>
-            <li><a href="/alyuminiievi-konstruktsii/">Алюмінієві вікна та двері</a></li>
+            <li><a href="/sklyani-perehorodky/"><span>Скляні перегородки</span><svg class="about-directions__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a></li>
+            <li><a href="/sklyani-dveri/"><span>Скляні двері</span><svg class="about-directions__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a></li>
+            <li><a href="/dushovi-kabiny/"><span>Душові кабіни</span><svg class="about-directions__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a></li>
+            <li><a href="/sklyani-ohorozhi/"><span>Скляні огорожі</span><svg class="about-directions__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a></li>
+            <li><a href="/arkhitekturni-systemy/"><span>Скляні навіси</span><svg class="about-directions__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a></li>
+            <li><a href="/arkhitekturni-systemy/"><span>Безрамне скління</span><svg class="about-directions__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a></li>
+            <li><a href="/fasadne-configurator/"><span>Фасадне скління</span><svg class="about-directions__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a></li>
+            <li><a href="/alyuminiievi-konstruktsii/"><span>Алюмінієві вікна та двері</span><svg class="about-directions__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a></li>
           </ul>
         </nav>
       </section>
@@ -209,45 +209,52 @@ const systems = [
 .about-stat {
   display: flex;
   min-width: 0;
-  gap: 16px;
+  gap: 14px;
   align-items: flex-start;
-  padding: 30px 28px;
+  padding: 28px 24px;
   border-right: 1px solid var(--line);
 }
 
 .about-stat:last-child { border-right: 0; }
 .about-stat > div { min-width: 0; padding: 0; border: 0; }
 .about-stat__icon { width: 32px; height: 32px; flex: 0 0 32px; color: var(--green); fill: none; stroke: currentColor; stroke-width: 1.45; stroke-linecap: round; stroke-linejoin: round; }
-.about-stat b { color: var(--green-deep); font-size: clamp(1.55rem, 2.2vw, 2.25rem); line-height: 1; letter-spacing: -.045em; }
-.about-stat span { margin-top: 7px; color: var(--ink); font-size: 13px; font-weight: 650; line-height: 1.35; }
-.about-stat small { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.45; }
+.about-stat b { display: block; white-space: nowrap; color: var(--green-deep); font-family: Arial, Helvetica, sans-serif; font-size: clamp(1.55rem, 2.2vw, 2.25rem); font-weight: 700; line-height: 1; letter-spacing: -.045em; }
+.about-stat span { display: block; margin-top: 8px; color: var(--ink); font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 600; line-height: 1.4; }
+.about-stat small { display: block; margin-top: 6px; color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: 400; line-height: 1.45; }
 
 .about-directions { border-bottom: 1px solid var(--line); }
 .about-directions__intro { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(260px, .85fr); gap: 48px; align-items: end; margin-bottom: 30px; }
 .about-directions h2 { max-width: 760px; margin: 0; font-size: clamp(34px, 3.2vw, 56px); line-height: 1.02; letter-spacing: -.045em; }
 .about-directions__intro > p:last-child { max-width: 500px; margin: 0; color: var(--muted); font-size: 17px; line-height: 1.55; }
-.about-directions__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-.about-directions__list li { min-width: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.about-directions__list a { display: flex; min-height: 74px; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; color: var(--ink); font-size: 14px; font-weight: 700; line-height: 1.35; text-decoration: none; }
-.about-directions__list a::after { content: '↗'; flex: 0 0 auto; color: var(--green); font-size: 18px; font-weight: 400; }
-@media (hover:hover) { .about-directions__list a:hover { background: var(--soft); color: var(--green-deep); } }
+.about-directions__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; list-style: none; }
+.about-directions__list li { min-width: 0; border-bottom: 1px solid color-mix(in srgb, var(--line) 72%, transparent); }
+.about-directions__list li:nth-child(-n + 4) { border-bottom-color: transparent; }
+.about-directions__list li:not(:nth-child(4n)) { border-right: 1px solid color-mix(in srgb, var(--line) 72%, transparent); }
+.about-directions__list a { display: flex; min-height: 88px; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 22px; color: var(--ink); font-size: 14px; font-weight: 700; line-height: 1.4; text-decoration: none; }
+.about-directions__arrow { width: 18px; height: 18px; flex: 0 0 18px; color: var(--green-deep); fill: none; stroke: currentColor; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round; }
+.about-directions__list a:focus-visible { outline: 2px solid var(--mint); outline-offset: -2px; }
+@media (hover:hover) { .about-directions__list a:hover { background: color-mix(in srgb, var(--soft) 55%, transparent); color: var(--green-deep); } }
 
 @media (max-width: 1000px) {
   .about-premium .about-v12-facts { padding: 0 24px; }
-  .about-stat { padding: 24px 18px; }
+  .about-stat { padding: 22px 18px; }
   .about-directions__intro { grid-template-columns: 1fr; gap: 16px; }
   .about-directions__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .about-directions__list li:nth-child(-n + 4) { border-bottom-color: color-mix(in srgb, var(--line) 72%, transparent); }
+  .about-directions__list li:nth-child(-n + 2) { border-bottom-color: transparent; }
+  .about-directions__list li:not(:nth-child(4n)) { border-right: 0; }
+  .about-directions__list li:not(:nth-child(2n)) { border-right: 1px solid color-mix(in srgb, var(--line) 72%, transparent); }
 }
 
 @media (max-width: 640px) {
   .about-premium .about-v12-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0; }
-  .about-stat { display: block; min-height: 188px; padding: 22px 18px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .about-stat { display: block; min-height: 168px; padding: 18px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .about-stat:nth-child(2n) { border-right: 0; }
   .about-stat:nth-last-child(-n+2) { border-bottom: 0; }
-  .about-stat__icon { display: block; margin-bottom: 18px; }
-  .about-stat b { font-size: 1.7rem; }
+  .about-stat__icon { display: block; margin-bottom: 14px; }
+  .about-stat b { font-size: clamp(1.45rem, 7.1vw, 1.7rem); }
   .about-stat span { font-size: 12px; }
-  .about-directions__list a { min-height: 68px; padding: 14px; font-size: 13px; }
+  .about-directions__list a { min-height: 76px; padding: 16px 14px; font-size: 13px; }
 }
 </style>
 
