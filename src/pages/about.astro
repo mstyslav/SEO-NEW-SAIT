@@ -61,39 +61,56 @@ const systems = [
     <main id="main" class="about-premium">
       <section class="sg-hero about-main-hero">
   <div class="sg-hero__copy">
-    <p class="eyebrow">ПРО НАС</p>
-
-    <h1>
-      SPACE GLASS
-    </h1>
-
-    <p class="about-main-hero__subtitle">
-      Скляні та алюмінієві конструкції<br>
-      для сучасної архітектури
-    </p>
+    <p class="eyebrow">ПРО КОМПАНІЮ</p>
+    <p class="about-main-hero__brand">SPACE GLASS</p>
+    <h1>Скляні та алюмінієві конструкції в Україні та Європі</h1>
+    <p class="about-main-hero__subtitle">Space Glass проєктує, виготовляє та монтує скляні й алюмінієві конструкції для приватних і комерційних об’єктів — від заміру та проєктування до готового монтажу.</p>
   </div>
 
   <div class="sg-hero__image">
-    <img
-      src="/images/about/about-hero.webp"
-      srcset="/images/about/about-hero-480.webp 480w, /images/about/about-hero-800.webp 800w, /images/about/about-hero-1200.webp 1200w, /images/about/about-hero.webp 1536w"
-      sizes="(max-width: 760px) 100vw, (max-width: 1180px) 58vw, min(62vw, 918px)"
-      alt="Space Glass — скляні та алюмінієві конструкції"
-      width="1536"
-      height="1024"
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
-    />
+    <picture>
+      <source media="(max-width: 760px)" srcset="/images/about/about-company-mobile-640.webp" type="image/webp" />
+      <img
+        src="/images/about/about-company-1280.webp"
+        srcset="/images/about/about-company-960.webp 960w, /images/about/about-company-1280.webp 1280w"
+        sizes="(max-width: 760px) 100vw, (max-width: 1180px) 58vw, min(62vw, 918px)"
+        alt="Сучасний офіс Space Glass зі скляними перегородками"
+        width="1280"
+        height="640"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
   </div>
 </section>
 
-<section class="about-v12-facts">
-  <div><b>5 000+</b><span>реалізованих проєктів</span></div>
-  <div><b>50 000+ м²</b><span>виконаного скління</span></div>
-  <div><b>10+ років</b><span>досвіду у скляних та алюмінієвих конструкціях</span></div>
-  <div><b>3 міста</b><span>Одеса · Київ · Львів</span></div>
+<section class="about-v12-facts" aria-label="Показники Space Glass">
+  <article class="about-stat"><svg class="about-stat__icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 28V9l8-5v24M13 28V5l8 4v19M21 28V13l6 3v12M8 13h2m-2 5h2m6-7h2m-2 5h2m-2 5h2m6-2h2" /></svg><div><b>5 000+</b><span>реалізованих проєктів</span></div></article>
+  <article class="about-stat"><svg class="about-stat__icon" viewBox="0 0 32 32" aria-hidden="true"><path d="m16 3 11 6v14l-11 6-11-6V9l11-6Zm0 0v12m11-6-11 6L5 9m11 6v14" /></svg><div><b>50 000+ м²</b><span>виконаного засклення</span></div></article>
+  <article class="about-stat"><svg class="about-stat__icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 26 7v8c0 6-4.2 11-10 14C10.2 26 6 21 6 15V7l10-4Zm-4 13 3 3 6-7" /></svg><div><b>10+</b><span>років досвіду у скляних та алюмінієвих конструкціях</span></div></article>
+  <article class="about-stat"><svg class="about-stat__icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 29s9-8.1 9-16A9 9 0 1 0 7 13c0 7.9 9 16 9 16Zm0-12a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z" /></svg><div><b>3+</b><span>локації в Україні</span><small>Київ · Одеса · Львів<br />Проєкти по всій Україні та Європі</small></div></article>
 </section>
+
+      <section class="about-directions section-pad" aria-labelledby="about-directions-title">
+        <div class="about-directions__intro">
+          <p class="eyebrow">НАШІ НАПРЯМКИ</p>
+          <h2 id="about-directions-title">Скляні та алюмінієві конструкції для житлових і комерційних об’єктів</h2>
+          <p>Space Glass реалізує комплексні рішення зі скла та алюмінію — від окремих конструкцій до масштабного скління приватних, комерційних та архітектурних об’єктів.</p>
+        </div>
+        <nav aria-label="Основні напрямки Space Glass">
+          <ul class="about-directions__list">
+            <li><a href="/sklyani-perehorodky/">Скляні перегородки</a></li>
+            <li><a href="/sklyani-dveri/">Скляні двері</a></li>
+            <li><a href="/dushovi-kabiny/">Душові кабіни</a></li>
+            <li><a href="/sklyani-ohorozhi/">Скляні огорожі</a></li>
+            <li><a href="/arkhitekturni-systemy/">Скляні навіси</a></li>
+            <li><a href="/arkhitekturni-systemy/">Безрамне скління</a></li>
+            <li><a href="/fasadne-configurator/">Фасадне скління</a></li>
+            <li><a href="/alyuminiievi-konstruktsii/">Алюмінієві вікна та двері</a></li>
+          </ul>
+        </nav>
+      </section>
 
       <section class="story section-pad">
         <div class="story__intro">
@@ -148,11 +165,6 @@ const systems = [
       </div>
     </section>
 
-    <section id="career" class="career section-pad">
-        <div class="career__copy"><p class="eyebrow">Хочу в команду</p><h2>Розкажіть про себе</h2><p>Залиште контакт і напрям, який вас цікавить. Ми зв’яжемося, коли з’явиться відповідна можливість.</p></div>
-        <form class="career__form"><input type="text" aria-label="Ім’я" placeholder="Ваше ім’я" /><input type="tel" aria-label="Телефон" placeholder="Телефон" /><select aria-label="Напрям роботи"><option>Напрям роботи</option><option>Монтаж</option><option>Продажі</option><option>Проєктування</option><option>Маркетинг</option><option>Інше</option></select><button type="button">Надіслати заявку →</button></form>
-      </section>
-
       <section class="systems section-pad">
         <div class="section-head section-head--compact"><div><p class="eyebrow">Системи та бренди</p><h2>Працюємо з перевіреними рішеннями</h2></div><a href="/catalog/">Детальніше про системи →</a></div>
         <div class="logo-strip logo-strip--systems">
@@ -161,6 +173,11 @@ const systems = [
       </section>
 
       <section class="final-cta" id="contact"><div><p class="eyebrow">Ваш проєкт</p><h2>Готові реалізувати складне рішення зі скла?</h2><p>Надішліть фото, розміри або креслення — підберемо оптимальну конструкцію та підготуємо попередній розрахунок.</p></div><a href="/#quote">Обговорити проєкт →</a></section>
+
+      <section id="career" class="career section-pad">
+        <div class="career__copy"><p class="eyebrow">Хочу в команду</p><h2>Розкажіть про себе</h2><p>Залиште контакт і напрям, який вас цікавить. Ми зв’яжемося, коли з’явиться відповідна можливість.</p></div>
+        <form class="career__form"><input type="text" aria-label="Ім’я" placeholder="Ваше ім’я" /><input type="tel" aria-label="Телефон" placeholder="Телефон" /><select aria-label="Напрям роботи"><option>Напрям роботи</option><option>Монтаж</option><option>Продажі</option><option>Проєктування</option><option>Маркетинг</option><option>Інше</option></select><button type="button">Надіслати заявку →</button></form>
+      </section>
     </main>
     <Footer />
   </div>
@@ -181,29 +198,104 @@ const systems = [
 </style>
 
 <style>
-/* ABOUT: используем механику hero главной страницы */
+/* About content hierarchy: statistics and internal directions. */
+.about-premium .about-v12-facts {
+  position: relative;
+  z-index: 1;
+  padding: 0 5.2%;
+  background: #fff;
+}
+
+.about-stat {
+  display: flex;
+  min-width: 0;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 30px 28px;
+  border-right: 1px solid var(--line);
+}
+
+.about-stat:last-child { border-right: 0; }
+.about-stat > div { min-width: 0; padding: 0; border: 0; }
+.about-stat__icon { width: 32px; height: 32px; flex: 0 0 32px; color: var(--green); fill: none; stroke: currentColor; stroke-width: 1.45; stroke-linecap: round; stroke-linejoin: round; }
+.about-stat b { color: var(--green-deep); font-size: clamp(1.55rem, 2.2vw, 2.25rem); line-height: 1; letter-spacing: -.045em; }
+.about-stat span { margin-top: 7px; color: var(--ink); font-size: 13px; font-weight: 650; line-height: 1.35; }
+.about-stat small { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.45; }
+
+.about-directions { border-bottom: 1px solid var(--line); }
+.about-directions__intro { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(260px, .85fr); gap: 48px; align-items: end; margin-bottom: 30px; }
+.about-directions h2 { max-width: 760px; margin: 0; font-size: clamp(34px, 3.2vw, 56px); line-height: 1.02; letter-spacing: -.045em; }
+.about-directions__intro > p:last-child { max-width: 500px; margin: 0; color: var(--muted); font-size: 17px; line-height: 1.55; }
+.about-directions__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.about-directions__list li { min-width: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.about-directions__list a { display: flex; min-height: 74px; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; color: var(--ink); font-size: 14px; font-weight: 700; line-height: 1.35; text-decoration: none; }
+.about-directions__list a::after { content: '↗'; flex: 0 0 auto; color: var(--green); font-size: 18px; font-weight: 400; }
+@media (hover:hover) { .about-directions__list a:hover { background: var(--soft); color: var(--green-deep); } }
+
+@media (max-width: 1000px) {
+  .about-premium .about-v12-facts { padding: 0 24px; }
+  .about-stat { padding: 24px 18px; }
+  .about-directions__intro { grid-template-columns: 1fr; gap: 16px; }
+  .about-directions__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .about-premium .about-v12-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0; }
+  .about-stat { display: block; min-height: 188px; padding: 22px 18px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .about-stat:nth-child(2n) { border-right: 0; }
+  .about-stat:nth-last-child(-n+2) { border-bottom: 0; }
+  .about-stat__icon { display: block; margin-bottom: 18px; }
+  .about-stat b { font-size: 1.7rem; }
+  .about-stat span { font-size: 12px; }
+  .about-directions__list a { min-height: 68px; padding: 14px; font-size: 13px; }
+}
+</style>
+
+<style>
+/* About Hero: semantic brand label, LCP image and compact mobile copy. */
+.about-main-hero__brand {
+  margin: 8px 0 12px;
+  color: var(--ink);
+  font-size: clamp(2rem, 3.1vw, 3.35rem);
+  font-weight: 800;
+  letter-spacing: -.055em;
+  line-height: .96;
+}
+
 .about-main-hero .sg-hero__copy h1 {
-  white-space: nowrap;
-  font-size: clamp(3.2rem, 5vw, 6rem);
+  max-width: 540px;
+  margin: 0;
+  font-size: clamp(2.15rem, 3.25vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -.045em;
 }
 
 .about-main-hero__subtitle {
-  max-width: 620px;
-  margin-top: 32px;
-  font-size: clamp(1.45rem, 2vw, 2rem);
-  line-height: 1.25;
-  font-weight: 600;
+  max-width: 550px;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  line-height: 1.55;
+  font-weight: 500;
 }
 
 @media (max-width: 760px) {
+  .about-main-hero .sg-hero__copy {
+    padding: 32px 24px 26px;
+  }
+
+  .about-main-hero__brand {
+    margin: 6px 0 10px;
+    font-size: clamp(2rem, 10.5vw, 2.65rem);
+  }
+
   .about-main-hero .sg-hero__copy h1 {
-    white-space: normal;
-    font-size: clamp(3rem, 14vw, 4.8rem);
+    font-size: clamp(2rem, 8.2vw, 2.55rem);
   }
 
   .about-main-hero__subtitle {
-    margin-top: 24px;
-    font-size: 1.4rem;
+    margin-top: 14px;
+    font-size: 1rem;
   }
 }
 </style>
@@ -218,6 +310,12 @@ const systems = [
 
 .about-main-hero .sg-hero__image {
   min-height: 550px;
+}
+
+.about-main-hero .sg-hero__image picture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .about-main-hero .sg-hero__image img {
@@ -235,6 +333,15 @@ const systems = [
 @media (max-width: 760px) {
   .about-main-hero {
     grid-template-columns: 1fr;
+  }
+
+  .about-main-hero .sg-hero__image {
+    min-height: 0;
+    height: clamp(320px, 92vw, 420px);
+  }
+
+  .about-main-hero .sg-hero__image img {
+    object-position: 50% 46%;
   }
 }
 </style>
