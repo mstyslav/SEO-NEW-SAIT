@@ -199,8 +199,12 @@ const systems = [
 .about-premium .about-v12-facts {
   position: relative;
   z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   padding: 0 5.2%;
   background: #fff;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .about-stat {
