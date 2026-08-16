@@ -1441,7 +1441,7 @@ body{background:#202020}
 
 .catalog-mega__group,
 .catalog-mega__architecture-list a{
-  transition:background .18s ease, padding-left .18s ease, border-color .18s ease;
+  transition:none;
 }
 
 .catalog-mega__group:hover,
@@ -1462,7 +1462,7 @@ body{background:#202020}
 }
 
 .catalog-mega__popular>a{
-  transition:background .18s ease, transform .18s ease;
+  transition:transform .18s ease;
 }
 
 .catalog-mega__popular>a:hover{
@@ -1505,7 +1505,7 @@ body{background:#202020}
 }
 
 .catalog-mega__cities a{
-  transition:color .18s ease, background .18s ease;
+  transition:none;
 }
 
 .catalog-mega__cities a:hover{

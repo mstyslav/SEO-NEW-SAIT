@@ -3,7 +3,8 @@
 <style is:global>
   :root{--sg-brand-mint:#7fd7bd;--sg-brand-deep:#0e4f3d}
   .catalog-mega a::after{display:none!important}
-  .catalog-mega a{transition:color .16s ease,background .16s ease}
+  .catalog-mega a{transition:none}
+  .catalog-mega .catalog-mega__popular>a{transition:transform .18s ease}
   .catalog-mega a:hover,.catalog-mega a:focus-visible{color:var(--sg-brand-mint)}
   .catalog-mega__group:hover,.catalog-mega__group.is-active{background:rgba(127,215,189,.06)}
   .sg-wishlist-header{width:44px;height:44px;border:1px solid rgba(255,255,255,.22);border-radius:50%;display:inline-grid;place-items:center;color:#fff;text-decoration:none;position:relative;flex:0 0 44px;background:transparent;transition:border-color .18s ease,background .18s ease}
