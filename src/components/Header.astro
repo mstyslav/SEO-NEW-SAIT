@@ -138,9 +138,8 @@ const menuData = {
     if(mobileMenu) mobileMenu.hidden=!isOpen;
   });
 
-  const desktopMql=window.matchMedia('(min-width:1121px)');
   const syncMobileMenu=()=>{
-    if(mobileButton && desktopMql.matches){
+    if(mobileButton && getComputedStyle(mobileButton).display==='none'){
       closeMobileMenu();
     }
   };
