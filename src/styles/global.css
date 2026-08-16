@@ -632,6 +632,7 @@ body{background:#202020}
   min-height:48px;
   border-radius:9px;
   font-size:14px;
+  transition:transform .2s ease;
 }
 
 @media(max-width:820px){
