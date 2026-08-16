@@ -1096,11 +1096,7 @@ body{background:#202020}
   border-radius:8px!important;
   background:transparent!important;
   color:#fff!important;
-  transition:
-    border-color .18s ease,
-    background .18s ease,
-    color .18s ease,
-    transform .18s ease;
+  transition:transform .18s ease;
 }
 
 .footer-refined__socials a:hover,
