@@ -115,7 +115,15 @@ const menuData = {
 <style>
   .sg-categories-trigger{display:inline-flex;flex-direction:column;justify-content:center;gap:4px;width:32px;height:32px;padding:6px;border:0;background:transparent;cursor:pointer}
   .sg-categories-trigger span{display:block;width:20px;height:1.5px;background:currentColor;border-radius:2px}
-  .mega-trigger--menu .catalog-mega{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+  .mega-trigger--menu .catalog-mega{
+  position:fixed;
+  top:92px;
+  left:50%;
+  transform:translate(-50%,10px);
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
   .mega-trigger--menu.is-open .catalog-mega{opacity:1!important;visibility:visible!important;pointer-events:auto!important}
   .nav-icon--phone svg{width:20px;height:20px;display:block}
 </style>
