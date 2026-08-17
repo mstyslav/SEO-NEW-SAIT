@@ -332,3 +332,21 @@ body{
     color:#fff;
   }
 }
+
+/* Match BaseLayout geometry before async global CSS arrives */
+body{
+  line-height:1.5;
+}
+
+.skip-link{
+  position:absolute;
+  left:-9999px;
+}
+
+.skip-link:focus{
+  left:20px;
+  top:20px;
+  z-index:100;
+  background:#fff;
+  padding:12px;
+}
