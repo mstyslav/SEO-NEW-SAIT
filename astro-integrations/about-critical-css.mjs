@@ -74,7 +74,13 @@ export default function aboutCriticalCss() {
           const firstLinkIndex = html.indexOf(matches[0][0]);
           html = html.slice(0, firstLinkIndex) + styleTag + html.slice(firstLinkIndex);
 
-          html = html.replace(STYLESHEET_LINK_RE, (full, href) => deferStylesheet(href));
+          let stylesheetIndex = 0;
+          html = html.replace(STYLESHEET_LINK_RE, (full, href) => {
+            const currentIndex = stylesheetIndex++;
+            // Defer only BaseLayout CSS. Keep the page-specific About stylesheet
+            // render-blocking so the document never paints with incomplete layout.
+            return currentIndex === 0 ? deferStylesheet(href) : full;
+          });
 
           fs.writeFileSync(pagePath, html);
         }
