@@ -524,3 +524,24 @@ body{
     display:none!important;
   }
 }
+
+/* CLS FIX — keep closed desktop Mega Menu out of initial document flow */
+.mega-trigger--menu{
+  position:relative;
+}
+
+.mega-trigger--menu .catalog-mega{
+  position:fixed!important;
+  top:92px;
+  left:50%;
+  transform:translate(-50%,10px);
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+
+.mega-trigger--menu.is-open .catalog-mega{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
