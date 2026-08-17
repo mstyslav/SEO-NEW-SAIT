@@ -545,3 +545,10 @@ body{
   visibility:visible!important;
   pointer-events:auto!important;
 }
+
+@media (max-width: 760px){
+  .sg-page-shell{
+    width:calc(100% - 24px);
+    margin:14px auto;
+  }
+}
