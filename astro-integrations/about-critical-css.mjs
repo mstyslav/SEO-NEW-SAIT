@@ -74,19 +74,10 @@ export default function aboutCriticalCss() {
           const firstLinkIndex = html.indexOf(matches[0][0]);
           html = html.slice(0, firstLinkIndex) + styleTag + html.slice(firstLinkIndex);
 
-          let stylesheetIndex = 0;
           html = html.replace(STYLESHEET_LINK_RE, (full, href) => {
-            const currentIndex = stylesheetIndex++;
-
-            // BaseLayout stays deferred.
-            if (currentIndex === 0) {
-              return deferStylesheet(href);
-            }
-
-            // About CSS:
-            // - desktop: blocking, to prevent layout shift;
-            // - mobile: deferred, because mobile critical CSS already provides
-            //   a stable first layout and blocking this file hurts LCP.
+            // Desktop needs the complete layout CSS before first paint.
+            // Mobile uses the verified inline critical CSS and loads the
+            // full stylesheet asynchronously.
             return (
               `<link rel="stylesheet" href="${href}" media="(min-width: 761px)">` +
               `<link rel="preload" as="style" href="${href}" media="(max-width: 760px)" ` +
