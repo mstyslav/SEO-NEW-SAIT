@@ -4,6 +4,7 @@ import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
 import FAQBlock from '../../../components/FAQBlock.astro';
 import { localeFromPath, normalizeLocale, localizedPath } from '../../../i18n/helpers';
+import '../../../styles/legacy-product.css';
 const locale = normalizeLocale(Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
 const lp = (path: string) => localizedPath(path, locale);
 const content = {

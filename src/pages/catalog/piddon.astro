@@ -8,6 +8,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
 import productData from '../../data/products.json';
+import '../../styles/legacy-product.css';
 
 const currentProduct = productData.products.find(item => item.slug === 'walk-in-premium-black') ?? productData.products[0];
 
