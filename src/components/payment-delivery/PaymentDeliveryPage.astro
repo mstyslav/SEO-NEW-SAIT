@@ -51,6 +51,7 @@ const structuredData: JsonLdObject[] = [
   faqSchema(copy.faq)!,
   {'@type':'Service','@id':`${canonical}#service`,name:copy.serviceName,serviceType:'Payment and delivery for custom glass structures',provider:{'@id':`${new URL('/',origin).href}#organization`},areaServed:{'@type':'Country',name:'Ukraine'},url:canonical,description:copy.description}
 ];
+import "../../styles/internal-pages.css";
 ---
 <BaseLayout title={copy.title} description={copy.description} locale={copy.locale} structuredData={structuredData}>
   <div class="sg-page-shell"><Header/><main id="main" class="pay-delivery">
