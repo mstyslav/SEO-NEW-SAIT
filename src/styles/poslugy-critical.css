@@ -97,7 +97,7 @@ body{
 
 .sg-header-cta{min-height:48px}
 .sg-mobile-toggle{display:none}
-.sg-mobile-menu{display:none}
+.sg-mobile-menu[hidden]{display:none!important}
 
 /* POSLUGY ABOVE THE FOLD */
 

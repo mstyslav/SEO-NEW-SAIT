@@ -163,7 +163,10 @@ const menuData = {
   const mega=document.querySelector('[data-catalog-mega]'); if(mega){const image=mega.querySelector('[data-promo-image]');const eyebrow=mega.querySelector('[data-promo-eyebrow]');const title=mega.querySelector('[data-promo-title]');const text=mega.querySelector('[data-promo-text]');const button=mega.querySelector('[data-promo-button]');const popularList=mega.querySelector('[data-popular-list]');let currentKey='partitions';const renderPopular=(items)=>{popularList.innerHTML=items.map(([itemTitle,itemText,itemImage,itemHref])=>`<a href="${itemHref}"><img src="${itemImage}" width="84" height="66" alt="" loading="lazy" /><span><b>${itemTitle}</b><small>${itemText}</small></span></a>`).join('');};const updateMenu=(key)=>{if(!menuData[key]||key===currentKey)return;currentKey=key;const data=menuData[key];image?.classList.add('is-changing');setTimeout(()=>{if(image){image.src=data.image;image.alt=data.title;}eyebrow.textContent=data.eyebrow;title.textContent=data.title;text.textContent=data.text;button.textContent=`${data.button} →`;button.href=data.href;renderPopular(data.popular);requestAnimationFrame(()=>image?.classList.remove('is-changing'));},120);};mega.querySelectorAll('[data-menu-key]').forEach((item)=>{item.addEventListener('mouseenter',()=>{mega.querySelectorAll('[data-menu-key]').forEach(el=>el.classList.remove('is-active'));item.classList.add('is-active');updateMenu(item.dataset.menuKey);});item.addEventListener('focusin',()=>updateMenu(item.dataset.menuKey));});}
 </script>
 <script>
-  const languageButton=document.querySelector('[data-language-button]'); languageButton?.addEventListener('click',()=>{localStorage.setItem('spaceGlassLocale',languageButton.dataset.targetLocale||'uk');}); if(!localStorage.getItem('spaceGlassLocale')){const browserLocale=(navigator.language||'').toLowerCase();const detected=browserLocale.startsWith('ru')?'ru':'uk';localStorage.setItem('spaceGlassLocale',detected);}
+  const languageButton=document.querySelector('[data-language-button]');
+  languageButton?.addEventListener('click',()=>{
+    localStorage.setItem('spaceGlassLocale',languageButton.dataset.targetLocale||'uk');
+  });
 </script>
 <style>
 /* Social icons — match existing header controls */
