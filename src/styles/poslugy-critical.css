@@ -252,3 +252,83 @@ body{
     margin-top:28px;
   }
 }
+
+/* Complete card geometry before async poslugy.css arrives */
+
+.service-category-card::before{
+  content:"";
+  position:absolute;
+  top:-54px;
+  right:-54px;
+  width:126px;
+  height:126px;
+  border:1px solid rgba(127,215,189,.35);
+  transform:rotate(45deg);
+}
+
+.service-category-card__links{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:flex-start;
+  flex-direction:column;
+  gap:5px;
+  margin:15px 0 17px;
+}
+
+.service-category-card__links a{
+  width:max-content;
+  max-width:100%;
+  padding:5px 7px;
+  border:1px solid #dce9e3;
+  border-radius:999px;
+  background:rgba(255,255,255,.82);
+  color:#52615b;
+  font-size:10px;
+  line-height:1.2;
+  text-decoration:none;
+}
+
+.service-category-card__more{
+  position:static;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:auto;
+  padding-top:15px;
+  border-top:1px solid var(--services-line);
+  color:var(--services-deep);
+  font-size:12px;
+  font-weight:850;
+  text-decoration:none;
+}
+
+.service-category-card__more::after{
+  content:"";
+  position:absolute;
+  inset:0;
+}
+
+.service-category-card__more span{
+  font-size:20px;
+}
+
+@media(max-width:1120px){
+  .sg-header .sg-nav-actions .nav-icon{
+    width:40px!important;
+    height:40px!important;
+    min-width:40px!important;
+    min-height:40px!important;
+  }
+
+  .sg-mobile-toggle{
+    width:auto;
+    min-height:44px;
+    padding:0 12px;
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:999px;
+    background:#101411;
+    color:#fff;
+  }
+}
