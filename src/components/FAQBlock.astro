@@ -20,6 +20,7 @@ const {
 
 import { localeFromPath, normalizeLocale } from '../i18n/helpers';
 import { expandFaq } from '../data/expand-faq';
+import '../styles/faq-block.css';
 const locale = normalizeLocale(localeProp ?? localeFromPath(Astro.url.pathname));
 const labels = {
   uk: { all: 'Показати всі питання', less: 'Показати менше' },
