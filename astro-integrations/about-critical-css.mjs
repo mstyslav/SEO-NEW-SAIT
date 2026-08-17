@@ -77,9 +77,22 @@ export default function aboutCriticalCss() {
           let stylesheetIndex = 0;
           html = html.replace(STYLESHEET_LINK_RE, (full, href) => {
             const currentIndex = stylesheetIndex++;
-            // Defer only BaseLayout CSS. Keep the page-specific About stylesheet
-            // render-blocking so the document never paints with incomplete layout.
-            return currentIndex === 0 ? deferStylesheet(href) : full;
+
+            // BaseLayout stays deferred.
+            if (currentIndex === 0) {
+              return deferStylesheet(href);
+            }
+
+            // About CSS:
+            // - desktop: blocking, to prevent layout shift;
+            // - mobile: deferred, because mobile critical CSS already provides
+            //   a stable first layout and blocking this file hurts LCP.
+            return (
+              `<link rel="stylesheet" href="${href}" media="(min-width: 761px)">` +
+              `<link rel="preload" as="style" href="${href}" media="(max-width: 760px)" ` +
+              `onload="this.onload=null;this.rel='stylesheet'">` +
+              `<noscript><link rel="stylesheet" href="${href}"></noscript>`
+            );
           });
 
           fs.writeFileSync(pagePath, html);
