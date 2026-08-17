@@ -1,5 +1,6 @@
 ---
 import FAQBlock from '../FAQBlock.astro';
 const { title, intro, items } = Astro.props;
+import "../../styles/seo-editorial.css";
 ---
 <section class="seo-faq"><FAQBlock title={title} intro={intro} items={items} visibleCount={items.length} /></section>

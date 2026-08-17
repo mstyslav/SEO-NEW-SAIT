@@ -13,6 +13,7 @@ const schema = {
   description: service.description, provider: { '@type': 'Organization', name: 'Space Glass', url: 'https://space-glass.com.ua/' },
   areaServed: { '@type': 'Country', name: 'Україна' }, url: new URL(service.path, Astro.site ?? Astro.url.origin).href
 };
+import "../styles/seo-directory.css";
 ---
 <BaseLayout title={service.title} description={service.description} locale="uk" availableLocales={['uk']}>
   <div class="sg-page-shell"><Header />

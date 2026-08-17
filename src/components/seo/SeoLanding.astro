@@ -80,6 +80,7 @@ const structuredData = [
   ]),
   faqStructuredData
 ].filter(Boolean) as JsonLdObject[];
+import "../../styles/seo-editorial.css";
 ---
 <BaseLayout title={page.title} description={page.description} locale={locale} schemaType={schemaTypeByKind[page.kind]} structuredData={structuredData}>
  <div class="sg-page-shell"><Header /><main id="main" class="seo-page">
