@@ -132,7 +132,7 @@ const menuData = {
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 10h3l4 4v2h-7zM6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM18 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" /></svg><p><b>Доставка по Україні</b><span>Надійно та в строк</span></p></div>
     </div>
   </section>}
-  <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden><div class="sg-mobile-menu__panel">{isUkrainian ? <details class="simple-catalog simple-catalog--mobile"><summary>Каталог</summary><div class="simple-catalog__menu">{catalogNavigation.map((category) => <a href={category.href}>{category.name}</a>)}</div></details> : <a class="sg-mobile-menu__primary" href={lp("/catalog/")}>Каталог</a>}{links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}{!isUkrainian && <><a href={lp("/compare/")}>Порівняння</a><a href={lp("/cart/")}>Кошик</a></>}<a href="tel:+380734251400">+38 (073) 425 14 00</a><a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a></div></div>
+  <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden><div class="sg-mobile-menu__panel"><a class="sg-mobile-menu__primary" href={lp("/catalog/")}>Каталог</a>{links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}{!isUkrainian && <><a href={lp("/compare/")}>Порівняння</a><a href={lp("/cart/")}>Кошик</a></>}<a href="tel:+380734251400">+38 (073) 425 14 00</a><a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a></div></div>
 </header>
 <style>
   .sg-categories-trigger{display:inline-flex;flex-direction:column;justify-content:center;gap:4px;width:32px;height:32px;padding:6px;border:0;background:transparent;cursor:pointer}
