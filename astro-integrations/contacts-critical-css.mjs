@@ -2,69 +2,80 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const CRITICAL_CSS_SOURCE = path.join('src', 'styles', 'contacts-final.css');
 const MARKER = 'data-contacts-critical';
 const STYLESHEET_LINK_RE = /<link rel="stylesheet" href="([^"]+)">/g;
-
 const TARGET_PAGES = ['contacts/index.html'];
 
 export default function contactsCriticalCss() {
   return {
     name: 'contacts-critical-css',
+
     hooks: {
       'astro:build:done': async ({ dir }) => {
         const outDir = fileURLToPath(dir);
-
-        if (!fs.existsSync(CRITICAL_CSS_SOURCE)) {
-          throw new Error(
-            `Contacts critical CSS not found: ${CRITICAL_CSS_SOURCE}`
-          );
-        }
-
-        const criticalCss = fs.readFileSync(CRITICAL_CSS_SOURCE, 'utf8').trim();
-
-        if (!criticalCss) {
-          throw new Error('Contacts critical CSS is empty.');
-        }
-
-        const styleTag = `<style ${MARKER}>${criticalCss}</style>`;
 
         for (const relativePath of TARGET_PAGES) {
           const pagePath = path.join(outDir, relativePath);
 
           if (!fs.existsSync(pagePath)) {
             throw new Error(
-              `Contacts page not found after build: ${pagePath}`
+              `Contacts CSS transform aborted: ${pagePath} not found after build.`
             );
           }
 
           let html = fs.readFileSync(pagePath, 'utf8');
 
-          if (html.includes(MARKER)) continue;
+          if (html.includes(MARKER)) {
+            continue;
+          }
 
           const matches = [...html.matchAll(STYLESHEET_LINK_RE)];
 
-          if (matches.length !== 2) {
+          const contactsLink = matches.find(
+            (match) => /\/_astro\/contacts\.[^"]+\.css$/.test(match[1])
+          );
+
+          if (!contactsLink) {
             throw new Error(
-              `Contacts CSS transform expected 2 stylesheet links, found ${matches.length}.`
+              'Contacts CSS transform aborted: generated contacts stylesheet link not found.'
             );
           }
 
-          const firstLinkIndex = html.indexOf(matches[0][0]);
+          const contactsHref = contactsLink[1];
 
-          html =
-            html.slice(0, firstLinkIndex) +
-            styleTag +
-            html.slice(firstLinkIndex);
+          const generatedCssPath = path.join(
+            outDir,
+            contactsHref.replace(/^\/+/, '')
+          );
 
-          html = html.replace(STYLESHEET_LINK_RE, (full, href) => {
-            return (
-              `<link rel="stylesheet" href="${href}" media="(min-width: 761px)">` +
-              `<link rel="preload" as="style" href="${href}" media="(max-width: 760px)" ` +
-              `onload="this.onload=null;this.rel='stylesheet'">` +
-              `<noscript><link rel="stylesheet" href="${href}"></noscript>`
+          if (!fs.existsSync(generatedCssPath)) {
+            throw new Error(
+              `Contacts CSS transform aborted: ${generatedCssPath} not found.`
             );
-          });
+          }
+
+          const generatedContactsCss = fs
+            .readFileSync(generatedCssPath, 'utf8')
+            .trim();
+
+          if (
+            !generatedContactsCss.includes('.contacts-page') ||
+            !generatedContactsCss.includes('.contacts-hero') ||
+            !generatedContactsCss.includes('.contacts-office-map')
+          ) {
+            throw new Error(
+              'Contacts CSS transform aborted: generated contacts stylesheet failed safety checks.'
+            );
+          }
+
+          /*
+           * Replace ONLY the generated contacts stylesheet.
+           * BaseLayout and all other stylesheets remain untouched.
+           */
+          const inlineTag =
+            `<style ${MARKER}>${generatedContactsCss}</style>`;
+
+          html = html.replace(contactsLink[0], inlineTag);
 
           fs.writeFileSync(pagePath, html);
         }
