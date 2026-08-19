@@ -17,9 +17,10 @@ interface Props {
   heroPreloadSizes?: string;
   heroPreloadMobileSrc?: string;
   heroPreloadMobileSrcset?: string;
+  robots?: string;
 }
 
-const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset } = Astro.props;
+const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, robots } = Astro.props;
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales } from '../i18n/helpers';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
@@ -63,6 +64,7 @@ const availableAlternateLocales = alternateLocales ?? supportedLocales;
     )}
     {heroPreloadSrc && !heroPreloadMobileSrcset && <link rel="preload" as="image" href={heroPreloadSrc} imagesrcset={heroPreloadSrcset} imagesizes={heroPreloadSizes} fetchpriority="high" />}
     <meta name="description" content={description} />
+    {robots && <meta name="robots" content={robots} />}
     <meta name="theme-color" content="#ffffff" />
     <title>{title}</title>
     <link rel="canonical" href={canonical} />

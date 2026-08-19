@@ -24,9 +24,9 @@ import "../../styles/projects-v14.css";
     <Header />
     <main id="main">
       <section class="projects-v14-hero">
-        <p class="eyebrow">Готові рішення</p>
+        <p class="eyebrow">Рішення</p>
         <h1>Скляні конструкції для дому та бізнесу</h1>
-        <p class="lead">Готові рішення Space Glass для житлових і комерційних просторів: від проєктування та виготовлення до професійного монтажу скляних конструкцій.</p>
+        <p class="lead">Рішення Space Glass для житлових і комерційних просторів: від проєктування та виготовлення до професійного монтажу скляних конструкцій.</p>
       </section>
       <section class="projects-v14-grid" aria-label="Скляні рішення за типом об’єкта">
         {solutions.map(([title, description, image, href, alt, fullWidth], index) => <a href={href}>
@@ -41,7 +41,7 @@ import "../../styles/projects-v14.css";
             fetchpriority={index === 0 ? 'high' : undefined}
             decoding="async"
           /></div>
-          <small>Готове рішення</small>
+          <small>Скляні рішення</small>
           <h2>{title}</h2>
           <p>{description}</p>
           <b>Переглянути рішення →</b>
