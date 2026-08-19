@@ -86,6 +86,7 @@ const menuData = {
       srcset="/images/space-glass-logo-header-148.webp 148w, /images/space-glass-logo-header.webp 202w"
       sizes="(max-width: 700px) 74px, (max-width: 1100px) 89px, 101px"
       width="101" height="82" alt="Space Glass" decoding="async"
+      style="width:101px;height:auto"
     /></a>
     <nav class="nav__links sg-nav-links" aria-label="Головна навігація">
       <a class="nav-link nav-link--catalog" href={lp("/catalog/")}>Каталог</a>
@@ -100,7 +101,7 @@ const menuData = {
             <aside class="catalog-mega__promo" data-promo><img src={menuData.partitions.image} width="560" height="700" alt="Скляні перегородки Space Glass" loading="lazy" decoding="async" data-promo-image /><div class="catalog-mega__promo-overlay"></div><div class="catalog-mega__promo-copy"><p data-promo-eyebrow>{menuData.partitions.eyebrow}</p><h2 data-promo-title>{menuData.partitions.title}</h2><span data-promo-text>{menuData.partitions.text}</span><a class="button button--mint" href={menuData.partitions.href} data-promo-button>{menuData.partitions.button} →</a></div></aside>
           </div>
           <div class="catalog-mega__cities"><strong>⌖ Пошук за містами</strong><a href="/city/kyiv/">Київ</a><a href="/city/lviv/">Львів</a><a href="/city/odesa/">Одеса</a><a href="#">Дніпро</a><a href="#">Харків</a><a href="#">Вінниця</a><a href="#">Івано-Франківськ</a><a href={lp("/catalog/")}>Вся Україна →</a></div>
-          <div class="catalog-mega__benefits"><div><span>⚙</span><b>Власне виробництво</b><small>Сучасне обладнання</small></div><div><span>◇</span><b>{t.warrantyShort ?? 'Гарантія 2 роки'}</b><small>На конструкції та монтаж</small></div><div><span>♙</span><b>Професійний монтаж</b><small>Досвідчені бригади</small></div><div><img src="/images/icons/delivery-truck.png" alt="" width="42" height="30" loading="lazy" decoding="async" /><b>Доставка по Україні</b><small>Надійно та в строк</small></div></div>
+          <div class="catalog-mega__benefits"><div><span>⚙</span><b>Власне виробництво</b><small>Сучасне обладнання</small></div><div><span>◇</span><b>{t.warrantyShort ?? 'Гарантія 2 роки'}</b><small>На всі конструкції</small></div><div><span>♙</span><b>Професійний монтаж</b><small>Досвідчені бригади</small></div><div><img src="/images/icons/delivery-truck.png" alt="" width="42" height="30" loading="lazy" decoding="async" /><b>Доставка по Україні</b><small>Надійно та в строк</small></div></div>
         </div>
       </div>}
     </nav>
@@ -126,7 +127,7 @@ const menuData = {
     </div>
     <div class="sg-ua-catalog-menu__benefits" aria-label="Переваги Space Glass">
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6M8 10h.01M16 10h.01" /></svg><p><b>Власне виробництво</b><span>Сучасне обладнання</span></p></div>
-      <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 7 3v5c0 4.6-2.8 8.5-7 10-4.2-1.5-7-5.4-7-10V6l7-3Zm-3 9 2 2 4-4" /></svg><p><b>Гарантія 2 роки</b><span>На конструкції та монтаж</span></p></div>
+      <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 7 3v5c0 4.6-2.8 8.5-7 10-4.2-1.5-7-5.4-7-10V6l7-3Zm-3 9 2 2 4-4" /></svg><p><b>Гарантія 2 роки</b><span>На всі конструкції</span></p></div>
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 16 4-4 3 3 6-7M15 8h2v2M4 20h16" /></svg><p><b>Професійний монтаж</b><span>Досвідчені бригади</span></p></div>
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 10h3l4 4v2h-7zM6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM18 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" /></svg><p><b>Доставка по Україні</b><span>Надійно та в строк</span></p></div>
     </div>

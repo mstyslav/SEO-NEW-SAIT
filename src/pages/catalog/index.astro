@@ -1,252 +1,39 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import '../../styles/catalog.css';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import catalog from '../../data/catalog.json';
+import { catalogNavigation } from '../../data/catalog-navigation';
+import '../../styles/catalog-hub.css';
+
+const imageBySlug = {
+  'dushovi-konstruktsii': { image: '/images/s24-menu/showers.webp', imageAlt: 'Скляна душова конструкція Space Glass', imageWidth: 1800, imageHeight: 2100 },
+  dzerkala: { image: '/images/s24-menu/mirrors.webp', imageAlt: 'Дзеркало для сучасного інтер’єру', imageWidth: 1800, imageHeight: 2100 },
+  'sklyani-perehorodky': { image: '/images/s24-menu/partitions.webp', imageAlt: 'Скляна перегородка для простору', imageWidth: 1800, imageHeight: 2100 },
+  'sklyani-dveri': { image: '/images/s24-menu/doors.webp', imageAlt: 'Скляні двері Space Glass', imageWidth: 1800, imageHeight: 2100 },
+  'sklyani-ohorozhi': { image: '/images/s24-menu/railings.webp', imageAlt: 'Скляна огорожа для сходів', imageWidth: 1800, imageHeight: 2100 },
+  'bezramne-sklinnya': { image: '/images/s24-menu/frameless.webp', imageAlt: 'Безрамне скління тераси', imageWidth: 1800, imageHeight: 2100 },
+  'alyuminiievi-konstruktsii': { image: '/images/s24-menu/aluminium.webp', imageAlt: 'Алюмінієва конструкція зі склінням', imageWidth: 1800, imageHeight: 2100 },
+  'sklyani-fasady': { image: '/images/s24-menu/facades.webp', imageAlt: 'Скляний фасад комерційного об’єкта', imageWidth: 1800, imageHeight: 2100 },
+  'metaloplastykovi-konstruktsii': { image: '/images/s24-menu/aluminium.webp', imageAlt: 'Віконна конструкція для житлового об’єкта', imageWidth: 1800, imageHeight: 2100 },
+  'sklo-dlia-biznesu': { image: '/images/projects/coffee-ocean-facade-odesa/coffee-ocean-glass-entrance-odesa.webp', imageAlt: 'Скляний вхід для комерційного простору', imageWidth: 960, imageHeight: 1280 }
+};
+const descriptions: Record<string, string> = {
+  'dushovi-konstruktsii': 'Піддони, кутові кабіни, двері й перегородки для душу та скляні шторки для ванни.', dzerkala: 'Дзеркала за розміром, із підсвіткою, для ванної, дому та комерційних просторів.', 'sklyani-perehorodky': 'Loft, офісні, міжкімнатні, розсувні, мобільні та безрамні системи.', 'sklyani-dveri': 'Розпашні, розсувні, маятникові двері та рішення в алюмінієвому профілі.', 'sklyani-ohorozhi': 'Огорожі сходів, балконів і терас — безрамні, на стійках або в профілі.', 'bezramne-sklinnya': 'Скління терас, балконів, альтанок і панорамні розсувні системи.', 'alyuminiievi-konstruktsii': 'Вікна, двері, фасади, розсувні системи, зимові сади та перголи.', 'sklyani-fasady': 'Вітринне, структурне та стійково-ригельне скління фасадів і вхідних груп.', 'metaloplastykovi-konstruktsii': 'Вікна, двері, балконні блоки та енергоефективні розсувні ПВХ-системи.', 'sklo-dlia-biznesu': 'Вітрини, козирки, стільниці, полиці та спеціальні рішення для бізнесу.'
+};
+const categories = catalogNavigation.map((category) => {
+  const { slug } = category;
+  const image = imageBySlug[slug];
+  if (!image) throw new Error(`Catalog image is missing category: ${slug}`);
+  return { ...category, description: descriptions[slug], ...image };
+});
 ---
-<BaseLayout title="Каталог Space Glass" description="Каталог скляних конструкцій Space Glass: душові, перегородки, двері, огорожі, дзеркала та алюмінієві системи.">
-<div class="sg-page-shell">
-  <Header />
-  <main id="main" class="catalog-page">
-    <section class="catalog-head">
-      <div>
-        <p class="eyebrow">Каталог</p>
-        <h1>Скляні конструкції</h1>
-        <p>Товари та індивідуальні рішення Space Glass. Доставка по Україні та Європі.</p>
-      </div>
-      <div class="catalog-search" role="search">
-        <input type="search" placeholder="Пошук за назвою або артикулом" aria-label="Пошук за назвою або артикулом" />
-        <button type="button">Знайти</button>
-      </div>
-    </section>
-
-    <div class="catalog-filter-controls">
-      <button class="filter-mobile" type="button" data-filter-mobile aria-expanded="false" aria-controls="catalog-filters">Підібрати рішення</button>
-      <p><strong data-results-count>1</strong> доступне рішення</p>
-    </div>
-
-    <section class="catalog-layout">
-      <aside class="filters" id="catalog-filters" aria-label="Підбір конструкції" data-catalog-filters>
-        <div class="filter-title"><div><p class="eyebrow">Параметри</p><h2>Підібрати рішення</h2></div><button type="button" data-filter-reset hidden>Скинути</button></div>
-        <details open><summary>Тип конструкції</summary><label><input type="checkbox" name="construction" value="fixed" /> Стаціонарна</label><label><input type="checkbox" name="construction" value="hinged" /> Розпашна</label><label><input type="checkbox" name="construction" value="sliding" /> Розсувна</label><label><input type="checkbox" name="construction" value="folding" /> Складна</label><label><input type="checkbox" name="construction" value="frameless" /> Безрамна</label></details>
-        <details open><summary>Вигляд скла</summary><label><input type="checkbox" name="glass" value="clear" /> Прозоре</label><label><input type="checkbox" name="glass" value="extra-clear" /> Просвітлене</label><label><input type="checkbox" name="glass" value="satin" /> Матове / Satin</label><label><input type="checkbox" name="glass" value="tinted" /> Тоноване сіре або бронза</label><label><input type="checkbox" name="glass" value="fluted" /> Рифлене</label></details>
-        <details><summary>Товщина скла</summary><label><input type="checkbox" name="thickness" value="8" /> 8 мм</label><label><input type="checkbox" name="thickness" value="10" /> 10 мм</label><label><input type="checkbox" name="thickness" value="12" /> 12 мм</label><label><input type="checkbox" name="thickness" value="calculated" /> За технічним розрахунком</label></details>
-        <details><summary>Колір фурнітури</summary><label><input type="checkbox" name="hardware" value="black" /> Чорний матовий</label><label><input type="checkbox" name="hardware" value="chrome" /> Хром</label><label><input type="checkbox" name="hardware" value="brushed" /> Брашована сталь</label><label><input type="checkbox" name="hardware" value="brass" /> Латунь / золото</label></details>
-        <details><summary>Потрібні послуги</summary><label><input type="checkbox" name="service" value="measurement" /> Професійний замір</label><label><input type="checkbox" name="service" value="manufacture" /> Виготовлення</label><label><input type="checkbox" name="service" value="delivery" /> Доставка</label><label><input type="checkbox" name="service" value="installation" /> Монтаж</label></details>
-        <a class="filter-help" href="/quote/">Не впевнені у параметрах? Допоможемо підібрати →</a>
-      </aside>
-
-      <div class="results">
-        <article class="product-card" data-catalog-product data-search="душова скляна перегородка walk-in sg-00001" data-construction="fixed frameless" data-glass="clear extra-clear satin tinted" data-thickness="8 10" data-hardware="black chrome brushed" data-service="measurement manufacture delivery installation">
-          <div class="product-media-wrap">
-            <a class="product-media" href="/catalog/dushova-perehorodka-walk-in-black/">
-              <img src="/images/v5/product-1.webp" alt="Душова скляна перегородка із загартованого скла" width="760" height="540" loading="eager" />
-              <span class="badge">На замовлення</span>
-            </a>
-            <button class="wishlist" type="button" aria-label="Додати в обране" aria-pressed="false" title="Додати в обране" data-wishlist-product data-product-id="SG-00001" data-product-title="Душова скляна перегородка" data-product-href="/catalog/dushova-perehorodka-walk-in-black/" data-product-image="/images/v5/product-1.webp" data-product-price="від 12 900 ₴"><span data-wishlist-icon>♡</span></button>
-          </div>
-          <div class="product-info">
-            <div class="meta">Душові перегородки · Артикул SG-00001</div>
-            <h2><a href="/catalog/dushova-perehorodka-walk-in-black/">Душова скляна перегородка</a></h2>
-            <p>Загартоване скло ESG 8–10 мм · вибір кольору скла та фурнітури · індивідуальні розміри</p>
-            <div class="price"><strong>від 12 900 ₴</strong><small>Орієнтовна ціна</small></div>
-            <a class="cta" href="/catalog/dushova-perehorodka-walk-in-black/">Переглянути та розрахувати →</a>
-          </div>
-        </article>
-        <p class="catalog-empty" data-catalog-empty hidden>За вибраними параметрами готової картки поки немає. Надішліть запит — ми підберемо індивідуальну конструкцію.</p>
-      </div>
-    </section>
-
-    <section class="category-links" aria-label="Категорії каталогу">
-      <h2>Категорії</h2>
-      <div>{catalog.categories.map((category)=><a href={`/${category.slug}/`}>{category.title}</a>)}</div>
-    </section>
-  </main>
-  <Footer />
-</div>
-
-<script>
-  const search = document.querySelector<HTMLInputElement>('.catalog-search input');
-  const searchButton = document.querySelector<HTMLButtonElement>('.catalog-search button');
-  const filterRoot = document.querySelector<HTMLElement>('[data-catalog-filters]');
-  const products = [...document.querySelectorAll<HTMLElement>('[data-catalog-product]')];
-  const reset = document.querySelector<HTMLButtonElement>('[data-filter-reset]');
-  const empty = document.querySelector<HTMLElement>('[data-catalog-empty]');
-  const count = document.querySelector<HTMLElement>('[data-results-count]');
-  const mobileToggle = document.querySelector<HTMLButtonElement>('[data-filter-mobile]');
-  const updateCatalog = () => {
-    const query = search?.value.trim().toLocaleLowerCase('uk') ?? '';
-    const checked = [...filterRoot?.querySelectorAll<HTMLInputElement>('input:checked') ?? []];
-    const groups = new Map<string, string[]>();
-    checked.forEach((input) => groups.set(input.name, [...(groups.get(input.name) ?? []), input.value]));
-    let visible = 0;
-    products.forEach((product) => {
-      const matchesSearch = !query || (product.dataset.search ?? '').includes(query);
-      const matchesFilters = [...groups].every(([name, values]) => {
-        const available = (product.dataset[name] ?? '').split(' ');
-        return values.some((value) => available.includes(value));
-      });
-      product.hidden = !(matchesSearch && matchesFilters);
-      if (!product.hidden) visible += 1;
-    });
-    if (empty) empty.hidden = visible > 0;
-    if (count) count.textContent = String(visible);
-    if (reset) reset.hidden = checked.length === 0 && !query;
-  };
-  filterRoot?.addEventListener('change', updateCatalog);
-  search?.addEventListener('input', updateCatalog);
-  searchButton?.addEventListener('click', updateCatalog);
-  reset?.addEventListener('click', () => {
-    filterRoot?.querySelectorAll<HTMLInputElement>('input:checked').forEach((input) => input.checked = false);
-    if (search) search.value = '';
-    updateCatalog();
-  });
-  mobileToggle?.addEventListener('click', () => {
-    const open = filterRoot?.classList.toggle('is-open') ?? false;
-    mobileToggle.setAttribute('aria-expanded', String(open));
-  });
-</script>
+<BaseLayout title="Каталог скляних та алюмінієвих конструкцій | Space Glass" description="Каталог скляних, алюмінієвих і металопластикових конструкцій Space Glass для дому, бізнесу та архітектурних об’єктів." schemaType="CollectionPage" locale="uk">
+  <div class="sg-page-shell"><Header />
+    <main id="main" class="catalog-hub">
+      <section class="catalog-hub__hero"><div class="catalog-hub__intro"><p class="catalog-hub__eyebrow">Каталог Space Glass</p><h1>Скляні та алюмінієві конструкції</h1><p>Оберіть напрямок, щоб побачити конструкції для дому, бізнесу та архітектурних об’єктів. Усі рішення проєктуємо під конкретний простір і завдання.</p></div><a class="catalog-hub__quote" href="/quote/">Потрібне індивідуальне рішення <span aria-hidden="true">→</span></a></section>
+      <section class="catalog-hub__categories" aria-labelledby="catalog-categories-title"><div class="catalog-hub__section-head"><p class="catalog-hub__eyebrow">Напрямки</p><h2 id="catalog-categories-title">Категорії конструкцій</h2></div><div class="catalog-hub__grid">
+        {categories.map((category, index) => <article class="catalog-hub__card"><div class="catalog-hub__image-wrap"><img src={category.image} alt={category.imageAlt} width={category.imageWidth} height={category.imageHeight} loading="lazy" decoding="async" /><span class="catalog-hub__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span></div><div class="catalog-hub__content"><h2><a href={category.href}>{category.name}<span aria-hidden="true">→</span></a></h2><p>{category.description}</p><ul aria-label={`Підкатегорії: ${category.name}`}>{category.services.map(service => <li><a href={service.path}>{service.shortName}</a></li>)}</ul><a class="catalog-hub__all-link" href={category.href}>Усі рішення <span aria-hidden="true">→</span></a></div></article>)}
+      </div></section>
+    </main><Footer />
+  </div>
 </BaseLayout>
-
-<style>
-  .catalog-page {
-    --brand: var(--sg-brand-mint, #7fd7bd);
-    --brand-dark: #0f684f;
-    --ink: #18211e;
-    --muted: #59645f;
-    --line: #dce7e2;
-    color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  }
-
-  .eyebrow {
-    margin: 0 0 9px;
-    color: var(--brand-dark) !important;
-    font-size: 12px !important;
-    font-weight: 800;
-    letter-spacing: .17em;
-    text-transform: uppercase;
-  }
-
-  .catalog-head,
-  .catalog-filter-controls,
-  .catalog-layout {
-    width: min(100%, 1320px);
-    margin-inline: auto;
-  }
-
-  .catalog-head {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(360px, 460px);
-    gap: 44px;
-    align-items: end;
-    padding: 54px 24px 34px;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .catalog-head h1 {
-    max-width: 780px;
-    margin: 0 0 14px;
-    font-size: clamp(40px, 4.2vw, 58px);
-    line-height: 1.02;
-    letter-spacing: -.04em;
-  }
-
-  .catalog-head p:not(.eyebrow) {
-    max-width: 660px;
-    margin: 0;
-    color: var(--muted);
-    font-size: 17px;
-    line-height: 1.55;
-  }
-
-  .catalog-search {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    min-height: 52px;
-    overflow: hidden;
-    border: 1px solid #c9d8d2;
-    border-radius: 12px;
-    background: #fff;
-  }
-
-  .catalog-search:focus-within { box-shadow: 0 0 0 3px rgb(127 215 189 / 24%); }
-  .catalog-search input { min-width: 0; padding: 0 17px; border: 0; outline: 0; color: var(--ink); font: inherit; }
-  .catalog-search input::placeholder { color: #7b8581; opacity: 1; }
-  .catalog-search button { padding: 0 23px; border: 0; background: var(--brand); color: #071d17; font: inherit; font-weight: 800; cursor: pointer; }
-
-  .catalog-filter-controls { display: flex; align-items: center; justify-content: flex-end; padding: 24px 24px 0; }
-  .catalog-filter-controls p { margin: 0; color: #69736f; font-size: 14px; }
-  .catalog-filter-controls strong { color: var(--ink); }
-  .filter-mobile { display: none; }
-
-  .catalog-layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 28px; padding: 18px 24px 78px; }
-  .filters {
-    position: sticky;
-    top: 92px;
-    align-self: start;
-    padding: 22px;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    background: #fff;
-  }
-  .filter-title { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; padding-bottom: 12px; }
-  .filter-title h2 { margin: 0; font-size: 23px; line-height: 1.08; letter-spacing: -.025em; }
-  .filter-title button { padding: 3px 0; border: 0; background: transparent; color: var(--brand-dark); font: inherit; font-size: 12px; font-weight: 750; cursor: pointer; }
-  .filters details { padding: 15px 0; border-top: 1px solid #e6ece9; }
-  .filters summary { cursor: pointer; font-size: 14px; font-weight: 800; list-style-position: outside; }
-  .filters label { display: flex; gap: 10px; align-items: flex-start; padding-top: 11px; color: #3f4b46; font-size: 13px; line-height: 1.35; cursor: pointer; }
-  .filters input { width: 16px; height: 16px; flex: 0 0 16px; margin: 1px 0 0; accent-color: var(--brand-dark); }
-  .filter-help { display: block; margin-top: 8px; padding: 14px; border-radius: 10px; background: #eff8f4; color: var(--brand-dark); font-size: 13px; font-weight: 750; line-height: 1.4; text-decoration: none; }
-
-  .results { display: grid; min-width: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-content: start; }
-  .product-card { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
-  .product-media-wrap { position: relative; }
-  .product-media { position: relative; display: block; overflow: hidden; aspect-ratio: 1.24 / 1; background: #eef3f1; }
-  .product-media img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
-  .product-card:hover .product-media img { transform: scale(1.025); }
-  .badge { position: absolute; top: 12px; left: 12px; padding: 6px 9px; border-radius: 7px; background: #12322d; color: #fff; font-size: 10px; font-weight: 700; text-transform: uppercase; }
-  .wishlist { position: absolute; z-index: 3; top: 12px; right: 12px; display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid #d5dedb; border-radius: 9px; background: #fff; color: #163029; font-size: 22px; cursor: pointer; }
-  .wishlist.is-active { border-color: var(--brand); background: #effaf6; color: #0d5e48; }
-  .product-info { padding: 18px; }
-  .meta { color: #6f7b76; font-size: 11px; line-height: 1.4; }
-  .product-info h2 { margin: 9px 0; font-size: 22px; line-height: 1.12; letter-spacing: -.025em; }
-  .product-info h2 a { color: inherit; text-decoration: none; }
-  .product-info p { margin: 0 0 15px; color: var(--muted); font-size: 13px; line-height: 1.5; }
-  .price { display: flex; flex-wrap: wrap; gap: 5px 10px; align-items: baseline; }
-  .price strong { font-size: 22px; }
-  .price small { color: #7c8782; font-size: 11px; }
-  .cta { display: inline-block; margin-top: 14px; color: var(--brand-dark); font-size: 13px; font-weight: 800; line-height: 1.35; text-decoration: none; }
-  .catalog-empty { grid-column: 1 / -1; margin: 0; padding: 28px; border: 1px dashed #bfd8ce; border-radius: 14px; background: #f6fbf9; color: var(--muted); line-height: 1.55; }
-  .category-links { width:min(100%,1320px); margin:0 auto; padding:0 24px 80px; }
-  .category-links h2 { margin:0 0 18px; font-size:30px; line-height:1.1; letter-spacing:-.025em; }
-  .category-links>div { display:flex; gap:8px; flex-wrap:wrap; }
-  .category-links a { padding:10px 14px; border:1px solid var(--line); border-radius:9px; background:#fff; color:#27413b; font-size:14px; font-weight:700; text-decoration:none; }
-  .category-links a:hover { border-color:var(--brand-dark); color:var(--brand-dark); }
-
-  @media (max-width: 1100px) {
-    .results { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-
-  @media (max-width: 900px) {
-    .catalog-head { grid-template-columns: 1fr; gap: 24px; }
-    .catalog-layout { grid-template-columns: 1fr; padding-top: 14px; }
-    .catalog-filter-controls { justify-content: space-between; }
-    .filter-mobile { display: inline-flex; min-height: 44px; align-items: center; padding: 0 16px; border: 1px solid var(--brand-dark); border-radius: 10px; background: #fff; color: var(--brand-dark); font: inherit; font-size: 14px; font-weight: 800; }
-    .filters { position: static; display: none; }
-    .filters.is-open { display: block; }
-  }
-
-  @media (max-width: 620px) {
-    .catalog-head, .catalog-filter-controls, .catalog-layout, .category-links { padding-right: 16px; padding-left: 16px; }
-    .catalog-head { padding-top: 38px; }
-    .catalog-head h1 { font-size: 40px; }
-    .catalog-search { grid-template-columns: 1fr; }
-    .catalog-search input { min-height: 50px; }
-    .catalog-search button { min-height: 46px; }
-    .results { grid-template-columns: 1fr; }
-    .catalog-filter-controls { gap: 12px; }
-    .catalog-filter-controls p { text-align: right; }
-  }
-</style>
