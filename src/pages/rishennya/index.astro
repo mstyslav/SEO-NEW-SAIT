@@ -11,11 +11,11 @@ import Footer from '../../components/Footer.astro';
 // is (very slightly) wrong. See git history for the crop rationale/pixels.
 const solutions = [
   ['Для квартири', 'Скляні перегородки, душові кабіни, двері, дзеркала та огородження для сучасних квартир.', '/images/solutions-new/solution-apartment.webp', '/rishennya/dlya-kvartyry/', 'Сучасна квартира зі скляною перегородкою в чорному алюмінієвому профілі', 1280],
-  ['Для будинку', 'Скляні огородження, тераси, душові, перегородки, фасадне скління та вхідні групи.', '/images/solutions-new/solution-house.webp', '/rishennya/dlya-budynku/', 'Сучасний приватний будинок з панорамним фасадним склінням і скляною терасою', 974],
-  ['Для офісу', 'Скляні офісні перегородки, двері, мобільні системи та фасадне скління для бізнес-просторів.', '/images/solutions-new/solution-office-meeting-room.webp', '/rishennya/dlya-ofisu/', 'Сучасний офіс зі скляними перегородками та дверима в алюмінієвому профілі', 1000],
-  ['Для готелю', 'Скляні душові, перегородки, огородження, дзеркала, вхідні групи та фасадне скління.', '/images/solutions-new/solution-hotel.webp', '/rishennya/dlya-hotelyu/', 'Преміальний готель зі скляною вхідною групою та панорамним фасадним склінням', 1000],
-  ['Для ресторану', 'Скляні перегородки, фасади, вхідні групи, двері, тераси, дзеркала та декоративне скло.', '/images/solutions-new/solution-restaurant.webp', '/rishennya/dlya-restoranu/', 'Сучасний ресторан з панорамним скляним фасадом і скляними перегородками', 974],
-  ['Для магазину', 'Скляні вітрини, фасадне скління, вхідні групи, двері та перегородки для магазинів і шоурумів.', '/images/solutions-new/solution-shop.webp', '/rishennya/dlya-magazynu/', 'Преміальний магазин зі скляною вітриною, фасадом та вхідною групою', 1000]
+  ['Для будинку', 'Скляні огородження, тераси, душові, перегородки, фасадне скління та вхідні групи.', '/images/solutions-new/solution-house.webp', '/rishennya/dlya-budynku/', 'Сучасний приватний будинок з панорамним фасадним склінням і скляною терасою', 1280],
+  ['Для офісу', 'Скляні офісні перегородки, двері, мобільні системи та фасадне скління для бізнес-просторів.', '/images/solutions-new/solution-office-meeting-room.webp', '/rishennya/dlya-ofisu/', 'Сучасний офіс зі скляними перегородками та дверима в алюмінієвому профілі', 1280],
+  ['Для готелю', 'Скляні душові, перегородки, огородження, дзеркала, вхідні групи та фасадне скління.', '/images/solutions-new/solution-hotel.webp', '/rishennya/dlya-hotelyu/', 'Преміальний готель зі скляною вхідною групою та панорамним фасадним склінням', 1280],
+  ['Для ресторану', 'Скляні перегородки, фасади, вхідні групи, двері, тераси, дзеркала та декоративне скло.', '/images/solutions-new/solution-restaurant.webp', '/rishennya/dlya-restoranu/', 'Сучасний ресторан з панорамним скляним фасадом і скляними перегородками', 1280],
+  ['Для магазину', 'Скляні вітрини, фасадне скління, вхідні групи, двері та перегородки для магазинів і шоурумів.', '/images/solutions-new/solution-shop.webp', '/rishennya/dlya-magazynu/', 'Преміальний магазин зі скляною вітриною, фасадом та вхідною групою', 1280]
 ];
 import "../../styles/projects-v14.css";
 ---
@@ -34,7 +34,7 @@ import "../../styles/projects-v14.css";
             src={image}
             srcset={index === 0
               ? `${image.replace('.webp', '-640.webp')} 640w, ${image.replace('.webp', '-800.webp')} 800w, ${image} ${fullWidth}w`
-              : `${image.replace('.webp', '-640.webp')} 640w, ${image} ${fullWidth}w`}
+              : `${image.replace('.webp', '-640.webp')} 640w, ${image.replace('.webp', '-800.webp')} 800w, ${image} ${fullWidth}w`}
             sizes="(max-width: 640px) calc(100vw - 48px), (max-width: 1000px) 50vw, 33vw"
             alt={alt}
             width="640"
