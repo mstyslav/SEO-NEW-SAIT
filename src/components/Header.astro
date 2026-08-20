@@ -151,11 +151,20 @@ const menuData = {
   .simple-catalog{position:relative}.simple-catalog summary{display:inline-flex;align-items:center;gap:6px;min-height:48px;color:#fff;cursor:pointer;list-style:none}.simple-catalog summary::-webkit-details-marker{display:none}.simple-catalog__menu{position:absolute;top:calc(100% - 4px);left:-18px;z-index:1000;display:grid;min-width:270px;padding:12px;background:#fff;border:1px solid #dce5e1;box-shadow:0 16px 35px rgba(0,0,0,.14)}.simple-catalog__menu a{padding:9px 12px;color:#111513;font-size:14px}.simple-catalog__menu a:hover,.simple-catalog__menu a:focus-visible{background:#edf8f2;color:#176f58}.simple-catalog--mobile{color:#fff}.simple-catalog--mobile summary{min-height:44px}.simple-catalog--mobile .simple-catalog__menu{position:static;min-width:0;padding:4px 0;background:transparent;border:0;box-shadow:none}.simple-catalog--mobile .simple-catalog__menu a{padding-left:18px;color:#dce5e1}
 </style>
 <style is:inline>
-  .simple-catalog--mobile .simple-catalog__menu a{-webkit-tap-highlight-color:transparent}
+  .simple-catalog--mobile .simple-catalog__menu a{
+    -webkit-tap-highlight-color:transparent;
+    border-bottom:0!important;
+  }
   .simple-catalog--mobile .simple-catalog__menu a:hover,
   .simple-catalog--mobile .simple-catalog__menu a:focus,
   .simple-catalog--mobile .simple-catalog__menu a:focus-visible,
-  .simple-catalog--mobile .simple-catalog__menu a:active{background:transparent}
+  .simple-catalog--mobile .simple-catalog__menu a:active{
+    background:transparent!important;
+    background-color:transparent!important;
+    color:#dce5e1!important;
+    box-shadow:none!important;
+    outline:none!important;
+  }
   /* The generic nav underline and color hover target all .nav-link elements.
      The UA menu button intentionally keeps that shell neutral and animates only its three lines. */
   .sg-header .sg-nav-links .sg-categories-trigger--ua,
