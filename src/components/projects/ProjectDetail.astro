@@ -12,7 +12,8 @@ import { buildProjectFaq } from '../../data/project-faq';
 import { buildProjectFacts } from '../../data/project-facts';
 import { projectRequestExample } from '../../data/project-request-examples';
 import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
-import '../../styles/projects-v2.css';
+import '../../styles/projects-common.css';
+import '../../styles/project-detail-v2.css';
 
 const { project, relatedProjects = [], locale = 'uk' } = Astro.props;
 const origin = Astro.site ?? Astro.url.origin;

@@ -1,33 +1,37 @@
 ---
 import { projectCategoryMap } from '../../data/project-taxonomy';
 
-const { project, hrefPrefix = '/projects', priority = false } = Astro.props;
+const { project, hrefPrefix = '/projects', priority = false, eager = false } = Astro.props;
 const category = projectCategoryMap[project.category];
 const href = `${hrefPrefix}/${project.slug}/`;
+
+// Generated variants live next to the original as `-{width}.webp` (see /rishennya/ for the
+// same convention). Never include a width >= the native size — that would upscale.
+const RESPONSIVE_WIDTHS = [480, 720, 960];
+const nativeWidth = project.cover.width;
+const srcset = RESPONSIVE_WIDTHS.filter((w) => w <= nativeWidth)
+  .map((w) => `${w === nativeWidth ? project.cover.src : project.cover.src.replace('.webp', `-${w}.webp`)} ${w}w`)
+  .join(', ');
+// Mirrors the grid CSS in projects-common.css: 1 column under 700px, 2 columns under 1050px, 3 above.
+const sizes = '(max-width: 700px) calc(100vw - 32px), (max-width: 1050px) calc((min(1380px, 100vw - 116px) - 18px) / 2), calc((min(1380px, 100vw - 116px) - 36px) / 3)';
+
+const loading = priority || eager ? 'eager' : 'lazy';
+const fetchpriority = priority ? 'high' : eager ? 'auto' : undefined;
 ---
 <article class="project-card-v2" data-project-card data-category={project.category} data-city={project.city}>
   <a href={href} aria-label={`Переглянути проєкт: ${project.cardTitle}`}>
     <div class="project-card-v2__media">
-      {priority ? (
-        <img
-          src={project.cover.src}
-          width={project.cover.width}
-          height={project.cover.height}
-          alt={project.cover.alt}
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-        />
-      ) : (
-        <img
-          src={project.cover.src}
-          width={project.cover.width}
-          height={project.cover.height}
-          alt={project.cover.alt}
-          loading="lazy"
-          decoding="async"
-        />
-      )}
+      <img
+        src={project.cover.src}
+        srcset={srcset}
+        sizes={sizes}
+        width={project.cover.width}
+        height={project.cover.height}
+        alt={project.cover.alt}
+        loading={loading}
+        decoding="async"
+        fetchpriority={fetchpriority}
+      />
     </div>
     <div class="project-card-v2__body">
       <p>{project.city} <span aria-hidden="true">/</span> {category.label}</p>

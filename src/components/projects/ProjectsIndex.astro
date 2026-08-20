@@ -3,7 +3,8 @@ import { getCollection } from 'astro:content';
 import Breadcrumbs from '../Breadcrumbs.astro';
 import ProjectCard from './ProjectCard.astro';
 import ProjectFilters from './ProjectFilters.astro';
-import '../../styles/projects-v2.css';
+import '../../styles/projects-common.css';
+import '../../styles/projects-index-v2.css';
 
 const projects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk'))
   .map(({ data }) => data)
@@ -19,7 +20,9 @@ const projects = (await getCollection('projects', ({ data }) => data.status === 
     </header>
     <ProjectFilters projects={projects} />
     <section class="projects-index-v2__grid" aria-label="Реалізовані проєкти">
-      {projects.map((project, index) => <ProjectCard project={project} hrefPrefix="/projects" priority={index === 0} />)}
+      {projects.map((project, index) => (
+        <ProjectCard project={project} hrefPrefix="/projects" priority={index === 0} eager={index === 1 || index === 2} />
+      ))}
     </section>
     <p class="projects-index-v2__empty" data-projects-empty hidden>У цій категорії проєкти ще готуються до публікації.</p>
   </div>
