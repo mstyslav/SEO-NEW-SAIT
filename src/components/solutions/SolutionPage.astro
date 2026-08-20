@@ -1,0 +1,189 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FAQBlock from '../../components/FAQBlock.astro';
+import SolutionRequestForm from '../../components/SolutionRequestForm.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import { PROCESS_STEPS, solutionBySlug, CITY_LINKS, type Solution } from '../../data/solutions';
+import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
+import '../../styles/projects-common.css';
+import '../../styles/solutions.css';
+
+interface Props { solution: Solution }
+const { solution } = Astro.props;
+
+const origin = Astro.site ?? Astro.url.origin;
+const canonical = absoluteUrl(solution.path, origin);
+
+const allProjects = await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk');
+const projects = solution.projectSlugs
+  .map((slug) => allProjects.find((p) => p.data.slug === slug))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p))
+  .map((p) => p.data);
+
+const relatedSolutions = solution.crossLinks.map((slug) => solutionBySlug[slug]).filter(Boolean);
+
+const breadcrumbItems = [
+  { label: 'Головна', href: '/' },
+  { label: 'Рішення', href: '/rishennya/' },
+  { label: solution.navLabel, href: solution.path }
+];
+
+const structuredData: JsonLdObject[] = [
+  breadcrumbSchema(breadcrumbItems.map((item) => ({ label: item.label, href: absoluteUrl(item.href, origin) }))),
+  faqSchema(solution.faq.map(([question, answer]) => ({ question, answer })))
+].filter(Boolean) as JsonLdObject[];
+
+const heroSrcset = `/images/solutions-new/${solution.heroImage.base}-640.webp 640w, /images/solutions-new/${solution.heroImage.base}.webp ${solution.heroImage.width}w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+---
+<BaseLayout
+  title={solution.title}
+  description={solution.description}
+  locale="uk"
+  alternateLocales={['uk']}
+  schemaType="Service"
+  structuredData={structuredData}
+  image={`/images/solutions-new/${solution.heroImage.base}.webp`}
+>
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main" class="solution-page">
+      <nav class="solution-page__breadcrumbs" aria-label="Хлібні крихти">
+        {breadcrumbItems.map((item, index) => (
+          <>
+            {index > 0 && <span aria-hidden="true">/</span>}
+            {index === breadcrumbItems.length - 1
+              ? <span aria-current="page">{item.label}</span>
+              : <a href={item.href}>{item.label}</a>}
+          </>
+        ))}
+      </nav>
+
+      <section class="solution-page__hero">
+        <div class="solution-page__hero-copy">
+          <p class="eyebrow">{solution.eyebrow}</p>
+          <h1>{solution.h1}</h1>
+          <p class="lead">{solution.heroLead}</p>
+          <a class="button button--mint" href="#solution-request">Отримати розрахунок</a>
+        </div>
+        <div class="solution-page__hero-media">
+          <img
+            src={`/images/solutions-new/${solution.heroImage.base}.webp`}
+            srcset={heroSrcset}
+            sizes={heroSizes}
+            width={solution.heroImage.width}
+            height={solution.heroImage.height}
+            alt={solution.heroImage.alt}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+      </section>
+
+      <section class="solution-page__section" aria-label={`Продукти ${solution.navLabel.toLowerCase()}`}>
+        <div class="solution-section-head"><p class="eyebrow">Продукти</p><h2>Рішення {solution.navLabel.toLowerCase()}</h2></div>
+        <div class="solution-product-grid">
+          {solution.productLinks.map((item) => (
+            <a class="solution-product-card" href={item.href}>
+              <h3>{item.label}</h3>
+              <p>{item.text}</p>
+              <b aria-hidden="true">→</b>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="solution-page__section">
+        <div class="solution-section-head"><p class="eyebrow">Асортимент</p><h2>Що ми виготовляємо</h2></div>
+        <ul class="solution-make-list">
+          {solution.whatWeMake.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+
+      <section class="solution-page__section">
+        <div class="solution-section-head"><p class="eyebrow">Вибір рішення</p><h2>Як обрати рішення</h2><p>{solution.chooseIntro}</p></div>
+        <div class="solution-choose-grid">
+          {solution.choosePoints.map((point) => (
+            <article class="solution-choose-card">
+              <h3>{point.title}</h3>
+              <p>{point.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="solution-page__section">
+        <div class="solution-section-head"><p class="eyebrow">Матеріали</p><h2>Матеріали та системи</h2></div>
+        <div class="solution-material-grid">
+          {solution.materials.map((material) => (
+            <article class="solution-material-card">
+              <h3>{material.title}</h3>
+              <p>{material.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="solution-page__section">
+        <div class="solution-section-head"><p class="eyebrow">Процес</p><h2>Як ми працюємо</h2></div>
+        <div class="solution-process-grid">
+          {PROCESS_STEPS.map((step, index) => (
+            <div class="solution-process-step">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <b>{step.title}</b>
+              <p>{step.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {projects.length > 0 && (
+        <section class="solution-page__section solution-page__projects">
+          <div class="solution-section-head"><p class="eyebrow">Проєкти</p><h2>Реалізовані об’єкти</h2></div>
+          <div class="projects-index-v2__grid">
+            {projects.map((project) => <ProjectCard project={project} hrefPrefix="/projects" />)}
+          </div>
+        </section>
+      )}
+
+      <section class="solution-page__section solution-page__geography">
+        <div class="solution-section-head"><p class="eyebrow">Географія</p><h2>Працюємо у вашому місті</h2></div>
+        <p>Space Glass реалізує проєкти у Києві, Одесі, Львові та інших містах України. Команда виконує замір, проєктування, виготовлення, доставку та монтаж конструкцій відповідно до вимог конкретного об’єкта.</p>
+        <div class="solution-city-links">
+          {CITY_LINKS.map((city) => <a href={city.href}>{city.label}</a>)}
+        </div>
+      </section>
+
+      <section class="solution-page__section">
+        <FAQBlock
+          title={`FAQ про ${solution.h1.toLowerCase()}: вибір, матеріали та монтаж`}
+          intro={`Відповідаємо на основні питання про ${solution.h1.toLowerCase()}, строки, гарантію та монтаж.`}
+          items={solution.faq}
+          visibleCount={5}
+        />
+      </section>
+
+      {relatedSolutions.length > 0 && (
+        <section class="solution-page__section solution-page__cross-links">
+          <div class="solution-section-head"><p class="eyebrow">Інші рішення</p><h2>Дивіться також</h2></div>
+          <div class="solution-cross-grid">
+            {relatedSolutions.map((related) => (
+              <a class="solution-cross-card" href={related.path}>
+                <h3>{related.navLabel}</h3>
+                <p>{related.hubCardText}</p>
+                <b aria-hidden="true">→</b>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <SolutionRequestForm solutionTitle={solution.h1} example={solution.requestExample} />
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>
