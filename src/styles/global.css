@@ -305,7 +305,6 @@ body{background:#202020}
   padding:0 28px;
   white-space:nowrap;
 }
-.mega-menu__feature .button{grid-area:button;justify-self:start}
 
 @media(max-width:1280px){
   .sg-nav{
@@ -353,9 +352,6 @@ body{background:#202020}
   opacity:1;
   visibility:visible;
   pointer-events:auto;
-}
-.mega-menu__feature .button::after{
-  display:none!important;
 }
 
 /* Keep top navigation underline below text */
@@ -601,13 +597,6 @@ body{background:#202020}
   transform:rotate(180deg);
 }
 
-.mega-menu-s9__promo-copy .button{
-  min-height:45px;
-  padding:0 19px;
-  border-radius:8px;
-  font-size:11px;
-}
-
 
 
 
@@ -639,18 +628,6 @@ body{background:#202020}
   right:0;
   top:100%;
   height:20px;
-}
-
-
-
-/* Sprint 14 */
-
-/* Disable all dropdown catalog blocks completely */
-.mega-menu,
-.mega-menu-s3,
-.mega-menu-s9,
-.mega-trigger::after{
-  display:none!important;
 }
 
 /* Footer top benefits */
