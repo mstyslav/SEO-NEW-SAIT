@@ -9,6 +9,11 @@ import '../../styles/projects-index-v2.css';
 // PSI (mobile + desktop) consistently reports this card's image as the actual LCP element
 // on /projects/, not just the first card in sort order — give it fetchpriority=high too.
 const LCP_SLUG = 'bath-screen-akvarel-odesa';
+const LCP_CARD_COVER = {
+  src: '/images/projects/bath-screen-akvarel-odesa/bath-screen-akvarel-odesa-card-720.webp',
+  width: 720,
+  height: 540
+};
 
 const projects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk'))
   .map(({ data }) => data)
@@ -30,6 +35,7 @@ const projects = (await getCollection('projects', ({ data }) => data.status === 
           hrefPrefix="/projects"
           priority={index === 0 || project.slug === LCP_SLUG}
           eager={index === 1 || index === 2}
+          cardCover={project.slug === LCP_SLUG ? { ...LCP_CARD_COVER, alt: project.cover.alt } : undefined}
         />
       ))}
     </section>
