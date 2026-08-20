@@ -3,14 +3,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 
-// Base-file width varies per image (974 vs 1000) because a few sources had
+// Base-file width varies per image because a few sources had
 // their existing external white-margin artifact cropped out — the -640
 // variant is regenerated from the same cropped source, so it's always
 // exactly 640w, but the "full" srcset candidate's real w-descriptor must
 // match its actual pixel width or the browser's responsive-selection math
 // is (very slightly) wrong. See git history for the crop rationale/pixels.
 const solutions = [
-  ['Для квартири', 'Скляні перегородки, душові кабіни, двері, дзеркала та огородження для сучасних квартир.', '/images/solutions-new/solution-apartment.webp', '/rishennya/dlya-kvartyry/', 'Сучасна квартира зі скляною перегородкою в чорному алюмінієвому профілі', 1000],
+  ['Для квартири', 'Скляні перегородки, душові кабіни, двері, дзеркала та огородження для сучасних квартир.', '/images/solutions-new/solution-apartment.webp', '/rishennya/dlya-kvartyry/', 'Сучасна квартира зі скляною перегородкою в чорному алюмінієвому профілі', 1280],
   ['Для будинку', 'Скляні огородження, тераси, душові, перегородки, фасадне скління та вхідні групи.', '/images/solutions-new/solution-house.webp', '/rishennya/dlya-budynku/', 'Сучасний приватний будинок з панорамним фасадним склінням і скляною терасою', 974],
   ['Для офісу', 'Скляні офісні перегородки, двері, мобільні системи та фасадне скління для бізнес-просторів.', '/images/solutions-new/solution-office-meeting-room.webp', '/rishennya/dlya-ofisu/', 'Сучасний офіс зі скляними перегородками та дверима в алюмінієвому профілі', 1000],
   ['Для готелю', 'Скляні душові, перегородки, огородження, дзеркала, вхідні групи та фасадне скління.', '/images/solutions-new/solution-hotel.webp', '/rishennya/dlya-hotelyu/', 'Преміальний готель зі скляною вхідною групою та панорамним фасадним склінням', 1000],
@@ -32,7 +32,9 @@ import "../../styles/projects-v14.css";
         {solutions.map(([title, description, image, href, alt, fullWidth], index) => <a href={href}>
           <div class="solution-image"><img
             src={image}
-            srcset={`${image.replace('.webp', '-640.webp')} 640w, ${image} ${fullWidth}w`}
+            srcset={index === 0
+              ? `${image.replace('.webp', '-640.webp')} 640w, ${image.replace('.webp', '-800.webp')} 800w, ${image} ${fullWidth}w`
+              : `${image.replace('.webp', '-640.webp')} 640w, ${image} ${fullWidth}w`}
             sizes="(max-width: 640px) calc(100vw - 48px), (max-width: 1000px) 50vw, 33vw"
             alt={alt}
             width="640"
