@@ -3,8 +3,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const MARKER = 'data-contacts-critical';
+const COMMON_MARKER = 'data-contacts-common-critical';
 const STYLESHEET_LINK_RE = /<link rel="stylesheet" href="([^"]+)">/g;
 const TARGET_PAGES = ['contacts/index.html'];
+const commonCriticalCssPath = fileURLToPath(
+  new URL('../src/styles/contacts-common-critical.css', import.meta.url)
+);
 
 export default function contactsCriticalCss() {
   return {
@@ -34,10 +38,13 @@ export default function contactsCriticalCss() {
           const contactsLink = matches.find(
             (match) => /\/_astro\/contacts\.[^"]+\.css$/.test(match[1])
           );
+          const baseLayoutLink = matches.find(
+            (match) => /\/_astro\/BaseLayout\.[^"]+\.css$/.test(match[1])
+          );
 
-          if (!contactsLink) {
+          if (!contactsLink || !baseLayoutLink) {
             throw new Error(
-              'Contacts CSS transform aborted: generated contacts stylesheet link not found.'
+              'Contacts CSS transform aborted: expected generated Contacts and BaseLayout stylesheet links.'
             );
           }
 
@@ -57,6 +64,9 @@ export default function contactsCriticalCss() {
           const generatedContactsCss = fs
             .readFileSync(generatedCssPath, 'utf8')
             .trim();
+          const commonCriticalCss = fs
+            .readFileSync(commonCriticalCssPath, 'utf8')
+            .trim();
 
           if (
             !generatedContactsCss.includes('.contacts-page') ||
@@ -67,15 +77,29 @@ export default function contactsCriticalCss() {
               'Contacts CSS transform aborted: generated contacts stylesheet failed safety checks.'
             );
           }
+          if (
+            !commonCriticalCss.includes('.sg-page-shell') ||
+            !commonCriticalCss.includes('.sg-mobile-toggle') ||
+            !commonCriticalCss.includes('body .sg-page-shell main h1')
+          ) {
+            throw new Error(
+              'Contacts CSS transform aborted: common critical stylesheet failed safety checks.'
+            );
+          }
 
           /*
            * Replace ONLY the generated contacts stylesheet.
            * BaseLayout and all other stylesheets remain untouched.
            */
-          const inlineTag =
+          const inlineTag = `<style ${COMMON_MARKER}>${commonCriticalCss}</style>` +
             `<style ${MARKER}>${generatedContactsCss}</style>`;
+          const baseLayoutHref = baseLayoutLink[1];
+          const deferredBaseLayout =
+            `<link rel="preload" as="style" href="${baseLayoutHref}" onload="this.onload=null;this.rel='stylesheet'">` +
+            `<noscript><link rel="stylesheet" href="${baseLayoutHref}"></noscript>`;
 
           html = html.replace(contactsLink[0], inlineTag);
+          html = html.replace(baseLayoutLink[0], deferredBaseLayout);
 
           fs.writeFileSync(pagePath, html);
         }
