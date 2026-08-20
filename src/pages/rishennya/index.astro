@@ -2,105 +2,93 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import { SOLUTIONS, CITY_LINKS } from '../../data/solutions';
+import { absoluteUrl, breadcrumbSchema, type JsonLdObject } from '../../seo/schema';
+import '../../styles/solutions.css';
 
-// Base-file width varies per image (974 vs 1000) because a few sources had
-// their existing external white-margin artifact cropped out — the -640
-// variant is regenerated from the same cropped source, so it's always
-// exactly 640w, but the "full" srcset candidate's real w-descriptor must
-// match its actual pixel width or the browser's responsive-selection math
-// is (very slightly) wrong. See git history for the crop rationale/pixels.
-const solutions = [
-  ['Для квартири', 'Скляні перегородки, душові кабіни, двері, дзеркала та огородження для сучасних квартир.', '/images/solutions-new/solution-apartment.webp', '/rishennya/dlya-kvartyry/', 'Сучасна квартира зі скляною перегородкою в чорному алюмінієвому профілі', 1000],
-  ['Для будинку', 'Скляні огородження, тераси, душові, перегородки, фасадне скління та вхідні групи.', '/images/solutions-new/solution-house.webp', '/rishennya/dlya-budynku/', 'Сучасний приватний будинок з панорамним фасадним склінням і скляною терасою', 974],
-  ['Для офісу', 'Скляні офісні перегородки, двері, мобільні системи та фасадне скління для бізнес-просторів.', '/images/solutions-new/solution-office-meeting-room.webp', '/rishennya/dlya-ofisu/', 'Сучасний офіс зі скляними перегородками та дверима в алюмінієвому профілі', 1000],
-  ['Для готелю', 'Скляні душові, перегородки, огородження, дзеркала, вхідні групи та фасадне скління.', '/images/solutions-new/solution-hotel.webp', '/rishennya/dlya-hotelyu/', 'Преміальний готель зі скляною вхідною групою та панорамним фасадним склінням', 1000],
-  ['Для ресторану', 'Скляні перегородки, фасади, вхідні групи, двері, тераси, дзеркала та декоративне скло.', '/images/solutions-new/solution-restaurant.webp', '/rishennya/dlya-restoranu/', 'Сучасний ресторан з панорамним скляним фасадом і скляними перегородками', 974],
-  ['Для магазину', 'Скляні вітрини, фасадне скління, вхідні групи, двері та перегородки для магазинів і шоурумів.', '/images/solutions-new/solution-shop.webp', '/rishennya/dlya-magazynu/', 'Преміальний магазин зі скляною вітриною, фасадом та вхідною групою', 1000]
+const origin = Astro.site ?? Astro.url.origin;
+const breadcrumbItems = [
+  { label: 'Головна', href: '/' },
+  { label: 'Рішення', href: '/rishennya/' }
 ];
-import "../../styles/projects-v14.css";
+const structuredData: JsonLdObject[] = [
+  breadcrumbSchema(breadcrumbItems.map((item) => ({ label: item.label, href: absoluteUrl(item.href, origin) })))
+];
+
+const categoryLinks = [
+  { label: 'Скляні перегородки', href: '/sklyani-perehorodky/' },
+  { label: 'Скляні двері', href: '/sklyani-dveri/' },
+  { label: 'Душові кабіни', href: '/dushovi-kabiny/' },
+  { label: 'Скляні огорожі', href: '/sklyani-ohorozhi/' },
+  { label: 'Безрамне скління', href: '/bezramne-configurator/' },
+  { label: 'Дзеркала', href: '/dzerkala/' },
+  { label: 'Архітектурні системи', href: '/arkhitekturni-systemy/' },
+  { label: 'Алюмінієві конструкції', href: '/alyuminiievi-konstruktsii/' }
+];
 ---
-<BaseLayout title="Скляні конструкції для дому та бізнесу | Space Glass" description="Скляні конструкції на замовлення для квартир, будинків, офісів, готелів, ресторанів і магазинів: перегородки, двері, душові, огородження, вітрини та фасадне скління Space Glass.">
+<BaseLayout
+  title="Скляні рішення для дому та бізнесу | Space Glass"
+  description="Скляні конструкції для квартир, будинків, офісів, ресторанів, готелів і магазинів. Перегородки, двері, душові, огорожі та алюмінієві системи Space Glass у Києві, Одесі, Львові та по Україні."
+  locale="uk"
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+>
   <div class="sg-page-shell">
     <Header />
-    <main id="main">
-      <section class="projects-v14-hero">
-        <p class="eyebrow">Рішення</p>
-        <h1>Скляні конструкції для дому та бізнесу</h1>
-        <p class="lead">Рішення Space Glass для житлових і комерційних просторів: від проєктування та виготовлення до професійного монтажу скляних конструкцій.</p>
-      </section>
-      <section class="projects-v14-grid" aria-label="Скляні рішення за типом об’єкта">
-        {solutions.map(([title, description, image, href, alt, fullWidth], index) => <a href={href}>
-          <div class="solution-image"><img
-            src={image}
-            srcset={`${image.replace('.webp', '-640.webp')} 640w, ${image} ${fullWidth}w`}
-            sizes="(max-width: 640px) calc(100vw - 48px), (max-width: 1000px) 50vw, 33vw"
-            alt={alt}
-            width="640"
-            height="416"
-            loading={index === 0 ? 'eager' : 'lazy'}
-            fetchpriority={index === 0 ? 'high' : undefined}
-            decoding="async"
-          /></div>
-          <small>Скляні рішення</small>
-          <h2>{title}</h2>
-          <p>{description}</p>
-          <b>Переглянути рішення →</b>
-        </a>)}
-      </section>
+    <main id="main" class="rishennya-hub">
+      <nav class="rishennya-hub__breadcrumbs" aria-label="Хлібні крихти">
+        <a href="/">Головна</a><span aria-hidden="true">/</span><span aria-current="page">Рішення</span>
+      </nav>
+
+      <div class="rishennya-hub__wrap">
+        <header class="rishennya-hub__hero">
+          <p class="eyebrow">Рішення</p>
+          <h1>Скляні рішення для дому та бізнесу</h1>
+          <p class="lead">Проєктуємо, виготовляємо та монтуємо скляні й алюмінієві конструкції для житлових і комерційних просторів у Києві, Одесі, Львові та по всій Україні.</p>
+        </header>
+
+        <section class="rishennya-hub__grid" aria-label="Рішення за типом об’єкта">
+          {SOLUTIONS.map((solution) => (
+            <a class="rishennya-hub__card" href={solution.path}>
+              <div class="rishennya-hub__card-media">
+                <img
+                  src={`/images/solutions-new/${solution.heroImage.base}.webp`}
+                  srcset={`/images/solutions-new/${solution.heroImage.base}-640.webp 640w, /images/solutions-new/${solution.heroImage.base}.webp ${solution.heroImage.width}w`}
+                  sizes="(max-width: 700px) calc(100vw - 32px), (max-width: 1050px) 50vw, 33vw"
+                  width={solution.heroImage.width}
+                  height={solution.heroImage.height}
+                  alt={solution.heroImage.alt}
+                  loading={solution.slug === 'dlya-kvartyry' ? 'eager' : 'lazy'}
+                  fetchpriority={solution.slug === 'dlya-kvartyry' ? 'high' : undefined}
+                  decoding="async"
+                />
+              </div>
+              <div class="rishennya-hub__card-body">
+                <p>Скляні рішення</p>
+                <h2>{solution.navLabel}</h2>
+                <span>{solution.hubCardText}</span>
+                <b aria-hidden="true">Переглянути рішення →</b>
+              </div>
+            </a>
+          ))}
+        </section>
+
+        <section class="rishennya-hub__categories" aria-label="Скляні конструкції за категоріями">
+          <div class="solution-section-head"><p class="eyebrow">Категорії</p><h2>Скляні конструкції за категоріями</h2><p>Кожне рішення поєднує кілька продуктових напрямків Space Glass — від скляних перегородок і дверей до безрамного скління та алюмінієвих систем.</p></div>
+          <div class="rishennya-hub__category-links">
+            {categoryLinks.map((item) => <a href={item.href}>{item.label}</a>)}
+          </div>
+        </section>
+
+        <section class="rishennya-hub__geography" aria-label="Географія робіт">
+          <div class="solution-section-head"><p class="eyebrow">Географія</p><h2>Працюємо у вашому місті</h2></div>
+          <p>Space Glass реалізує проєкти у Києві, Одесі, Львові та інших містах України. Команда виконує замір, проєктування, виготовлення, доставку та монтаж конструкцій відповідно до вимог конкретного об’єкта.</p>
+          <div class="solution-city-links">
+            {CITY_LINKS.map((city) => <a href={city.href}>{city.label}</a>)}
+          </div>
+        </section>
+      </div>
     </main>
     <Footer />
   </div>
 </BaseLayout>
-
-<style>
-  .projects-v14-grid > a {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    overflow: hidden;
-    border-radius: 18px;
-    background: linear-gradient(145deg, #fff 80%, #f2faf6);
-    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
-  }
-
-  .projects-v14-grid > a:hover {
-    border-color: #96cdb9;
-    box-shadow: 0 16px 38px rgba(10, 70, 50, .08);
-    transform: translateY(-2px);
-  }
-
-  .projects-v14-grid .solution-image {
-    display: block;
-    width: calc(100% + 2px);
-    height: auto;
-    min-height: 0;
-    margin: -1px -1px 0;
-    padding: 0;
-    overflow: hidden;
-    aspect-ratio: 20 / 13;
-    background: none;
-    line-height: 0;
-  }
-
-  .projects-v14-grid .solution-image img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    margin: 0;
-    padding: 0;
-    object-fit: cover;
-    object-position: center;
-    transform: scale(1.005);
-  }
-
-  @media (max-width: 760px) {
-    .projects-v14-grid > a {
-      border-radius: 14px;
-    }
-
-    .projects-v14-grid .solution-image {
-      aspect-ratio: 16 / 9;
-    }
-  }
-</style>
