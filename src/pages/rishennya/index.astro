@@ -151,34 +151,44 @@ const choosePoints = [
         </section>
 
         <section class="rishennya-hub__section rishennya-hub__projects" aria-labelledby="projects-title">
-          <div class="solution-section-head">
-            <p class="eyebrow">Реальні об’єкти</p>
-            <h2 id="projects-title">Реалізовані рішення Space Glass</h2>
-            <p>Реальні проєкти Space Glass у Києві, Одесі, Львові та по Україні: скляні перегородки, Loft-перегородки й скляні двері, душові кабіни, огорожі, безрамне, панорамне та фасадне скління, алюмінієві конструкції, перголи й ZIP-системи. Показуємо задачу, підібране рішення, матеріали та готовий результат на конкретному об’єкті.</p>
+          <div class="rishennya-project-head">
+            <div class="solution-section-head">
+              <p class="eyebrow">Реальні об’єкти</p>
+              <h2 id="projects-title">Реалізовані рішення Space Glass</h2>
+              <p>Реальні проєкти Space Glass у Києві, Одесі, Львові та по Україні: скляні перегородки, Loft-перегородки й скляні двері, душові кабіни, огорожі, безрамне, панорамне та фасадне скління, алюмінієві конструкції, перголи й ZIP-системи. Показуємо задачу, підібране рішення, матеріали та готовий результат на конкретному об’єкті.</p>
+            </div>
+            <div class="rishennya-project-controls" aria-label="Керування каруселлю проєктів">
+              <button type="button" aria-label="Попередні проєкти" data-rishennya-project-direction="-1">←</button>
+              <button type="button" aria-label="Наступні проєкти" data-rishennya-project-direction="1">→</button>
+            </div>
           </div>
-          <div class="rishennya-showcase">
-            {featuredProjects.map((project) => (
-              <a class="rishennya-showcase__card" href={`/projects/${project.slug}/`}>
-                <div class="rishennya-showcase__media">
-                  <img
-                    src={project.cover.src.replace('.webp', '-480.webp')}
-                    srcset={`${project.cover.src.replace('.webp', '-480.webp')} 480w, ${project.cover.width > 720 ? project.cover.src.replace('.webp', '-720.webp') : project.cover.src} ${Math.min(project.cover.width, 720)}w`}
-                    sizes="(max-width: 700px) calc(100vw - 32px), (max-width: 1050px) 50vw, 25vw"
-                    width={project.cover.width}
-                    height={project.cover.height}
-                    alt={project.cover.alt}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                <div class="rishennya-showcase__body">
-                  <p>{project.city} · {project.constructionType}</p>
-                  <h3>{project.cardTitle}</h3>
-                  <b>Переглянути проєкт <span aria-hidden="true">→</span></b>
-                </div>
-              </a>
-            ))}
+
+          <div class="rishennya-project-viewport" data-rishennya-projects-carousel tabindex="0" aria-label="Реалізовані проєкти Space Glass">
+            <div class="rishennya-showcase">
+              {featuredProjects.map((project) => (
+                <a class="rishennya-showcase__card" href={`/projects/${project.slug}/`}>
+                  <div class="rishennya-showcase__media">
+                    <img
+                      src={project.cover.src.replace('.webp', '-480.webp')}
+                      srcset={`${project.cover.src.replace('.webp', '-480.webp')} 480w, ${project.cover.width > 720 ? project.cover.src.replace('.webp', '-720.webp') : project.cover.src} ${Math.min(project.cover.width, 720)}w`}
+                      sizes="(max-width: 700px) 82vw, (max-width: 1050px) 44vw, 320px"
+                      width={project.cover.width}
+                      height={project.cover.height}
+                      alt={project.cover.alt}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="rishennya-showcase__body">
+                    <p>{project.city} · {project.constructionType}</p>
+                    <h3>{project.cardTitle}</h3>
+                    <b>Переглянути проєкт <span aria-hidden="true">→</span></b>
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
+
           <a class="rishennya-hub__section-link" href="/projects/">Дивитися всі проєкти →</a>
         </section>
 
@@ -237,3 +247,25 @@ const choosePoints = [
     <Footer />
   </div>
 </BaseLayout>
+
+<script is:inline>
+  const rishennyaProjectsCarousel = document.querySelector('[data-rishennya-projects-carousel]');
+
+  const scrollRishennyaProjects = (direction) => {
+    if (!rishennyaProjectsCarousel) return;
+    const card = rishennyaProjectsCarousel.querySelector('.rishennya-showcase__card');
+    const distance = card ? card.getBoundingClientRect().width + 18 : rishennyaProjectsCarousel.clientWidth;
+    rishennyaProjectsCarousel.scrollBy({ left: direction * distance, behavior: 'smooth' });
+  };
+
+  document.querySelectorAll('[data-rishennya-project-direction]').forEach((button) => {
+    button.addEventListener('click', () => scrollRishennyaProjects(Number(button.dataset.rishennyaProjectDirection)));
+  });
+
+  rishennyaProjectsCarousel?.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      scrollRishennyaProjects(event.key === 'ArrowRight' ? 1 : -1);
+    }
+  });
+</script>

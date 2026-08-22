@@ -21,9 +21,28 @@ const projects = (await getCollection('projects', ({ data }) => data.status === 
 <div class="projects-index-v2">
   <div class="projects-index-v2__wrap">
     <header class="projects-index-v2__hero">
-      <p class="eyebrow">Наші проєкти</p>
-      <h1>Реалізовані конструкції Space Glass</h1>
-      <p class="lead">Показуємо задачі, технічні рішення, матеріали й результат на готових об’єктах.</p>
+      <div class="projects-index-v2__hero-copy">
+        <p class="eyebrow">Наші проєкти</p>
+        <h1>Реалізовані конструкції Space Glass</h1>
+        <p class="lead">Показуємо задачі, технічні рішення, матеріали й результат на готових об’єктах.</p>
+      </div>
+      <div class="projects-index-v2__hero-media">
+        <picture>
+          <source
+            media="(max-width: 900px)"
+            srcset="/images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero-480.webp"
+          />
+          <img
+            src="/images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero-720.webp"
+            width="720"
+            height="540"
+            alt="Реалізований проєкт Space Glass"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
+      </div>
     </header>
     <ProjectFilters projects={projects} />
     <section class="projects-index-v2__grid" aria-label="Реалізовані проєкти">
