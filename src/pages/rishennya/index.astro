@@ -6,10 +6,7 @@ import Footer from '../../components/Footer.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
 import { SOLUTIONS, CITY_LINKS, PROCESS_STEPS } from '../../data/solutions';
 import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
-import loftProject from '../../content/projects/loft-kyiv.json';
-import hotelProject from '../../content/projects/hotel-dvoryanskyi-showers-odesa.json';
-import lvivProject from '../../content/projects/shower-sloped-ceiling-lviv.json';
-import restaurantProject from '../../content/projects/restaurant-glazing-artshat-odesa.json';
+import { getCollection } from 'astro:content';
 import '../../styles/solutions.css';
 
 const origin = Astro.site ?? Astro.url.origin;
@@ -63,7 +60,9 @@ const categoryLinks = [
   { label: 'Алюмінієві конструкції', href: '/alyuminiievi-konstruktsii/' }
 ];
 
-const featuredProjects = [loftProject, hotelProject, lvivProject, restaurantProject];
+const featuredProjects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk'))
+  .map(({ data }) => data)
+  .sort((a, b) => a.sortOrder - b.sortOrder);
 const experienceStats = [
   ['5 000+', 'реалізованих проєктів'],
   ['50 000+', 'м² виконаного засклення'],
