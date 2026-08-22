@@ -5,6 +5,7 @@
  */
 
 /* V8 category template: glass partitions */
+.category-breadcrumbs{padding-inline:60px}
 .category-hero{display:grid;grid-template-columns:.95fr 1.05fr;min-height:640px;background:#fff;border-bottom:1px solid var(--line)}
 .category-hero__copy{padding:86px 60px;display:flex;flex-direction:column;justify-content:center}
 .category-hero__copy h1{font-size:clamp(4rem,6vw,7rem);max-width:700px}
@@ -29,4 +30,4 @@
 .category-seo{border-top:1px solid var(--line)}.category-seo__grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px}.category-seo__grid p{color:var(--muted);line-height:1.8}
 @media(max-width:1100px){.category-type-grid,.category-model-grid{grid-template-columns:repeat(2,1fr)}.category-process__grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:900px){.category-hero,.category-seo__grid{grid-template-columns:1fr}.category-hero__visual{min-height:470px}.category-heading{align-items:flex-start;flex-direction:column}}
-@media(max-width:620px){.category-hero__copy,.category-section,.category-process{padding:54px 24px}.category-type-grid,.category-model-grid,.material-grid,.category-process__grid,.category-trust{grid-template-columns:1fr}}
+@media(max-width:620px){.category-hero__copy,.category-section,.category-process{padding:54px 24px}.category-type-grid,.category-model-grid,.material-grid,.category-process__grid,.category-trust{grid-template-columns:1fr}.category-breadcrumbs{padding-inline:24px}}

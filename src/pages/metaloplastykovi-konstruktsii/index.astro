@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import '../../styles/category-pages.css';
 
 const title = "Металопластикові конструкції";
@@ -35,6 +36,7 @@ const faq = [
 <div class="sg-page-shell">
   <Header />
   <main id="main">
+    <div class="category-breadcrumbs"><Breadcrumbs items={[{label:'Головна',href:'/'},{label:title}]} /></div>
     <section class="category-hero">
       <div class="category-hero__copy">
         <p class="eyebrow">Віконні системи</p>

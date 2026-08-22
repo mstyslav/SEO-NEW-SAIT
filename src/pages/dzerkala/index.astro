@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import '../../styles/category-pages.css';
 
 const title = "Дзеркала";
@@ -95,6 +96,7 @@ const faq = [
 <div class="sg-page-shell">
   <Header />
   <main id="main">
+    <div class="category-breadcrumbs"><Breadcrumbs items={[{label:'Головна',href:'/'},{label:title}]} /></div>
     <section class="category-hero">
       <div class="category-hero__copy"><p class="eyebrow">{title}</p><h1>{title} на замовлення</h1><p class="lead">{subtitle}</p><div class="hero__actions"><a class="button button--mint" href="#category-request">Отримати розрахунок</a><a class="button button--outline" href="#types">Переглянути види</a></div></div>
       <div class="category-hero__visual"><div class="category-hero__glass"></div><span>SPACE GLASS</span></div>
