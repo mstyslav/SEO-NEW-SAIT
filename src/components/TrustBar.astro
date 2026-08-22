@@ -1,0 +1,163 @@
+<section class="sg-trustbar" aria-label="Переваги Space Glass">
+  <div class="sg-trustbar__item">
+    <span class="sg-trustbar__icon" aria-hidden="true">◇</span>
+    <div>
+      <strong>Власне виробництво</strong>
+      <small>В Україні</small>
+    </div>
+  </div>
+
+  <div class="sg-trustbar__item">
+    <span class="sg-trustbar__icon" aria-hidden="true">◉</span>
+    <div>
+      <strong>Гарантія 2 роки</strong>
+      <small>На всі конструкції</small>
+    </div>
+  </div>
+
+  <div class="sg-trustbar__item">
+    <span class="sg-trustbar__icon" aria-hidden="true">▱</span>
+    <div>
+      <strong>Доставка по Україні</strong>
+      <small>Та Європі</small>
+    </div>
+  </div>
+
+  <div class="sg-trustbar__item">
+    <span class="sg-trustbar__icon" aria-hidden="true">◯</span>
+    <div>
+      <strong>Індивідуальні рішення</strong>
+      <small>Під ваш проєкт</small>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sg-trustbar{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    width:100%;
+    min-height:154px;
+    margin:0;
+    padding:0 clamp(34px,5vw,82px);
+    border-top:1px solid #dce6e2;
+    border-bottom:1px solid #dce6e2;
+    background:#fff;
+  }
+
+  .sg-trustbar__item{
+    display:flex;
+    min-width:0;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    padding:30px 34px;
+    border-right:1px solid #dce6e2;
+  }
+
+  .sg-trustbar__item:first-child{
+    border-left:1px solid transparent;
+  }
+
+  .sg-trustbar__item:last-child{
+    border-right:0;
+  }
+
+  .sg-trustbar__icon{
+    flex:0 0 auto;
+    color:#2e806a;
+    font-size:31px;
+    font-weight:400;
+    line-height:1;
+  }
+
+  .sg-trustbar__item div{
+    min-width:0;
+  }
+
+  .sg-trustbar__item strong{
+    display:block;
+    margin:0 0 5px;
+    color:#202522;
+    font-size:18px;
+    font-weight:750;
+    line-height:1.2;
+    white-space:nowrap;
+  }
+
+  .sg-trustbar__item small{
+    display:block;
+    color:#65706b;
+    font-size:15px;
+    line-height:1.35;
+  }
+
+  @media(max-width:1050px){
+    .sg-trustbar{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      padding:0 24px;
+    }
+
+    .sg-trustbar__item{
+      justify-content:flex-start;
+      border-bottom:1px solid #dce6e2;
+    }
+
+    .sg-trustbar__item:nth-child(2){
+      border-right:0;
+    }
+
+    .sg-trustbar__item:nth-child(3),
+    .sg-trustbar__item:nth-child(4){
+      border-bottom:0;
+    }
+  }
+
+  @media(max-width:620px){
+    .sg-trustbar{
+      grid-template-columns:1fr;
+      padding:0 22px;
+    }
+
+    .sg-trustbar__item{
+      min-height:82px;
+      padding:18px 0;
+      border-right:0;
+      border-bottom:1px solid #dce6e2;
+      justify-content:flex-start;
+    }
+
+    .sg-trustbar__item:nth-child(3){
+      border-bottom:1px solid #dce6e2;
+    }
+
+    .sg-trustbar__item:last-child{
+      border-bottom:0;
+    }
+
+    .sg-trustbar__item strong{
+      font-size:16px;
+      white-space:normal;
+    }
+
+    .sg-trustbar__item small{
+      font-size:14px;
+    }
+
+    .sg-trustbar__icon{
+      width:32px;
+      font-size:27px;
+      text-align:center;
+    }
+  }
+</style>
+
+<style>
+  /* Same edge-to-edge TrustBar on all four hub pages */
+  .sg-trustbar{
+    width:100vw;
+    max-width:none;
+    margin-left:calc(50% - 50vw);
+    margin-right:calc(50% - 50vw);
+  }
+</style>

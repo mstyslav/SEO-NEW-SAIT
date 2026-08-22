@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import Header from '../../components/Header.astro';
+import TrustBar from '../../components/TrustBar.astro';
 import Footer from '../../components/Footer.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
@@ -96,6 +97,7 @@ const stageIcons: Record<string, string> = {
         <div class="services-cycle__hero-copy"><p class="eyebrow">ПОСЛУГИ SPACE GLASS</p><h1 id="services-title">Послуги зі скла та алюмінію</h1><p>Проєктуємо, виготовляємо та монтуємо скляні й алюмінієві конструкції під ключ — від заміру до сервісу. Київ, Одеса, Львів та вся Україна.</p><div class="hero__actions"><a class="button button--mint" href="/quote/">Отримати розрахунок</a><a class="button button--outline" href="/projects/">Переглянути проєкти</a></div></div>
         <div class="services-cycle__hero-image"><img src="/images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero.webp" srcset="/images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero-480.webp 480w, /images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero-720.webp 720w, /images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero.webp 960w" sizes="(max-width: 1100px) 100vw, 45vw" alt="Скляні перегородки стоматологічної клініки в Одесі — реалізований проєкт Space Glass" width="960" height="1280" loading="eager" fetchpriority="high" decoding="async" /></div>
       </section>
+      <TrustBar />
 
       <section class="services-cycle__section" aria-labelledby="full-cycle-title">
         <div class="services-cycle__section-head"><p class="eyebrow">ПОВНИЙ ЦИКЛ</p><h2 id="full-cycle-title">Усе необхідне для реалізації проєкту — в одній команді</h2><p>Координуємо весь шлях конструкції, щоб технічне рішення, виробництво й монтаж працювали як єдиний процес.</p></div>
