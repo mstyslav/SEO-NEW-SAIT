@@ -132,7 +132,7 @@ const menuData = {
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 10h3l4 4v2h-7zM6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM18 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" /></svg><p><b>Доставка по Україні</b><span>Надійно та в строк</span></p></div>
     </div>
   </section>}
-  <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden><div class="sg-mobile-menu__panel">{isUkrainian ? <details class="simple-catalog simple-catalog--mobile"><summary>Каталог</summary><div class="simple-catalog__menu">{catalogNavigation.map((category) => <a href={category.href}>{category.name}</a>)}</div></details> : <a class="sg-mobile-menu__primary" href={lp("/catalog/")}>Каталог</a>}{links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}{!isUkrainian && <><a href={lp("/compare/")}>Порівняння</a><a href={lp("/cart/")}>Кошик</a></>}<a href="tel:+380734251400">+38 (073) 425 14 00</a><a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a></div></div>
+  <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden><div class="sg-mobile-menu__panel">{isUkrainian ? <div class="simple-catalog simple-catalog--mobile"><div class="simple-catalog__mobile-row"><a class="sg-mobile-menu__primary" href="/catalog/">Каталог</a><button class="simple-catalog__toggle" type="button" aria-label="Розгорнути категорії каталогу" aria-controls="sg-mobile-catalog-categories" aria-expanded="false" data-mobile-catalog-toggle><i aria-hidden="true"></i></button></div><div class="simple-catalog__menu" id="sg-mobile-catalog-categories" data-mobile-catalog-menu hidden>{catalogNavigation.map((category, index) => { const services = category.services.filter((service, serviceIndex, allServices) => allServices.findIndex(({ shortName, path }) => path === service.path && shortName === service.shortName) === serviceIndex); const servicesId = `sg-mobile-catalog-services-${index + 1}`; return <section><div class="simple-catalog__category-row"><a class="simple-catalog__category" href={category.href}>{category.name}</a><button class="simple-catalog__service-toggle" type="button" aria-label={`Розгорнути підкатегорії: ${category.name}`} aria-controls={servicesId} aria-expanded="false" data-mobile-category-toggle><i aria-hidden="true"></i></button></div><div class="simple-catalog__services" id={servicesId} data-mobile-category-menu hidden>{services.map((service) => <a href={service.path}>{service.shortName}</a>)}</div></section>})}</div></div> : <a class="sg-mobile-menu__primary" href={lp("/catalog/")}>Каталог</a>}{links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}{!isUkrainian && <><a href={lp("/compare/")}>Порівняння</a><a href={lp("/cart/")}>Кошик</a></>}<a href="tel:+380734251400">+38 (073) 425 14 00</a><a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a></div></div>
 </header>
 <style>
   .sg-categories-trigger{display:inline-flex;flex-direction:column;justify-content:center;gap:4px;width:32px;height:32px;padding:6px;border:0;background:transparent;cursor:pointer}
@@ -148,9 +148,31 @@ const menuData = {
 }
   .mega-trigger--menu.is-open .catalog-mega{opacity:1!important;visibility:visible!important;pointer-events:auto!important}
   .nav-icon--phone svg{width:20px;height:20px;display:block}
-  .simple-catalog{position:relative}.simple-catalog summary{display:inline-flex;align-items:center;gap:6px;min-height:48px;color:#fff;cursor:pointer;list-style:none}.simple-catalog summary::-webkit-details-marker{display:none}.simple-catalog__menu{position:absolute;top:calc(100% - 4px);left:-18px;z-index:1000;display:grid;min-width:270px;padding:12px;background:#fff;border:1px solid #dce5e1;box-shadow:0 16px 35px rgba(0,0,0,.14)}.simple-catalog__menu a{padding:9px 12px;color:#111513;font-size:14px}.simple-catalog__menu a:hover,.simple-catalog__menu a:focus-visible{background:#edf8f2;color:#176f58}.simple-catalog--mobile{color:#fff}.simple-catalog--mobile summary{min-height:44px}.simple-catalog--mobile .simple-catalog__menu{position:static;min-width:0;padding:4px 0;background:transparent;border:0;box-shadow:none}.simple-catalog--mobile .simple-catalog__menu a{padding-left:18px;color:#dce5e1}
+  .simple-catalog{position:relative}.simple-catalog__menu{position:absolute;top:calc(100% - 4px);left:-18px;z-index:1000;display:grid;min-width:270px;padding:12px;background:#fff;border:1px solid #dce5e1;box-shadow:0 16px 35px rgba(0,0,0,.14)}.simple-catalog__menu a{padding:9px 12px;color:#111513;font-size:14px}.simple-catalog__menu a:hover,.simple-catalog__menu a:focus-visible{background:#edf8f2;color:#176f58}.simple-catalog--mobile{color:#fff}.simple-catalog--mobile .simple-catalog__menu{position:static;min-width:0;padding:4px 0;background:transparent;border:0;box-shadow:none}.simple-catalog--mobile .simple-catalog__menu a{padding-left:18px;color:#dce5e1}
 </style>
 <style is:inline>
+  .simple-catalog summary{display:inline-flex;align-items:center;gap:6px;min-height:48px;color:#fff;cursor:pointer;list-style:none}.simple-catalog summary::-webkit-details-marker{display:none}.simple-catalog--mobile summary{min-height:44px}
+  @media(max-width:1120px){.sg-header .sg-mobile-menu:not([hidden]){display:block!important}}
+  .sg-header [data-mobile-catalog-menu][hidden]{display:none!important}
+  .sg-header [data-mobile-category-menu][hidden]{display:none!important}
+  .sg-header .simple-catalog__mobile-row{display:grid;grid-template-columns:minmax(0,1fr) 48px;align-items:center;border-bottom:1px solid #1d231f}
+  .sg-header .simple-catalog__mobile-row>a{border-bottom:0!important}
+  .sg-header .simple-catalog__toggle{display:grid;width:48px;height:48px;padding:0;border:0;background:transparent;place-items:center;color:#fff;cursor:pointer}
+  .sg-header .simple-catalog__toggle i{width:0;height:0;border-top:6px solid currentColor;border-right:5px solid transparent;border-left:5px solid transparent;transition:transform .18s ease}
+  .sg-header .simple-catalog__toggle[aria-expanded="true"] i{transform:rotate(180deg)}
+  .sg-header .simple-catalog__toggle:focus-visible{outline:2px solid var(--mint);outline-offset:-4px}
+  .sg-header .simple-catalog--mobile .simple-catalog__menu{position:static;min-width:0;max-height:min(56vh,560px);overflow-y:auto;padding:6px 0 10px;background:transparent;border:0;box-shadow:none}
+  .sg-header .simple-catalog--mobile .simple-catalog__menu section{padding:0;border-bottom:1px solid rgba(220,229,225,.12)}
+  .sg-header .simple-catalog__category-row{display:grid;grid-template-columns:minmax(0,1fr) 44px;align-items:center}
+  .sg-header .simple-catalog__category-row>a{border-bottom:0!important}
+  .sg-header .simple-catalog__service-toggle{display:grid;width:44px;height:44px;padding:0;border:0;background:transparent;place-items:center;color:#dce5e1;cursor:pointer}
+  .sg-header .simple-catalog__service-toggle i{width:0;height:0;border-top:5px solid currentColor;border-right:4px solid transparent;border-left:4px solid transparent;transition:transform .18s ease}
+  .sg-header .simple-catalog__service-toggle[aria-expanded="true"] i{transform:rotate(180deg)}
+  .sg-header .simple-catalog__service-toggle:focus-visible{outline:2px solid var(--mint);outline-offset:-4px}
+  .sg-header .simple-catalog--mobile .simple-catalog__menu a{min-height:40px;padding:7px 10px 7px 18px;border-bottom:0;color:#dce5e1}
+  .sg-header .simple-catalog--mobile .simple-catalog__category{color:#fff!important;font-weight:750}
+  .sg-header .simple-catalog__services{display:grid;padding-left:12px}
+  .sg-header .simple-catalog--mobile .simple-catalog__services a{min-height:36px;color:#aeb9b4;font-size:12px}
   .simple-catalog--mobile .simple-catalog__menu a{
     -webkit-tap-highlight-color:transparent;
     border-bottom:0!important;
@@ -314,16 +336,50 @@ const menuData = {
 <script>
   const mobileButtons=[...document.querySelectorAll('[data-mobile-menu-button]')];
   const mobileMenu=document.querySelector('[data-mobile-menu]');
+  const mobileCatalogToggle=document.querySelector('[data-mobile-catalog-toggle]');
+  const mobileCatalogMenu=document.querySelector('[data-mobile-catalog-menu]');
+  const mobileCategoryToggles=[...document.querySelectorAll('[data-mobile-category-toggle]')];
+
+  const setMobileCategory=(button,open)=>{
+    const menuId=button.getAttribute('aria-controls');
+    const menu=menuId?document.getElementById(menuId):null;
+    if(!menu) return;
+    menu.hidden=!open;
+    button.setAttribute('aria-expanded',String(open));
+    const categoryName=button.getAttribute('aria-label')?.split(': ')[1] ?? '';
+    button.setAttribute('aria-label',`${open?'Згорнути':'Розгорнути'} підкатегорії: ${categoryName}`);
+  };
+
+  const closeMobileCategories=(except)=>{
+    mobileCategoryToggles.forEach((button)=>{if(button!==except)setMobileCategory(button,false);});
+  };
+
+  const setMobileCatalog=(open)=>{
+    if(!mobileCatalogToggle || !mobileCatalogMenu) return;
+    if(!open) closeMobileCategories();
+    mobileCatalogMenu.hidden=!open;
+    mobileCatalogToggle.setAttribute('aria-expanded',String(open));
+    mobileCatalogToggle.setAttribute('aria-label',open?'Згорнути категорії каталогу':'Розгорнути категорії каталогу');
+  };
 
   const closeMobileMenu=()=>{
     if(mobileMenu) mobileMenu.hidden=true;
+    setMobileCatalog(false);
     mobileButtons.forEach((button)=>{button.classList.remove('is-open');button.setAttribute('aria-expanded','false');});
   };
 
   mobileButtons.forEach((button)=>button.addEventListener('click',()=>{
     const isOpen=button.getAttribute('aria-expanded')!=='true';
+    setMobileCatalog(false);
     mobileButtons.forEach((item)=>{item.setAttribute('aria-expanded',String(isOpen));item.classList.toggle('is-open',isOpen);});
     if(mobileMenu) mobileMenu.hidden=!isOpen;
+  }));
+
+  mobileCatalogToggle?.addEventListener('click',()=>setMobileCatalog(mobileCatalogToggle.getAttribute('aria-expanded')!=='true'));
+  mobileCategoryToggles.forEach((button)=>button.addEventListener('click',()=>{
+    const open=button.getAttribute('aria-expanded')!=='true';
+    closeMobileCategories(button);
+    setMobileCategory(button,open);
   }));
 
   const syncMobileMenu=()=>{

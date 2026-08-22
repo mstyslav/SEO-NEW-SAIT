@@ -134,6 +134,7 @@ const footerTextByLocale = {
   }
 };
 const ft = footerTextByLocale[locale] ?? footerTextByLocale.uk;
+const currentYear = new Date().getFullYear();
 ---
 <footer class="site-footer footer-refined">
   <div class="footer-refined__benefits">
@@ -209,12 +210,31 @@ const ft = footerTextByLocale[locale] ?? footerTextByLocale.uk;
     </div>
   </div>
 
-  <div class="footer-refined__bottom"><span>{ft.copyright}</span><div><a href="/privacy-policy/">{ft.privacyPolicy}</a><a href="/terms/">{ft.terms}</a><a href="/cookies-policy/">{ft.cookies}</a><a href="/sitemap.xml">{ft.sitemap}</a></div></div>
+
+  <div class="footer-refined__bottom">
+    <span>© {currentYear} Space Glass. {ft.copyright.replace(/^© \d{4} Space Glass\.\s*/, "")}</span>
+  </div>
 </footer>
 
 <style>
   /* Footer — "Наша продукція" heading */
   .footer-refined__products h3 {
     color: #fff;
+  }
+</style>
+
+<style>
+  /* Footer copyright — centered on all viewports */
+  .footer-refined__bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .footer-refined__bottom > span {
+    width: 100%;
+    text-align: center;
   }
 </style>
