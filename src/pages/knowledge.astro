@@ -10,6 +10,8 @@ import { knowledgeArticles, knowledgeCategories } from '../data/knowledge-articl
   description="Практичні матеріали Space Glass про вибір скла, душових, перегородок, дверей, дзеркал, огорож, замір, монтаж, вартість і догляд."
   schemaType="CollectionPage"
   alternateLocales={['uk']}
+  heroPreloadSrc="/images/knowledge/knowledge-hero-desktop.webp"
+  heroPreloadMobileSrc="/images/knowledge/knowledge-hero-mobile.webp"
 >
   <div class="sg-page-shell">
     <Header />
@@ -20,7 +22,20 @@ import { knowledgeArticles, knowledgeCategories } from '../data/knowledge-articl
           <h1>База знань про скляні конструкції</h1>
           <p class="lead">Допомагаємо розібратися у матеріалах, конструкціях, замірі, монтажі та догляді до замовлення.</p>
         </div>
-        <div class="knowledge-v14-brand" aria-hidden="true"><span>SPACE GLASS</span></div>
+        <div class="knowledge-v14-brand">
+          <picture>
+            <source media="(max-width: 900px)" srcset="/images/knowledge/knowledge-hero-mobile.webp" />
+            <img
+              src="/images/knowledge/knowledge-hero-desktop.webp"
+              width="1536"
+              height="1024"
+              alt="Матеріали Space Glass про скло, конструкції, креслення та вибір технічних рішень"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+        </div>
       </section>
 
       <nav class="knowledge-filters" aria-label="Фільтр матеріалів">
@@ -105,54 +120,32 @@ import { knowledgeArticles, knowledgeCategories } from '../data/knowledge-articl
   }
   .knowledge-v14-brand {
     position:relative;
-    display:flex;
+    min-width:0;
     min-height:520px;
-    align-items:flex-end;
-    justify-content:flex-end;
-    padding:38px 44px;
     overflow:hidden;
     border-left:1px solid var(--line);
-    background:linear-gradient(135deg,#fff,#eefaf5);
+    background:#fff;
   }
-  .knowledge-v14-brand::before,
-  .knowledge-v14-brand::after {
-    content:"";
+  .knowledge-v14-brand picture,
+  .knowledge-v14-brand img {
+    display:block;
+    width:100%;
+    height:100%;
+  }
+  .knowledge-v14-brand picture {
     position:absolute;
-    border:2px solid rgba(88,190,157,.65);
-    transform:rotate(35deg);
+    inset:0;
   }
-  .knowledge-v14-brand::before {
-    width:310px;
-    height:500px;
-    top:4px;
-    right:56px;
-  }
-  .knowledge-v14-brand::after {
-    width:155px;
-    height:270px;
-    top:135px;
-    right:190px;
-  }
-  .knowledge-v14-brand span {
-    position:relative;
-    z-index:1;
-    color:var(--mint-dark);
-    font-size:clamp(2.25rem,4vw,4rem);
-    font-weight:900;
-    letter-spacing:-.035em;
-    white-space:nowrap;
+  .knowledge-v14-brand img {
+    object-fit:cover;
+    object-position:center;
   }
   @media(max-width:900px) {
     .knowledge-v14-hero > div:first-child { min-height:0; padding:58px 40px; }
     .knowledge-v14-brand { min-height:340px; border-top:1px solid var(--line); border-left:0; }
-    .knowledge-v14-brand::before { width:240px; height:390px; right:46px; }
-    .knowledge-v14-brand::after { width:120px; height:210px; top:92px; right:150px; }
   }
   @media(max-width:640px) {
     .knowledge-v14-hero > div:first-child { padding:44px 24px; }
-    .knowledge-v14-brand { min-height:280px; padding:26px; }
-    .knowledge-v14-brand::before { right:-16px; }
-    .knowledge-v14-brand::after { right:86px; }
-    .knowledge-v14-brand span { font-size:2rem; }
+    .knowledge-v14-brand { min-height:280px; }
   }
 </style>
