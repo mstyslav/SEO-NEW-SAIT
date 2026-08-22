@@ -38,7 +38,9 @@ function routeExists(href) {
     fs.existsSync(path.join(pages, localizedKey, 'index.astro'))
   )) return true;
   return fs.existsSync(path.join(pages, `${key}.astro`)) ||
-    fs.existsSync(path.join(pages, key, 'index.astro'));
+    fs.existsSync(path.join(pages, key, 'index.astro')) ||
+    fs.existsSync(path.resolve('dist', key, 'index.html')) ||
+    fs.existsSync(path.resolve('dist', `${key}.html`));
 }
 
 for (const file of walk(root)) {

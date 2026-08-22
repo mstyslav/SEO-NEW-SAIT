@@ -6,6 +6,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/catalog.css';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
 import productData from '../../data/products.json';
 import '../../styles/legacy-product.css';
@@ -158,6 +159,7 @@ const faq = [
 <div class="sg-page-shell">
   <Header />
   <main id="main">
+    <Breadcrumbs contained items={[{label:'Головна',href:'/'},{label:'Каталог',href:'/catalog/'},{label:'Душовий піддон'}]} />
     <section class="product-premium product-premium--s19">
       <div class="product-gallery product-gallery--real product-gallery--s20" data-product-gallery>
         <div class="product-gallery__thumbs" aria-label="Фотографії товару">

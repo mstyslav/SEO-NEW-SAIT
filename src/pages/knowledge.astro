@@ -4,19 +4,11 @@ import '../styles/knowledge.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { knowledgeArticles, knowledgeCategories } from '../data/knowledge-articles';
-import { breadcrumbSchema } from '../seo/schema';
-
-const origin = Astro.site ?? Astro.url.origin;
-const structuredData = breadcrumbSchema([
-  { label: 'Головна', href: new URL('/', origin) },
-  { label: 'База знань', href: new URL('/knowledge/', origin) }
-]);
 ---
 <BaseLayout
   title="База знань про скляні конструкції | Space Glass"
   description="Практичні матеріали Space Glass про вибір скла, душових, перегородок, дверей, дзеркал, огорож, замір, монтаж, вартість і догляд."
   schemaType="CollectionPage"
-  structuredData={structuredData}
   alternateLocales={['uk']}
 >
   <div class="sg-page-shell">

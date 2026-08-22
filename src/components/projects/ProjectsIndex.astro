@@ -1,6 +1,5 @@
 ---
 import { getCollection } from 'astro:content';
-import Breadcrumbs from '../Breadcrumbs.astro';
 import ProjectCard from './ProjectCard.astro';
 import ProjectFilters from './ProjectFilters.astro';
 import '../../styles/projects-common.css';
@@ -21,7 +20,6 @@ const projects = (await getCollection('projects', ({ data }) => data.status === 
 ---
 <div class="projects-index-v2">
   <div class="projects-index-v2__wrap">
-    <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: 'Наші проєкти' }]} />
     <header class="projects-index-v2__hero">
       <p class="eyebrow">Наші проєкти</p>
       <h1>Реалізовані конструкції Space Glass</h1>

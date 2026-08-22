@@ -1,13 +1,34 @@
 ---
 interface Item { label: string; href?: string }
-interface Props { items: Item[] }
-const { items } = Astro.props;
+interface Props { items: Item[]; schema?: boolean; contained?: boolean }
+const { items, schema: includeSchema = true, contained = false } = Astro.props;
+const site = Astro.site ?? Astro.url.origin;
 const schema = {
   '@context': 'https://schema.org', '@type': 'BreadcrumbList',
   itemListElement: items.map((item, index) => ({
     '@type': 'ListItem', position: index + 1, name: item.label,
-    ...(item.href ? { item: new URL(item.href, Astro.site ?? Astro.url.origin).href } : {})
+    item: new URL(item.href ?? Astro.url.pathname, site).href
   }))
 };
 ---
-<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+{includeSchema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+<nav class:list={['sg-breadcrumbs', contained && 'sg-breadcrumbs--contained']} aria-label="Хлібні крихти">
+  {items.map((item, index) => (
+    <>
+      {index > 0 && <span class="sg-breadcrumbs__separator" aria-hidden="true">/</span>}
+      {index === items.length - 1
+        ? <span class="sg-breadcrumbs__current" aria-current="page">{item.label}</span>
+        : <a href={item.href}>{item.label}</a>}
+    </>
+  ))}
+</nav>
+
+<style>
+  .sg-breadcrumbs{display:flex;max-width:100%;align-items:center;gap:8px;padding:16px 0 0;overflow:hidden;color:var(--muted,#68736f);font-size:12px;line-height:1.4;white-space:nowrap}
+  .sg-breadcrumbs--contained{width:min(1380px,calc(100% - 48px));margin-inline:auto}
+  .sg-breadcrumbs a{flex:0 0 auto;color:inherit;text-decoration:none}
+  .sg-breadcrumbs a:hover,.sg-breadcrumbs a:focus-visible{color:var(--mint-dark,#176b55)}
+  .sg-breadcrumbs__separator{flex:0 0 auto;color:var(--line,#cfd9d5)}
+  .sg-breadcrumbs__current{min-width:0;overflow:hidden;color:var(--ink,#15201c);font-weight:600;text-overflow:ellipsis}
+  @media(max-width:700px){.sg-breadcrumbs{gap:6px;padding-top:12px;font-size:11px}.sg-breadcrumbs--contained{width:calc(100% - 36px)}}
+</style>

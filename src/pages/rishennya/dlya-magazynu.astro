@@ -1,5 +1,323 @@
 ---
-import SolutionPage from '../../components/solutions/SolutionPage.astro';
-import { solutionBySlug } from '../../data/solutions';
+// Bespoke SEO/UX build, mirroring the approved /rishennya/dlya-kvartyry/ pattern.
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FAQBlock from '../../components/FAQBlock.astro';
+import SolutionRequestForm from '../../components/SolutionRequestForm.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
+import '../../styles/projects-common.css';
+import '../../styles/solution-kvartyry.css';
+
+const PATH = '/rishennya/dlya-magazynu/';
+const origin = Astro.site ?? Astro.url.origin;
+
+// PRIMARY intent = object type ("для магазину"), not product type — «скляні вітрини»
+// remain a strong secondary/product cluster, not the primary target of this page.
+const title = 'Скляні конструкції для магазину на замовлення | Space Glass';
+const description =
+  'Скляні конструкції для магазину на замовлення: вітрини, вхідні групи, перегородки та фасадні системи. Виготовлення й монтаж Space Glass у Києві, Одесі, Львові та по Україні.';
+const h1 = 'Скляні конструкції для магазину';
+const heroLead =
+  'Вітрини, вхідні групи та перегородки для торгових приміщень — прозорі рішення, які відкривають товар покупцю з вулиці, в Києві, Одесі, Львові та по всій Україні.';
+const heroImage = {
+  base: 'solution-shop',
+  width: 1280,
+  height: 721,
+  alt: 'Преміальний магазин зі скляною вітриною, фасадом та вхідною групою'
+};
+
+const productLinks = [
+  { label: 'Архітектурні системи', href: '/arkhitekturni-systemy/', html: 'Фасадне скління та панорамні вітрини на першому поверсі.' },
+  { label: 'Скляні двері', href: '/sklyani-dveri/', html: 'Вхідні групи для торгового приміщення з інтенсивним трафіком.' },
+  { label: 'Скляні перегородки', href: '/sklyani-perehorodky/', html: 'Зонування торгового залу та примірочних без втрати огляду товару.' },
+  { label: 'Алюмінієві конструкції', href: '/alyuminiievi-konstruktsii/', html: 'Профільні системи для вітрин і вхідних груп.' }
+];
+
+const scenarios = [
+  { title: 'Вітрина першого поверху з інтенсивним трафіком', text: 'Мінімум рам і посилена фурнітура вхідної групи витримують сотні відкривань щодня.' },
+  { title: 'Торговий зал без глухих стін', text: 'Перегородки відокремлюють примірочні чи касову зону, зберігаючи огляд товару з будь-якої точки залу.' },
+  { title: 'Бренд на фасаді', text: 'Гравіювання чи плівка з логотипом інтегруються прямо в скло вітрини замість окремої вивіски.' },
+  { title: 'Примірочні без відчуття тісноти', text: 'Матоване чи сатиноване скло дає приватність примірочній зоні, не перетворюючи її на глуху кабінку.' }
+];
+
+const choosePoints = [
+  { title: 'Триплекс для вітрини першого поверху', text: 'Скло, доступне з вулиці, вимагає підвищеної безпеки — при пошкодженні воно має лишатися в рамі, а не розсипатися на тротуар.', link: { label: 'Heat Soak Test загартованого скла: коли він потрібен', href: '/knowledge/heat-soak-test-zagartovanogo-skla/' } },
+  { title: 'Підготовка приміщення до заміру', text: 'Точний розрахунок вітрини чи вхідної групи можливий лише після фінального заміру фактичного прорізу фасаду.', link: { label: 'Як підготувати простір до заміру', href: '/knowledge/yak-pidhotuvaty-prostir-do-zamiru/' } },
+  { title: 'Фурнітура під трафік магазину', text: 'Двері з інтенсивною прохідністю комплектують посиленими доводчиками й напрямними, розрахованими на сотні відкривань щодня.' }
+];
+
+const materials = [
+  { title: 'Триплекс', text: 'Основний матеріал для вітрин і фасадних конструкцій першого поверху — безпечний при ударному навантаженні з вулиці.' },
+  { title: 'Загартоване скло', text: 'Застосовується для дверей і внутрішніх перегородок торгового приміщення.' },
+  { title: 'Алюмінієві профільні системи', text: 'Формують мінімалістичний каркас вітрини та вхідної групи.' },
+  { title: 'Фурнітура', text: 'Посилені доводчики й напрямні для дверей з високою інтенсивністю використання.' }
+];
+
+const priceFactors = [
+  'площа вітрини чи фасаду',
+  'тип і товщина скла',
+  'система профілю',
+  'фурнітура під трафік',
+  'нанесення логотипа чи плівки',
+  'монтаж і графік робіт у приміщенні'
+];
+
+const safetyPoints = [
+  { title: 'Безпечне скло на рівні вулиці', text: 'Триплекс для вітрин не розсипається при пошкодженні — критично важливо для конструкцій, доступних перехожим.' },
+  { title: 'Стійкість до щоденного трафіку', text: 'Вхідні групи з інтенсивним використанням комплектують фурнітурою, розрахованою на сотні відкривань щодня без втрати плавності ходу.' },
+  { title: 'Перевірене загартоване скло', text: 'Для відповідальних конструкцій застосовується скло з підтвердженою термічною обробкою, що знижує ризик спонтанного руйнування.' }
+];
+
+const processSteps = [
+  { title: 'Консультація', text: 'Уточнюємо задачу, тип приміщення, бажаний результат і орієнтовний бюджет.' },
+  { title: 'Замір', text: 'Виїжджаємо на об’єкт і фіксуємо фактичну геометрію фасаду чи торгового залу.' },
+  { title: 'Проєктування', text: 'Готуємо креслення з розмірами, склом, профілем і вузлами кріплення.' },
+  { title: 'Виготовлення', text: 'Виробляємо конструкцію на власному обладнанні під погоджені параметри.' },
+  { title: 'Доставка', text: 'Пакуємо та доставляємо готову конструкцію в Києві, Одесі, Львові та по Україні.' },
+  { title: 'Монтаж', text: 'Встановлюємо, перевіряємо роботу механізмів і передаємо об’єкт із гарантією.' }
+];
+
+const experienceStats = [
+  { value: '10+', label: 'років реального досвіду в реалізації скляних та алюмінієвих конструкцій' },
+  { value: '5 000+', label: 'реалізованих проєктів для дому та бізнесу в Україні та Європі' },
+  { value: '50 000+', label: 'м² виконаного засклення житлових та комерційних об’єктів' }
+];
+
+const cityLinks = [
+  { label: 'Київ', href: '/city/kyiv/' },
+  { label: 'Одеса', href: '/city/odesa/' },
+  { label: 'Львів', href: '/city/lviv/' }
+];
+
+const faq: [string, string][] = [
+  ['Яке скло використовують для вітрини магазину?', 'Найчастіше триплекс — при пошкодженні він залишається цілим, що важливо для конструкцій на рівні вулиці.'],
+  ['Чи можна замовити вітрину за нестандартним розміром прорізу?', 'Так, вітрини й вхідні групи виготовляють за фактичною геометрією фасаду конкретного приміщення.'],
+  ['Чи витримує вхідна група інтенсивний трафік?', 'Так, за умови посиленої фурнітури — доводчиків і напрямних, підібраних під очікувану кількість відкривань щодня.'],
+  ['Чи можна нанести логотип або плівку на вітрину?', 'Так, гравіювання, тонування чи брендовану плівку наносимо за погодженим макетом.'],
+  ['Скільки триває виготовлення вітрини?', 'Строк залежить від розмірів і складності конструкції, фіксується після заміру та погодження креслення.'],
+  ['Чи можна інтегрувати підсвітку у вітрину?', 'Так, підсвітку узгоджуємо на етапі проєктування — вона підкреслює товар і фасад магазину в темний час доби.'],
+  ['Що таке Heat Soak Test і чи потрібен він для вітрини?', 'Це додаткова термічна перевірка загартованого скла, яка знижує ризик спонтанного руйнування — застосовується для відповідальних фасадних конструкцій.'],
+  ['Чи можна зонувати торговий зал без глухих перегородок?', 'Так, прозорі або матовані скляні перегородки відокремлюють примірочні чи касову зону, зберігаючи огляд товару.'],
+  ['Чи проводите монтаж без зупинки роботи магазину?', 'Графік монтажу погоджуємо індивідуально, щоб мінімізувати вплив на роботу торгового приміщення.'],
+  ['Чи можна замовити примірочні зі скляними дверима?', 'Так, матоване чи сатиноване скло забезпечує приватність, зберігаючи світло в примірочній зоні.'],
+  ['Скільки коштує скляна вітрина для магазину?', 'Вартість залежить від площі, товщини скла, профілю та фурнітури. Попередній розрахунок готуємо після фото й приблизних розмірів.'],
+  ['Чи потрібен професійний замір перед виготовленням?', 'Так, фінальний замір фіксує фактичну геометрію фасадного прорізу перед виготовленням вітрини.'],
+  ['Чи можна замовити лише виготовлення без монтажу?', 'У частині випадків так, із доставкою готової конструкції — деталі узгоджуються індивідуально.'],
+  ['Як доглядати за скляною вітриною магазину?', 'Використовуйте неабразивні засоби для скла та регулярно перевіряйте напрямні й ущільнення вхідної групи.'],
+  ['Чи можна замовити розсувну вхідну групу для магазину?', 'Так, розсувні системи економлять простір проходу там, де прогнозується високий трафік покупців.'],
+  ['Чи є гарантія на конструкції для магазину?', 'Так, гарантійні умови фіксуються в договорі та залежать від типу конструкції й обсягу проєкту.'],
+  ['Чи можна працювати за кресленнями архітектора чи дизайнера?', 'Так, можемо реалізувати проєкт за наданими кресленнями, узгодивши технічні деталі скла й профілю.'],
+  ['Чи можлива доставка обладнання в інші міста?', 'Так, реалізуємо проєкти по всій Україні — умови доставки й монтажу узгоджуються під конкретний об’єкт.'],
+  ['Чи можна замінити частину вітрини без демонтажу всієї конструкції?', 'Це залежить від конструктиву — модульні системи дозволяють замінити окрему секцію, суцільні полотна виготовляють заново.'],
+  ['Що робити, якщо фасад приміщення ще не готовий до заміру?', 'Попередній розрахунок можна отримати за кресленням чи фото проєкту, фінальний замір — після завершення фасадних робіт.']
+];
+
+const projectSlugs = ['world-of-comics-entrance-odesa', 'loft-partitions-kselena-odesa', 'dental-clinic-partitions-odesa'];
+const allProjects = await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk');
+const projects = projectSlugs
+  .map((slug) => allProjects.find((p) => p.data.slug === slug))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p))
+  .map((p) => p.data);
+
+const breadcrumbItems = [
+  { label: 'Головна', href: '/' },
+  { label: 'Рішення', href: '/rishennya/' },
+  { label: 'Для магазину', href: PATH }
+];
+
+const structuredData: JsonLdObject[] = [
+  breadcrumbSchema(breadcrumbItems.map((item) => ({ label: item.label, href: absoluteUrl(item.href, origin) }))),
+  faqSchema(faq.map(([question, answer]) => ({ question, answer })))
+].filter(Boolean) as JsonLdObject[];
+
+const heroSrcset = `/images/solutions-new/${heroImage.base}-640.webp 640w, /images/solutions-new/${heroImage.base}.webp ${heroImage.width}w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
 ---
-<SolutionPage solution={solutionBySlug['dlya-magazynu']} />
+<BaseLayout
+  title={title}
+  description={description}
+  locale="uk"
+  alternateLocales={['uk']}
+  schemaType="Service"
+  structuredData={structuredData}
+  image={`/images/solutions-new/${heroImage.base}.webp`}
+>
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main" class="sgk-page">
+      <nav class="sgk-breadcrumbs" aria-label="Хлібні крихти">
+        {breadcrumbItems.map((item, index) => (
+          <>
+            {index > 0 && <span aria-hidden="true">/</span>}
+            {index === breadcrumbItems.length - 1
+              ? <span aria-current="page">{item.label}</span>
+              : <a href={item.href}>{item.label}</a>}
+          </>
+        ))}
+      </nav>
+
+      <section class="sgk-hero">
+        <div class="sgk-hero__copy">
+          <p class="eyebrow">Рішення · Для магазину</p>
+          <h1>{h1}</h1>
+          <p class="lead">{heroLead}</p>
+          <div class="sgk-hero__actions">
+            <a class="button button--mint" href="#solution-request">Отримати розрахунок</a>
+            <a class="button button--outline" href="/projects/">Переглянути проєкти</a>
+          </div>
+        </div>
+        <div class="sgk-hero__media">
+          <img
+            src={`/images/solutions-new/${heroImage.base}.webp`}
+            srcset={heroSrcset}
+            sizes={heroSizes}
+            width={heroImage.width}
+            height={heroImage.height}
+            alt={heroImage.alt}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+      </section>
+
+      <section class="sgk-section" aria-label="Які конструкції підходять для магазину">
+        <div class="sgk-section-head"><p class="eyebrow">Продукти</p><h2>Які конструкції підходять для магазину</h2><p>Торговому приміщенню зазвичай потрібне поєднання рішень: вітрина й вхідна група для фасаду, перегородки для зонування залу.</p></div>
+        <div class="sgk-product-grid">
+          {productLinks.map((item) => (
+            <article class="sgk-product-card">
+              <h3><a href={item.href}>{item.label}</a></h3>
+              <p set:html={item.html} />
+              <div class="sgk-product-card__foot">
+                <a href={item.href} aria-hidden="true">→</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="sgk-section" aria-label="Реальні сценарії для магазину">
+        <div class="sgk-section-head"><p class="eyebrow">Задачі об’єкта</p><h2>Реальні сценарії</h2></div>
+        <div class="sgk-scenario-grid">
+          {scenarios.map((scenario) => (
+            <article class="sgk-scenario-card">
+              <h3>{scenario.title}</h3>
+              <p>{scenario.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="sgk-section">
+        <div class="sgk-section-head"><p class="eyebrow">Вибір рішення</p><h2>Як обрати рішення</h2><p>Вітрина працює на продаж лише тоді, коли поєднує максимальну прозорість із безпекою та витривалістю до щоденного трафіку.</p></div>
+        <div class="sgk-choose-grid">
+          {choosePoints.map((point) => (
+            <article class="sgk-choose-card">
+              <h3>{point.title}</h3>
+              <p>{point.text}</p>
+              {point.link && <a class="sgk-inline-link" href={point.link.href}>{point.link.label} →</a>}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="sgk-section">
+        <div class="sgk-section-head"><p class="eyebrow">Матеріали</p><h2>Матеріали та системи</h2></div>
+        <div class="sgk-material-grid">
+          {materials.map((material) => (
+            <article class="sgk-material-card">
+              <h3>{material.title}</h3>
+              <p>{material.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="sgk-section">
+        <div class="sgk-section-head"><p class="eyebrow">Вартість</p><h2>Скільки коштують скляні конструкції для магазину</h2><p>Фіксованої ціни немає — вартість завжди прораховується під конкретне приміщення. На неї впливають:</p></div>
+        <ul class="sgk-price-list">
+          {priceFactors.map((factor) => <li>{factor}</li>)}
+        </ul>
+        <p class="sgk-price-note">Детальніше про фактори ціни — у статті <a href="/knowledge/vid-choho-zalezhyt-tsina-sklyanoyi-konstruktsiyi/">від чого залежить вартість скляної конструкції</a>.</p>
+      </section>
+
+      <section class="sgk-section">
+        <div class="sgk-section-head"><p class="eyebrow">Безпека</p><h2>Безпека та довговічність</h2></div>
+        <div class="sgk-safety-grid">
+          {safetyPoints.map((point) => (
+            <article class="sgk-safety-card">
+              <h3>{point.title}</h3>
+              <p>{point.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {projects.length > 0 && (
+        <section class="sgk-section sgk-projects">
+          <div class="sgk-section-head"><p class="eyebrow">Проєкти</p><h2>Реалізовані об’єкти</h2></div>
+          <div class="projects-index-v2__grid">
+            {projects.map((project) => <ProjectCard project={project} hrefPrefix="/projects" />)}
+          </div>
+          <a class="sgk-text-link" href="/projects/">Усі реалізовані проєкти Space Glass →</a>
+        </section>
+      )}
+
+      <section class="sgk-section sgk-experience">
+        <div class="sgk-section-head"><p class="eyebrow">Досвід</p><h2>Досвід Space Glass</h2></div>
+        <div class="sgk-experience-grid">
+          {experienceStats.map((stat) => (
+            <div class="sgk-experience-stat"><b>{stat.value}</b><span>{stat.label}</span></div>
+          ))}
+        </div>
+        <a class="sgk-text-link" href="/about/">Детальніше про компанію Space Glass →</a>
+      </section>
+
+      <section class="sgk-section">
+        <div class="sgk-section-head"><p class="eyebrow">Процес</p><h2>Як ми працюємо</h2></div>
+        <div class="sgk-process-grid">
+          {processSteps.map((step, index) => (
+            <div class="sgk-process-step">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <b>{step.title}</b>
+              <p>{step.text}</p>
+            </div>
+          ))}
+        </div>
+        <a class="sgk-text-link" href="/poslugy/">Детальніше про процес роботи Space Glass →</a>
+      </section>
+
+      <section class="sgk-section sgk-geography">
+        <div class="sgk-section-head"><p class="eyebrow">Географія</p><h2>Працюємо у вашому місті</h2></div>
+        <p>Space Glass реалізує проєкти у Києві, Одесі, Львові та інших містах України. Команда виконує замір, проєктування, виготовлення, доставку та монтаж конструкцій відповідно до вимог конкретного об’єкта.</p>
+        <div class="sgk-city-links">
+          {cityLinks.map((city) => <a href={city.href}>{city.label}</a>)}
+        </div>
+      </section>
+
+      <section class="sgk-section">
+        <FAQBlock
+          title="FAQ про скляні конструкції для магазину: вітрини, безпека та монтаж"
+          intro="Відповідаємо на 20 основних питань про скляні конструкції для магазину — вітрини, вхідні групи й монтаж."
+          items={faq}
+          visibleCount={6}
+        />
+      </section>
+
+      <section class="sgk-section">
+        <div class="sgk-section-head"><p class="eyebrow">Інше рішення</p><h2>Дивіться також</h2></div>
+        <a class="sgk-cross" href="/rishennya/dlya-ofisu/">
+          <h3>Для офісу</h3>
+          <p>Скляні офісні перегородки, двері та конструкції в алюмінієвому профілі для робочих просторів.</p>
+          <b aria-hidden="true">→</b>
+        </a>
+      </section>
+
+      <SolutionRequestForm solutionTitle={h1} example="Скляна вітрина та вхідна група для магазину у Львові" />
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>

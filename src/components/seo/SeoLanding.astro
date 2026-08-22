@@ -57,6 +57,16 @@ const projects = [
   }
 ];
 const crumbHome = pathFor(safeLocale, '').replace('//', '/');
+const breadcrumbParent = page.kind === 'city'
+  ? { label: safeLocale === 'ru' ? 'Города' : 'Міста', href: pathFor(safeLocale, 'mista') }
+  : page.kind === 'article'
+    ? { label: safeLocale === 'ru' ? 'База знаний' : 'База знань', href: pathFor(safeLocale, 'baza-znan') }
+    : page.kind === 'project'
+      ? { label: safeLocale === 'ru' ? 'Проекты' : 'Проєкти', href: pathFor(safeLocale, 'projects') }
+      : null;
+const breadcrumbItems = breadcrumbParent
+  ? [{ label: labels.home, href: crumbHome }, breadcrumbParent, { label: page.h1 }]
+  : [];
 const origin = Astro.site ?? Astro.url.origin;
 const pageUrl = absoluteUrl(pathFor(safeLocale, page.slug), origin);
 const schemaTypeByKind = { hub: 'CollectionPage', service: 'Service', city: 'Service', article: 'Article', project: 'CreativeWork' } as const;
@@ -74,17 +84,14 @@ const pageStructuredData: JsonLdObject = {
 const faqStructuredData = faqSchema(page.faq.map(([question, answer]) => ({ question, answer })));
 const structuredData = [
   pageStructuredData,
-  breadcrumbSchema([
-    { label: labels.home, href: absoluteUrl(crumbHome, origin) },
-    { label: page.h1, href: pageUrl }
-  ]),
+  ...(breadcrumbItems.length ? [breadcrumbSchema(breadcrumbItems.map((item) => ({ label: item.label, href: absoluteUrl(item.href ?? pathFor(safeLocale, page.slug), origin) })))] : []),
   faqStructuredData
 ].filter(Boolean) as JsonLdObject[];
 import "../../styles/seo-editorial.css";
 ---
 <BaseLayout title={page.title} description={page.description} locale={locale} schemaType={schemaTypeByKind[page.kind]} structuredData={structuredData}>
  <div class="sg-page-shell"><Header /><main id="main" class="seo-page">
-  <div class="seo-page__wrap"><Breadcrumbs items={[{label:labels.home,href:crumbHome},{label:page.h1}]} /></div>
+  {breadcrumbItems.length > 0 && <div class="seo-page__wrap"><Breadcrumbs items={breadcrumbItems} schema={false} /></div>}
   <section class="seo-hero"><div><p class="eyebrow">{page.eyebrow}</p><h1>{page.h1}</h1><p class="lead">{page.intro}</p><a class="button button--mint" href="#seo-request">{labels.ctaButton}</a></div><div class="seo-hero__mark" aria-hidden="true"><span>SPACE</span><b>GLASS</b></div></section>
   <div class="seo-page__wrap">
    {page.sections.length > 1 && <nav class="seo-jump" aria-label="On this page">{page.sections.map((section,index)=><a href={`#section-${index+1}`}>{section.title}</a>)}</nav>}
@@ -98,4 +105,3 @@ import "../../styles/seo-editorial.css";
   <div id="seo-request"><CTA title={labels.ctaTitle} text={labels.ctaText} button={labels.ctaButton} href={pathFor(safeLocale,'quote')} /></div>
  </main><Footer /></div>
 </BaseLayout>
-

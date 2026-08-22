@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import FAQBlock from '../../../components/FAQBlock.astro';
 import '../../../styles/legacy-product.css';
 import '../../../styles/category-pages.css';
@@ -19,7 +20,7 @@ const faq = [
 ];
 ---
 <BaseLayout title={`${title} — Space Glass`} description={description}>
-<div class="sg-page-shell"><Header/><main id="main">
+<div class="sg-page-shell"><Header/><main id="main"><Breadcrumbs contained items={[{label:'Головна',href:'/'},{label:'Скляні перегородки',href:'/sklyani-perehorodky/'},{label:title}]} />
 <section class="product-premium product-premium--s19 category-product-hero">
  <div class="product-gallery product-gallery--real"><button class="product-gallery__main" type="button"><img src={image} alt={title} width="1800" height="1300"/></button></div>
  <div class="product-premium__info"><p class="eyebrow">Скляні перегородки</p><div class="product-state product-state--order">● Під замовлення</div><h1>{title}</h1><p class="lead">{description}</p><div class="product-price-row"><strong>від 150 $/м²</strong><span>Попередня базова ставка</span></div>

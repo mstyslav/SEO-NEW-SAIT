@@ -1,5 +1,324 @@
 ---
-import SolutionPage from '../../components/solutions/SolutionPage.astro';
-import { solutionBySlug } from '../../data/solutions';
+// Bespoke SEO/UX build, mirroring the approved /rishennya/dlya-kvartyry/ pattern.
+// Deliberately self-contained (not SolutionPage.astro/solutions.ts/solutions.css)
+// so the hub and the other solution pages stay untouched.
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FAQBlock from '../../components/FAQBlock.astro';
+import SolutionRequestForm from '../../components/SolutionRequestForm.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
+import '../../styles/projects-common.css';
+import '../../styles/solution-kvartyry.css';
+
+const PATH = '/rishennya/dlya-budynku/';
+const origin = Astro.site ?? Astro.url.origin;
+
+const title = 'Скляні конструкції для будинку на замовлення | Space Glass';
+const description =
+  'Скляні конструкції для приватного будинку на замовлення: огорожі, тераси, безрамне та панорамне скління, вхідні групи й алюмінієві системи. Проєктування, виготовлення й монтаж у Києві, Одесі, Львові та по Україні.';
+const h1 = 'Скляні конструкції для приватного будинку';
+const heroLead =
+  'Огорожі, тераси, безрамне та панорамне скління для приватного будинку — конструкції, розраховані на зовнішні навантаження й цілорічну експлуатацію в Києві, Одесі, Львові та по всій Україні.';
+const heroImage = {
+  base: 'solution-house',
+  width: 1280,
+  height: 941,
+  alt: 'Сучасний приватний будинок з панорамним фасадним склінням і скляною терасою'
+};
+
+const productLinks = [
+  { label: 'Скляні огорожі', href: '/sklyani-ohorozhi/', html: 'Огорожі сходів, балконів і терас — безпечні системи для зовнішнього використання.' },
+  { label: 'Безрамне скління', href: '/bezramne-configurator/', html: 'Скління тераси чи альтанки без вертикальних рам, з максимальним оглядом.' },
+  { label: 'Алюмінієві конструкції', href: '/alyuminiievi-konstruktsii/', html: 'Вікна, двері, зимові сади та розсувні системи в теплому чи холодному профілі.' },
+  { label: 'Архітектурні системи', href: '/arkhitekturni-systemy/', html: 'Фасадне та панорамне скління для великих засклених площин будинку.' },
+  { label: 'Скляні двері', href: '/sklyani-dveri/', html: 'Вхідні та міжкімнатні двері для приватного будинку.' }
+];
+
+const scenarios = [
+  { title: 'Тераса на весь рік, а не тільки на літо', text: 'Теплий алюмінієвий контур і безрамне скління відкривають вид на ділянку без протягів у міжсезоння.' },
+  { title: 'Ділянка з перепадом висот чи басейном', text: 'Скляна огорожа замість глухого паркану зберігає панораму двору, не перекриваючи огляд.' },
+  { title: 'Зимовий сад біля будинку', text: 'Алюмінієві профільні системи формують засклений об’єм, який можна використовувати як продовження житлового простору.' },
+  { title: 'Вхідна група як частина фасаду', text: 'Навіс і скління входу проєктують у стилі фасаду будинку, а не як окремий додаток до готового об’єкта.' }
+];
+
+const choosePoints = [
+  { title: 'Товщина скла для огорож', text: 'Огорожі сходів, балконів і басейнів розраховують за висотою падіння та навантаженням — здебільшого це триплекс, який залишається цілим навіть при пошкодженні одного шару.', link: { label: 'Скляні огорожі: безпека, скло та кріплення', href: '/knowledge/sklyani-ohorozhi-vymohy-bezpeka/' } },
+  { title: 'Безрамне чи каркасне скління тераси', text: 'Безрамне скління дає максимальний огляд і підходить для літньої тераси. Алюмінієві розсувні системи з теплим контуром доцільні, якщо простір планують використовувати цілий рік.', link: { label: 'Системи безрамного скління: як обрати механіку', href: '/knowledge/bezramne-sklinnya-systemy-yak-obraty/' } },
+  { title: 'Тепле чи холодне скління', text: 'Холодний контур дешевший і підходить для сезонного використання. Теплий контур зі склопакетом утримує температуру взимку, якщо тераса чи зимовий сад стають частиною житлового простору.', link: { label: 'Тепле чи холодне скління тераси: різниця', href: '/knowledge/teple-chy-kholodne-sklinnya-terasy/' } }
+];
+
+const materials = [
+  { title: 'Триплекс', text: 'Основний матеріал для огорож і навісів — витримує зовнішні навантаження та лишається безпечним при пошкодженні.' },
+  { title: 'Загартоване скло', text: 'Застосовується для дверей, безрамного скління та ділянок, де важлива стійкість до ударних навантажень.' },
+  { title: 'Алюмінієві профільні системи', text: 'Теплий або холодний контур підбирають залежно від того, чи буде простір опалюваним цілий рік.' },
+  { title: 'Фурнітура для зовнішніх систем', text: 'Петлі, ролики та замки із захистом від корозії — розраховані на цілорічну експлуатацію просто неба.' }
+];
+
+const priceFactors = [
+  'площа скління тераси, фасаду чи огорожі',
+  'тип системи — тепла чи холодна',
+  'товщина й тип скла',
+  'профіль і колір системи',
+  'складність рельєфу ділянки',
+  'монтаж і доступ до об’єкта'
+];
+
+const safetyPoints = [
+  { title: 'Безпечне скло на висоті', text: 'Огорожі сходів, балконів і терас виконують із триплексу — при пошкодженні він лишається в площині кріплення, не створюючи небезпечних уламків.' },
+  { title: 'Стійкість до погодних умов', text: 'Зовнішні конструкції розраховують на вітрове навантаження, перепади температур і вологість — профіль і ущільнення підбирають під цілорічну експлуатацію.' },
+  { title: 'Антикорозійна фурнітура', text: 'Ролики, петлі та замки зовнішніх систем захищені від корозії, щоб зберігати плавний хід механізмів під відкритим небом.' }
+];
+
+const processSteps = [
+  { title: 'Консультація', text: 'Уточнюємо задачу, тип конструкції, бажаний результат і орієнтовний бюджет.' },
+  { title: 'Замір', text: 'Виїжджаємо на об’єкт і фіксуємо фактичну геометрію ділянки, фасаду чи прорізу.' },
+  { title: 'Проєктування', text: 'Готуємо креслення з розмірами, склом, профілем і вузлами кріплення.' },
+  { title: 'Виготовлення', text: 'Виробляємо конструкцію на власному обладнанні під погоджені параметри.' },
+  { title: 'Доставка', text: 'Пакуємо та доставляємо готову конструкцію в Києві, Одесі, Львові та по Україні.' },
+  { title: 'Монтаж', text: 'Встановлюємо, перевіряємо роботу механізмів і передаємо об’єкт із гарантією.' }
+];
+
+const experienceStats = [
+  { value: '10+', label: 'років реального досвіду в реалізації скляних та алюмінієвих конструкцій' },
+  { value: '5 000+', label: 'реалізованих проєктів для дому та бізнесу в Україні та Європі' },
+  { value: '50 000+', label: 'м² виконаного засклення житлових та комерційних об’єктів' }
+];
+
+const cityLinks = [
+  { label: 'Київ', href: '/city/kyiv/' },
+  { label: 'Одеса', href: '/city/odesa/' },
+  { label: 'Львів', href: '/city/lviv/' }
+];
+
+const faq: [string, string][] = [
+  ['Яке скло використовують для огорожі тераси чи сходів?', 'Найчастіше триплекс — при пошкодженні одного шару конструкція залишається цілою, що критично для зовнішньої безпеки на висоті.'],
+  ['Чи можна засклити терасу без рам?', 'Так, безрамне скління — окреме рішення саме для терас і альтанок: панелі складаються чи розсуваються без вертикальних стійок.'],
+  ['Чи витримує зовнішнє скління зиму?', 'Так, за умови правильного профілю та ущільнень. Для цілорічного використання рекомендуємо теплий алюмінієвий контур.'],
+  ['Чи потрібен дозвіл на огорожу балкона чи тераси зі скла?', 'Вимоги залежать від об’єкта й місцевого регламенту — рекомендуємо уточнювати індивідуально під час консультації.'],
+  ['Скільки триває монтаж фасадного чи терасного скління?', 'Строк залежить від площі та складності конструкції, фіксується після заміру та погодження креслення.'],
+  ['Чим безрамне скління відрізняється від традиційного?', 'У безрамному склінні немає вертикальних стійок — панелі складаються або розсуваються одна повз одну, зберігаючи максимальний огляд. У традиційному є алюмінієвий каркас, який тримає тепловий контур узимку.'],
+  ['Що краще для зимового саду — тепле чи холодне скління?', 'Якщо простір планують опалювати й використовувати цілий рік — теплий контур зі склопакетом. Для сезонного використання достатньо холодного контуру.'],
+  ['Чи можна встановити огорожу на нерівній ділянці чи сходах?', 'Так, перепади рельєфу фіксуються на замірі й враховуються індивідуальним кріпленням чи ступінчастою геометрією скла.'],
+  ['Чи можна замовити лише виготовлення без монтажу?', 'У частині випадків так, із доставкою готової конструкції — деталі узгоджуються індивідуально.'],
+  ['Яка висота огорожі потрібна для тераси чи басейну?', 'Висоту визначають за призначенням і висотою можливого падіння — параметри фіксуються на замірі відповідно до конкретного об’єкта.'],
+  ['Чи можна встановити зовнішнє скління взимку?', 'Монтаж можливий у холодну пору за належних погодних умов — деталі графіка узгоджуються індивідуально.'],
+  ['Чим огорожа відрізняється від поручня зі скла?', 'Огорожа — суцільна конструкція з несучим склом, поручень — додатковий елемент безпеки, який може монтуватися на вже наявну огорожу чи балюстраду.'],
+  ['Чи потрібно фарбувати чи обробляти алюмінієвий профіль з часом?', 'Ні, профіль має заводське порошкове покриття, розраховане на зовнішні умови без додаткового обслуговування.'],
+  ['Як доглядати за зовнішніми скляними конструкціями?', 'Використовуйте неабразивні засоби, регулярно очищайте напрямні й ущільнення, звертайтеся в сервіс при появі люфту в механізмах.'],
+  ['Чи можна змінити систему з холодної на теплу пізніше?', 'Це складна переробка — контур системи закладається на етапі проєктування, тому тип варто визначити до виготовлення.'],
+  ['Чи доставляєте конструкції за межі Києва, Одеси та Львова?', 'Так, реалізуємо проєкти по всій Україні — умови доставки й монтажу узгоджуються під конкретний об’єкт.'],
+  ['Що входить у вартість фасадного скління?', 'Скло, профіль, фурнітура, виготовлення та монтаж — комплектація фіксується в комерційній пропозиції після заміру.'],
+  ['Чи можна засклити дах чи навіс над терасою?', 'Так, це окреме технічне рішення з іншими вимогами до нахилу, товщини скла й водовідведення.'],
+  ['Чи потрібен окремий проєкт для кожного будинку?', 'Так, зовнішні конструкції завжди проєктують під фактичну геометрію фасаду, ділянки чи сходів конкретного об’єкта.'],
+  ['Що робити, якщо фасад будинку ще не завершений?', 'Попередній розрахунок можна отримати за кресленням чи фото проєкту, фінальний замір виконують після завершення фасадних робіт.']
+];
+
+const projectSlugs = ['led-mirror-private-house-odesa', 'glass-stair-railing-private-house-odesa', 'led-mirror-private-house-kyiv'];
+const allProjects = await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk');
+const projects = projectSlugs
+  .map((slug) => allProjects.find((p) => p.data.slug === slug))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p))
+  .map((p) => p.data);
+
+const breadcrumbItems = [
+  { label: 'Головна', href: '/' },
+  { label: 'Рішення', href: '/rishennya/' },
+  { label: 'Для будинку', href: PATH }
+];
+
+const structuredData: JsonLdObject[] = [
+  breadcrumbSchema(breadcrumbItems.map((item) => ({ label: item.label, href: absoluteUrl(item.href, origin) }))),
+  faqSchema(faq.map(([question, answer]) => ({ question, answer })))
+].filter(Boolean) as JsonLdObject[];
+
+const heroSrcset = `/images/solutions-new/${heroImage.base}-640.webp 640w, /images/solutions-new/${heroImage.base}.webp ${heroImage.width}w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
 ---
-<SolutionPage solution={solutionBySlug['dlya-budynku']} />
+<BaseLayout
+  title={title}
+  description={description}
+  locale="uk"
+  alternateLocales={['uk']}
+  schemaType="Service"
+  structuredData={structuredData}
+  image={`/images/solutions-new/${heroImage.base}.webp`}
+>
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main" class="sgk-page">
+      <nav class="sgk-breadcrumbs" aria-label="Хлібні крихти">
+        {breadcrumbItems.map((item, index) => (
+          <>
+            {index > 0 && <span aria-hidden="true">/</span>}
+            {index === breadcrumbItems.length - 1
+              ? <span aria-current="page">{item.label}</span>
+              : <a href={item.href}>{item.label}</a>}
+          </>
+        ))}
+      </nav>
+
+      <section class="sgk-hero">
+        <div class="sgk-hero__copy">
+          <p class="eyebrow">Рішення · Для будинку</p>
+          <h1>{h1}</h1>
+          <p class="lead">{heroLead}</p>
+          <div class="sgk-hero__actions">
+            <a class="button button--mint" href="#solution-request">Отримати розрахунок</a>
+            <a class="button button--outline" href="/projects/">Переглянути проєкти</a>
+          </div>
+        </div>
+        <div class="sgk-hero__media">
+          <img
+            src={`/images/solutions-new/${heroImage.base}.webp`}
+            srcset={heroSrcset}
+            sizes={heroSizes}
+            width={heroImage.width}
+            height={heroImage.height}
+            alt={heroImage.alt}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+      </section>
+
+      <section class="sgk-section" aria-label="Які конструкції підходять для будинку">
+        <div class="sgk-section-head"><p class="eyebrow">Продукти</p><h2>Які конструкції підходять для будинку</h2><p>Приватному будинку зазвичай потрібне поєднання зовнішніх рішень: огорожа сходів чи тераси, скління входу та алюмінієві системи вікон і дверей.</p></div>
+        <div class="sgk-product-grid">
+          {productLinks.map((item) => (
+            <article class="sgk-product-card">
+              <h3><a href={item.href}>{item.label}</a></h3>
+              <p set:html={item.html} />
+              <div class="sgk-product-card__foot">
+                <a href={item.href} aria-hidden="true">→</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="sgk-section" aria-label="Реальні сценарії для будинку">
+        <div class="sgk-section-head"><p class="eyebrow">Задачі об’єкта</p><h2>Реальні сценарії</h2></div>
+        <div class="sgk-scenario-grid">
+          {scenarios.map((scenario) => (
+            <article class="sgk-scenario-card">
+              <h3>{scenario.title}</h3>
+              <p>{scenario.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="sgk-section">
+        <div class="sgk-section-head"><p class="eyebrow">Вибір рішення</p><h2>Як обрати рішення</h2><p>Зовнішні конструкції працюють в інших умовах, ніж інтер’єрні: вітрове навантаження, перепади температур і сезонна експлуатація.</p></div>
+        <div class="sgk-choose-grid">
+          {choosePoints.map((point) => (
+            <article class="sgk-choose-card">
+              <h3>{point.title}</h3>
+              <p>{point.text}</p>
+              {point.link && <a class="sgk-inline-link" href={point.link.href}>{point.link.label} →</a>}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="sgk-section">
+        <div class="sgk-section-head"><p class="eyebrow">Матеріали</p><h2>Матеріали та системи</h2></div>
+        <div class="sgk-material-grid">
+          {materials.map((material) => (
+            <article class="sgk-material-card">
+              <h3>{material.title}</h3>
+              <p>{material.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="sgk-section">
+        <div class="sgk-section-head"><p class="eyebrow">Вартість</p><h2>Скільки коштують скляні конструкції для будинку</h2><p>Фіксованої ціни немає — вартість завжди прораховується під конкретний об’єкт. На неї впливають:</p></div>
+        <ul class="sgk-price-list">
+          {priceFactors.map((factor) => <li>{factor}</li>)}
+        </ul>
+        <p class="sgk-price-note">Детальніше про фактори ціни — у статті <a href="/knowledge/vid-choho-zalezhyt-tsina-sklyanoyi-konstruktsiyi/">від чого залежить ціна скляної конструкції</a>.</p>
+      </section>
+
+      <section class="sgk-section">
+        <div class="sgk-section-head"><p class="eyebrow">Безпека</p><h2>Безпека та довговічність</h2></div>
+        <div class="sgk-safety-grid">
+          {safetyPoints.map((point) => (
+            <article class="sgk-safety-card">
+              <h3>{point.title}</h3>
+              <p>{point.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {projects.length > 0 && (
+        <section class="sgk-section sgk-projects">
+          <div class="sgk-section-head"><p class="eyebrow">Проєкти</p><h2>Реалізовані об’єкти</h2></div>
+          <div class="projects-index-v2__grid">
+            {projects.map((project) => <ProjectCard project={project} hrefPrefix="/projects" />)}
+          </div>
+          <a class="sgk-text-link" href="/projects/">Усі реалізовані проєкти Space Glass →</a>
+        </section>
+      )}
+
+      <section class="sgk-section sgk-experience">
+        <div class="sgk-section-head"><p class="eyebrow">Досвід</p><h2>Досвід Space Glass</h2></div>
+        <div class="sgk-experience-grid">
+          {experienceStats.map((stat) => (
+            <div class="sgk-experience-stat"><b>{stat.value}</b><span>{stat.label}</span></div>
+          ))}
+        </div>
+        <a class="sgk-text-link" href="/about/">Детальніше про компанію Space Glass →</a>
+      </section>
+
+      <section class="sgk-section">
+        <div class="sgk-section-head"><p class="eyebrow">Процес</p><h2>Як ми працюємо</h2></div>
+        <div class="sgk-process-grid">
+          {processSteps.map((step, index) => (
+            <div class="sgk-process-step">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <b>{step.title}</b>
+              <p>{step.text}</p>
+            </div>
+          ))}
+        </div>
+        <a class="sgk-text-link" href="/poslugy/">Детальніше про процес роботи Space Glass →</a>
+      </section>
+
+      <section class="sgk-section sgk-geography">
+        <div class="sgk-section-head"><p class="eyebrow">Географія</p><h2>Працюємо у вашому місті</h2></div>
+        <p>Space Glass реалізує проєкти у Києві, Одесі, Львові та інших містах України. Команда виконує замір, проєктування, виготовлення, доставку та монтаж конструкцій відповідно до вимог конкретного об’єкта.</p>
+        <div class="sgk-city-links">
+          {cityLinks.map((city) => <a href={city.href}>{city.label}</a>)}
+        </div>
+      </section>
+
+      <section class="sgk-section">
+        <FAQBlock
+          title="FAQ про скляні конструкції для будинку: вибір, монтаж і догляд"
+          intro="Відповідаємо на 20 основних питань про скляні конструкції для приватного будинку — огорожі, тераси, скло та монтаж."
+          items={faq}
+          visibleCount={6}
+        />
+      </section>
+
+      <section class="sgk-section">
+        <div class="sgk-section-head"><p class="eyebrow">Інше рішення</p><h2>Дивіться також</h2></div>
+        <a class="sgk-cross" href="/rishennya/dlya-kvartyry/">
+          <h3>Для квартири</h3>
+          <p>Душові кабіни, скляні перегородки, двері та індивідуальні конструкції для сучасного інтер’єру.</p>
+          <b aria-hidden="true">→</b>
+        </a>
+      </section>
+
+      <SolutionRequestForm solutionTitle={h1} example="Скляна огорожа тераси для приватного будинку у Львові" />
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>

@@ -4,6 +4,7 @@ import '../../styles/knowledge.css';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { knowledgeArticles, getKnowledgeArticle } from '../../data/knowledge-articles';
 import { getFullKnowledgeSections } from '../../data/knowledge-expert-sections';
 import { breadcrumbSchema, faqSchema } from '../../seo/schema';
@@ -51,6 +52,7 @@ const structuredData = [
   <div class="sg-page-shell">
     <Header />
     <main id="main">
+      <Breadcrumbs contained schema={false} items={[{ label: 'Головна', href: '/' }, { label: 'База знань', href: '/knowledge/' }, { label: article.title }]} />
       <article>
         <header class="knowledge-article-hero knowledge-article-hero--compact">
           <div class="knowledge-article-hero__copy">
