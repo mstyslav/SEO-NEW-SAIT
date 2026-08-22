@@ -1,54 +1,156 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import FAQBlock from '../../components/FAQBlock.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import { faqSchema, type JsonLdObject } from '../../seo/schema';
 import '../../styles/services-full-cycle.css';
+import '../../styles/projects-common.css';
 
-const services = [
-  ['01', 'Замір та консультація', 'Точні розміри, оцінка об’єкта та підбір оптимального технічного рішення.', '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-detail-01.webp', 'Замір для безрамного скління на об’єкті Space Glass', 960, 1280],
-  ['02', 'Проєктування', 'Креслення, вузли, підбір скла, профілів, фурнітури та способів кріплення.', '/images/projects/office-partitions-morskyi-odesa/office-partitions-morskyi-odesa-detail-03.webp', 'Профіль і вузол скляної перегородки Space Glass', 960, 1280],
-  ['03', 'Виготовлення', 'Виробництво конструкцій за індивідуальними розмірами та затвердженим проєктом.', '/images/projects/restaurant-glazing-artshat-odesa/restaurant-glazing-artshat-odesa-detail-03.webp', 'Алюмінієвий профіль фасадного скління', 960, 1280],
-  ['04', 'Доставка', 'Професійне пакування та безпечна доставка конструкцій безпосередньо на об’єкт.', '/images/projects/glass-stair-railing-private-house-odesa/glass-stair-railing-private-house-odesa-detail-03.webp', 'Кріплення скляної огорожі до основи', 720, 1280],
-  ['05', 'Монтаж', 'Професійний монтаж, регулювання, герметизація та підготовка конструкції до експлуатації.', '/images/projects/coffee-ocean-facade-odesa/coffee-ocean-glass-entrance-odesa.webp', 'Скляна вхідна група після монтажу', 960, 1280],
-  ['06', 'Сервіс та гарантія', 'Гарантійна підтримка, регулювання, заміна комплектуючих та обслуговування.', '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-detail-05.webp', 'Безрамне скління тераси після монтажу', 960, 1280]
+const stages = [
+  ['01', 'Замір та консультація', 'Точні розміри, оцінка об’єкта та підбір оптимального технічного рішення.', 'ruler'],
+  ['02', 'Проєктування', 'Креслення, вузли, підбір скла, профілів, фурнітури та способів кріплення.', 'draft'],
+  ['03', 'Виготовлення', 'Виробництво конструкцій за індивідуальними розмірами та затвердженим проєктом.', 'factory'],
+  ['04', 'Доставка', 'Професійне пакування та безпечна доставка конструкцій по Україні.', 'truck'],
+  ['05', 'Монтаж', 'Професійний монтаж, регулювання, герметизація та підготовка до експлуатації.', 'install'],
+  ['06', 'Сервіс та гарантія', 'Гарантійна підтримка, регулювання, заміна комплектуючих та обслуговування.', 'shield']
 ] as const;
-const process = [['01','Заявка','Розповідаєте про задачу'],['02','Замір','Фіксуємо точні розміри'],['03','Проєкт','Розробляємо технічне рішення'],['04','Виробництво','Виготовляємо конструкцію'],['05','Монтаж','Встановлюємо на об’єкті'],['06','Результат','Передаємо готову конструкцію']] as const;
-const projects = [
-  ['Скляні офісні перегородки','Одеса · БЦ Морський','Готове рішення для зонування офісного простору.','/projects/office-partitions-morskyi-odesa/','/images/projects/office-partitions-morskyi-odesa/office-partitions-morskyi-odesa-hero.webp','Офісні перегородки у БЦ Морський — реалізований проєкт Space Glass',960,1280],
-  ['Скляна огорожа сходів','Одеса · приватний будинок','Огорожа, спроєктована за геометрією сходів і другого світла.','/projects/glass-stair-railing-private-house-odesa/','/images/projects/glass-stair-railing-private-house-odesa/glass-stair-railing-private-house-odesa-hero.webp','Огорожа сходів у приватному будинку — реалізований проєкт Space Glass',720,1280],
-  ['Фасадне скління кав’ярні','Одеса · Coffee Ocean','Фасад, вікно видачі та вхідна група для комерційного об’єкта.','/projects/coffee-ocean-facade-odesa/','/images/projects/coffee-ocean-facade-odesa/coffee-ocean-facade-odesa-hero.webp','Фасадне скління Coffee Ocean — реалізований проєкт Space Glass',960,1280]
+
+const process = [
+  ['01', 'Запит', 'Розповідаєте про задачу, надсилаєте фото та побажання'],
+  ['02', 'Попередній розрахунок', 'Оцінюємо задачу за фото, розмірами та типом конструкції'],
+  ['03', 'Замір', 'Фіксуємо точну геометрію на об’єкті'],
+  ['04', 'Креслення та погодження', 'Готуємо технічне рішення й узгоджуємо комплектацію'],
+  ['05', 'Виробництво', 'Виготовляємо конструкцію за затвердженим проєктом'],
+  ['06', 'Доставка та монтаж', 'Доставляємо та встановлюємо конструкцію на об’єкті'],
+  ['07', 'Здача і сервіс', 'Перевіряємо результат та надаємо гарантійну підтримку']
 ] as const;
+
 const directions = [
-  ['Душові кабіни','/dushovi-kabiny/'],['Скляні перегородки','/sklyani-perehorodky/'],['Скляні двері','/sklyani-dveri/'],['Скляні огорожі','/sklyani-ohorozhi/'],['Дзеркала','/dzerkala/'],['Безрамне скління','/poslugy/bezramne-sklinnya/'],['Скляні фасади','/arkhitekturni-systemy/'],['Алюмінієві конструкції','/alyuminiievi-konstruktsii/'],['Металопластикові конструкції','/metaloplastykovi-konstruktsii/'],['Архітектурні системи','/arkhitekturni-systemy/']
+  ['Душові кабіни', '/dushovi-kabiny/'],
+  ['Скляні перегородки', '/sklyani-perehorodky/'],
+  ['Скляні двері', '/sklyani-dveri/'],
+  ['Скляні огорожі', '/sklyani-ohorozhi/'],
+  ['Дзеркала', '/dzerkala/'],
+  ['Безрамне скління', '/poslugy/bezramne-sklinnya/'],
+  ['Архітектурні системи', '/arkhitekturni-systemy/'],
+  ['Алюмінієві конструкції', '/alyuminiievi-konstruktsii/'],
+  ['Металопластикові конструкції', '/metaloplastykovi-konstruktsii/'],
+  ['Скло для бізнесу', '/poslugy/sklo-dlia-biznesu/']
 ] as const;
+
+const cities = [
+  ['Київ', '/city/kyiv/', 'Проєкти та монтаж'],
+  ['Одеса', '/city/odesa/', 'Проєкти та монтаж'],
+  ['Львів', '/city/lviv/', 'Проєкти та монтаж']
+] as const;
+
 const faq = [
-  ['Скільки коштує виготовлення конструкції?','Вартість залежить від типу конструкції, розмірів, скла, профільної системи, фурнітури та умов монтажу. Для попереднього розрахунку надішліть фото, орієнтовні розміри або креслення.'],
-  ['Чи можна отримати попередній розрахунок без виїзду замірника?','Так. Для стартової оцінки достатньо фото, приблизних розмірів, міста та короткого опису задачі. Точне рішення і кошторис погоджуємо після заміру та уточнення комплектації.'],
-  ['Які терміни виготовлення?','Терміни залежать від типу конструкції, комплектації, обсягу проєкту та графіка монтажу. Після уточнення технічного рішення називаємо реалістичний план робіт.'],
-  ['Чи працюєте ви за кресленнями архітектора або дизайнера?','Так. Аналізуємо надані креслення, уточнюємо вузли та адаптуємо рішення до фактичних умов об’єкта, скла, профілів і способів кріплення.'],
-  ['Чи виконуєте монтаж в інших містах України?','Так, реалізуємо проєкти по Україні. Формат заміру, логістики та монтажу погоджуємо окремо з урахуванням міста й особливостей об’єкта.'],
-  ['Яка гарантія на конструкції та монтаж?','Умови гарантії залежать від конкретної системи, фурнітури та складу робіт. Їх фіксуємо у пропозиції після погодження технічного рішення.']
+  ['Як отримати попередній розрахунок?', 'Надішліть фото об’єкта, орієнтовні розміри та короткий опис задачі через форму на сайті. Ми оцінимо тип конструкції та повернемося з попереднім рішенням і подальшими кроками.'],
+  ['Що потрібно надіслати для розрахунку?', 'Достатньо фото місця встановлення, приблизних розмірів і міста. Якщо є креслення, дизайн-проєкт або побажання щодо скла й фурнітури — додайте їх до запиту.'],
+  ['Чи виконуєте замір?', 'Так. Професійний замір фіксує фактичну геометрію об’єкта та монтажні основи, це потрібно для точного виготовлення конструкції.'],
+  ['У яких містах доступний замір?', 'Виїзний замір постійно доступний у Києві, Одесі та Львові. В інших містах формат заміру погоджуємо окремо залежно від конструкції та логістики.'],
+  ['Чи працюєте з кресленнями DWG/PDF?', 'Так, приймаємо креслення архітектора чи дизайнера у DWG або PDF. Аналізуємо файл, уточнюємо вузли та адаптуємо рішення до фактичних умов об’єкта.'],
+  ['Чи готуєте технічні креслення?', 'Так, для погоджених конструкцій наша команда готує технічні креслення, вузли кріплення та специфікацію матеріалів перед запуском у виробництво.'],
+  ['Чи можна замовити тільки виготовлення?', 'Так, для частини проєктів можливе виготовлення конструкції з доставкою без монтажу — залежно від типу системи та домовленості.'],
+  ['Чи можна замовити конструкцію без монтажу?', 'Так, якщо у вас є власна монтажна команда. У такому разі надаємо конструкцію з технічною документацією та рекомендаціями зі встановлення.'],
+  ['Чи є доставка по Україні?', 'Так, доставляємо готові конструкції та комплектуючі по всій Україні. Умови доставки залежать від габаритів, крихкості скла та відстані.'],
+  ['Де доступний монтаж?', 'Власні монтажні команди Space Glass постійно працюють у Києві, Одесі та Львові. Монтаж в інших містах реалізуємо за погодженням, з урахуванням типу конструкції та обсягу робіт.'],
+  ['Чи працюєте з нестандартними розмірами?', 'Так, більшість конструкцій виготовляємо за індивідуальною геометрією об’єкта. Можливість нестандартної форми чи великого розміру уточнюємо після заміру.'],
+  ['Яке скло використовує Space Glass?', 'Залежно від задачі застосовуємо загартоване скло або триплекс. Тип, товщину й обробку скла підбираємо за розмірами, кріпленням та навантаженням конструкції.'],
+  ['Чи можна вибрати колір скла та фурнітури?', 'Так, доступні прозоре, матове, тоноване та інші варіанти скла, а також кілька кольорів профілю й фурнітури в межах обраної системи.'],
+  ['Чи працюєте з алюмінієвими конструкціями?', 'Так, окрім скла виконуємо алюмінієві вікна, двері, фасади та розсувні системи — самостійно або в поєднанні зі скляними конструкціями.'],
+  ['Чи реалізуєте комерційні об’єкти?', 'Так, працюємо з офісами, ресторанами, готелями, магазинами та іншими комерційними просторами з урахуванням потоку людей і режиму експлуатації.'],
+  ['Чи працюєте з архітекторами та дизайнерами?', 'Так, регулярно супроводжуємо проєкти за дизайн-проєктом чи технічним завданням архітектора, надаємо консультації та технічні матеріали.'],
+  ['Скільки часу займає виготовлення?', 'Термін залежить від типу конструкції, комплектації та завантаження виробництва. Реалістичний план робіт називаємо після погодження технічного рішення.'],
+  ['Від чого залежить ціна?', 'Ціна залежить від розмірів, типу й обробки скла, профільної системи, фурнітури, складності виготовлення та умов монтажу чи доставки.'],
+  ['Яка гарантія на конструкції та монтаж?', 'Умови гарантії залежать від конкретної системи, фурнітури та складу робіт і фіксуються в комерційній пропозиції до початку виготовлення.'],
+  ['Чи є післягарантійний сервіс?', 'Так, після завершення гарантійного терміну доступні консультації, регулювання фурнітури та заміна комплектуючих за потреби.']
 ] as const;
+
+const allProjects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk'))
+  .map(({ data }) => data)
+  .sort((a, b) => a.sortOrder - b.sortOrder);
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] : [];
+
+const stageIcons: Record<string, string> = {
+  ruler: '<path d="M8 20 20 8l20 20L28 40 8 20Z"/><path d="m13 15 4 4M18 10l4 4M23 25l4 4M28 20l4 4"/>',
+  draft: '<path d="M8 40 24 8l16 32H8Z"/><path d="M17 33h14M20 26h8"/><circle cx="24" cy="15" r="2.4"/>',
+  factory: '<path d="M8 40V24l8 6v-6l8 6V16l8 8V8h6v32H8Z"/><path d="M8 40h32"/>',
+  truck: '<path d="M6 30V14h20v16H6Z"/><path d="M26 20h8l6 6v4h-14z"/><circle cx="14" cy="34" r="3.4"/><circle cx="34" cy="34" r="3.4"/>',
+  install: '<path d="M10 10h20v28H10z"/><path d="M10 24h20M18 10v28"/><path d="m30 30 8 8M35 25l5 5-8 8-5-5Z"/>',
+  shield: '<path d="M24 6 40 12v11c0 11-7 17.5-16 19-9-1.5-16-8-16-19V12L24 6Z"/><path d="m17 24 5 5 9-10"/>'
+};
 ---
-<BaseLayout title="Послуги Space Glass — замір, проєктування, виготовлення та монтаж" description="Послуги Space Glass: повний цикл реалізації скляних та алюмінієвих конструкцій в Україні — замір, проєктування, виготовлення, доставка, монтаж і сервіс." schemaType="Service" locale="uk" image="/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero.webp">
+<BaseLayout title="Послуги зі скла та алюмінію — виготовлення та монтаж | Space Glass" description="Проєктування, виготовлення та монтаж скляних і алюмінієвих конструкцій Space Glass. Замір, доставка та сервіс. Київ, Одеса, Львів та вся Україна." schemaType="Service" structuredData={structuredData} locale="uk" image="/images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero.webp">
   <div class="sg-page-shell"><Header />
     <main id="main" class="services-cycle">
+      <div class="services-cycle__breadcrumbs"><Breadcrumbs items={[{label:'Головна',href:'/'},{label:'Послуги'}]} /></div>
+
       <section class="services-cycle__hero" aria-labelledby="services-title">
-        <div class="services-cycle__hero-copy"><p class="services-cycle__eyebrow">ПОСЛУГИ SPACE GLASS</p><h1 id="services-title">Від задуму до готової конструкції</h1><p>Повний цикл реалізації скляних та алюмінієвих конструкцій — від першого заміру та проєктування до виготовлення, монтажу й сервісу.</p><a class="button button--mint" href="/quote/">Обговорити проєкт</a></div>
-        <div class="services-cycle__hero-image"><img src="/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero.webp" alt="Комплексне скління OSOCOR RESIDENCE — реалізований проєкт Space Glass" width="960" height="1280" loading="eager" fetchpriority="high" decoding="async" /></div>
+        <div class="services-cycle__hero-copy"><p class="eyebrow">ПОСЛУГИ SPACE GLASS</p><h1 id="services-title">Послуги зі скла та алюмінію</h1><p>Проєктуємо, виготовляємо та монтуємо скляні й алюмінієві конструкції під ключ — від заміру до сервісу. Київ, Одеса, Львів та вся Україна.</p><div class="hero__actions"><a class="button button--mint" href="/quote/">Отримати розрахунок</a><a class="button button--outline" href="/projects/">Переглянути проєкти</a></div></div>
+        <div class="services-cycle__hero-image"><img src="/images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero.webp" srcset="/images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero-480.webp 480w, /images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero-720.webp 720w, /images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero.webp 960w" sizes="(max-width: 1100px) 100vw, 45vw" alt="Скляні перегородки стоматологічної клініки в Одесі — реалізований проєкт Space Glass" width="960" height="1280" loading="eager" fetchpriority="high" decoding="async" /></div>
       </section>
+
       <section class="services-cycle__section" aria-labelledby="full-cycle-title">
-        <div class="services-cycle__section-head"><p class="services-cycle__eyebrow">ПОВНИЙ ЦИКЛ</p><h2 id="full-cycle-title">Усе необхідне для реалізації проєкту — в одній команді</h2><p>Координуємо весь шлях конструкції, щоб технічне рішення, виробництво й монтаж працювали як єдиний процес.</p></div>
-        <div class="services-cycle__service-grid">{services.map(([number,title,text,image,alt,width,height],index) => <article class:list={['services-cycle__service',index % 2 === 1 && 'services-cycle__service--reverse']}><div class="services-cycle__service-image"><img src={image} alt={alt} width={width} height={height} loading="lazy" decoding="async" /></div><div class="services-cycle__service-copy"><span>{number}</span><h3>{title}</h3><p>{text}</p></div></article>)}</div>
+        <div class="services-cycle__section-head"><p class="eyebrow">ПОВНИЙ ЦИКЛ</p><h2 id="full-cycle-title">Усе необхідне для реалізації проєкту — в одній команді</h2><p>Координуємо весь шлях конструкції, щоб технічне рішення, виробництво й монтаж працювали як єдиний процес.</p></div>
+        <div class="services-cycle__stage-grid">{stages.map(([number,title,text,icon]) => <article class="services-cycle__stage"><div class="services-cycle__stage-icon"><svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" set:html={stageIcons[icon]} /></div><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
       </section>
-      <section class="services-cycle__image-break" aria-label="Підхід Space Glass до реалізації проєктів"><img src="/images/projects/restaurant-glazing-artshat-odesa/restaurant-glazing-artshat-odesa-detail-04.webp" alt="Фасадне скління з боку тераси після монтажу" width="960" height="1280" loading="lazy" decoding="async" /><p>Від креслення — до монтажу на об’єкті</p></section>
-      <section class="services-cycle__section services-cycle__process" aria-labelledby="process-title"><div class="services-cycle__section-head services-cycle__section-head--split"><div><p class="services-cycle__eyebrow">ПРОЦЕС</p><h2 id="process-title">Як ми працюємо</h2></div><p>Прозорий маршрут від першого запиту до передання готової конструкції.</p></div><ol class="services-cycle__timeline">{process.map(([number,title,text]) => <li><span>{number}</span><h3>{title}</h3><p>{text}</p></li>)}</ol></section>
-      <section class="services-cycle__numbers" aria-labelledby="numbers-title"><div class="services-cycle__numbers-head"><p class="services-cycle__eyebrow">ДОСВІД У ЦИФРАХ</p><h2 id="numbers-title">Точність, яку видно в масштабі робіт</h2></div><div class="services-cycle__numbers-grid"><article><strong>5 000+</strong><p>реалізованих проєктів<br />для дому та бізнесу<br />в Україні та Європі</p></article><article><strong>50 000+</strong><p>м² виконаного засклення<br />житлових та комерційних<br />об’єктів різної складності</p></article><article><strong>10+</strong><p>років реального досвіду<br />в реалізації скляних та<br />алюмінієвих конструкцій</p></article><article><strong>3</strong><p>Київ · Одеса · Львів<br />реалізація проєктів<br />по всій Україні</p></article></div></section>
-      <section class="services-cycle__section" aria-labelledby="projects-title"><div class="services-cycle__section-head services-cycle__section-head--split"><div><p class="services-cycle__eyebrow">РЕАЛІЗОВАНІ ПРОЄКТИ</p><h2 id="projects-title">Від проєкту до реалізації</h2></div><a class="services-cycle__text-link" href="/projects/">Усі проєкти <span aria-hidden="true">→</span></a></div><div class="services-cycle__projects-grid">{projects.map(([title,location,text,href,image,alt,width,height]) => <a class="services-cycle__project" href={href}><div><img src={image} alt={alt} width={width} height={height} loading="lazy" decoding="async" /></div><span>{location}</span><h3>{title}</h3><p>{text}</p><i aria-hidden="true">→</i></a>)}</div></section>
-      <section class="services-cycle__section services-cycle__directions" aria-labelledby="directions-title"><div class="services-cycle__section-head"><p class="services-cycle__eyebrow">НАПРЯМКИ</p><h2 id="directions-title">Працюємо з різними типами конструкцій</h2><p>Підбираємо матеріали, системи та спосіб монтажу відповідно до задачі об’єкта.</p></div><nav aria-label="Напрямки Space Glass"><ul>{directions.map(([title,href]) => <li><a href={href}><span>{title}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a></li>)}</ul></nav></section>
-      <section class="services-cycle__geography" aria-labelledby="geography-title"><div><p class="services-cycle__eyebrow">ГЕОГРАФІЯ</p><h2 id="geography-title">Реалізуємо проєкти по всій Україні</h2></div><p>Працюємо у Києві, Одесі та Львові, а також організовуємо реалізацію проєктів в інших містах України — з урахуванням логістики та умов об’єкта.</p><ul><li>Київ</li><li>Одеса</li><li>Львів</li></ul></section>
-      <section class="services-cycle__section services-cycle__faq" aria-labelledby="faq-title"><div class="services-cycle__section-head"><p class="services-cycle__eyebrow">FAQ</p><h2 id="faq-title">Відповіді перед початком роботи</h2></div><div class="services-cycle__faq-grid">{faq.map(([question,answer]) => <details><summary><span>{question}</span><i aria-hidden="true"></i></summary><p>{answer}</p></details>)}</div></section>
-      <section class="services-cycle__cta" aria-labelledby="cta-title"><div><p class="services-cycle__eyebrow">ВАШ ПРОЄКТ</p><h2 id="cta-title">Маєте ідею або готове креслення?</h2><p>Надішліть фото, розміри або креслення — підготуємо технічне рішення та попередній розрахунок вартості.</p><small>Фото · PDF · DWG</small></div><a class="button button--mint" href="/quote/">Отримати розрахунок</a></section>
+
+      <section class="services-cycle__section services-cycle__process" aria-labelledby="process-title"><div class="services-cycle__section-head services-cycle__section-head--split"><div><p class="eyebrow">ПРОЦЕС</p><h2 id="process-title">Як проходить замовлення</h2></div><p>Шлях від першого звернення до переданої готової конструкції.</p></div><ol class="services-cycle__timeline">{process.map(([number,title,text]) => <li><span>{number}</span><h3>{title}</h3><p>{text}</p></li>)}</ol></section>
+
+      <section class="services-cycle__numbers" aria-labelledby="numbers-title"><div class="services-cycle__numbers-head"><p class="eyebrow">ДОСВІД У ЦИФРАХ</p><h2 id="numbers-title">Точність, яку видно в масштабі робіт</h2></div><div class="services-cycle__numbers-grid"><article><strong>5 000+</strong><p>реалізованих проєктів<br />для дому та бізнесу<br />в Україні та Європі</p></article><article><strong>50 000+</strong><p>м² виконаного засклення<br />житлових та комерційних<br />об’єктів різної складності</p></article><article><strong>10+</strong><p>років реального досвіду<br />в реалізації скляних та<br />алюмінієвих конструкцій</p></article><article><strong>3</strong><p>Київ · Одеса · Львів<br />реалізація проєктів<br />по всій Україні</p></article></div></section>
+
+      <section class="services-cycle__section" aria-labelledby="projects-title">
+        <div class="services-cycle__section-head services-cycle__section-head--split"><div><p class="eyebrow">РЕАЛІЗОВАНІ ПРОЄКТИ</p><h2 id="projects-title">Від проєкту до реалізації</h2></div><div class="services-cycle__projects-controls" aria-label="Керування списком проєктів"><button type="button" aria-label="Попередні проєкти" data-poslugy-projects-direction="-1">←</button><button type="button" aria-label="Наступні проєкти" data-poslugy-projects-direction="1">→</button></div></div>
+        <div class="services-cycle__projects-viewport" data-poslugy-projects-rail tabindex="0" aria-label="Реалізовані проєкти Space Glass">
+          <div class="services-cycle__projects-track">
+            {allProjects.map((project) => <div class="services-cycle__projects-item"><ProjectCard project={project} hrefPrefix="/projects" /></div>)}
+          </div>
+        </div>
+        <a class="services-cycle__text-link" href="/projects/">Усі проєкти <span aria-hidden="true">→</span></a>
+      </section>
+
+      <section class="services-cycle__section services-cycle__directions" aria-labelledby="directions-title"><div class="services-cycle__section-head"><p class="eyebrow">НАПРЯМКИ</p><h2 id="directions-title">Працюємо з різними типами конструкцій</h2><p>Підбираємо матеріали, системи та спосіб монтажу відповідно до задачі об’єкта.</p></div><nav aria-label="Напрямки Space Glass"><ul>{directions.map(([title,href]) => <li><a href={href}><span>{title}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a></li>)}</ul></nav></section>
+
+      <section class="services-cycle__section" aria-labelledby="geography-title">
+        <div class="services-cycle__section-head"><p class="eyebrow">ГЕОГРАФІЯ</p><h2 id="geography-title">Працюємо у Києві, Одесі та Львові</h2><p>Проєкти в інших містах України реалізуємо за погодженням — з урахуванням типу конструкції, логістики та умов об’єкта.</p></div>
+        <div class="services-cycle__cities" aria-label="Міста роботи Space Glass">
+          {cities.map(([city,href,caption]) => <a href={href}><span>{city}</span><b>{caption} <i aria-hidden="true">→</i></b></a>)}
+        </div>
+        <p class="services-cycle__geo-note">Доставка конструкцій — по всій Україні. Монтажні команди постійно працюють у Києві, Одесі та Львові; в інших містах замір і монтаж погоджуємо окремо залежно від конструкції, обсягу та логістики.</p>
+      </section>
+
+      <section class="services-cycle__section services-cycle__faq-section" aria-labelledby="faq-title">
+        <FAQBlock eyebrow="FAQ" title="Відповіді перед початком роботи" intro="Відповідаємо на основні питання про розрахунок, замір, креслення, доставку, монтаж, гарантію та сервіс скляних і алюмінієвих конструкцій Space Glass." items={faq} visibleCount={6} locale="uk" />
+      </section>
+
+      <section class="services-cycle__final-cta" aria-labelledby="cta-title">
+        <div><p class="eyebrow eyebrow--light">ВАШ ПРОЄКТ</p><h2 id="cta-title">Обговоримо вашу конструкцію</h2><p>Надішліть фото, розміри або креслення — підготуємо попередню комплектацію та розрахунок.</p></div>
+        <div class="services-cycle__final-cta-actions"><a class="button button--mint" href="/quote/">Надіслати проєкт</a><a class="button button--outline" href="/contacts/">Зв’язатися з нами</a></div>
+      </section>
     </main><Footer />
   </div>
 </BaseLayout>
+
+<script is:inline>
+  const poslugyProjectsRail = document.querySelector('[data-poslugy-projects-rail]');
+  const scrollPoslugyProjects = (direction) => {
+    if (!poslugyProjectsRail) return;
+    const card = poslugyProjectsRail.querySelector('.services-cycle__projects-item');
+    const distance = card ? card.getBoundingClientRect().width + 18 : poslugyProjectsRail.clientWidth;
+    poslugyProjectsRail.scrollBy({ left: direction * distance, behavior: 'smooth' });
+  };
+  document.querySelectorAll('[data-poslugy-projects-direction]').forEach((button) => button.addEventListener('click', () => scrollPoslugyProjects(Number(button.dataset.poslugyProjectsDirection))));
+  poslugyProjectsRail?.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      scrollPoslugyProjects(event.key === 'ArrowRight' ? 1 : -1);
+    }
+  });
+</script>
