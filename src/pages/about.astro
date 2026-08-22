@@ -65,7 +65,11 @@ const systems = [
   <div class="sg-hero__copy">
     <p class="eyebrow">SPACE GLASS · ПРО КОМПАНІЮ</p>
 
-    <h1>Скляні конструкції та алюмінієві системи Space Glass</h1>
+    <h1>
+      <span>Скляні конструкції</span>
+      <span>та алюмінієві системи</span>
+      <span>Space Glass</span>
+    </h1>
     <p class="about-main-hero__subtitle">Проєктуємо, виготовляємо та монтуємо скляні перегородки, Loft-перегородки, скляні огорожі, душові кабіни, скляні двері, фасадне й безрамне скління, алюмінієві вікна та двері, перголи й сонцезахисні системи. Працюємо по всій Україні та реалізуємо проєкти в Європі.</p>
   </div>
 
@@ -304,52 +308,6 @@ const systems = [
   .about-main-hero__subtitle {
     margin-top: 14px;
     font-size: 1rem;
-  }
-}
-</style>
-
-
-
-<style>
-/* ABOUT HERO — больше ширины фотографии, исходная высота */
-.about-main-hero {
-  grid-template-columns: 38% 62%;
-}
-
-.about-main-hero .sg-hero__image {
-  min-height: 550px;
-}
-
-.about-main-hero .sg-hero__image picture {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.about-main-hero .sg-hero__image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-@media (max-width: 1180px) {
-  .about-main-hero {
-    grid-template-columns: 42% 58%;
-  }
-}
-
-@media (max-width: 760px) {
-  .about-main-hero {
-    grid-template-columns: 1fr;
-  }
-
-  .about-main-hero .sg-hero__image {
-    min-height: 0;
-    height: clamp(320px, 92vw, 420px);
-  }
-
-  .about-main-hero .sg-hero__image img {
-    object-position: 50% 46%;
   }
 }
 </style>
@@ -909,5 +867,194 @@ const systems = [
   .career.section-pad {
     padding-top: 19px !important;
   }
+}
+
+
+/* ABOUT HERO FINAL — same desktop/mobile geometry family as homepage */
+@media (min-width: 901px) {
+  .about-main-hero {
+    display: grid;
+    grid-template-columns: minmax(0, .79fr) minmax(0, 1fr);
+    min-height: 550px;
+    align-items: stretch;
+  }
+
+  .about-main-hero .sg-hero__copy {
+    min-width: 0;
+    padding: 54px 58px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .about-main-hero .sg-hero__copy h1 {
+    width: 100%;
+    max-width: 620px;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(42px, 3.35vw, 56px);
+    font-weight: 600;
+    line-height: .98;
+    letter-spacing: -.04em;
+  }
+
+  .about-main-hero .sg-hero__copy h1 > span {
+    display: block;
+    color: inherit;
+    white-space: nowrap;
+  }
+
+  .about-main-hero .sg-hero__image {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    min-height: 550px;
+    height: 550px;
+    overflow: hidden;
+    border-radius: 0;
+  }
+
+  .about-main-hero .sg-hero__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .about-main-hero {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .about-main-hero .sg-hero__copy {
+    min-width: 0;
+    padding: 44px 24px;
+  }
+
+  .about-main-hero .sg-hero__copy h1 {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(2.25rem, 9.5vw, 3rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -.04em;
+  }
+
+  .about-main-hero .sg-hero__copy h1 > span {
+    display: block;
+    color: inherit;
+  }
+
+  .about-main-hero .sg-hero__image {
+    width: 100%;
+    min-height: 0;
+    height: clamp(320px, 92vw, 430px);
+    overflow: hidden;
+    border-radius: 0;
+  }
+
+  .about-main-hero .sg-hero__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: 50% 46%;
+    border-radius: 0;
+  }
+}
+
+/* ABOUT — final H1 color + readable mobile facts */
+
+/* H1 must stay graphite, never inherit global mint span color */
+.about-main-hero .sg-hero__copy h1,
+.about-main-hero .sg-hero__copy h1 > span {
+  color: #111513 !important;
+}
+
+/* Mobile facts: readable 2 × 2 cards */
+@media (max-width: 760px) {
+  .about-premium .about-v12-facts {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100%;
+    padding: 0 !important;
+    background: #fff;
+  }
+
+  .about-premium .about-stat {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+
+    min-width: 0 !important;
+    min-height: 190px !important;
+    padding: 22px 18px 20px !important;
+
+    border-right: 1px solid var(--line) !important;
+    border-bottom: 1px solid var(--line) !important;
+  }
+
+  .about-premium .about-stat:nth-child(2n) {
+    border-right: 0 !important;
+  }
+
+  .about-premium .about-stat:nth-last-child(-n + 2) {
+    border-bottom: 0 !important;
+  }
+
+  .about-premium .about-stat__icon {
+    display: block !important;
+    width: 27px !important;
+    height: 27px !important;
+    margin: 0 0 14px !important;
+    flex: 0 0 auto !important;
+  }
+
+  .about-premium .about-stat > div {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .about-premium .about-stat b {
+    display: block !important;
+    margin: 0 0 9px !important;
+
+    font-size: clamp(1.65rem, 7.5vw, 2rem) !important;
+    line-height: 1 !important;
+    letter-spacing: -.04em !important;
+    white-space: nowrap !important;
+  }
+
+  .about-premium .about-stat span {
+    display: block !important;
+    width: 100% !important;
+
+    font-size: 12px !important;
+    line-height: 1.38 !important;
+    font-weight: 600 !important;
+
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: none !important;
+  }
+}
+
+/* Hero description — aligned with Rishennya reference */
+.about-main-hero__subtitle{
+  max-width:650px;
+  color:var(--muted,#5d6863);
+  font-size:clamp(1rem,1.25vw,1.16rem);
+  line-height:1.62;
 }
 </style>
