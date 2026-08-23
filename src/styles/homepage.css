@@ -391,6 +391,19 @@ html[lang="de"] .quote-form--home-final__submit{
     width:38px;
     height:38px;
   }
+
+  .sg-products__head{
+    flex-direction:row;
+    align-items:center;
+  }
+
+  .sg-all-link{
+    display:block;
+    width:max-content;
+    max-width:100%;
+    margin-left:auto;
+    margin-right:auto;
+  }
 }
 
 /* Projects — mobile final layout */
