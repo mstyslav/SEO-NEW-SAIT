@@ -85,6 +85,10 @@
 
 .sg-projects__viewport.is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}
 
+@media(pointer:coarse){
+  .sg-product-grid,.sg-projects__viewport{cursor:auto;touch-action:pan-x pan-y}
+}
+
 .sg-projects__viewport::-webkit-scrollbar{display:block;height:6px}
 
 .sg-projects__viewport::-webkit-scrollbar-track{border-radius:999px;background:#edf5f1}
