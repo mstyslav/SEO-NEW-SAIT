@@ -149,7 +149,13 @@ const faq = [
         </div>
         <div class="sg-hero__image">
           <picture>
-            <source media="(max-width: 900px)" srcset={heroMobileSrcset} sizes="100vw" />
+            <source
+              media="(max-width: 900px)"
+              srcset={heroMobileSrcset}
+              sizes="100vw"
+              width="800"
+              height="1200"
+            />
             <img
               src={heroSrc}
               srcset={heroSrcset}
