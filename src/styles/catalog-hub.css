@@ -89,3 +89,49 @@
     border-left:0;
   }
 }
+
+/* Catalog section dividers + compact geography */
+.catalog-hub__process,
+.catalog-project-head,
+.catalog-hub__geo {
+  position: relative;
+}
+
+.catalog-hub__process::before,
+.catalog-project-head::before,
+.catalog-hub__geo::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  background: var(--catalog-mint);
+  transform: translateX(-50%);
+}
+
+.catalog-hub__process::before {
+  top: 0;
+}
+
+.catalog-project-head::before {
+  top: calc(clamp(68px, 8vw, 116px) * -1);
+}
+
+.catalog-hub__geo {
+  width: min(calc(100% - 40px), 1248px);
+  margin-inline: auto;
+}
+
+.catalog-hub__geo::before {
+  top: calc(clamp(20px, 3vw, 44px) * -1 - 1px);
+}
+
+@media (max-width: 640px) {
+  .catalog-hub__geo {
+    width: calc(100% - 40px);
+  }
+
+  .catalog-project-head::before {
+    top: -64px;
+  }
+}
