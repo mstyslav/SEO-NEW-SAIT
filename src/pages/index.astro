@@ -311,7 +311,7 @@ const faq = [
         let solutionsHasDragged = false;
 
         solutionsCarousel.addEventListener('pointerdown', (event) => {
-          if (event.pointerType === 'mouse' && event.button !== 0) return;
+          if (event.pointerType !== 'mouse' || event.button !== 0) return;
 
           solutionsPointerId = event.pointerId;
           solutionsDragStartX = event.clientX;
@@ -382,7 +382,7 @@ const faq = [
         let hasDragged = false;
 
         projectsCarousel.addEventListener('pointerdown', (event) => {
-          if (event.pointerType === 'mouse' && event.button !== 0) return;
+          if (event.pointerType !== 'mouse' || event.button !== 0) return;
           pointerId = event.pointerId;
           dragStartX = event.clientX;
           dragStartScroll = projectsCarousel.scrollLeft;
