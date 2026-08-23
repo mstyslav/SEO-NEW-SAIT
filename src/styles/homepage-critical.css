@@ -733,3 +733,15 @@ body .sg-page-shell main .project-detail-v2__service-link h2{
   font-size:clamp(1rem,1.25vw,1.16rem);
   line-height:1.62;
 }
+
+@media (min-width:901px){
+  .sg-home-hero .sg-hero__image picture{
+    display:block;
+    width:100%;
+    height:100%;
+  }
+
+  .sg-home-hero .sg-hero__image img{
+    object-fit:cover;
+  }
+}

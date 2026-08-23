@@ -427,3 +427,22 @@
     font-size:1.2rem;
   }
 }
+
+/* Poslugy hero — standard top-level desktop geometry */
+@media (min-width:901px){
+  .services-cycle__hero{
+    grid-template-columns:minmax(0,.79fr) minmax(0,1fr);
+    min-height:550px;
+    height:550px;
+    gap:0;
+  }
+
+  .services-cycle__hero-copy{
+    padding:54px 58px 40px;
+  }
+
+  .services-cycle__hero-image{
+    min-height:550px;
+    height:550px;
+  }
+}

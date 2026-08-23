@@ -197,12 +197,13 @@
 }
 
 /* Rishennya hero — final geometry aligned with homepage */
-@media (min-width:1051px){
+@media (min-width:901px){
   .rishennya-hub__hero{
     grid-template-columns:minmax(0,.79fr) minmax(0,1fr);
     gap:0;
     align-items:stretch;
     min-height:550px;
+    height:550px;
     padding:0;
     background:#fff;
   }
@@ -237,22 +238,14 @@
   }
 
   .rishennya-hub__hero{
-    width:auto;
+    width:calc(100% + 116px);
     max-width:none;
-    margin-left:calc((100% - 100vw) / 2);
-    margin-right:calc((100% - 100vw) / 2);
+    margin-left:-58px;
+    margin-right:-58px;
   }
 }
 
-@media (min-width:1504px){
-  .rishennya-hub__hero{
-    width:1480px;
-    margin-left:calc((100% - 1480px) / 2);
-    margin-right:calc((100% - 1480px) / 2);
-  }
-}
-
-@media (max-width:1050px){
+@media (max-width:900px){
   .rishennya-hub__hero-media{
     width:100%;
     border-radius:0;

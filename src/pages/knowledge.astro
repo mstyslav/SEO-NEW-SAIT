@@ -140,6 +140,21 @@ import { knowledgeArticles, knowledgeCategories } from '../data/knowledge-articl
     object-fit:cover;
     object-position:center;
   }
+  @media(min-width:901px) {
+    .knowledge-v14-hero {
+      grid-template-columns:minmax(0,.79fr) minmax(0,1fr);
+      min-height:550px;
+      height:550px;
+    }
+    .knowledge-v14-hero > div:first-child {
+      min-height:550px;
+      padding:54px 58px 40px;
+    }
+    .knowledge-v14-brand {
+      min-height:550px;
+      height:550px;
+    }
+  }
   @media(max-width:900px) {
     .knowledge-v14-hero > div:first-child { min-height:0; padding:58px 40px; }
     .knowledge-v14-brand { min-height:340px; border-top:1px solid var(--line); border-left:0; }

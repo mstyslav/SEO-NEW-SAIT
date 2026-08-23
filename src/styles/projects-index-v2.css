@@ -199,3 +199,23 @@
     right:-16px;
   }
 }
+
+/* Projects hero — standard top-level desktop geometry */
+@media (min-width:901px){
+  .projects-index-v2__hero{
+    grid-template-columns:minmax(0,.79fr) minmax(0,1fr);
+    min-height:550px;
+    height:550px;
+    gap:0;
+  }
+
+  .projects-index-v2__hero-copy{
+    min-height:550px;
+    padding:54px 58px 40px;
+  }
+
+  .projects-index-v2__hero-media{
+    min-height:550px;
+    height:550px;
+  }
+}
