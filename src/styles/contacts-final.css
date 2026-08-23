@@ -87,7 +87,8 @@
   .contacts-social-mini a { width:100%; aspect-ratio:1; height:auto; }
   .contacts-geography .contacts-section-head h2 { max-width:none; }
   .contacts-geography .contacts-city-list { margin-top:22px; }
-  .contacts-ukraine-map__city text { font-size:13px; }
+  .contacts-ukraine-map { width:50%; }
+  .contacts-ukraine-map__city text { font-size:16px; }
 }
 
 /* Contacts office social icons — visible black marks */
