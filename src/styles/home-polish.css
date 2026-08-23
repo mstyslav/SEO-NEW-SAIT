@@ -125,3 +125,40 @@
     min-height:58px;
   }
 }
+
+/* Homepage hero heading */
+body .sg-page-shell main .sg-home-hero .sg-hero__copy h1{
+  font-size:clamp(3.25rem,4vw,4rem)!important;
+  line-height:.98!important;
+  letter-spacing:-.045em!important;
+}
+
+@media(max-width:700px){
+  body .sg-page-shell main .sg-home-hero .sg-hero__copy h1{
+    font-size:clamp(2.25rem,10vw,2.7rem)!important;
+    line-height:1!important;
+    letter-spacing:-.04em!important;
+  }
+}
+
+/* Homepage hero desktop: keep H1 in two balanced lines */
+@media(min-width:901px){
+  body .sg-page-shell main .sg-home-hero{
+    grid-template-columns:minmax(0,.95fr) minmax(0,1fr);
+  }
+
+  body .sg-page-shell main .sg-home-hero .sg-hero__copy h1{
+    font-size:clamp(3rem,3.55vw,3.65rem)!important;
+    white-space:nowrap;
+  }
+}
+
+/* Homepage mobile hero: keep H1 in two lines */
+@media(max-width:700px){
+  body .sg-page-shell main .sg-home-hero .sg-hero__copy h1{
+    font-size:clamp(2rem,8.3vw,2.25rem)!important;
+    line-height:1!important;
+    letter-spacing:-.045em!important;
+    white-space:nowrap;
+  }
+}
