@@ -78,7 +78,20 @@
 @media (max-width: 768px) {
   .contacts-geography .contacts-section__inner { grid-template-columns:1fr; gap:32px; }
   .contacts-geography .contacts-section-head h2 { max-width:22ch; }
-  .contacts-ukraine-map { max-width:680px; margin:0 auto; }
+  .contacts-ukraine-map { width:55%; max-width:680px; margin:0 auto; }
+}
+
+@media (min-width: 621px) and (max-width: 768px) {
+  .contacts-geography .contacts-city-list {
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    width:100%;
+  }
+
+  .contacts-geography .contacts-city-list span {
+    width:100%;
+    min-width:0;
+  }
 }
 
 @media (max-width: 620px) {
@@ -87,7 +100,7 @@
   .contacts-social-mini a { width:100%; aspect-ratio:1; height:auto; }
   .contacts-geography .contacts-section-head h2 { max-width:none; }
   .contacts-geography .contacts-city-list { margin-top:22px; }
-  .contacts-ukraine-map { width:50%; }
+  .contacts-ukraine-map { width:70%; }
   .contacts-ukraine-map__city text { font-size:16px; }
 }
 
