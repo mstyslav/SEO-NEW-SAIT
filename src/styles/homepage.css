@@ -95,6 +95,8 @@
 
 .sg-projects__track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 30px)/4);gap:10px}
 
+.sg-project-image h3{display:none}
+
 @media(max-width:1200px) {
 
 .sg-product-grid{
@@ -119,7 +121,7 @@
 .sg-product-grid::-webkit-scrollbar-track{border-radius:999px;background:#edf5f1}
 .sg-product-grid::-webkit-scrollbar-thumb{border-radius:999px;background:var(--mint-dark)}
 
-.sg-product-card__body h3{font-size:17px}
+.sg-products .sg-product-card__body h3{font-size:13px!important;line-height:1.3!important;font-weight:700;text-transform:uppercase}
 
 .sg-projects__track{grid-auto-columns:calc((100% - 20px)/3)}
 
@@ -130,18 +132,20 @@
    and was losing to the repeat(3,1fr) rule directly above. Restore it here. */
 @media(max-width:620px) {
 
+.sg-products{padding-left:24px;padding-right:24px}
+
 .sg-product-grid{
   grid-template-columns:none;
-  grid-auto-columns:86%;
+  grid-auto-columns:calc((100% - 20px)/3);
 }
 
-.sg-product-card__body{padding:16px}
+.sg-product-card__body{padding:8px}
 
-.sg-product-card__body h3{font-size:18px}
+.sg-products .sg-product-card__body h3{font-size:13px!important;line-height:1.3!important;font-weight:700;text-transform:uppercase;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:break-word}
 
-.sg-product-card__body p{font-size:14px}
+.sg-product-card__body p{display:none}
 
-.sg-product-card .sg-product-button{font-size:13px}
+.sg-product-card .sg-product-button{display:none}
 
 }
 
@@ -160,6 +164,17 @@
 @media(max-width:620px) {
 
 .sg-projects__track{grid-auto-columns:86%}
+
+}
+
+/* .sg-products carries an unconditional padding:0 58px 34px (line 37) that
+   silences global.css's intended 24px tablet padding for the same reason
+   documented above for .sg-product-grid. .sg-projects has no such conflict.
+   Re-assert the reduced padding here, at the same 900px breakpoint global.css
+   intended, so both sections' header rows share one left/right content line. */
+@media(max-width:900px) {
+
+.sg-products{padding-left:24px;padding-right:24px}
 
 }
 
@@ -473,6 +488,26 @@ html[lang="de"] .quote-form--home-final__submit{
   .sg-project-image{
     width:100%;
     min-width:0;
+    height:auto;
+    overflow:visible;
+  }
+
+  .sg-project-image img{
+    height:175px;
+    border-radius:14px;
+  }
+
+  .sg-projects .sg-project-image h3{
+    display:-webkit-box;
+    margin:8px 0 0;
+    font-size:13px!important;
+    line-height:1.3!important;
+    font-weight:700;
+    text-transform:uppercase;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    overflow-wrap:break-word;
   }
 
   .sg-projects__all-link{
@@ -535,8 +570,33 @@ html[lang="de"] .quote-form--home-final__submit{
   }
 
   .sg-projects__track{
-    grid-auto-columns:calc((100% - 10px)/2);
+    grid-auto-columns:calc((100% - 20px)/3);
     gap:10px;
+  }
+
+  .sg-project-image{
+    width:100%;
+    min-width:0;
+    height:auto;
+    overflow:visible;
+  }
+
+  .sg-project-image img{
+    height:175px;
+    border-radius:14px;
+  }
+
+  .sg-projects .sg-project-image h3{
+    display:-webkit-box;
+    margin:8px 0 0;
+    font-size:13px!important;
+    line-height:1.3!important;
+    font-weight:700;
+    text-transform:uppercase;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    overflow-wrap:break-word;
   }
 
   .sg-projects__all-link{
@@ -550,5 +610,104 @@ html[lang="de"] .quote-form--home-final__submit{
     font-weight:700;
     line-height:1.35;
     text-transform:uppercase;
+  }
+}
+
+/* Projects — desktop titles + centered all-projects CTA */
+@media (min-width:1201px){
+
+  .sg-project-image{
+    height:auto;
+    overflow:visible;
+  }
+
+  .sg-project-image img{
+    height:175px;
+    border-radius:14px;
+  }
+
+  .sg-projects .sg-project-image h3{
+    display:-webkit-box;
+    margin:8px 0 0;
+    font-size:13px!important;
+    line-height:1.3!important;
+    font-weight:700;
+    text-transform:uppercase;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    overflow-wrap:break-word;
+  }
+
+  .sg-projects__all-link{
+    display:block;
+    grid-column:1 / -1;
+    width:max-content;
+    max-width:100%;
+    min-height:0;
+    margin:18px auto 0;
+    padding:0;
+    color:var(--mint-dark);
+    font-size:13px;
+    font-weight:700;
+    line-height:1.4;
+    text-align:center;
+    text-transform:uppercase;
+  }
+}
+
+
+/* Mobile: popular solutions match project-card visual layout */
+@media (max-width:620px){
+
+  .sg-products .sg-product-card{
+    background:transparent;
+    border:0;
+    border-radius:0;
+    overflow:visible;
+    box-shadow:none;
+  }
+
+  .sg-products .sg-product-card img{
+    width:100%;
+    height:175px;
+    object-fit:cover;
+    border-radius:14px;
+    display:block;
+  }
+
+  .sg-products .sg-product-card__body{
+    padding:0;
+  }
+
+  .sg-products .sg-product-card__body h3{
+    margin:8px 0 0;
+    font-size:13px!important;
+    line-height:1.3!important;
+    font-weight:700;
+    text-transform:uppercase;
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    overflow-wrap:break-word;
+  }
+}
+
+/* Mobile: solutions use the same photo box as projects */
+@media (max-width:620px){
+  .sg-products .sg-product-card__media{
+    width:100%;
+    height:175px;
+    aspect-ratio:auto;
+    overflow:hidden;
+    border-radius:14px;
+  }
+
+  .sg-products .sg-product-card__media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
   }
 }
