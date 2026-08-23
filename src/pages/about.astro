@@ -74,15 +74,21 @@ const systems = [
   </div>
 
   <div class="sg-hero__image">
-    <img
-      src="/images/about/about-realized-railing.webp"
-      alt="Команда Space Glass на реалізованому об’єкті зі скляним огородженням"
-      width="1024"
-      height="572"
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
-    />
+    <picture>
+      <source
+        media="(max-width: 760px)"
+        srcset="/images/about/about-hero-mobile.webp"
+      />
+      <img
+        src="/images/about/about-hero-desktop.webp"
+        alt="Команда Space Glass на реалізованому об’єкті зі скляним огородженням"
+        width="1280"
+        height="640"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
   </div>
 </section>
 
