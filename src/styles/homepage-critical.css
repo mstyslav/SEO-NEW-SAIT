@@ -745,3 +745,81 @@ body .sg-page-shell main .project-detail-v2__service-link h2{
     object-fit:cover;
   }
 }
+
+/* Homepage hero H1 — pages.css (home-polish.css) loads async and applies
+   !important font-size rules at these exact breakpoints. This block was
+   missing/mismatched here, so the H1 reflowed once pages.css arrived,
+   shifting .sg-hero__image (stacked below it on mobile) — the CLS root
+   cause. Values below are copied verbatim from home-polish.css so nothing
+   changes once it applies. */
+.sg-home-hero .sg-hero__copy h1{
+  font-size:clamp(3.25rem,4vw,4rem);
+  line-height:.98;
+  letter-spacing:-.045em;
+}
+@media(min-width:901px){
+  .sg-home-hero .sg-hero__copy h1{
+    font-size:clamp(3rem,3.55vw,3.65rem);
+    white-space:nowrap;
+  }
+}
+@media(max-width:700px){
+  .sg-home-hero .sg-hero__copy h1{
+    font-size:clamp(2rem,8.3vw,2.25rem);
+    line-height:1;
+    letter-spacing:-.045em;
+    white-space:nowrap;
+  }
+}
+
+/* Homepage hero CTA — same async-mismatch issue: .sg-home-hero__actions
+   and its buttons had no critical-CSS rule at all, so they painted with
+   the generic .button fallback (padding:0 22px, border-radius:999px,
+   min-height:50px) and then snapped to the values below once pages.css
+   applied. Because .button carries transition:.2s (=all), that snap was
+   animated — Chrome's non-composited-animation warning on these two CTAs.
+   Values copied verbatim from home-polish.css so nothing changes on load. */
+.sg-home-hero__actions{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:16px;
+  margin-top:24px;
+  width:100%;
+}
+.sg-home-hero__actions > a.button{
+  width:100%;
+  /* min-height/horizontal padding here match the TRUE final computed values,
+     not home-polish.css's own 64px/16px 24px: global.css has a separate,
+     async-loaded `.button{min-height:48px!important;padding-inline:max(22px,1rem)!important}`
+     a11y rule that always wins over home-polish's non-!important values, at
+     every breakpoint (including its own max-width:760px min-height:58px
+     tier, which is equally overridden). Matching that actual winner here
+     avoids a second snap once global.css's bundle also finishes loading. */
+  min-height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px 22px;
+  border-radius:16px;
+  box-sizing:border-box;
+  text-align:center;
+  font-weight:700;
+  /* Composited-only hover transition for hero CTAs specifically (Lighthouse:
+     avoid non-composited animations). Scoped here — does not touch the
+     shared .button{transition:.2s} used by every other button on the site. */
+  transition:transform .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.sg-home-hero__actions > .sg-home-hero__secondary{
+  background:#fff;
+  color:#171b18;
+  border:1px solid #d9e2dd;
+}
+@media (max-width:760px){
+  .sg-home-hero__actions{
+    grid-template-columns:1fr;
+    gap:12px;
+    margin-top:20px;
+  }
+  /* No min-height override here: the unconditional 48px above (matching
+     global.css's !important a11y rule) already wins at every width. */
+}
