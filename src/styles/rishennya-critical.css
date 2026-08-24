@@ -1,0 +1,292 @@
+/* RISHENNYA — mobile critical CSS */
+
+:root{
+  --mint:#93D1BA;
+  --mint-dark:#67B79A;
+  --green:#176f58;
+  --green-deep:#0e5947;
+  --ink:#111513;
+  --text:#111513;
+  --muted:#5e6864;
+  --line:#dce5e1;
+  --green-line:#d7e6df;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+
+body{
+  background:#202020;
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.5;
+}
+
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+.sg-page-shell{
+  width:min(1480px,calc(100% - 24px));
+  margin:14px auto;
+  border-radius:32px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow:0 20px 80px rgba(0,0,0,.28);
+}
+
+/* HEADER */
+
+.sg-header{
+  position:relative;
+  top:auto;
+  background:#000;
+  color:#fff;
+}
+
+.sg-header .container{
+  width:100%;
+  max-width:none;
+  padding:0 48px;
+}
+
+.sg-header .sg-nav{
+  display:grid;
+  grid-template-columns:160px minmax(0,1fr) auto;
+  align-items:center;
+  min-height:96px;
+  gap:20px;
+}
+
+.sg-header .brand-logo{
+  display:flex!important;
+  align-items:center!important;
+  width:auto!important;
+  min-width:0!important;
+  margin:0!important;
+}
+
+.sg-header .brand-logo img{
+  display:block!important;
+  width:101px!important;
+  height:auto!important;
+  max-width:none!important;
+}
+
+.sg-nav-links{
+  display:flex;
+  align-items:center;
+  gap:22px;
+}
+
+.sg-nav-links a,
+.sg-nav-links button{color:#fff}
+
+.sg-nav-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.sg-nav-actions .nav-icon,
+.sg-wishlist-header,
+.language-switcher__button{
+  width:44px;
+  height:44px;
+  min-width:44px;
+  min-height:44px;
+  display:inline-grid;
+  place-items:center;
+}
+
+.sg-header-cta{min-height:48px}
+.sg-mobile-toggle{display:none}
+.sg-mobile-menu[hidden]{display:none!important}
+
+/* BASIC UI */
+
+.button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:48px;
+  padding:0 22px;
+  border:1px solid transparent;
+  border-radius:999px;
+  font-size:16px;
+  font-weight:700;
+  line-height:1.3;
+}
+
+.button--mint{
+  border-color:var(--mint);
+  background:var(--mint);
+  color:#07120e;
+}
+
+.button--outline{
+  border-color:var(--line);
+  background:#fff;
+  color:var(--text);
+}
+
+.eyebrow{
+  margin:0 0 14px;
+  color:var(--mint-dark);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+
+/* RISHENNYA ABOVE THE FOLD */
+
+.rishennya-hub{
+  --hub-soft:#f4f8f6;
+  --hub-ink:#14201c;
+  --hub-radius:22px;
+  color:var(--hub-ink);
+}
+
+.rishennya-hub__wrap{
+  width:min(1380px,calc(100% - 116px));
+  margin-inline:auto;
+}
+
+.rishennya-hub__hero{
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(460px,1.1fr);
+  gap:54px;
+  align-items:center;
+  padding:54px 0 86px;
+}
+
+.rishennya-hub__hero-copy{padding:30px 0}
+
+.rishennya-hub__hero h1{
+  max-width:760px;
+  margin:.16em 0 .38em;
+  font-size:clamp(2.75rem,5vw,5.25rem);
+  line-height:.95;
+  letter-spacing:-.06em;
+  text-wrap:balance;
+}
+
+.rishennya-hub__hero .lead{
+  max-width:650px;
+  margin:0;
+  color:var(--muted);
+  font-size:clamp(1rem,1.25vw,1.16rem);
+  line-height:1.62;
+}
+
+.rishennya-hub__hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:30px;
+}
+
+.rishennya-hub__hero-media{
+  height:clamp(440px,43vw,620px);
+  overflow:hidden;
+  border-radius:var(--hub-radius);
+  background:#eaf2ee;
+}
+
+.rishennya-hub__hero-media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+@media(min-width:901px){
+  .rishennya-hub__hero{
+    grid-template-columns:minmax(0,.79fr) minmax(0,1fr);
+    gap:0;
+    align-items:stretch;
+    min-height:550px;
+    height:550px;
+    padding:0;
+    background:#fff;
+  }
+
+  .rishennya-hub__hero-copy{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    min-width:0;
+    padding:54px 58px 40px;
+  }
+
+  .rishennya-hub__hero-media{
+    width:100%;
+    min-width:0;
+    height:550px;
+    border-radius:0;
+  }
+}
+
+@media(max-width:1120px){
+  .sg-nav-links{display:none!important}
+
+  .sg-mobile-toggle{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    min-height:44px;
+  }
+
+  .sg-header .sg-nav{
+    grid-template-columns:minmax(118px,150px) auto 1fr!important;
+    min-height:82px!important;
+    padding-inline:16px!important;
+  }
+}
+
+@media(max-width:700px){
+  .sg-page-shell{
+    width:100%;
+    margin:0;
+    border-radius:0;
+    box-shadow:none;
+  }
+
+  .sg-header .container{padding:0 16px}
+
+  .rishennya-hub__wrap{
+    width:calc(100% - 32px);
+  }
+
+  .rishennya-hub__hero{
+    grid-template-columns:1fr;
+    gap:20px;
+    padding:36px 0 58px;
+  }
+
+  .rishennya-hub__hero-copy{padding:8px 0}
+
+  .rishennya-hub__hero h1{
+    font-size:2.65rem;
+  }
+
+  .rishennya-hub__hero .lead{
+    font-size:1rem;
+    line-height:1.62;
+  }
+
+  .rishennya-hub__hero-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .rishennya-hub__hero-actions .button{width:100%}
+
+  .rishennya-hub__hero-media{
+    height:clamp(330px,105vw,450px);
+  }
+}
+
+@media(max-width:430px){
+  .rishennya-hub__hero h1{font-size:2.35rem}
+}
