@@ -471,10 +471,12 @@ body{background:#202020}
   font-size:20px;
   line-height:1;
 }
-.sg-nav-actions .nav-icon:hover{
-  border-color:var(--mint);
-  color:var(--mint);
-  background:rgba(147,209,186,.08);
+@media(hover:hover){
+  .sg-nav-actions .nav-icon:hover{
+    border-color:var(--mint);
+    color:var(--mint);
+    background:rgba(147,209,186,.08);
+  }
 }
 .sg-nav-links{
   gap:30px;
@@ -1517,7 +1519,12 @@ body{background:#202020}
   text-decoration:none;
   cursor:pointer;
 }
-.language-switcher__button--direct:hover,
+@media(hover:hover){
+  .language-switcher__button--direct:hover{
+    border-color:var(--mint)!important;
+    color:var(--mint)!important;
+  }
+}
 .language-switcher__button--direct:focus-visible{
   border-color:var(--mint)!important;
   color:var(--mint)!important;

@@ -141,11 +141,11 @@
   border-radius:50%;
   font-size:20px;
   line-height:1;
-}.sg-nav-actions .nav-icon:hover{
+}@media(hover:hover){.sg-nav-actions .nav-icon:hover{
   border-color:var(--mint);
   color:var(--mint);
   background:rgba(147,209,186,.08);
-}.sg-nav-links{
+}}.sg-nav-links{
   gap:30px;
 }.button{
   border-radius:10px;
@@ -296,8 +296,10 @@
 }.language-switcher__button--direct{
   text-decoration:none;
   cursor:pointer;
-}.language-switcher__button--direct:hover,
-.language-switcher__button--direct:focus-visible{
+}@media(hover:hover){.language-switcher__button--direct:hover{
+  border-color:var(--mint)!important;
+  color:var(--mint)!important;
+}}.language-switcher__button--direct:focus-visible{
   border-color:var(--mint)!important;
   color:var(--mint)!important;
 }.language-switcher.is-open .language-switcher__button i{
