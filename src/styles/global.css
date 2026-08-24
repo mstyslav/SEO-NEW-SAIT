@@ -131,7 +131,7 @@ body{background:#202020}
 .sg-hero__image{position:relative;min-height:550px;overflow:hidden}
 .sg-hero__image img{width:100%;height:100%;object-fit:cover}
 .sg-home-hero .sg-hero__lead{max-width:650px;font-size:clamp(1rem,1.25vw,1.16rem);line-height:1.62;text-wrap:pretty}
-@media(min-width:901px){.sg-home-hero{grid-template-columns:minmax(0,.79fr) minmax(0,1fr)}.sg-home-hero .sg-hero__image picture{display:block;width:100%;height:100%}.sg-home-hero .sg-hero__image img{object-fit:cover;object-position:center;transform:none}}
+@media(min-width:901px){.sg-home-hero{grid-template-columns:minmax(0,.95fr) minmax(0,1fr)}.sg-home-hero .sg-hero__image picture{display:block;width:100%;height:100%}.sg-home-hero .sg-hero__image img{object-fit:cover;object-position:center;transform:none}}
 
 .sg-categories{padding:16px 58px 26px}
 .sg-categories__grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
