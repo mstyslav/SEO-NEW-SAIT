@@ -34,6 +34,8 @@ const projects = (await getCollection('projects', ({ data }) => data.status === 
           />
           <img
             src="/images/projects/projects-hero/projects-hero-desktop.webp"
+            srcset="/images/projects/projects-hero/projects-hero-desktop-640.webp 640w, /images/projects/projects-hero/projects-hero-desktop-800.webp 800w, /images/projects/projects-hero/projects-hero-desktop-960.webp 960w, /images/projects/projects-hero/projects-hero-desktop.webp 1200w"
+            sizes="(min-width: 901px) min(50vw, 733px), 100vw"
             width="1200"
             height="900"
             alt="Скляна огорожа сходів із латунним профілем у світлому сучасному інтер’єрі"
