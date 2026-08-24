@@ -753,13 +753,13 @@ body .sg-page-shell main .project-detail-v2__service-link h2{
    cause. Values below are copied verbatim from home-polish.css so nothing
    changes once it applies. */
 .sg-home-hero .sg-hero__copy h1{
-  font-size:clamp(3.25rem,4vw,4rem);
-  line-height:.98;
-  letter-spacing:-.045em;
+  font-size:clamp(3.25rem,4vw,4rem)!important;
+  line-height:.98!important;
+  letter-spacing:-.045em!important;
 }
 @media(min-width:901px){
   .sg-home-hero .sg-hero__copy h1{
-    font-size:clamp(3rem,3.55vw,3.65rem);
+    font-size:clamp(3rem,3.55vw,3.65rem)!important;
     white-space:nowrap;
   }
 }
