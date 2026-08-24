@@ -199,6 +199,14 @@ body .sg-page-shell main h1{
 /* global.css: .hero-copy,.section-copy,.lead,.intro-text{line-height:1.65!important} */
 .lead{line-height:1.65!important}
 
+/* global.css "Production Lighthouse polish: WCAG AA contrast" block —
+   .eyebrow,h1 span,...{color:var(--green-dark)!important} (--green-dark:#064b32)
+   .lead,...{color:#4f5a55!important}
+   Mirrored verbatim so critical-only paint already matches the final
+   accessibility-contrast colors instead of flashing to them on load. */
+.eyebrow{color:#064b32!important}
+.lead{color:#4f5a55!important}
+
 @media(max-width:700px){
   body .sg-page-shell main h1{
     font-size:clamp(1.75rem,7.9vw,2.3rem)!important;
