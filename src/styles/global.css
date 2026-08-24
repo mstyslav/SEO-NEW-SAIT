@@ -529,23 +529,6 @@ body{background:#202020}
 .sg-nav-actions .nav-icon{
   flex:0 0 40px;
 }
-.nav-icon--cart{
-  position:relative;
-}
-.nav-icon--cart small{
-  position:absolute;
-  top:-4px;
-  right:-3px;
-  display:grid;
-  place-items:center;
-  width:17px;
-  height:17px;
-  border-radius:50%;
-  background:var(--mint);
-  color:#06110c;
-  font-size:9px;
-  font-weight:800;
-}
 .sg-header-cta{
   margin-left:5px;
   padding:0 22px;
@@ -582,15 +565,7 @@ body{background:#202020}
   }
 }
 
-
-
-/* Sprint 8 — footer one row, clear cart, architecture category */
-
-.nav-icon--cart svg{
-  width:22px;
-  height:22px;
-  display:block;
-}
+/* Sprint 8 — legacy cart styles removed */
 
 
 .mega-trigger:hover .catalog-chevron{
@@ -859,454 +834,14 @@ body{background:#202020}
   stroke:none;
 }
 
-/* Sprint 16 — homepage FAQ + stable mega catalog */
-
-/* Re-enable only the new catalog menu */
-.mega-trigger--catalog{
-  position:relative;
-}
-.mega-trigger--catalog::after{
-  content:"";
-  position:absolute;
-  left:-20px;
-  right:-20px;
-  top:100%;
-  height:24px;
-}
-.catalog-mega{
-  display:none;
-  position:fixed;
-  z-index:1000;
-  top:92px;
-  left:50%;
-  width:min(1180px,calc(100vw - 32px));
-  max-height:calc(100vh - 112px);
-  overflow:auto;
-  transform:translateX(-50%);
-  padding:16px;
-  border:1px solid #202723;
-  border-radius:0 0 18px 18px;
-  background:#070908;
-  box-shadow:0 30px 85px rgba(0,0,0,.55);
-}
-.mega-trigger--catalog:hover .catalog-mega,
-.mega-trigger--catalog:focus-within .catalog-mega{
-  display:block;
-}
-.catalog-mega__main{
-  display:grid;
-  grid-template-columns:1fr 1fr .9fr 1.2fr;
-  min-width:0;
-}
-.catalog-mega__column{
-  min-width:0;
-  padding:10px 18px;
-  border-right:1px solid #242c28;
-}
-.catalog-mega__column h3{
-  margin:0 0 14px;
-  color:var(--mint);
-  font-size:11px;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
-.catalog-mega__group{
-  margin-bottom:10px;
-  padding-bottom:10px;
-  border-bottom:1px solid #222824;
-}
-.catalog-mega__group:last-child{
-  margin-bottom:0;
-  border-bottom:0;
-}
-.catalog-mega__group a{
-  position:relative;
-  display:block;
-  width:max-content;
-  max-width:100%;
-  padding:2px 0;
-  color:#aeb4b0;
-  font-size:10px;
-  line-height:1.38;
-  white-space:normal;
-}
-.catalog-mega__group a:hover{
-  color:#fff;
-}
-.catalog-mega__group-title{
-  margin-bottom:4px;
-  color:#fff!important;
-  font-size:11.5px!important;
-  font-weight:750;
-}
-.catalog-mega__architecture-list{
-  display:grid;
-}
-.catalog-mega__architecture-list a{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  padding:6px 0;
-  color:#bbc1bd;
-  font-size:10.5px;
-  border-bottom:1px solid transparent;
-}
-.catalog-mega__architecture-list a:hover{
-  color:#fff;
-  border-bottom-color:var(--mint);
-}
-.catalog-mega__architecture-list b{
-  color:var(--mint);
-}
-.catalog-mega__popular{
-  margin-top:14px;
-  padding-top:14px;
-  border-top:1px solid #242c28;
-}
-.catalog-mega__popular h4{
-  margin:0 0 8px;
-  color:var(--mint);
-  font-size:10px;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
-.catalog-mega__popular>a{
-  display:grid;
-  grid-template-columns:62px 1fr;
-  gap:9px;
-  align-items:center;
-  padding:6px 0;
-  border-bottom:1px solid #202622;
-}
-.catalog-mega__popular img{
-  width:62px;
-  height:50px;
-  object-fit:cover;
-  border-radius:3px;
-}
-.catalog-mega__popular span,
-.catalog-mega__popular b,
-.catalog-mega__popular small{
-  display:block;
-}
-.catalog-mega__popular b{
-  color:#fff;
-  font-size:10px;
-  line-height:1.25;
-}
-.catalog-mega__popular small{
-  margin-top:3px;
-  color:#838a86;
-  font-size:8.5px;
-}
-.catalog-mega__promo{
-  position:relative;
-  min-height:500px;
-  overflow:hidden;
-  border-radius:7px;
-}
-.catalog-mega__promo>img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.catalog-mega__promo-overlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,.95),rgba(0,0,0,.2));
-}
-.catalog-mega__promo-copy{
-  position:absolute;
-  z-index:2;
-  left:22px;
-  right:22px;
-  bottom:22px;
-}
-.catalog-mega__promo-copy p{
-  margin:0 0 8px;
-  color:var(--mint);
-  font-size:9px;
-  letter-spacing:.09em;
-  text-transform:uppercase;
-}
-.catalog-mega__promo-copy h2{
-  margin:0 0 10px;
-  color:#fff;
-  font-size:25px;
-  line-height:1.05;
-}
-.catalog-mega__promo-copy>span{
-  display:block;
-  margin-bottom:16px;
-  color:#b6bcb8;
-  font-size:10px;
-  line-height:1.5;
-}
-.catalog-mega__promo-copy .button{
-  min-height:42px;
-  padding:0 16px;
-  font-size:10px;
-}
-.catalog-mega__cities{
-  display:grid;
-  grid-template-columns:1.5fr repeat(8,1fr);
-  margin-top:14px;
-  border-top:1px solid #242c28;
-  border-bottom:1px solid #242c28;
-}
-.catalog-mega__cities>*{
-  padding:11px 10px;
-  border-right:1px solid #242c28;
-  color:#c0c5c2;
-  font-size:9.5px;
-  text-align:center;
-  white-space:nowrap;
-}
-.catalog-mega__cities strong{
-  color:var(--mint);
-  text-align:left;
-  text-transform:uppercase;
-}
-.catalog-mega__cities a:last-child{
-  border-right:0;
-}
-.catalog-mega__benefits{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  padding-top:10px;
-}
-.catalog-mega__benefits>div{
-  display:grid;
-  grid-template-columns:auto 1fr;
-  column-gap:9px;
-  min-height:52px;
-  padding:7px 14px;
-  border-right:1px solid #242c28;
-}
-.catalog-mega__benefits>div:last-child{
-  border-right:0;
-}
-.catalog-mega__benefits span{
-  grid-row:1/3;
-  color:var(--mint);
-}
-.catalog-mega__benefits b{
-  color:#fff;
-  font-size:10px;
-}
-.catalog-mega__benefits small{
-  color:#808783;
-  font-size:8.5px;
-}
-
 @media(max-width:1200px){
-  .catalog-mega__main{
-    grid-template-columns:1fr 1fr 1fr;
-  }
-  .catalog-mega__promo{
-    grid-column:1/-1;
-    min-height:300px;
-    margin-top:12px;
-  }
-  .catalog-mega__cities{
-    grid-template-columns:repeat(4,1fr);
-  }
-  .catalog-mega__cities strong{
-    grid-column:1/-1;
-  }
 }
 @media(max-width:1120px){
-  .catalog-mega{
-    display:none!important;
-  }
-}
-
-.mega-trigger--catalog:hover .catalog-arrow,
-.mega-trigger--catalog:focus-within .catalog-arrow{
-  color:var(--mint);
-  transform:translateY(1px);
-}
-
-/* Popular solutions stay compact with 4 items */
-.catalog-mega__popular>a{
-  min-height:58px;
-}
-
-/* Modern loft image on the large card */
-.catalog-mega__promo>img{
-  object-position:center;
-}
-
-/* Sprint 18 — dynamic premium Mega Menu */
-.catalog-mega--dynamic{
-  display:block;
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-  transform:translate(-50%,10px);
-  transition:opacity .22s ease, transform .22s ease, visibility .22s ease;
-}
-
-.mega-trigger--catalog:hover .catalog-mega--dynamic,
-.mega-trigger--catalog:focus-within .catalog-mega--dynamic{
-  opacity:1;
-  visibility:visible;
-  pointer-events:auto;
-  transform:translate(-50%,0);
-}
-
-.catalog-mega__group,
-.catalog-mega__architecture-list a{
-  transition:none;
-}
-
-.catalog-mega__group:hover,
-.catalog-mega__group.is-active{
-  margin-left:-8px;
-  margin-right:-8px;
-  padding-left:8px;
-  padding-right:8px;
-  border-color:var(--mint);
-  background:linear-gradient(90deg,rgba(147,209,186,.08),transparent);
-}
-
-.catalog-mega__architecture-list a:hover,
-.catalog-mega__architecture-list a.is-active{
-  padding-left:8px;
-  color:var(--mint);
-  background:linear-gradient(90deg,rgba(147,209,186,.08),transparent);
-}
-
-.catalog-mega__popular>a{
-  transition:transform .18s ease;
-}
-
-.catalog-mega__popular>a:hover{
-  background:rgba(255,255,255,.035);
-  transform:translateX(3px);
-}
-
-.catalog-mega__popular img{
-  transition:transform .25s ease;
-}
-
-.catalog-mega__popular>a:hover img{
-  transform:scale(1.04);
-}
-
-.catalog-mega__promo{
-  border:1px solid #202823;
-  border-radius:18px;
-  box-shadow:0 14px 36px rgba(0,0,0,.28);
-}
-
-.catalog-mega__promo>img{
-  transition:opacity .24s ease, transform .45s ease;
-}
-
-.catalog-mega__promo>img.is-changing{
-  opacity:.18;
-  transform:scale(1.025);
-}
-
-.catalog-mega__promo:hover>img{
-  transform:scale(1.025);
-}
-
-.catalog-mega__promo-copy h2,
-.catalog-mega__promo-copy p,
-.catalog-mega__promo-copy>span,
-.catalog-mega__promo-copy .button{
-  transition:opacity .18s ease, transform .18s ease;
-}
-
-.catalog-mega__cities a{
-  transition:none;
-}
-
-.catalog-mega__cities a:hover{
-  color:var(--mint);
-  background:rgba(147,209,186,.055);
-}
-
-.catalog-mega__benefits>div{
-  align-items:center;
-}
-
-.catalog-mega__benefits img{
-  grid-row:1/3;
-  width:38px;
-  height:28px;
-  object-fit:contain;
-}
-
-.mega-trigger--catalog:hover .catalog-arrow,
-.mega-trigger--catalog:focus-within .catalog-arrow{
-  color:var(--mint);
-}
-
-/* Sprint 19 — sharp catalog image + premium product page */
-
-/* Never blur the large Mega Menu image */
-.catalog-mega__promo>img{
-  image-rendering:auto;
-  filter:none!important;
-  opacity:1;
-  transform:scale(1.001);
-  object-position:center center;
-}
-.catalog-mega__promo-overlay{
-  background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.38) 46%,rgba(0,0,0,.05) 100%);
-}
-.catalog-mega__promo>img.is-changing{
-  opacity:.55;
-  filter:none!important;
-}
-
-/* Sprint 21 — city search row alignment */
-.catalog-mega__cities{
-  align-items:stretch;
-}
-
-.catalog-mega__cities > *{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:46px;
-  padding-top:0!important;
-  padding-bottom:0!important;
-  line-height:1.15;
-}
-
-.catalog-mega__cities > strong{
-  justify-content:flex-start;
-  align-items:center;
-  margin:0;
-  transform:none!important;
-  position:static!important;
-}
-
-.catalog-mega__cities > a{
-  margin:0;
-  transform:none!important;
-  position:static!important;
 }
 
 /* Sprint 22 — category-specific imagery, 4 compatible cards and configurator */
 
-.catalog-mega__promo > img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  image-rendering:auto;
-  filter:none!important;
-}
-.catalog-mega__promo > img[src$="hero-space-glass.png"]{
-  object-position:center 35%;
-}
+
 
 
 
@@ -1327,25 +862,6 @@ body{background:#202020}
   border-color:var(--mint-dark);
   background:#edf8f3;
   color:#0b5d43;
-}
-
-
-
-/* Mega Menu: sharper image rendering and cleaner fade */
-.catalog-mega__promo > img{
-  image-rendering:auto;
-  filter:none!important;
-  object-fit:cover;
-  object-position:center;
-  opacity:1;
-  transform:scale(1.001);
-  backface-visibility:hidden;
-  will-change:opacity;
-}
-.catalog-mega__promo > img.is-changing{
-  opacity:.68!important;
-  filter:none!important;
-  transform:scale(1.004)!important;
 }
 .quote-page__hero p:not(.eyebrow){
   max-width:720px;
@@ -1434,24 +950,6 @@ body{background:#202020}
 }
 
 
-/* Sprint 25 — premium catalog imagery + guided configurator */
-
-.catalog-mega__promo > img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  image-rendering:auto;
-  filter:none!important;
-  opacity:1;
-  transform:translateZ(0);
-}
-.catalog-mega__promo > img.is-changing{
-  opacity:.72!important;
-  transform:scale(1.008)!important;
-}
-
-
 
 
 [data-add-to-project],
@@ -1464,17 +962,6 @@ body{background:#202020}
   max-width:760px;
   color:#aab5af;
   font-size:17px;
-}
-
-
-
-.nav-icon--compare{
-  position:relative;
-}
-
-.nav-icon--compare svg{
-  width:22px;
-  height:22px;
 }
 
 /* Sprint 29 — language selector + localized foundation + CRM lead inbox */
@@ -1988,7 +1475,7 @@ a,button,.button,.nav-link,.nav-icon,.language-switcher__button,.language-switch
 .footer{color:#fff}.footer a{color:#c6cec9!important}.eyebrow--light,.project--dark span{color:#b7f0d0!important}
 
 img[loading="lazy"]{content-visibility:auto}
-.sg-product-card__media img,.catalog-mega__popular img{max-width:100%;height:auto}
+.sg-product-card__media img{max-width:100%;height:auto}
 .sg-project-image img{display:block;max-width:none;width:100%;height:100%;object-fit:cover}
 @media(max-width:640px){.nav__actions .button{min-height:48px!important}.sg-header .sg-nav{min-height:76px!important}.sg-header .brand-logo{width:128px!important}}
 
@@ -2007,7 +1494,7 @@ img[loading="lazy"]{content-visibility:auto}
 @media(max-width:1120px){
   .sg-header .sg-nav{grid-template-columns:minmax(118px,150px) auto 1fr!important;min-height:82px!important;padding-inline:16px!important}.sg-mobile-toggle{display:inline-flex;align-items:center;gap:5px;justify-self:start;width:auto;min-height:44px;padding:0 12px;border:1px solid rgba(255,255,255,.2);background:#101411;color:#fff;border-radius:999px}.sg-mobile-toggle span{display:block;width:14px;height:2px;background:currentColor}.sg-mobile-toggle b{font-size:12px}.sg-header .sg-nav-actions{gap:7px!important}.sg-header .sg-nav-actions .nav-icon{width:40px!important;height:40px!important;flex-basis:40px!important}.sg-header-cta{display:inline-flex!important;min-height:42px!important;padding-inline:14px!important}.sg-mobile-menu{position:absolute;left:0;right:0;top:100%;z-index:1200;background:#070908;border-top:1px solid #222824;box-shadow:0 24px 60px rgba(0,0,0,.45)}.sg-mobile-menu__panel{display:grid;gap:4px;padding:14px 18px 20px}.sg-mobile-menu__panel a{min-height:44px;display:flex;align-items:center;color:#fff;border-bottom:1px solid #1d231f}.sg-mobile-menu__primary{color:var(--mint)!important;font-weight:800}.sg-mobile-menu__panel .button{justify-content:center;margin-top:8px;border-bottom:0}
 }
-@media(max-width:640px){.sg-header .sg-nav{grid-template-columns:112px auto 1fr!important;padding-inline:10px!important}.sg-header .brand-logo{width:106px!important}.sg-header .language-switcher__button{min-width:62px!important;padding-inline:8px!important}.sg-header .sg-nav-actions .nav-icon--compare{display:none!important}.sg-header .sg-header-cta{display:none!important}}
+@media(max-width:640px){.sg-header .sg-nav{grid-template-columns:112px auto 1fr!important;padding-inline:10px!important}.sg-header .brand-logo{width:106px!important}.sg-header .language-switcher__button{min-width:62px!important;padding-inline:8px!important}.sg-header .sg-header-cta{display:none!important}}
 
 
 
@@ -2425,7 +1912,7 @@ body .sg-page-shell main h6{font-size:1rem!important;line-height:1.3!important}
 /* Unified Space Glass card language: soft corners and restrained mint geometry. */
 :where(
   .inner-card,
-  
+
   .sg-category-card,
   .sg-product-card,
   .category-type-card,
@@ -2499,7 +1986,7 @@ body .sg-page-shell main h6{font-size:1rem!important;line-height:1.3!important}
 
 :where(
   .inner-card,
-  
+
   .sg-category-card,
   .category-type-card,
   .category-model-card,
@@ -2511,7 +1998,7 @@ body .sg-page-shell main h6{font-size:1rem!important;line-height:1.3!important}
 }
 :where(
   .inner-card,
-  
+
   .sg-category-card,
   .category-type-card,
   .category-model-card,
@@ -2527,7 +2014,7 @@ body .sg-page-shell main h6{font-size:1rem!important;line-height:1.3!important}
 @media(max-width:640px){
   :where(
     .inner-card,
-      
+
     .sg-category-card,
     .category-type-card,
     .category-model-card,
@@ -2618,9 +2105,9 @@ body main .config-demo-hero~.section h2{
   gap:0!important;
 }
 
-/* ===== Mobile header simplification: logo / Menu / Wishlist / Cart / Phone / language ===== */
+/* Mobile header controls */
 @media(max-width:640px){
-  /* Search + Compare stay hidden on mobile. Wishlist and Cart are restored below. */
+
   .sg-header .sg-nav-actions a[aria-label="Пошук"]{
     display:none!important;
   }
@@ -2633,10 +2120,8 @@ body main .config-demo-hero~.section h2{
   /* Slightly smaller controls + tighter gaps so the row never crowds */
   .sg-header .sg-nav-actions{
     gap:6px!important;
-  }
-  .sg-header .sg-nav-actions .nav-icon,
-  .sg-header .sg-nav-actions .nav-icon--phone,
-  .sg-header .sg-nav-actions .sg-wishlist-header{
+  }.sg-header .sg-nav-actions .nav-icon,
+.sg-header .sg-nav-actions .nav-icon--phone{
     width:40px!important;
     height:40px!important;
     min-width:40px!important;
@@ -2644,10 +2129,6 @@ body main .config-demo-hero~.section h2{
     flex-basis:40px!important;
   }
   .sg-header .nav-icon--phone svg{
-    width:18px!important;
-    height:18px!important;
-  }
-  .sg-header .sg-wishlist-header svg{
     width:18px!important;
     height:18px!important;
   }
@@ -2667,9 +2148,7 @@ body main .config-demo-hero~.section h2{
   }
 }
 
-/* ===== Compact header (≤1120px): wishlist → cart → phone → language → hamburger.
-   Reuses the existing .sg-mobile-toggle / data-mobile-menu-button element
-   and its existing click logic — only its position, content and style change. ===== */
+/* Compact header: phone → language → hamburger. */
 @media(max-width:1120px){
   .sg-header .sg-nav{
     display:flex!important;
@@ -2679,24 +2158,8 @@ body main .config-demo-hero~.section h2{
   .sg-header .sg-nav-actions{
     min-width:0!important;
     flex:0 0 auto!important;
-  }
-  .sg-header .sg-nav-actions a[aria-label="Пошук"],
-  .sg-header .sg-nav-actions .nav-icon--compare,
-  .sg-header .sg-header-cta{display:none!important}
-  .sg-header .sg-wishlist-header{
-    display:inline-grid!important;
-    place-items:center!important;
-    width:40px!important;
-    height:40px!important;
-    min-width:40px!important;
-    min-height:40px!important;
-    flex:0 0 auto!important;
-    border:1px solid rgba(255,255,255,.16)!important;
-    border-radius:50%!important;
-    background:transparent!important;
-  }
-  .sg-header .sg-nav-actions>.sg-wishlist-header{order:1!important}
-  .sg-header .sg-nav-actions>.nav-icon--cart{order:2!important}
+  }.sg-header .sg-nav-actions a[aria-label="Пошук"],
+.sg-header .sg-header-cta{display:none!important}
   .sg-header .sg-nav-actions>a[aria-label="Зателефонувати"]{order:3!important}
   .sg-header .sg-nav-actions>.language-switcher{order:4!important}
   .sg-header .sg-nav-actions>.sg-mobile-toggle{order:5!important}

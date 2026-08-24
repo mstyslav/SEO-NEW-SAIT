@@ -9,25 +9,6 @@
   .sg-header .nav-link{transition:color .16s ease,background-color .16s ease}
   .sg-header .nav-link:hover,.sg-header .nav-link:focus-visible{color:#7fd7bd}
 
-  .sg-header .catalog-mega__group>a,
-  .sg-header .catalog-mega__architecture-list>a,
-  .sg-header .catalog-mega__cities>a{border-radius:6px;transition:none}
-  .sg-header .catalog-mega__group>a:hover,
-  .sg-header .catalog-mega__group>a:focus-visible,
-  .sg-header .catalog-mega__architecture-list>a:hover,
-  .sg-header .catalog-mega__architecture-list>a:focus-visible,
-  .sg-header .catalog-mega__cities>a:hover,
-  .sg-header .catalog-mega__cities>a:focus-visible{color:#7fd7bd!important;background:rgba(127,215,189,.08)}
-
-  /* Requested desktop action order: search → compare → wishlist → cart → phone → language. */
-  .sg-nav-actions>a[aria-label="Пошук"]{order:1}
-  .sg-nav-actions>.nav-icon--compare{order:2}
-  .sg-nav-actions>.sg-wishlist-header{order:3}
-  .sg-nav-actions>.nav-icon--cart{order:4}
-  .sg-nav-actions>a[aria-label="Зателефонувати"]{order:5}
-  .sg-nav-actions>.language-switcher{order:6}
-  .sg-nav-actions>.sg-header-cta{order:7}
-
   /* Keep all category pictograms in the same fine-line Space Glass language. */
   .sg-home-category-grid .sg-category-card__icon{width:46px!important;height:46px!important;color:#1f6a58!important;margin-bottom:24px!important}
   .sg-home-category-grid .sg-category-card__icon svg{width:46px!important;height:46px!important;display:block;fill:none!important;stroke:currentColor!important;stroke-width:1.45!important;stroke-linecap:round!important;stroke-linejoin:round!important}
@@ -50,7 +31,7 @@
     ['Контакти','/contacts/']
   ]);
 
-  header.querySelectorAll('.sg-nav-links > a.nav-link, .mega-trigger--catalog > a.nav-link').forEach((link) => {
+  header.querySelectorAll('.sg-nav-links > a.nav-link').forEach((link) => {
     const label = (link.textContent || '').replace('⌄','').trim();
     const route = topRouteByText.get(label);
     if (route) link.setAttribute('href', route);
