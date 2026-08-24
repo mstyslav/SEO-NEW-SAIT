@@ -159,7 +159,7 @@
 .rishennya-faq .faq-block{max-width:none}
 
 .rishennya-final-cta{display:flex;align-items:flex-end;justify-content:space-between;gap:60px;margin:0 0 90px;padding:54px;border-radius:var(--hub-radius);background:#153f34;color:#fff}
-.rishennya-final-cta>div:first-child{max-width:760px}.rishennya-final-cta .eyebrow{color:#91dbc4}
+.rishennya-final-cta>div:first-child{max-width:760px}.rishennya-final-cta .eyebrow{color:#fff!important}
 .rishennya-final-cta h2{color:#fff}.rishennya-final-cta p:not(.eyebrow){margin:0;color:#d4e2dd;line-height:1.6}
 .rishennya-final-cta__actions{display:flex;flex:0 0 auto;flex-wrap:wrap;gap:10px}
 .rishennya-final-cta .button--mint,.rishennya-final-cta .button--mint:visited{background:#91dbc4;color:#10372d}
