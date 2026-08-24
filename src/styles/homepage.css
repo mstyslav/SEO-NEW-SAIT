@@ -139,7 +139,7 @@
 .sg-products{padding-left:24px;padding-right:24px}
 
 .sg-product-grid{
-  grid-template-columns:none;
+  grid-template-columns:none!important;
   grid-auto-columns:calc((100% - 20px)/3);
 }
 
@@ -492,12 +492,12 @@ html[lang="de"] .quote-form--home-final__submit{
   .sg-project-image{
     width:100%;
     min-width:0;
-    height:auto;
-    overflow:visible;
+    height:auto!important;
+    overflow:visible!important;
   }
 
   .sg-project-image img{
-    height:175px;
+    height:175px!important;
     border-radius:14px;
   }
 
