@@ -1991,7 +1991,7 @@ a,button,.button,.nav-link,.nav-icon,.language-switcher__button,.language-switch
 .sg-product-button,.category-type-card__body b,.product-card__body div,.inner-card a{display:inline-flex;align-items:center;min-height:48px;padding-block:12px}
 
 .eyebrow,h1 span,.knowledge-grid span,.product-card__badge,.product-chip,.seo-related-grid span,.seo-related-grid small,.seo-sections>section>span,.seo-related__grid b{color:var(--green-dark)!important}
-.lead,.hero__facts,.section-heading>p,.product-card__meta,.knowledge-grid p,.faq p,.footer__brand p,.footer__cta span,.footer a,.language-switcher__option,.localized-home__hero p:not(.eyebrow),.sg-benefits small,.sg-category-card p,.sg-product-card small,.sg-projects__intro p,.sg-final-benefits small{color:#4f5a55!important}
+.hero__facts,.section-heading>p,.product-card__meta,.knowledge-grid p,.faq p,.footer__brand p,.footer__cta span,.footer a,.language-switcher__option,.localized-home__hero p:not(.eyebrow),.sg-benefits small,.sg-category-card p,.sg-product-card small,.sg-projects__intro p,.sg-final-benefits small{color:#4f5a55!important}
 .footer{color:#fff}.footer a{color:#c6cec9!important}.eyebrow--light,.project--dark span{color:#b7f0d0!important}
 
 img[loading="lazy"]{content-visibility:auto}
