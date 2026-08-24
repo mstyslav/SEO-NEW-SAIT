@@ -252,3 +252,25 @@ const currentYear = new Date().getFullYear();
     text-align: center;
   }
 </style>
+
+<style>
+  /* Footer product grid — stable desktop geometry */
+  @media (min-width: 901px) {
+    .footer-refined__product-grid {
+      display: grid !important;
+      grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
+      width: 100% !important;
+    }
+
+    .footer-refined__product-grid > a {
+      display: grid !important;
+      min-width: 0 !important;
+      width: auto !important;
+      margin: 0 !important;
+    }
+
+    .footer-refined__product-grid > a:last-child {
+      display: grid !important;
+    }
+  }
+</style>
