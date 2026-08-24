@@ -224,6 +224,20 @@ const currentYear = new Date().getFullYear();
 </style>
 
 <style>
+  /* "Скло для бізнесу" is the last item in the 10-item product grid. At the
+     641-900px tier the grid is 3 columns (global.css), so 10 items leave a
+     trailing row of 1 (two empty cells). Hiding just this last item there
+     gives 9 items = exactly 3 clean rows. Left visible at ≤640px (2 cols,
+     10/2 already clean) and at 901px+ (5 or 10 cols, both already clean —
+     hiding it there would instead create a gap). */
+  @media (min-width: 641px) and (max-width: 900px) {
+    .footer-refined__product-grid a:last-child {
+      display: none;
+    }
+  }
+</style>
+
+<style>
   /* Footer copyright — centered on all viewports */
   .footer-refined__bottom {
     display: flex;
