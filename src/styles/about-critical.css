@@ -17,6 +17,12 @@ html,body{margin:0;padding:0}
 body{
   background:#202020;
   font-family:Arial,Helvetica,sans-serif;
+  line-height:1.5;
+}
+
+.skip-link{
+  position:absolute;
+  left:-9999px;
 }
 
 .sg-page-shell{
@@ -35,12 +41,17 @@ body{
   top:auto;
   background:#000;
   color:#fff;
+  border-bottom:1px solid #181818;
 }
 
 .sg-header .container{
   width:100%;
   max-width:none;
   padding:0 48px;
+}
+
+.sg-header .nav{
+  height:96px;
 }
 
 .sg-header .sg-nav{
@@ -147,12 +158,20 @@ body{
   letter-spacing:-.045em;
 }
 
+/* Global heading-scale override (global.css) always wins over the rule
+   above via !important — replicated here so first paint matches it. */
+body .sg-page-shell main h1{
+  font-size:clamp(2.2rem,3.6vw,3.25rem)!important;
+  line-height:1.06!important;
+  letter-spacing:-.035em!important;
+}
+
 .about-main-hero__subtitle{
   max-width:550px;
   margin:18px 0 0;
   color:var(--muted);
   font-size:clamp(1rem,1.25vw,1.2rem);
-  line-height:1.55;
+  line-height:1.62;
   font-weight:500;
 }
 
@@ -291,6 +310,11 @@ body{
     min-width:40px!important;
     min-height:40px!important;
   }
+
+  body .sg-page-shell main h1{
+    font-size:clamp(1.75rem,7.9vw,2.3rem)!important;
+    line-height:1.08!important;
+  }
 }
 
 /* MOBILE ABOUT HERO */
@@ -302,11 +326,16 @@ body{
   }
 
   .about-main-hero .sg-hero__copy{
-    padding:32px 24px 26px;
+    padding:44px 24px;
   }
 
   .about-main-hero .sg-hero__copy h1{
     font-size:clamp(2rem,8.2vw,2.55rem);
+    font-weight:600;
+  }
+
+  .about-main-hero .sg-hero__copy h1 > span{
+    display:block;
   }
 
   .about-main-hero__subtitle{
@@ -316,7 +345,7 @@ body{
 
   .about-main-hero .sg-hero__image{
     min-height:0;
-    height:clamp(320px,92vw,420px);
+    height:clamp(320px,92vw,430px);
   }
 
   .about-main-hero .sg-hero__image img{
