@@ -29,14 +29,14 @@ const categories: [string, string, string, string, boolean?][] = [
 const popularSolutions = [
   ['Душові кабіни','Душові кабіни зі скла: walk-in, кутові, розсувні та індивідуальні конструкції.','/dushovi-kabiny/','/images/projects/stationary-shower-partition-odesa/stationary-shower-partition-odesa-hero-480.webp',480,640],
   ['Скляні перегородки','Скляні перегородки для квартир, офісів і комерційних просторів — безрамні та профільні системи.','/sklyani-perehorodky/','/images/projects/office-partitions-morskyi-odesa/office-partitions-morskyi-odesa-hero-480.webp',480,640],
-  ['Розсувні скляні системи','Розсувні системи зі скла для терас, великих прорізів та зонування внутрішніх просторів.','/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/','/images/s24-menu/frameless.webp',1800,2100],
+  ['Розсувні скляні системи','Розсувні системи зі скла для терас, великих прорізів та зонування внутрішніх просторів.','/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/','/images/s24-menu/frameless-480.webp',480,560],
   ['Скляні огорожі','Скляні огорожі для сходів, балконів і терас — безрамні та профільні рішення.','/sklyani-ohorozhi/','/images/projects/glass-stair-railing-private-house-odesa/glass-stair-railing-private-house-odesa-hero-480.webp',480,853],
-  ['Скляні двері','Скляні двері для житлових і комерційних просторів — розпашні, розсувні та маятникові.','/sklyani-dveri/','/images/s24-menu/doors.webp',1800,2100],
+  ['Скляні двері','Скляні двері для житлових і комерційних просторів — розпашні, розсувні та маятникові.','/sklyani-dveri/','/images/s24-menu/doors-480.webp',480,560],
   ['Скління терас','Безрамне скління терас, веранд і відкритих просторів із можливістю повного відкривання.','/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/','/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-480.webp',480,640],
-  ['Дзеркала','Дзеркала для ванних кімнат, житлових та комерційних інтер’єрів — індивідуальне виготовлення за розмірами.','/dzerkala/','/images/s24-menu/mirrors.webp',1800,2100],
-  ['Безрамне скління','Панорамні безрамні системи для балконів, терас, альтанок та інших відкритих просторів.','/poslugy/bezramne-sklinnya/','/images/s24-menu/frameless.webp',1800,2100],
-  ['Скляні фасади','Сучасне фасадне скління для приватних і комерційних будівель із застосуванням скла та алюмінієвих систем.','/arkhitekturni-systemy/','/images/s24-menu/facades.webp',1800,2100],
-  ['Алюмінієві конструкції','Алюмінієві вікна, двері, фасади та розсувні системи для житлових і комерційних об’єктів.','/alyuminiievi-konstruktsii/','/images/s24-menu/aluminium.webp',1800,2100],
+  ['Дзеркала','Дзеркала для ванних кімнат, житлових та комерційних інтер’єрів — індивідуальне виготовлення за розмірами.','/dzerkala/','/images/s24-menu/mirrors-480.webp',480,560],
+  ['Безрамне скління','Панорамні безрамні системи для балконів, терас, альтанок та інших відкритих просторів.','/poslugy/bezramne-sklinnya/','/images/s24-menu/frameless-480.webp',480,560],
+  ['Скляні фасади','Сучасне фасадне скління для приватних і комерційних будівель із застосуванням скла та алюмінієвих систем.','/arkhitekturni-systemy/','/images/s24-menu/facades-480.webp',480,560],
+  ['Алюмінієві конструкції','Алюмінієві вікна, двері, фасади та розсувні системи для житлових і комерційних об’єктів.','/alyuminiievi-konstruktsii/','/images/s24-menu/aluminium-480.webp',480,560],
 ];
 
 const heroSrc = '/images/v5/hero-desktop.webp';
@@ -198,7 +198,12 @@ const faq = [
           {popularSolutions.map(([title,description,href,image,width,height]) => (
             <a class="sg-product-card" href={href}>
               <div class="sg-product-card__media">
-                <img src={image} alt={title} width={width} height={height} loading="lazy" decoding="async" />
+                <img
+                  src={image}
+                  srcset={`${image.replace('-480.webp','-320.webp')} 320w, ${image} 480w`}
+                  sizes="(max-width: 640px) 90px, (max-width: 1200px) 360px, 270px"
+                  alt={title} width={width} height={height} loading="lazy" decoding="async"
+                />
               </div>
               <div class="sg-product-card__body">
                 <h3>{title}</h3>
@@ -222,19 +227,24 @@ const faq = [
         </div>
         <div class="sg-projects__viewport" data-projects-carousel tabindex="0" aria-label="Реалізовані проєкти Space Glass">
           <div class="sg-projects__track">
-            {homeProjects.map((project) => (
+            {homeProjects.map((project) => {
+              const cardSrc = project.cover.src.replace(/\.webp$/, '-480.webp');
+              const cardWidth = 480;
+              const cardHeight = Math.round(480 * project.cover.height / project.cover.width);
+              return (
               <a class="sg-project-image" href={lp(`/projects/${project.slug}/`)} aria-label={`Переглянути проєкт: ${project.cardTitle}`}>
                 <img
-                  src={project.cover.src}
-                  width={project.cover.width}
-                  height={project.cover.height}
+                  src={cardSrc}
+                  width={cardWidth}
+                  height={cardHeight}
                   alt={project.cover.alt}
                   loading="lazy"
                   decoding="async"
                 />
                 <h3>{project.cardTitle}</h3>
               </a>
-            ))}
+              );
+            })}
           </div>
         </div>
         <a class="sg-projects__all-link" href={lp('/projects/')}>Дивитися всі реалізовані проєкти →</a>
