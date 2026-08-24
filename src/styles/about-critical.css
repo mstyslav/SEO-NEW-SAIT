@@ -92,10 +92,7 @@ body{
   display:flex;
   align-items:center;
   gap:8px;
-}
-
-.sg-nav-actions .nav-icon,
-.sg-wishlist-header,
+}.sg-nav-actions .nav-icon,
 .language-switcher__button{
   width:44px;
   height:44px;
@@ -294,17 +291,11 @@ body .sg-page-shell main h1{
   .sg-header .sg-nav-actions{
     min-width:0!important;
     gap:6px!important;
-  }
-
-  .sg-header .sg-nav-actions a[aria-label="Пошук"],
-  .sg-header .sg-nav-actions .nav-icon--compare,
-  .sg-header .sg-header-cta{
+  }.sg-header .sg-nav-actions a[aria-label="Пошук"],
+.sg-header .sg-header-cta{
     display:none!important;
-  }
-
-  .sg-header .language-switcher__button,
-  .sg-header .sg-nav-actions .nav-icon,
-  .sg-header .sg-wishlist-header{
+  }.sg-header .language-switcher__button,
+.sg-header .sg-nav-actions .nav-icon{
     width:40px!important;
     height:40px!important;
     min-width:40px!important;
@@ -557,20 +548,4 @@ body .sg-page-shell main h1{
 /* CLS FIX — keep closed desktop Mega Menu out of initial document flow */
 .mega-trigger--menu{
   position:relative;
-}
-
-.mega-trigger--menu .catalog-mega{
-  position:fixed!important;
-  top:92px;
-  left:50%;
-  transform:translate(-50%,10px);
-  opacity:0!important;
-  visibility:hidden!important;
-  pointer-events:none!important;
-}
-
-.mega-trigger--menu.is-open .catalog-mega{
-  opacity:1!important;
-  visibility:visible!important;
-  pointer-events:auto!important;
 }

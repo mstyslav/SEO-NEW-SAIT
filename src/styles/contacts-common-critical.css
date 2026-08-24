@@ -210,14 +210,10 @@ body .sg-page-shell main h1 {
     min-height: 82px !important;
     padding-inline: 16px !important;
   }
-  .sg-header .brand-logo img { width: 89px !important; }
-  .sg-header .sg-nav-links,
-  .sg-header .sg-nav-actions a[aria-label="Пошук"],
-  .sg-header .sg-nav-actions .nav-icon--compare,
-  .sg-header .sg-header-cta { display: none !important; }
+  .sg-header .brand-logo img { width: 89px !important; }.sg-header .sg-nav-links,
+.sg-header .sg-nav-actions a[aria-label="Пошук"],
+.sg-header .sg-header-cta{ display: none !important; }
   .sg-header .sg-nav-actions { flex: 0 0 auto !important; gap: 7px !important; min-width: 0 !important; }
-  .sg-header .sg-nav-actions > .sg-wishlist-header { order: 1 !important; }
-  .sg-header .sg-nav-actions > .nav-icon--cart { order: 2 !important; }
   .sg-header .sg-nav-actions > a[aria-label="Зателефонувати"] { order: 3 !important; }
   .sg-header .sg-nav-actions > .language-switcher { order: 4 !important; }
   .sg-header .sg-nav-actions > .sg-mobile-toggle { order: 5 !important; }
@@ -274,10 +270,8 @@ body .sg-page-shell main h1 {
 
 @media (max-width: 640px) {
   .sg-header .sg-nav { min-height: 76px !important; padding-inline: 10px !important; }
-  .sg-header .sg-nav-actions { gap: 6px !important; }
-  .sg-header .sg-nav-actions .nav-icon,
-  .sg-header .sg-nav-actions .nav-icon--phone,
-  .sg-header .sg-nav-actions .sg-wishlist-header {
+  .sg-header .sg-nav-actions { gap: 6px !important; }.sg-header .sg-nav-actions .nav-icon,
+.sg-header .sg-nav-actions .nav-icon--phone{
     flex-basis: 40px !important;
     width: 40px !important;
     min-width: 40px !important;
