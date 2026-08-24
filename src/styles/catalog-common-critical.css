@@ -80,6 +80,7 @@ button, input, textarea { font: inherit; }
   gap: clamp(14px, 1.45vw, 30px) !important;
   width: 100% !important;
   min-width: 0 !important;
+  height: 100%;
   overflow: visible !important;
   white-space: nowrap !important;
 }
