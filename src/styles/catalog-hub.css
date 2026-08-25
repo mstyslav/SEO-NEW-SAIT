@@ -147,3 +147,16 @@ body .sg-page-shell main .catalog-hub__hero h1 {
     line-height: .98 !important;
   }
 }
+
+/* Catalog CTA — keep action labels on one line */
+@media (min-width:641px){
+  .catalog-cta{
+    grid-template-columns:minmax(0,1fr) 260px;
+  }
+  .catalog-cta .catalog-hub__actions{
+    width:260px;
+  }
+  .catalog-cta .catalog-hub__actions .button{
+    white-space:nowrap;
+  }
+}
