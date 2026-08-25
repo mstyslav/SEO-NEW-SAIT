@@ -1,0 +1,55 @@
+---
+// Single shared template for every /X-configurator/ page in both locales.
+// The 6 uk pages (src/pages/*-configurator.astro) and their /ru/ counterparts
+// are thin wrappers that just pass `config`, `productKey` and `locale` here —
+// see src/pages/bezramne-configurator.astro for the pattern to copy when
+// adding a new configurator page.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import DynamicConfigurator from './DynamicConfigurator.astro';
+import tariffs from '../../pricing/tariffs.json';
+import labelsAll from '../../i18n/configurator-labels.json';
+import uiAll from '../../i18n/configurator-ui.json';
+import type { Locale } from '../../i18n/helpers';
+
+interface Props {
+  locale: Locale;
+  config: Record<string, any>;
+  productKey: string;
+}
+
+const { locale, config, productKey } = Astro.props;
+const labels = labelsAll[locale];
+const ui = uiAll[locale];
+const title = labels[productKey];
+const tariff = tariffs.categories[config.category];
+---
+<BaseLayout
+  title={`${title} — Space Glass`}
+  description={ui.configureText}
+  locale={locale}
+>
+  <Header locale={locale} />
+  <main>
+    <section class="config-demo-hero">
+      <div class="container">
+        <p class="eyebrow">Space Glass Configurator</p>
+        <h1>{title}</h1>
+        <p>{ui.configureText}</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <DynamicConfigurator
+          config={config}
+          tariff={tariff}
+          currency={tariffs.currency}
+          productName={title}
+          locale={locale}
+        />
+      </div>
+    </section>
+  </main>
+  <Footer locale={locale} />
+</BaseLayout>

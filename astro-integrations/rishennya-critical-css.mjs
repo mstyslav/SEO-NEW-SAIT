@@ -36,7 +36,7 @@ export default function rishennyaCriticalCss() {
           const matches = [...html.matchAll(STYLESHEET_LINK_RE)];
 
           const rishennyaLink = matches.find(
-            (match) => /\/_astro\/rishennya\.[^"]+\.css$/.test(match[1])
+            (match) => /\/_astro\/RishennyaPage\.[^"]+\.css$/.test(match[1])
           );
           const baseLayoutLink = matches.find(
             (match) => /\/_astro\/BaseLayout\.[^"]+\.css$/.test(match[1])

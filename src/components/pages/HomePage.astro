@@ -1,0 +1,361 @@
+---
+// Shared template for the homepage in both locales — src/pages/index.astro
+// (uk) and src/pages/ru/index.astro (ru) are thin wrappers that just pass
+// `locale` here. Locale is decided purely by which route file rendered this
+// component, never by a `?lang=` query param.
+import '../../styles/home-polish.css';
+import { getCollection } from 'astro:content';
+import translations from '../../i18n/translations.json';
+import { localizedPath, type Locale } from '../../i18n/helpers';
+import { homeContent } from '../../content/i18n/pages/home';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/homepage.css';
+import Header from '../Header.astro';
+import TrustBar from '../TrustBar.astro';
+import Footer from '../Footer.astro';
+import FAQBlock from '../FAQBlock.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale: pageLocale } = Astro.props;
+const pageT = translations[pageLocale] ?? translations.uk;
+const lp = (path: string) => localizedPath(path, pageLocale);
+const t = homeContent[pageLocale];
+
+const categories = t.categories;
+
+const popularSolutions = t.popularSolutions;
+
+const heroSrc = '/images/v5/hero-desktop.webp';
+const heroSrcset = '/images/v5/hero-desktop-480.webp 480w, /images/v5/hero-desktop-800.webp 800w, /images/v5/hero-desktop-960.webp 960w, /images/v5/hero-desktop-1200.webp 1200w, /images/v5/hero-desktop.webp 1536w';
+const heroSizes = '(max-width: 900px) 100vw, (max-width: 1535px) 55vw, 825px';
+const heroMobileSrc = '/images/v5/hero-mobile-800.webp';
+const heroMobileSrcset = '/images/v5/hero-mobile-480.webp 480w, /images/v5/hero-mobile-800.webp 800w';
+
+const publishedProjects = await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk');
+const homeProjects = publishedProjects
+  .map(({ data }) => data)
+  .sort((a, b) => a.sortOrder - b.sortOrder);
+
+const faq = t.faq.items;
+---
+<BaseLayout title={t.meta.title} description={t.meta.description} locale={pageLocale} heroPreloadSrc={heroSrc} heroPreloadSrcset={heroSrcset} heroPreloadSizes={heroSizes} heroPreloadMobileSrc={heroMobileSrc} heroPreloadMobileSrcset={heroMobileSrcset}>
+  <div class="sg-page-shell">
+    <Header locale={pageLocale} />
+    <main id="main">
+      <section class="sg-hero sg-home-hero">
+        <div class="sg-hero__copy">
+          <p class="eyebrow">{t.hero.eyebrow}</p>
+          <h1>{t.hero.h1Line1}<br>{t.hero.h1Line2}</h1>
+          <p class="sg-hero__lead">{t.hero.lead}</p>
+          <div class="sg-home-hero__actions">
+            <a class="button button--mint" href={lp('/quote/')}>{t.hero.ctaPrimary}</a>
+            <a class="button sg-home-hero__secondary" href={lp('/rishennya/')}>{t.hero.ctaSecondary}</a>
+          </div>
+        </div>
+        <div class="sg-hero__image">
+          <picture>
+            <source
+              media="(max-width: 900px)"
+              srcset={heroMobileSrcset}
+              sizes="100vw"
+              width="800"
+              height="1200"
+            />
+            <img
+              src={heroSrc}
+              srcset={heroSrcset}
+              sizes={heroSizes}
+              width="1536" height="1024"
+              alt={t.hero.imageAlt}
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
+        </div>
+      </section>
+
+      <TrustBar />
+
+      <section class="sg-categories">
+        <div class="sg-categories__grid sg-home-category-grid">
+          {categories.map(([title,text,href,icon,tabletMobileOnly]) => (
+            <a class={`sg-category-card${tabletMobileOnly ? ' sg-category-card--tablet-mobile-only' : ''}`} href={href}>
+              <span class="sg-category-card__icon" set:html={icon} />
+              <h2>{title}</h2>
+              <p>{text}</p>
+              <b>→</b>
+            </a>
+          ))}
+        </div>
+        <a class="sg-all-link" href="/poslugy/">{t.categoriesAllLink}</a>
+      </section>
+
+      <section class="sg-products">
+        <div class="sg-section-title sg-products__head">
+          <h2>{t.products.title}</h2>
+          <div class="sg-products__controls" aria-label={t.products.controlsAriaLabel}>
+            <button type="button" data-solutions-prev aria-label={t.products.prevLabel}>←</button>
+            <button type="button" data-solutions-next aria-label={t.products.nextLabel}>→</button>
+          </div>
+        </div>
+        <div class="sg-product-grid" data-solutions-carousel>
+          {popularSolutions.map(([title,description,href,image,width,height]) => (
+            <a class="sg-product-card" href={href}>
+              <div class="sg-product-card__media">
+                <img
+                  src={image}
+                  srcset={`${image.replace('-480.webp','-320.webp')} 320w, ${image} 480w`}
+                  sizes="(max-width: 640px) 90px, (max-width: 1200px) 360px, 270px"
+                  alt={title} width={width} height={height} loading="lazy" decoding="async"
+                />
+              </div>
+              <div class="sg-product-card__body">
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <span class="sg-product-button">{t.products.viewLabel}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+        <a class="sg-products__all-link" href={lp('/rishennya/')}>{t.products.allLink}</a>
+      </section>
+
+      <section class="sg-projects">
+        <div class="sg-projects__intro">
+          <h2>{t.projects.title}</h2>
+          <p>{t.projects.intro}</p>
+          <div class="sg-projects__controls" aria-label={t.projects.controlsAriaLabel}>
+            <button type="button" data-projects-prev aria-label={t.projects.prevLabel}>←</button>
+            <button type="button" data-projects-next aria-label={t.projects.nextLabel}>→</button>
+          </div>
+        </div>
+        <div class="sg-projects__viewport" data-projects-carousel tabindex="0" aria-label={t.projects.carouselAriaLabel}>
+          <div class="sg-projects__track">
+            {homeProjects.map((project) => {
+              const cardSrc = project.cover.src.replace(/\.webp$/, '-480.webp');
+              const cardWidth = 480;
+              const cardHeight = Math.round(480 * project.cover.height / project.cover.width);
+              return (
+              <a class="sg-project-image" href={lp(`/projects/${project.slug}/`)} aria-label={`${t.projects.viewProjectPrefix} ${project.cardTitle}`}>
+                <img
+                  src={cardSrc}
+                  width={cardWidth}
+                  height={cardHeight}
+                  alt={project.cover.alt}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <h3>{project.cardTitle}</h3>
+              </a>
+              );
+            })}
+          </div>
+        </div>
+        <a class="sg-projects__all-link" href={lp('/projects/')}>{t.projects.allLink}</a>
+      </section>
+
+      <section class="sg-final-benefits">
+        {t.finalBenefits.map(([title, text, icon]) => <div><span>{icon}</span><b>{title}</b><small>{text}</small></div>)}
+      </section>
+
+      <section class="section sg-faq sg-faq--home">
+        <FAQBlock
+          title={t.faq.title}
+          intro={t.faq.intro}
+          items={faq}
+          visibleCount={6}
+          locale={pageLocale}
+        />
+      </section>
+
+      <section id="quote" class="section quote-v4">
+        <div class="container quote-v4__grid">
+          <div><p class="eyebrow eyebrow--light">{t.quote.eyebrow}</p><h2>{t.quote.title}</h2><p>{t.quote.intro}</p></div>
+          <form class="quote-form quote-form--home-final" data-home-quote-form>
+            <label>
+              <span>{pageT.name}</span>
+              <input type="text" name="name" autocomplete="name" />
+            </label>
+
+            <label>
+              <span>{pageT.phone}</span>
+              <input type="tel" name="phone" autocomplete="tel" />
+            </label>
+
+            <label>
+              <span>{pageT.city}</span>
+              <input type="text" name="city" autocomplete="address-level2" />
+            </label>
+
+            <label class="quote-form--home-final__need">
+              <span>{pageT.need}</span>
+              <input type="text" name="message" placeholder={t.quote.messagePlaceholder} />
+            </label>
+
+            <button class="button button--white quote-form--home-final__submit" type="submit">
+              {pageT.preliminaryQuote}
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <Footer locale={pageLocale} />
+    <script>
+      const solutionsCarousel = document.querySelector('[data-solutions-carousel]');
+
+      const scrollSolutions = (direction) => {
+        if (!solutionsCarousel) return;
+        const card = solutionsCarousel.querySelector('.sg-product-card');
+        const gap = 10;
+        const distance = card
+          ? card.getBoundingClientRect().width + gap
+          : solutionsCarousel.clientWidth;
+
+        solutionsCarousel.scrollBy({
+          left: direction * distance,
+          behavior: 'smooth'
+        });
+      };
+
+      document.querySelector('[data-solutions-prev]')?.addEventListener('click', () => scrollSolutions(-1));
+      document.querySelector('[data-solutions-next]')?.addEventListener('click', () => scrollSolutions(1));
+
+      if (solutionsCarousel) {
+        solutionsCarousel.setAttribute('tabindex', '0');
+        solutionsCarousel.setAttribute('aria-label', 'Популярні рішення Space Glass');
+
+        let solutionsPointerId = null;
+        let solutionsDragStartX = 0;
+        let solutionsDragStartScroll = 0;
+        let solutionsHasDragged = false;
+
+        solutionsCarousel.addEventListener('pointerdown', (event) => {
+          if (event.pointerType !== 'mouse' || event.button !== 0) return;
+
+          solutionsPointerId = event.pointerId;
+          solutionsDragStartX = event.clientX;
+          solutionsDragStartScroll = solutionsCarousel.scrollLeft;
+          solutionsHasDragged = false;
+        });
+
+        solutionsCarousel.addEventListener('pointermove', (event) => {
+          if (solutionsPointerId !== event.pointerId) return;
+
+          const distance = event.clientX - solutionsDragStartX;
+
+          if (!solutionsHasDragged && Math.abs(distance) > 5) {
+            solutionsHasDragged = true;
+            solutionsCarousel.classList.add('is-dragging');
+            solutionsCarousel.setPointerCapture(event.pointerId);
+          }
+
+          if (solutionsHasDragged) {
+            solutionsCarousel.scrollLeft = solutionsDragStartScroll - distance;
+          }
+        });
+
+        const endSolutionsDrag = (event) => {
+          if (solutionsPointerId !== event.pointerId) return;
+
+          if (solutionsCarousel.hasPointerCapture(event.pointerId)) {
+            solutionsCarousel.releasePointerCapture(event.pointerId);
+          }
+
+          solutionsPointerId = null;
+          solutionsCarousel.classList.remove('is-dragging');
+        };
+
+        solutionsCarousel.addEventListener('pointerup', endSolutionsDrag);
+        solutionsCarousel.addEventListener('pointercancel', endSolutionsDrag);
+
+        solutionsCarousel.addEventListener('click', (event) => {
+          if (!solutionsHasDragged) return;
+
+          event.preventDefault();
+          event.stopPropagation();
+          solutionsHasDragged = false;
+        }, true);
+
+        solutionsCarousel.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            event.preventDefault();
+            scrollSolutions(event.key === 'ArrowRight' ? 1 : -1);
+          }
+        });
+      }
+
+      const projectsCarousel = document.querySelector('[data-projects-carousel]');
+      const scrollProjects = (direction) => {
+        if (!projectsCarousel) return;
+        const card = projectsCarousel.querySelector('.sg-project-image');
+        const gap = 10;
+        const distance = card ? card.getBoundingClientRect().width + gap : projectsCarousel.clientWidth;
+        projectsCarousel.scrollBy({ left: direction * distance, behavior: 'smooth' });
+      };
+      document.querySelector('[data-projects-prev]')?.addEventListener('click', () => scrollProjects(-1));
+      document.querySelector('[data-projects-next]')?.addEventListener('click', () => scrollProjects(1));
+      if (projectsCarousel) {
+        let pointerId = null;
+        let dragStartX = 0;
+        let dragStartScroll = 0;
+        let hasDragged = false;
+
+        projectsCarousel.addEventListener('pointerdown', (event) => {
+          if (event.pointerType !== 'mouse' || event.button !== 0) return;
+          pointerId = event.pointerId;
+          dragStartX = event.clientX;
+          dragStartScroll = projectsCarousel.scrollLeft;
+          hasDragged = false;
+        });
+        projectsCarousel.addEventListener('pointermove', (event) => {
+          if (pointerId !== event.pointerId) return;
+          const distance = event.clientX - dragStartX;
+          if (!hasDragged && Math.abs(distance) > 5) {
+            hasDragged = true;
+            projectsCarousel.classList.add('is-dragging');
+            projectsCarousel.setPointerCapture(event.pointerId);
+          }
+          if (hasDragged) projectsCarousel.scrollLeft = dragStartScroll - distance;
+        });
+        const endProjectDrag = (event) => {
+          if (pointerId !== event.pointerId) return;
+          if (projectsCarousel.hasPointerCapture(event.pointerId)) projectsCarousel.releasePointerCapture(event.pointerId);
+          pointerId = null;
+          projectsCarousel.classList.remove('is-dragging');
+        };
+        projectsCarousel.addEventListener('pointerup', endProjectDrag);
+        projectsCarousel.addEventListener('pointercancel', endProjectDrag);
+        projectsCarousel.addEventListener('click', (event) => {
+          if (!hasDragged) return;
+          event.preventDefault();
+          event.stopPropagation();
+          hasDragged = false;
+        }, true);
+      }
+      projectsCarousel?.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault();
+          scrollProjects(event.key === 'ArrowRight' ? 1 : -1);
+        }
+      });
+
+      const homeQuoteForm = document.querySelector('[data-home-quote-form]');
+      homeQuoteForm?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const data = new FormData(homeQuoteForm);
+        const request = [
+          data.get('name'),
+          data.get('phone'),
+          data.get('city'),
+          data.get('message')
+        ].filter(Boolean).join(' · ');
+
+        window.location.href = `/quote/?request=${encodeURIComponent(request)}`;
+      });
+    </script>
+  </div>
+</BaseLayout>

@@ -1,0 +1,247 @@
+---
+// Shared template for /rishennya/ in both locales — src/pages/rishennya/index.astro
+// (uk) and src/pages/ru/rishennya/index.astro (ru) are thin wrappers that just
+// pass `locale` here. Locale is decided purely by which route file rendered
+// this component, never by a `?lang=` query param.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import TrustBar from '../TrustBar.astro';
+import Footer from '../Footer.astro';
+import FAQBlock from '../FAQBlock.astro';
+import { SOLUTIONS, CITY_LINKS, PROCESS_STEPS } from '../../data/solutions';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { getCollection } from 'astro:content';
+import type { Locale } from '../../i18n/helpers';
+import { rishennyaContent } from '../../content/i18n/pages/rishennya';
+import '../../styles/solutions.css';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = rishennyaContent[locale];
+
+const origin = Astro.site ?? Astro.url.origin;
+const faqItems = t.faqItems;
+
+const faqStructuredData = faqSchema(faqItems.map(([question, answer]) => ({ question, answer })));
+const structuredData: JsonLdObject[] = [
+  {
+    '@type': 'ItemList',
+    name: t.schemaListName,
+    numberOfItems: SOLUTIONS.length,
+    itemListElement: SOLUTIONS.map((solution, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: t.solutions[solution.slug].navLabel,
+      url: absoluteUrl(solution.path, origin)
+    }))
+  },
+  ...(faqStructuredData ? [faqStructuredData] : [])
+];
+
+const categoryLinks = t.categoryLinks;
+
+// No RU entries exist in the projects content collection yet (schema is
+// uk-only), so both locales show the same real, published projects here.
+const featuredProjects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk'))
+  .map(({ data }) => data)
+  .sort((a, b) => a.sortOrder - b.sortOrder);
+const experienceStats = t.experienceStats;
+const choosePoints = t.choosePoints;
+---
+<BaseLayout
+  title={t.meta.title}
+  description={t.meta.description}
+  locale={locale}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  heroPreloadSrc="/images/solutions-new/rishennya-hero-desktop.webp"
+  heroPreloadSrcset="/images/solutions-new/rishennya-hero-desktop-480.webp 480w, /images/solutions-new/rishennya-hero-desktop-700.webp 700w, /images/solutions-new/rishennya-hero-desktop-900.webp 900w, /images/solutions-new/rishennya-hero-desktop.webp 1280w"
+  heroPreloadSizes="(max-width: 900px) calc(100vw - 32px), 48vw"
+  heroPreloadMobileSrc="/images/solutions-new/rishennya-hero-mobile.webp"
+  heroPreloadMobileSrcset="/images/solutions-new/rishennya-hero-mobile.webp 700w"
+>
+  <div class="sg-page-shell">
+    <Header locale={locale} />
+    <main id="main" class="rishennya-hub">
+      <div class="rishennya-hub__wrap">
+        <header class="rishennya-hub__hero">
+          <div class="rishennya-hub__hero-copy">
+            <p class="eyebrow">{t.hero.eyebrow}</p>
+            <h1>{t.hero.h1}</h1>
+            <p class="lead">{t.hero.lead}</p>
+            <div class="rishennya-hub__hero-actions">
+              <a class="button button--mint" href="#solutions">{t.hero.ctaPrimary}</a>
+              <a class="button button--outline" href="/quote/">{t.hero.ctaSecondary}</a>
+            </div>
+          </div>
+          <div class="rishennya-hub__hero-media">
+            <picture>
+              <source media="(max-width: 900px)" srcset="/images/solutions-new/rishennya-hero-mobile.webp" />
+              <img
+                src="/images/solutions-new/rishennya-hero-desktop.webp"
+                srcset="/images/solutions-new/rishennya-hero-desktop-480.webp 480w, /images/solutions-new/rishennya-hero-desktop-700.webp 700w, /images/solutions-new/rishennya-hero-desktop-900.webp 900w, /images/solutions-new/rishennya-hero-desktop.webp 1280w"
+                sizes="(max-width: 900px) calc(100vw - 32px), 48vw"
+                width="1280"
+                height="1001"
+                alt={t.hero.heroImageAlt}
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </picture>
+          </div>
+        </header>
+        <TrustBar />
+
+        <section class="rishennya-hub__solutions" id="solutions" aria-labelledby="solutions-title">
+          <div class="solution-section-head">
+            <p class="eyebrow">{t.solutionsSection.eyebrow}</p>
+            <h2 id="solutions-title">{t.solutionsSection.title}</h2>
+            <p>{t.solutionsSection.intro}</p>
+          </div>
+          <div class="rishennya-hub__grid">
+            {SOLUTIONS.map((solution) => (
+              <a class="rishennya-hub__card" href={solution.path}>
+                <div class="rishennya-hub__card-media">
+                  <img
+                    src={`/images/solutions-new/${solution.heroImage.base}-800.webp`}
+                    srcset={`/images/solutions-new/${solution.heroImage.base}-640.webp 640w, /images/solutions-new/${solution.heroImage.base}-800.webp 800w, /images/solutions-new/${solution.heroImage.base}.webp ${solution.heroImage.width}w`}
+                    sizes="(max-width: 700px) calc(100vw - 32px), (max-width: 1050px) 50vw, 33vw"
+                    width={solution.heroImage.width}
+                    height={solution.heroImage.height}
+                    alt={solution.heroImage.alt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="rishennya-hub__card-body">
+                  <p>{t.solutionCardEyebrow}</p>
+                  <h3>{t.solutions[solution.slug].navLabel}</h3>
+                  <span>{t.solutions[solution.slug].hubCardText}</span>
+                  <b>{t.solutionCardCtaPrefix} {t.solutions[solution.slug].navLabel.toLowerCase()} <span aria-hidden="true">→</span></b>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="rishennya-hub__section rishennya-hub__projects" aria-labelledby="projects-title">
+          <div class="rishennya-project-head">
+            <div class="solution-section-head">
+              <p class="eyebrow">{t.projectsSection.eyebrow}</p>
+              <h2 id="projects-title">{t.projectsSection.title}</h2>
+              <p>{t.projectsSection.intro}</p>
+            </div>
+            <div class="rishennya-project-controls" aria-label={t.projectsSection.controlsAriaLabel}>
+              <button type="button" aria-label={t.projectsSection.prevLabel} data-rishennya-project-direction="-1">←</button>
+              <button type="button" aria-label={t.projectsSection.nextLabel} data-rishennya-project-direction="1">→</button>
+            </div>
+          </div>
+
+          <div class="rishennya-project-viewport" data-rishennya-projects-carousel tabindex="0" aria-label={t.projectsSection.carouselAriaLabel}>
+            <div class="rishennya-showcase">
+              {featuredProjects.map((project) => (
+                <a class="rishennya-showcase__card" href={`/projects/${project.slug}/`}>
+                  <div class="rishennya-showcase__media">
+                    <img
+                      src={project.cover.src.replace('.webp', '-480.webp')}
+                      srcset={`${project.cover.src.replace('.webp', '-480.webp')} 480w, ${project.cover.width > 720 ? project.cover.src.replace('.webp', '-720.webp') : project.cover.src} ${Math.min(project.cover.width, 720)}w`}
+                      sizes="(max-width: 700px) 82vw, (max-width: 1050px) 44vw, 320px"
+                      width={project.cover.width}
+                      height={project.cover.height}
+                      alt={project.cover.alt}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="rishennya-showcase__body">
+                    <h3>{project.cardTitle}</h3>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <a class="rishennya-hub__section-link" href="/projects/">{t.projectsSection.viewAllLabel}</a>
+        </section>
+
+        <section class="rishennya-hub__section rishennya-hub__categories" aria-labelledby="categories-title">
+          <div class="solution-section-head"><p class="eyebrow">{t.categoriesSection.eyebrow}</p><h2 id="categories-title">{t.categoriesSection.title}</h2><p>{t.categoriesSection.intro}</p></div>
+          <div class="rishennya-hub__category-links">
+            {categoryLinks.map((item) => <a href={item.href}>{item.label}<span aria-hidden="true">↗</span></a>)}
+          </div>
+        </section>
+
+        <section class="rishennya-hub__section rishennya-experience" aria-labelledby="experience-title">
+          <div class="rishennya-experience__copy">
+            <p class="eyebrow">{t.experienceSection.eyebrow}</p>
+            <h2 id="experience-title">{t.experienceSection.title}</h2>
+            <p>{t.experienceSection.intro}</p>
+            <a class="rishennya-hub__section-link" href="/about/">{t.experienceSection.aboutLinkLabel}</a>
+          </div>
+          <div class="rishennya-experience__stats">
+            {experienceStats.map(([value, label]) => <article><strong>{value}</strong><span>{label}</span></article>)}
+          </div>
+        </section>
+
+        <section class="rishennya-hub__section rishennya-choose" aria-labelledby="choose-title">
+          <div class="solution-section-head"><p class="eyebrow">{t.chooseSection.eyebrow}</p><h2 id="choose-title">{t.chooseSection.title}</h2></div>
+          <div class="rishennya-choose__grid">
+            {choosePoints.map(([title, text], index) => <article><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}
+          </div>
+          <a class="rishennya-hub__section-link" href="/quote/">{t.chooseSection.ctaLabel}</a>
+        </section>
+
+        <section class="rishennya-hub__section rishennya-process" aria-labelledby="process-title">
+          <div class="solution-section-head"><p class="eyebrow">{t.processSection.eyebrow}</p><h2 id="process-title">{t.processSection.title}</h2></div>
+          <div class="solution-process-grid">
+            {PROCESS_STEPS.map((step, index) => <article class="solution-process-step"><span>0{index + 1}</span><b>{step.title}</b><p>{step.text}</p></article>)}
+          </div>
+        </section>
+
+        <section class="rishennya-hub__section rishennya-hub__geography" aria-labelledby="geography-title">
+          <div class="solution-section-head"><p class="eyebrow">{t.geographySection.eyebrow}</p><h2 id="geography-title">{t.geographySection.title}</h2><p>{t.geographySection.intro}</p></div>
+          <div class="rishennya-cities">
+            {CITY_LINKS.map((city) => <a href={city.href}><span>{city.label}</span><b>{t.geographySection.cityCtaLabel} <i aria-hidden="true">→</i></b></a>)}
+          </div>
+          <p class="rishennya-hub__geography-note">{t.geographySection.footnote}</p>
+        </section>
+
+        <section class="rishennya-hub__section rishennya-faq">
+          <FAQBlock title={t.faqSectionTitle} items={faqItems} visibleCount={6} variant="compact" locale={locale} />
+        </section>
+
+        <section class="rishennya-final-cta" aria-labelledby="cta-title">
+          <div><p class="eyebrow">{t.finalCta.eyebrow}</p><h2 id="cta-title">{t.finalCta.title}</h2><p>{t.finalCta.intro}</p></div>
+          <div class="rishennya-final-cta__actions"><a class="button button--mint" href="/quote/">{t.finalCta.ctaPrimary}</a><a class="button button--outline" href="/contacts/">{t.finalCta.ctaSecondary}</a></div>
+        </section>
+      </div>
+    </main>
+    <Footer locale={locale} />
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const rishennyaProjectsCarousel = document.querySelector('[data-rishennya-projects-carousel]');
+
+  const scrollRishennyaProjects = (direction) => {
+    if (!rishennyaProjectsCarousel) return;
+    const card = rishennyaProjectsCarousel.querySelector('.rishennya-showcase__card');
+    const distance = card ? card.getBoundingClientRect().width + 18 : rishennyaProjectsCarousel.clientWidth;
+    rishennyaProjectsCarousel.scrollBy({ left: direction * distance, behavior: 'smooth' });
+  };
+
+  document.querySelectorAll('[data-rishennya-project-direction]').forEach((button) => {
+    button.addEventListener('click', () => scrollRishennyaProjects(Number(button.dataset.rishennyaProjectDirection)));
+  });
+
+  rishennyaProjectsCarousel?.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      scrollRishennyaProjects(event.key === 'ArrowRight' ? 1 : -1);
+    }
+  });
+</script>
