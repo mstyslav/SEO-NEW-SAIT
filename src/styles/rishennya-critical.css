@@ -2,7 +2,13 @@
 
 :root{
   --mint:#93D1BA;
-  --mint-dark:#67B79A;
+  /* WCAG AA fix: #67B79A only gave 2.38:1 on white for the small bold
+     labels/CTAs/links that use this var (.rishennya-hub__card-body p/b,
+     .rishennya-hub__text-link, .rishennya-experience__stats strong, etc.
+     across solutions.css). #347a66 is the color already approved for this
+     page's hero lead — reusing it here keeps a single accent green and
+     gives 5.09:1, passing AA for normal text. */
+  --mint-dark:#347a66;
   --green:#176f58;
   --green-deep:#0e5947;
   --ink:#111513;
