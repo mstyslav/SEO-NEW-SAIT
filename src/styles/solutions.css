@@ -98,7 +98,7 @@
 .rishennya-hub__hero{display:grid;grid-template-columns:minmax(0,.9fr) minmax(460px,1.1fr);gap:54px;align-items:center;padding:54px 0 86px}
 .rishennya-hub__hero-copy{padding:30px 0}
 .rishennya-hub__hero h1{max-width:760px;margin:.16em 0 .38em;font-size:clamp(2.75rem,5vw,5.25rem);line-height:.95;letter-spacing:-.06em;text-wrap:balance}
-.rishennya-hub__hero .lead{max-width:650px;margin:0;color:#347a66!important;font-size:clamp(1rem,1.25vw,1.16rem);line-height:1.62}
+.rishennya-hub__hero .lead{max-width:650px;margin:0;color:#111513!important;font-size:clamp(1rem,1.25vw,1.16rem);line-height:1.62}
 .rishennya-hub__hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
 .rishennya-hub__hero-actions .button,.rishennya-final-cta .button{min-height:48px}
 .rishennya-hub__text-link,.rishennya-hub__section-link{display:inline-flex;margin-top:22px;color:var(--mint-dark);font-weight:800;text-decoration:none}
