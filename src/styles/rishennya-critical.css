@@ -179,7 +179,7 @@ a{text-decoration:none;color:inherit}
 /* HeaderFixes.astro <style is:global> — compiled into BaseLayout.css by
    Astro, so it disappears while that stylesheet is deferred. Mirrored
    verbatim (desktop nav-actions order; ≤1120px override already below). */
-.sg-nav-actions>a[aria-label="Пошук"]{order:1}
+.sg-nav-actions>.nav-icon--search-ua-desktop{order:1}
 .sg-nav-actions>a[aria-label="Зателефонувати"]{order:5}
 .sg-nav-actions>.language-switcher{order:6}
 .sg-nav-actions>.sg-header-cta{order:7}
@@ -348,7 +348,7 @@ body .sg-page-shell main h1{
   }
   .sg-header .brand-logo img{width:89px!important}
   .sg-header .sg-nav-links,
-  .sg-header .sg-nav-actions a[aria-label="Пошук"],
+  .sg-header .sg-nav-actions .nav-icon--search-ua-desktop,
   .sg-header .sg-header-cta{display:none!important}
   .sg-header .sg-nav-actions{flex:0 0 auto!important;gap:7px!important;min-width:0!important}
   .sg-header .sg-nav-actions>a[aria-label="Зателефонувати"]{order:3!important}

@@ -1,0 +1,197 @@
+---
+// Shared template for the /knowledge/ hub in both locales —
+// src/pages/knowledge.astro (uk) and src/pages/ru/knowledge/index.astro (ru)
+// are thin wrappers that just pass `locale` here.
+//
+// The 80 articles listed below (src/data/knowledge-articles.ts) are UK-only
+// content — see src/content/i18n/pages/knowledge.ts for the scope note.
+// This hub is real ru content; the article catalog it lists is not yet.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/knowledge.css';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import { knowledgeArticles, knowledgeCategories } from '../../data/knowledge-articles';
+import { localizedPath, type Locale } from '../../i18n/helpers';
+import { knowledgeContent } from '../../content/i18n/pages/knowledge';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = knowledgeContent[locale];
+const lp = (path: string) => localizedPath(path, locale);
+---
+<BaseLayout
+  title={t.meta.title}
+  description={t.meta.description}
+  locale={locale}
+  schemaType="CollectionPage"
+  heroPreloadSrc="/images/knowledge/knowledge-hero-desktop.webp"
+  heroPreloadSrcset="/images/knowledge/knowledge-hero-desktop-850.webp 850w, /images/knowledge/knowledge-hero-desktop.webp 1536w"
+  heroPreloadSizes="(max-width: 1504px) 56vw, 827px"
+  heroPreloadMobileSrc="/images/knowledge/knowledge-hero-mobile-v4.webp"
+  heroPreloadMobileSrcset="/images/knowledge/knowledge-hero-mobile-v4.webp 720w"
+>
+  <div class="sg-page-shell">
+    <Header locale={locale} />
+    <main id="main" data-locale={locale}>
+      <section class="knowledge-v14-hero">
+        <div>
+          <p class="eyebrow">{t.hero.eyebrow}</p>
+          <h1>{t.hero.h1}</h1>
+          <p class="lead">{t.hero.lead}</p>
+        </div>
+        <div class="knowledge-v14-brand">
+          <picture>
+            <source media="(max-width: 900px)" srcset="/images/knowledge/knowledge-hero-mobile-v4.webp" />
+            <img
+              src="/images/knowledge/knowledge-hero-desktop.webp"
+              srcset="/images/knowledge/knowledge-hero-desktop-850.webp 850w, /images/knowledge/knowledge-hero-desktop.webp 1536w"
+              sizes="(max-width: 900px) 100vw, (max-width: 1504px) 56vw, 827px"
+              width="1536"
+              height="1024"
+              alt={t.hero.imageAlt}
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+        </div>
+      </section>
+
+      <nav class="knowledge-filters" aria-label={t.filtersAriaLabel}>
+        <button class="is-active" type="button" data-knowledge-filter="all">{t.allFilterLabel}</button>
+        {knowledgeCategories.map((category) => <button type="button" data-knowledge-filter={category}>{category}</button>)}
+      </nav>
+
+      <section class="knowledge-library" aria-labelledby="knowledge-library-title">
+        <div class="category-heading">
+          <div><p class="eyebrow" data-knowledge-count>{t.countLabel(knowledgeArticles.length)}</p><h2 id="knowledge-library-title">{t.libraryTitle}</h2></div>
+        </div>
+        <div class="knowledge-library__grid" data-knowledge-grid>
+          {knowledgeArticles.map((item, index) => (
+            <article class="knowledge-card" data-category={item.category}>
+              <div class="knowledge-card__meta"><span>{String(index + 1).padStart(2, '0')}</span><span>{item.category}</span><span>{item.readingTime} {t.readingTimeUnit}</span></div>
+              <h2><a href={`/knowledge/${item.slug}/`}>{item.title}</a></h2>
+              <p>{item.description}</p>
+              <a class="knowledge-card__link" href={`/knowledge/${item.slug}/`}>{t.cardLinkLabel}</a>
+            </article>
+          ))}
+        </div>
+        <p class="knowledge-empty" data-knowledge-empty hidden>{t.emptyMessage}</p>
+      </section>
+
+      <section class="inner-cta">
+        <div><p class="eyebrow eyebrow--light">{t.cta.eyebrow}</p><h2>{t.cta.title}</h2><p>{t.cta.text}</p></div>
+        <a class="button button--white" href={lp('/quote/')}>{t.cta.buttonLabel}</a>
+      </section>
+    </main>
+    <Footer locale={locale} />
+  </div>
+
+  <script>
+    const cards = [...document.querySelectorAll<HTMLElement>('.knowledge-card')];
+    const filters = [...document.querySelectorAll<HTMLButtonElement>('[data-knowledge-filter]')];
+    const empty = document.querySelector<HTMLElement>('[data-knowledge-empty]');
+    const count = document.querySelector<HTMLElement>('[data-knowledge-count]');
+    const locale = document.getElementById('main')?.dataset.locale === 'ru' ? 'ru' : 'uk';
+    let category = 'all';
+    const countLabelUk = (value: number) => {
+      const mod10 = value % 10;
+      const mod100 = value % 100;
+      if (mod10 === 1 && mod100 !== 11) return `${value} експертний матеріал`;
+      if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return `${value} експертні матеріали`;
+      return `${value} експертних матеріалів`;
+    };
+    const countLabelRu = (value: number) => {
+      const mod10 = value % 10;
+      const mod100 = value % 100;
+      if (mod10 === 1 && mod100 !== 11) return `${value} экспертный материал`;
+      if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return `${value} экспертных материала`;
+      return `${value} экспертных материалов`;
+    };
+    const countLabel = locale === 'ru' ? countLabelRu : countLabelUk;
+    const update = () => {
+      let visible = 0;
+      cards.forEach((card) => {
+        const matchesCategory = category === 'all' || card.dataset.category === category;
+        card.hidden = !matchesCategory;
+        if (!card.hidden) visible += 1;
+      });
+      if (empty) empty.hidden = visible > 0;
+      if (count) count.textContent = countLabel(visible);
+    };
+    filters.forEach((button) => button.addEventListener('click', () => {
+      category = button.dataset.knowledgeFilter ?? 'all';
+      filters.forEach((item) => item.classList.toggle('is-active', item === button));
+      update();
+    }));
+  </script>
+</BaseLayout>
+
+<style>
+  .knowledge-v14-hero {
+    gap:0;
+    padding:0;
+    align-items:stretch;
+  }
+  .knowledge-card { cursor:pointer; }
+  .knowledge-card__link:focus-visible { outline:2px solid var(--mint-dark); outline-offset:3px; }
+  @media(min-width:1100px) {
+    .knowledge-filters { flex-wrap:nowrap; gap:7px; padding-inline:28px; }
+    .knowledge-filters button { min-width:0; padding:10px 12px; font-size:clamp(10px,.78vw,13px); white-space:nowrap; }
+  }
+  .knowledge-v14-hero > div:first-child {
+    display:flex;
+    min-height:520px;
+    padding:70px 58px;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .knowledge-v14-brand {
+    position:relative;
+    min-width:0;
+    min-height:520px;
+    overflow:hidden;
+    border-left:1px solid var(--line);
+    background:#fff;
+  }
+  .knowledge-v14-brand picture,
+  .knowledge-v14-brand img {
+    display:block;
+    width:100%;
+    height:100%;
+  }
+  .knowledge-v14-brand picture {
+    position:absolute;
+    inset:0;
+  }
+  .knowledge-v14-brand img {
+    object-fit:cover;
+    object-position:center;
+  }
+  @media(min-width:901px) {
+    .knowledge-v14-hero {
+      grid-template-columns:minmax(0,.79fr) minmax(0,1fr);
+      min-height:550px;
+      height:550px;
+    }
+    .knowledge-v14-hero > div:first-child {
+      min-height:550px;
+      padding:54px 58px 40px;
+    }
+    .knowledge-v14-brand {
+      min-height:550px;
+      height:550px;
+    }
+  }
+  @media(max-width:900px) {
+    .knowledge-v14-hero > div:first-child { min-height:0; padding:58px 40px; }
+    .knowledge-v14-brand { min-height:340px; border-top:1px solid var(--line); border-left:0; }
+  }
+  @media(max-width:640px) {
+    .knowledge-v14-hero > div:first-child { padding:44px 24px; }
+    .knowledge-v14-brand { min-height:280px; }
+  }
+</style>

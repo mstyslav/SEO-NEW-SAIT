@@ -2628,7 +2628,7 @@ body main .config-demo-hero~.section h2{
 /* ===== Mobile header simplification: logo / Menu / Wishlist / Cart / Phone / language ===== */
 @media(max-width:640px){
   /* Search + Compare stay hidden on mobile. Wishlist and Cart are restored below. */
-  .sg-header .sg-nav-actions a[aria-label="Пошук"]{
+  .sg-header .sg-nav-actions .nav-icon--search-ua-desktop{
     display:none!important;
   }
 
@@ -2687,7 +2687,7 @@ body main .config-demo-hero~.section h2{
     min-width:0!important;
     flex:0 0 auto!important;
   }
-  .sg-header .sg-nav-actions a[aria-label="Пошук"],
+  .sg-header .sg-nav-actions .nav-icon--search-ua-desktop,
   .sg-header .sg-nav-actions .nav-icon--compare,
   .sg-header .sg-header-cta{display:none!important}
   .sg-header .sg-wishlist-header{
@@ -2760,7 +2760,7 @@ body main .config-demo-hero~.section h2{
   }
 
   .sg-header .sg-nav-links,
-  .sg-header .sg-nav-actions a[aria-label="Пошук"],
+  .sg-header .sg-nav-actions .nav-icon--search-ua-desktop,
   .sg-header .sg-header-cta{
     display:none!important;
   }

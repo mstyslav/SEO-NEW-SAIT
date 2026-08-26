@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const MARKER = 'data-knowledge-common-critical';
 const PAGE_MARKER = 'data-knowledge-critical';
 const STYLESHEET_LINK_RE = /<link rel="stylesheet" href="([^"]+)">/g;
-const TARGET_PAGES = ['knowledge/index.html'];
+const TARGET_PAGES = ['knowledge/index.html', 'ru/knowledge/index.html'];
 const commonCriticalCssPath = fileURLToPath(
   new URL('../src/styles/knowledge-common-critical.css', import.meta.url)
 );
@@ -35,8 +35,16 @@ export default function knowledgeCriticalCss() {
 
           const matches = [...html.matchAll(STYLESHEET_LINK_RE)];
 
+          // The knowledge page's own <style> blocks now live in the shared
+          // src/components/pages/KnowledgePage.astro template (used by both
+          // locales), not in this page file directly — Rollup's chunk name
+          // for that CSS therefore depends on module-graph heuristics rather
+          // than the page's own filename (observed as e.g.
+          // "knowledge-articles.[hash].css"). Match on content, not on a
+          // hardcoded "knowledge.[hash].css" name, and let the safety checks
+          // below confirm it's the right chunk.
           const knowledgeLink = matches.find(
-            (match) => /\/_astro\/knowledge\.[^"]+\.css$/.test(match[1])
+            (match) => /\/_astro\/[^"/]*knowledge[^"/]*\.css$/i.test(match[1])
           );
           const baseLayoutLink = matches.find(
             (match) => /\/_astro\/BaseLayout\.[^"]+\.css$/.test(match[1])

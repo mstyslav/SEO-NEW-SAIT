@@ -291,7 +291,7 @@ body .sg-page-shell main h1{
   .sg-header .sg-nav-actions{
     min-width:0!important;
     gap:6px!important;
-  }.sg-header .sg-nav-actions a[aria-label="Пошук"],
+  }.sg-header .sg-nav-actions .nav-icon--search-ua-desktop,
 .sg-header .sg-header-cta{
     display:none!important;
   }.sg-header .language-switcher__button,

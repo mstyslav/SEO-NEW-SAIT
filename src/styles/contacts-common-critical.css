@@ -211,7 +211,7 @@ body .sg-page-shell main h1 {
     padding-inline: 16px !important;
   }
   .sg-header .brand-logo img { width: 89px !important; }.sg-header .sg-nav-links,
-.sg-header .sg-nav-actions a[aria-label="Пошук"],
+.sg-header .sg-nav-actions .nav-icon--search-ua-desktop,
 .sg-header .sg-header-cta{ display: none !important; }
   .sg-header .sg-nav-actions { flex: 0 0 auto !important; gap: 7px !important; min-width: 0 !important; }
   .sg-header .sg-nav-actions > a[aria-label="Зателефонувати"] { order: 3 !important; }

@@ -1,11 +1,15 @@
 ---
+import { localizedPath, type Locale } from '../../i18n/helpers';
+
 interface Props {
   projectTitle: string;
   city: string;
   requestExample: string;
+  locale?: Locale;
 }
 
-const { projectTitle, city, requestExample } = Astro.props;
+const { projectTitle, city, requestExample, locale = 'uk' } = Astro.props;
+const successUrl = localizedPath('/thank-you/', locale);
 ---
 
 <section class="project-request-form" id="project-request" aria-labelledby="project-request-title">
@@ -16,7 +20,7 @@ const { projectTitle, city, requestExample } = Astro.props;
     <p class="project-request-form__project"><b>Наприклад:</b> {requestExample}</p>
   </div>
 
-  <form class="quote-form contacts-v15-form project-request-form__form" data-lead-form data-success-url="/uk/thank-you/">
+  <form class="quote-form contacts-v15-form project-request-form__form" data-lead-form data-success-url={successUrl}>
     <input name="product" type="hidden" value={projectTitle} />
     <div class="contacts-form-grid">
       <label>Ім’я<input name="name" type="text" autocomplete="name" placeholder="Ваше ім’я" required /></label>

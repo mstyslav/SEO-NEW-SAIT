@@ -20,18 +20,14 @@ const nextLocale: 'uk' | 'ru' = locale === 'ru' ? 'uk' : 'ru';
 const directLocaleHref = localeSwitchPath(nextLocale);
 const directLocaleLabel = nextLocale === 'uk' ? 'Перейти українською' : 'Перейти російською';
 
-const isUkrainian = locale === 'uk';
-const baseLinks = [
-  [t.services, '/poslugy/'],
+const links = [
   [t.solutions, '/rishennya/'],
+  [t.services, '/poslugy/'],
   [t.projects, '/projects/'],
   [t.knowledge, '/knowledge/'],
   [t.about, '/about/'],
   [t.contacts, '/contacts/'],
 ];
-const links = isUkrainian
-  ? [baseLinks[1], baseLinks[0], ...baseLinks.slice(2)]
-  : baseLinks;
 
 ---
 <header class="site-header sg-header">
