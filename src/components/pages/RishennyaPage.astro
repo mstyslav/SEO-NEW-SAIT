@@ -184,7 +184,7 @@ const choosePoints = t.choosePoints;
         <section class="rishennya-hub__section rishennya-hub__categories" aria-labelledby="categories-title">
           <div class="solution-section-head"><p class="eyebrow">{t.categoriesSection.eyebrow}</p><h2 id="categories-title">{t.categoriesSection.title}</h2><p>{t.categoriesSection.intro}</p></div>
           <div class="rishennya-hub__category-links">
-            {categoryLinks.map((item) => <a href={item.href}>{item.label}<span aria-hidden="true">↗</span></a>)}
+            {categoryLinks.map((item) => <a href={item.href}>{item.label}<span aria-hidden="true" class="rishennya-arrow"><svg viewBox="0 0 16 16" width="16" height="16" fill="none"><path d="M4 12L12 4M6 4h6v6" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>)}
           </div>
         </section>
 
