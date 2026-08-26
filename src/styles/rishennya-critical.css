@@ -74,8 +74,7 @@ a{text-decoration:none;color:inherit}
   display:flex!important;
   align-items:center!important;
   flex-shrink:0!important;
-  width:auto!important;
-  height:82px;
+  width:clamp(132px, 8vw, 174px)!important;
   min-width:0!important;
   max-width:none!important;
   margin:0!important;
@@ -83,7 +82,7 @@ a{text-decoration:none;color:inherit}
 }
 .sg-header .brand-logo img{
   display:block!important;
-  width:101px!important;
+  width:100%!important;
   max-width:none!important;
   height:auto!important;
   max-height:none!important;
@@ -172,7 +171,7 @@ a{text-decoration:none;color:inherit}
 }
 .button--outline{background:#fff;color:var(--text);border-color:var(--line)}
 .button--mint{border-color:var(--mint);background:var(--mint);color:#07120e}
-.sg-header .sg-header-cta{margin-left:3px!important;white-space:nowrap!important;border-radius:4px}
+.sg-header .sg-header-cta{margin-left:3px!important;white-space:nowrap!important;border-radius:4px;font-size:clamp(12px, .8vw, 14px)!important;line-height:1.15!important;text-align:center!important}
 .sg-mobile-toggle{display:none}
 .sg-mobile-menu[hidden]{display:none!important}
 
@@ -318,8 +317,7 @@ body .sg-page-shell main h1{
   .sg-header .sg-nav-links{gap:clamp(12px,1.05vw,19px)!important}
   .sg-header .sg-nav-links .nav-link,
   .sg-header .sg-nav-links .mega-trigger>.nav-link{font-size:12.5px!important}
-  .sg-header .sg-nav-actions .nav-icon{width:40px!important;height:40px!important;min-width:40px!important;min-height:40px!important}
-  .sg-header .sg-header-cta{min-height:48px!important;padding:0 16px!important;font-size:12px}
+  .sg-header .sg-header-cta{min-height:48px!important;padding:0 max(22px, 1rem)!important;font-size:12px}
 }
 
 @media(max-width:1450px){
