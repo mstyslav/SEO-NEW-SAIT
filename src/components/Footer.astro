@@ -67,7 +67,7 @@ const footerTextByLocale = {
     hours: 'Пн–Пт: 09:00–19:00',
     citiesLine: 'Київ · Львів · Одеса',
     brandDescription: 'Скляні конструкції преміум-класу для дому, бізнесу та архітектурних проєктів.',
-    copyright: '© 2026 Space Glass. Усі права захищені.',
+    copyright: '© 2014–2026 Space Glass. Усі права захищені.',
     privacyPolicy: 'Політика конфіденційності',
     terms: 'Умови використання',
     cookies: 'Cookies',
@@ -91,7 +91,7 @@ const footerTextByLocale = {
     hours: 'Пн–Пт: 09:00–19:00',
     citiesLine: 'Киев · Львов · Одесса',
     brandDescription: 'Стеклянные конструкции премиум-класса для дома, бизнеса и архитектурных проектов.',
-    copyright: '© 2026 Space Glass. Все права защищены.',
+    copyright: '© 2014–2026 Space Glass. Все права защищены.',
     privacyPolicy: 'Политика конфиденциальности',
     terms: 'Условия использования',
     cookies: 'Cookies',
@@ -184,7 +184,7 @@ const currentYear = new Date().getFullYear();
 
 
   <div class="footer-refined__bottom">
-    <span>© {currentYear} Space Glass. {ft.copyright.replace(/^© \d{4} Space Glass\.\s*/, "")}</span>
+    <span>{ft.copyright}</span>
   </div>
 </footer>
 

@@ -2903,3 +2903,266 @@ body main .config-demo-hero~.section h2{
     height:82px !important;
   }
 }
+
+/* ===== Mobile footer compact layout test ===== */
+@media (max-width:480px){
+
+  /* Hide redundant mobile navigation groups */
+  .footer-refined__categories,
+  .footer-refined__main > .footer-refined__col:nth-of-type(3){
+    display:none !important;
+  }
+
+  /* Main footer compact 2-column layout */
+  .footer-refined__main{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+    column-gap:18px !important;
+    row-gap:24px !important;
+    align-items:start !important;
+  }
+
+  /* Brand left */
+  .footer-refined__brand{
+    grid-column:1 !important;
+    grid-row:1 !important;
+    width:auto !important;
+    min-width:0 !important;
+  }
+
+  /* Contacts right */
+  .footer-refined__contacts{
+    grid-column:2 !important;
+    grid-row:1 !important;
+    width:auto !important;
+    min-width:0 !important;
+  }
+
+  /* Company bottom-left */
+  .footer-refined__main > .footer-refined__col:nth-of-type(4){
+    grid-column:1 !important;
+    grid-row:2 !important;
+  }
+
+  /* Cities bottom-right */
+  .footer-refined__cities{
+    grid-column:2 !important;
+    grid-row:2 !important;
+  }
+
+  /* Keep social icons compact */
+  .footer-refined__socials{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    gap:8px !important;
+    margin-top:14px !important;
+  }
+
+  .footer-refined__socials a{
+    flex:0 0 auto !important;
+  }
+
+  /* Remove excessive vertical gaps */
+  .footer-refined__brand p{
+    margin-bottom:10px !important;
+  }
+
+  .footer-refined__contacts,
+  .footer-refined__col{
+    gap:8px !important;
+  }
+}
+
+/* ===== Mobile footer compact refinement ===== */
+@media (max-width:480px){
+
+  /* Company: hide "Матеріали" only on mobile */
+  .footer-refined__main > .footer-refined__col:nth-of-type(4) > a:nth-of-type(2){
+    display:none !important;
+  }
+
+  /* Contacts: cities are already linked in the separate "Міста" block */
+  .footer-refined__contacts > span:first-of-type{
+    display:none !important;
+  }
+
+  /* Make contacts tighter */
+  .footer-refined__contacts{
+    gap:6px !important;
+  }
+
+  .footer-refined__contacts > a,
+  .footer-refined__contacts > span{
+    margin:0 !important;
+  }
+
+  .footer-refined__call-secondary{
+    margin-top:4px !important;
+  }
+
+  /* Compact Company / Cities section */
+  .footer-refined__main{
+    row-gap:18px !important;
+    margin-bottom:18px !important;
+    padding-bottom:0 !important;
+  }
+
+  .footer-refined__main > .footer-refined__col:nth-of-type(4),
+  .footer-refined__cities{
+    gap:6px !important;
+  }
+
+  /* Pull products closer */
+  .footer-refined__products{
+    margin-top:0 !important;
+    padding-top:20px !important;
+  }
+}
+
+/* ===== Mobile footer — tighter gap before products ===== */
+@media (max-width:480px){
+  .footer-refined__main{
+    margin-bottom:8px !important;
+  }
+
+  .footer-refined__products{
+    margin-top:0 !important;
+    padding-top:10px !important;
+  }
+}
+
+
+/* ===== Mobile footer — compact space before products ===== */
+@media (max-width:480px){
+  .footer-refined__main{
+    margin-bottom:0 !important;
+    padding-bottom:0 !important;
+    min-height:0 !important;
+    height:auto !important;
+  }
+
+  .footer-refined__main > .footer-refined__col:nth-of-type(4),
+  .footer-refined__cities{
+    margin-bottom:0 !important;
+    padding-bottom:0 !important;
+    min-height:0 !important;
+  }
+
+  .footer-refined__main > .footer-refined__col:nth-of-type(4) > :last-child,
+  .footer-refined__cities > :last-child{
+    margin-bottom:0 !important;
+  }
+
+  .footer-refined__products{
+    margin-top:0 !important;
+    padding-top:3px !important;
+  }
+}
+
+/* ===== Mobile footer — remove empty hidden grid row ===== */
+@media (max-width:480px){
+  .footer-refined__main{
+    grid-template-areas:none !important;
+    grid-template-rows:auto auto !important;
+    row-gap:18px !important;
+  }
+
+  .footer-refined__brand{
+    grid-column:1 !important;
+    grid-row:1 !important;
+  }
+
+  .footer-refined__contacts{
+    grid-column:2 !important;
+    grid-row:1 !important;
+  }
+
+  .footer-refined__main > .footer-refined__col:nth-of-type(4){
+    grid-column:1 !important;
+    grid-row:2 !important;
+  }
+
+  .footer-refined__cities{
+    grid-column:2 !important;
+    grid-row:2 !important;
+  }
+}
+
+/* ===== Mobile footer — tiny gap before products title ===== */
+@media (max-width:480px){
+  .footer-refined__products{
+    padding-top:10px !important;
+  }
+}
+
+/* ===== Mobile footer — products title slightly lower ===== */
+@media (max-width:480px){
+  .footer-refined__products{
+    padding-top:14px !important;
+  }
+}
+
+/* ===== Compact footer for phones + narrow tablets ===== */
+@media (min-width:481px) and (max-width:760px){
+
+  /* Hide redundant text navigation */
+  .footer-refined__categories,
+  .footer-refined__main > .footer-refined__col:nth-of-type(3){
+    display:none !important;
+  }
+
+  .footer-refined__main{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+    grid-template-areas:none !important;
+    grid-template-rows:auto auto !important;
+    column-gap:28px !important;
+    row-gap:22px !important;
+    padding-bottom:0 !important;
+    margin-bottom:0 !important;
+  }
+
+  .footer-refined__brand{
+    grid-area:auto !important;
+    grid-column:1 !important;
+    grid-row:1 !important;
+  }
+
+  .footer-refined__contacts{
+    grid-area:auto !important;
+    grid-column:2 !important;
+    grid-row:1 !important;
+  }
+
+  .footer-refined__main > .footer-refined__col:nth-of-type(4){
+    grid-area:auto !important;
+    grid-column:1 !important;
+    grid-row:2 !important;
+  }
+
+  .footer-refined__cities{
+    grid-area:auto !important;
+    grid-column:2 !important;
+    grid-row:2 !important;
+  }
+
+  /* Hide "Матеріали" */
+  .footer-refined__main > .footer-refined__col:nth-of-type(4) > a:nth-of-type(2){
+    display:none !important;
+  }
+
+  /* City/location line duplicated by МІСТА below */
+  .footer-refined__contacts > span:first-of-type{
+    display:none !important;
+  }
+
+  .footer-refined__products{
+    margin-top:0 !important;
+    padding-top:14px !important;
+  }
+
+  /* Narrow tablet has enough width for 3 */
+  .footer-refined__product-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  }
+}
