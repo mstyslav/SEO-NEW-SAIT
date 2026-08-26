@@ -2872,3 +2872,34 @@ body main .config-demo-hero~.section h2{
     width:52px!important;
   }
 }
+
+/* ===== Mobile footer product icons — larger ===== */
+@media (max-width:480px){
+  .footer-refined__product-grid .footer-refined__icon{
+    width:110px !important;
+    height:110px !important;
+  }
+
+  .footer-refined__product-grid .footer-refined__icon svg{
+    width:100px !important;
+    height:100px !important;
+  }
+}
+
+/* ===== Mobile footer product grid — 2 per row test ===== */
+@media (max-width:480px){
+  .footer-refined__product-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:14px !important;
+  }
+
+  .footer-refined__product-grid .footer-refined__icon{
+    width:90px !important;
+    height:90px !important;
+  }
+
+  .footer-refined__product-grid .footer-refined__icon svg{
+    width:82px !important;
+    height:82px !important;
+  }
+}
