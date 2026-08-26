@@ -56,7 +56,17 @@ const related = sourceArticle.related
   })
   .filter((item): item is NonNullable<typeof item> => item !== null);
 
-const serviceHref = sourceArticle.serviceHref;
+const lp = (path: string) => localizedPath(path, 'ru');
+
+const localizeHref = (href: string) => {
+  const match = href.match(/^([^?#]*)(.*)$/);
+  if (!match) return href;
+
+  const [, pathname, suffix] = match;
+  return `${lp(pathname)}${suffix}`;
+};
+
+const serviceHref = localizeHref(sourceArticle.serviceHref);
 
 const structuredData = [
   {
@@ -87,6 +97,7 @@ const structuredData = [
   )
 ].filter(Boolean);
 import { KNOWLEDGE_CARDS_RU } from '../../../content/i18n/pages/knowledge-cards-ru';
+import { localizedPath } from '../../../i18n/helpers';
 ---
 
 <BaseLayout
@@ -141,7 +152,7 @@ import { KNOWLEDGE_CARDS_RU } from '../../../content/i18n/pages/knowledge-cards-
             <strong>Посмотреть реализованные проекты</strong>
           </a>
 
-          <a href="/contacts/#contact-form">
+          <a href={`${lp("/contacts/")}#contact-form`}>
             <span>03 · Ваш объект</span>
             <strong>Получить предварительный расчёт</strong>
           </a>
@@ -204,7 +215,7 @@ import { KNOWLEDGE_CARDS_RU } from '../../../content/i18n/pages/knowledge-cards-
               шаг.
             </p>
 
-            <a class="button button--white" href="/contacts/#contact-form">
+            <a class="button button--white" href={`${lp("/contacts/")}#contact-form`}>
               Получить консультацию
             </a>
 
@@ -259,7 +270,7 @@ import { KNOWLEDGE_CARDS_RU } from '../../../content/i18n/pages/knowledge-cards-
             </p>
           </div>
 
-          <a class="button button--white" href="/contacts/#contact-form">
+          <a class="button button--white" href={`${lp("/contacts/")}#contact-form`}>
             Перейти к расчёту
           </a>
         </section>

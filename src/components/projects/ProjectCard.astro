@@ -4,8 +4,12 @@ import type { Locale } from '../../i18n/helpers';
 
 const { project, hrefPrefix = '/projects', priority = false, eager = false, cardCover, locale = 'uk' as Locale } = Astro.props;
 const category = projectCategoryMap[project.category];
-const href = `${hrefPrefix}/${project.slug}/`;
 const isRu = locale === 'ru';
+const localizedHrefPrefix =
+  isRu && hrefPrefix.startsWith('/') && !hrefPrefix.startsWith('/ru/')
+    ? `/ru${hrefPrefix}`
+    : hrefPrefix;
+const href = `${localizedHrefPrefix}/${project.slug}/`;
 const cardTitle = isRu && project.cardTitleRu ? project.cardTitleRu : project.cardTitle;
 const city = isRu && project.cityRu ? project.cityRu : project.city;
 const constructionType = isRu && project.constructionTypeRu ? project.constructionTypeRu : project.constructionType;

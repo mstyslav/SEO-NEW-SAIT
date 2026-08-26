@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check:routes": "node scripts/check-routes.mjs",
-    "check:links": "node scripts/check-links.mjs",
+    "check:links": "node scripts/check-links.mjs && node scripts/check-locale-links.mjs",
     "check:seo": "node scripts/check-seo-pages.mjs",
     "check:projects": "node scripts/check-projects.mjs",
     "check:production": "npm run check:routes && npm run check:links && npm run check:configurator && npm run check:projects",

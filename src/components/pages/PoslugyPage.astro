@@ -57,7 +57,7 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
       <div class="services-cycle__breadcrumbs"><Breadcrumbs items={[{label:t.breadcrumbs.home,href:lp('/')},{label:t.breadcrumbs.current}]} ariaLabel={t.breadcrumbs.ariaLabel} /></div>
 
       <section class="services-cycle__hero" aria-labelledby="services-title">
-        <div class="services-cycle__hero-copy"><p class="eyebrow">{t.hero.eyebrow}</p><h1 id="services-title">{t.hero.h1}</h1><p>{t.hero.lead}</p><div class="hero__actions"><a class="button button--mint" href="/contacts/#contact-form">{t.hero.ctaPrimary}</a><a class="button button--outline" href={lp('/projects/')}>{t.hero.ctaSecondary}</a></div></div>
+        <div class="services-cycle__hero-copy"><p class="eyebrow">{t.hero.eyebrow}</p><h1 id="services-title">{t.hero.h1}</h1><p>{t.hero.lead}</p><div class="hero__actions"><a class="button button--mint" href={`${lp("/contacts/")}#contact-form`}>{t.hero.ctaPrimary}</a><a class="button button--outline" href={lp('/projects/')}>{t.hero.ctaSecondary}</a></div></div>
         <div class="services-cycle__hero-image"><picture><source media="(max-width: 700px)" srcset="/images/services/services-hero-mobile.webp" /><img src="/images/services/services-hero-desktop.webp" width="1536" height="1024" alt={t.hero.heroImageAlt} loading="eager" fetchpriority="high" decoding="async" /></picture></div>
       </section>
       <TrustBar locale={locale} />
@@ -97,7 +97,7 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
 
       <section class="services-cycle__final-cta" aria-labelledby="cta-title">
         <div><p class="eyebrow eyebrow--light">{t.ctaSection.eyebrow}</p><h2 id="cta-title">{t.ctaSection.title}</h2><p>{t.ctaSection.intro}</p></div>
-        <div class="services-cycle__final-cta-actions"><a class="button button--mint" href="/contacts/#contact-form">{t.ctaSection.ctaPrimary}</a><a class="button button--outline" href={lp('/contacts/')}>{t.ctaSection.ctaSecondary}</a></div>
+        <div class="services-cycle__final-cta-actions"><a class="button button--mint" href={`${lp("/contacts/")}#contact-form`}>{t.ctaSection.ctaPrimary}</a><a class="button button--outline" href={lp('/contacts/')}>{t.ctaSection.ctaSecondary}</a></div>
       </section>
     </main><Footer locale={locale} />
   </div>

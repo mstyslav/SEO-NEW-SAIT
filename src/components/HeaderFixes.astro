@@ -56,6 +56,12 @@
     if (route) link.setAttribute('href', route);
   });
 
+  const isRu = window.location.pathname === '/ru/' || window.location.pathname.startsWith('/ru/');
+  const localeRoute = (route) => {
+    if (!isRu || !route.startsWith('/') || route.startsWith('/ru/')) return route;
+    return route === '/' ? '/ru/' : `/ru${route}`;
+  };
+
   const groupRoutes = {
     showers:'/dushovi-kabiny/',
     mirrors:'/dzerkala/',
@@ -75,11 +81,12 @@
   header.querySelectorAll('[data-menu-key]').forEach((node) => {
     const route = groupRoutes[node.dataset.menuKey];
     if (!route) return;
-    if (node.matches('a')) node.setAttribute('href', route);
-    node.querySelectorAll?.('a').forEach((link) => link.setAttribute('href', route));
+    const localizedRoute = localeRoute(route);
+    if (node.matches('a')) node.setAttribute('href', localizedRoute);
+    node.querySelectorAll?.('a').forEach((link) => link.setAttribute('href', localizedRoute));
   });
 
-  header.querySelectorAll('a[href="#"]').forEach((link) => link.setAttribute('href','/contacts/'));
+  header.querySelectorAll('a[href="#"]').forEach((link) => link.setAttribute('href', localeRoute('/contacts/')));
 
   /* .sg-nav-actions visual order is fully controlled by the CSS `order` rules
      above; the wishlist icon is server-rendered in Header.astro, so no JS
