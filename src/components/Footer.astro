@@ -14,59 +14,46 @@ const categoryTypes = ['shower','mirror','partition','door','railing','frameless
 const categories = categoryLabels.map((label, i) => [label, categoryHrefs[i]]);
 const productStrip = categoryLabels.map((label, i) => [label, categoryHrefs[i], categoryTypes[i]]);
 
-const serviceHrefs = ['/poslugy/vyhotovlennya/','/poslugy/dostavka/','/poslugy/montazh/','/poslugy/zamir/','/poslugy/proektuvannya/','/poslugy/servis/','/poslugy/servis/'];
+const serviceHrefs = [`${lp('/poslugy/')}#full-cycle`, `${lp('/poslugy/')}#process`, `${lp('/poslugy/')}#process`, `${lp('/poslugy/')}#process`, `${lp('/poslugy/')}#process`];
 const serviceLabelsByLocale = {
-  uk: ['Виготовлення','Доставка','Монтаж','Замір','Проєктування','Гарантія та сервіс','Післягарантійне обслуговування'],
-  ru: ['Изготовление','Доставка','Монтаж','Замер','Проектирование','Гарантия и сервис','Послегарантийное обслуживание']
+  uk: ['Виготовлення','Монтаж','Замір','Проєктування','Гарантія та сервіс'],
+  ru: ['Изготовление','Монтаж','Замер','Проектирование','Гарантия и сервис']
 };
 const services = (serviceLabelsByLocale[locale] ?? serviceLabelsByLocale.uk).map((label, i) => [label, serviceHrefs[i]]);
 
 const companyByLocale = {
   uk: [
-    ['Про нас','/about/'],
-    ['Наше виробництво','/about/'],
-    ['Матеріали','/knowledge/'],
-    ['Технології','/knowledge/'],
-    ['Вакансії','/about/#career'],
-    ['Партнери','/about/'],
-    ['Відгуки','/projects/'],
-    ['Контакти','/contacts/']
+    ['Про нас', lp('/about/')],
+    ['Матеріали', lp('/knowledge/')],
+    ['Вакансії', `${lp('/about/')}#career`],
+    ['Партнери', `${lp('/about/')}#partners`],
+    ['Відгуки', `${lp('/about/')}#reviews`]
   ],
   ru: [
-    ['О нас','/about/'],
-    ['Наше производство','/about/'],
-    ['Материалы','/knowledge/'],
-    ['Технологии','/knowledge/'],
-    ['Вакансии','/about/#career'],
-    ['Партнёры','/about/'],
-    ['Отзывы','/projects/'],
-    ['Контакты','/contacts/']
+    ['О нас', lp('/about/')],
+    ['Материалы', lp('/knowledge/')],
+    ['Вакансии', `${lp('/about/')}#career`],
+    ['Партнёры', `${lp('/about/')}#partners`],
+    ['Отзывы', `${lp('/about/')}#reviews`]
   ]
 };
 const company = companyByLocale[locale] ?? companyByLocale.uk;
 
 const citiesByLocale = {
   uk: [
-    ['Скляні конструкції Київ','/city/kyiv/'],
-    ['Скляні конструкції Львів','/city/lviv/'],
-    ['Скляні конструкції Одеса','/city/odesa/'],
-    ['Скляні конструкції Дніпро','#'],
-    ['Скляні конструкції Харків','#'],
-    ['Скляні конструкції Івано-Франківськ','#'],
-    ['Всі міста','/catalog/']
+    ['Київ','/city/kyiv/'],
+    ['Одеса','/city/odesa/'],
+    ['Львів','/city/lviv/'],
+    ['Вся Україна','/catalog/']
   ],
   ru: [
-    ['Стеклянные конструкции Киев','/city/kyiv/'],
-    ['Стеклянные конструкции Львов','/city/lviv/'],
-    ['Стеклянные конструкции Одесса','/city/odesa/'],
-    ['Стеклянные конструкции Днепр','#'],
-    ['Стеклянные конструкции Харьков','#'],
-    ['Стеклянные конструкции Ивано-Франковск','#'],
-    ['Все города','/catalog/']
+    ['Киев','/city/kyiv/'],
+    ['Одесса','/city/odesa/'],
+    ['Львов','/city/lviv/'],
+    ['Вся Украина','/catalog/']
   ]
 };
 const cities = citiesByLocale[locale] ?? citiesByLocale.uk;
-const citiesNowrapMarker = locale === 'ru' ? 'Ивано-Франковск' : 'Івано-Франківськ';
 
 const footerTextByLocale = {
   uk: {
@@ -151,9 +138,9 @@ const currentYear = new Date().getFullYear();
       <strong>{ft.categoriesTitle}</strong>
       {categories.map(([label,href]) => <a href={lp(href)}>{label}</a>)}
     </div>
-    <div class="footer-refined__col"><strong>{ft.servicesTitle}</strong>{services.map(([label,href]) => <a href={lp(href)}>{label}</a>)}</div>
-    <div class="footer-refined__col"><strong>{ft.companyTitle}</strong>{company.map(([label,href]) => <a href={lp(href)}>{label}</a>)}</div>
-    <div class="footer-refined__col footer-refined__cities"><strong>{ft.citiesTitle}</strong>{cities.map(([label,href]) => <a class={label.includes(citiesNowrapMarker) ? 'footer-nowrap' : undefined} href={href === '#' ? href : lp(href)}>{label}</a>)}</div>
+    <div class="footer-refined__col"><strong>{ft.servicesTitle}</strong>{services.map(([label,href]) => <a href={href}>{label}</a>)}</div>
+    <div class="footer-refined__col"><strong>{ft.companyTitle}</strong>{company.map(([label,href]) => <a href={href}>{label}</a>)}</div>
+    <div class="footer-refined__col footer-refined__cities"><strong>{ft.citiesTitle}</strong>{cities.map(([label,href]) => <a href={lp(href)}>{label}</a>)}</div>
     <div class="footer-refined__contacts"><strong>{ft.contactsTitle}</strong><a href="tel:+380734251400"><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>+38 (073) 425 14 00</span></a><a href="mailto:info@space-glass.com.ua"><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4V6Zm0 0 8 7 8-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>info@space-glass.com.ua</span></a><span><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><b>{ft.citiesLine}</b></span><span><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5v4.7l3.2 1.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>{ft.hours}</b></span><a class="footer-refined__call-secondary" href={lp("/contacts/")}><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>{ft.callSecondary}</b><i>→</i></a></div>
   </div>
 

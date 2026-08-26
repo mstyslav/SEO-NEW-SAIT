@@ -2293,21 +2293,37 @@ img[loading="lazy"]{content-visibility:auto}
 }
 
 
-/* ТОЛЬКО СОВСЕМ УЗКИЙ ТЕЛЕФОН — навигационные секции в 2 колонки, brand/contacts на всю ширину */
+/* ТОЛЬКО СОВСЕМ УЗКИЙ ТЕЛЕФОН — навигационные секции в 2 колонки, contacts справа от логотипа */
 @media (max-width:480px){
   .footer-refined__main{
     grid-template-columns:repeat(2,minmax(0,1fr)) !important;
     grid-template-areas:
-      "brand brand"
-      "contacts contacts"
+      "brand contacts"
       "categories services"
       "company cities" !important;
     row-gap:20px !important;
     column-gap:14px !important;
   }
 
+  /* 10 категорій = 2 колонки по 5, порядок зберігається (перші 5 — ліва
+     колонка, наступні 5 — права): явні grid-template-rows + auto-flow:column
+     замість repeat(2,1fr) row-major, який дав би зигзаг 1-2/3-4/… замість
+     чистого поділу навпіл. Заголовок займає окремий рядок на всю ширину. */
   .footer-refined__categories{
-    grid-template-columns:1fr !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    grid-template-rows:auto repeat(5,auto) !important;
+    grid-auto-flow:column !important;
+    column-gap:14px !important;
+    row-gap:8px !important;
+  }
+
+  .footer-refined__categories > strong{
+    grid-column:1/-1 !important;
+    grid-row:1 !important;
+  }
+
+  .footer-refined__categories > a{
+    min-width:0 !important;
   }
 
   .footer-refined__col,

@@ -5,6 +5,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../Header.astro';
 import Footer from '../Footer.astro';
+import GoogleReviews from '../GoogleReviews.astro';
 import { localizedPath, type Locale } from '../../i18n/helpers';
 import { aboutContent } from '../../content/i18n/pages/about';
 
@@ -119,7 +120,12 @@ const systems = [
         <a class="outline-link" href="#career">{t.team.careerLinkLabel}</a>
       </section>
 
-      <section class="trust section-pad about-partners-final">
+      <section id="career" class="career section-pad">
+        <div class="career__copy"><p class="eyebrow">{t.career.eyebrow}</p><h2>{t.career.title}</h2><p>{t.career.text}</p></div>
+        <form class="career__form"><input type="text" aria-label={t.career.nameLabel} placeholder={t.career.namePlaceholder} /><input type="tel" aria-label={t.career.phoneLabel} placeholder={t.career.phonePlaceholder} /><select aria-label={t.career.jobAriaLabel}><option>{t.career.jobPlaceholder}</option>{t.career.jobOptions.map((option) => <option>{option}</option>)}</select><button type="button">{t.career.submitLabel}</button></form>
+      </section>
+
+      <section id="partners" class="trust section-pad about-partners-final">
       <div class="about-partners-final__intro">
         <div>
           <p class="eyebrow">{t.trust.eyebrow}</p>
@@ -151,12 +157,11 @@ const systems = [
         </div>
       </section>
 
-      <section class="final-cta" id="contact"><div><p class="eyebrow">{t.finalCta.eyebrow}</p><h2>{t.finalCta.title}</h2><p>{t.finalCta.text}</p></div><a href={`${lp('/')}#quote`}>{t.finalCta.buttonLabel}</a></section>
+      <div id="reviews">
+        <GoogleReviews locale={locale} />
+      </div>
 
-      <section id="career" class="career section-pad">
-        <div class="career__copy"><p class="eyebrow">{t.career.eyebrow}</p><h2>{t.career.title}</h2><p>{t.career.text}</p></div>
-        <form class="career__form"><input type="text" aria-label={t.career.nameLabel} placeholder={t.career.namePlaceholder} /><input type="tel" aria-label={t.career.phoneLabel} placeholder={t.career.phonePlaceholder} /><select aria-label={t.career.jobAriaLabel}><option>{t.career.jobPlaceholder}</option>{t.career.jobOptions.map((option) => <option>{option}</option>)}</select><button type="button">{t.career.submitLabel}</button></form>
-      </section>
+      <section class="final-cta" id="contact"><div><p class="eyebrow">{t.finalCta.eyebrow}</p><h2>{t.finalCta.title}</h2><p>{t.finalCta.text}</p></div><a href={`${lp('/')}#quote`}>{t.finalCta.buttonLabel}</a></section>
     </main>
     <Footer locale={locale} />
   </div>

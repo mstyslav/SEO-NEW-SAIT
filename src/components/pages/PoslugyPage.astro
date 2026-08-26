@@ -62,12 +62,12 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
       </section>
       <TrustBar locale={locale} />
 
-      <section class="services-cycle__section" aria-labelledby="full-cycle-title">
+      <section id="full-cycle" class="services-cycle__section" aria-labelledby="full-cycle-title">
         <div class="services-cycle__section-head"><p class="eyebrow">{t.fullCycleSection.eyebrow}</p><h2 id="full-cycle-title">{t.fullCycleSection.title}</h2><p>{t.fullCycleSection.intro}</p></div>
         <div class="services-cycle__stage-grid">{stages.map(({number,title,text,icon}) => <article class="services-cycle__stage"><div class="services-cycle__stage-icon"><svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" set:html={stageIcons[icon]} /></div><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
       </section>
 
-      <section class="services-cycle__section services-cycle__process" aria-labelledby="process-title"><div class="services-cycle__section-head services-cycle__section-head--split"><div><p class="eyebrow">{t.processSection.eyebrow}</p><h2 id="process-title">{t.processSection.title}</h2></div><p>{t.processSection.intro}</p></div><ol class="services-cycle__timeline">{t.process.map(([number,title,text]) => <li><span>{number}</span><h3>{title}</h3><p>{text}</p></li>)}</ol></section>
+      <section id="process" class="services-cycle__section services-cycle__process" aria-labelledby="process-title"><div class="services-cycle__section-head services-cycle__section-head--split"><div><p class="eyebrow">{t.processSection.eyebrow}</p><h2 id="process-title">{t.processSection.title}</h2></div><p>{t.processSection.intro}</p></div><ol class="services-cycle__timeline">{t.process.map(([number,title,text]) => <li><span>{number}</span><h3>{title}</h3><p>{text}</p></li>)}</ol></section>
 
       <section class="services-cycle__numbers" aria-labelledby="numbers-title"><div class="services-cycle__numbers-head"><p class="eyebrow">{t.numbersSection.eyebrow}</p><h2 id="numbers-title">{t.numbersSection.title}</h2></div><div class="services-cycle__numbers-grid">{t.numbers.map(({value, lines}) => <article><strong>{value}</strong><p>{lines[0]}<br />{lines[1]}<br />{lines[2]}</p></article>)}</div></section>
 
