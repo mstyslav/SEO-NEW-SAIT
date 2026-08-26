@@ -139,8 +139,9 @@ const faq = t.faq.items;
               const cardSrc = project.cover.src.replace(/\.webp$/, '-480.webp');
               const cardWidth = 480;
               const cardHeight = Math.round(480 * project.cover.height / project.cover.width);
+              const cardTitle = pageLocale === 'ru' && project.cardTitleRu ? project.cardTitleRu : project.cardTitle;
               return (
-              <a class="sg-project-image" href={lp(`/projects/${project.slug}/`)} aria-label={`${t.projects.viewProjectPrefix} ${project.cardTitle}`}>
+              <a class="sg-project-image" href={lp(`/projects/${project.slug}/`)} aria-label={`${t.projects.viewProjectPrefix} ${cardTitle}`}>
                 <img
                   src={cardSrc}
                   width={cardWidth}
@@ -149,7 +150,7 @@ const faq = t.faq.items;
                   loading="lazy"
                   decoding="async"
                 />
-                <h3>{project.cardTitle}</h3>
+                <h3>{cardTitle}</h3>
               </a>
               );
             })}

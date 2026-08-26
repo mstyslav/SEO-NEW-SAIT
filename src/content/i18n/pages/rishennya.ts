@@ -40,6 +40,7 @@ export interface RishennyaContent {
   chooseSection: { eyebrow: string; title: string; ctaLabel: string };
   choosePoints: [string, string][];
   processSection: { eyebrow: string; title: string };
+  processSteps: [string, string][];
   geographySection: { eyebrow: string; title: string; intro: string; cityCtaLabel: string; footnote: string };
   faqSectionTitle: string;
   faqItems: [string, string][];
@@ -128,6 +129,12 @@ export const rishennyaContent: Record<Locale, RishennyaContent> = {
       eyebrow: 'Від ідеї до монтажу',
       title: 'Як проходить реалізація проєкту'
     },
+    processSteps: [
+      ['Замір на об’єкті', 'Точні розміри, геометрія та умови монтажу.'],
+      ['Проєктування конструкції', 'Креслення, вузли, скло, профіль і фурнітура.'],
+      ['Виготовлення на виробництві', 'Обробка скла та комплектація конструкції.'],
+      ['Доставка та монтаж', 'Монтаж, регулювання та перевірка готової конструкції.']
+    ],
     geographySection: {
       eyebrow: 'Географія',
       title: 'Реалізуємо проєкти у Києві, Одесі, Львові та по Україні',
@@ -247,6 +254,12 @@ export const rishennyaContent: Record<Locale, RishennyaContent> = {
       eyebrow: 'От идеи до монтажа',
       title: 'Как проходит реализация проекта'
     },
+    processSteps: [
+      ['Замер на объекте', 'Точные размеры, геометрия и условия монтажа.'],
+      ['Проектирование конструкции', 'Чертежи, узлы, стекло, профиль и фурнитура.'],
+      ['Изготовление на производстве', 'Обработка стекла и комплектация конструкции.'],
+      ['Доставка и монтаж', 'Монтаж, регулировка и проверка готовой конструкции.']
+    ],
     geographySection: {
       eyebrow: 'География',
       title: 'Реализуем проекты в Киеве, Одессе, Львове и по Украине',

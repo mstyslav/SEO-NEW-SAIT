@@ -31,6 +31,9 @@ export interface Solution {
   slug: SolutionSlug;
   path: string;
   navLabel: string;
+  // Used only by /catalog/'s "object type" section (no dedicated /ru/rishennya/dlya-*/ route exists yet).
+  navLabelRu?: string;
+  hubCardTextRu?: string;
   eyebrow: string;
   title: string;
   description: string;
@@ -72,6 +75,7 @@ export const SOLUTIONS: Solution[] = [
     slug: 'dlya-kvartyry',
     path: '/rishennya/dlya-kvartyry/',
     navLabel: 'Для квартири',
+    navLabelRu: 'Для квартиры',
     eyebrow: 'Рішення · Для квартири',
     title: 'Скляні конструкції для квартири | Space Glass',
     description:
@@ -86,6 +90,7 @@ export const SOLUTIONS: Solution[] = [
       alt: 'Сучасна квартира зі скляною перегородкою в чорному алюмінієвому профілі'
     },
     hubCardText: 'Душові кабіни, скляні перегородки, Loft-перегородки, двері та індивідуальні конструкції для сучасного інтер’єру.',
+    hubCardTextRu: 'Душевые кабины, стеклянные перегородки, Loft-перегородки, двери и индивидуальные конструкции для современного интерьера.',
     seo: {
       primaryKeyword: 'скляні конструкції для квартири',
       secondaryKeywords: ['скляні перегородки для квартири', 'Loft-перегородки для квартири', 'душові кабіни зі скла', 'скляні двері для квартири', 'дзеркала на замовлення'],
@@ -144,6 +149,7 @@ export const SOLUTIONS: Solution[] = [
     slug: 'dlya-budynku',
     path: '/rishennya/dlya-budynku/',
     navLabel: 'Для будинку',
+    navLabelRu: 'Для дома',
     eyebrow: 'Рішення · Для будинку',
     title: 'Скляні конструкції для будинку | Space Glass',
     description:
@@ -158,6 +164,7 @@ export const SOLUTIONS: Solution[] = [
       alt: 'Сучасний приватний будинок з панорамним фасадним склінням і скляною терасою'
     },
     hubCardText: 'Скляні огорожі, навіси, тераси, безрамне скління та алюмінієві системи для приватного будинку.',
+    hubCardTextRu: 'Стеклянные ограждения, навесы, террасы, безрамное остекление и алюминиевые системы для частного дома.',
     seo: {
       primaryKeyword: 'скляні конструкції для будинку',
       secondaryKeywords: ['скляні огорожі для будинку', 'безрамне скління тераси', 'скління будинків', 'алюмінієві вікна та двері'],
@@ -216,6 +223,7 @@ export const SOLUTIONS: Solution[] = [
     slug: 'dlya-ofisu',
     path: '/rishennya/dlya-ofisu/',
     navLabel: 'Для офісу',
+    navLabelRu: 'Для офиса',
     eyebrow: 'Рішення · Для офісу',
     title: 'Скляні перегородки та двері для офісу | Space Glass',
     description:
@@ -230,6 +238,7 @@ export const SOLUTIONS: Solution[] = [
       alt: 'Сучасний офіс зі скляними перегородками та дверима в алюмінієвому профілі'
     },
     hubCardText: 'Скляні офісні перегородки, двері та конструкції в алюмінієвому профілі для робочих просторів.',
+    hubCardTextRu: 'Стеклянные офисные перегородки, двери и конструкции в алюминиевом профиле для рабочих пространств.',
     seo: {
       primaryKeyword: 'скляні перегородки для офісу',
       secondaryKeywords: ['скляні конструкції для офісу', 'офісні перегородки зі скла', 'loft перегородки', 'скління переговорних кімнат'],
@@ -287,6 +296,7 @@ export const SOLUTIONS: Solution[] = [
     slug: 'dlya-hotelyu',
     path: '/rishennya/dlya-hotelyu/',
     navLabel: 'Для готелю',
+    navLabelRu: 'Для отеля',
     eyebrow: 'Рішення · Для готелю',
     title: 'Скляні конструкції для готелів | Space Glass',
     description:
@@ -301,6 +311,7 @@ export const SOLUTIONS: Solution[] = [
       alt: 'Преміальний готель зі скляною вхідною групою та панорамним фасадним склінням'
     },
     hubCardText: 'Душові, перегородки, огорожі, двері та фасадні рішення для готелів і апартаментів.',
+    hubCardTextRu: 'Душевые, перегородки, ограждения, двери и фасадные решения для отелей и апартаментов.',
     seo: {
       primaryKeyword: 'скляні конструкції для готелів',
       secondaryKeywords: ['душові кабіни для готелю', 'скляні перегородки для готелю', 'Loft-перегородки для готелю', 'фасадне скління готелю', 'вхідні групи для готелів'],
@@ -359,6 +370,7 @@ export const SOLUTIONS: Solution[] = [
     slug: 'dlya-restoranu',
     path: '/rishennya/dlya-restoranu/',
     navLabel: 'Для ресторану',
+    navLabelRu: 'Для ресторана',
     eyebrow: 'Рішення · Для ресторану',
     title: 'Скляні конструкції для ресторанів і кафе | Space Glass',
     description:
@@ -373,6 +385,7 @@ export const SOLUTIONS: Solution[] = [
       alt: 'Сучасний ресторан з панорамним скляним фасадом і скляними перегородками'
     },
     hubCardText: 'Вітрини, перегородки, тераси, двері та фасадне скління для ресторанів і кафе.',
+    hubCardTextRu: 'Витрины, перегородки, террасы, двери и фасадное остекление для ресторанов и кафе.',
     seo: {
       primaryKeyword: 'скляні конструкції для ресторану',
       secondaryKeywords: ['скляні перегородки для ресторану', 'Loft-перегородки для ресторану', 'фасадне скління кафе', 'скління тераси ресторану', 'вітрини для кафе'],
@@ -431,6 +444,7 @@ export const SOLUTIONS: Solution[] = [
     slug: 'dlya-magazynu',
     path: '/rishennya/dlya-magazynu/',
     navLabel: 'Для магазину',
+    navLabelRu: 'Для магазина',
     eyebrow: 'Рішення · Для магазину',
     title: 'Скляні вітрини та конструкції для магазинів | Space Glass',
     description:
@@ -445,6 +459,7 @@ export const SOLUTIONS: Solution[] = [
       alt: 'Преміальний магазин зі скляною вітриною, фасадом та вхідною групою'
     },
     hubCardText: 'Скляні вітрини, вхідні групи, двері та фасадні конструкції для торгових просторів.',
+    hubCardTextRu: 'Стеклянные витрины, входные группы, двери и фасадные конструкции для торговых пространств.',
     seo: {
       primaryKeyword: 'скляні вітрини для магазину',
       secondaryKeywords: ['скляні конструкції для магазину', 'фасадне скління магазину', 'вхідні групи для магазину', 'скління торгових приміщень'],

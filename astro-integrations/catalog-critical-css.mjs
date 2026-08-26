@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const MARKER = 'data-catalog-common-critical';
 const PAGE_MARKER = 'data-catalog-critical';
 const STYLESHEET_LINK_RE = /<link rel="stylesheet" href="([^"]+)">/g;
-const TARGET_PAGES = ['catalog/index.html'];
+const TARGET_PAGES = ['catalog/index.html', 'ru/catalog/index.html'];
 const commonCriticalCssPath = fileURLToPath(
   new URL('../src/styles/catalog-common-critical.css', import.meta.url)
 );

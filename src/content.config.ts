@@ -24,11 +24,17 @@ const projects = defineCollection({
     }),
     h1: z.string().min(20),
     cardTitle: z.string().min(10),
+    // RU display overlay for carousel/card text only — the project entity itself
+    // stays uk-only (see `locale` above); no separate ru entity, no slug/URL change.
+    cardTitleRu: z.string().min(10).optional(),
     city: z.enum(['Київ', 'Львів', 'Одеса']),
+    cityRu: z.enum(['Киев', 'Одесса', 'Львов']).optional(),
     category: z.enum(projectCategoryIds),
     constructionType: z.string().min(3),
+    constructionTypeRu: z.string().min(3).optional(),
     objectType: z.string().min(3),
     shortDescription: z.string().min(40),
+    shortDescriptionRu: z.string().min(40).optional(),
     clientTask: z.object({ title: z.string(), text: z.string().min(60) }),
     solution: z.object({ title: z.string(), text: z.string().min(60) }),
     characteristics: z.array(z.object({ label: z.string(), value: z.string() })).min(3),

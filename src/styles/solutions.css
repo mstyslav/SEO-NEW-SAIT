@@ -384,3 +384,10 @@
     width:82vw;
   }
 }
+
+/* /rishennya/ uses its own localized 4-step process */
+@media (min-width:1051px){
+  .rishennya-process .solution-process-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+}

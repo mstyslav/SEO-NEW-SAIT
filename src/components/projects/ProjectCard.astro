@@ -1,9 +1,18 @@
 ---
 import { projectCategoryMap } from '../../data/project-taxonomy';
+import type { Locale } from '../../i18n/helpers';
 
-const { project, hrefPrefix = '/projects', priority = false, eager = false, cardCover } = Astro.props;
+const { project, hrefPrefix = '/projects', priority = false, eager = false, cardCover, locale = 'uk' as Locale } = Astro.props;
 const category = projectCategoryMap[project.category];
 const href = `${hrefPrefix}/${project.slug}/`;
+const isRu = locale === 'ru';
+const cardTitle = isRu && project.cardTitleRu ? project.cardTitleRu : project.cardTitle;
+const city = isRu && project.cityRu ? project.cityRu : project.city;
+const constructionType = isRu && project.constructionTypeRu ? project.constructionTypeRu : project.constructionType;
+const shortDescription = isRu && project.shortDescriptionRu ? project.shortDescriptionRu : project.shortDescription;
+const categoryLabel = isRu ? category.labelRu : category.label;
+const viewProjectLabel = isRu ? 'Смотреть проект' : 'Переглянути проєкт';
+const viewProjectAriaPrefix = isRu ? 'Смотреть проект:' : 'Переглянути проєкт:';
 const resolvedCover = cardCover ?? project.cover;
 
 // Generated variants live next to the original as `-{width}.webp` (see /rishennya/ for the
@@ -25,7 +34,7 @@ const loading = priority || eager ? 'eager' : 'lazy';
 const fetchpriority = priority ? 'high' : eager ? 'auto' : undefined;
 ---
 <article class="project-card-v2" data-project-card data-category={project.category} data-city={project.city}>
-  <a href={href} aria-label={`Переглянути проєкт: ${project.cardTitle}`}>
+  <a href={href} aria-label={`${viewProjectAriaPrefix} ${cardTitle}`}>
     <div class="project-card-v2__media">
       <img
         src={resolvedCover.src}
@@ -40,11 +49,11 @@ const fetchpriority = priority ? 'high' : eager ? 'auto' : undefined;
       />
     </div>
     <div class="project-card-v2__body">
-      <p>{project.city} <span aria-hidden="true">/</span> {category.label}</p>
-      <h2>{project.cardTitle}</h2>
-      <span class="project-card-v2__type">{project.constructionType}</span>
-      <span class="project-card-v2__description">{project.shortDescription}</span>
-      <b>Переглянути проєкт <span aria-hidden="true">→</span></b>
+      <p>{city} <span aria-hidden="true">/</span> {categoryLabel}</p>
+      <h2>{cardTitle}</h2>
+      <span class="project-card-v2__type">{constructionType}</span>
+      <span class="project-card-v2__description">{shortDescription}</span>
+      <b>{viewProjectLabel} <span aria-hidden="true">→</span></b>
     </div>
   </a>
 </article>

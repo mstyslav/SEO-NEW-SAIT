@@ -1,10 +1,4 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import ProjectsIndex from '../components/projects/ProjectsIndex.astro';
+import ProjectsPage from '../components/pages/ProjectsPage.astro';
 ---
-<BaseLayout title="Реалізовані проєкти Space Glass" description="Реалізовані проєкти Space Glass: скляні перегородки, двері, душові, огорожі, фасади, безрамне скління, алюмінієві конструкції, перголи та системи сонцезахисту. Київ, Одеса, Львів і вся Україна." locale="uk" alternateLocales={['uk']}>
-<div class="sg-page-shell"><Header/><main id="main">
-<ProjectsIndex />
-</main><Footer/></div></BaseLayout>
+<ProjectsPage locale="uk" />

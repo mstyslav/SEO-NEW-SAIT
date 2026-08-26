@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const MARKER = 'data-rishennya-common-critical';
 const PAGE_MARKER = 'data-rishennya-critical';
 const STYLESHEET_LINK_RE = /<link rel="stylesheet" href="([^"]+)">/g;
-const TARGET_PAGES = ['rishennya/index.html'];
+const TARGET_PAGES = ['rishennya/index.html', 'ru/rishennya/index.html'];
 const commonCriticalCssPath = fileURLToPath(
   new URL('../src/styles/rishennya-critical.css', import.meta.url)
 );

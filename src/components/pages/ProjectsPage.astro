@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import ProjectsIndex from '../projects/ProjectsIndex.astro';
+import type { Locale } from '../../i18n/helpers';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+
+const meta = locale === 'ru' ? {
+  title: 'Реализованные проекты Space Glass',
+  description: 'Реализованные проекты Space Glass: стеклянные перегородки, двери, душевые, ограждения, фасады, безрамное остекление, алюминиевые конструкции, перголы и системы солнцезащиты. Киев, Одесса, Львов и вся Украина.'
+} : {
+  title: 'Реалізовані проєкти Space Glass',
+  description: 'Реалізовані проєкти Space Glass: скляні перегородки, двері, душові, огорожі, фасади, безрамне скління, алюмінієві конструкції, перголи та системи сонцезахисту. Київ, Одеса, Львів і вся Україна.'
+};
+---
+<BaseLayout title={meta.title} description={meta.description} locale={locale}>
+<div class="sg-page-shell"><Header locale={locale}/><main id="main">
+<ProjectsIndex locale={locale} />
+</main><Footer locale={locale}/></div></BaseLayout>

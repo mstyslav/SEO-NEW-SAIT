@@ -1,9 +1,9 @@
 ---
 // Standard 4-item strip, translated once in src/i18n/trustbar.ts and shared
 // by every caller. `locale` defaults to 'uk', so callers that don't pass it
-// (poslugy, catalog — neither has real per-locale rendering) keep rendering
-// byte-identical uk output. Callers that do render under /ru/ (HomePage,
-// RishennyaPage) just pass their own `locale` — no per-page copy needed.
+// (poslugy — no real per-locale rendering) keep rendering byte-identical uk
+// output. Callers that do render under /ru/ (HomePage, RishennyaPage, catalog,
+// ProjectsIndex) just pass their own `locale` — no per-page copy needed.
 import { trustBarItems } from '../i18n/trustbar';
 import type { Locale } from '../i18n/helpers';
 

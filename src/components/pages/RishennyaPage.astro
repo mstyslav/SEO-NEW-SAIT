@@ -8,7 +8,7 @@ import Header from '../Header.astro';
 import TrustBar from '../TrustBar.astro';
 import Footer from '../Footer.astro';
 import FAQBlock from '../FAQBlock.astro';
-import { SOLUTIONS, CITY_LINKS, PROCESS_STEPS } from '../../data/solutions';
+import { SOLUTIONS, CITY_LINKS } from '../../data/solutions';
 import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
 import { getCollection } from 'astro:content';
 import { localizedPath, type Locale } from '../../i18n/helpers';
@@ -171,7 +171,7 @@ const choosePoints = t.choosePoints;
                     />
                   </div>
                   <div class="rishennya-showcase__body">
-                    <h3>{project.cardTitle}</h3>
+                    <h3>{locale === 'ru' && project.cardTitleRu ? project.cardTitleRu : project.cardTitle}</h3>
                   </div>
                 </a>
               ))}
@@ -211,7 +211,7 @@ const choosePoints = t.choosePoints;
         <section class="rishennya-hub__section rishennya-process" aria-labelledby="process-title">
           <div class="solution-section-head"><p class="eyebrow">{t.processSection.eyebrow}</p><h2 id="process-title">{t.processSection.title}</h2></div>
           <div class="solution-process-grid">
-            {PROCESS_STEPS.map((step, index) => <article class="solution-process-step"><span>0{index + 1}</span><b>{step.title}</b><p>{step.text}</p></article>)}
+            {t.processSteps.map(([title, text], index) => <article class="solution-process-step"><span>0{index + 1}</span><b>{title}</b><p>{text}</p></article>)}
           </div>
         </section>
 

@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const MARKER = 'data-contacts-critical';
 const COMMON_MARKER = 'data-contacts-common-critical';
 const STYLESHEET_LINK_RE = /<link rel="stylesheet" href="([^"]+)">/g;
-const TARGET_PAGES = ['contacts/index.html'];
+const TARGET_PAGES = ['contacts/index.html', 'ru/contacts/index.html'];
 const commonCriticalCssPath = fileURLToPath(
   new URL('../src/styles/contacts-common-critical.css', import.meta.url)
 );

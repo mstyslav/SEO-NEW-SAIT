@@ -18,7 +18,7 @@ const MARKER = 'data-homepage-critical';
 const STYLESHEET_LINK_RE = /<link rel="stylesheet" href="([^"]+)">/g;
 
 // Pages this transform is allowed to touch, relative to dist/.
-const TARGET_PAGES = ['index.html'];
+const TARGET_PAGES = ['index.html', 'ru/index.html'];
 
 function deferStylesheet(href) {
   return (

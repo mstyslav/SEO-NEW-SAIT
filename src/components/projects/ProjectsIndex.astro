@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import ProjectCard from './ProjectCard.astro';
 import ProjectFilters from './ProjectFilters.astro';
+import type { Locale } from '../../i18n/helpers';
 import '../../styles/projects-common.css';
 import '../../styles/projects-index-v2.css';
 
@@ -14,17 +15,36 @@ const LCP_CARD_COVER = {
   height: 540
 };
 
+const { locale = 'uk' as Locale } = Astro.props;
+const isRu = locale === 'ru';
+
 const projects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk'))
   .map(({ data }) => data)
   .sort((a, b) => a.sortOrder - b.sortOrder);
+
+const t = isRu ? {
+  eyebrow: 'Наши проекты',
+  h1: 'Реализованные конструкции Space Glass',
+  lead: 'Реальные объекты Space Glass в Киеве, Одессе, Львове и по Украине: стеклянные перегородки, двери, душевые кабины, ограждения, безрамное и фасадное остекление, алюминиевые окна, двери и раздвижные системы, перголы и системы солнцезащиты. Показываем задачу, техническое решение, материалы, монтаж и готовый результат.',
+  heroAlt: 'Стеклянное ограждение лестницы с латунным профилем в светлом современном интерьере',
+  gridAriaLabel: 'Реализованные проекты',
+  empty: 'В этой категории проекты ещё готовятся к публикации.'
+} : {
+  eyebrow: 'Наші проєкти',
+  h1: 'Реалізовані конструкції Space Glass',
+  lead: 'Реальні об’єкти Space Glass у Києві, Одесі, Львові та по Україні: скляні перегородки, двері, душові кабіни, огорожі, безрамне й фасадне скління, алюмінієві вікна, двері та розсувні системи, перголи й системи сонцезахисту. Показуємо задачу, технічне рішення, матеріали, монтаж і готовий результат.',
+  heroAlt: 'Скляна огорожа сходів із латунним профілем у світлому сучасному інтер’єрі',
+  gridAriaLabel: 'Реалізовані проєкти',
+  empty: 'У цій категорії проєкти ще готуються до публікації.'
+};
 ---
 <div class="projects-index-v2">
   <div class="projects-index-v2__wrap">
     <header class="projects-index-v2__hero">
       <div class="projects-index-v2__hero-copy">
-        <p class="eyebrow">Наші проєкти</p>
-        <h1>Реалізовані конструкції Space Glass</h1>
-        <p class="lead">Реальні об’єкти Space Glass у Києві, Одесі, Львові та по Україні: скляні перегородки, двері, душові кабіни, огорожі, безрамне й фасадне скління, алюмінієві вікна, двері та розсувні системи, перголи й системи сонцезахисту. Показуємо задачу, технічне рішення, матеріали, монтаж і готовий результат.</p>
+        <p class="eyebrow">{t.eyebrow}</p>
+        <h1>{t.h1}</h1>
+        <p class="lead">{t.lead}</p>
       </div>
       <div class="projects-index-v2__hero-media">
         <picture>
@@ -38,7 +58,7 @@ const projects = (await getCollection('projects', ({ data }) => data.status === 
             sizes="(min-width: 901px) min(50vw, 733px), 100vw"
             width="1200"
             height="900"
-            alt="Скляна огорожа сходів із латунним профілем у світлому сучасному інтер’єрі"
+            alt={t.heroAlt}
             loading="eager"
             fetchpriority="high"
             decoding="async"
@@ -46,18 +66,19 @@ const projects = (await getCollection('projects', ({ data }) => data.status === 
         </picture>
       </div>
     </header>
-    <ProjectFilters projects={projects} />
-    <section class="projects-index-v2__grid" aria-label="Реалізовані проєкти">
+    <ProjectFilters projects={projects} locale={locale} />
+    <section class="projects-index-v2__grid" aria-label={t.gridAriaLabel}>
       {projects.map((project, index) => (
         <ProjectCard
           project={project}
           hrefPrefix="/projects"
+          locale={locale}
           priority={index === 0 || project.slug === LCP_SLUG}
           eager={index === 1 || index === 2}
           cardCover={project.slug === LCP_SLUG ? { ...LCP_CARD_COVER, alt: project.cover.alt } : undefined}
         />
       ))}
     </section>
-    <p class="projects-index-v2__empty" data-projects-empty hidden>У цій категорії проєкти ще готуються до публікації.</p>
+    <p class="projects-index-v2__empty" data-projects-empty hidden>{t.empty}</p>
   </div>
 </div>

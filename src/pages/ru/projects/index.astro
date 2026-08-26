@@ -1,7 +1,4 @@
 ---
-import SeoLanding from '../../../components/seo/SeoLanding.astro';
-import { hubPages } from '../../../data/seo-pages';
-const locale = 'ru';
-const page = hubPages(locale).find((entry) => entry.slug === 'projects');
+import ProjectsPage from '../../../components/pages/ProjectsPage.astro';
 ---
-<SeoLanding page={page} locale={locale} />
+<ProjectsPage locale="ru" />

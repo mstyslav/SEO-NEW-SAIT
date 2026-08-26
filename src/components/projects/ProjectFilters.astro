@@ -1,19 +1,23 @@
 ---
 import { projectCategories } from '../../data/project-taxonomy';
+import type { Locale } from '../../i18n/helpers';
 
-const { projects } = Astro.props;
+const { projects, locale = 'uk' as Locale } = Astro.props;
+const isRu = locale === 'ru';
 const counts = Object.fromEntries(projectCategories.map(({ id }) => [
   id,
   projects.filter((project) => project.category === id).length
 ]));
+const filtersAriaLabel = isRu ? 'Фильтры проектов' : 'Фільтри проєктів';
+const allLabel = isRu ? 'Все' : 'Всі';
 ---
-<div class="project-filters-v2" data-project-filters aria-label="Фільтри проєктів">
+<div class="project-filters-v2" data-project-filters aria-label={filtersAriaLabel}>
   <button class="is-active" type="button" data-project-filter="all" aria-pressed="true">
-    Всі <span>{projects.length}</span>
+    {allLabel} <span>{projects.length}</span>
   </button>
   {projectCategories.map((category) => (
     <button type="button" data-project-filter={category.id} aria-pressed="false">
-      {category.label} <span>{counts[category.id]}</span>
+      {isRu ? category.labelRu : category.label} <span>{counts[category.id]}</span>
     </button>
   ))}
 </div>
