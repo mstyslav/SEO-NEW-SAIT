@@ -41,26 +41,38 @@
   /* Make every visible header item go to a real page instead of a dead or mismatched route. */
   const topRouteByText = new Map([
     ['Каталог','/catalog/'],
+
     ['Послуги','/poslugy/'],
+    ['Услуги','/poslugy/'],
+
     ['Рішення','/rishennya/'],
+    ['Решения','/rishennya/'],
+
     ['Проєкти','/projects/'],
     ['Проекти','/projects/'],
-    ['База знань','/knowledge/'],
-    ['Про нас','/about/'],
-    ['Контакти','/contacts/']
-  ]);
+    ['Проекты','/projects/'],
 
-  header.querySelectorAll('.sg-nav-links > a.nav-link, .mega-trigger--catalog > a.nav-link').forEach((link) => {
-    const label = (link.textContent || '').replace('⌄','').trim();
-    const route = topRouteByText.get(label);
-    if (route) link.setAttribute('href', route);
-  });
+    ['База знань','/knowledge/'],
+    ['База знаний','/knowledge/'],
+
+    ['Про нас','/about/'],
+    ['О нас','/about/'],
+
+    ['Контакти','/contacts/'],
+    ['Контакты','/contacts/']
+  ]);
 
   const isRu = window.location.pathname === '/ru/' || window.location.pathname.startsWith('/ru/');
   const localeRoute = (route) => {
     if (!isRu || !route.startsWith('/') || route.startsWith('/ru/')) return route;
     return route === '/' ? '/ru/' : `/ru${route}`;
   };
+
+  header.querySelectorAll('.sg-nav-links > a.nav-link, .mega-trigger--catalog > a.nav-link').forEach((link) => {
+    const label = (link.textContent || '').replace('⌄','').trim();
+    const route = topRouteByText.get(label);
+    if (route) link.setAttribute('href', localeRoute(route));
+  });
 
   const groupRoutes = {
     showers:'/dushovi-kabiny/',
