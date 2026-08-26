@@ -13,6 +13,7 @@ import Footer from '../Footer.astro';
 import { knowledgeArticles, knowledgeCategories } from '../../data/knowledge-articles';
 import { localizedPath, type Locale } from '../../i18n/helpers';
 import { knowledgeContent } from '../../content/i18n/pages/knowledge';
+import { KNOWLEDGE_CARDS_RU } from '../../content/i18n/pages/knowledge-cards-ru';
 
 interface Props {
   locale: Locale;
@@ -21,6 +22,13 @@ interface Props {
 const { locale } = Astro.props;
 const t = knowledgeContent[locale];
 const lp = (path: string) => localizedPath(path, locale);
+
+const localizedArticles = knowledgeArticles.map((article) => {
+  if (locale !== 'ru') return article;
+  const translated = KNOWLEDGE_CARDS_RU[article.slug];
+  return translated ? { ...article, ...translated } : article;
+});
+
 ---
 <BaseLayout
   title={t.meta.title}
@@ -67,10 +75,10 @@ const lp = (path: string) => localizedPath(path, locale);
 
       <section class="knowledge-library" aria-labelledby="knowledge-library-title">
         <div class="category-heading">
-          <div><p class="eyebrow" data-knowledge-count>{t.countLabel(knowledgeArticles.length)}</p><h2 id="knowledge-library-title">{t.libraryTitle}</h2></div>
+          <div><p class="eyebrow" data-knowledge-count>{t.countLabel(localizedArticles.length)}</p><h2 id="knowledge-library-title">{t.libraryTitle}</h2></div>
         </div>
         <div class="knowledge-library__grid" data-knowledge-grid>
-          {knowledgeArticles.map((item, index) => (
+          {localizedArticles.map((item, index) => (
             <article class="knowledge-card" data-category={item.category}>
               <div class="knowledge-card__meta"><span>{String(index + 1).padStart(2, '0')}</span><span>{item.category}</span><span>{item.readingTime} {t.readingTimeUnit}</span></div>
               <h2><a href={`/knowledge/${item.slug}/`}>{item.title}</a></h2>
@@ -139,8 +147,22 @@ const lp = (path: string) => localizedPath(path, locale);
   .knowledge-card { cursor:pointer; }
   .knowledge-card__link:focus-visible { outline:2px solid var(--mint-dark); outline-offset:3px; }
   @media(min-width:1100px) {
-    .knowledge-filters { flex-wrap:nowrap; gap:7px; padding-inline:28px; }
-    .knowledge-filters button { min-width:0; padding:10px 12px; font-size:clamp(10px,.78vw,13px); white-space:nowrap; }
+    .knowledge-filters {
+      display:flex;
+      flex-wrap:nowrap;
+      gap:7px;
+      padding-inline:28px;
+    }
+
+    .knowledge-filters button {
+      flex:none;
+      min-width:0;
+      padding:10px 12px;
+      font-size:clamp(10px,.78vw,13px);
+      white-space:nowrap;
+    }
+
+
   }
   .knowledge-v14-hero > div:first-child {
     display:flex;
