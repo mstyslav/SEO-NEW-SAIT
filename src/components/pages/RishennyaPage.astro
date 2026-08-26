@@ -11,7 +11,8 @@ import FAQBlock from '../FAQBlock.astro';
 import { SOLUTIONS, CITY_LINKS, PROCESS_STEPS } from '../../data/solutions';
 import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
 import { getCollection } from 'astro:content';
-import type { Locale } from '../../i18n/helpers';
+import { localizedPath, type Locale } from '../../i18n/helpers';
+import translations from '../../i18n/translations.json';
 import { rishennyaContent } from '../../content/i18n/pages/rishennya';
 import '../../styles/solutions.css';
 
@@ -21,6 +22,18 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = rishennyaContent[locale];
+const lp = (path: string) => localizedPath(path, locale);
+
+// CITY_LINKS (src/data/solutions.ts) is the single uk source for city
+// slugs/hrefs — reused as-is for both locales. City names are already
+// translated once in the shared translations.json (used by Header), so
+// they're just looked up here instead of duplicating them.
+const globalT = translations[locale] ?? translations.uk;
+const cityLabelByHref: Record<string, string> = {
+  '/city/kyiv/': globalT.cityKyiv,
+  '/city/odesa/': globalT.cityOdesa,
+  '/city/lviv/': globalT.cityLviv
+};
 
 const origin = Astro.site ?? Astro.url.origin;
 const faqItems = t.faqItems;
@@ -94,7 +107,7 @@ const choosePoints = t.choosePoints;
             </picture>
           </div>
         </header>
-        <TrustBar />
+        <TrustBar locale={locale} />
 
         <section class="rishennya-hub__solutions" id="solutions" aria-labelledby="solutions-title">
           <div class="solution-section-head">
@@ -205,7 +218,7 @@ const choosePoints = t.choosePoints;
         <section class="rishennya-hub__section rishennya-hub__geography" aria-labelledby="geography-title">
           <div class="solution-section-head"><p class="eyebrow">{t.geographySection.eyebrow}</p><h2 id="geography-title">{t.geographySection.title}</h2><p>{t.geographySection.intro}</p></div>
           <div class="rishennya-cities">
-            {CITY_LINKS.map((city) => <a href={city.href}><span>{city.label}</span><b>{t.geographySection.cityCtaLabel} <i aria-hidden="true">→</i></b></a>)}
+            {CITY_LINKS.map((city) => <a href={lp(city.href)}><span>{cityLabelByHref[city.href] ?? city.label}</span><b>{t.geographySection.cityCtaLabel} <i aria-hidden="true">→</i></b></a>)}
           </div>
           <p class="rishennya-hub__geography-note">{t.geographySection.footnote}</p>
         </section>

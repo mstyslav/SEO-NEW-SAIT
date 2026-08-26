@@ -2,13 +2,13 @@
 import translations from '../i18n/translations.json';
 import i18nConfig from '../i18n/config.json';
 import { localeFromPath, localizedPath, normalizeLocale } from '../i18n/helpers';
-import { showerServiceNavigation } from '../data/service-navigation';
-import { catalogNavigation } from '../data/catalog-navigation';
+import { getCatalogNavigation } from '../data/catalog-navigation';
 
 const requestedLocale = Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname);
 const locale = normalizeLocale(requestedLocale);
 const t = translations[locale] ?? translations.uk;
 const localeInfo = i18nConfig.locales[locale] ?? i18nConfig.locales.uk;
+const catalogNavigation = getCatalogNavigation(locale);
 const currentPath = Astro.url.pathname;
 const lp = (path: string) => localizedPath(path, locale);
 
@@ -42,45 +42,45 @@ const links = isUkrainian
 ---
 <header class="site-header sg-header">
   <div class="container nav sg-nav">
-    <a class="brand-logo" href={lp("/")} aria-label="Space Glass — головна"><img
+    <a class="brand-logo" href={lp("/")} aria-label={t.brandLogoAria}><img
       src="/images/space-glass-logo-header.webp"
       srcset="/images/space-glass-logo-header-148.webp 148w, /images/space-glass-logo-header.webp 202w"
       sizes="(max-width: 700px) 74px, (max-width: 1100px) 89px, 101px"
       width="101" height="82" alt="Space Glass" decoding="async"
       style="width:101px;height:auto"
     /></a>
-    <nav class="nav__links sg-nav-links" aria-label="Головна навігація">
-      <a class="nav-link nav-link--catalog" href={lp("/catalog/")}>Каталог</a>
+    <nav class="nav__links sg-nav-links" aria-label={t.mainNavAria}>
+      <a class="nav-link nav-link--catalog" href={lp("/catalog/")}>{t.catalog}</a>
       {links.map(([label, href]) => <a class="nav-link" href={lp(href)}>{label}</a>)}
-      <button class="nav-link sg-categories-trigger sg-categories-trigger--ua" type="button" aria-controls="sg-ua-catalog-menu" aria-expanded="false" aria-haspopup="true" aria-label="Відкрити меню" data-ua-catalog-menu-button><span></span><span></span><span></span></button>
+      <button class="nav-link sg-categories-trigger sg-categories-trigger--ua" type="button" aria-controls="sg-ua-catalog-menu" aria-expanded="false" aria-haspopup="true" aria-label={t.openCatalogMenuAria} data-ua-catalog-menu-button><span></span><span></span><span></span></button>
     </nav>
     <div class="nav__actions sg-nav-actions">
       <div class="language-switcher" data-language-switcher><a class="language-switcher__button language-switcher__button--direct" href={directLocaleHref} hreflang={nextLocale} lang={nextLocale} aria-label={directLocaleLabel} title={directLocaleLabel} data-language-button data-target-locale={nextLocale}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 12h17M12 3c2.4 2.5 3.6 5.5 3.6 9S14.4 18.5 12 21M12 3C9.6 5.5 8.4 8.5 8.4 12S9.6 18.5 12 21" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span>{localeInfo.short}</span></a></div>
-      <a class:list={['nav-icon', 'nav-icon--search', isUkrainian && 'nav-icon--search-ua-desktop']} href={lp("/catalog/")} aria-label="Пошук">⌕</a>
-      <a class="nav-icon nav-icon--phone" href="tel:+380734251400" aria-label="Зателефонувати"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class:list={['nav-icon', 'nav-icon--search', isUkrainian && 'nav-icon--search-ua-desktop']} href={lp("/catalog/")} aria-label={t.searchAria}>⌕</a>
+      <a class="nav-icon nav-icon--phone" href="tel:+380734251400" aria-label={t.phoneAria}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a class="button button--mint sg-header-cta" href={lp("/contacts/")}>{t.quote}</a>
       <button class="sg-mobile-toggle" type="button" aria-controls="sg-mobile-menu" aria-expanded="false" aria-label={t.menu} data-mobile-menu-button><span></span><span></span><span></span></button>
     </div>
   </div>
-  <section class="sg-ua-catalog-menu" id="sg-ua-catalog-menu" aria-label="Категорії конструкцій" data-ua-catalog-menu hidden>
+  <section class="sg-ua-catalog-menu" id="sg-ua-catalog-menu" aria-label={t.catalogCategoriesAria} data-ua-catalog-menu hidden>
     <div class="sg-ua-catalog-menu__grid">
-      {catalogNavigation.map(category => <section class="sg-ua-catalog-menu__group"><h2><a href={category.href}>{category.name}</a></h2><ul>{category.services.map(service => <li><a href={service.path}>{service.shortName}</a></li>)}</ul></section>)}
+      {catalogNavigation.map(category => <section class="sg-ua-catalog-menu__group"><h2><a href={lp(category.href)}>{category.name}</a></h2><ul>{category.services.map(service => <li><a href={lp(service.path)}>{service.shortName}</a></li>)}</ul></section>)}
     </div>
-    <div class="sg-ua-catalog-menu__cities" aria-label="Пошук за містами">
-      <span>⌖ Пошук за містами</span>
-      <a href="/city/kyiv/">Київ</a>
-      <a href="/city/odesa/">Одеса</a>
-      <a href="/city/lviv/">Львів</a>
-      <a href="/catalog/">Вся Україна <b aria-hidden="true">→</b></a>
+    <div class="sg-ua-catalog-menu__cities" aria-label={t.searchByCityLabel}>
+      <span>⌖ {t.searchByCityLabel}</span>
+      <a href={lp("/city/kyiv/")}>{t.cityKyiv}</a>
+      <a href={lp("/city/odesa/")}>{t.cityOdesa}</a>
+      <a href={lp("/city/lviv/")}>{t.cityLviv}</a>
+      <a href={lp("/catalog/")}>{t.cityAllUkraine} <b aria-hidden="true">→</b></a>
     </div>
-    <div class="sg-ua-catalog-menu__benefits" aria-label="Переваги Space Glass">
-      <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6M8 10h.01M16 10h.01" /></svg><p><b>Власне виробництво</b><span>Сучасне обладнання</span></p></div>
-      <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 7 3v5c0 4.6-2.8 8.5-7 10-4.2-1.5-7-5.4-7-10V6l7-3Zm-3 9 2 2 4-4" /></svg><p><b>Гарантія 2 роки</b><span>На всі конструкції</span></p></div>
-      <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 16 4-4 3 3 6-7M15 8h2v2M4 20h16" /></svg><p><b>Професійний монтаж</b><span>Досвідчені бригади</span></p></div>
-      <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 10h3l4 4v2h-7zM6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM18 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" /></svg><p><b>Доставка по Україні</b><span>Надійно та в строк</span></p></div>
+    <div class="sg-ua-catalog-menu__benefits" aria-label={t.catalogMenuBenefitsLabel}>
+      <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6M8 10h.01M16 10h.01" /></svg><p><b>{t.catalogMenuBenefitProductionTitle}</b><span>{t.catalogMenuBenefitProductionText}</span></p></div>
+      <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 7 3v5c0 4.6-2.8 8.5-7 10-4.2-1.5-7-5.4-7-10V6l7-3Zm-3 9 2 2 4-4" /></svg><p><b>{t.warrantyShort}</b><span>{t.catalogMenuBenefitWarrantyText}</span></p></div>
+      <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 16 4-4 3 3 6-7M15 8h2v2M4 20h16" /></svg><p><b>{t.catalogMenuBenefitInstallTitle}</b><span>{t.catalogMenuBenefitInstallText}</span></p></div>
+      <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 10h3l4 4v2h-7zM6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM18 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" /></svg><p><b>{t.catalogMenuBenefitDeliveryTitle}</b><span>{t.catalogMenuBenefitDeliveryText}</span></p></div>
     </div>
   </section>
-  <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden><div class="sg-mobile-menu__panel"><div class="simple-catalog simple-catalog--mobile"><div class="simple-catalog__mobile-row"><a class="sg-mobile-menu__primary" href="/catalog/">Каталог</a><button class="simple-catalog__toggle" type="button" aria-label="Розгорнути категорії каталогу" aria-controls="sg-mobile-catalog-categories" aria-expanded="false" data-mobile-catalog-toggle><i aria-hidden="true"></i></button></div><div class="simple-catalog__menu" id="sg-mobile-catalog-categories" data-mobile-catalog-menu hidden>{catalogNavigation.map((category, index) => { const services = category.services.filter((service, serviceIndex, allServices) => allServices.findIndex(({ shortName, path }) => path === service.path && shortName === service.shortName) === serviceIndex); const servicesId = `sg-mobile-catalog-services-${index + 1}`; return <section><div class="simple-catalog__category-row"><a class="simple-catalog__category" href={category.href}>{category.name}</a><button class="simple-catalog__service-toggle" type="button" aria-label={`Розгорнути підкатегорії: ${category.name}`} aria-controls={servicesId} aria-expanded="false" data-mobile-category-toggle><i aria-hidden="true"></i></button></div><div class="simple-catalog__services" id={servicesId} data-mobile-category-menu hidden>{services.map((service) => <a href={service.path}>{service.shortName}</a>)}</div></section>})}</div></div>{links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}<a href="tel:+380734251400">+38 (073) 425 14 00</a><a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a></div></div>
+  <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden><div class="sg-mobile-menu__panel"><div class="simple-catalog simple-catalog--mobile"><div class="simple-catalog__mobile-row"><a class="sg-mobile-menu__primary" href={lp("/catalog/")}>{t.catalog}</a><button class="simple-catalog__toggle" type="button" aria-label={t.expandCatalogMenu} aria-controls="sg-mobile-catalog-categories" aria-expanded="false" data-mobile-catalog-toggle data-expand-label={t.expandCatalogMenu} data-collapse-label={t.collapseCatalogMenu}><i aria-hidden="true"></i></button></div><div class="simple-catalog__menu" id="sg-mobile-catalog-categories" data-mobile-catalog-menu hidden>{catalogNavigation.map((category, index) => { const services = category.services.filter((service, serviceIndex, allServices) => allServices.findIndex(({ shortName, path }) => path === service.path && shortName === service.shortName) === serviceIndex); const servicesId = `sg-mobile-catalog-services-${index + 1}`; return <section><div class="simple-catalog__category-row"><a class="simple-catalog__category" href={lp(category.href)}>{category.name}</a><button class="simple-catalog__service-toggle" type="button" aria-label={`${t.expandSubcategoriesPrefix}: ${category.name}`} aria-controls={servicesId} aria-expanded="false" data-mobile-category-toggle data-category-name={category.name} data-expand-prefix={t.expandSubcategoriesPrefix} data-collapse-prefix={t.collapseSubcategoriesPrefix}><i aria-hidden="true"></i></button></div><div class="simple-catalog__services" id={servicesId} data-mobile-category-menu hidden>{services.map((service) => <a href={lp(service.path)}>{service.shortName}</a>)}</div></section>})}</div></div>{links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}<a href="tel:+380734251400">+38 (073) 425 14 00</a><a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a></div></div>
 </header>
 <style>
   .sg-categories-trigger{display:inline-flex;flex-direction:column;justify-content:center;gap:4px;width:32px;height:32px;padding:6px;border:0;background:transparent;cursor:pointer}
@@ -284,8 +284,9 @@ const links = isUkrainian
     if(!menu) return;
     menu.hidden=!open;
     button.setAttribute('aria-expanded',String(open));
-    const categoryName=button.getAttribute('aria-label')?.split(': ')[1] ?? '';
-    button.setAttribute('aria-label',`${open?'Згорнути':'Розгорнути'} підкатегорії: ${categoryName}`);
+    const categoryName=button.dataset.categoryName ?? '';
+    const prefix=open?button.dataset.collapsePrefix:button.dataset.expandPrefix;
+    button.setAttribute('aria-label',`${prefix}: ${categoryName}`);
   };
 
   const closeMobileCategories=(except)=>{
@@ -297,7 +298,7 @@ const links = isUkrainian
     if(!open) closeMobileCategories();
     mobileCatalogMenu.hidden=!open;
     mobileCatalogToggle.setAttribute('aria-expanded',String(open));
-    mobileCatalogToggle.setAttribute('aria-label',open?'Згорнути категорії каталогу':'Розгорнути категорії каталогу');
+    mobileCatalogToggle.setAttribute('aria-label',open?mobileCatalogToggle.dataset.collapseLabel:mobileCatalogToggle.dataset.expandLabel);
   };
 
   const closeMobileMenu=()=>{

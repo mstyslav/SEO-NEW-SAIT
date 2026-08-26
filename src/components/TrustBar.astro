@@ -1,35 +1,29 @@
+---
+// Standard 4-item strip, translated once in src/i18n/trustbar.ts and shared
+// by every caller. `locale` defaults to 'uk', so callers that don't pass it
+// (poslugy, catalog — neither has real per-locale rendering) keep rendering
+// byte-identical uk output. Callers that do render under /ru/ (HomePage,
+// RishennyaPage) just pass their own `locale` — no per-page copy needed.
+import { trustBarItems } from '../i18n/trustbar';
+import type { Locale } from '../i18n/helpers';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'uk' } = Astro.props;
+const items = trustBarItems[locale];
+---
 <section class="sg-trustbar" aria-label="Переваги Space Glass">
-  <div class="sg-trustbar__item">
-    <span class="sg-trustbar__icon" aria-hidden="true">◇</span>
-    <div>
-      <strong>Власне виробництво</strong>
-      <small>В Україні</small>
+  {items.map(([title, text, icon]) => (
+    <div class="sg-trustbar__item">
+      <span class="sg-trustbar__icon" aria-hidden="true">{icon}</span>
+      <div>
+        <strong>{title}</strong>
+        <small>{text}</small>
+      </div>
     </div>
-  </div>
-
-  <div class="sg-trustbar__item">
-    <span class="sg-trustbar__icon" aria-hidden="true">◉</span>
-    <div>
-      <strong>Гарантія 2 роки</strong>
-      <small>На всі конструкції</small>
-    </div>
-  </div>
-
-  <div class="sg-trustbar__item">
-    <span class="sg-trustbar__icon" aria-hidden="true">▱</span>
-    <div>
-      <strong>Доставка по Україні</strong>
-      <small>Та Європі</small>
-    </div>
-  </div>
-
-  <div class="sg-trustbar__item">
-    <span class="sg-trustbar__icon" aria-hidden="true">◯</span>
-    <div>
-      <strong>Індивідуальні рішення</strong>
-      <small>Під ваш проєкт</small>
-    </div>
-  </div>
+  ))}
 </section>
 
 <style>
