@@ -23,6 +23,13 @@ function routeExists(href) {
   if (!clean || clean === '/' || !clean.startsWith('/')) return true;
   if (clean.startsWith('/images/') || clean.startsWith('/docs/') || clean.startsWith('/js/')) return true;
   if (clean.startsWith('/api/')) return true;
+
+  // Any root-relative file that physically exists in public/ is a valid asset.
+  // This covers icons, manifests, PDFs and other static files without
+  // hard-coding individual extensions or directories.
+  const publicAsset = clean.replace(/^\//, '');
+  if (fs.existsSync(path.resolve('public', publicAsset))) return true;
+
   if (clean.endsWith('.xml') || clean.endsWith('.txt')) {
     const asset = clean.replace(/^\//, '');
     return fs.existsSync(path.resolve('public', asset)) ||

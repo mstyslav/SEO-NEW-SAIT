@@ -42,7 +42,7 @@ for (const locale of ['ru'] as Locale[]) Object.assign(copies[locale], localized
 const copy = copies[Astro.props.locale as Locale];
 const lp = (path: string) => localizedPath(path, copy.locale);
 copy.links = ([
-  ['Каталог','/catalog/'],['Душові кабіни','/dushovi-kabiny/'],['Скляні перегородки','/sklyani-perehorodky/'],['Скляні двері','/sklyani-dveri/'],['Скляні огорожі','/sklyani-ohorozhi/'],['Дзеркала','/dzerkala/'],['Безрамне скління','/bezramne-configurator/'],['Перголи','/alyuminiievi-konstruktsii/'],['Проєкти','/projects/'],['Конфігуратор','/quote/'],['Гарантія','/poslugy/','#process'],['Публічна оферта','/terms/'],['Політика конфіденційності','/privacy-policy/'],['Контакти','/contacts/']
+  ['Каталог','/catalog/'],['Душові кабіни','/dushovi-kabiny/'],['Скляні перегородки','/sklyani-perehorodky/'],['Скляні двері','/sklyani-dveri/'],['Скляні огорожі','/sklyani-ohorozhi/'],['Дзеркала','/dzerkala/'],['Безрамне скління','/bezramne-configurator/'],['Перголи','/alyuminiievi-konstruktsii/'],['Проєкти','/projects/'],['Конфігуратор','/contacts/#contact-form'],['Гарантія','/poslugy/','#process'],['Публічна оферта','/terms/'],['Політика конфіденційності','/privacy-policy/'],['Контакти','/contacts/']
 ] as [string, string, string?][]).map(([label,href,anchor])=>({label,href: `${lp(href)}${anchor ?? ''}`}));
 const origin = Astro.site ?? Astro.url.origin;
 const canonical = new URL(Astro.url.pathname, origin).href;

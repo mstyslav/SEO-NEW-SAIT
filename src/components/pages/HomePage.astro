@@ -51,7 +51,7 @@ const faq = t.faq.items;
           <h1>{t.hero.h1Line1}<br>{t.hero.h1Line2}</h1>
           <p class="sg-hero__lead">{t.hero.lead}</p>
           <div class="sg-home-hero__actions">
-            <a class="button button--mint" href={lp('/quote/')}>{t.hero.ctaPrimary}</a>
+            <a class="button button--mint" href={`${lp('/contacts/')}#contact-form`}>{t.hero.ctaPrimary}</a>
             <a class="button sg-home-hero__secondary" href={lp('/rishennya/')}>{t.hero.ctaSecondary}</a>
           </div>
         </div>
@@ -355,7 +355,10 @@ const faq = t.faq.items;
           data.get('message')
         ].filter(Boolean).join(' · ');
 
-        window.location.href = `/quote/?request=${encodeURIComponent(request)}`;
+        const contactsPath = document.documentElement.lang === 'ru'
+          ? '/ru/contacts/'
+          : '/contacts/';
+        window.location.href = `${contactsPath}?request=${encodeURIComponent(request)}#contact-form`;
       });
     </script>
   </div>

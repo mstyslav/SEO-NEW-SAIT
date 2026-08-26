@@ -60,7 +60,7 @@ import Footer from '../../components/Footer.astro';
             <textarea rows="4" data-project-note placeholder="Наприклад: потрібна доставка й монтаж у Києві"></textarea>
           </label>
 
-          <a class="button button--mint project-cart-quote" href="/quote/" data-project-quote>Отримати КП на весь проєкт →</a>
+          <a class="button button--mint project-cart-quote" href="/contacts/#contact-form" data-project-quote>Отримати КП на весь проєкт →</a>
           <button class="button button--outline project-cart-save" type="button" data-project-save>Зберегти проєкт</button>
           <button class="button button--outline project-cart-share" type="button" data-project-share>Скопіювати посилання</button>
           <button class="button button--outline project-cart-download" type="button" data-project-download>Завантажити PDF</button>
@@ -171,7 +171,7 @@ import Footer from '../../components/Footer.astro';
         note: project.note || '',
         total
       }));
-      quoteLink.href = `/quote/?project=${projectPayload}`;
+      quoteLink.href = `/contacts/#contact-form?project=${projectPayload}`;
       quoteLink.classList.toggle('is-disabled', project.items.length === 0);
       quoteLink.setAttribute('aria-disabled', project.items.length === 0 ? 'true' : 'false');
     };

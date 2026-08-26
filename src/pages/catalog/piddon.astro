@@ -292,7 +292,7 @@ const faq = [
         </div>
 
         <div class="product-actions product-actions--three">
-          <a class="button button--mint" href="/quote/" data-quote-link>Отримати КП</a>
+          <a class="button button--mint" href="/contacts/#contact-form" data-quote-link>Отримати КП</a>
           <button class="button button--outline" type="button" data-add-to-project>Додати до проєкту</button>
           <button class="button button--outline" type="button" data-add-to-compare>Порівняти</button>
         </div>
@@ -517,7 +517,7 @@ const faq = [
         };
 
         quoteLink.href =
-          `/quote/?product=${encodeURIComponent('Walk-in Premium Black')}` +
+          `/contacts/#contact-form?product=${encodeURIComponent('Walk-in Premium Black')}` +
           `&config=${encodeURIComponent(values.join(' · '))}` +
           `&price=${encodeURIComponent(formatUah(lastCalculation.totalUah))}` +
           `&pricing=${encodeURIComponent(JSON.stringify(priceDetails))}`;

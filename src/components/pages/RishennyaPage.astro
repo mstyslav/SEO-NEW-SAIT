@@ -87,7 +87,7 @@ const choosePoints = t.choosePoints;
             <p class="lead">{t.hero.lead}</p>
             <div class="rishennya-hub__hero-actions">
               <a class="button button--mint" href="#solutions">{t.hero.ctaPrimary}</a>
-              <a class="button button--outline" href="/quote/">{t.hero.ctaSecondary}</a>
+              <a class="button button--outline" href="/contacts/#contact-form">{t.hero.ctaSecondary}</a>
             </div>
           </div>
           <div class="rishennya-hub__hero-media">
@@ -205,7 +205,7 @@ const choosePoints = t.choosePoints;
           <div class="rishennya-choose__grid">
             {choosePoints.map(([title, text], index) => <article><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}
           </div>
-          <a class="rishennya-hub__section-link" href="/quote/">{t.chooseSection.ctaLabel}</a>
+          <a class="rishennya-hub__section-link" href="/contacts/#contact-form">{t.chooseSection.ctaLabel}</a>
         </section>
 
         <section class="rishennya-hub__section rishennya-process" aria-labelledby="process-title">
@@ -229,7 +229,7 @@ const choosePoints = t.choosePoints;
 
         <section class="rishennya-final-cta" aria-labelledby="cta-title">
           <div><p class="eyebrow">{t.finalCta.eyebrow}</p><h2 id="cta-title">{t.finalCta.title}</h2><p>{t.finalCta.intro}</p></div>
-          <div class="rishennya-final-cta__actions"><a class="button button--mint" href="/quote/">{t.finalCta.ctaPrimary}</a><a class="button button--outline" href="/contacts/">{t.finalCta.ctaSecondary}</a></div>
+          <div class="rishennya-final-cta__actions"><a class="button button--mint" href={`${lp('/contacts/')}#contact-form`}>{t.finalCta.ctaPrimary}</a><a class="button button--outline" href="/contacts/">{t.finalCta.ctaSecondary}</a></div>
         </section>
       </div>
     </main>

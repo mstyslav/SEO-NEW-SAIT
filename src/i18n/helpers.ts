@@ -44,7 +44,14 @@ const LOCALIZED_ROUTES: Record<'ru', ReadonlySet<string>> = {
 
 export function hasLocalizedRoute(pathname: string, locale: Locale): boolean {
   if (locale === 'uk') return true;
-  return LOCALIZED_ROUTES[locale].has(stripLocale(pathname));
+
+  const base = stripLocale(pathname);
+
+  // All RU Knowledge article routes are generated from the localized
+  // knowledge dataset under /ru/knowledge/[slug]/.
+  if (locale === 'ru' && /^\/knowledge\/[^/]+\/$/.test(base)) return true;
+
+  return LOCALIZED_ROUTES[locale].has(base);
 }
 
 /**
@@ -56,7 +63,7 @@ export function hasLocalizedRoute(pathname: string, locale: Locale): boolean {
 export function localizedPath(pathname: string, locale: Locale): string {
   const base = stripLocale(pathname);
   if (locale === 'uk') return base;
-  if (!LOCALIZED_ROUTES[locale].has(base)) return base;
+  if (!hasLocalizedRoute(base, locale)) return base;
   return `/${locale}${base === '/' ? '/' : base}`;
 }
 

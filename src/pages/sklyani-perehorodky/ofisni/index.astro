@@ -120,11 +120,11 @@ const labels = pageLabels[locale] ?? pageLabels.uk;
  <div class="product-gallery product-gallery--real"><button class="product-gallery__main" type="button"><img src={image} alt={title} width="1800" height="1300"/></button></div>
  <div class="product-premium__info"><p class="eyebrow">{tr.category}</p><div class="product-state product-state--order">{labels.order}</div><h1>{title}</h1><p class="lead">{description}</p><div class="product-price-row"><strong>{labels.price}</strong><span>{labels.priceNote}</span></div>
  <ul class="detail-feature-list">{features.map(item=><li>✓ {item}</li>)}</ul>
- <div class="product-actions"><a class="button button--mint" href={lp("/peregorodky-configurator/")}>{tr.calc}</a><a class="button button--outline" href={lp("/quote/")}>{tr.quote}</a></div></div>
+ <div class="product-actions"><a class="button button--mint" href={lp("/peregorodky-configurator/")}>{tr.calc}</a><a class="button button--outline" href={lp("/contacts/#contact-form")}>{tr.quote}</a></div></div>
 </section>
 <section class="product-spec-section"><div class="product-spec-intro"><p class="eyebrow">{labels.specEyebrow}</p><h2>{labels.specTitle}</h2><p>{labels.specText}</p></div><div class="product-spec-table">
 {labels.specs.map(([name,value]) => <div><span>{name}</span><b>{value || tr.warranty}</b></div>)}</div></section>
 <section class="category-section"><div class="category-heading"><div><p class="eyebrow">{labels.processEyebrow}</p><h2>{labels.processTitle}</h2></div><p>{labels.processText}</p></div><div class="category-process__grid category-process__grid--light">{labels.steps.map(([num,name,text]) => <div><span>{num}</span><b>{name}</b><small>{text}</small></div>)}</div></section>
 <section class="section"><FAQBlock title={tr.faqTitle} intro={tr.faqIntro} items={faq} visibleCount={20}/></section>
-<section class="inner-cta"><div><p class="eyebrow eyebrow--light">{labels.ctaEyebrow}</p><h2>{labels.ctaTitle}</h2><p>{labels.ctaText}</p></div><a class="button button--white" href={lp("/quote/")}>{tr.quote}</a></section>
+<section class="inner-cta"><div><p class="eyebrow eyebrow--light">{labels.ctaEyebrow}</p><h2>{labels.ctaTitle}</h2><p>{labels.ctaText}</p></div><a class="button button--white" href={lp("/contacts/#contact-form")}>{tr.quote}</a></section>
 </main><Footer/></div></BaseLayout>
