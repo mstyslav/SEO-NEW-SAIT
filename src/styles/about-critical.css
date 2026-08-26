@@ -132,6 +132,7 @@ body{
 }
 
 .sg-hero__copy{
+  min-width:0;
   padding:54px 58px 40px;
   display:flex;
   flex-direction:column;
@@ -148,7 +149,9 @@ body{
 }
 
 .about-main-hero .sg-hero__copy h1{
+  width:100%;
   max-width:540px;
+  overflow-wrap:normal;
   margin:0;
   font-size:clamp(2.15rem,3.25vw,4rem);
   line-height:1.02;
@@ -551,4 +554,15 @@ body .sg-page-shell main h1{
 /* CLS FIX — keep closed desktop Mega Menu out of initial document flow */
 .mega-trigger--menu{
   position:relative;
+}
+
+/* RU About hero — long H1 must stay inside text column */
+@media (min-width: 1200px) {
+  html[lang="ru"] .about-main-hero .sg-hero__copy h1 {
+    width:100%;
+    max-width:460px;
+    font-size:clamp(40px,2.7vw,50px);
+    line-height:1.04;
+    letter-spacing:-0.025em;
+  }
 }
