@@ -1,0 +1,121 @@
+---
+// Shared template for /poslugy/ in both locales — src/pages/poslugy/index.astro
+// (uk) and src/pages/ru/poslugy/index.astro (ru) are thin wrappers that just
+// pass `locale` here. Locale is decided purely by which route file rendered
+// this component, never by a `?lang=` query param.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import Header from '../Header.astro';
+import TrustBar from '../TrustBar.astro';
+import Footer from '../Footer.astro';
+import FAQBlock from '../FAQBlock.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import ProjectCard from '../projects/ProjectCard.astro';
+import { faqSchema, type JsonLdObject } from '../../seo/schema';
+import { localizedPath, type Locale } from '../../i18n/helpers';
+import { poslugyContent } from '../../content/i18n/pages/poslugy';
+import '../../styles/services-full-cycle.css';
+import '../../styles/projects-common.css';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = poslugyContent[locale];
+const lp = (path: string) => localizedPath(path, locale);
+
+const stageIconKeys = ['ruler', 'draft', 'factory', 'truck', 'install', 'shield'] as const;
+const stageIcons: Record<string, string> = {
+  ruler: '<path d="M8 20 20 8l20 20L28 40 8 20Z"/><path d="m13 15 4 4M18 10l4 4M23 25l4 4M28 20l4 4"/>',
+  draft: '<path d="M8 40 24 8l16 32H8Z"/><path d="M17 33h14M20 26h8"/><circle cx="24" cy="15" r="2.4"/>',
+  factory: '<path d="M8 40V24l8 6v-6l8 6V16l8 8V8h6v32H8Z"/><path d="M8 40h32"/>',
+  truck: '<path d="M6 30V14h20v16H6Z"/><path d="M26 20h8l6 6v4h-14z"/><circle cx="14" cy="34" r="3.4"/><circle cx="34" cy="34" r="3.4"/>',
+  install: '<path d="M10 10h20v28H10z"/><path d="M10 24h20M18 10v28"/><path d="m30 30 8 8M35 25l5 5-8 8-5-5Z"/>',
+  shield: '<path d="M24 6 40 12v11c0 11-7 17.5-16 19-9-1.5-16-8-16-19V12L24 6Z"/><path d="m17 24 5 5 9-10"/>'
+};
+const stages = t.stages.map(([number, title, text], index) => ({ number, title, text, icon: stageIconKeys[index] }));
+
+const directionHrefs = [
+  '/dushovi-kabiny/', '/sklyani-perehorodky/', '/sklyani-dveri/', '/sklyani-ohorozhi/', '/dzerkala/',
+  '/poslugy/bezramne-sklinnya/', '/arkhitekturni-systemy/', '/alyuminiievi-konstruktsii/', '/metaloplastykovi-konstruktsii/', '/poslugy/sklo-dlia-biznesu/'
+];
+const directions = t.directionLabels.map((label, index) => [label, directionHrefs[index]] as const);
+
+const cityHrefs = ['/city/kyiv/', '/city/odesa/', '/city/lviv/'];
+const cities = t.cities.map(({ name, caption }, index) => [name, cityHrefs[index], caption] as const);
+
+const allProjects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk'))
+  .map(({ data }) => data)
+  .sort((a, b) => a.sortOrder - b.sortOrder);
+
+const faqStructuredData = faqSchema(t.faqSection.items.map(([question, answer]) => ({ question, answer })));
+const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] : [];
+---
+<BaseLayout title={t.meta.title} description={t.meta.description} schemaType="Service" structuredData={structuredData} locale={locale}
+  heroPreloadSrc="/images/services/services-hero-desktop.webp"
+  heroPreloadMobileSrc="/images/services/services-hero-mobile.webp" image="/images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero.webp">
+  <div class="sg-page-shell"><Header locale={locale} />
+    <main id="main" class="services-cycle">
+      <div class="services-cycle__breadcrumbs"><Breadcrumbs items={[{label:t.breadcrumbs.home,href:lp('/')},{label:t.breadcrumbs.current}]} ariaLabel={t.breadcrumbs.ariaLabel} /></div>
+
+      <section class="services-cycle__hero" aria-labelledby="services-title">
+        <div class="services-cycle__hero-copy"><p class="eyebrow">{t.hero.eyebrow}</p><h1 id="services-title">{t.hero.h1}</h1><p>{t.hero.lead}</p><div class="hero__actions"><a class="button button--mint" href="/quote/">{t.hero.ctaPrimary}</a><a class="button button--outline" href={lp('/projects/')}>{t.hero.ctaSecondary}</a></div></div>
+        <div class="services-cycle__hero-image"><picture><source media="(max-width: 700px)" srcset="/images/services/services-hero-mobile.webp" /><img src="/images/services/services-hero-desktop.webp" width="1536" height="1024" alt={t.hero.heroImageAlt} loading="eager" fetchpriority="high" decoding="async" /></picture></div>
+      </section>
+      <TrustBar locale={locale} />
+
+      <section class="services-cycle__section" aria-labelledby="full-cycle-title">
+        <div class="services-cycle__section-head"><p class="eyebrow">{t.fullCycleSection.eyebrow}</p><h2 id="full-cycle-title">{t.fullCycleSection.title}</h2><p>{t.fullCycleSection.intro}</p></div>
+        <div class="services-cycle__stage-grid">{stages.map(({number,title,text,icon}) => <article class="services-cycle__stage"><div class="services-cycle__stage-icon"><svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" set:html={stageIcons[icon]} /></div><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
+      </section>
+
+      <section class="services-cycle__section services-cycle__process" aria-labelledby="process-title"><div class="services-cycle__section-head services-cycle__section-head--split"><div><p class="eyebrow">{t.processSection.eyebrow}</p><h2 id="process-title">{t.processSection.title}</h2></div><p>{t.processSection.intro}</p></div><ol class="services-cycle__timeline">{t.process.map(([number,title,text]) => <li><span>{number}</span><h3>{title}</h3><p>{text}</p></li>)}</ol></section>
+
+      <section class="services-cycle__numbers" aria-labelledby="numbers-title"><div class="services-cycle__numbers-head"><p class="eyebrow">{t.numbersSection.eyebrow}</p><h2 id="numbers-title">{t.numbersSection.title}</h2></div><div class="services-cycle__numbers-grid">{t.numbers.map(({value, lines}) => <article><strong>{value}</strong><p>{lines[0]}<br />{lines[1]}<br />{lines[2]}</p></article>)}</div></section>
+
+      <section class="services-cycle__section" aria-labelledby="projects-title">
+        <div class="services-cycle__section-head services-cycle__section-head--split"><div><p class="eyebrow">{t.projectsSection.eyebrow}</p><h2 id="projects-title">{t.projectsSection.title}</h2></div><div class="services-cycle__projects-controls" aria-label={t.projectsSection.controlsAria}><button type="button" aria-label={t.projectsSection.prevAria} data-poslugy-projects-direction="-1">←</button><button type="button" aria-label={t.projectsSection.nextAria} data-poslugy-projects-direction="1">→</button></div></div>
+        <div class="services-cycle__projects-viewport" data-poslugy-projects-rail tabindex="0" aria-label={t.projectsSection.carouselAria}>
+          <div class="services-cycle__projects-track">
+            {allProjects.map((project) => <div class="services-cycle__projects-item"><ProjectCard project={project} hrefPrefix="/projects" locale={locale} /></div>)}
+          </div>
+        </div>
+        <a class="services-cycle__text-link" href={lp('/projects/')}>{t.projectsSection.viewAllLink} <span aria-hidden="true">→</span></a>
+      </section>
+
+      <section class="services-cycle__section services-cycle__directions" aria-labelledby="directions-title"><div class="services-cycle__section-head"><p class="eyebrow">{t.directionsSection.eyebrow}</p><h2 id="directions-title">{t.directionsSection.title}</h2><p>{t.directionsSection.intro}</p></div><nav aria-label={t.directionsSection.navAria}><ul>{directions.map(([title,href]) => <li><a href={lp(href)}><span>{title}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a></li>)}</ul></nav></section>
+
+      <section class="services-cycle__section" aria-labelledby="geography-title">
+        <div class="services-cycle__section-head"><p class="eyebrow">{t.geographySection.eyebrow}</p><h2 id="geography-title">{t.geographySection.title}</h2><p>{t.geographySection.intro}</p></div>
+        <div class="services-cycle__cities" aria-label={t.geographySection.citiesAria}>
+          {cities.map(([city,href,caption]) => <a href={lp(href)}><span>{city}</span><b>{caption} <i aria-hidden="true">→</i></b></a>)}
+        </div>
+        <p class="services-cycle__geo-note">{t.geographySection.note}</p>
+      </section>
+
+      <section class="services-cycle__section services-cycle__faq-section" aria-labelledby="faq-title">
+        <FAQBlock eyebrow="FAQ" title={t.faqSection.title} intro={t.faqSection.intro} items={t.faqSection.items} visibleCount={6} locale={locale} />
+      </section>
+
+      <section class="services-cycle__final-cta" aria-labelledby="cta-title">
+        <div><p class="eyebrow eyebrow--light">{t.ctaSection.eyebrow}</p><h2 id="cta-title">{t.ctaSection.title}</h2><p>{t.ctaSection.intro}</p></div>
+        <div class="services-cycle__final-cta-actions"><a class="button button--mint" href="/quote/">{t.ctaSection.ctaPrimary}</a><a class="button button--outline" href={lp('/contacts/')}>{t.ctaSection.ctaSecondary}</a></div>
+      </section>
+    </main><Footer locale={locale} />
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const poslugyProjectsRail = document.querySelector('[data-poslugy-projects-rail]');
+  const scrollPoslugyProjects = (direction) => {
+    if (!poslugyProjectsRail) return;
+    const card = poslugyProjectsRail.querySelector('.services-cycle__projects-item');
+    const distance = card ? card.getBoundingClientRect().width + 18 : poslugyProjectsRail.clientWidth;
+    poslugyProjectsRail.scrollBy({ left: direction * distance, behavior: 'smooth' });
+  };
+  document.querySelectorAll('[data-poslugy-projects-direction]').forEach((button) => button.addEventListener('click', () => scrollPoslugyProjects(Number(button.dataset.poslugyProjectsDirection))));
+  poslugyProjectsRail?.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      scrollPoslugyProjects(event.key === 'ArrowRight' ? 1 : -1);
+    }
+  });
+</script>

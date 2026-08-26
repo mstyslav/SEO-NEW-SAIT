@@ -6,7 +6,7 @@ const CRITICAL_CSS_SOURCE = path.join('src', 'styles', 'poslugy-critical.css');
 const MARKER = 'data-poslugy-critical';
 const STYLESHEET_LINK_RE = /<link rel="stylesheet" href="([^"]+)">/g;
 
-const TARGET_PAGES = ['poslugy/index.html'];
+const TARGET_PAGES = ['poslugy/index.html', 'ru/poslugy/index.html'];
 
 export default function poslugyCriticalCss() {
   return {

@@ -1,7 +1,7 @@
 ---
 interface Item { label: string; href?: string }
-interface Props { items: Item[]; schema?: boolean; contained?: boolean }
-const { items, schema: includeSchema = true, contained = false } = Astro.props;
+interface Props { items: Item[]; schema?: boolean; contained?: boolean; ariaLabel?: string }
+const { items, schema: includeSchema = true, contained = false, ariaLabel = 'Хлібні крихти' } = Astro.props;
 const site = Astro.site ?? Astro.url.origin;
 const schema = {
   '@context': 'https://schema.org', '@type': 'BreadcrumbList',
@@ -12,7 +12,7 @@ const schema = {
 };
 ---
 {includeSchema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
-<nav class:list={['sg-breadcrumbs', contained && 'sg-breadcrumbs--contained']} aria-label="Хлібні крихти">
+<nav class:list={['sg-breadcrumbs', contained && 'sg-breadcrumbs--contained']} aria-label={ariaLabel}>
   {items.map((item, index) => (
     <>
       {index > 0 && <span class="sg-breadcrumbs__separator" aria-hidden="true">/</span>}

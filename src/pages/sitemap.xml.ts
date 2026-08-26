@@ -6,9 +6,11 @@ const pages = import.meta.glob('./**/*.astro');
 const excludedLocales = /^\.\/(en|de|uk)(?:\/|$)/;
 // These ru/* pages redirect straight back to the unprefixed (uk) URL and never render real
 // Russian content, so they must not be submitted to search engines as indexable RU pages.
-// ru/catalog and ru/projects are NOT in this list: both render real, locale-branched content
-// on the same shared template as their uk counterpart and must be indexed as real RU pages.
-const excludedRuStubs = /^\.\/ru\/(about|cart|compare|quote|services)(?:\/|$)/;
+// ru/catalog, ru/projects and ru/poslugy are NOT in this list: all three render real,
+// locale-branched content on the same shared template as their uk counterpart and must be
+// indexed as real RU pages. ru/services no longer exists as a page at all (deleted, not a
+// redirect), so it needs no exclusion entry here.
+const excludedRuStubs = /^\.\/ru\/(about|cart|compare|quote)(?:\/|$)/;
 // ru/catalog/piddon is a separate, still-a-redirect-stub page nested under the now-real
 // ru/catalog/ hub, so it needs its own exact-path exclusion instead of matching on "catalog".
 const excludedRuNestedStub = /^\.\/ru\/catalog\/piddon\/index\.astro$/;
