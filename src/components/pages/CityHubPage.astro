@@ -1,0 +1,341 @@
+---
+// MASTER template for the local commercial hub pages at /city/{slug}/.
+//
+// Kyiv is the approved reference. To add Odesa / Lviv later: add the city entry
+// to src/data/city-hubs.ts and a one-line route wrapper under src/pages/city/.
+// Nothing city-specific belongs in this file.
+//
+// Reuses, not re-invents:
+//   TrustBar, FAQBlock, ProjectCard            — shared components
+//   homeContent.categories                      — shared category/icon cards data
+//   getCollection('projects')                   — shared project proof, filtered by real `city`
+//   projects-common.css                         — shared project card + grid styling
+// city-hub.css is self-contained (it intentionally does NOT import solutions.css
+// so the /rishennya/ critical-CSS build step keeps its own dedicated chunk).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import TrustBar from '../TrustBar.astro';
+import FAQBlock from '../FAQBlock.astro';
+import ProjectCard from '../projects/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+import { getCityHub, type CityHubLocale } from '../../data/city-hubs';
+import { homeContent } from '../../content/i18n/pages/home';
+import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
+import '../../styles/projects-common.css';
+import '../../styles/city-hub.css';
+
+interface Props {
+  city: string;
+  locale?: CityHubLocale;
+}
+
+const { city, locale = 'uk' } = Astro.props;
+const hub = getCityHub(city);
+const categories = homeContent[locale].categories;
+
+const localProjects = (
+  await getCollection(
+    'projects',
+    ({ data }) => data.status === 'published' && data.locale === 'uk' && data.city === hub.projectCity
+  )
+)
+  .map(({ data }) => data)
+  .sort((a, b) => a.sortOrder - b.sortOrder)
+  .slice(0, 6);
+
+const origin = Astro.site ?? Astro.url.origin;
+const pagePath = `/city/${hub.slug}/`;
+
+const faqStructuredData = faqSchema(hub.faq.items.map(([question, answer]) => ({ question, answer })));
+const pageUrl = absoluteUrl(pagePath, origin);
+const structuredData: JsonLdObject[] = [
+  breadcrumbSchema([
+    { label: 'Головна', href: new URL('/', origin) },
+    { label: hub.hero.h1, href: new URL(pagePath, origin) }
+  ]),
+  // Local Service node — mirrors the existing Service pattern in
+  // SeoServicePage / PaymentDeliveryPage (provider references the single
+  // global Organization by @id, so no duplicate business entity is created).
+  {
+    '@type': 'Service',
+    '@id': `${pageUrl}#service`,
+    name: `Виготовлення та монтаж скляних конструкцій ${hub.cityLocative}`,
+    serviceType: 'Замір, виготовлення та монтаж скляних і алюмінієвих конструкцій',
+    provider: { '@id': `${absoluteUrl('/', origin)}#organization` },
+    areaServed: [
+      ...hub.geography.areas.map((name) => ({ '@type': 'City', name })),
+      { '@type': 'AdministrativeArea', name: 'Київська область' }
+    ],
+    url: pageUrl,
+    description: hub.meta.description
+  },
+  {
+    '@type': 'ItemList',
+    name: hub.makeSection.title,
+    numberOfItems: categories.length,
+    itemListElement: categories.map(([label, , href], index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: label,
+      url: absoluteUrl(href, origin)
+    }))
+  },
+  ...(faqStructuredData ? [faqStructuredData] : [])
+];
+---
+<BaseLayout
+  title={hub.meta.title}
+  description={hub.meta.description}
+  locale={locale}
+  alternateLocales={['uk']}
+  schemaType="WebPage"
+  structuredData={structuredData}
+  heroPreloadSrc={hub.hero.image.src}
+  heroPreloadSrcset={hub.hero.image.srcset}
+  heroPreloadSizes={hub.hero.image.sizes}
+  heroPreloadMobileSrc={hub.hero.image.mobileSrc}
+  heroPreloadMobileSrcset={hub.hero.image.mobileSrcset}
+>
+  <div class="sg-page-shell">
+    <Header locale={locale} />
+    <main id="main" class="city-hub">
+      <div class="city-hub__wrap">
+        <header class="city-hub__hero">
+          <div class="city-hub__hero-copy">
+            <p class="eyebrow">{hub.hero.eyebrow}</p>
+            <h1>{hub.hero.h1}</h1>
+            <p class="lead">{hub.hero.lead}</p>
+            <div class="city-hub__hero-actions">
+              <a class="button button--mint" href={hub.hero.ctaPrimaryHref}>{hub.hero.ctaPrimary}</a>
+              <a class="button button--outline" href={hub.hero.ctaSecondaryHref}>{hub.hero.ctaSecondary}</a>
+            </div>
+          </div>
+          <div class="city-hub__hero-media">
+            <a href={hub.hero.image.href} aria-label={hub.hero.image.alt}>
+              <picture>
+                <source media="(max-width: 900px)" srcset={hub.hero.image.mobileSrcset} sizes="calc(100vw - 32px)" />
+                <img
+                  src={hub.hero.image.src}
+                  srcset={hub.hero.image.srcset}
+                  sizes={hub.hero.image.sizes}
+                  width={hub.hero.image.width}
+                  height={hub.hero.image.height}
+                  alt={hub.hero.image.alt}
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
+                />
+              </picture>
+            </a>
+          </div>
+        </header>
+
+        <TrustBar locale={locale} />
+
+        <section class="city-hub__section city-hub__make" aria-labelledby="city-make-title">
+          <div class="city-hub__head">
+            <p class="eyebrow">{hub.makeSection.eyebrow}</p>
+            <h2 id="city-make-title">{hub.makeSection.title}</h2>
+            <p>{hub.makeSection.intro}</p>
+          </div>
+          <div class="city-hub__cats">
+            {categories.map(([title, text, href, icon]) => (
+              <a class="city-hub__cat" href={href}>
+                <span class="city-hub__cat-icon" set:html={icon} />
+                <h3>{title}</h3>
+                <p>{(hub.makeSection.categoryOverrides ?? {})[href] ?? text}</p>
+                <b aria-hidden="true">→</b>
+              </a>
+            ))}
+          </div>
+          <a class="city-hub__link" href={hub.makeSection.allLinkHref}>{hub.makeSection.allLinkLabel}</a>
+        </section>
+
+        <section class="city-hub__section city-hub__intro" aria-labelledby="city-intro-title">
+          <div class="city-hub__head city-hub__head--split">
+            <div>
+              <p class="eyebrow">{hub.localIntro.eyebrow}</p>
+              <h2 id="city-intro-title">{hub.localIntro.title}</h2>
+              {hub.localIntro.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+            <aside class="city-hub__aside">
+              <p class="city-hub__aside-title">{hub.localIntro.asideTitle}</p>
+              <ul class="city-hub__proof">
+                {hub.localIntro.asideItems.map((item) => <li>{item}</li>)}
+              </ul>
+            </aside>
+          </div>
+        </section>
+
+        <section class="city-hub__section city-hub__scenarios" aria-labelledby="city-scenarios-title">
+          <div class="city-hub__head">
+            <p class="eyebrow">{hub.scenarios.eyebrow}</p>
+            <h2 id="city-scenarios-title">{hub.scenarios.title}</h2>
+            <p>{hub.scenarios.intro}</p>
+          </div>
+          <div class="city-hub__scenario-grid">
+            {hub.scenarios.cards.map((card) => (
+              <a class="city-hub__scenario" href={card.href}>
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+                <b aria-hidden="true">→</b>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="city-hub__section city-hub__projects" aria-labelledby="city-projects-title">
+          <div class="city-hub__head-row">
+            <div class="city-hub__head">
+              <p class="eyebrow">{hub.projectsSection.eyebrow}</p>
+              <h2 id="city-projects-title">{hub.projectsSection.title}</h2>
+              <p>{hub.projectsSection.intro}</p>
+            </div>
+            <a class="city-hub__link" href={hub.projectsSection.viewAllHref}>{hub.projectsSection.viewAllLabel}</a>
+          </div>
+          {localProjects.length > 0 ? (
+            <div class="city-hub__project-grid projects-index-v2__grid" aria-label={hub.projectsSection.gridAriaLabel}>
+              {localProjects.map((project) => (
+                <ProjectCard project={project} hrefPrefix="/projects" locale={locale} />
+              ))}
+            </div>
+          ) : (
+            <p class="city-hub__empty">{hub.projectsSection.emptyText}</p>
+          )}
+        </section>
+
+        <section class="city-hub__section city-hub__process" aria-labelledby="city-process-title">
+          <div class="city-hub__head">
+            <p class="eyebrow">{hub.processSection.eyebrow}</p>
+            <h2 id="city-process-title">{hub.processSection.title}</h2>
+          </div>
+          <div class="city-hub__steps">
+            {hub.processSection.steps.map(([title, text], index) => (
+              <article class="city-hub__step">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <b>{title}</b>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="city-hub__section city-hub__geography" aria-labelledby="city-geography-title">
+          <div class="city-hub__head city-hub__head--split">
+            <div>
+              <p class="eyebrow">{hub.geography.eyebrow}</p>
+              <h2 id="city-geography-title">{hub.geography.title}</h2>
+              {hub.geography.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+            <aside class="city-hub__aside">
+              <p class="city-hub__aside-title">{hub.geography.asideTitle}</p>
+              <div class="city-hub__chips">
+                {hub.geography.areas.map((area) => <span>{area}</span>)}
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="city-hub__section city-hub__cost" aria-labelledby="city-cost-title">
+          <div class="city-hub__head">
+            <p class="eyebrow">{hub.cost.eyebrow}</p>
+            <h2 id="city-cost-title">{hub.cost.title}</h2>
+            <p>{hub.cost.intro}</p>
+          </div>
+          <div class="city-hub__factors">
+            {hub.cost.factors.map(([title, text], index) => (
+              <article>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+          <a class="city-hub__link" href={hub.cost.ctaHref}>{hub.cost.ctaLabel} →</a>
+        </section>
+
+        <section class="city-hub__section city-hub__why" aria-labelledby="city-why-title">
+          <div class="city-hub__why-grid">
+            <div class="city-hub__why-copy">
+              <p class="eyebrow">{hub.why.eyebrow}</p>
+              <h2 id="city-why-title">{hub.why.title}</h2>
+              <p>{hub.why.intro}</p>
+              <a class="city-hub__link" href={hub.why.aboutHref}>{hub.why.aboutLabel}</a>
+            </div>
+            <div class="city-hub__stats">
+              {hub.why.stats.map(([value, label]) => <article><strong>{value}</strong><span>{label}</span></article>)}
+            </div>
+          </div>
+        </section>
+
+        <section class="city-hub__section city-hub__b2b" aria-labelledby="city-b2b-title">
+          <div class="city-hub__head city-hub__head--split">
+            <div>
+              <p class="eyebrow">{hub.b2b.eyebrow}</p>
+              <h2 id="city-b2b-title">{hub.b2b.title}</h2>
+              <p>{hub.b2b.intro}</p>
+              <a class="button button--mint city-hub__b2b-cta" href={hub.b2b.ctaHref}>{hub.b2b.ctaLabel}</a>
+            </div>
+            <ul class="city-hub__b2b-list">
+              {hub.b2b.points.map((point) => <li>{point}</li>)}
+            </ul>
+          </div>
+        </section>
+
+        <section class="city-hub__section city-hub__contact" aria-labelledby="city-contact-title">
+          <div class="city-hub__head">
+            <p class="eyebrow">{hub.contact.eyebrow}</p>
+            <h2 id="city-contact-title">{hub.contact.title}</h2>
+            <p>{hub.contact.intro}</p>
+          </div>
+          <div class="city-hub__contact-actions">
+            <a class="button button--mint" href={hub.contact.ctaHref}>{hub.contact.ctaLabel}</a>
+            <a class="button button--outline" href={hub.contact.phoneHref}>{hub.contact.phoneLabel}</a>
+            <a class="button button--outline" href={hub.contact.telegramHref} target="_blank" rel="noopener noreferrer">{hub.contact.telegramLabel}</a>
+          </div>
+          <div class="city-hub__contact-note">
+            <a class="city-hub__contact-phone" href={hub.contact.phoneHref}>{hub.contact.phone}</a>
+            <span class="city-hub__contact-hours">{hub.contact.hours}</span>
+            <a class="city-hub__contact-office" href={hub.contact.officesHref}>{hub.contact.officesLabel}</a>
+          </div>
+        </section>
+
+        <section class="city-hub__section city-hub__faq">
+          <FAQBlock title={hub.faq.title} intro={hub.faq.intro} items={hub.faq.items} visibleCount={6} variant="compact" locale={locale} />
+        </section>
+
+        <section class="city-hub__section city-hub__knowledge" aria-labelledby="city-knowledge-title">
+          <div class="city-hub__head">
+            <p class="eyebrow">{hub.knowledge.eyebrow}</p>
+            <h2 id="city-knowledge-title">{hub.knowledge.title}</h2>
+            <p>{hub.knowledge.intro}</p>
+          </div>
+          <div class="city-hub__know-links">
+            {hub.knowledge.links.map((link) => (
+              <a href={link.href}>
+                {link.label}
+                <span aria-hidden="true" class="city-hub__arrow">
+                  <svg viewBox="0 0 16 16" width="16" height="16" fill="none"><path d="M4 12L12 4M6 4h6v6" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="city-hub__final" aria-labelledby="city-final-title">
+          <div>
+            <p class="eyebrow">{hub.finalCta.eyebrow}</p>
+            <h2 id="city-final-title">{hub.finalCta.title}</h2>
+            <p>{hub.finalCta.intro}</p>
+          </div>
+          <div class="city-hub__final-actions">
+            <a class="button button--mint" href={hub.finalCta.ctaPrimaryHref}>{hub.finalCta.ctaPrimary}</a>
+            <a class="button button--outline" href={hub.finalCta.ctaSecondaryHref}>{hub.finalCta.ctaSecondary}</a>
+          </div>
+        </section>
+      </div>
+    </main>
+    <Footer locale={locale} />
+  </div>
+</BaseLayout>

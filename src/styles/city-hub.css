@@ -1,0 +1,529 @@
+/* Local commercial hub (/city/{slug}/) — MASTER template styling.
+   Self-contained on purpose: shares the Space Glass visual language
+   (same tokens, card treatment and section rhythm as /rishennya/) but does
+   NOT import solutions.css, so the /rishennya/ critical-CSS build step keeps
+   its own dedicated stylesheet chunk. */
+
+.city-hub{
+  --hub-soft:#f4f8f6;
+  --hub-radius:22px;
+  background:#fff;
+  color:#14201c;
+}
+.city-hub__wrap{
+  width:min(1380px,calc(100% - 116px));
+  margin-inline:auto;
+}
+.city-hub__section{
+  padding:86px 0;
+  border-top:1px solid var(--line);
+}
+.city-hub__section:first-of-type{border-top:0}
+
+/* Section heads */
+.city-hub__head{max-width:1180px;margin-bottom:34px}
+.city-hub__head>p:last-child{max-width:980px}
+.city-hub__head h2{
+  margin:.14em 0 .45em;
+  font-size:clamp(2rem,3.2vw,3.45rem);
+  line-height:1.02;
+  letter-spacing:-.045em;
+  text-wrap:pretty;
+}
+.city-hub__head>p:not(.eyebrow){
+  color:var(--muted);
+  font-size:1.02rem;
+  line-height:1.6;
+}
+.city-hub__head--split{
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);
+  align-items:start;
+  gap:48px;
+  max-width:none;
+}
+.city-hub__head--split>div>p:not(.eyebrow){
+  max-width:760px;
+  margin:0 0 16px;
+  color:var(--muted);
+  font-size:1.02rem;
+  line-height:1.65;
+}
+
+.city-hub__link{
+  display:inline-flex;
+  margin-top:22px;
+  color:var(--mint-dark);
+  font-weight:800;
+  text-decoration:none;
+}
+.city-hub__link:hover{text-decoration:underline;text-underline-offset:4px}
+
+/* Hero */
+.city-hub__hero{
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(460px,1.1fr);
+  gap:54px;
+  align-items:center;
+  padding:54px 0 86px;
+}
+.city-hub__hero-copy{padding:30px 0}
+.city-hub__hero h1{
+  max-width:760px;
+  margin:.16em 0 .38em;
+  font-size:clamp(2.6rem,4.6vw,4.9rem);
+  line-height:.98;
+  letter-spacing:-.055em;
+  text-wrap:balance;
+}
+.city-hub__hero .lead{
+  max-width:650px;
+  margin:0;
+  color:#111513;
+  font-size:clamp(1rem,1.25vw,1.16rem);
+  line-height:1.62;
+}
+.city-hub__hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:30px;
+}
+.city-hub__hero-actions .button{min-height:48px}
+.city-hub__hero-media{
+  position:relative;
+  overflow:hidden;
+  border-radius:0;
+  background:#eaf2ee;
+}
+.city-hub__hero-media a{display:block}
+.city-hub__hero-media img{
+  display:block;
+  width:100%;
+  height:clamp(360px,88vw,460px);
+  object-fit:cover;
+  object-position:center;
+}
+
+/* "Що ми виготовляємо" — category / icon cards */
+.city-hub__cats{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:12px;
+}
+.city-hub__cat{
+  display:flex;
+  min-width:0;
+  flex-direction:column;
+  padding:22px;
+  border:1px solid var(--green-line);
+  border-radius:16px;
+  background:#fff;
+  color:inherit;
+  text-decoration:none;
+  transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+}
+.city-hub__cat:hover{
+  border-color:var(--mint);
+  box-shadow:0 14px 30px rgba(10,70,50,.08);
+  transform:translateY(-2px);
+}
+.city-hub__cat-icon{
+  display:flex;
+  width:34px;
+  height:34px;
+  margin-bottom:16px;
+  color:var(--mint-dark);
+}
+.city-hub__cat-icon svg{
+  width:100%;
+  height:100%;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.city-hub__cat h3{margin:0 0 8px;font-size:1.02rem;line-height:1.2}
+.city-hub__cat p{margin:0;color:var(--muted);font-size:.88rem;line-height:1.5}
+.city-hub__cat b{margin-top:auto;padding-top:16px;color:var(--mint-dark);font-size:1rem}
+
+/* Aside (route / area) for the split sections */
+.city-hub__aside{
+  padding:26px;
+  border:1px solid var(--green-line);
+  border-radius:18px;
+  background:var(--hub-soft);
+}
+/* Centre the shorter aside card against its taller text column so the right
+   side reads as intentional breathing room, not a cut-off half. */
+.city-hub__intro .city-hub__head--split,
+.city-hub__geography .city-hub__head--split{align-items:center}
+.city-hub__aside-title{
+  margin:0 0 16px;
+  color:var(--mint-dark);
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+/* Commercial-proof checklist in the local-intro aside (not a numbered process) */
+.city-hub__proof{margin:0;padding:0;list-style:none;display:grid;gap:11px}
+.city-hub__proof li{
+  position:relative;
+  padding-left:24px;
+  color:var(--text);
+  font-weight:600;
+  line-height:1.4;
+}
+.city-hub__proof li::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:.5em;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--mint);
+}
+
+/* Confirmed-areas chips: dark text, mint border, premium */
+.city-hub__chips{display:flex;flex-wrap:wrap;gap:10px}
+.city-hub__chips span{
+  display:inline-flex;
+  align-items:center;
+  min-height:40px;
+  padding:0 16px;
+  border:1px solid var(--mint);
+  border-radius:999px;
+  color:var(--text);
+  font-weight:700;
+  font-size:.92rem;
+}
+
+/* Scenario cards */
+.city-hub__scenario-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+}
+.city-hub__scenario{
+  display:flex;
+  min-width:0;
+  flex-direction:column;
+  padding:26px;
+  border:1px solid var(--green-line);
+  border-radius:16px;
+  background:#eff9f4;
+  color:inherit;
+  text-decoration:none;
+  transition:border-color .18s ease;
+}
+.city-hub__scenario:hover{border-color:var(--mint)}
+.city-hub__scenario h3{margin:0 0 10px;font-size:1.15rem;line-height:1.15}
+.city-hub__scenario p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.55}
+.city-hub__scenario b{margin-top:auto;padding-top:18px;color:var(--mint-dark)}
+
+/* Projects proof — arrow-link aligned to the TOP of the heading group */
+.city-hub__head-row{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:40px;
+}
+.city-hub__head-row .city-hub__head{margin-bottom:0}
+.city-hub__head-row .city-hub__link{flex:0 0 auto;margin-top:2px}
+.city-hub__project-grid.projects-index-v2__grid{padding:36px 0 0}
+.city-hub__empty{margin:24px 0 0;color:var(--muted)}
+
+/* Process — mint band, six steps */
+.city-hub__process{
+  margin-inline:calc(50% - 50vw);
+  padding-inline:max(58px,calc((100vw - 1380px)/2));
+  background:var(--hub-soft);
+}
+.city-hub__steps{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:14px;
+}
+.city-hub__step{padding:18px 0 0;border-top:1px solid var(--line)}
+.city-hub__step span{display:block;margin-bottom:10px;color:var(--mint-dark);font-weight:800;font-size:.85rem}
+.city-hub__step b{display:block;margin-bottom:6px}
+.city-hub__step p{margin:0;color:var(--muted);font-size:.86rem;line-height:1.45}
+
+/* Cost factors — six items as three columns */
+.city-hub__factors{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+.city-hub__factors article{
+  padding:26px;
+  border:1px solid var(--green-line);
+  border-radius:16px;
+}
+.city-hub__factors article>span{color:var(--mint-dark);font-size:.78rem;font-weight:900;letter-spacing:.12em}
+.city-hub__factors h3{margin:20px 0 10px;font-size:1.05rem}
+.city-hub__factors p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.56}
+
+/* Why Space Glass — copy + stats */
+.city-hub__why-grid{
+  display:grid;
+  grid-template-columns:minmax(0,.88fr) minmax(520px,1.12fr);
+  gap:70px;
+  align-items:center;
+}
+.city-hub__why-copy>p:not(.eyebrow){max-width:640px;color:var(--muted);font-size:1.02rem;line-height:1.65}
+.city-hub__why-copy h2{
+  margin:.14em 0 .45em;
+  font-size:clamp(2rem,3.2vw,3.45rem);
+  line-height:1.02;
+  letter-spacing:-.045em;
+}
+.city-hub__stats{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  border-top:1px solid var(--line);
+  border-left:1px solid var(--line);
+}
+.city-hub__stats article{
+  min-height:170px;
+  padding:30px;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.city-hub__stats strong{
+  display:block;
+  color:var(--mint-dark);
+  font-size:clamp(2rem,3vw,3.4rem);
+  line-height:1;
+  letter-spacing:-.05em;
+}
+.city-hub__stats span{display:block;margin-top:12px;color:var(--muted);font-size:.92rem}
+
+/* B2B list */
+.city-hub__b2b-list{margin:0;padding:0;list-style:none;display:grid;gap:2px;align-self:start}
+.city-hub__b2b-list li{
+  position:relative;
+  padding:14px 0 14px 24px;
+  border-top:1px solid var(--line);
+  color:var(--text);
+}
+.city-hub__b2b-list li::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:22px;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--mint);
+}
+.city-hub__b2b-cta{align-self:flex-start;margin-top:24px;min-height:48px}
+
+/* Local contact / conversion */
+.city-hub__contact-actions{display:flex;flex-wrap:wrap;gap:12px}
+.city-hub__contact-actions .button{min-height:48px}
+.city-hub__contact-note{margin:20px 0 0;color:var(--muted)}
+.city-hub__contact-note a{color:var(--mint-dark);font-weight:700}
+
+/* Knowledge links — symmetrical 4-col grid on a soft band */
+.city-hub__knowledge{
+  margin-inline:calc(50% - 50vw);
+  padding-inline:max(58px,calc((100vw - 1380px)/2));
+  background:linear-gradient(90deg,var(--hub-soft),#fff);
+}
+.city-hub__know-links{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+}
+.city-hub__know-links a{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  min-height:72px;
+  padding:0 20px;
+  border:1px solid rgba(31,100,78,.16);
+  border-radius:14px;
+  background:rgba(255,255,255,.72);
+  color:var(--text);
+  text-decoration:none;
+  font-weight:700;
+  line-height:1.25;
+  transition:.18s ease;
+}
+.city-hub__know-links a:hover{border-color:var(--mint);background:#fff}
+.city-hub__arrow{flex:0 0 auto;color:var(--mint-dark)}
+
+/* Final CTA — dark card */
+.city-hub__final{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:60px;
+  margin:86px 0 90px;
+  padding:54px;
+  border-radius:var(--hub-radius);
+  background:#153f34;
+  color:#fff;
+}
+.city-hub__final>div:first-child{max-width:760px}
+/* light mint / near-white eyebrow — ~10:1 on #153f34 (matches the dark CTA pattern) */
+.city-hub__final .eyebrow{color:#e9faf3 !important}
+.city-hub__final h2{
+  margin:.14em 0 .4em;
+  color:#fff;
+  font-size:clamp(2rem,3.2vw,3.45rem);
+  line-height:1.02;
+  letter-spacing:-.045em;
+}
+.city-hub__final p:not(.eyebrow){margin:0;color:#d4e2dd;line-height:1.6}
+.city-hub__final-actions{display:flex;flex:0 0 auto;flex-wrap:wrap;gap:10px}
+.city-hub__final .button--mint,.city-hub__final .button--mint:visited{background:#91dbc4;color:#10372d}
+.city-hub__final .button--outline,.city-hub__final .button--outline:visited{border-color:rgba(255,255,255,.65);background:transparent;color:#fff}
+.city-hub__final .button--outline:hover,.city-hub__final .button--outline:focus-visible{border-color:#fff;background:#fff;color:#153f34}
+
+/* Desktop hero — flush geometry aligned with the homepage / rishennya hero */
+@media (min-width:901px){
+  .city-hub__hero{
+    grid-template-columns:minmax(0,.79fr) minmax(0,1fr);
+    gap:0;
+    align-items:stretch;
+    min-height:550px;
+    padding:0;
+    width:calc(100% + 116px);
+    margin-left:-58px;
+    margin-right:-58px;
+  }
+  .city-hub__hero-copy{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    min-width:0;
+    padding:54px 58px 40px;
+  }
+  .city-hub__hero-media{
+    min-height:550px;
+    border-radius:0;
+    background:#fff;
+  }
+  .city-hub__hero-media a{position:absolute;inset:0}
+  .city-hub__hero-media img{width:100%;height:100%;object-fit:cover}
+}
+
+@media(max-width:1050px){
+  .city-hub__wrap{width:calc(100% - 64px)}
+  .city-hub__hero{grid-template-columns:1fr;gap:20px}
+  .city-hub__hero-copy{max-width:800px}
+  .city-hub__cats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .city-hub__scenario-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .city-hub__steps{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .city-hub__factors{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .city-hub__know-links{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .city-hub__head--split{grid-template-columns:1fr;gap:28px}
+  .city-hub__why-grid{grid-template-columns:1fr;gap:40px}
+  .city-hub__stats{max-width:760px}
+  .city-hub__head-row{flex-direction:column;align-items:flex-start;gap:12px}
+  .city-hub__final{align-items:flex-start;flex-direction:column}
+}
+
+@media(max-width:700px){
+  .city-hub__wrap{width:calc(100% - 32px)}
+  .city-hub__section{padding:58px 0}
+  .city-hub__head{margin-bottom:26px}
+  .city-hub__head h2,.city-hub__why-copy h2,.city-hub__final h2{font-size:2rem;text-wrap:balance}
+  .city-hub__hero{padding:0}
+  .city-hub__hero h1{font-size:2.5rem}
+  .city-hub__hero-media img{height:clamp(320px,90vw,440px)}
+  .city-hub__hero-actions{display:grid;grid-template-columns:1fr}
+  .city-hub__hero-actions .button{width:100%}
+  .city-hub__cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .city-hub__cat{padding:18px}
+  .city-hub__scenario-grid,
+  .city-hub__factors,
+  .city-hub__know-links{grid-template-columns:1fr}
+  .city-hub__steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .city-hub__process,.city-hub__knowledge{padding-inline:16px}
+  .city-hub__stats article{min-height:135px;padding:22px 18px}
+  .city-hub__stats strong{font-size:1.8rem}
+  .city-hub__contact-actions{display:grid;grid-template-columns:1fr}
+  .city-hub__contact-actions .button{width:100%}
+  /* B2B CTA matches the other primary CTAs on mobile: full-width, centred */
+  .city-hub__b2b-cta{
+    width:100%;
+    max-width:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:22px;
+  }
+  .city-hub__final{margin:58px 0;padding:34px 24px}
+  .city-hub__final-actions{width:100%;flex-direction:column}
+  .city-hub__final-actions .button{width:100%}
+}
+
+@media(max-width:430px){
+  .city-hub__cats{grid-template-columns:1fr}
+  .city-hub__steps{grid-template-columns:1fr}
+  .city-hub__stats{grid-template-columns:1fr}
+  .city-hub__stats article{min-height:auto}
+}
+
+
+/* City contact meta layout */
+.city-hub__contact-note{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:0;
+}
+
+.city-hub__contact-note > * + *::before{
+  content:"·";
+  display:inline-block;
+  margin:0 .5rem;
+  color:var(--muted);
+  font-weight:400;
+}
+
+@media (max-width:620px){
+  .city-hub__contact-note{
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    text-align:center;
+  }
+
+  .city-hub__contact-note > *{
+    display:block;
+    width:100%;
+    text-align:center;
+  }
+
+  .city-hub__contact-note > * + *::before{
+    content:none;
+  }
+}
+
+/* Kyiv city hero: full-bleed media below desktop */
+@media (max-width: 900px) {
+  .city-hub__hero-media{
+    width:100vw;
+    max-width:none;
+    margin-left:calc(50% - 50vw);
+    margin-right:calc(50% - 50vw);
+    border-radius:0;
+  }
+
+  .city-hub__hero-media picture,
+  .city-hub__hero-media img{
+    display:block;
+    width:100%;
+    max-width:none;
+    border-radius:0;
+  }
+}

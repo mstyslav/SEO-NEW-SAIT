@@ -1,9 +1,7 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-const services = [['Душові зі скла','Walk-in, двері, шторки та індивідуальні душові.'],['Скляні перегородки','Loft, офісні, міжкімнатні та розсувні системи.'],['Скляні огорожі','Для сходів, балконів, терас і басейнів.'],['Скляні двері','Розпашні, розсувні та маятникові.']];
-import "../../styles/internal-pages.css";
+// Thin route wrapper — all content lives in the shared master template
+// (src/components/pages/CityHubPage.astro) and src/data/city-hubs.ts.
+// Odesa / Lviv wrappers stay untouched until the Kyiv layout is signed off.
+import CityHubPage from '../../components/pages/CityHubPage.astro';
 ---
-<BaseLayout title="Скляні конструкції у Києві — Space Glass" description="Замір, виготовлення та монтаж скляних конструкцій у Києві.">
-<div class="sg-page-shell"><Header/><main id="main"><section class="inner-hero"><div class="inner-hero__copy"><p class="eyebrow">Локальний монтаж</p><h1>Скляні конструкції у Києві</h1><p class="lead">Замір, проєктування, виготовлення, доставка та монтаж.</p><a class="button button--mint" href="#city-cta">Отримати розрахунок</a></div><div class="inner-hero__visual"><span>КИЇВ</span></div></section><section class="inner-section"><div class="inner-section__heading"><p class="eyebrow">Послуги</p><h2>Що ми встановлюємо</h2></div><div class="inner-card-grid">{services.map(([title,text],i)=><article class="inner-card"><span>{String(i+1).padStart(2,'0')}</span><h3>{title}</h3><p>{text}</p><a href="#">Детальніше →</a></article>)}</div></section><section id="city-cta" class="inner-cta"><div><p class="eyebrow eyebrow--light">Заявка</p><h2>Обговоримо ваш проєкт у Києві</h2></div><a class="button button--white" href="mailto:info@space-glass.com.ua">Надіслати запит</a></section></main><Footer/></div></BaseLayout>
+<CityHubPage city="kyiv" locale="uk" />
