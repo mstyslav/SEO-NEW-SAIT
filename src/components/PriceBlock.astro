@@ -1,0 +1,69 @@
+---
+/**
+ * Reusable category price block (pilot: /dushovi-kabiny/).
+ *
+ * The price model is intentionally NOT hard-wired: `amount` is a plain string,
+ * so switching from "від 12 000 грн" to "від X грн/м²" later is a one-line data
+ * change with no markup/redesign. Keep the price in ONE place — this component —
+ * and never repeat the number elsewhere on the page.
+ *
+ * `factors` are informational (not links) — [label, explanation] pairs rendered
+ * as plain info items under a small "від чого залежить вартість" heading.
+ */
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  amount: string;
+  amountNote?: string;
+  kicker?: string;
+  bullets?: string[];
+  ctaLabel: string;
+  ctaHref: string;
+  factorsTitle?: string;
+  factors: [string, string][];
+}
+const {
+  eyebrow = 'Вартість',
+  heading,
+  amount,
+  amountNote,
+  kicker,
+  bullets = [],
+  ctaLabel,
+  ctaHref,
+  factorsTitle = 'Від чого залежить вартість',
+  factors
+} = Astro.props;
+import '../styles/category-pages.css';
+---
+<section class="price-block">
+  <div class="price-block__card">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2>{heading}</h2>
+    {kicker && <p class="price-block__kicker">{kicker}</p>}
+    <p class="price-block__amount">{amount}</p>
+    {amountNote && <p class="price-block__note">{amountNote}</p>}
+
+    {bullets.length > 0 && (
+      <ul class="price-block__bullets">
+        {bullets.map((item) => <li>{item}</li>)}
+      </ul>
+    )}
+
+    <a class="button button--mint" href={ctaHref}>{ctaLabel}</a>
+  </div>
+
+  {factors.length > 0 && (
+    <div class="price-block__factors-wrap">
+      <p class="price-block__factors-title">{factorsTitle}</p>
+      <ul class="price-block__factors">
+        {factors.map(([label, text]) => (
+          <li>
+            <b>{label}</b>
+            <span>{text}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</section>
