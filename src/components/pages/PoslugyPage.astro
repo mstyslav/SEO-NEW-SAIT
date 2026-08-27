@@ -81,7 +81,7 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
         <a class="services-cycle__text-link" href={lp('/projects/')}>{t.projectsSection.viewAllLink} <span aria-hidden="true">→</span></a>
       </section>
 
-      <section class="services-cycle__section services-cycle__directions" aria-labelledby="directions-title"><div class="services-cycle__section-head"><p class="eyebrow">{t.directionsSection.eyebrow}</p><h2 id="directions-title">{t.directionsSection.title}</h2><p>{t.directionsSection.intro}</p></div><nav aria-label={t.directionsSection.navAria}><ul>{directions.map(([title,href]) => <li><a href={lp(href)}><span>{title}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a></li>)}</ul></nav></section>
+      <section class="services-cycle__section services-cycle__directions" aria-labelledby="directions-title"><div class="services-cycle__section-head"><p class="eyebrow">{t.directionsSection.eyebrow}</p><h2 id="directions-title">{t.directionsSection.title}</h2><p>{t.directionsSection.intro}</p></div><nav aria-label={t.directionsSection.navAria}><ul>{directions.map(([title,href]) => <li><a href={lp(href)}><span>{title}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 15L15 5M8 5h7v7" /></svg></a></li>)}</ul></nav></section>
 
       <section class="services-cycle__section" aria-labelledby="geography-title">
         <div class="services-cycle__section-head"><p class="eyebrow">{t.geographySection.eyebrow}</p><h2 id="geography-title">{t.geographySection.title}</h2><p>{t.geographySection.intro}</p></div>

@@ -8,6 +8,7 @@ import Footer from '../Footer.astro';
 import GoogleReviews from '../GoogleReviews.astro';
 import { localizedPath, type Locale } from '../../i18n/helpers';
 import { aboutContent } from '../../content/i18n/pages/about';
+import { getCatalogNavigation } from '../../data/catalog-navigation';
 
 interface Props {
   locale: Locale;
@@ -16,6 +17,11 @@ interface Props {
 const { locale } = Astro.props;
 const t = aboutContent[locale];
 const lp = (path: string) => localizedPath(path, locale);
+
+const aboutDirections = getCatalogNavigation(locale).map(({ name, href }) => ({
+  label: name,
+  href
+}));
 
 const clients = [
   ['CHOICE', '/images/partners/choice.svg'],
@@ -87,7 +93,7 @@ const systems = [
         </div>
         <nav aria-label={t.directions.navAriaLabel}>
           <ul class="about-directions__list">
-            {t.directions.items.map((item) => <li><a href={lp(item.href)}><span>{item.label}</span><svg class="about-directions__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a></li>)}
+            {aboutDirections.map((item) => <li><a href={lp(item.href)}><span>{item.label}</span><svg class="about-directions__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 15L15 5M8 5h7v7" /></svg></a></li>)}
           </ul>
         </nav>
       </section>
@@ -214,12 +220,12 @@ const systems = [
 .about-directions__intro { display: grid; grid-template-columns: minmax(0, .9fr) minmax(420px, 1.1fr); gap: 48px; align-items: end; margin-bottom: 30px; }
 .about-directions h2 { max-width: 760px; margin: 0; font-size: clamp(34px, 3.2vw, 56px); line-height: 1.02; letter-spacing: -.045em; }
 .about-directions__intro > p:last-child { max-width: 500px; margin: 0; color: var(--muted); font-size: 17px; line-height: 1.55; }
-.about-directions__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; list-style: none; }
-.about-directions__list li { min-width: 0; border-bottom: 1px solid color-mix(in srgb, var(--line) 72%, transparent); }
+.about-directions__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
+.about-directions__list li { min-width: 0; border: 0; }
 .about-directions__list li:nth-child(-n + 4) { border-bottom-color: transparent; }
-.about-directions__list li:not(:nth-child(4n)) { border-right: 1px solid color-mix(in srgb, var(--line) 72%, transparent); }
-.about-directions__list a { display: flex; min-height: 88px; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 22px; color: var(--ink); font-size: 14px; font-weight: 700; line-height: 1.4; text-decoration: none; }
-.about-directions__arrow { width: 18px; height: 18px; flex: 0 0 18px; color: var(--green-deep); fill: none; stroke: currentColor; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round; }
+.about-directions__list li:not(:nth-child(4n)) { border-right: 0; }
+.about-directions__list a { display: flex; min-height: 92px; align-items: center; justify-content: space-between; gap: 18px; padding: 20px 22px; background: #fff; border: 1px solid var(--line); border-radius: 20px; color: var(--ink); font-size: 15px; font-weight: 700; line-height: 1.35; text-decoration: none; }
+.about-directions__arrow { width: 20px; height: 20px; flex: 0 0 20px; color: var(--green-deep); fill: none; stroke: currentColor; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round; }
 .about-directions__list a:focus-visible { outline: 2px solid var(--mint); outline-offset: -2px; }
 @media (hover:hover) { .about-directions__list a:hover { background: color-mix(in srgb, var(--soft) 55%, transparent); color: var(--green-deep); } }
 
@@ -227,11 +233,7 @@ const systems = [
   .about-premium .about-v12-facts { padding: 0 24px; }
   .about-stat { padding: 22px 18px; }
   .about-directions__intro { grid-template-columns: 1fr; gap: 16px; }
-  .about-directions__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .about-directions__list li:nth-child(-n + 4) { border-bottom-color: color-mix(in srgb, var(--line) 72%, transparent); }
-  .about-directions__list li:nth-child(-n + 2) { border-bottom-color: transparent; }
-  .about-directions__list li:not(:nth-child(4n)) { border-right: 0; }
-  .about-directions__list li:not(:nth-child(2n)) { border-right: 1px solid color-mix(in srgb, var(--line) 72%, transparent); }
+  .about-directions__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 }
 
 @media (max-width: 640px) {
@@ -242,7 +244,9 @@ const systems = [
   .about-stat__icon { display: block; margin-bottom: 14px; }
   .about-stat b { font-size: clamp(1.45rem, 7.1vw, 1.7rem); }
   .about-stat span { font-size: 12px; }
-  .about-directions__list a { min-height: 76px; padding: 16px 14px; font-size: 13px; }
+  .about-directions__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .about-directions__list a { min-height: 76px; padding: 14px 12px; border-radius: 16px; font-size: 13px; gap: 10px; }
+  .about-directions__arrow { width: 16px; height: 16px; flex-basis: 16px; }
 }
 </style>
 

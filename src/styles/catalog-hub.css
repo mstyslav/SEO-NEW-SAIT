@@ -160,3 +160,23 @@ body .sg-page-shell main .catalog-hub__hero h1 {
     white-space:nowrap;
   }
 }
+
+/* Catalog experience stats — mint accent like About */
+.catalog-experience dt{
+  color:var(--catalog-mint) !important;
+}
+
+/* Catalog navigation arrow — same geometry on every device */
+.catalog-link-arrow{
+  display:inline-flex;
+  flex:0 0 auto;
+  align-items:center;
+  justify-content:center;
+  color:var(--catalog-mint);
+  line-height:0;
+}
+.catalog-link-arrow svg{
+  display:block;
+  width:16px;
+  height:16px;
+}
