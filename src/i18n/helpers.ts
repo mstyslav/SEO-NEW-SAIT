@@ -30,6 +30,7 @@ const LOCALIZED_ROUTES: Record<'ru', ReadonlySet<string>> = {
     '/city/odesa/',
     '/city/lviv/',
     '/contacts/',
+    '/dushovi-kabiny/',
     '/knowledge/',
     '/oplata-dostavka/',
     '/poslugy/',
