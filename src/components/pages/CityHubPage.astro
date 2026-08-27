@@ -1,9 +1,10 @@
 ---
-// MASTER template for the local commercial hub pages at /city/{slug}/.
+// MASTER template for the local commercial hub pages:
+//   UA  /city/kyiv|odesa|lviv/        RU  /ru/city/kyiv|odesa|lviv/
 //
-// Kyiv is the approved reference. To add Odesa / Lviv later: add the city entry
-// to src/data/city-hubs.ts and a one-line route wrapper under src/pages/city/.
-// Nothing city-specific belongs in this file.
+// Every page — both locales, all cities — renders through this one component;
+// all per-city, per-locale copy lives in src/data/city-hubs.ts. Nothing
+// city-specific belongs in this file.
 //
 // Reuses, not re-invents:
 //   TrustBar, FAQBlock, ProjectCard            — shared components
@@ -21,6 +22,7 @@ import ProjectCard from '../projects/ProjectCard.astro';
 import { getCollection } from 'astro:content';
 import { getCityHub, type CityHubLocale } from '../../data/city-hubs';
 import { homeContent } from '../../content/i18n/pages/home';
+import { localizedPath } from '../../i18n/helpers';
 import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
 import '../../styles/projects-common.css';
 import '../../styles/city-hub.css';
@@ -31,8 +33,18 @@ interface Props {
 }
 
 const { city, locale = 'uk' } = Astro.props;
-const hub = getCityHub(city);
+const hub = getCityHub(city, locale);
 const categories = homeContent[locale].categories;
+
+// Route every internal link through the site's own localizedPath() so RU pages
+// only get a /ru/ prefix where a real RU route exists (Header/Footer/Poslugy do
+// the same). Fragment (#) and external (tel:/https:) links pass through.
+const lp = (path: string) => localizedPath(path, locale);
+const localizeHref = (href: string) => {
+  if (!href.startsWith('/')) return href;
+  const [path, hash] = href.split('#');
+  return hash ? `${lp(path)}#${hash}` : lp(path);
+};
 
 const localProjects = (
   await getCollection(
@@ -48,11 +60,19 @@ const origin = Astro.site ?? Astro.url.origin;
 const pagePath = `/city/${hub.slug}/`;
 
 const faqStructuredData = faqSchema(hub.faq.items.map(([question, answer]) => ({ question, answer })));
-const pageUrl = absoluteUrl(pagePath, origin);
+const pageUrl = absoluteUrl(lp(pagePath), origin);
+const serviceName =
+  locale === 'ru'
+    ? `Изготовление и монтаж стеклянных конструкций ${hub.cityLocative}`
+    : `Виготовлення та монтаж скляних конструкцій ${hub.cityLocative}`;
+const serviceType =
+  locale === 'ru'
+    ? 'Замер, изготовление и монтаж стеклянных и алюминиевых конструкций'
+    : 'Замір, виготовлення та монтаж скляних і алюмінієвих конструкцій';
 const structuredData: JsonLdObject[] = [
   breadcrumbSchema([
-    { label: 'Головна', href: new URL('/', origin) },
-    { label: hub.hero.h1, href: new URL(pagePath, origin) }
+    { label: locale === 'ru' ? 'Главная' : 'Головна', href: new URL(lp('/'), origin) },
+    { label: hub.hero.h1, href: new URL(lp(pagePath), origin) }
   ]),
   // Local Service node — mirrors the existing Service pattern in
   // SeoServicePage / PaymentDeliveryPage (provider references the single
@@ -60,12 +80,14 @@ const structuredData: JsonLdObject[] = [
   {
     '@type': 'Service',
     '@id': `${pageUrl}#service`,
-    name: `Виготовлення та монтаж скляних конструкцій ${hub.cityLocative}`,
-    serviceType: 'Замір, виготовлення та монтаж скляних і алюмінієвих конструкцій',
+    name: serviceName,
+    serviceType,
     provider: { '@id': `${absoluteUrl('/', origin)}#organization` },
     areaServed: [
-      ...hub.geography.areas.map((name) => ({ '@type': 'City', name })),
-      { '@type': 'AdministrativeArea', name: 'Київська область' }
+      ...hub.geography.areas
+        .filter((name) => name !== hub.geography.oblast)
+        .map((name) => ({ '@type': 'City', name })),
+      { '@type': 'AdministrativeArea', name: hub.geography.oblast }
     ],
     url: pageUrl,
     description: hub.meta.description
@@ -78,7 +100,7 @@ const structuredData: JsonLdObject[] = [
       '@type': 'ListItem',
       position: index + 1,
       name: label,
-      url: absoluteUrl(href, origin)
+      url: absoluteUrl(localizeHref(href), origin)
     }))
   },
   ...(faqStructuredData ? [faqStructuredData] : [])
@@ -88,7 +110,7 @@ const structuredData: JsonLdObject[] = [
   title={hub.meta.title}
   description={hub.meta.description}
   locale={locale}
-  alternateLocales={['uk']}
+  alternateLocales={['uk', 'ru']}
   schemaType="WebPage"
   structuredData={structuredData}
   heroPreloadSrc={hub.hero.image.src}
@@ -107,12 +129,12 @@ const structuredData: JsonLdObject[] = [
             <h1>{hub.hero.h1}</h1>
             <p class="lead">{hub.hero.lead}</p>
             <div class="city-hub__hero-actions">
-              <a class="button button--mint" href={hub.hero.ctaPrimaryHref}>{hub.hero.ctaPrimary}</a>
-              <a class="button button--outline" href={hub.hero.ctaSecondaryHref}>{hub.hero.ctaSecondary}</a>
+              <a class="button button--mint" href={localizeHref(hub.hero.ctaPrimaryHref)}>{hub.hero.ctaPrimary}</a>
+              <a class="button button--outline" href={localizeHref(hub.hero.ctaSecondaryHref)}>{hub.hero.ctaSecondary}</a>
             </div>
           </div>
           <div class="city-hub__hero-media">
-            <a href={hub.hero.image.href} aria-label={hub.hero.image.alt}>
+            <a href={localizeHref(hub.hero.image.href)} aria-label={hub.hero.image.alt}>
               <picture>
                 <source media="(max-width: 900px)" srcset={hub.hero.image.mobileSrcset} sizes="calc(100vw - 32px)" />
                 <img
@@ -141,7 +163,7 @@ const structuredData: JsonLdObject[] = [
           </div>
           <div class="city-hub__cats">
             {categories.map(([title, text, href, icon]) => (
-              <a class="city-hub__cat" href={href}>
+              <a class="city-hub__cat" href={localizeHref(href)}>
                 <span class="city-hub__cat-icon" set:html={icon} />
                 <h3>{title}</h3>
                 <p>{(hub.makeSection.categoryOverrides ?? {})[href] ?? text}</p>
@@ -149,7 +171,7 @@ const structuredData: JsonLdObject[] = [
               </a>
             ))}
           </div>
-          <a class="city-hub__link" href={hub.makeSection.allLinkHref}>{hub.makeSection.allLinkLabel}</a>
+          <a class="city-hub__link" href={localizeHref(hub.makeSection.allLinkHref)}>{hub.makeSection.allLinkLabel}</a>
         </section>
 
         <section class="city-hub__section city-hub__intro" aria-labelledby="city-intro-title">
@@ -176,7 +198,7 @@ const structuredData: JsonLdObject[] = [
           </div>
           <div class="city-hub__scenario-grid">
             {hub.scenarios.cards.map((card) => (
-              <a class="city-hub__scenario" href={card.href}>
+              <a class="city-hub__scenario" href={localizeHref(card.href)}>
                 <h3>{card.title}</h3>
                 <p>{card.text}</p>
                 <b aria-hidden="true">→</b>
@@ -192,12 +214,12 @@ const structuredData: JsonLdObject[] = [
               <h2 id="city-projects-title">{hub.projectsSection.title}</h2>
               <p>{hub.projectsSection.intro}</p>
             </div>
-            <a class="city-hub__link" href={hub.projectsSection.viewAllHref}>{hub.projectsSection.viewAllLabel}</a>
+            <a class="city-hub__link" href={localizeHref(hub.projectsSection.viewAllHref)}>{hub.projectsSection.viewAllLabel}</a>
           </div>
           {localProjects.length > 0 ? (
             <div class="city-hub__project-grid projects-index-v2__grid" aria-label={hub.projectsSection.gridAriaLabel}>
               {localProjects.map((project) => (
-                <ProjectCard project={project} hrefPrefix="/projects" locale={locale} />
+                <ProjectCard project={project} href={localizeHref(`/projects/${project.slug}/`)} locale={locale} />
               ))}
             </div>
           ) : (
@@ -252,7 +274,7 @@ const structuredData: JsonLdObject[] = [
               </article>
             ))}
           </div>
-          <a class="city-hub__link" href={hub.cost.ctaHref}>{hub.cost.ctaLabel} →</a>
+          <a class="city-hub__link" href={localizeHref(hub.cost.ctaHref)}>{hub.cost.ctaLabel} →</a>
         </section>
 
         <section class="city-hub__section city-hub__why" aria-labelledby="city-why-title">
@@ -261,7 +283,7 @@ const structuredData: JsonLdObject[] = [
               <p class="eyebrow">{hub.why.eyebrow}</p>
               <h2 id="city-why-title">{hub.why.title}</h2>
               <p>{hub.why.intro}</p>
-              <a class="city-hub__link" href={hub.why.aboutHref}>{hub.why.aboutLabel}</a>
+              <a class="city-hub__link" href={localizeHref(hub.why.aboutHref)}>{hub.why.aboutLabel}</a>
             </div>
             <div class="city-hub__stats">
               {hub.why.stats.map(([value, label]) => <article><strong>{value}</strong><span>{label}</span></article>)}
@@ -275,7 +297,7 @@ const structuredData: JsonLdObject[] = [
               <p class="eyebrow">{hub.b2b.eyebrow}</p>
               <h2 id="city-b2b-title">{hub.b2b.title}</h2>
               <p>{hub.b2b.intro}</p>
-              <a class="button button--mint city-hub__b2b-cta" href={hub.b2b.ctaHref}>{hub.b2b.ctaLabel}</a>
+              <a class="button button--mint city-hub__b2b-cta" href={localizeHref(hub.b2b.ctaHref)}>{hub.b2b.ctaLabel}</a>
             </div>
             <ul class="city-hub__b2b-list">
               {hub.b2b.points.map((point) => <li>{point}</li>)}
@@ -290,14 +312,14 @@ const structuredData: JsonLdObject[] = [
             <p>{hub.contact.intro}</p>
           </div>
           <div class="city-hub__contact-actions">
-            <a class="button button--mint" href={hub.contact.ctaHref}>{hub.contact.ctaLabel}</a>
+            <a class="button button--mint" href={localizeHref(hub.contact.ctaHref)}>{hub.contact.ctaLabel}</a>
             <a class="button button--outline" href={hub.contact.phoneHref}>{hub.contact.phoneLabel}</a>
             <a class="button button--outline" href={hub.contact.telegramHref} target="_blank" rel="noopener noreferrer">{hub.contact.telegramLabel}</a>
           </div>
           <div class="city-hub__contact-note">
             <a class="city-hub__contact-phone" href={hub.contact.phoneHref}>{hub.contact.phone}</a>
             <span class="city-hub__contact-hours">{hub.contact.hours}</span>
-            <a class="city-hub__contact-office" href={hub.contact.officesHref}>{hub.contact.officesLabel}</a>
+            <a class="city-hub__contact-office" href={localizeHref(hub.contact.officesHref)}>{hub.contact.officesLabel}</a>
           </div>
         </section>
 
@@ -313,7 +335,7 @@ const structuredData: JsonLdObject[] = [
           </div>
           <div class="city-hub__know-links">
             {hub.knowledge.links.map((link) => (
-              <a href={link.href}>
+              <a href={localizeHref(link.href)}>
                 {link.label}
                 <span aria-hidden="true" class="city-hub__arrow">
                   <svg viewBox="0 0 16 16" width="16" height="16" fill="none"><path d="M4 12L12 4M6 4h6v6" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -330,8 +352,8 @@ const structuredData: JsonLdObject[] = [
             <p>{hub.finalCta.intro}</p>
           </div>
           <div class="city-hub__final-actions">
-            <a class="button button--mint" href={hub.finalCta.ctaPrimaryHref}>{hub.finalCta.ctaPrimary}</a>
-            <a class="button button--outline" href={hub.finalCta.ctaSecondaryHref}>{hub.finalCta.ctaSecondary}</a>
+            <a class="button button--mint" href={localizeHref(hub.finalCta.ctaPrimaryHref)}>{hub.finalCta.ctaPrimary}</a>
+            <a class="button button--outline" href={localizeHref(hub.finalCta.ctaSecondaryHref)}>{hub.finalCta.ctaSecondary}</a>
           </div>
         </section>
       </div>

@@ -2,14 +2,18 @@
 import { projectCategoryMap } from '../../data/project-taxonomy';
 import type { Locale } from '../../i18n/helpers';
 
-const { project, hrefPrefix = '/projects', priority = false, eager = false, cardCover, locale = 'uk' as Locale } = Astro.props;
+const { project, hrefPrefix = '/projects', href: hrefOverride, priority = false, eager = false, cardCover, locale = 'uk' as Locale } = Astro.props;
 const category = projectCategoryMap[project.category];
 const isRu = locale === 'ru';
 const localizedHrefPrefix =
   isRu && hrefPrefix.startsWith('/') && !hrefPrefix.startsWith('/ru/')
     ? `/ru${hrefPrefix}`
     : hrefPrefix;
-const href = `${localizedHrefPrefix}/${project.slug}/`;
+// `href` override lets a caller resolve the link through the site's own
+// localizedPath() (which only prefixes /ru/ when a real RU route exists) instead
+// of the blunt /ru prefix above — used by the city hubs so RU cards never point
+// at a non-existent /ru/projects/{slug}/ page.
+const href = hrefOverride ?? `${localizedHrefPrefix}/${project.slug}/`;
 const cardTitle = isRu && project.cardTitleRu ? project.cardTitleRu : project.cardTitle;
 const city = isRu && project.cityRu ? project.cityRu : project.city;
 const constructionType = isRu && project.constructionTypeRu ? project.constructionTypeRu : project.constructionType;
