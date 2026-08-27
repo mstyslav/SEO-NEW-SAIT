@@ -459,6 +459,27 @@ body{background:#202020}
   color:#fff;
 }
 
+/* Inner CTA: stack earlier on tablet / narrow desktop */
+@media(max-width:900px){
+  .inner-cta{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .inner-cta > div{
+    width:100%;
+    min-width:0;
+  }
+
+  .inner-cta .button{
+    width:100%;
+    max-width:100%;
+    justify-content:center;
+    white-space:normal;
+    text-align:center;
+  }
+}
+
 /* Search icon more visible and spaced from text */
 .sg-nav-actions{
   gap:20px;
