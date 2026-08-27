@@ -527,3 +527,19 @@
     border-radius:0;
   }
 }
+
+/* City category cards — compact long titles */
+body .sg-page-shell main .city-hub__cat h3{
+  font-size:clamp(20px,1.35vw,24px)!important;
+  line-height:1.08!important;
+  letter-spacing:-.025em!important;
+  overflow-wrap:normal;
+  word-break:normal;
+  hyphens:none;
+}
+
+@media(max-width:1200px){
+  body .sg-page-shell main .city-hub__cat h3{
+    font-size:21px!important;
+  }
+}
