@@ -39,7 +39,7 @@ export const homeContent: Record<Locale, HomeContent> = {
       imageAlt: 'Скляна перегородка Space Glass'
     },
     categories: [
-      ['Душові кабіни','Walk-in, двері, кабіни в нішу, шторки та душові піддони','/dushovi-kabiny/','<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M12 41V17c0-7 5-11 12-11h8v35"/><path d="M21 13h11M25 18v5m-6-2 2 4m10-4-2 4"/></svg>'],
+      ['Душові кабіни','Walk-In, двері, кабіни в нішу, шторки та душові піддони','/dushovi-kabiny/','<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M12 41V17c0-7 5-11 12-11h8v35"/><path d="M21 13h11M25 18v5m-6-2 2 4m10-4-2 4"/></svg>'],
       ['Скляні перегородки','Loft, офісні, міжкімнатні, мобільні та безрамні системи','/sklyani-perehorodky/','<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 8h34v32H7zM18 8v32M30 8v32"/><path d="M7 25h34"/></svg>'],
       ['Скляні двері','Розпашні, розсувні, маятникові та двері в профілі','/sklyani-dveri/','<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M9 42V6h30v36M15 42V11h18v31"/><circle cx="29" cy="26" r="1"/></svg>'],
       ['Скляні огорожі','Сходи, балкони, тераси, безрамні та стійкові рішення','/sklyani-ohorozhi/','<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 39h11V29h10V19h13"/><path d="M9 33 39 9M15 31V22m10 1v-9m9 1V7"/></svg>'],
