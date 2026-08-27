@@ -194,17 +194,17 @@ const kyiv: CityHub = {
     ctaSecondary: 'Переглянути проєкти в Києві',
     ctaSecondaryHref: '/projects/',
     image: {
-      src: '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp',
+      src: '/images/city/kyiv/kyiv-hero-osocor-1440.webp',
       srcset:
-        '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-480.webp 480w, /images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp 720w, /images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero.webp 960w',
-      sizes: '(max-width: 900px) calc(100vw - 32px), 48vw',
-      width: 960,
-      height: 1280,
-      alt: 'Безрамне скління тераси у житловому комплексі Osocor Residence — реалізований проєкт Space Glass у Києві',
+        '/images/city/kyiv/kyiv-hero-osocor-768.webp 768w, /images/city/kyiv/kyiv-hero-osocor-1440.webp 1440w',
+      sizes: '(max-width: 900px) 100vw, 48vw',
+      width: 1440,
+      height: 958,
+      alt: 'Скляне фасадне та безрамне скління тераси OSOCOR RESIDENCE у Києві',
       href: '/projects/osocor-residence-glazing-kyiv/',
-      mobileSrc: '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp',
+      mobileSrc: '/images/city/kyiv/kyiv-hero-osocor-768.webp',
       mobileSrcset:
-        '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-480.webp 480w, /images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp 720w'
+        '/images/city/kyiv/kyiv-hero-osocor-768.webp 768w'
     }
   },
 
