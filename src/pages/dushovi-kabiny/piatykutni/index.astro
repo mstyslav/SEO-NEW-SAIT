@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import '../../../styles/product-detail.css';
+import '../../../styles/legacy-product.css';
+
+const title = "П'ятикутні душові кабіни";
+const subtitle = "П'ятикутні душові кабіни зі скла на замовлення за індивідуальними розмірами — для кутового розміщення та ванних кімнат, де важливо зберегти більше вільного простору перед душовою.";
+const price = "Ціна за індивідуальним розрахунком";
+const features = [
+  "П'ятикутна геометрія під фактичні розміри",
+  "Кутове розміщення зі скошеною передньою площиною",
+  "Піддон або монтаж без піддона",
+  "Індивідуальний підбір скла, дверей і фурнітури"
+];
+const faq = [
+  ["Що таке п'ятикутна душова кабіна?", "Це кутова душова конструкція зі скошеною передньою частиною. Така геометрія допомагає організувати вхід і зменшити виступ конструкції в приміщення."],
+  ["Коли варто обрати п'ятикутну душову кабіну?", "Коли душову потрібно розмістити в куті, але стандартна прямокутна геометрія займає забагато місця або заважає проходу, меблям чи сантехніці."],
+  ["Чи можна виготовити п'ятикутну душову за індивідуальними розмірами?", "Так. Розміри, кути, ширину входу та положення дверей визначаємо після заміру конкретної душової зони."],
+  ["Чи потрібен спеціальний п'ятикутний піддон?", "Не обов'язково. Конструкцію можна проєктувати під сумісний піддон або під підготовлену підлогу без піддона. Геометрію основи потрібно узгодити до фінального заміру скла."],
+  ["Від чого залежить вартість?", "Від габаритів, кількості й форми скляних полотен, типу дверей, скла, фурнітури, основи та умов монтажу."]
+];
+---
+<BaseLayout title="П'ятикутні душові кабіни на замовлення | Space Glass" description={subtitle}>
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main">
+      <Breadcrumbs contained items={[{label:'Головна',href:'/'},{label:'Душові кабіни',href:'/dushovi-kabiny/'},{label:title}]} />
+
+      <section class="product-detail-hero">
+        <div class="product-detail-hero__media">
+          <img src="/images/catalog/dushovi-kabiny/dushovi-kabiny-1200.webp" alt="П'ятикутна скляна душова кабіна на замовлення" width="1200" height="900" />
+        </div>
+        <div class="product-detail-hero__copy">
+          <p class="eyebrow">Скляні душові кабіни</p>
+          <h1>{title}</h1>
+          <p class="lead">{subtitle}</p>
+          <div class="product-detail-price">{price}</div>
+          <div class="hero__actions">
+            <a class="button button--mint" href="/contacts/#contact-form">Отримати розрахунок</a>
+            <a class="button button--outline" href="/dushovi-kabiny/">Всі види душових</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="product-detail-section">
+        <div class="category-heading">
+          <div><p class="eyebrow">Геометрія</p><h2>П'ятикутна душова під ваш простір</h2></div>
+          <p>П'ятикутна душова кабіна поєднує кутове розміщення зі скошеною передньою частиною. Це дозволяє точніше вписати скляну конструкцію у ванну кімнату та зберегти зручний прохід.</p>
+        </div>
+        <div class="product-feature-grid">{features.map((feature, i) => <article><span>{String(i + 1).padStart(2, '0')}</span><h3>{feature}</h3></article>)}</div>
+      </section>
+
+      <section class="product-spec-section">
+        <div><p class="eyebrow">Перед замовленням</p><h2>Що визначає конструкцію</h2></div>
+        <dl class="product-spec-list">
+          <div><dt>Кут і габарити</dt><dd>Перевіряємо фактичну геометрію стін та доступний простір</dd></div>
+          <div><dt>Скошена грань</dt><dd>Її ширина та кут залежать від планування ванної кімнати</dd></div>
+          <div><dt>Вхід</dt><dd>Положення та ширина проходу узгоджуються з сантехнікою й меблями</dd></div>
+          <div><dt>Двері</dt><dd>Тип відкривання підбираємо під доступний простір перед душовою</dd></div>
+          <div><dt>Основа</dt><dd>Піддон відповідної геометрії або підготовлена підлога з водовідведенням</dd></div>
+          <div><dt>Скло й фурнітура</dt><dd>Комплектацію визначаємо за розмірами та схемою конструкції</dd></div>
+        </dl>
+      </section>
+
+      <section class="product-gallery-strip">
+        <img src="/images/s19/walkin-angle.webp" alt="Кутова геометрія скляної душової конструкції" width="1400" height="1700" loading="lazy" />
+        <img src="/images/catalog/dushovi-kabiny/hardware/petli-new.webp" alt="Петля скляних дверей душової кабіни" width="960" height="1280" loading="lazy" />
+        <img src="/images/catalog/dushovi-kabiny/hardware/stabilizator-new.webp" alt="Стабілізатор скляної душової конструкції" width="960" height="1280" loading="lazy" />
+      </section>
+
+      <section class="product-detail-section">
+        <div class="category-heading"><div><p class="eyebrow">Пов'язані рішення</p><h2>Інші формати душових зі скла</h2></div></div>
+        <div class="product-feature-grid">
+          <article><h3><a href="/dushovi-kabiny/kutovi/">Скляні кутові душові кабіни</a></h3><p>Класична кутова геометрія з двома скляними площинами.</p></article>
+          <article><h3><a href="/dushovi-kabiny/dushovi-piddony/">Душові піддони</a></h3><p>Підбір основи під геометрію майбутньої душової.</p></article>
+          <article><h3><a href="/dushovi-kabiny/dushovi-dveri/">Скляні душові двері</a></h3><p>Рішення для входу в душову зону або нішу.</p></article>
+          <article><h3><a href="/knowledge/yak-obraty-dushovu-kabinu/">Як обрати душову кабіну</a></h3><p>Практичний матеріал перед замовленням.</p></article>
+        </div>
+      </section>
+
+      <FAQBlock eyebrow="FAQ" title="Часті запитання про п'ятикутні душові кабіни" description="Про геометрію, розміри, піддон, двері та індивідуальний розрахунок." items={faq} initiallyVisible={5} />
+
+      <section class="inner-cta">
+        <div><p class="eyebrow eyebrow--light">Попередня оцінка</p><h2>Надішліть фото кута та приблизні розміри</h2><p>Запропонуємо геометрію п'ятикутної душової, варіант входу та підготуємо попередній розрахунок.</p></div>
+        <a class="button button--white" href="/contacts/#contact-form">Отримати розрахунок</a>
+      </section>
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>
