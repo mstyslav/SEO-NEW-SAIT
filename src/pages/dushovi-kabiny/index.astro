@@ -11,38 +11,32 @@ import ProjectCard from '../../components/projects/ProjectCard.astro';
 import '../../styles/category-pages.css';
 import '../../styles/projects-common.css';
 
-const title = "Душові кабіни";
-const h1 = "Душові кабіни на замовлення";
-const subtitle = "Walk-in, кутові, у нішу, розсувні та індивідуальні рішення із загартованого скла";
+const title = "Скляні душові кабіни";
+const h1 = "Скляні душові кабіни на замовлення";
+const subtitle = "Душові кабіни зі скла за індивідуальними розмірами: перегородки Walk-In, кутові, у нішу, розсувні, складні системи, душові двері, піддони та шторки на ванну.";
 
-// Minimal inline line-art schematics (no photos) — mint stroke, same weight as
-// the homepage category-card icons. Each one is a readable silhouette of that
-// exact shower type, not an abstract shape.
 const iconWrap = (p: string) =>
   `<svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
 const icons = {
-  // Стаціонарна перегородка / walk-in: one upright glass panel off a wall, floor line.
   screen: iconWrap('<path d="M6 34h28"/><path d="M9 34V7"/><rect x="9" y="7" width="17" height="27"/>'),
-  // Кутова кабіна: two glass planes meeting at a corner + a hinged door with handle.
   corner: iconWrap('<path d="M5 34h30"/><path d="M7 34V13l13-4v25"/><path d="M20 9l13 4v21"/><path d="M27 13v20"/><path d="M24.5 22h.01"/>'),
-  // У нішу: single panel with a door between two walls.
   niche: iconWrap('<path d="M6 6v30M34 6v30"/><path d="M6 34h28"/><rect x="12" y="9" width="16" height="25"/><path d="M20 9v25"/><path d="M17.5 21h.01"/>'),
-  // Розсувна: two overlapping panels on a top track.
   sliding: iconWrap('<path d="M5 9h30"/><path d="M6 34h28"/><rect x="8" y="11" width="15" height="23"/><rect x="18" y="11" width="15" height="23"/><path d="M25 22h4"/>'),
-  // Душові двері: a single door leaf in an opening, hinge side + handle.
   door: iconWrap('<path d="M8 34h24"/><path d="M12 34V8h16v26"/><path d="M12 8v26"/><path d="M24.5 21h.01"/>'),
-  // Шторка на ванну: bathtub with a glass screen on the rim.
+  fold: iconWrap('<path d="M5 34h30M7 8h26"/><path d="M9 10l7 24 7-24 8 24"/><circle cx="16" cy="34" r="1"/><circle cx="31" cy="34" r="1"/>'),
+  tray: iconWrap('<path d="M6 24h28l-3 9H9z"/><path d="M10 20h20"/><path d="M14 16h12"/><path d="M19 28h2"/>'),
   bath: iconWrap('<path d="M5 22h30v4a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5z"/><path d="M8 22v-4a3 3 0 0 1 3-3h2"/><rect x="20" y="7" width="12" height="15"/>')
 };
 
-// Existing 6 real subcategories — user-facing names updated, URLs unchanged.
 const items = [
-  { title: "Душові перегородки", note: "Walk-in та стаціонарні скляні рішення без дверей — для просторих ванних і відкритого входу в зону душу.", href: "/dushovi-kabiny/peregorodka-dlya-dusha/", icon: icons.screen },
-  { title: "Кутові душові кабіни", note: "Займають кут кімнати, вхід по діагоналі або з двох боків. Компактна й найпоширеніша схема.", href: "/dushovi-kabiny/kutovi/", icon: icons.corner },
-  { title: "Душові в нішу", note: "Одна скляна площина з дверима між трьох стін — коли під душ уже виділено готову нішу.", href: "/dushovi-kabiny/u-nishu/", icon: icons.niche },
-  { title: "Розсувні душові кабіни", note: "Стулки їздять по напрямній і не потребують місця на відкривання. Для вузьких приміщень.", href: "/dushovi-kabiny/rozsuvni/", icon: icons.sliding },
-  { title: "Душові двері", note: "Тільки дверний блок у готовий отвір або між стіною та стаціонарним склом, зокрема на заміну старих.", href: "/dushovi-kabiny/dushovi-dveri/", icon: icons.door },
-  { title: "Шторки на ванну", note: "Скляна перегородка на борт ванни замість тканинної шторки — коли душ суміщений з ванною.", href: "/dushovi-kabiny/shtorky-dlia-vanny/", icon: icons.bath }
+  { title: "Скляні перегородки для душу", note: "Стаціонарні Walk-In перегородки без дверей — мінімалістичне рішення під фактичні розміри душової зони.", href: "/dushovi-kabiny/peregorodka-dlya-dusha/", icon: icons.screen },
+  { title: "Скляні душові двері", note: "Окремий дверний блок у нішу або між стіною та стаціонарним склом — розпашний чи розсувний.", href: "/dushovi-kabiny/dushovi-dveri/", icon: icons.door },
+  { title: "Скляні кутові душові кабіни", note: "Дві скляні площини формують душову в куті кімнати з індивідуально підібраним входом.", href: "/dushovi-kabiny/kutovi/", icon: icons.corner },
+  { title: "Розсувні душові кабіни", note: "Стулки рухаються вздовж напрямної та не потребують місця перед душовою для відкривання.", href: "/dushovi-kabiny/rozsuvni/", icon: icons.sliding },
+  { title: "Душові кабіни в нішу", note: "Скляні двері або двері з нерухомою частиною для готового отвору між трьома стінами.", href: "/dushovi-kabiny/u-nishu/", icon: icons.niche },
+  { title: "Складні душові кабіни", note: "Двері гармошка для компактних душових, ніш і ванн — коли розпашна стулка займає забагато місця.", href: "/dushovi-kabiny/skladni/", icon: icons.fold },
+  { title: "Душові піддони", note: "Підбір піддона за розміром і формою з урахуванням майбутньої скляної конструкції та водовідведення.", href: "/dushovi-kabiny/dushovi-piddony/", icon: icons.tray },
+  { title: "Скляні шторки на ванну", note: "Стаціонарні, розпашні або складні скляні екрани на ванну замість текстильної шторки.", href: "/dushovi-kabiny/shtorky-dlia-vanny/", icon: icons.bath }
 ];
 
 const priceFactors: [string, string][] = [
@@ -52,11 +46,6 @@ const priceFactors: [string, string][] = [
   ["Монтаж", "Складність встановлення та умови об'єкта"]
 ];
 
-// Hardware / components of a shower system — confirmed by Space Glass data:
-// seo-pages.ts (showers: "hinges, clamps, stabilising bars and seals"),
-// solutions.ts ("Петлі, напрямні та ручки", "Ролики й напрямні", "Алюмінієвий профіль"),
-// knowledge-articles/expert ("стабілізаційна штанга", "профіль або точкові кріплення"),
-// knowledge-supplemental ("furnitura-dlya-dushovoyi: петлі, профілі та ущільнювачі").
 const hardwareParts = [
   ["Петлі", "Тримають полотно, задають кут і плавність відкривання дверей."],
   ["Стабілізуючі штанги", "З'єднують скло зі стіною або стелею й фіксують геометрію широких і високих полотен."],
@@ -66,9 +55,6 @@ const hardwareParts = [
   ["Направляюча та ролики", "Застосовуються у розсувних системах і відповідають за плавний рух полотна та стабільність конструкції."]
 ];
 
-// Hardware detail visuals — real Space Glass close-up photos (WebP, 960×1280).
-// Petli / stabilizer / handle live in public/images/catalog/dushovi-kabiny/hardware/,
-// the sliding mechanism reuses an existing project gallery shot.
 const hardwareDetails = [
   { label: "Петлі", src: "/images/catalog/dushovi-kabiny/hardware/petli-new.webp", alt: "Хромована петля на скляних дверях душової кабіни крупним планом" },
   { label: "Стабілізуюча штанга", src: "/images/catalog/dushovi-kabiny/hardware/stabilizator-new.webp", alt: "Стабілізуюча штанга душової конструкції зі скла крупним планом" },
@@ -76,8 +62,6 @@ const hardwareDetails = [
   { label: "Направляюча та ролики", src: "/images/projects/sliding-shower-doors-kyiv/sliding-shower-doors-kyiv-detail-02.webp", alt: "Роликові каретки розсувних душових дверей крупним планом на верхній хромованій рейці" }
 ];
 
-// Glass options — all confirmed by existing Space Glass content
-// (catalog/dushova-perehorodka-walk-in-black, catalog/piddon, knowledge articles).
 const glassOptions = [
   { name: "Прозоре", note: "Максимум світла, візуально не зменшує ванну", cls: "sw-glass-clear" },
   { name: "Освітлене (Extra Clear)", note: "Без зеленого відтінку торця, чистіша передача кольору", cls: "sw-glass-extra" },
@@ -87,7 +71,6 @@ const glassOptions = [
   { name: "Рифлене / декоративне", note: "Фактура й часткова приватність зі збереженням світла", cls: "sw-glass-fluted" }
 ];
 
-// Hardware finishes — confirmed by walk-in-black catalog page and real shower projects.
 const hardwareFinishes = [
   { name: "Хром", cls: "sw-hw-chrome" },
   { name: "Чорний", cls: "sw-hw-black" },
@@ -100,80 +83,76 @@ const hardwareFinishes = [
 const trayCards = [
   {
     name: "З піддоном",
-    text: "Готовий піддон спрощує організацію зливу та гідроізоляцію й не потребує складної підготовки підлоги. Висота порогу та спосіб монтажу залежать від моделі піддона.",
-    href: "/catalog/dushovi-piddony/",
+    text: "Готовий піддон спрощує організацію зливу та гідроізоляцію. Його розмір і геометрію бажано узгодити зі скляною конструкцією до фінального заміру.",
+    href: "/dushovi-kabiny/dushovi-piddony/",
     linkLabel: "Переглянути душові піддони →"
   },
   {
     name: "Без піддона",
-    text: "Душ урівень з підлогою: плитка по стяжці з ухилом до точкового трапа або лінійного водовідведення. Виглядає мінімалістично, але вимагає підготовленої основи з правильними ухилами та гідроізоляцією."
+    text: "Душ урівень з підлогою: плитка по стяжці з ухилом до точкового трапа або лінійного водовідведення. Такий варіант вимагає підготовленої основи з правильною гідроізоляцією."
   }
 ];
 
 const prepSteps = [
   ["Фото", "Кілька знімків душової зони загалом і місць майбутнього кріплення."],
   ["Орієнтовні розміри", "Ширина, висота та глибина зони — навіть приблизні цифри допомагають з оцінкою."],
-  ["Тип конструкції", "Перегородка, кутова, у нішу, розсувна, двері чи шторка на ванну."],
+  ["Тип конструкції", "Перегородка, двері, кутова, у нішу, розсувна, складна, піддон або шторка на ванну."],
   ["Стан душової зони", "Чи завершене чистове оздоблення, де злив і чи є ухил підлоги."]
 ];
 
 const relatedLinks = [
-  ["Душові піддони", "/catalog/dushovi-piddony/"],
-  ["Душова перегородка walk-in", "/catalog/dushova-perehorodka-walk-in-black/"],
+  ["Душові піддони", "/dushovi-kabiny/dushovi-piddony/"],
+  ["Складні душові двері", "/dushovi-kabiny/skladni/"],
   ["Як обрати душову кабіну", "/knowledge/yak-obraty-dushovu-kabinu/"],
   ["Walk-in: переваги й недоліки", "/knowledge/walk-in-perevahy-nedoliky/"],
   ["Душова в нішу: замір", "/knowledge/dushova-v-nishu-zamir/"],
   ["Розпашні чи розсувні двері", "/knowledge/rozpashni-chy-rozsuvni-sklyani-dveri/"],
   ["Товщина скла: 8, 10, 12 мм", "/knowledge/tovshchyna-skla-8-10-12-mm/"],
-  ["Догляд за склом і фурнітурою", "/knowledge/doglyad-za-sklyanymy-konstruktsiyamy/"]
+  ["Фурнітура для душової", "/knowledge/furnitura-dlya-dushovoyi/"]
 ];
 
-// Real shower projects from the shared content collection — never hand-copied.
 const showerProjects = (await getCollection('projects', ({ data }) =>
   data.status === 'published' && data.locale === 'uk' && data.category === 'showers'))
   .map(({ data }) => data)
   .sort((a, b) => a.sortOrder - b.sortOrder)
   .slice(0, 6);
 
-// FAQ — 20 shower-specific questions (no generic padding, see expandTo).
 const faq = [
-  ["Скільки коштує душова кабіна на замовлення?", "Вартість залежить від розмірів, типу конструкції, скла, фурнітури та монтажу. Стартовий орієнтир для базової перегородки наведено в блоці «Вартість душових конструкцій»; кутові, розсувні та нішеві системи розраховуються індивідуально після заміру й погодження креслення."],
+  ["Скільки коштує скляна душова кабіна на замовлення?", "Вартість залежить від розмірів, типу конструкції, скла, фурнітури та монтажу. Стартовий орієнтир для базової перегородки наведено в блоці «Вартість душових конструкцій»; кутові, розсувні, складні та нішеві системи розраховуються індивідуально після заміру й погодження креслення."],
   ["Чи можна дізнатися приблизну ціну до заміру?", "Так. Попередній орієнтир дамо за фото, приблизними розмірами та типом конструкції. Точну суму фіксуємо після заміру й погодження креслення, скла та комплектації."],
-  ["Чи можна виготовити душову за індивідуальними розмірами?", "Так. Більшість конструкцій проєктуємо під фактичний отвір, нішу або кут конкретної ванної кімнати після заміру або перевірки наданих розмірів."],
+  ["Чи можна виготовити душову зі скла за індивідуальними розмірами?", "Так. Більшість конструкцій проєктуємо під фактичний отвір, нішу або кут конкретної ванної кімнати після заміру або перевірки наданих розмірів."],
   ["Яку товщину скла обрати — 8 чи 10 мм?", "Для більшості стаціонарних перегородок базове рішення — 8 мм; для збільшених габаритів або окремих вузлів може бути рекомендовано 10 мм. Це не універсальне правило — товщину підтверджують за розрахунком."],
-  ["Наскільки безпечне загартоване скло?", "Загартоване (гартоване) скло міцніше за звичайне і при пошкодженні розсипається на дрібні негострі фрагменти. За запитом доступний додатковий heat-soak тест."],
-  ["Що таке walk-in та душова перегородка?", "Це стаціонарна скляна перегородка без дверей. Підходить для просторих ванних і відкритого входу в душ; для компактних приміщень частіше беруть кутові або конструкції у нішу з дверима."],
-  ["Коли підходить кутова душова кабіна?", "Коли душ розташований у куті кімнати. Вхід організовують розпашними або розсувними дверима між двома скляними боками — це компактна й найпоширеніша схема."],
-  ["Чим особлива душова в нішу?", "Готова ніша між трьох стін закривається однією площиною скла з дверима. Конструктивно це найпростіший варіант, бо бокові панелі не потрібні."],
-  ["Розсувні чи розпашні двері — що обрати?", "Розпашні простіші й тихіші, але потребують місця на відкривання. Розсувні їздять по напрямній і не займають простір перед душем — зручні для вузьких ванних."],
-  ["Чи можна встановити душ на піддон?", "Так. Конструкцію адаптуємо під готовий піддон — він спрощує організацію зливу та гідроізоляцію. Висота порогу залежить від моделі піддона."],
-  ["Чи можна зробити душ без піддона, урівень з підлогою?", "Так, зі стяжкою з ухилом до точкового трапа або лінійного водовідведення. Такий варіант виглядає мінімалістично, але вимагає підготовленої основи з гідроізоляцією."],
+  ["Наскільки безпечне загартоване скло?", "Загартоване скло міцніше за звичайне і при пошкодженні розсипається на дрібні негострі фрагменти. За запитом доступний додатковий heat-soak тест."],
+  ["Що таке Walk-In та скляна перегородка для душу?", "Це стаціонарна скляна перегородка без дверей. Підходить для просторих ванних і відкритого входу в душ; для компактних приміщень частіше беруть кутові або конструкції у нішу з дверима."],
+  ["Коли підходить кутова душова кабіна?", "Коли душ розташований у куті кімнати. Вхід організовують розпашними або розсувними дверима між двома скляними боками."],
+  ["Чим особлива душова в нішу?", "Готова ніша між трьох стін закривається однією площиною скла з дверима або дверима з нерухомою секцією."],
+  ["Розсувні чи розпашні двері — що обрати?", "Розпашні простіші за конструкцією, але потребують місця на відкривання. Розсувні рухаються вздовж напрямної і не займають простір перед душем."],
+  ["Коли варто обрати складні душові двері гармошка?", "Коли потрібно максимально звільнити прохід і перед душовою мало місця для розпашної стулки. Складні системи використовують у душових зонах, нішах і для окремих шторок на ванну."],
+  ["Чи можна встановити душ на піддон?", "Так. Конструкцію адаптуємо під готовий піддон; його геометрію бажано визначити до фінального заміру скла."],
+  ["Чи можна зробити душ без піддона, урівень з підлогою?", "Так, зі стяжкою з ухилом до точкового трапа або лінійного водовідведення. Такий варіант вимагає підготовленої основи з гідроізоляцією."],
   ["Які варіанти скла доступні?", "Прозоре, освітлене (Extra Clear), матове (Satin), графітове, бронзове тоноване та рифлене/декоративне. Доступність конкретного відтінку підтверджуємо перед виробництвом."],
-  ["Чим відрізняється матове й тоноване скло?", "Матове (Satin) розсіює світло й приховує силуети, залишаючись нейтральним за кольором. Тоноване (графіт, бронза) додає відтінок і приглушує відображення, менше впливаючи на приватність."],
-  ["Які кольори фурнітури доступні?", "Базово — хром, чорний і брашована (матова) сталь. Золото, латунь і бронза доступні для окремих систем, де відповідне покриття передбачене виробником; можливі й індивідуальні фініші."],
+  ["Чим відрізняється матове й тоноване скло?", "Матове (Satin) розсіює світло й приховує силуети, залишаючись нейтральним за кольором. Тоноване додає відтінок і змінює сприйняття інтер'єру."],
+  ["Які кольори фурнітури доступні?", "Базово — хром, чорний і брашована сталь. Інші фініші доступні для окремих систем, де відповідне покриття передбачене виробником."],
   ["Коли робити замір?", "Фінальний замір виконують після завершення чистових поверхонь, які формують отвір, нішу або кут, і коли відомі розташування зливу та точки кріплення."],
   ["Скільки триває виготовлення?", "Термін залежить від типу конструкції, обробки скла, фурнітури та завантаження виробництва і фіксується після погодження креслення й комплектації."],
   ["Чи входить монтаж у вартість?", "Монтаж і доставка розраховуються окремо та вказуються в пропозиції. Основні міста монтажу — Київ, Львів та Одеса з областями."],
-  ["Чи надаєте гарантію?", "Так. Гарантійні умови залежать від скла, системи та фурнітури й фіксуються в документах до замовлення."],
-  ["Як доглядати за скляною душовою?", "Використовуйте неабразивні засоби, після душу видаляйте воду зі скла, періодично оглядайте ущільнювачі та петлі. За потреби ущільнювачі замінюються."],
-  ["Чи працюєте в Києві, Одесі та Львові? Чи є доставка Україною?", "Замір і монтаж виконуємо у Києві, Львові та Одесі з областями. Готові вироби та комплектуючі доставляємо по всій Україні — умови залежать від міста, габаритів і доступу до об'єкта."]
+  ["Як доглядати за скляною душовою?", "Використовуйте неабразивні засоби, після душу видаляйте воду зі скла, періодично оглядайте ущільнювачі та петлі."],
+  ["Чи працюєте в Києві, Одесі та Львові?", "Замір і монтаж виконуємо у Києві, Львові та Одесі з областями. Умови доставки готових виробів залежать від міста, габаритів і доступу до об'єкта."]
 ];
 ---
-<BaseLayout title={`${h1} — Space Glass`} description={subtitle}>
+<BaseLayout title={`${h1} | Space Glass`} description={subtitle}>
 <div class="sg-page-shell">
   <Header />
   <main id="main">
-    <!-- 1. HERO — mirrors HOME / CATALOG hero geometry (see .category-hero--photo
-         in category-pages.css). Photo is its own full-bleed column, no text over photo. -->
     <section class="category-hero category-hero--photo">
       <div class="category-hero__copy">
         <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: title }]} />
         <p class="eyebrow">{title}</p>
         <h1>{h1}</h1>
-        <p class="lead">Виготовляємо душові кабіни зі скла за індивідуальними розмірами — кутові, у нішу, душові перегородки, розсувні системи та двері. Підбираємо загартоване скло й фурнітуру, виконуємо замір, проєктування, виготовлення та монтаж.</p>
+        <p class="lead">Виготовляємо скляні душові кабіни та душові конструкції зі скла за індивідуальними розмірами. Проєктуємо перегородки Walk-In, душові двері, кутові й нішеві кабіни, розсувні та складні системи; підбираємо скло, фурнітуру, виконуємо замір, виготовлення та монтаж.</p>
         <div class="hero__actions">
           <a class="button button--mint" href="#price">Отримати розрахунок</a>
-          <a class="button button--outline" href="#types">Переглянути види</a>
+          <a class="button button--outline" href="#types">Переглянути 8 напрямів</a>
         </div>
       </div>
       <figure class="category-hero__figure">
@@ -182,7 +161,7 @@ const faq = [
             src="/images/catalog/dushovi-kabiny/dushovi-kabiny-1200.webp"
             srcset="/images/catalog/dushovi-kabiny/dushovi-kabiny-480.webp 480w, /images/catalog/dushovi-kabiny/dushovi-kabiny-768.webp 768w, /images/catalog/dushovi-kabiny/dushovi-kabiny-1200.webp 1200w, /images/catalog/dushovi-kabiny/dushovi-kabiny-1600.webp 1600w"
             sizes="(max-width: 900px) calc(100vw - 48px), 52vw"
-            alt="Скляна кутова душова кабіна на замовлення за індивідуальними розмірами"
+            alt="Скляна душова кабіна на замовлення за індивідуальними розмірами"
             width="1600"
             height="1200"
             decoding="async"
@@ -192,29 +171,27 @@ const faq = [
       </figure>
     </section>
 
-      <TrustBar locale="uk" />
+    <TrustBar locale="uk" />
 
-    <!-- 2. SEO INTRO — text left, spec list right (desktop); no decorative visual -->
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Індивідуальне виготовлення</p><h2>Душові кабіни зі скла за індивідуальними розмірами</h2></div></div>
+      <div class="category-heading"><div><p class="eyebrow">Індивідуальне виготовлення</p><h2>Душові кабіни зі скла під ваш простір</h2></div></div>
       <div class="category-intro-grid">
         <div class="category-prose">
-          <p>Готові душові кабіни рідко збігаються з реальним приміщенням: стіни бувають непаралельні, кути — не рівно 90°, а місце під душ обмежене нішею або кутом. Тому ми не підганяємо простір під типовий бокс, а виготовляємо конструкцію під конкретний отвір — у квартирі, приватному будинку чи на комерційному об'єкті.</p>
-          <p>Робота йде повним циклом: замір, проєктування та узгодження креслення, виготовлення скла й комплектація фурнітурою, доставка та монтаж із герметизацією. На кожному етапі ви бачите розміри, тип скла, фурнітуру та спосіб відкривання до запуску у виробництво.</p>
+          <p>Ми виготовляємо не стандартні готові бокси, а скляні душові конструкції під конкретне приміщення. Фактична геометрія ванної кімнати, ніша, кут, піддон або підготовлена підлога визначають розміри скла та схему відкривання.</p>
+          <p>Робота йде повним циклом: замір, проєктування та узгодження креслення, виготовлення скла й комплектація фурнітурою, доставка та монтаж. До запуску у виробництво погоджуємо тип конструкції, скло, фурнітуру та спосіб відкривання.</p>
         </div>
         <ul class="category-intro__spec">
           <li><b>Індивідуальні розміри</b><span>під фактичний отвір, нішу або кут</span></li>
-          <li><b>Загартоване скло 8–10 мм</b><span>прозоре, матове або тоноване</span></li>
-          <li><b>Повний цикл</b><span>замір · проєкт · виготовлення · монтаж</span></li>
-          <li><b>Київ · Одеса · Львів</b><span>та доставка по Україні</span></li>
+          <li><b>Загартоване скло</b><span>тип і товщину визначаємо за конструкцією</span></li>
+          <li><b>8 окремих напрямів</b><span>від Walk-In до складних систем і піддонів</span></li>
+          <li><b>Київ · Одеса · Львів</b><span>замір і монтаж у ключових регіонах</span></li>
         </ul>
       </div>
     </section>
 
-    <!-- 3. ВИДИ ДУШОВИХ — icon cards, no photos, existing URLs -->
     <section id="types" class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Види душових конструкцій</h2></div><p>Оберіть тип — далі уточнимо розміри, скло, фурнітуру, колір і формат монтажу.</p></div>
-      <div class="category-icon-grid">
+      <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Види скляних душових конструкцій</h2></div><p>Оберіть сценарій — далі уточнимо розміри, скло, фурнітуру, спосіб відкривання та монтаж.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
         {items.map((item)=>(
           <a class="category-icon-card" href={item.href}>
             <span class="category-icon-card__icon" set:html={item.icon} />
@@ -226,9 +203,8 @@ const faq = [
       </div>
     </section>
 
-    <!-- 4. СКЛО ТА ФУРНІТУРА — visual material blocks -->
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Матеріали</p><h2>Скло та фурнітура</h2></div><p>Візуальний бік конструкції: тип скла та фініш фурнітури підбираємо під інтер'єр і сценарій використання.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">Матеріали</p><h2>Скло та фурнітура</h2></div><p>Тип скла та фініш фурнітури підбираємо під інтер'єр, конструкцію і сценарій використання.</p></div>
 
       <div class="material-subblock">
         <h3>Варіанти скла</h3>
@@ -242,16 +218,14 @@ const faq = [
         </div>
         <dl class="material-thickness">
           <div><dt>8 мм</dt><dd>Базове рішення для більшості душових конструкцій.</dd></div>
-          <div><dt>10 мм або ламіноване скло</dt><dd>Для окремих конструкцій за проєктним чи конструкторським розрахунком — не універсальне рішення.</dd></div>
+          <div><dt>10 мм або ламіноване скло</dt><dd>Для окремих конструкцій за проєктним чи конструкторським розрахунком.</dd></div>
         </dl>
       </div>
 
       <div class="material-subblock">
         <h3>Фурнітура та комплектуючі</h3>
         <div class="material-grid material-grid--parts">
-          {hardwareParts.map(([name,text])=>(
-            <article><b>{name}</b><p>{text}</p></article>
-          ))}
+          {hardwareParts.map(([name,text])=>(<article><b>{name}</b><p>{text}</p></article>))}
         </div>
         <div class="hardware-details">
           {hardwareDetails.map((d)=>(
@@ -264,12 +238,6 @@ const faq = [
       </div>
 
       <div class="material-subblock">
-        <h3>Матеріали фурнітури</h3>
-        <p class="material-subblock__text">Фурнітуру для душових виконують із матеріалів, стійких до постійної вологи: нержавіюча сталь і латунь не кородують і зберігають жорсткість вузлів, алюмінієві профілі тримають геометрію конструкції, а полімерні ущільнення залишаються еластичними. Від якості цих елементів залежить, наскільки плавно працюють двері, наскільки стабільна конструкція та чи точно вона тримає форму з роками.</p>
-        <a class="category-arrow-link" href="/knowledge/furnitura-dlya-dushovoyi/">Фурнітура для душової <span aria-hidden="true">→</span></a>
-      </div>
-
-      <div class="material-subblock">
         <h3>Кольори фурнітури</h3>
         <div class="swatch-grid swatch-grid--hardware">
           {hardwareFinishes.map((hw)=>(
@@ -279,49 +247,37 @@ const faq = [
             </figure>
           ))}
         </div>
-        <p class="material-subblock__text">Хром, чорний і брашована сталь — базові фініші. Золото, латунь і бронза доступні для окремих систем, де відповідне покриття передбачене виробником.</p>
       </div>
     </section>
 
-    <!-- 6. З ПІДДОНОМ ЧИ БЕЗ -->
     <section class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Основа</p><h2>З піддоном чи без піддона</h2></div><p>Обидва варіанти робочі — різниця в підготовці підлоги та вигляді входу.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">Основа</p><h2>З піддоном чи без піддона</h2></div><p>Обидва варіанти робочі — різниця в підготовці підлоги та геометрії входу.</p></div>
       <div class="category-duo">
         {trayCards.map((item)=>(
           <article>
             <h3>{item.name}</h3>
             <p>{item.text}</p>
-            {item.href && item.linkLabel && (
-              <a class="category-arrow-link" href={item.href}>
-                {item.linkLabel}
-              </a>
-            )}
+            {item.href && item.linkLabel && <a class="category-arrow-link" href={item.href}>{item.linkLabel}</a>}
           </article>
         ))}
       </div>
     </section>
 
-    <!-- 7. ЩО ПОТРІБНО ДЛЯ РОЗРАХУНКУ — 4-step block, 2×2 on mobile -->
     <section class="category-section category-section--mint">
       <div class="category-heading"><div><p class="eyebrow">Підготовка</p><h2>Що потрібно для розрахунку</h2></div><p>Цього достатньо для попередньої оцінки. Фінальні вимоги узгоджує технолог за конкретним об'єктом.</p></div>
       <div class="category-steps">
         {prepSteps.map(([name,text],i)=>(
-          <div class="category-steps__item">
-            <span>{String(i+1).padStart(2,'0')}</span>
-            <b>{name}</b>
-            <p>{text}</p>
-          </div>
+          <div class="category-steps__item"><span>{String(i+1).padStart(2,'0')}</span><b>{name}</b><p>{text}</p></div>
         ))}
       </div>
     </section>
 
-    <!-- 8. PRICE BLOCK — placed after product/material understanding -->
     <div id="price">
       <PriceBlock
         heading="Вартість душових конструкцій"
         kicker="Орієнтир для базової комплектації"
         amount="від 11 800 грн"
-        amountNote="Стартова вартість залежить від формату конструкції, розмірів, скла, фурнітури та умов монтажу. Кутові, нішеві, розсувні системи й нестандартні рішення розраховуємо індивідуально."
+        amountNote="Стартова вартість залежить від формату конструкції, розмірів, скла, фурнітури та умов монтажу. Кутові, нішеві, розсувні, складні системи й нестандартні рішення розраховуємо індивідуально."
         bullets={[
           "Базова конструкція — просте рішення зі стандартною комплектацією.",
           "Індивідуальні розміри — виготовлення за фактичними розмірами душової зони.",
@@ -334,19 +290,11 @@ const faq = [
       />
     </div>
 
-    <!-- 9. ПРОЄКТИ — real shower projects from shared collection -->
     {showerProjects.length > 0 && (
       <section class="category-section">
         <div class="category-heading category-heading--top category-heading--projects">
-          <div class="category-heading--projects__title">
-            <p class="eyebrow">Портфоліо</p>
-            <h2>Реалізовані душові конструкції</h2>
-          </div>
-
-          <div class="category-heading--projects__aside">
-            <a class="category-arrow-link" href="/projects/">Переглянути всі проєкти <span aria-hidden="true">→</span></a>
-            <p>Добірка реалізованих душових Space Glass — кутові кабіни, душові в нішу, перегородки та двері зі скла для квартир, будинків і комерційних об'єктів.</p>
-          </div>
+          <div class="category-heading--projects__title"><p class="eyebrow">Портфоліо</p><h2>Реалізовані душові конструкції</h2></div>
+          <div class="category-heading--projects__aside"><a class="category-arrow-link" href="/projects/">Переглянути всі проєкти <span aria-hidden="true">→</span></a><p>Реальні кутові кабіни, душові в нішу, перегородки та двері зі скла Space Glass.</p></div>
         </div>
         <div class="projects-index-v2__grid category-projects-grid">
           {showerProjects.map((project) => <ProjectCard project={project} hrefPrefix="/projects" />)}
@@ -354,7 +302,6 @@ const faq = [
       </section>
     )}
 
-    <!-- 10. PROCESS — kept -->
     <section class="category-process">
       <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від запиту до готової конструкції</h2></div></div>
       <div class="category-process__grid">
@@ -363,38 +310,27 @@ const faq = [
         <div><span>03</span><b>Замір</b><small>Перевірка геометрії</small></div>
         <div><span>04</span><b>Проєкт</b><small>Технічне узгодження креслення</small></div>
         <div><span>05</span><b>Виготовлення</b><small>Контроль якості</small></div>
-        <div><span>06</span><b>Монтаж</b><small>Здача та гарантія</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Здача конструкції</small></div>
       </div>
     </section>
 
-    <!-- 11. Geography — two-column on desktop (text left, cities right) -->
     <section class="category-section category-geo">
       <div class="category-geo__grid">
-        <div class="category-geo__copy">
-          <p class="eyebrow">Географія</p>
-          <h2>Замір і монтаж душових конструкцій</h2>
-          <p>Замір і монтаж виконуємо у Києві, Львові та Одесі з областями. Готові вироби та комплектуючі доставляємо по всій Україні — умови залежать від міста, габаритів і доступу до об'єкта.</p>
-        </div>
-        <ul class="category-geo__cities">
-          <li><b>Київ</b><span>замір і монтаж</span></li>
-          <li><b>Одеса</b><span>замір і монтаж</span></li>
-          <li><b>Львів</b><span>замір і монтаж</span></li>
-        </ul>
+        <div class="category-geo__copy"><p class="eyebrow">Географія</p><h2>Замір і монтаж скляних душових кабін</h2><p>Замір і монтаж виконуємо у Києві, Львові та Одесі з областями. Умови доставки готових виробів залежать від міста, габаритів і доступу до об'єкта.</p></div>
+        <ul class="category-geo__cities"><li><b>Київ</b><span>замір і монтаж</span></li><li><b>Одеса</b><span>замір і монтаж</span></li><li><b>Львів</b><span>замір і монтаж</span></li></ul>
       </div>
     </section>
 
-    <!-- 12. FAQ — 20 shower-specific questions, FAQBlock kept -->
     <section class="category-section category-section--faq">
       <FAQBlock
-        title="FAQ про душові кабіни: ціна, розміри, скло, монтаж"
-        intro="Відповідаємо на основні питання про душові кабіни — вартість, індивідуальні розміри, тип і товщину скла, walk-in, кутові й нішеві конструкції, піддон, замір, строки, фурнітуру, догляд, гарантію та доставку."
+        title="FAQ про скляні душові кабіни: ціна, розміри, скло, монтаж"
+        intro="Відповідаємо на основні питання про душові кабіни зі скла, перегородки, двері, розсувні й складні системи, піддони, замір та монтаж."
         items={faq}
         visibleCount={6}
         expandTo={faq.length}
       />
     </section>
 
-    <!-- 13. Internal linking — 8 verified existing URLs, symmetric grid -->
     <section class="category-section category-links">
       <div class="category-heading"><div><p class="eyebrow">Корисне</p><h2>Далі по темі</h2></div></div>
       <div class="category-links__grid category-links__grid--8">
@@ -402,9 +338,8 @@ const faq = [
       </div>
     </section>
 
-    <!-- 14. Final CTA — existing Space Glass CTA style -->
     <section id="category-request" class="inner-cta">
-      <div><p class="eyebrow eyebrow--light">Заявка</p><h2>Потрібен попередній розрахунок?</h2><p>Надішліть фото, приблизні розміри або креслення — підготуємо конфігурацію та орієнтовну вартість.</p></div>
+      <div><p class="eyebrow eyebrow--light">Заявка</p><h2>Потрібен попередній розрахунок?</h2><p>Надішліть фото, приблизні розміри або креслення — запропонуємо тип скляної душової конструкції та підготуємо орієнтовну вартість.</p></div>
       <a class="button button--white" href="/contacts/#contact-form">Отримати розрахунок</a>
     </section>
   </main>
