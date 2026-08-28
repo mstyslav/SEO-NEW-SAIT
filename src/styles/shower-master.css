@@ -7,6 +7,13 @@
 .category-section--mint:has(.category-intro-grid) .category-intro-grid{align-items:start}
 .category-section--mint:has(.category-intro-grid) .category-prose p{line-height:1.68;margin-bottom:12px}
 
+/* Shower MASTER only: reduce the oversized vertical rhythm around the lower
+   commercial sections by roughly half. Shared category pages stay untouched. */
+.category-section--faq{padding-top:46px;padding-bottom:46px}
+.category-links{padding-top:46px;padding-bottom:46px}
+.inner-cta{margin-top:46px;margin-bottom:46px}
+#price + .category-section{padding-top:46px}
+
 @media(min-width:901px){
   .category-section--mint:has(.category-intro-grid) .category-intro__spec{margin-top:-82px}
 
@@ -27,4 +34,6 @@
   .category-icon-grid--showers{grid-template-columns:1fr}
   .category-section--mint:has(.category-intro-grid){padding-top:44px;padding-bottom:36px}
   .category-section--mint:has(.category-intro-grid) .category-heading{margin-bottom:12px}
+  .category-section--faq,.category-links{padding-top:32px;padding-bottom:32px}
+  .inner-cta{margin-top:32px;margin-bottom:32px}
 }
