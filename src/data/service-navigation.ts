@@ -18,7 +18,7 @@ const showerServiceNavigationItems: Array<{ href: string; label: Record<Locale, 
   { href: '/dushovi-kabiny/u-nishu/', label: { uk: 'Душові кабіни в нішу', ru: 'Душевые кабины в нишу' } },
   { href: '/dushovi-kabiny/skladni/', label: { uk: 'Складні душові кабіни', ru: 'Складные душевые кабины' } },
   { href: '/dushovi-kabiny/dushovi-piddony/', label: { uk: 'Душові піддони', ru: 'Душевые поддоны' } },
-  { href: '/dushovi-kabiny/shtorky-dlia-vanny/', label: { uk: 'Скляні шторки на ванну', ru: 'Стеклянные шторки для ванны' } }
+  { href: '/dushovi-kabiny/shtorky-dlya-vannoyi/', label: { uk: 'Скляні шторки на ванну', ru: 'Стеклянные шторки для ванны' } }
 ];
 
 export function getShowerServiceNavigation(locale: Locale = 'uk'): ServiceNavigationItem[] {
