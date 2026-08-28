@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import '../../../styles/product-detail.css';
+import '../../../styles/legacy-product.css';
+
+const title = "Душові піддони";
+const subtitle = "Підбираємо душові піддони під скляні кабіни, ніші та Walk-In конструкції — за розміром, формою, висотою і розташуванням зливу.";
+const price = "Ціна за індивідуальним розрахунком";
+const features = [
+  "Підбір під конкретну душову конструкцію",
+  "Квадратні та прямокутні формати",
+  "Низькі моделі для сучасних душових зон",
+  "Узгодження піддона зі склом до замовлення"
+];
+const faq = [
+  ["Як підібрати розмір душового піддона?", "Враховуємо фактичну ширину й глибину душової зони, положення стін, дверей і майбутньої скляної конструкції."],
+  ["Чи можна підібрати піддон разом із душовою кабіною?", "Так. Це бажаний сценарій: геометрію піддона, скла та дверей узгоджуємо як одну конструкцію."],
+  ["Квадратний чи прямокутний піддон обрати?", "Форма залежить від планування. Квадратні моделі частіше використовують у компактних кутових душових, прямокутні — у нішах і просторіших зонах."],
+  ["Чи обов'язково робити душову з піддоном?", "Ні. Скляну конструкцію можна встановити і без піддона на підготовлену підлогу з гідроізоляцією та правильним водовідведенням."],
+  ["Коли треба визначитися з піддоном?", "До фінального заміру скла. Встановлений або точно обраний піддон впливає на геометрію, точки кріплення та розміри душової конструкції."]
+];
+---
+<BaseLayout title="Душові піддони — розміри та підбір для душової | Space Glass" description={subtitle}>
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main">
+      <Breadcrumbs contained items={[{label:'Головна',href:'/'},{label:'Душові кабіни',href:'/dushovi-kabiny/'},{label:title}]} />
+      <section class="product-detail-hero">
+        <div class="product-detail-hero__media">
+          <img src="/images/s20/product-detail.webp" alt="Душовий піддон для скляної душової кабіни" width="1000" height="680" />
+        </div>
+        <div class="product-detail-hero__copy">
+          <p class="eyebrow">Душові конструкції</p>
+          <h1>{title}</h1>
+          <p class="lead">{subtitle}</p>
+          <div class="product-detail-price">{price}</div>
+          <div class="hero__actions">
+            <a class="button button--mint" href="/contacts/#contact-form">Підібрати піддон</a>
+            <a class="button button--outline" href="/dushovi-kabiny/">Всі види душових</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="product-detail-section">
+        <div class="category-heading">
+          <div><p class="eyebrow">Підбір</p><h2>Піддон як частина всієї душової системи</h2></div>
+          <p>Найкраще узгоджувати піддон і скляну конструкцію одночасно: тоді розміри, двері, профілі та точки кріплення не конфліктують між собою.</p>
+        </div>
+        <div class="product-feature-grid">
+          {features.map((feature, i) => <article><span>{String(i + 1).padStart(2, '0')}</span><h3>{feature}</h3></article>)}
+        </div>
+      </section>
+
+      <section class="product-spec-section">
+        <div><p class="eyebrow">Що врахувати</p><h2>Розмір, форма та підготовка</h2></div>
+        <dl class="product-spec-list">
+          <div><dt>Розмір</dt><dd>Під фактичну ширину та глибину душової зони</dd></div>
+          <div><dt>Форма</dt><dd>Квадратна або прямокутна залежно від планування</dd></div>
+          <div><dt>Висота</dt><dd>Обирається з урахуванням монтажу та бажаної висоти входу</dd></div>
+          <div><dt>Злив</dt><dd>Положення випуску перевіряємо до замовлення</dd></div>
+          <div><dt>Скло</dt><dd>Контур піддона має відповідати майбутній конструкції</dd></div>
+          <div><dt>Монтаж</dt><dd>Фінальний замір скла — після готової основи</dd></div>
+        </dl>
+      </section>
+
+      <section class="product-detail-section">
+        <div class="category-heading"><div><p class="eyebrow">Популярні запити</p><h2>Піддони під різні душові зони</h2></div></div>
+        <div class="product-feature-grid">
+          <article><span>01</span><h3>Квадратні піддони</h3><p>Для компактних кутових душових і симетричних зон.</p></article>
+          <article><span>02</span><h3>Прямокутні піддони</h3><p>Для ніш, Walk-In і просторіших душових.</p></article>
+          <article><span>03</span><h3>Низькі піддони</h3><p>Для мінімалістичного входу та сучасних інтер'єрів.</p></article>
+          <article><span>04</span><h3>Піддон + скляна кабіна</h3><p>Комплексний підбір геометрії під одну душову конструкцію.</p></article>
+        </div>
+      </section>
+
+      <FAQBlock eyebrow="FAQ" title="Часті запитання про душові піддони" description="Про розміри, форму, монтаж і сумісність зі скляною душовою." items={faq} initiallyVisible={5} />
+
+      <section class="inner-cta">
+        <div><p class="eyebrow eyebrow--light">Розрахунок</p><h2>Потрібен піддон разом із душовою?</h2><p>Надішліть розміри або фото зони — підберемо сумісний варіант і врахуємо його в конструкції зі скла.</p></div>
+        <a class="button button--white" href="/contacts/#contact-form">Отримати розрахунок</a>
+      </section>
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>
