@@ -1,4 +1,4 @@
-.category-icon-grid--showers{grid-template-columns:repeat(4,minmax(0,1fr))}
+.category-icon-grid--showers{grid-template-columns:repeat(3,minmax(0,1fr))}
 
 /* Shower MASTER intro: keep SEO copy close to the heading and align the facts
    card with the heading on desktop, without changing shared category layouts. */
