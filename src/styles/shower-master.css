@@ -27,38 +27,48 @@
   .category-geo__grid{align-items:start}
   .category-geo__cities{margin-top:126px}
 
-  /* Standard two-column section heading: compact copy sits at the far-right edge. */
+  /* Right-side section copy follows the same 3-column grid as the cards below:
+     it starts at column 3 and ends exactly at the card grid's right edge. */
   .category-heading:not(.category-heading--projects):has(> p){
     width:100%;
     max-width:none;
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    gap:48px;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    column-gap:24px;
+    align-items:end;
+  }
+  .category-heading:not(.category-heading--projects) > div{
+    grid-column:1 / 3;
+    min-width:0;
   }
   .category-heading:not(.category-heading--projects) > p{
-    flex:0 0 430px;
-    width:430px;
-    max-width:430px;
-    margin:0 0 0 auto;
+    grid-column:3;
+    width:100%;
+    max-width:none;
+    margin:0;
     text-align:left;
     text-wrap:balance;
     line-height:1.55;
   }
 
-  /* Portfolio has its own wrapper. Keep the link and copy on the right card edge. */
+  /* Portfolio uses the same card-grid geometry for its right-side aside. */
   .category-heading--projects{
     width:100%;
     max-width:none;
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:48px;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    column-gap:24px;
+    align-items:start;
+  }
+  .category-heading--projects__title{
+    grid-column:1 / 3;
+    min-width:0;
   }
   .category-heading--projects__aside{
-    flex:0 0 430px;
-    width:430px;
-    margin-left:auto;
+    grid-column:3;
+    width:100%;
+    max-width:none;
+    margin:0;
     display:flex;
     flex-direction:column;
     align-items:stretch;
@@ -68,8 +78,8 @@
     margin:0;
   }
   .category-heading--projects__aside p{
-    width:430px;
-    max-width:430px;
+    width:100%;
+    max-width:none;
     margin:28px 0 0;
     text-align:left;
     text-wrap:balance;
