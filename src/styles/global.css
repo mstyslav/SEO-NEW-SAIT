@@ -3083,3 +3083,22 @@ body main .config-demo-hero~.section h2{
     grid-template-columns:repeat(3,minmax(0,1fr)) !important;
   }
 }
+
+/* Header stability: prevent CTA / catalog controls from shifting on interaction */
+.sg-header .sg-nav-links,
+.sg-header .sg-nav-actions{
+  min-width:0;
+}
+
+.sg-header .sg-header-cta{
+  flex:0 0 auto;
+  min-width:max-content;
+  white-space:nowrap;
+}
+
+.sg-header .sg-categories-trigger--ua{
+  flex:0 0 32px;
+  width:32px;
+  min-width:32px;
+  max-width:32px;
+}
