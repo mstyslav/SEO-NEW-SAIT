@@ -12,59 +12,69 @@
 .inner-cta{margin-top:46px;margin-bottom:46px}
 #price + .category-section{padding-top:46px}
 .category-projects-grid{padding-bottom:0}
-.category-section:has(> .category-heading--projects){padding-bottom:48px}
+.category-projects{padding-bottom:48px}
+
+/* Geography */
 .category-geo{padding-bottom:28px}
 .category-geo + .category-section--faq{padding-top:28px}
 
 @media(min-width:901px){
   .category-section--mint:has(.category-intro-grid) .category-intro__spec{margin-top:-82px}
 
-  /* Standard section headings: keep the title left and anchor the copy to the
-     same right content edge as the cards below. */
-  .category-section > .category-heading:not(.category-heading--projects){
+  .category-geo__copy p{max-width:64ch;font-size:1.06rem;line-height:1.72}
+
+  /* City cards start on the same horizontal line as the first body-copy line. */
+  .category-geo__grid{align-items:start}
+  .category-geo__cities{margin-top:126px}
+
+  /* Standard two-column section heading: compact copy sits at the far-right edge. */
+  .category-heading:not(.category-heading--projects):has(> p){
     width:100%;
+    max-width:none;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:48px;
   }
-  .category-section > .category-heading:not(.category-heading--projects) > p{
-    flex:0 0 520px;
-    width:520px;
-    max-width:520px;
-    margin-left:auto;
-    margin-right:0;
+  .category-heading:not(.category-heading--projects) > p{
+    flex:0 0 430px;
+    width:430px;
+    max-width:430px;
+    margin:0 0 0 auto;
     text-align:left;
     text-wrap:balance;
     line-height:1.55;
   }
 
-  /* Portfolio has its own nested aside. Make the second grid column end at the
-     section edge; both the link arrow and copy share that exact right edge. */
+  /* Portfolio has its own wrapper. Keep the link and copy on the right card edge. */
   .category-heading--projects{
-    grid-template-columns:minmax(0,1fr) 520px;
     width:100%;
+    max-width:none;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:48px;
   }
   .category-heading--projects__aside{
-    width:520px;
-    max-width:520px;
-    justify-self:end;
+    flex:0 0 430px;
+    width:430px;
+    margin-left:auto;
+    display:flex;
+    flex-direction:column;
     align-items:stretch;
   }
   .category-heading--projects__aside .category-arrow-link{
     align-self:flex-end;
-    margin-right:0;
+    margin:0;
   }
   .category-heading--projects__aside p{
-    width:100%;
-    max-width:none;
-    margin-left:0;
-    margin-right:0;
+    width:430px;
+    max-width:430px;
+    margin:28px 0 0;
     text-align:left;
     text-wrap:balance;
+    line-height:1.55;
   }
-
-  /* Geography */
-  .category-geo__grid{align-items:start}
-  .category-geo__copy h2{width:max-content;max-width:100%;text-align:center}
-  .category-geo__copy p{max-width:none;font-size:1.06rem;line-height:1.72}
-  .category-geo__cities{margin-top:115px}
 }
 
 @media(max-width:1100px){
@@ -73,6 +83,7 @@
 
 @media(max-width:900px){
   .category-section--mint:has(.category-intro-grid) .category-intro__spec{margin-top:0}
+  .category-geo__cities{margin-top:0}
 }
 
 @media(max-width:620px){
@@ -81,5 +92,5 @@
   .category-section--mint:has(.category-intro-grid) .category-heading{margin-bottom:12px}
   .category-section--faq,.category-links{padding-top:32px;padding-bottom:32px}
   .inner-cta{margin-top:32px;margin-bottom:32px}
-  .category-section:has(> .category-heading--projects){padding-bottom:32px}
+  .category-projects{padding-bottom:32px}
 }
