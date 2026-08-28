@@ -1,9 +1,10 @@
 .category-icon-grid--showers{grid-template-columns:repeat(4,minmax(0,1fr))}
 
-/* Keep the MASTER intro visually connected to its heading without changing
-   shared category spacing on other pages/sections. */
-.category-section--mint:has(.category-intro-grid) .category-heading{margin-bottom:16px}
-.category-section--mint:has(.category-intro-grid){padding-top:68px;padding-bottom:68px}
+/* Keep the MASTER intro compact: prose and the facts card start on the same
+   row directly below the heading, with no oversized empty space below. */
+.category-section--mint:has(.category-intro-grid) .category-heading{margin-bottom:22px}
+.category-section--mint:has(.category-intro-grid){padding-top:58px;padding-bottom:42px}
+.category-section--mint:has(.category-intro-grid) .category-intro-grid{align-items:start}
 
 /* Geography copy is intentionally more prominent on the shower MASTER: it is
    useful service-area information and also carries the local commercial intent. */
@@ -17,6 +18,6 @@
 
 @media(max-width:620px){
   .category-icon-grid--showers{grid-template-columns:1fr}
-  .category-section--mint:has(.category-intro-grid){padding-top:48px;padding-bottom:48px}
-  .category-section--mint:has(.category-intro-grid) .category-heading{margin-bottom:14px}
+  .category-section--mint:has(.category-intro-grid){padding-top:44px;padding-bottom:36px}
+  .category-section--mint:has(.category-intro-grid) .category-heading{margin-bottom:16px}
 }
