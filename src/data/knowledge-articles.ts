@@ -72,7 +72,7 @@ const coreKnowledgeArticles: KnowledgeArticle[] = [
     title:'Душова Walk-in: переваги, обмеження та розміри',
     description:'Чесний розбір душової Walk-in: кому підходить відкрита перегородка, як зменшити бризки та що врахувати до монтажу.',
     intro:'Walk-in виглядає легко й сучасно, але комфорт залежить від довжини скла, розташування душу, ухилу та вентиляції.',
-    readingTime:7, serviceHref:'/dushovi-kabiny/walk-in/', serviceLabel:'Переглянути душові Walk-in',
+    readingTime:7, serviceHref:'/dushovi-kabiny/peregorodka-dlya-dusha/', serviceLabel:'Переглянути душові Walk-in',
     sections:[
       {id:'perevahy',title:'Чим зручна Walk-in',paragraphs:['Мінімум рухомих деталей спрощує догляд, а відкрита конструкція не перевантажує інтер’єр. Прохід без дверей зручний для просторих ванних і доступних рішень.']},
       {id:'obmezhennia',title:'Які є обмеження',paragraphs:['Відкрита зона може гірше утримувати тепло й бризки. Короткий екран поруч із потужною лійкою не вирішить завдання, навіть якщо виглядає ефектно на візуалізації.']},
