@@ -1,25 +1,70 @@
 .category-icon-grid--showers{grid-template-columns:repeat(3,minmax(0,1fr))}
 
-/* Shower MASTER intro: keep SEO copy close to the heading and align the facts
-   card with the heading on desktop, without changing shared category layouts. */
+/* Shower MASTER intro */
 .category-section--mint:has(.category-intro-grid) .category-heading{margin-bottom:10px}
 .category-section--mint:has(.category-intro-grid){padding-top:52px;padding-bottom:30px}
 .category-section--mint:has(.category-intro-grid) .category-intro-grid{align-items:start}
 .category-section--mint:has(.category-intro-grid) .category-prose p{line-height:1.68;margin-bottom:12px}
 
-/* Shower MASTER only: reduce the oversized vertical rhythm around the lower
-   commercial sections by roughly half. Shared category pages stay untouched. */
+/* Shower MASTER vertical rhythm */
 .category-section--faq{padding-top:46px;padding-bottom:46px}
 .category-links{padding-top:46px;padding-bottom:46px}
 .inner-cta{margin-top:46px;margin-bottom:46px}
 #price + .category-section{padding-top:46px}
+.category-projects-grid{padding-bottom:0}
+.category-section:has(> .category-heading--projects){padding-bottom:48px}
+.category-geo{padding-bottom:28px}
+.category-geo + .category-section--faq{padding-top:28px}
 
 @media(min-width:901px){
   .category-section--mint:has(.category-intro-grid) .category-intro__spec{margin-top:-82px}
 
-  /* Geography copy is intentionally more prominent on the shower MASTER: it is
-     useful service-area information and also carries the local commercial intent. */
-  .category-geo__copy p{max-width:64ch;font-size:1.06rem;line-height:1.72}
+  /* Standard section headings: keep the title left and anchor the copy to the
+     same right content edge as the cards below. */
+  .category-section > .category-heading:not(.category-heading--projects){
+    width:100%;
+  }
+  .category-section > .category-heading:not(.category-heading--projects) > p{
+    flex:0 0 520px;
+    width:520px;
+    max-width:520px;
+    margin-left:auto;
+    margin-right:0;
+    text-align:left;
+    text-wrap:balance;
+    line-height:1.55;
+  }
+
+  /* Portfolio has its own nested aside. Make the second grid column end at the
+     section edge; both the link arrow and copy share that exact right edge. */
+  .category-heading--projects{
+    grid-template-columns:minmax(0,1fr) 520px;
+    width:100%;
+  }
+  .category-heading--projects__aside{
+    width:520px;
+    max-width:520px;
+    justify-self:end;
+    align-items:stretch;
+  }
+  .category-heading--projects__aside .category-arrow-link{
+    align-self:flex-end;
+    margin-right:0;
+  }
+  .category-heading--projects__aside p{
+    width:100%;
+    max-width:none;
+    margin-left:0;
+    margin-right:0;
+    text-align:left;
+    text-wrap:balance;
+  }
+
+  /* Geography */
+  .category-geo__grid{align-items:start}
+  .category-geo__copy h2{width:max-content;max-width:100%;text-align:center}
+  .category-geo__copy p{max-width:none;font-size:1.06rem;line-height:1.72}
+  .category-geo__cities{margin-top:115px}
 }
 
 @media(max-width:1100px){
@@ -36,4 +81,5 @@
   .category-section--mint:has(.category-intro-grid) .category-heading{margin-bottom:12px}
   .category-section--faq,.category-links{padding-top:32px;padding-bottom:32px}
   .inner-cta{margin-top:32px;margin-bottom:32px}
+  .category-section:has(> .category-heading--projects){padding-bottom:32px}
 }
