@@ -7,92 +7,76 @@ import FAQBlock from '../../../components/FAQBlock.astro';
 import '../../../styles/product-detail.css';
 import '../../../styles/legacy-product.css';
 
-const title = "Душова кабіна в нішу";
-const subtitle = "Скляні двері або двері з нерухомою частиною для готової душової ніші.";
-const price = "від 150 $/м²";
-const features = ["Точне виготовлення під проріз", "Розпашне або розсувне відкривання", "Магнітні ущільнювачі", "Професійний замір"];
+const title = "Душові кабіни в нішу зі скла";
+const subtitle = "Скляні душові двері та конструкції в нішу на замовлення — під фактичний отвір між стінами, з розпашним, розсувним або складним відкриванням.";
+const price = "Ціна за індивідуальним розрахунком";
+const features = ["Точне виготовлення під готовий отвір", "Розпашне, розсувне або складне відкривання", "Двері або двері з нерухомою секцією", "Замір після чистового оздоблення"];
 const faq = [
-  ["Яка товщина скла використовується?", "Зазвичай 8 або 10 мм залежно від типу й розмірів конструкції."],
-  ["Чи можна зробити за індивідуальними розмірами?", "Так, конструкція виготовляється після заміру або перевірки наданих розмірів."],
-  ["Чи входить монтаж у ціну?", "Монтаж розраховується окремо та додається в конфігураторі."],
-  ["Які кольори фурнітури доступні?", "Базові варіанти — чорний, хром і графіт. Інші кольори уточнюються окремо."],
-  ["Скільки триває виготовлення?", "Термін підтверджуємо після погодження креслення та комплектації."]
+  ["Що таке душова кабіна в нішу?", "Це душова зона між трьома стінами, де зі скла потрібно закрити тільки фронтальний отвір — дверима або дверима з нерухомою частиною."],
+  ["Коли робити замір ніші?", "Після завершення плитки та інших чистових поверхонь, які формують отвір. Саме вони визначають фінальну ширину й геометрію скла."],
+  ["Які двері можна поставити в нішу?", "Розпашні, розсувні або складні. Вибір залежить від ширини отвору, доступного місця перед душовою та потрібної ширини проходу."],
+  ["Чи можна зробити душову в нішу без піддона?", "Так. У такому випадку підлога повинна бути підготовлена з гідроізоляцією, ухилом і водовідведенням до фінального заміру."],
+  ["Від чого залежить ціна?", "Від ширини й висоти отвору, кількості скляних секцій, системи відкривання, скла, фурнітури та монтажу."]
 ];
 ---
-<BaseLayout title={`${title} — Space Glass`} description={subtitle}>
+<BaseLayout title="Душові кабіни в нішу зі скла на замовлення | Space Glass" description={subtitle}>
   <div class="sg-page-shell">
     <Header />
     <main id="main">
       <Breadcrumbs contained items={[{label:'Головна',href:'/'},{label:'Душові кабіни',href:'/dushovi-kabiny/'},{label:title}]} />
       <section class="product-detail-hero">
         <div class="product-detail-hero__media">
-          <img src="/images/s19/walkin-main.webp" alt={title} width="1400" height="1700" />
+          <img src="/images/s19/walkin-main.webp" alt="Скляна душова кабіна в нішу" width="1400" height="1700" />
         </div>
         <div class="product-detail-hero__copy">
-          <p class="eyebrow">Душові кабіни</p>
+          <p class="eyebrow">Душові в нішу</p>
           <h1>{title}</h1>
           <p class="lead">{subtitle}</p>
           <div class="product-detail-price">{price}</div>
           <div class="hero__actions">
-            <a class="button button--mint" href="/catalog/piddon/">Налаштувати та розрахувати</a>
-            <a class="button button--outline" href="/contacts/#contact-form">Отримати КП</a>
+            <a class="button button--mint" href="/contacts/#contact-form">Отримати розрахунок</a>
+            <a class="button button--outline" href="/dushovi-kabiny/">Всі види душових</a>
           </div>
         </div>
       </section>
 
       <section class="product-detail-section">
-        <div class="category-heading">
-          <div>
-            <p class="eyebrow">Переваги</p>
-            <h2>Комплектація під ваш простір</h2>
-          </div>
-          <p>Після заміру узгоджуємо креслення, скло, фурнітуру, ущільнення та спосіб монтажу.</p>
-        </div>
-        <div class="product-feature-grid">
-          {features.map((feature, i) => (
-            <article>
-              <span>{String(i + 1).padStart(2, '0')}</span>
-              <h3>{feature}</h3>
-            </article>
-          ))}
-        </div>
+        <div class="category-heading"><div><p class="eyebrow">Формат</p><h2>Скло закриває тільки фронт ніші</h2></div><p>Ніша вже сформована трьома стінами, тому головне завдання — правильно організувати вхід, ширину проходу та герметичність фронтальної скляної конструкції.</p></div>
+        <div class="product-feature-grid">{features.map((feature, i) => <article><span>{String(i + 1).padStart(2, '0')}</span><h3>{feature}</h3></article>)}</div>
       </section>
 
       <section class="product-spec-section">
-        <div>
-          <p class="eyebrow">Характеристики</p>
-          <h2>Технічна база</h2>
-        </div>
+        <div><p class="eyebrow">Замір</p><h2>Що перевіряємо в готовій ніші</h2></div>
         <dl class="product-spec-list">
-          <div><dt>Скло</dt><dd>Загартоване ESG</dd></div>
-          <div><dt>Товщина</dt><dd>8 або 10 мм</dd></div>
-          <div><dt>Колір скла</dt><dd>Прозоре, матове, тоноване</dd></div>
-          <div><dt>Фурнітура</dt><dd>Black, Chrome, Graphite</dd></div>
-          <div><dt>Розмір</dt><dd>Індивідуальний</dd></div>
-          <div><dt>Монтаж</dt><dd>Київ, Львів, Одеса та області</dd></div>
+          <div><dt>Ширина</dt><dd>Замірюємо отвір у кількох точках</dd></div>
+          <div><dt>Вертикальність</dt><dd>Перевіряємо стіни та можливі відхилення</dd></div>
+          <div><dt>Відкривання</dt><dd>Оцінюємо місце для розпашної, розсувної або складної системи</dd></div>
+          <div><dt>Підлога</dt><dd>Піддон або готова гідроізольована основа</dd></div>
+          <div><dt>Притвор</dt><dd>Ущільнення та магнітний контакт за обраною системою</dd></div>
+          <div><dt>Фурнітура</dt><dd>Підбираємо під схему дверей і вагу скла</dd></div>
         </dl>
       </section>
 
       <section class="product-gallery-strip">
-        <img src="/images/s19/walkin-angle.webp" alt={`${title} — ракурс`} width="1400" height="1700" loading="lazy" />
-        <img src="/images/s19/walkin-detail.webp" alt={`${title} — деталь`} width="1400" height="1700" loading="lazy" />
-        <img src="/images/s20/product-interior.webp" alt={`${title} в інтер’єрі`} width="1800" height="1500" loading="lazy" />
+        <img src="/images/s19/walkin-angle.webp" alt="Душова в нішу зі скляними дверима" width="1400" height="1700" loading="lazy" />
+        <img src="/images/catalog/dushovi-kabiny/hardware/petli-new.webp" alt="Петля скляних дверей душової в нішу" width="960" height="1280" loading="lazy" />
+        <img src="/images/catalog/dushovi-kabiny/hardware/ruchky.webp" alt="Ручка душових дверей у нішу" width="960" height="1280" loading="lazy" />
       </section>
 
-      <FAQBlock
-        eyebrow="FAQ"
-        title="Часті запитання"
-        description="Основна інформація про замовлення, виготовлення та монтаж."
-        items={faq}
-        initiallyVisible={5}
-      />
+      <section class="product-detail-section">
+        <div class="category-heading"><div><p class="eyebrow">Пов'язані рішення</p><h2>Варіанти входу в нішу</h2></div></div>
+        <div class="product-feature-grid">
+          <article><h3><a href="/dushovi-kabiny/dushovi-dveri/">Скляні душові двері</a></h3><p>Коли потрібен окремий дверний блок.</p></article>
+          <article><h3><a href="/dushovi-kabiny/rozsuvni/">Розсувні двері</a></h3><p>Для ніші без місця перед входом.</p></article>
+          <article><h3><a href="/dushovi-kabiny/skladni/">Складні двері гармошка</a></h3><p>Для максимально компактного відкривання.</p></article>
+          <article><h3><a href="/knowledge/dushova-v-nishu-zamir/">Як заміряти душову в нішу</a></h3><p>Що важливо підготувати до фінального заміру.</p></article>
+        </div>
+      </section>
+
+      <FAQBlock eyebrow="FAQ" title="Часті запитання про душові кабіни в нішу" description="Про замір, двері, основу та індивідуальний розрахунок." items={faq} initiallyVisible={5} />
 
       <section class="inner-cta">
-        <div>
-          <p class="eyebrow eyebrow--light">Попередня оцінка</p>
-          <h2>Надішліть фото та розміри</h2>
-          <p>Підготуємо конфігурацію та попередній розрахунок.</p>
-        </div>
+        <div><p class="eyebrow eyebrow--light">Попередня оцінка</p><h2>Надішліть фото ніші та приблизні розміри</h2><p>Запропонуємо схему дверей і підготуємо попередню комплектацію.</p></div>
         <a class="button button--white" href="/contacts/#contact-form">Отримати розрахунок</a>
       </section>
     </main>
