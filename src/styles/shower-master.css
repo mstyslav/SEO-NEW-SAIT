@@ -5,6 +5,12 @@
 .category-section--mint:has(.category-intro-grid) .category-heading{margin-bottom:16px}
 .category-section--mint:has(.category-intro-grid){padding-top:68px;padding-bottom:68px}
 
+/* Geography copy is intentionally more prominent on the shower MASTER: it is
+   useful service-area information and also carries the local commercial intent. */
+@media(min-width:901px){
+  .category-geo__copy p{max-width:64ch;font-size:1.06rem;line-height:1.72}
+}
+
 @media(max-width:1100px){
   .category-icon-grid--showers{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
