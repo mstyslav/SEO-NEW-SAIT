@@ -7,92 +7,76 @@ import FAQBlock from '../../../components/FAQBlock.astro';
 import '../../../styles/product-detail.css';
 import '../../../styles/legacy-product.css';
 
-const title = "Кутова душова кабіна";
-const subtitle = "Дві скляні площини утворюють комфортну душову з розпашними або розсувними дверима.";
-const price = "від 150 $/м²";
-const features = ["Кутова конфігурація 90°", "Розпашні або розсувні двері", "Прозоре, матове чи тоноване скло", "Фурнітура в одному стилі"];
+const title = "Скляні кутові душові кабіни";
+const subtitle = "Кутові душові кабіни зі скла на замовлення за індивідуальними розмірами — для компактних і просторих ванних кімнат, з розпашними або розсувними дверима.";
+const price = "Ціна за індивідуальним розрахунком";
+const features = ["Кутова геометрія під фактичні стіни", "Розпашні або розсувні двері", "Піддон або монтаж без піддона", "Індивідуальний підбір скла та фурнітури"];
 const faq = [
-  ["Яка товщина скла використовується?", "Зазвичай 8 або 10 мм залежно від типу й розмірів конструкції."],
-  ["Чи можна зробити за індивідуальними розмірами?", "Так, конструкція виготовляється після заміру або перевірки наданих розмірів."],
-  ["Чи входить монтаж у ціну?", "Монтаж розраховується окремо та додається в конфігураторі."],
-  ["Які кольори фурнітури доступні?", "Базові варіанти — чорний, хром і графіт. Інші кольори уточнюються окремо."],
-  ["Скільки триває виготовлення?", "Термін підтверджуємо після погодження креслення та комплектації."]
+  ["Коли підходить кутова душова кабіна?", "Коли душову зону формують дві стіни кімнати і дві скляні площини. Це універсальний формат для більшості ванних."],
+  ["Чи можна зробити кутову душову не під 90°?", "Такі випадки потребують заміру та окремого конструктивного рішення. Ми не прив'язуємо виготовлення до стандартного заводського боксу."],
+  ["Розпашні чи розсувні двері обрати?", "Розпашні простіші за механікою, але потребують місця перед кабіною. Розсувні зручніші там, де простір обмежений."],
+  ["Чи можна встановити кутову душову на піддон?", "Так. Піддон бажано визначити до фінального заміру скла, щоб його геометрія збігалася з конструкцією."],
+  ["Від чого залежить вартість?", "Від ширини й висоти скляних площин, типу дверей, скла, фурнітури, піддона та умов монтажу."]
 ];
 ---
-<BaseLayout title={`${title} — Space Glass`} description={subtitle}>
+<BaseLayout title="Скляні кутові душові кабіни на замовлення | Space Glass" description={subtitle}>
   <div class="sg-page-shell">
     <Header />
     <main id="main">
       <Breadcrumbs contained items={[{label:'Головна',href:'/'},{label:'Душові кабіни',href:'/dushovi-kabiny/'},{label:title}]} />
       <section class="product-detail-hero">
         <div class="product-detail-hero__media">
-          <img src="/images/s19/walkin-main.webp" alt={title} width="1400" height="1700" />
+          <img src="/images/catalog/dushovi-kabiny/dushovi-kabiny-1200.webp" alt="Скляна кутова душова кабіна на замовлення" width="1200" height="900" />
         </div>
         <div class="product-detail-hero__copy">
-          <p class="eyebrow">Душові кабіни</p>
+          <p class="eyebrow">Скляні душові кабіни</p>
           <h1>{title}</h1>
           <p class="lead">{subtitle}</p>
           <div class="product-detail-price">{price}</div>
           <div class="hero__actions">
-            <a class="button button--mint" href="/catalog/piddon/">Налаштувати та розрахувати</a>
-            <a class="button button--outline" href="/contacts/#contact-form">Отримати КП</a>
+            <a class="button button--mint" href="/contacts/#contact-form">Отримати розрахунок</a>
+            <a class="button button--outline" href="/dushovi-kabiny/">Всі види душових</a>
           </div>
         </div>
       </section>
 
       <section class="product-detail-section">
-        <div class="category-heading">
-          <div>
-            <p class="eyebrow">Переваги</p>
-            <h2>Комплектація під ваш простір</h2>
-          </div>
-          <p>Після заміру узгоджуємо креслення, скло, фурнітуру, ущільнення та спосіб монтажу.</p>
-        </div>
-        <div class="product-feature-grid">
-          {features.map((feature, i) => (
-            <article>
-              <span>{String(i + 1).padStart(2, '0')}</span>
-              <h3>{feature}</h3>
-            </article>
-          ))}
-        </div>
+        <div class="category-heading"><div><p class="eyebrow">Конструкція</p><h2>Кутова душова під геометрію ванної</h2></div><p>Дві скляні площини закривають кут і формують окрему душову зону. Розміри та положення дверей визначаємо після заміру, а не підганяємо приміщення під типовий бокс.</p></div>
+        <div class="product-feature-grid">{features.map((feature, i) => <article><span>{String(i + 1).padStart(2, '0')}</span><h3>{feature}</h3></article>)}</div>
       </section>
 
       <section class="product-spec-section">
-        <div>
-          <p class="eyebrow">Характеристики</p>
-          <h2>Технічна база</h2>
-        </div>
+        <div><p class="eyebrow">Перед замовленням</p><h2>Що впливає на конструкцію</h2></div>
         <dl class="product-spec-list">
-          <div><dt>Скло</dt><dd>Загартоване ESG</dd></div>
-          <div><dt>Товщина</dt><dd>8 або 10 мм</dd></div>
-          <div><dt>Колір скла</dt><dd>Прозоре, матове, тоноване</dd></div>
-          <div><dt>Фурнітура</dt><dd>Black, Chrome, Graphite</dd></div>
-          <div><dt>Розмір</dt><dd>Індивідуальний</dd></div>
-          <div><dt>Монтаж</dt><dd>Київ, Львів, Одеса та області</dd></div>
+          <div><dt>Геометрія кута</dt><dd>Перевіряємо фактичні кути та вертикальність стін</dd></div>
+          <div><dt>Вхід</dt><dd>Розташування й ширина проходу залежать від сантехніки та меблів</dd></div>
+          <div><dt>Двері</dt><dd>Розпашні або розсувні за доступним простором</dd></div>
+          <div><dt>Основа</dt><dd>Піддон або підготовлена підлога з водовідведенням</dd></div>
+          <div><dt>Скло</dt><dd>Прозоре, освітлене, матове чи тоноване — за проєктом</dd></div>
+          <div><dt>Фурнітура</dt><dd>Кріплення, петлі, ручки й стабілізація під габарити</dd></div>
         </dl>
       </section>
 
       <section class="product-gallery-strip">
-        <img src="/images/s19/walkin-angle.webp" alt={`${title} — ракурс`} width="1400" height="1700" loading="lazy" />
-        <img src="/images/s19/walkin-detail.webp" alt={`${title} — деталь`} width="1400" height="1700" loading="lazy" />
-        <img src="/images/s20/product-interior.webp" alt={`${title} в інтер’єрі`} width="1800" height="1500" loading="lazy" />
+        <img src="/images/s19/walkin-angle.webp" alt="Кутова скляна душова кабіна — ракурс" width="1400" height="1700" loading="lazy" />
+        <img src="/images/catalog/dushovi-kabiny/hardware/petli-new.webp" alt="Петлі кутової душової кабіни" width="960" height="1280" loading="lazy" />
+        <img src="/images/catalog/dushovi-kabiny/hardware/stabilizator-new.webp" alt="Стабілізатор скляної кутової душової" width="960" height="1280" loading="lazy" />
       </section>
 
-      <FAQBlock
-        eyebrow="FAQ"
-        title="Часті запитання"
-        description="Основна інформація про замовлення, виготовлення та монтаж."
-        items={faq}
-        initiallyVisible={5}
-      />
+      <section class="product-detail-section">
+        <div class="category-heading"><div><p class="eyebrow">Пов'язані рішення</p><h2>Інші формати душових зі скла</h2></div></div>
+        <div class="product-feature-grid">
+          <article><h3><a href="/dushovi-kabiny/rozsuvni/">Розсувні душові кабіни</a></h3><p>Для економії місця перед входом.</p></article>
+          <article><h3><a href="/dushovi-kabiny/u-nishu/">Душові в нішу</a></h3><p>Коли зона вже сформована трьома стінами.</p></article>
+          <article><h3><a href="/dushovi-kabiny/dushovi-piddony/">Душові піддони</a></h3><p>Підбір основи під скляну конструкцію.</p></article>
+          <article><h3><a href="/knowledge/yak-obraty-dushovu-kabinu/">Як обрати душову кабіну</a></h3><p>Практичний матеріал перед замовленням.</p></article>
+        </div>
+      </section>
+
+      <FAQBlock eyebrow="FAQ" title="Часті запитання про кутові душові кабіни" description="Про геометрію, двері, піддон і індивідуальний розрахунок." items={faq} initiallyVisible={5} />
 
       <section class="inner-cta">
-        <div>
-          <p class="eyebrow eyebrow--light">Попередня оцінка</p>
-          <h2>Надішліть фото та розміри</h2>
-          <p>Підготуємо конфігурацію та попередній розрахунок.</p>
-        </div>
+        <div><p class="eyebrow eyebrow--light">Попередня оцінка</p><h2>Надішліть фото кута та приблизні розміри</h2><p>Запропонуємо схему входу, тип дверей і підготуємо попередній розрахунок.</p></div>
         <a class="button button--white" href="/contacts/#contact-form">Отримати розрахунок</a>
       </section>
     </main>
