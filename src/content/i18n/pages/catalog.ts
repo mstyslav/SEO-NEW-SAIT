@@ -100,7 +100,7 @@ export const catalogContent: Record<Locale, CatalogContent> = {
       ['Розсувні скляні двері', '/poslugy/sklyani-dveri/rozsuvni-sklyani-dveri/'],
       ['Безрамні огорожі', '/poslugy/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/'],
       ['Панорамне скління', '/poslugy/bezramne-sklinnya/panoramne-sklinnya/'],
-      ['Дзеркала з підсвіткою', '/poslugy/dzerkala/dzerkalo-z-pidsvitkoyu/'],
+      ['Дзеркала на замовлення', '/dzerkala/'],
       ['Вітринне скління', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
       ['Скляні козирки', '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/'],
       ['Скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/']
@@ -260,7 +260,7 @@ export const catalogContent: Record<Locale, CatalogContent> = {
       ['Раздвижные стеклянные двери', '/poslugy/sklyani-dveri/rozsuvni-sklyani-dveri/'],
       ['Безрамные ограждения', '/poslugy/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/'],
       ['Панорамное остекление', '/poslugy/bezramne-sklinnya/panoramne-sklinnya/'],
-      ['Зеркала с подсветкой', '/poslugy/dzerkala/dzerkalo-z-pidsvitkoyu/'],
+      ['Зеркала на заказ', '/dzerkala/'],
       ['Витринное остекление', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
       ['Стеклянные козырьки', '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/'],
       ['Остекление террасы', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/']

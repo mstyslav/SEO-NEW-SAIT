@@ -1,136 +1,225 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import { faqSchema, type JsonLdObject } from '../../seo/schema';
+import { mirrorTypes } from '../../data/mirror-types';
 import '../../styles/category-pages.css';
+import '../../styles/projects-common.css';
 
 const title = "Дзеркала";
-const subtitle = "LED, у рамі, панно, на стіну та індивідуальні форми";
-const items = ["LED", "У рамі", "Панно", "На стіну", "Фігурні", "Для ванної"];
-const faq = [
-  [
-    "Від чого залежить ціна?",
-    "Від габаритів, типу скла, профілю, фурнітури, складності та монтажу."
-  ],
-  [
-    "Чи є індивідуальні розміри?",
-    "Так, більшість конструкцій виготовляємо за погодженими розмірами."
-  ],
-  [
-    "Де доступний монтаж?",
-    "Основні міста монтажу — Київ, Львів та Одеса з областями."
-  ],
-  [
-    "Чи є доставка по Україні?",
-    "Готові товари та комплектуючі доставляємо по всій Україні."
-  ],
-  [
-    "Які матеріали використовуються?",
-    "Матеріали підбираються за призначенням конструкції, навантаженням і дизайном."
-  ],
-  [
-    "Чи можна обрати колір профілю?",
-    "Так, доступні стандартні та індивідуальні кольори залежно від системи."
-  ],
-  [
-    "Які строки виготовлення?",
-    "Термін визначається після погодження креслення, комплектації та завантаження виробництва."
-  ],
-  [
-    "Чи надається гарантія?",
-    "Так, гарантія залежить від типу конструкції, матеріалів та умов монтажу."
-  ],
-  [
-    "Чи потрібен професійний замір?",
-    "Для індивідуальних конструкцій професійний замір рекомендований або обов’язковий."
-  ],
-  [
-    "Чи можна замовити тільки виготовлення?",
-    "Так, у частині проєктів можливе виготовлення без монтажу з доставкою."
-  ],
-  [
-    "Чи робите технічні креслення?",
-    "Так, перед запуском складних конструкцій готуємо та погоджуємо креслення."
-  ],
-  [
-    "Чи можна інтегрувати двері?",
-    "Так, залежно від системи доступні розпашні, розсувні, маятникові та pivot-рішення."
-  ],
-  [
-    "Чи працюєте з дизайнерами й архітекторами?",
-    "Так, надаємо технічні матеріали, консультації та супровід проєкту."
-  ],
-  [
-    "Чи можна використати матове скло?",
-    "Так, доступні матове, тоноване, освітлене, рифлене та декоративне скло."
-  ],
-  [
-    "Чи працюєте з комерційними об’єктами?",
-    "Так, реалізуємо рішення для офісів, магазинів, ресторанів, готелів і клінік."
-  ],
-  [
-    "Чи можливий демонтаж старих конструкцій?",
-    "Так, демонтаж оцінюється окремо після огляду об’єкта."
-  ],
-  [
-    "Що потрібно для попередньої оцінки?",
-    "Фото, приблизні розміри, місто та короткий опис бажаного рішення."
-  ],
-  [
-    "Чи можна замовити поетапну реалізацію?",
-    "Так, великі проєкти можна поділяти на етапи за погодженим графіком."
-  ],
-  [
-    "Які способи оплати доступні?",
-    "Умови оплати залежать від типу товару, обсягу та формату робіт."
-  ],
-  [
-    "Чи є сервіс після монтажу?",
-    "Так, доступні гарантійні та післягарантійні консультації й обслуговування."
-  ]
-]
+const h1 = "Дзеркала на замовлення";
+const subtitle = "Дзеркала за індивідуальними розмірами: з LED-підсвіткою, в рамі, на стіну, дзеркальні панно та фігурні форми";
+
+// Minimal line-art icons — mint stroke, same weight as the /dushovi-kabiny/
+// type icons. Keyed by mirror.iconKey (see src/data/mirror-types.ts).
+const iconWrap = (p: string) =>
+  `<svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const icons: Record<string, string> = {
+  // LED: mirror with a light halo around the frame.
+  led: iconWrap('<rect x="11" y="8" width="18" height="24"/><path d="M6 12v-4h4M34 12v-4h-4M6 28v4h4M34 28v4h-4"/>'),
+  // У рамі: mirror with an emphasised outer frame.
+  framed: iconWrap('<rect x="7" y="6" width="26" height="28"/><rect x="12" y="11" width="16" height="18"/>'),
+  // На стіну: mirror modules across a wall.
+  wall: iconWrap('<path d="M5 7h30v26H5z"/><path d="M15 7v26M25 7v26"/>'),
+  // Панно: composition of mirror tiles.
+  panno: iconWrap('<path d="M6 6h12v12H6zM22 6h12v12H22zM6 22h12v12H6zM22 22h12v12H22z"/>')
+};
+
+// Final child pages under this MASTER — single source of truth in
+// src/data/mirror-types.ts. Legacy-compatible slugs, real local photos,
+// no invented content. The "за розміром / у ванну / для спортзалу" intents
+// are covered by this MASTER page itself.
+const items = mirrorTypes.map((mirror) => ({
+  title: mirror.label.uk,
+  note: mirror.cardNote,
+  href: mirror.href,
+  icon: icons[mirror.iconKey]
+}));
+
+// Verified existing Knowledge articles about mirrors (core + supplemental sets).
+const relatedLinks: [string, string][] = [
+  ["Як обрати розмір і форму дзеркала", "/knowledge/yak-obraty-dzerkalo-rozmir-forma/"],
+  ["Дзеркало з підсвіткою: що врахувати", "/knowledge/dzerkalo-z-pidsvitkoyu-shcho-vrakhuvaty/"],
+  ["Дзеркало у ванну: розмір і монтаж", "/knowledge/dzerkalo-u-vannu/"],
+  ["Дзеркальна стіна: стики й монтаж", "/knowledge/dzerkalna-stina/"],
+  ["Дзеркало в рамі: профіль і кріплення", "/knowledge/dzerkalo-v-rami/"],
+  ["Дзеркало з підігрівом: антизапотівання", "/knowledge/dzerkalo-z-pidigrivom/"],
+  ["Фігурне дзеркало за шаблоном", "/knowledge/fasonne-dzerkalo-shablon/"],
+  ["Монтаж дзеркала на стіну", "/knowledge/montazh-dzerkala-na-stinu/"]
+];
+
+// Real mirror projects from the shared content collection — never hand-copied.
+const mirrorProjects = (await getCollection('projects', ({ data }) =>
+  data.status === 'published' && data.locale === 'uk' && data.category === 'mirrors'))
+  .map(({ data }) => data)
+  .sort((a, b) => a.sortOrder - b.sortOrder);
+
+// FAQ — mirror-specific, no generic padding (expandTo = faq.length). No invented
+// prices, lead times or warranty terms.
+const faq: [string, string][] = [
+  ["Від чого залежить вартість дзеркала?", "Від габаритів і форми, типу дзеркального полотна, обробки крайки (поліровка чи фацет), наявності підсвітки й підігріву, рами, вирізів та умов монтажу."],
+  ["Чи можна виготовити дзеркало за індивідуальними розмірами?", "Так. Більшість дзеркал виготовляємо за погодженими розмірами під конкретну стіну, тумбу або нішу після перевірки наданих розмірів чи заміру."],
+  ["Які форми дзеркал можливі?", "Прямокутні, квадратні, круглі та фігурні за шаблоном. Складний контур потребує точного шаблону й продуманого розташування кріплень."],
+  ["Яка обробка крайки доступна?", "Відкриту крайку полірують. Фацет створює декоративне заломлення світла, але зменшує корисну площу відображення й впливає на габарити."],
+  ["Що врахувати для дзеркала з LED-підсвіткою?", "Схему електрики й сценарій світла узгоджують до виготовлення: тип світла (контурне чи фронтальне), точку виводу кабелю, вимикач, за потреби — підігрів і доступ до блока живлення для сервісу."],
+  ["Навіщо потрібен підігрів дзеркала?", "Підігрів зменшує запотівання центральної зони дзеркала після душу. Він не замінює вентиляцію приміщення."],
+  ["Чи можна зробити вирізи під розетки, світильники або кріплення?", "Так. Точне положення вирізів і отворів задають до виготовлення — після загартування дзеркальне полотно не свердлять і не підрізають."],
+  ["Яке дзеркало підходить для ванної кімнати?", "Виконання, розраховане на вологість: враховують стан і матеріал стіни, вентиляцію, розташування електрики та спосіб кріплення."],
+  ["Як кріплять велике або важке дзеркало?", "Спосіб кріплення залежить від розміру, ваги, вологості й матеріалу стіни. Для клеєного монтажу застосовують матеріали, сумісні з амальгамою; для великих полотен можуть знадобитися закладні або механічний профіль."],
+  ["Що таке дзеркальна стіна і як її монтують?", "Це суцільна дзеркальна площина з кількох модулів. Розкладку швів, розміри модулів і підготовку основи (рівність, сухість) узгоджують на кресленні до виробництва."],
+  ["Чи можна дзеркало в рамі?", "Так, у металевому, алюмінієвому або декоративному профілі. Рама завершує контур і захищає крайку; тип профілю підбирають під інтер'єр і розмір."],
+  ["Коли потрібен професійний замір?", "Фінальний замір роблять після завершення чистових поверхонь, на які встановлюється дзеркало, і коли відомі точки електровиводу для підсвітки."],
+  ["Що підготувати для попереднього розрахунку?", "Фото місця, приблизні розміри, місто, побажання щодо форми, підсвітки, рами та обробки крайки."],
+  ["У яких містах виконуєте замір і монтаж?", "Замір і монтаж — Київ, Львів та Одеса з областями. Готові дзеркала й комплектуючі доставляємо по всій Україні залежно від габаритів і доступу до об'єкта."],
+  ["Чи можна замовити тільки виготовлення дзеркала, без монтажу?", "Так, у частині замовлень можливе виготовлення з доставкою без монтажу — за умови безпечного транспортування габаритів."]
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] : [];
 ---
-<BaseLayout title={`${title} — Space Glass`} description={subtitle}>
+<BaseLayout
+  title={`${h1} — Space Glass`}
+  description="Дзеркала на замовлення від Space Glass: за індивідуальними розмірами, з LED-підсвіткою, у ванну, в рамі, дзеркальні стіни та фігурні форми. Замір, виготовлення й монтаж у Києві, Одесі та Львові."
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  locale="uk"
+  alternateLocales={['uk']}
+  image="/images/projects/led-mirror-private-house-kyiv/led-mirror-private-house-kyiv-hero.webp"
+>
 <div class="sg-page-shell">
   <Header />
   <main id="main">
-    <div class="category-breadcrumbs"><Breadcrumbs items={[{label:'Головна',href:'/'},{label:title}]} /></div>
-    <section class="category-hero">
-      <div class="category-hero__copy"><p class="eyebrow">{title}</p><h1>{title} на замовлення</h1><p class="lead">{subtitle}</p><div class="hero__actions"><a class="button button--mint" href="#category-request">Отримати розрахунок</a><a class="button button--outline" href="#types">Переглянути види</a></div></div>
-      <div class="category-hero__visual"><div class="category-hero__glass"></div><span>SPACE GLASS</span></div>
+    <section class="category-hero category-hero--photo">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">{subtitle}. Підбираємо тип дзеркального полотна, обробку крайки, раму та підсвітку, виконуємо замір, виготовлення та монтаж.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#category-request">Отримати розрахунок</a>
+          <a class="button button--outline" href="#types">Переглянути види</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img
+            src="/images/projects/led-mirror-private-house-kyiv/led-mirror-private-house-kyiv-hero.webp"
+            srcset="/images/projects/led-mirror-private-house-kyiv/led-mirror-private-house-kyiv-hero-480.webp 480w, /images/projects/led-mirror-private-house-kyiv/led-mirror-private-house-kyiv-hero.webp 720w"
+            sizes="(max-width: 900px) calc(100vw - 48px), 52vw"
+            alt="Кругле дзеркало з LED-підсвіткою на замовлення в інтер'єрі приватного будинку"
+            width="720"
+            height="1280"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+      </figure>
     </section>
 
-    <section id="types" class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Оберіть відповідне рішення</h2></div><p>Після вибору типу уточнимо розміри, матеріали, колір, комплектацію та формат монтажу.</p></div>
-      <div class="category-type-grid">
-        {items.map((item,i)=><a class="category-type-card" href="#"><div class="category-type-card__visual"><span>{String(i+1).padStart(2,'0')}</span></div><div class="category-type-card__body"><small>{String(i+1).padStart(2,'0')}</small><h3>{item}</h3><p>Індивідуальна конфігурація під ваш простір.</p><b>Детальніше →</b></div></a>)}
+    <TrustBar locale="uk" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Індивідуальне виготовлення</p><h2>Дзеркала за розмірами вашого інтер'єру</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Готове дзеркало рідко точно збігається зі стіною, тумбою чи нішею: змінюється ширина, висота монтажу, положення світильників і розеток. Тому ми виготовляємо дзеркало під конкретне місце — у квартирі, будинку чи на комерційному об'єкті.</p>
+          <p>Робота йде повним циклом: замір або перевірка розмірів, узгодження форми, крайки, рами та схеми підсвітки, виготовлення й монтаж. Форму, вирізи та розташування кріплень фіксуємо до виробництва — після загартування дзеркальне полотно не змінюють.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>Індивідуальні розміри й форма</b><span>під фактичну стіну, тумбу або нішу</span></li>
+          <li><b>Крайка на вибір</b><span>поліровка або декоративний фацет</span></li>
+          <li><b>LED-підсвітка та підігрів</b><span>за узгодженою схемою електрики</span></li>
+          <li><b>Київ · Одеса · Львів</b><span>та доставка по Україні</span></li>
+        </ul>
       </div>
     </section>
 
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Види дзеркал</h2></div><p>Оберіть тип — далі уточнимо розміри, форму, крайку, раму, підсвітку та формат монтажу.</p></div>
+      <div class="category-icon-grid">
+        {items.map((item)=>(
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    {mirrorProjects.length > 0 && (
+      <section class="category-section">
+        <div class="category-heading category-heading--projects">
+          <div class="category-heading--projects__title">
+            <p class="eyebrow">Портфоліо</p>
+            <h2>Реалізовані дзеркала</h2>
+          </div>
+          <div class="category-heading--projects__aside">
+            <a class="category-arrow-link" href="/projects/">Переглянути всі проєкти <span aria-hidden="true">→</span></a>
+            <p>Добірка реалізованих дзеркал Space Glass — з LED-підсвіткою, для житлових і комерційних інтер'єрів.</p>
+          </div>
+        </div>
+        <div class="projects-index-v2__grid category-projects-grid">
+          {mirrorProjects.map((project) => <ProjectCard project={project} hrefPrefix="/projects" />)}
+        </div>
+      </section>
+    )}
+
     <section class="category-process">
-      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від запиту до готової конструкції</h2></div></div>
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від запиту до готового дзеркала</h2></div></div>
       <div class="category-process__grid">
-        <div><span>01</span><b>Запит</b><small>Фото, розміри або креслення</small></div>
-        <div><span>02</span><b>Оцінка</b><small>Попередня комплектація</small></div>
-        <div><span>03</span><b>Замір</b><small>Перевірка геометрії</small></div>
-        <div><span>04</span><b>Креслення</b><small>Технічне узгодження</small></div>
+        <div><span>01</span><b>Запит</b><small>Фото, розміри, побажання</small></div>
+        <div><span>02</span><b>Оцінка</b><small>Форма, крайка, підсвітка</small></div>
+        <div><span>03</span><b>Замір</b><small>Стіна та точки електрики</small></div>
+        <div><span>04</span><b>Креслення</b><small>Розміри, вирізи, кріплення</small></div>
         <div><span>05</span><b>Виготовлення</b><small>Контроль якості</small></div>
-        <div><span>06</span><b>Монтаж</b><small>Здача та гарантія</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Встановлення та підключення</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">Географія</p>
+          <h2>Замір і монтаж дзеркал</h2>
+          <p>Замір і монтаж виконуємо у Києві, Львові та Одесі з областями. Готові дзеркала та комплектуючі доставляємо по всій Україні — умови залежать від міста, габаритів і доступу до об'єкта.</p>
+        </div>
+        <ul class="category-geo__cities">
+          <li><b>Київ</b><span>замір і монтаж</span></li>
+          <li><b>Одеса</b><span>замір і монтаж</span></li>
+          <li><b>Львів</b><span>замір і монтаж</span></li>
+        </ul>
       </div>
     </section>
 
     <section class="category-section category-section--faq">
       <FAQBlock
-        title={`FAQ про ${title.toLowerCase()}: ціни, монтаж, матеріали та замовлення`}
-        intro={`Відповідаємо на основні питання про ${title.toLowerCase()}, строки, гарантію, доставку й індивідуальне виготовлення.`}
+        title="FAQ про дзеркала: ціна, розміри, підсвітка, монтаж"
+        intro="Відповідаємо на основні питання про дзеркала на замовлення — вартість, індивідуальні розміри й форму, обробку крайки, LED-підсвітку, підігрів, кріплення, замір, доставку та монтаж."
         items={faq}
         visibleCount={6}
+        expandTo={faq.length}
       />
     </section>
 
-    <section id="category-request" class="inner-cta"><div><p class="eyebrow eyebrow--light">Заявка</p><h2>Потрібен попередній розрахунок?</h2><p>Надішліть фото, розміри або креслення.</p></div><a class="button button--white" href="mailto:info@space-glass.com.ua">Надіслати запит</a></section>
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Корисне</p><h2>Далі по темі</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label,href])=>(<a href={href}>{label}</a>))}
+      </div>
+    </section>
+
+    <section id="category-request" class="inner-cta">
+      <div><p class="eyebrow eyebrow--light">Заявка</p><h2>Потрібен попередній розрахунок?</h2><p>Надішліть фото, приблизні розміри та побажання щодо форми, рами й підсвітки — підготуємо конфігурацію та орієнтовну вартість.</p></div>
+      <a class="button button--white" href="/contacts/#contact-form">Отримати розрахунок</a>
+    </section>
   </main>
   <Footer />
 </div>

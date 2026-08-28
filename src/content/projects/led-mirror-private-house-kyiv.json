@@ -109,8 +109,8 @@
     }
   ],
   "serviceLink": {
-    "label": "Дзеркала з підсвіткою на замовлення",
-    "href": "/poslugy/dzerkala/dzerkalo-z-pidsvitkoyu/"
+    "label": "Дзеркала на замовлення",
+    "href": "/dzerkala/"
   },
   "relatedProjectSlugs": [
     "led-mirror-private-house-odesa",

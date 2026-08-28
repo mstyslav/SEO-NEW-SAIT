@@ -1,5 +1,6 @@
 import { seoCategories } from './seo-services';
 import { getShowerServiceNavigation } from './service-navigation';
+import { mirrorTypes } from './mirror-types';
 import type { Locale } from '../i18n/helpers';
 
 export interface CatalogNavigationCategory {
@@ -58,13 +59,6 @@ const serviceShortNameRu: Record<string, string> = {
   '/poslugy/sklyani-ohorozhi/sklyani-ohorozhi-na-stiykakh/': 'Ограждения на стойках',
   '/poslugy/sklyani-ohorozhi/sklyani-poruchni/': 'Ограждения с поручнем',
 
-  '/poslugy/dzerkala/dzerkalo-za-rozmirom/': 'Зеркало по размеру',
-  '/poslugy/dzerkala/dzerkalo-z-pidsvitkoyu/': 'Зеркало с подсветкой',
-  '/poslugy/dzerkala/dzerkalo-u-vannu/': 'Зеркало в ванную',
-  '/poslugy/dzerkala/dzerkalna-stina/': 'Зеркальная стена',
-  '/poslugy/dzerkala/dzerkalo-v-rami/': 'Зеркало в раме',
-  '/poslugy/dzerkala/dzerkalo-dlia-sportzalu/': 'Зеркала для спортзала',
-
   '/poslugy/sklyani-fasady/sklyani-fasady-budynkiv/': 'Фасады домов',
   '/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/': 'Стоечно-ригельное остекление',
   '/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/': 'Структурное остекление',
@@ -84,12 +78,24 @@ const serviceShortNameRu: Record<string, string> = {
   '/poslugy/sklo-dlia-biznesu/sklyani-doshky-dlia-ofisu/': 'Стеклянные маркерные доски'
 };
 
+// Дзеркала: власний MASTER /dzerkala/ + 4 фінальні дочірні сторінки
+// /dzerkala/{slug}/ (єдине джерело — src/data/mirror-types.ts). Напрям НЕ
+// входить у програмний силос /poslugy/, тому додається сюди як "featured".
+const mirrorFeaturedCategory = (locale: Locale): CatalogNavigationCategory => ({
+  slug: 'dzerkala',
+  name: locale === 'uk' ? 'Дзеркала' : (categoryNameRu.dzerkala ?? 'Дзеркала'),
+  href: '/dzerkala/',
+  services: mirrorTypes.map((mirror) => ({ shortName: mirror.label[locale] ?? mirror.label.uk, path: mirror.href }))
+});
+
 const featuredCategories: Record<Locale, CatalogNavigationCategory[]> = {
   uk: [
+    mirrorFeaturedCategory('uk'),
     { slug: 'alyuminiievi-konstruktsii', name: 'Алюмінієві конструкції', href: '/alyuminiievi-konstruktsii/', services: ['Алюмінієві вікна', 'Алюмінієві двері', 'Розсувні системи', 'Алюмінієві фасади', 'Зимові сади', 'Перголи'].map(shortName => ({ shortName, path: '/alyuminiievi-konstruktsii/' })) },
     { slug: 'metaloplastykovi-konstruktsii', name: 'Металопластикові конструкції', href: '/metaloplastykovi-konstruktsii/', services: ['Металопластикові вікна', 'Металопластикові двері', 'Балконні блоки', 'Розсувні ПВХ-системи'].map(shortName => ({ shortName, path: '/metaloplastykovi-konstruktsii/' })) }
   ],
   ru: [
+    mirrorFeaturedCategory('ru'),
     { slug: 'alyuminiievi-konstruktsii', name: 'Алюминиевые конструкции', href: '/alyuminiievi-konstruktsii/', services: ['Алюминиевые окна', 'Алюминиевые двери', 'Раздвижные системы', 'Алюминиевые фасады', 'Зимние сады', 'Перголы'].map(shortName => ({ shortName, path: '/alyuminiievi-konstruktsii/' })) },
     { slug: 'metaloplastykovi-konstruktsii', name: 'Металлопластиковые конструкции', href: '/metaloplastykovi-konstruktsii/', services: ['Металлопластиковые окна', 'Металлопластиковые двери', 'Балконные блоки', 'Раздвижные ПВХ-системы'].map(shortName => ({ shortName, path: '/metaloplastykovi-konstruktsii/' })) }
   ]

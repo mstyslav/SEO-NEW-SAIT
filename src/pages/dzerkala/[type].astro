@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FAQBlock from '../../components/FAQBlock.astro';
+import { faqSchema, type JsonLdObject } from '../../seo/schema';
+import { mirrorTypes } from '../../data/mirror-types';
+import '../../styles/product-detail.css';
+import '../../styles/legacy-product.css';
+
+export function getStaticPaths() {
+  return mirrorTypes.map((mirror) => ({ params: { type: mirror.slug }, props: { mirror } }));
+}
+
+const { mirror } = Astro.props;
+
+const faqStructuredData = faqSchema(mirror.faq.map(([question, answer]) => ({ question, answer })));
+const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] : [];
+---
+<BaseLayout
+  title={mirror.title}
+  description={mirror.description}
+  schemaType="WebPage"
+  structuredData={structuredData}
+  locale="uk"
+  alternateLocales={['uk']}
+  image={mirror.hero.src}
+>
+  <div class="sg-page-shell">
+    <Header />
+    <main id="main">
+      <Breadcrumbs contained items={[{ label: 'Головна', href: '/' }, { label: 'Дзеркала', href: '/dzerkala/' }, { label: mirror.h1 }]} />
+
+      <section class="product-detail-hero">
+        <div class="product-detail-hero__media">
+          <img
+            src={mirror.hero.src}
+            alt={mirror.hero.alt}
+            width={mirror.hero.width}
+            height={mirror.hero.height}
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+        <div class="product-detail-hero__copy">
+          <p class="eyebrow">{mirror.eyebrow}</p>
+          <h1>{mirror.h1}</h1>
+          <p class="lead">{mirror.lead}</p>
+          <div class="product-detail-price">Ціна за індивідуальним розрахунком</div>
+          <div class="hero__actions">
+            <a class="button button--mint" href="/contacts/#contact-form">Отримати розрахунок</a>
+            <a class="button button--outline" href="/dzerkala/">Усі види дзеркал</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="product-detail-section">
+        <div class="category-heading">
+          <div>
+            <p class="eyebrow">Що врахувати</p>
+            <h2>Перед замовленням</h2>
+          </div>
+          <p>Після заміру або перевірки розмірів узгоджуємо форму, крайку, скло, кріплення та схему електрики.</p>
+        </div>
+        <ul class="product-detail-points">
+          {mirror.points.map((point) => <li>{point}</li>)}
+        </ul>
+      </section>
+
+      <section class="product-gallery-strip">
+        {mirror.gallery.map((image) => (
+          <img src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async" />
+        ))}
+      </section>
+
+      <FAQBlock
+        eyebrow="FAQ"
+        title={`FAQ: ${mirror.label.uk.toLowerCase()}`}
+        intro="Основні питання про виготовлення, кріплення та монтаж."
+        items={mirror.faq}
+        visibleCount={4}
+        expandTo={mirror.faq.length}
+      />
+
+      <section class="product-detail-section">
+        <div class="category-heading">
+          <div>
+            <p class="eyebrow">Корисне</p>
+            <h2>Далі по темі</h2>
+          </div>
+        </div>
+        <a class="category-arrow-link" href={mirror.knowledge.href}>{mirror.knowledge.label} <span aria-hidden="true">→</span></a>
+      </section>
+
+      <section class="inner-cta">
+        <div>
+          <p class="eyebrow eyebrow--light">Попередня оцінка</p>
+          <h2>Надішліть фото та розміри</h2>
+          <p>Підготуємо конфігурацію та попередній розрахунок.</p>
+        </div>
+        <a class="button button--white" href="/contacts/#contact-form">Отримати розрахунок</a>
+      </section>
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .product-detail-points{max-width:900px;margin:0;padding:0;list-style:none;display:grid;gap:14px}
+  .product-detail-points li{position:relative;padding-left:26px;color:var(--muted,#55605b);line-height:1.6}
+  .product-detail-points li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:50%;background:var(--mint,#8fd3b6)}
+</style>
