@@ -4,7 +4,11 @@ import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import { seoCategories } from '../../../data/seo-services';
-export function getStaticPaths() { return seoCategories.map((category) => ({ params: { category: category.slug }, props: { category } })); }
+export function getStaticPaths() {
+  return seoCategories
+    .filter((category) => category.slug !== 'dushovi-konstruktsii')
+    .map((category) => ({ params: { category: category.slug }, props: { category } }));
+}
 const { category } = Astro.props;
 import "../../../styles/seo-directory.css";
 ---
