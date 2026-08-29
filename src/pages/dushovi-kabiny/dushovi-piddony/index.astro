@@ -227,6 +227,7 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
                   decoding="async"
                 />
                 <span class="piddon-card__badge">{series.formatBadge}</span>
+                <span class="piddon-card__delivery-badge">✓ Безкоштовна доставка</span>
                 {series.images.length > 1 && (
                   <div class="piddon-card__thumbs" role="group" aria-label="Фотографії піддона">
                     {series.images.map((img, idx) => {
@@ -295,6 +296,7 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
                       <strong data-price class:list={[!init.known && 'is-unknown']}>{init.priceLabel}</strong>
                       <span data-price-note hidden={!init.known}>орієнтовна ціна за обраний розмір</span>
                     </div>
+                    <div class="piddon-free-delivery" aria-label="Безкоштовна доставка">✓ Безкоштовна доставка</div>
                     <a class="button button--mint piddon-picker__cta" data-cta href={init.ctaHref}>{init.ctaLabel}</a>
                   </div>
                 </div>
@@ -660,6 +662,22 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
     line-height:1;
     text-transform:lowercase;
   }
+
+  .piddon-card__delivery-badge{
+    position:absolute;
+    right:14px;
+    top:14px;
+    z-index:2;
+    padding:6px 11px;
+    border-radius:999px;
+    background:rgba(255,255,255,.92);
+    color:var(--text);
+    font-size:.74rem;
+    font-weight:700;
+    line-height:1;
+    white-space:nowrap;
+  }
+
   .piddon-card__thumbs{
     display:flex;
     gap:8px;
@@ -948,5 +966,27 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
     .piddon-table-note__price{display:inline;white-space:normal}
     .piddon-catalog-note{white-space:normal}
   }
+
+  .piddon-free-delivery {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 10px 0 12px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(80, 200, 170, 0.10);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 700px) {
+    .piddon-free-delivery {
+      white-space: normal;
+    }
+  }
+
 </style>
 </BaseLayout>
