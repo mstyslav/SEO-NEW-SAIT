@@ -1,0 +1,1015 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Header from '../../../../components/Header.astro';
+import Footer from '../../../../components/Footer.astro';
+import Breadcrumbs from '../../../../components/Breadcrumbs.astro';
+import FAQBlock from '../../../../components/FAQBlock.astro';
+import TrustBar from '../../../../components/TrustBar.astro';
+import PriceBlock from '../../../../components/PriceBlock.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../../seo/schema';
+import { piddonySeriesRu as piddonySeries, formatUah, seriesPriceFromRu } from '../../../../data/dushovi-piddony';
+import { localizedPath } from '../../../../i18n/helpers';
+import '../../../../styles/category-pages.css';
+import '../../../../styles/shower-master.css';
+
+const locale = 'ru' as const;
+const lp = (path: string) => localizedPath(path, locale);
+
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl('/ru/dushovi-kabiny/dushovi-piddony/', origin);
+
+const title = 'Душевые поддоны';
+const metaTitle = 'Душевые поддоны — купить поддон для душа из искусственного камня | Space Glass';
+const metaDescription =
+  'Душевые поддоны из искусственного мрамора и камня: квадратные, прямоугольные и пятиугольные, с сифоном в комплекте и противоскольжением. Выбор размера и цвета с ценами, подбор под стеклянную душевую Space Glass, доставка по Украине.';
+const priceDisclaimer = 'Цены ориентировочные и зависят от выбранного размера и комплектации. Точную стоимость подтверждаем при заказе.';
+
+const allPrices = piddonySeries.flatMap((s) =>
+  s.variants.map((v) => v.price).filter((p): p is number => typeof p === 'number')
+);
+const overallFrom = formatUah(Math.min(...allPrices));
+const priceDisclaimerSentences = priceDisclaimer.split(/(?<=\.) /);
+
+// SSR initial selection for each card (works with JS disabled too).
+const cardInit = piddonySeries.map((s) => {
+  const firstAvailable = s.variants.find((v) => v.price !== null);
+  const size = firstAvailable ? firstAvailable.size : s.sizes[0];
+  const color = s.colors[0];
+  const variant =
+    s.variants.find((v) => v.size === size && v.color === color) ??
+    s.variants.find((v) => v.size === size);
+  const known = !!variant && typeof variant.price === 'number';
+  const config = `${size} мм${s.colors.length > 1 ? ` · ${color}` : ''}`;
+  const params = new URLSearchParams({ product: s.publicName, config });
+  if (known && variant) params.set('price', formatUah(variant.price));
+  return {
+    size,
+    color,
+    known,
+    priceLabel: known && variant ? formatUah(variant.price as number) : 'Уточнить наличие',
+    ctaHref: `${lp('/contacts/')}?${params.toString()}#contact-form`,
+    ctaLabel: known ? 'Получить точную стоимость' : 'Уточнить наличие'
+  };
+});
+
+const sizeAvailable = (series: (typeof piddonySeries)[number], size: string) =>
+  series.variants.some((v) => v.size === size && v.price !== null);
+
+// --- Choose by shape / size ------------------------------------------------
+const byShape = [
+  ['Квадратные', 'Для компактных и угловых душевых: 800×800, 900×900, 1000×1000 мм. Симметричная зона под двери или Walk-In.'],
+  ['Прямоугольные', 'Для ниш и более просторных зон: 800×1200, 900×1200, 900×1600 мм. Комфортная душевая вдоль стены.'],
+  ['Пятиугольные', 'Со скошенной передней гранью для угла комнаты — под пятиугольную стеклянную кабину.']
+];
+const bySize = [
+  ['Компактный душ', '800×800 – 900×900 мм', 'Минимальная удобная зона для одного человека в небольшой ванной.'],
+  ['Стандарт', '900×1000 – 900×1200 мм', 'Самый популярный диапазон под душевые двери и перегородки в нишу.'],
+  ['Walk-In / большой', '900×1400 – 900×1600 мм', 'Вытянутая зона под открытую перегородку без дверей.']
+];
+
+// --- How to choose -------------------------------------------------------
+const chooseSteps = [
+  ['Измерьте зону', 'Ширина и глубина мокрой зоны по чистовой отделке с учётом будущего стекла.'],
+  ['Выберите форму', 'Квадрат — угол или двери, прямоугольник — ниша и Walk-In, пятиугольник — срезанный угол.'],
+  ['Толщина и вход', 'Толщина поддона 30–32 мм обеспечивает вход почти вровень с полом; уровень входа согласуем со стеклом.'],
+  ['Слив и поверхность', 'Расположение выпуска, сифон в комплекте, противоскольжение — проверяем до заказа.']
+];
+
+// --- Tray vs flush --------------------------------------------------------
+const baseCards = [
+  {
+    name: 'С готовым поддоном',
+    text: 'Искусственный камень упрощает гидроизоляцию и организацию слива: сифон и декоративная накладка уже в комплекте. Размер и форму поддона согласуем со стеклянной конструкцией до финального замера.',
+    href: '#catalog',
+    linkLabel: 'Перейти к каталогу поддонов →'
+  },
+  {
+    name: 'Душ вровень с полом',
+    text: 'Плитка по стяжке с уклоном к точечному трапу или линейному водоотводу — без поддона. Требуется подготовленное основание с правильной гидроизоляцией; геометрию учитываем при замере.'
+  }
+];
+
+const showerLinks = [
+  ['Стеклянные перегородки для душа (Walk-In)', lp('/dushovi-kabiny/peregorodka-dlya-dusha/')],
+  ['Стеклянные душевые двери', lp('/dushovi-kabiny/dushovi-dveri/')],
+  ['Угловые душевые кабины', lp('/dushovi-kabiny/kutovi/')],
+  ['Душевые кабины в нишу', lp('/dushovi-kabiny/u-nishu/')],
+  ['Раздвижные душевые кабины', lp('/dushovi-kabiny/rozsuvni/')],
+  ['Пятиугольные душевые кабины', lp('/dushovi-kabiny/piatykutni/')]
+];
+
+const relatedLinks = [
+  ['Все виды душевых кабин', lp('/dushovi-kabiny/')],
+  ['Как выбрать душевую кабину', lp('/knowledge/yak-obraty-dushovu-kabinu/')],
+  ['Душевая в нишу: замер', lp('/knowledge/dushova-v-nishu-zamir/')],
+  ['Как подготовить пространство к замеру', lp('/knowledge/yak-pidhotuvaty-prostir-do-zamiru/')],
+  ['Уход за стеклом и поверхностями', lp('/knowledge/doglyad-za-sklyanymy-konstruktsiyamy/')],
+  ['От чего зависит цена конструкции', lp('/knowledge/vid-choho-zalezhyt-tsina-sklyanoyi-konstruktsiyi/')],
+  ['Оплата и доставка', lp('/oplata-dostavka/')]
+];
+
+// --- FAQ (real search intents) ----------------------------------------
+const faq: [string, string][] = [
+  ['Сколько стоит душевой поддон?', `Душевые поддоны из искусственного камня — ориентировочно от ${overallFrom} за размер 900×900 мм. Итоговая цена зависит от серии, размера и цвета. Точную стоимость подтверждаем при заказе.`],
+  ['Как подобрать размер душевого поддона?', 'Измерьте фактическую ширину и глубину мокрой зоны по чистовой отделке и учтите место под будущую стеклянную конструкцию. Компактный душ — 800×800–900×900 мм, стандарт — 900×1000–900×1200 мм, Walk-In — 900×1400–900×1600 мм.'],
+  ['Какой материал поддона лучше?', 'Искусственный камень (мраморная крошка на кварцевой основе) прочнее акрила, приятен на ощупь, устойчив к царапинам и легко очищается. Поддоны в каталоге выдерживают нагрузку 375–500 кг и имеют толщину 30–32 мм.'],
+  ['Какая форма поддона нужна?', 'Квадратные поддоны — для угловых душевых и зон под двери, прямоугольные — для ниш и Walk-In, пятиугольные со скошенной гранью — для угла небольшой ванной под пятиугольную кабину.'],
+  ['Скользкий ли поддон из искусственного камня?', 'Нет. Мраморные серии имеют поверхность с 3 классом противоскольжения, усиленные модели не становятся скользкими при контакте с водой и сохраняют комфортные тактильные свойства.'],
+  ['Входит ли сифон в комплект?', 'Да. Сифон и декоративная накладка уже входят в комплектацию поддонов — докупать эти детали не нужно.'],
+  ['Обязательно ли делать душ с поддоном?', 'Нет. Стеклянную душевую можно установить и без поддона — на подготовленный пол с гидроизоляцией и уклоном к трапу. Поддон упрощает монтаж и водоотведение.'],
+  ['Когда нужно определиться с поддоном?', 'До финального замера стекла. Установленный или точно выбранный поддон задаёт геометрию, точки крепления и размеры стеклянной конструкции.'],
+  ['Можно ли заказать поддон вместе со стеклянной душевой?', 'Да, это предпочтительный сценарий. Space Glass подбирает поддон по размеру и форме и согласует его со стеклянной перегородкой, дверьми или кабиной как единую систему.'],
+  ['Есть ли доставка поддонов по Украине?', 'Да. Доставку поддонов организуем по Украине; для заказов со стеклянной конструкцией выполняем доставку и монтаж в Киеве, Одессе и Львове, в других городах — по договорённости.'],
+  ['Какая гарантия на душевой поддон?', 'Производитель предоставляет 5 лет гарантии на поддоны из искусственного камня при условии правильного монтажа и эксплуатации.'],
+  ['Какая толщина душевого поддона?', 'Поддоны в каталоге имеют толщину 30–32 мм, что обеспечивает вход в душ почти вровень с полом. Уровень входа согласуем со стеклянной конструкцией.']
+];
+
+// --- Structured data (no supplier name / codes) ----------------------
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#catalog`,
+  name: 'Душевые поддоны',
+  numberOfItems: piddonySeries.length,
+  itemListElement: piddonySeries.map((s, index) => {
+    const cover = s.images[0];
+    return {
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Product',
+        name: s.publicName,
+        category: 'Душевые поддоны',
+        material: s.material,
+        image: absoluteUrl(`${cover.base}-${cover.widths[cover.widths.length - 1]}.webp`, origin)
+      }
+    };
+  })
+};
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
+
+const tableHeads = ['Поддон', 'Форма', 'Размеры, мм', 'Толщина поддона', 'Нагрузка', 'Противоскольжение', 'Цвет', 'Цена'];
+---
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  locale="ru"
+  image="/images/catalog/piddony/piddon-1-white-900.webp"
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  heroPreloadSrc="/images/catalog/piddony/piddony-hero-1200.webp"
+  heroPreloadSrcset="/images/catalog/piddony/piddony-hero-480.webp 480w, /images/catalog/piddony/piddony-hero-768.webp 768w, /images/catalog/piddony/piddony-hero-1200.webp 1200w, /images/catalog/piddony/piddony-hero-1600.webp 1600w"
+  heroPreloadSizes="(max-width: 900px) calc(100vw - 48px), 52vw"
+>
+<div class="sg-page-shell">
+  <Header locale="ru" />
+  <main id="main">
+    <section class="category-hero category-hero--photo">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: 'Душевые кабины', href: lp('/dushovi-kabiny/') }, { label: title }]} />
+        <p class="eyebrow">Душевые кабины / Поддоны</p>
+        <h1>Душевые поддоны</h1>
+        <p class="lead">Душевые поддоны из искусственного камня под стеклянную душевую Space Glass. Квадратные, прямоугольные и пятиугольные поддоны с сифоном в комплекте и противоскольжением. Подбираем поддон по размеру и форме душевой зоны, согласуем со стеклом, организуем доставку и монтаж.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#catalog">Выбрать поддон</a>
+          <a class="button button--outline" href={`${lp('/contacts/')}#contact-form`}>Получить расчёт</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img
+            src="/images/catalog/piddony/piddony-hero-1200.webp"
+            srcset="/images/catalog/piddony/piddony-hero-480.webp 480w, /images/catalog/piddony/piddony-hero-768.webp 768w, /images/catalog/piddony/piddony-hero-1200.webp 1200w, /images/catalog/piddony/piddony-hero-1600.webp 1600w"
+            sizes="(max-width: 900px) calc(100vw - 48px), 52vw"
+            alt="Прямоугольный душевой поддон из искусственного камня в современной ванной комнате"
+            width="1600"
+            height="826"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="ru" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">О поддонах</p><h2>Поддон из искусственного камня как часть душевой системы</h2></div><p>Вместе со стеклянной конструкцией поддон работает как единая система: размеры, форма и вход не конфликтуют между собой.</p></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Душевой поддон формирует мокрую зону, обеспечивает уклон к сливу и защищает пол от протекания. Поддоны из искусственного камня (мраморная крошка на кварцевой основе) прочнее акрила, имеют приятную на ощупь матовую поверхность с каменной текстурой, устойчивы к царапинам и легко очищаются.</p>
+          <p>В каталоге — душевые поддоны из искусственного мрамора и камня: серии с 3 классом противоскольжения и усиленные модели с запасом нагрузки до 500 кг. Толщина 30–32 мм обеспечивает вход в душ почти вровень с полом, а сифон и декоративная накладка входят в комплект.</p>
+          <p>Space Glass подбирает поддон под конкретную душевую зону и согласует его геометрию со стеклянной перегородкой, дверьми или кабиной ещё до изготовления стекла.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>Искусственный камень и мрамор</b><span>кварцевое сырьё, матовая каменная текстура</span></li>
+          <li><b>Толщина поддона 30–32 мм</b><span>вход в душ почти вровень с полом</span></li>
+          <li><b>Противоскольжение</b><span>класс 3 у мраморных серий</span></li>
+          <li><b>Сифон в комплекте</b><span>сифон + декоративная накладка</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="catalog" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Каталог</p><h2>Каталог душевых поддонов</h2></div><p>Поддоны из искусственного мрамора и камня.<br class="piddon-desktop-break" /> Выберите размер и цвет — стоимость обновится сразу.</p></div>
+      <div class="piddon-grid">
+        {piddonySeries.map((series, i) => {
+          const init = cardInit[i];
+          const cover = series.images[0];
+          const maxW = cover.widths[cover.widths.length - 1];
+          return (
+            <article class:list={['piddon-card', `piddon-card--${series.mediaTone}`]} data-piddon-card>
+              <div class="piddon-card__media" data-gallery>
+                <img
+                  class="piddon-card__photo"
+                  data-gallery-main
+                  src={`${cover.base}-480.webp`}
+                  srcset={`${cover.base}-480.webp 480w, ${cover.base}-${maxW}.webp ${maxW}w`}
+                  sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw"
+                  alt={cover.alt}
+                  width={cover.w}
+                  height={cover.h}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="piddon-card__badge">{series.formatBadge}</span>
+                {series.images.length > 1 && (
+                  <div class="piddon-card__thumbs" role="group" aria-label="Фотографии поддона">
+                    {series.images.map((img, idx) => {
+                      const iMax = img.widths[img.widths.length - 1];
+                      return (
+                        <button
+                          type="button"
+                          class="piddon-card__thumb"
+                          data-thumb
+                          data-src={`${img.base}-480.webp`}
+                          data-srcset={`${img.base}-480.webp 480w, ${img.base}-${iMax}.webp ${iMax}w`}
+                          data-alt={img.alt}
+                          data-color={img.color ?? ''}
+                          aria-label={img.alt}
+                          aria-current={idx === 0 ? 'true' : 'false'}
+                        >
+                          <img src={`${img.base}-480.webp`} alt="" width="80" height="80" loading="lazy" decoding="async" />
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              <div class="piddon-card__body">
+                <h3>{series.publicName}</h3>
+                <p class="piddon-card__formats">{series.formatsLabel}</p>
+                <p class="piddon-card__blurb">{series.blurb}</p>
+
+                <div class="piddon-picker" data-picker data-name={series.publicName} data-variants={JSON.stringify(series.variants)}>
+                  <fieldset class="piddon-picker__group">
+                    <legend>Размер, мм</legend>
+                    <div class="piddon-picker__opts">
+                      {series.sizes.map((sz) => {
+                        const avail = sizeAvailable(series, sz);
+                        const selected = sz === init.size;
+                        return (
+                          <button
+                            type="button"
+                            class:list={['piddon-size', selected && 'is-selected', !avail && 'is-unavailable']}
+                            data-size={sz}
+                            data-available={avail ? 'true' : 'false'}
+                            aria-pressed={selected ? 'true' : 'false'}
+                          >{sz}</button>
+                        );
+                      })}
+                    </div>
+                  </fieldset>
+
+                  {series.colors.length > 1 && (
+                    <fieldset class="piddon-picker__group">
+                      <legend>Цвет</legend>
+                      <div class="piddon-colors" role="radiogroup">
+                        {series.colors.map((c, ci) => (
+                          <label class="piddon-color">
+                            <input type="radio" name={`color-${series.id}`} value={c} data-color checked={ci === 0} />
+                            <span>{c}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
+                  )}
+
+                  <div class="piddon-picker__out">
+                    <div class="piddon-picker__price">
+                      <strong data-price class:list={[!init.known && 'is-unknown']}>{init.priceLabel}</strong>
+                      <span data-price-note hidden={!init.known}>ориентировочная цена за выбранный размер</span>
+                    </div>
+                    <a class="button button--mint piddon-picker__cta" data-cta href={init.ctaHref}>{init.ctaLabel}</a>
+                  </div>
+                </div>
+
+                <dl class="piddon-card__specs">
+                  <div><dt>Материал</dt><dd>{series.material}</dd></div>
+                  <div><dt>Толщина поддона</dt><dd>{series.thickness}</dd></div>
+                  <div><dt>Вес</dt><dd>{series.weight}</dd></div>
+                  <div><dt>Макс. нагрузка</dt><dd>{series.maxLoad}</dd></div>
+                  {series.antiSlip && <div><dt>Противоскольжение</dt><dd>{series.antiSlip}</dd></div>}
+                  <div><dt>Комплектация</dt><dd>{series.kit}</dd></div>
+                </dl>
+                <p class="piddon-card__meta"><b>Размеры, мм:</b> {series.sizes.join(' · ')}</p>
+                <p class="piddon-card__meta"><b>Цвет:</b> {series.colors.join(' · ')}</p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+      <p class="piddon-note piddon-catalog-note">{priceDisclaimer}</p>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Быстрый выбор</p><h2>Выберите по форме и размеру</h2></div><p>Форма зависит от планировки, размер<br class="piddon-desktop-break" /> — от фактической мокрой зоны и места под стекло.</p></div>
+
+      <div class="material-subblock">
+        <h3>По форме</h3>
+        <div class="category-icon-grid">
+          {byShape.map(([name, text]) => (
+            <div class="category-icon-card category-icon-card--static">
+              <h3>{name}</h3>
+              <p>{text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="material-subblock">
+        <h3>По размеру зоны</h3>
+        <div class="category-steps">
+          {bySize.map(([name, size, text]) => (
+            <div class="category-steps__item"><span>{size}</span><b>{name}</b><p>{text}</p></div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Подбор</p><h2>Как выбрать душевой поддон</h2></div><p>Четыре шага, которые определяют<br class="piddon-desktop-break" /> серию, форму и узел слива.</p></div>
+      <div class="category-steps">
+        {chooseSteps.map(([name, text], i) => (
+          <div class="category-steps__item"><span>{String(i + 1).padStart(2, '0')}</span><b>{name}</b><p>{text}</p></div>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading piddon-comparison-heading"><div><p class="eyebrow">Сравнение</p><h2>Сравнение поддонов</h2></div><p>Ключевые параметры четырёх серий.<br class="piddon-desktop-break" /> Цена — за наименьший доступный размер.</p></div>
+      <div class="piddon-table-wrap">
+        <table class="piddon-table">
+          <thead>
+            <tr>{tableHeads.map((h, i) => <th scope="col" class={i === 5 ? 'piddon-table__antislip-head' : undefined}>{h}</th>)}</tr>
+          </thead>
+          <tbody>
+            {piddonySeries.map((s) => (
+              <tr>
+                <th scope="row">{s.publicName}</th>
+                <td>{s.formatsShort}</td>
+                <td class="piddon-table__sizes">
+                  {Array.from({ length: Math.ceil(s.sizes.length / 2) }, (_, pairIndex) => {
+                    const pair = s.sizes.slice(pairIndex * 2, pairIndex * 2 + 2);
+                    return (
+                      <>
+                        {pairIndex > 0 && <span class="piddon-size-pair-separator">, </span>}
+                        <span class="piddon-size-pair">{pair.join(', ')}</span>
+                      </>
+                    );
+                  })}
+                </td>
+                <td>{s.thickness}</td>
+                <td>{s.maxLoad}</td>
+                <td>{s.comparisonAntiSlip ?? s.antiSlip ?? '—'}</td>
+                <td>{s.colors.join(', ')}</td>
+                <td>{seriesPriceFromRu(s)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="piddon-note piddon-table-note">Комплектация всех серий: сифон + декоративная накладка. Гарантия производителя — 5 лет.<br class="piddon-desktop-break" /> <span class="piddon-table-note__price">{priceDisclaimerSentences.join(' ')}</span></p>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Основание</p><h2>Размеры и варианты установки</h2></div><p>Оба варианта рабочие — разница в<br class="piddon-install-break" /> подготовке пола и геометрии входа.</p></div>
+      <div class="category-duo">
+        {baseCards.map((item) => (
+          <article>
+            <h3>{item.name}</h3>
+            <p>{item.text}</p>
+            {item.href && item.linkLabel && <a class="category-arrow-link" href={item.href}>{item.linkLabel}</a>}
+          </article>
+        ))}
+      </div>
+      <dl class="material-thickness">
+        <div><dt>Компактные</dt><dd>800×800, 900×900, 1000×1000 мм — угол или двери.</dd></div>
+        <div><dt>Прямоугольные</dt><dd>800×1200, 900×1200, 900×1600 мм — ниша и Walk-In.</dd></div>
+      </dl>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Материал</p><h2>Покрытие, противоскольжение и слив</h2></div><p>Что именно обеспечивает безопасность и долговечность<br class="piddon-desktop-break" /> поддона из искусственного камня.</p></div>
+      <div class="material-subblock">
+        <div class="material-grid material-grid--parts">
+          <article><b>Искусственный камень</b><p>Кварцевое сырьё с минеральным наполнителем. Теплее акрила на ощупь, устойчиво к царапинам и бытовой химии, не желтеет.</p></article>
+          <article><b>Каменная текстура</b><p>Матовая поверхность с рельефом натурального сланца. Скрывает капли и разводы, легко очищается неабразивными средствами.</p></article>
+          <article><b>Противоскольжение</b><p>Мраморные серии — 3 класс противоскольжения; усиленные модели из искусственного камня не становятся скользкими при контакте с водой.</p></article>
+          <article><b>Толщина 30–32 мм</b><p>Тонкий борт обеспечивает вход в душ почти вровень с полом и визуально не перегружает зону.</p></article>
+          <article><b>Слив и сифон</b><p>Сифон и декоративная накладка уже в комплекте. Положение выпуска проверяем до заказа.</p></article>
+          <article><b>Нагрузка</b><p>375 кг для мраморных серий и до 500 кг для усиленных — запас прочности для ежедневного использования.</p></article>
+        </div>
+        <div class="hardware-details hardware-details--three">
+          <figure class="hardware-details__item">
+            <img src="/images/catalog/piddony/piddon-1-texture-480.webp" srcset="/images/catalog/piddony/piddon-1-texture-480.webp 480w, /images/catalog/piddony/piddon-1-texture-900.webp 900w" sizes="(max-width: 900px) 90vw, 30vw" alt="Матовая каменная текстура поверхности душевого поддона крупным планом" width="900" height="600" loading="lazy" decoding="async" />
+            <figcaption>Каменная текстура поверхности</figcaption>
+          </figure>
+          <figure class="hardware-details__item">
+            <img src="/images/catalog/piddony/piddon-1-drain-480.webp" srcset="/images/catalog/piddony/piddon-1-drain-480.webp 480w, /images/catalog/piddony/piddon-1-drain-900.webp 900w" sizes="(max-width: 900px) 90vw, 30vw" alt="Декоративная накладка слива и кромка душевого поддона из искусственного мрамора" width="900" height="1351" loading="lazy" decoding="async" />
+            <figcaption>Накладка слива и кромка</figcaption>
+          </figure>
+          <figure class="hardware-details__item">
+            <img src="/images/catalog/piddony/piddon-1-siphon-480.webp" srcset="/images/catalog/piddony/piddon-1-siphon-480.webp 480w, /images/catalog/piddony/piddon-1-siphon-900.webp 900w" sizes="(max-width: 900px) 90vw, 30vw" alt="Сифон для душевого поддона, входящий в комплект" width="900" height="1351" loading="lazy" decoding="async" />
+            <figcaption>Сифон в комплекте</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Комплект</p><h2>Поддон + стеклянная душевая Space Glass</h2></div><p>Поддон и стекло лучше согласовывать одновременно, чтобы размеры, двери и точки крепления не конфликтовали.</p></div>
+      <div class="piddon-bundle">
+        <figure class="piddon-bundle__media">
+          <img src="/images/catalog/piddony/piddon-2-interior-480.webp" srcset="/images/catalog/piddony/piddon-2-interior-480.webp 480w, /images/catalog/piddony/piddon-2-interior-900.webp 900w" sizes="(max-width: 900px) 90vw, 45vw" alt="Белый душевой поддон из искусственного мрамора в ванной со стеклянной душевой зоной" width="900" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <div class="piddon-bundle__copy">
+          <p>Когда поддон выбран до замера стекла, стеклянную перегородку или двери изготавливают точно под его контур: без лишних зазоров, с правильным притвором и водоотведением. Space Glass берёт на себя подбор поддона, согласование геометрии, замер, изготовление стекла и монтаж.</p>
+          <ul class="piddon-bundle__links">
+            {showerLinks.map(([label, href]) => <li><a href={href}>{label}</a></li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процесс</p><h2>Монтаж, замер и доставка</h2></div></div>
+      <div class="category-process__grid">
+        <div><span>01</span><b>Запрос</b><small>Фото зоны и приблизительные размеры</small></div>
+        <div><span>02</span><b>Подбор</b><small>Серия, форма и размер поддона</small></div>
+        <div><span>03</span><b>Замер</b><small>Проверка геометрии и слива</small></div>
+        <div><span>04</span><b>Согласование</b><small>Поддон + стеклянная конструкция</small></div>
+        <div><span>05</span><b>Доставка</b><small>По Украине</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Киев, Одесса, Львов — при необходимости</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Решения Space Glass</p><h2>Стеклянные душевые и полезные материалы</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={href}>{label}</a>)}
+      </div>
+    </section>
+
+    <section class="category-section category-seo">
+      <div class="category-seo__grid">
+        <div><p class="eyebrow">Экспертно</p><h2>Душевые поддоны под стеклянную душевую</h2></div>
+        <div class="category-prose">
+          <p>Душевой поддон — это основание мокрой зоны, которое обеспечивает уклон к сливу, упрощает гидроизоляцию и задаёт уровень входа в душ. Поддоны из искусственного камня сочетают прочность минерального наполнителя с приятной матовой поверхностью: они не боятся царапин и бытовой химии, не желтеют со временем и имеют выразительную каменную текстуру, скрывающую капли воды.</p>
+          <p>Форму поддона выбирают по планировке. Квадратные поддоны 800×800–900×900 мм устанавливают в угол или под душевые двери, прямоугольные 800×1200–900×1600 мм — в нишу и под перегородку Walk-In, пятиугольные со скошенной гранью экономят место в небольшой ванной. Толщина 30–32 мм обеспечивает вход почти вровень с полом, а сифон и декоративная накладка уже входят в комплект — отдельно покупать их не нужно.</p>
+          <p>Лучший сценарий — подбирать поддон и стеклянную конструкцию вместе. Тогда размеры полотна, положение дверей, притвор и точки крепления рассчитывают под фактический контур поддона. Space Glass согласует поддон со стеклянной перегородкой, дверьми или кабиной, выполняет замер, изготовление и монтаж в Киеве, Одессе и Львове, а готовые поддоны доставляет по Украине.</p>
+        </div>
+      </div>
+    </section>
+
+    <div id="price">
+      <PriceBlock
+        eyebrow="Стоимость"
+        heading="Стоимость поддона со стеклянной душевой"
+        kicker="Ориентир для стартовой комплектации"
+        amount={`поддон — ориентировочно ${overallFrom}`}
+        amountNote="Цена поддона зависит от серии, размера и цвета (по собранным данным). Стеклянную душевую конструкцию рассчитываем отдельно по фактическим размерам зоны."
+        bullets={[
+          'Поддон из искусственного камня — готовое основание с сифоном и противоскольжением в комплекте.',
+          'Стеклянная перегородка, двери или кабина — изготовление под контур поддона.',
+          'Замер, доставка и монтаж — согласовываются с учётом города и объекта.'
+        ]}
+        ctaLabel="Рассчитать поддон и стекло"
+        ctaHref={`${lp('/contacts/')}#contact-form`}
+        factorsTitle="Что влияет на стоимость"
+        factors={[
+          ['Серия поддона', 'Материал и запас нагрузки'],
+          ['Размер и форма', 'Квадрат, прямоугольник или пятиугольник'],
+          ['Цвет', 'Белый или графит (где доступно)'],
+          ['Стекло и монтаж', 'Конструкция душевой и условия объекта']
+        ]}
+      />
+    </div>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock
+        locale="ru"
+        title="FAQ о душевых поддонах: цена, размеры, материал, монтаж"
+        intro="Отвечаем на основные вопросы о поддонах из искусственного камня, форме, размере, противоскольжении, сифоне, доставке и совместимости со стеклянной душевой."
+        items={faq}
+        visibleCount={6}
+        expandTo={faq.length}
+      />
+    </section>
+
+    <section id="category-request" class="inner-cta">
+      <div><p class="eyebrow eyebrow--light">Заявка</p><h2>Нужен поддон под стеклянную душевую?</h2><p>Пришлите фото душевой зоны и приблизительные размеры — подберём поддон по форме и размеру и учтём его в стеклянной конструкции.</p></div>
+      <a class="button button--white" href={`${lp('/contacts/')}#contact-form`}>Получить расчёт</a>
+    </section>
+  </main>
+  <Footer locale="ru" />
+</div>
+
+<script>
+  document.querySelectorAll('[data-piddon-card]').forEach((card) => {
+    const picker = card.querySelector('[data-picker]');
+    if (!(picker instanceof HTMLElement)) return;
+
+    let variants = [];
+    try { variants = JSON.parse(picker.dataset.variants || '[]'); } catch { variants = []; }
+    const productName = picker.dataset.name || 'Душевой поддон';
+
+    const sizeBtns = Array.from(picker.querySelectorAll('[data-size]'));
+    const colorInputs = Array.from(picker.querySelectorAll('input[data-color]'));
+    const priceEl = picker.querySelector('[data-price]');
+    const noteEl = picker.querySelector('[data-price-note]');
+    const cta = picker.querySelector('[data-cta]');
+    const mainPhoto = card.querySelector('[data-gallery-main]');
+    const thumbs = Array.from(card.querySelectorAll('[data-thumb]'));
+
+    const fmt = (n) => `${Number(n).toLocaleString('ru-RU')} грн`;
+
+    let selSize =
+      (sizeBtns.find((b) => b.getAttribute('aria-pressed') === 'true') || sizeBtns[0])?.dataset.size ||
+      (variants[0] && variants[0].size) || '';
+    let selColor =
+      (colorInputs.find((i) => i.checked) || colorInputs[0])?.value ||
+      (variants[0] && variants[0].color) || '';
+
+    const render = () => {
+      sizeBtns.forEach((b) => {
+        const on = b.dataset.size === selSize;
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        b.classList.toggle('is-selected', on);
+      });
+
+      const v =
+        variants.find((x) => x.size === selSize && x.color === selColor) ||
+        variants.find((x) => x.size === selSize) ||
+        null;
+      const known = !!v && typeof v.price === 'number';
+
+      if (priceEl) {
+        priceEl.textContent = known ? fmt(v.price) : 'Уточнить наличие';
+        priceEl.classList.toggle('is-unknown', !known);
+      }
+      if (noteEl) noteEl.hidden = !known;
+
+      const config = `${selSize} мм${colorInputs.length ? ` · ${selColor}` : ''}`;
+      const params = new URLSearchParams({ product: productName, config });
+      if (known) params.set('price', fmt(v.price));
+      if (cta) {
+        cta.setAttribute('href', `/ru/contacts/?${params.toString()}#contact-form`);
+        cta.textContent = known ? 'Получить точную стоимость' : 'Уточнить наличие';
+      }
+    };
+
+    const activateThumb = (thumb) => {
+      if (!(mainPhoto instanceof HTMLImageElement) || !thumb) return;
+      if (thumb.dataset.src) mainPhoto.src = thumb.dataset.src;
+      mainPhoto.srcset = thumb.dataset.srcset || '';
+      if (thumb.dataset.alt) mainPhoto.alt = thumb.dataset.alt;
+      thumbs.forEach((t) => t.setAttribute('aria-current', t === thumb ? 'true' : 'false'));
+    };
+
+    const swapMainByColor = (color) => {
+      const t = thumbs.find((x) => x.dataset.color === color);
+      if (t) activateThumb(t);
+    };
+
+    sizeBtns.forEach((b) =>
+      b.addEventListener('click', () => {
+        selSize = b.dataset.size || selSize;
+        render();
+      })
+    );
+
+    colorInputs.forEach((input) =>
+      input.addEventListener('change', () => {
+        selColor = input.value;
+        render();
+        swapMainByColor(selColor);
+      })
+    );
+
+    thumbs.forEach((thumb) =>
+      thumb.addEventListener('click', () => {
+        activateThumb(thumb);
+        const color = thumb.dataset.color;
+        if (color) {
+          const match = colorInputs.find((x) => x.value === color);
+          if (match && !match.checked) {
+            match.checked = true;
+            selColor = color;
+            render();
+          }
+        }
+      })
+    );
+
+    render();
+  });
+</script>
+
+<style>
+  /* Piddon catalog — scoped page styles built on existing Space Glass tokens
+     (--green-line, --mint, --mint-dark, --muted, --text, --radius). No new
+     global rules; mirrors the .catalog-card / category-pages card rhythm. */
+  .piddon-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+  }
+  .piddon-card{
+    display:flex;
+    flex-direction:column;
+    border:1px solid var(--green-line);
+    border-radius:16px;
+    overflow:hidden;
+    background:#fff;
+  }
+  .piddon-card__media{
+    position:relative;
+    background:#eef4f1;
+  }
+  .piddon-card--dark .piddon-card__media{background:#17171a}
+  .piddon-card__photo{
+    display:block;
+    width:100%;
+    aspect-ratio:16/11;
+    object-fit:cover;
+  }
+  .piddon-card__badge{
+    position:absolute;
+    left:14px;
+    top:14px;
+    padding:6px 11px;
+    border-radius:999px;
+    background:rgba(255,255,255,.92);
+    color:var(--text);
+    font-size:.74rem;
+    font-weight:700;
+    line-height:1;
+    text-transform:lowercase;
+  }
+  .piddon-card__thumbs{
+    display:flex;
+    gap:8px;
+    padding:12px;
+    background:#fff;
+    border-top:1px solid var(--green-line);
+    overflow-x:auto;
+    scrollbar-width:thin;
+  }
+  .piddon-card__thumb{
+    flex:0 0 auto;
+    width:52px;
+    height:52px;
+    padding:0;
+    border:1px solid var(--green-line);
+    border-radius:9px;
+    background:#eef4f1;
+    overflow:hidden;
+    cursor:pointer;
+  }
+  .piddon-card__thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .piddon-card__thumb[aria-current="true"]{border-color:var(--mint-dark);outline:2px solid var(--mint-dark);outline-offset:-1px}
+  .piddon-card__thumb:focus-visible{outline:2px solid var(--mint-dark);outline-offset:2px}
+
+  .piddon-card__body{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    padding:24px;
+  }
+  .piddon-card__body h3{margin:0}
+  .piddon-card__formats{
+    margin:0;
+    font-size:.82rem;
+    font-weight:700;
+    color:var(--mint-dark);
+  }
+  .piddon-card__blurb{
+    margin:0;
+    color:var(--muted);
+    font-size:.94rem;
+    line-height:1.55;
+  }
+
+  /* --- Variant picker --- */
+  .piddon-picker{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    padding:16px;
+    border:1px solid var(--green-line);
+    border-radius:12px;
+    background:#f7fbf9;
+  }
+  .piddon-picker__group{
+    margin:0;
+    padding:0;
+    border:0;
+  }
+  .piddon-picker__group legend{
+    padding:0;
+    margin:0 0 8px;
+    font-size:.78rem;
+    font-weight:800;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .piddon-picker__opts{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .piddon-size{
+    padding:9px 13px;
+    border:1px solid var(--green-line);
+    border-radius:9px;
+    background:#fff;
+    font:inherit;
+    font-size:.9rem;
+    font-weight:700;
+    color:var(--text);
+    cursor:pointer;
+  }
+  .piddon-size:hover{border-color:var(--mint-dark)}
+  .piddon-size:focus-visible{outline:2px solid var(--mint-dark);outline-offset:2px}
+  .piddon-size.is-selected{
+    border-color:var(--mint-dark);
+    background:#e9f7f1;
+    color:#0b5d43;
+  }
+  .piddon-size.is-unavailable{
+    color:var(--muted);
+    text-decoration:line-through;
+    text-decoration-thickness:1px;
+  }
+  .piddon-size.is-unavailable.is-selected{
+    text-decoration:none;
+    background:#fff;
+    border-color:var(--mint-dark);
+  }
+
+  .piddon-colors{display:flex;flex-wrap:wrap;gap:8px}
+  .piddon-color{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:8px 12px;
+    border:1px solid var(--green-line);
+    border-radius:9px;
+    background:#fff;
+    font-size:.9rem;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .piddon-color:has(input:checked){border-color:var(--mint-dark);background:#e9f7f1;color:#0b5d43}
+  .piddon-color:has(input:focus-visible){outline:2px solid var(--mint-dark);outline-offset:2px}
+  .piddon-color input{width:15px;height:15px;margin:0;accent-color:var(--mint-dark)}
+
+  .piddon-picker__out{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    padding-top:12px;
+    border-top:1px solid var(--green-line);
+  }
+  .piddon-picker__price{display:flex;flex-direction:column;gap:2px}
+  .piddon-picker__price strong{font-size:1.4rem;letter-spacing:-.02em}
+  .piddon-picker__price strong.is-unknown{font-size:1.05rem;color:var(--mint-dark)}
+  .piddon-picker__price span{font-size:.78rem;color:var(--muted)}
+  .piddon-picker__cta{text-align:center}
+
+  .piddon-card__specs{
+    display:grid;
+    gap:0;
+    margin:2px 0 0;
+    border-top:1px solid var(--green-line);
+  }
+  .piddon-card__specs div{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    padding:11px 0;
+    border-bottom:1px solid var(--green-line);
+  }
+  .piddon-card__specs dt{color:var(--muted);font-size:.88rem}
+  .piddon-card__specs dd{margin:0;font-weight:700;font-size:.88rem}
+  .piddon-card__meta{margin:0;font-size:.86rem;color:var(--text)}
+  .piddon-card__meta b{color:var(--muted);font-weight:700}
+  .piddon-note{
+    margin:22px 0 0;
+    color:var(--muted);
+    font-size:.86rem;
+    line-height:1.6;
+    max-width:80ch;
+  }
+
+  .hardware-details--three{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:900px){.hardware-details--three{grid-template-columns:1fr}}
+
+  .category-icon-card--static{min-height:0;padding:24px;cursor:default}
+  .category-icon-card--static:hover{transform:none;border-color:var(--green-line);box-shadow:none}
+  .category-icon-card--static h3{margin:0 0 10px}
+
+  .piddon-table-wrap{
+    overflow-x:auto;
+    border:1px solid var(--green-line);
+    border-radius:16px;
+    background:#fff;
+  }
+  .piddon-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:.9rem;
+    min-width:980px;
+    table-layout:fixed;
+  }
+  .piddon-table th,
+  .piddon-table td{
+    padding:14px 16px;
+    text-align:left;
+    border-bottom:1px solid var(--green-line);
+    vertical-align:top;
+  }
+  .piddon-table thead th{
+    background:#f3fbf7;
+    font-size:.76rem;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    color:var(--mint-dark);
+  }
+  .piddon-table tbody th{font-weight:800}
+  .piddon-table th:nth-child(1){width:18%}
+  .piddon-table th:nth-child(2){width:12%}
+  .piddon-table th:nth-child(3){width:21%}
+  .piddon-table th:nth-child(4),
+  .piddon-table th:nth-child(5),
+  .piddon-table th:nth-child(6){width:10%}
+  .piddon-table th:nth-child(7){width:8%}
+  .piddon-table th:nth-child(8){width:11%}
+  .piddon-size-pair{display:block;white-space:nowrap}
+  .piddon-size-pair-separator{display:none}
+  .piddon-table th:last-child,
+  .piddon-table td:last-child{
+    white-space:nowrap;
+    font-variant-numeric:tabular-nums;
+  }
+  .piddon-table td:last-child{font-weight:700}
+  .piddon-table tbody tr:last-child th,
+  .piddon-table tbody tr:last-child td{border-bottom:0}
+
+  .piddon-desktop-break,
+  .piddon-install-break{display:none}
+
+  .piddon-bundle{
+    display:grid;
+    grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+    gap:40px;
+    align-items:center;
+  }
+  .piddon-bundle__media{
+    margin:0;
+    border:1px solid var(--green-line);
+    border-radius:16px;
+    overflow:hidden;
+    background:#eef4f1;
+  }
+  .piddon-bundle__media img{display:block;width:100%;height:100%;object-fit:cover}
+  .piddon-bundle__copy p{margin:0 0 18px;color:var(--muted);line-height:1.7}
+  .piddon-bundle__links{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+  .piddon-bundle__links a{
+    display:block;
+    padding:14px 16px;
+    border:1px solid var(--green-line);
+    border-radius:12px;
+    color:var(--text);
+    font-weight:700;
+    font-size:.9rem;
+    line-height:1.4;
+  }
+  .piddon-bundle__links a:hover,
+  .piddon-bundle__links a:focus-visible{border-color:var(--mint-dark);background:#f3fbf7}
+
+  @media(max-width:1100px){
+    .piddon-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media(min-width:901px){
+    .piddon-card__body,
+    .piddon-picker{flex:1}
+    .piddon-picker__out{margin-top:auto}
+    .piddon-desktop-break,
+    .piddon-install-break{display:inline}
+    .piddon-comparison-heading{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(0,440px);
+      gap:32px;
+    }
+    .piddon-comparison-heading>p{
+      max-width:none;
+    }
+    .piddon-table-note{width:100%;max-width:none}
+    .piddon-table-note__price{display:block;white-space:nowrap}
+    .piddon-catalog-note{width:100%;max-width:none;white-space:nowrap}
+    #price :global(.price-block__amount){
+      font-size:clamp(1.3rem,2.2vw,2rem);
+      letter-spacing:-.035em;
+      white-space:nowrap;
+    }
+  }
+  @media(max-width:900px){
+    .piddon-bundle{grid-template-columns:1fr;gap:24px}
+    .piddon-bundle__links{grid-template-columns:1fr}
+    .piddon-size-pair{display:inline;white-space:normal}
+    .piddon-size-pair-separator{display:inline}
+  }
+  @media(max-width:700px){
+    .piddon-grid{grid-template-columns:1fr}
+    .piddon-card__body{padding:20px}
+    .piddon-table-note__price{display:inline;white-space:normal}
+    .piddon-catalog-note{white-space:normal}
+  }
+
+  /* RU comparison table: give the long anti-slip heading enough room */
+  @media (min-width: 901px) {
+    .piddon-table {
+      table-layout: fixed;
+      width: 100%;
+    }
+
+    .piddon-table th:nth-child(1),
+    .piddon-table td:nth-child(1) { width: 18%; }
+
+    .piddon-table th:nth-child(2),
+    .piddon-table td:nth-child(2) { width: 12%; }
+
+    .piddon-table th:nth-child(3),
+    .piddon-table td:nth-child(3) { width: 21%; }
+
+    .piddon-table th:nth-child(4),
+    .piddon-table td:nth-child(4) { width: 10%; }
+
+    .piddon-table th:nth-child(5),
+    .piddon-table td:nth-child(5) { width: 10%; }
+
+    .piddon-table th:nth-child(6),
+    .piddon-table td:nth-child(6) { width: 12%; }
+
+    .piddon-table th:nth-child(7),
+    .piddon-table td:nth-child(7) { width: 7%; }
+
+    .piddon-table th:nth-child(8),
+    .piddon-table td:nth-child(8) { width: 10%; }
+
+    .piddon-table__antislip-head {
+      white-space: normal !important;
+      overflow-wrap: normal;
+      word-break: normal;
+      line-height: 1.15;
+    }
+  }
+
+</style>
+</BaseLayout>
+
+<style>
+@media (min-width: 901px) {
+  .piddon-table thead th {
+    vertical-align: top !important;
+    padding-top: 16px !important;
+  }
+
+  .piddon-table__antislip-head {
+    vertical-align: top !important;
+    padding-top: 16px !important;
+    line-height: inherit !important;
+  }
+}
+</style>

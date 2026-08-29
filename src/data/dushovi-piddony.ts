@@ -206,6 +206,88 @@ export const piddonySeries: PiddonSeries[] = [
   }
 ];
 
+const piddonySeriesRuCopy: Record<string, Pick<PiddonSeries,
+  'publicName' | 'formatBadge' | 'formatsLabel' | 'formatsShort' | 'blurb' | 'material' | 'antiSlip' | 'kit'
+> & { comparisonAntiSlip?: string; imageAlts: string[] }> = {
+  s1: {
+    publicName: 'Душевой поддон из искусственного мрамора',
+    formatBadge: 'квадратный, прямоугольный',
+    formatsLabel: 'Доступные форматы: квадратный, прямоугольный',
+    formatsShort: 'Квадратный, прямоугольный',
+    blurb: 'Базовая серия из искусственного мрамора с выразительной каменной текстурой. Квадрат 900×900 и прямоугольные размеры до 900×1600 мм — для душевых дверей, ниши и Walk-In.',
+    material: 'Искусственный мрамор',
+    antiSlip: '3 класс',
+    kit: 'Сифон + декоративная накладка',
+    imageAlts: [
+      'Прямоугольный душевой поддон из искусственного мрамора, белый',
+      'Прямоугольный душевой поддон из искусственного мрамора, графит',
+      'Белый душевой поддон из искусственного мрамора в ванной комнате',
+      'Матовая каменная текстура поверхности душевого поддона крупным планом',
+      'Декоративная накладка слива и кромка душевого поддона из искусственного мрамора',
+      'Сифон для душевого поддона, входящий в комплект'
+    ]
+  },
+  s2: {
+    publicName: 'Прямоугольный душевой поддон',
+    formatBadge: 'квадратный, прямоугольный',
+    formatsLabel: 'Доступные форматы: квадратный, прямоугольный',
+    formatsShort: 'Квадратный, прямоугольный',
+    blurb: 'Самый широкий размерный ряд: узкие 800 мм, компактный квадрат 800×800 и вытянутые модели до 800×1400 мм. Для тесных и нестандартных душевых зон.',
+    material: 'Искусственный мрамор',
+    antiSlip: '3 класс',
+    kit: 'Сифон + декоративная накладка',
+    imageAlts: [
+      'Квадратный душевой поддон из искусственного мрамора, белый',
+      'Квадратный душевой поддон из искусственного мрамора, графит',
+      'Белый душевой поддон из искусственного мрамора в ванной со стеклянной душевой зоной',
+      'Каменная текстура и декоративная крышка слива душевого поддона крупным планом',
+      'Кромка и толщина душевых поддонов из искусственного мрамора — белый и графит рядом',
+      'Сифон для душевого поддона, входящий в комплект'
+    ]
+  },
+  s3: {
+    publicName: 'Пятиугольный душевой поддон',
+    formatBadge: 'пятиугольный',
+    formatsLabel: 'Форма: пятиугольная со скошенной гранью',
+    formatsShort: 'Пятиугольный',
+    blurb: 'Угловое решение со скошенной передней гранью — экономит место в небольшой ванной и сочетается с пятиугольной стеклянной кабиной. 900×900 и 1000×1000 мм.',
+    material: 'Искусственный камень',
+    antiSlip: null,
+    comparisonAntiSlip: '3 класс',
+    kit: 'Сифон + декоративная накладка',
+    imageAlts: ['Пятиугольный душевой поддон из искусственного камня, белый, со скошенной передней гранью']
+  },
+  s4: {
+    publicName: 'Квадратный душевой поддон',
+    formatBadge: 'квадратный, прямоугольный',
+    formatsLabel: 'Доступные форматы: квадратный, прямоугольный',
+    formatsShort: 'Квадратный, прямоугольный',
+    blurb: 'Высокопрочный искусственный мрамор с запасом нагрузки до 500 кг и толщиной 32 мм. Квадрат 900×900 и прямоугольник 1200×900 мм.',
+    material: 'Высокопрочный искусственный мрамор',
+    antiSlip: null,
+    comparisonAntiSlip: '3 класс',
+    kit: 'Сифон + декоративная накладка',
+    imageAlts: ['Квадратный усиленный душевой поддон из искусственного мрамора, белый']
+  }
+};
+
+const ruColor = (color: string) => color === 'Білий' ? 'Белый' : color === 'Графіт' ? 'Графит' : color;
+
+export const piddonySeriesRu: PiddonSeries[] = piddonySeries.map((series) => {
+  const copy = piddonySeriesRuCopy[series.id];
+  return {
+    ...series,
+    ...copy,
+    colors: series.colors.map(ruColor),
+    variants: series.variants.map((variant) => ({ ...variant, color: ruColor(variant.color) })),
+    images: series.images.map((image, index) => ({
+      ...image,
+      color: image.color ? ruColor(image.color) : undefined,
+      alt: copy.imageAlts[index]
+    }))
+  };
+});
+
 export const formatUah = (n: number): string =>
   `${n.toLocaleString('uk-UA').replace(/ /g, ' ')} грн`;
 
@@ -215,6 +297,13 @@ export const seriesPriceFrom = (series: PiddonSeries): string => {
     .map((v) => v.price)
     .filter((p): p is number => typeof p === 'number');
   return prices.length ? `від ${formatUah(Math.min(...prices))}` : 'за запитом';
+};
+
+export const seriesPriceFromRu = (series: PiddonSeries): string => {
+  const prices = series.variants
+    .map((variant) => variant.price)
+    .filter((price): price is number => typeof price === 'number');
+  return prices.length ? `от ${formatUah(Math.min(...prices))}` : 'по запросу';
 };
 
 export const priceDisclaimer =
