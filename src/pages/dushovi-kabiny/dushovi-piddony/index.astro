@@ -23,6 +23,7 @@ const allPrices = piddonySeries.flatMap((s) =>
   s.variants.map((v) => v.price).filter((p): p is number => typeof p === 'number')
 );
 const overallFrom = formatUah(Math.min(...allPrices));
+const priceDisclaimerSentences = priceDisclaimer.split(/(?<=\.) /);
 
 // SSR initial selection for each card (works with JS disabled too).
 const cardInit = piddonySeries.map((s) => {
@@ -204,7 +205,7 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
     </section>
 
     <section id="catalog" class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Каталог</p><h2>Каталог душових піддонів</h2></div><p>Піддони зі штучного мармуру та каменю. Оберіть розмір і колір — вартість оновиться одразу.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">Каталог</p><h2>Каталог душових піддонів</h2></div><p>Піддони зі штучного мармуру та каменю.<br class="piddon-desktop-break" /> Оберіть розмір і колір — вартість оновиться одразу.</p></div>
       <div class="piddon-grid">
         {piddonySeries.map((series, i) => {
           const init = cardInit[i];
@@ -313,11 +314,11 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
           );
         })}
       </div>
-      <p class="piddon-note">{priceDisclaimer}</p>
+      <p class="piddon-note piddon-catalog-note">{priceDisclaimer}</p>
     </section>
 
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Швидкий вибір</p><h2>Оберіть за формою та розміром</h2></div><p>Форма залежить від планування, розмір — від фактичної мокрої зони та місця під скло.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">Швидкий вибір</p><h2>Оберіть за формою та розміром</h2></div><p>Форма залежить від планування, розмір<br class="piddon-desktop-break" /> — від фактичної мокрої зони та місця під скло.</p></div>
 
       <div class="material-subblock">
         <h3>За формою</h3>
@@ -342,7 +343,7 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
     </section>
 
     <section class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Підбір</p><h2>Як обрати душовий піддон</h2></div><p>Чотири кроки, які визначають серію, форму та вузол зливу.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">Підбір</p><h2>Як обрати душовий піддон</h2></div><p>Чотири кроки, які визначають<br class="piddon-desktop-break" /> серію, форму та вузол зливу.</p></div>
       <div class="category-steps">
         {chooseSteps.map(([name, text], i) => (
           <div class="category-steps__item"><span>{String(i + 1).padStart(2, '0')}</span><b>{name}</b><p>{text}</p></div>
@@ -351,7 +352,7 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
     </section>
 
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Порівняння</p><h2>Порівняння піддонів</h2></div><p>Ключові параметри чотирьох серій. Ціна — за найменший доступний розмір.</p></div>
+      <div class="category-heading piddon-comparison-heading"><div><p class="eyebrow">Порівняння</p><h2>Порівняння піддонів</h2></div><p>Ключові параметри чотирьох серій.<br class="piddon-desktop-break" /> Ціна — за найменший доступний розмір.</p></div>
       <div class="piddon-table-wrap">
         <table class="piddon-table">
           <thead>
@@ -362,10 +363,20 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
               <tr>
                 <th scope="row">{s.publicName}</th>
                 <td>{s.formatsShort}</td>
-                <td>{s.sizes.join(', ')}</td>
+                <td class="piddon-table__sizes">
+                  {Array.from({ length: Math.ceil(s.sizes.length / 2) }, (_, pairIndex) => {
+                    const pair = s.sizes.slice(pairIndex * 2, pairIndex * 2 + 2);
+                    return (
+                      <>
+                        {pairIndex > 0 && <span class="piddon-size-pair-separator">, </span>}
+                        <span class="piddon-size-pair">{pair.join(', ')}</span>
+                      </>
+                    );
+                  })}
+                </td>
                 <td>{s.thickness}</td>
                 <td>{s.maxLoad}</td>
-                <td>{s.antiSlip ?? '—'}</td>
+                <td>{s.comparisonAntiSlip ?? s.antiSlip ?? '—'}</td>
                 <td>{s.colors.join(', ')}</td>
                 <td>{seriesPriceFrom(s)}</td>
               </tr>
@@ -373,11 +384,11 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
           </tbody>
         </table>
       </div>
-      <p class="piddon-note">Комплектація всіх серій: сифон + декоративна накладка. Гарантія виробника — 5 років. {priceDisclaimer}</p>
+      <p class="piddon-note piddon-table-note">Комплектація всіх серій: сифон + декоративна накладка. Гарантія виробника — 5 років.<br class="piddon-desktop-break" /> <span class="piddon-table-note__price">{priceDisclaimerSentences.join(' ')}</span></p>
     </section>
 
     <section class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Основа</p><h2>Розміри та варіанти встановлення</h2></div><p>Обидва варіанти робочі — різниця у підготовці підлоги та геометрії входу.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">Основа</p><h2>Розміри та варіанти встановлення</h2></div><p>Обидва варіанти робочі — різниця у<br class="piddon-install-break" /> підготовці підлоги та геометрії входу.</p></div>
       <div class="category-duo">
         {baseCards.map((item) => (
           <article>
@@ -394,7 +405,7 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
     </section>
 
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Матеріал</p><h2>Покриття, антиковзання та злив</h2></div><p>Що саме забезпечує безпеку та довговічність піддона зі штучного каменю.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">Матеріал</p><h2>Покриття, антиковзання та злив</h2></div><p>Що саме забезпечує безпеку та довговічність<br class="piddon-desktop-break" /> піддона зі штучного каменю.</p></div>
       <div class="material-subblock">
         <div class="material-grid material-grid--parts">
           <article><b>Штучний камінь</b><p>Кварцова сировина з мінеральним наповнювачем. Тепліший на дотик за акрил, стійкий до подряпин та побутової хімії, не жовтіє.</p></article>
@@ -823,7 +834,8 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
     width:100%;
     border-collapse:collapse;
     font-size:.9rem;
-    min-width:820px;
+    min-width:980px;
+    table-layout:fixed;
   }
   .piddon-table th,
   .piddon-table td{
@@ -840,8 +852,27 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
     color:var(--mint-dark);
   }
   .piddon-table tbody th{font-weight:800}
+  .piddon-table th:nth-child(1){width:18%}
+  .piddon-table th:nth-child(2){width:12%}
+  .piddon-table th:nth-child(3){width:21%}
+  .piddon-table th:nth-child(4),
+  .piddon-table th:nth-child(5),
+  .piddon-table th:nth-child(6){width:10%}
+  .piddon-table th:nth-child(7){width:8%}
+  .piddon-table th:nth-child(8){width:11%}
+  .piddon-size-pair{display:block;white-space:nowrap}
+  .piddon-size-pair-separator{display:none}
+  .piddon-table th:last-child,
+  .piddon-table td:last-child{
+    white-space:nowrap;
+    font-variant-numeric:tabular-nums;
+  }
+  .piddon-table td:last-child{font-weight:700}
   .piddon-table tbody tr:last-child th,
   .piddon-table tbody tr:last-child td{border-bottom:0}
+
+  .piddon-desktop-break,
+  .piddon-install-break{display:none}
 
   .piddon-bundle{
     display:grid;
@@ -882,13 +913,40 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
   @media(max-width:1100px){
     .piddon-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
+  @media(min-width:901px){
+    .piddon-card__body,
+    .piddon-picker{flex:1}
+    .piddon-picker__out{margin-top:auto}
+    .piddon-desktop-break,
+    .piddon-install-break{display:inline}
+    .piddon-comparison-heading{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(0,440px);
+      gap:32px;
+    }
+    .piddon-comparison-heading>p{
+      max-width:none;
+    }
+    .piddon-table-note{width:100%;max-width:none}
+    .piddon-table-note__price{display:block;white-space:nowrap}
+    .piddon-catalog-note{width:100%;max-width:none;white-space:nowrap}
+    #price :global(.price-block__amount){
+      font-size:clamp(1.3rem,2.2vw,2rem);
+      letter-spacing:-.035em;
+      white-space:nowrap;
+    }
+  }
   @media(max-width:900px){
     .piddon-bundle{grid-template-columns:1fr;gap:24px}
     .piddon-bundle__links{grid-template-columns:1fr}
+    .piddon-size-pair{display:inline;white-space:normal}
+    .piddon-size-pair-separator{display:inline}
   }
   @media(max-width:700px){
     .piddon-grid{grid-template-columns:1fr}
     .piddon-card__body{padding:20px}
+    .piddon-table-note__price{display:inline;white-space:normal}
+    .piddon-catalog-note{white-space:normal}
   }
 </style>
 </BaseLayout>

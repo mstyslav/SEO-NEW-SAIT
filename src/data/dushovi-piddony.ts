@@ -47,6 +47,7 @@ export interface PiddonSeries {
   weight: string;
   maxLoad: string;
   antiSlip: string | null;   // null → not shown
+  comparisonAntiSlip?: string;
   kit: string;
   colors: string[];
   sizes: string[];           // every size — rendered in SSR HTML
@@ -108,7 +109,7 @@ export const piddonySeries: PiddonSeries[] = [
   {
     id: 's2',
     supplierCode: 'ES-A',
-    publicName: 'Душовий піддон зі штучного мармуру — компактні формати',
+    publicName: 'Прямокутний душовий піддон',
     formatBadge: 'квадратний, прямокутний',
     formatsLabel: 'Доступні формати: квадратний, прямокутний',
     formatsShort: 'Квадратний, прямокутний',
@@ -146,7 +147,7 @@ export const piddonySeries: PiddonSeries[] = [
   {
     id: 's3',
     supplierCode: 'WPD-P',
-    publicName: 'П’ятикутний душовий піддон',
+    publicName: "П'ятикутний душовий піддон",
     formatBadge: 'п’ятикутний',
     formatsLabel: 'Форма: п’ятикутний зі скошеною гранню',
     formatsShort: 'П’ятикутний',
@@ -157,6 +158,7 @@ export const piddonySeries: PiddonSeries[] = [
     weight: '26 кг',
     maxLoad: 'до 500 кг',
     antiSlip: null,
+    comparisonAntiSlip: '3 клас',
     kit: 'Сифон + декоративна накладка',
     colors: ['Білий'],
     sizes: ['900×900', '1000×1000'],
@@ -175,7 +177,7 @@ export const piddonySeries: PiddonSeries[] = [
   {
     id: 's4',
     supplierCode: 'WPD-K',
-    publicName: 'Посилений душовий піддон зі штучного мармуру',
+    publicName: 'Квадратний душовий піддон',
     formatBadge: 'квадратний, прямокутний',
     formatsLabel: 'Доступні формати: квадратний, прямокутний',
     formatsShort: 'Квадратний, прямокутний',
@@ -186,6 +188,7 @@ export const piddonySeries: PiddonSeries[] = [
     weight: '26 кг',
     maxLoad: 'до 500 кг',
     antiSlip: null,
+    comparisonAntiSlip: '3 клас',
     kit: 'Сифон + декоративна накладка',
     colors: ['Білий'],
     sizes: ['900×900', '1200×900'],
