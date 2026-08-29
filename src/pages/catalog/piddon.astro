@@ -1,820 +1,700 @@
 ---
-import tariffs from '../../pricing/tariffs.json';
-const showerTariff = tariffs.categories.shower;
-const currencySettings = tariffs.currency;
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import '../../styles/catalog.css';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
-import productData from '../../data/products.json';
-import '../../styles/legacy-product.css';
+import TrustBar from '../../components/TrustBar.astro';
+import PriceBlock from '../../components/PriceBlock.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
 import '../../styles/category-pages.css';
+import '../../styles/shower-master.css';
 
-const currentProduct = productData.products.find(item => item.slug === 'walk-in-premium-black') ?? productData.products[0];
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl('/catalog/piddon/', origin);
 
-const gallery = [
-  ['/images/s20/product-main.webp','Walk-in Premium Black — загальний вигляд'],
-  ['/images/s20/product-angle.webp','Walk-in — вигляд під кутом'],
-  ['/images/s20/product-detail.webp','Деталі скла та профілю'],
-  ['/images/s20/product-interior.webp','Walk-in у сучасному інтер’єрі']
-];
+const title = 'Душові піддони';
+const metaTitle = 'Душові піддони — купити піддон для душу зі штучного каменю | Space Glass';
+const metaDescription =
+  'Душові піддони зі штучного каменю: квадратні, прямокутні та п’ятикутні моделі Weston із сифоном у комплекті, антиковзанням та тонким профілем 30–32 мм. Підбираємо піддон під скляну душову Space Glass за розміром і формою. Замір, доставка по Україні, монтаж у Києві, Одесі та Львові.';
 
-const badgeLabels = {
-  top: 'ТОП продажу',
-  hit: 'Хіт продажу'
-};
-
-const documents = currentProduct.documents ?? [];
-
-const specs = [
-  ['Тип','Walk-in'],
-  ['Скло','Загартоване 8–10 мм'],
-  ['Профіль','Чорний / хром / графіт'],
-  ['Розмір','Стандартний або індивідуальний'],
-  ['Монтаж','Київ, Львів, Одеса'],
-  ['Доставка','По всій Україні']
-];
-
-const related = [
+// --- Real Weston shower-tray models -----------------------------------------
+// Data taken from weston.com.ua product pages (Product JSON-LD + characteristics
+// blocks). Prices are indicative, for the starting size, and can change — they
+// are shown as "орієнтовно від". Where the category and product pages disagree,
+// the product page is used.
+const models = [
   {
-    title: 'Душові двері в нішу',
-    category: 'Скляні двері',
-    price: 'від 10 900 грн',
-    image: '/images/s20/product-angle.webp',
-    badge: 'ХІТ',
-    href: '/catalog/piddon/'
+    id: 'weston-es-h',
+    name: 'Weston ES-H',
+    shape: 'Прямокутний / квадратний',
+    priceFrom: 'орієнтовно від 13 000 грн',
+    priceNote: 'за дані виробника, розмір 900×900 мм',
+    sizes: ['900×900', '800×1200', '900×1200', '900×1600'],
+    colors: ['Білий', 'Графіт'],
+    mediaTone: 'light',
+    image: 'es-h-white',
+    imageAlt: 'Душовий піддон Weston ES-H зі штучного каменю, білий, прямокутної форми',
+    specs: [
+      ['Матеріал', 'Штучний мармур (кварцова сировина)'],
+      ['Профіль', '30 мм'],
+      ['Макс. навантаження', 'до 375 кг'],
+      ['Антиковзання', 'Клас 3'],
+      ['Комплектація', 'Сифон + декоративна кришка з каменю'],
+      ['Гарантія', '5 років (виробник)']
+    ],
+    blurb: 'Флагманська серія з виразною кам’яною текстурою. Два кольори, широкий діапазон розмірів — базове рішення під Walk-In та душі в нішу.'
   },
   {
-    title: 'Піддон зі штучного каменю',
-    category: 'Душові піддони',
-    price: 'від 8 900 грн',
-    image: '/images/s20/product-detail.webp',
-    badge: '',
-    href: '/catalog/piddon/'
+    id: 'weston-es-a',
+    name: 'Weston ES-A',
+    shape: 'Квадратний / прямокутний',
+    priceFrom: 'орієнтовно від 11 700 грн',
+    priceNote: 'за дані виробника, розмір 800×1000 мм',
+    sizes: ['800×800', '800×1000', '900×900', '800×1200', '800×1400', '900×1200'],
+    colors: ['Білий', 'Графіт'],
+    mediaTone: 'light',
+    image: 'es-a-white',
+    imageAlt: 'Душовий піддон Weston ES-A зі штучного каменю, білий, квадратної форми',
+    specs: [
+      ['Матеріал', 'Штучний камінь (кварцова сировина)'],
+      ['Профіль', '30 мм'],
+      ['Макс. навантаження', 'до 375 кг'],
+      ['Антиковзання', 'Клас 3'],
+      ['Комплектація', 'Сифон + декоративна кришка з каменю'],
+      ['Гарантія', '5 років (виробник)']
+    ],
+    blurb: 'Найбільший вибір типорозмірів — від компактних 800×800 до видовжених 800×1400 мм. Для вузьких і нестандартних душових зон.'
   },
   {
-    title: 'Комплект чорної фурнітури',
-    category: 'Фурнітура',
-    price: 'від 3 600 грн',
-    image: '/images/s19/walkin-detail.webp',
-    badge: 'ТОП',
-    href: '/catalog/piddon/'
+    id: 'weston-wpd-k',
+    name: 'Weston WPD-K',
+    shape: 'Квадратний / прямокутний',
+    priceFrom: 'орієнтовно від 10 500 грн',
+    priceNote: 'за дані виробника, розмір 900×900 мм',
+    sizes: ['900×900', '1200×900'],
+    colors: ['Білий'],
+    mediaTone: 'dark',
+    image: 'wpd-k-square',
+    imageAlt: 'Душовий піддон Weston WPD-K зі штучного мармуру, білий, квадратний',
+    specs: [
+      ['Матеріал', 'Надміцний штучний мармур'],
+      ['Профіль', '32 мм'],
+      ['Макс. навантаження', 'до 500 кг'],
+      ['Поверхня', 'Не стає слизькою при контакті з водою'],
+      ['Комплектація', 'Сифон + декоративна накладка'],
+      ['Гарантія', '5 років (виробник)']
+    ],
+    blurb: 'Посилений штучний мармур із запасом на навантаження до 500 кг. Дві форми — квадрат 900×900 та прямокутник 1200×900 мм.'
   },
   {
-    title: 'Стабілізатор для Walk-in',
-    category: 'Комплектуючі',
-    price: 'від 2 450 грн',
-    image: '/images/s20/product-interior.webp',
-    badge: '',
-    href: '/catalog/piddon/'
+    id: 'weston-wpd-p',
+    name: 'Weston WPD-P',
+    shape: 'П’ятикутний',
+    priceFrom: 'орієнтовно від 9 500 грн',
+    priceNote: 'за дані виробника, розмір 900×900 мм',
+    sizes: ['900×900', '1000×1000'],
+    colors: ['Білий'],
+    mediaTone: 'dark',
+    image: 'wpd-p-pentagon',
+    imageAlt: 'Душовий піддон Weston WPD-P зі штучного каменю, білий, п’ятикутної форми зі скошеною передньою гранню',
+    specs: [
+      ['Матеріал', 'Штучний камінь (кварцова сировина)'],
+      ['Профіль', '32 мм'],
+      ['Макс. навантаження', 'до 500 кг'],
+      ['Поверхня', 'Не стає слизькою при контакті з водою'],
+      ['Комплектація', 'Сифон + декоративна накладка'],
+      ['Гарантія', '5 років (виробник)']
+    ],
+    blurb: 'Кутове рішення зі скошеною передньою гранню — економить простір у невеликій ванній та поєднується з п’ятикутною скляною кабіною.'
   }
 ];
 
-const faq = [
-  [
-    "Скільки коштує душова Walk-in?",
-    "Вартість залежить від розміру, товщини скла, типу профілю, стабілізатора, фурнітури та монтажу."
-  ],
-  [
-    "Чи можна зробити нестандартний розмір?",
-    "Так. Конструкцію виготовляємо за погодженими розмірами після технічної перевірки."
-  ],
-  [
-    "Яке скло краще: 8 чи 10 мм?",
-    "Товщину підбираємо за габаритами, способом кріплення та конструктивом."
-  ],
-  [
-    "Чи входить монтаж у ціну?",
-    "Монтаж розраховується окремо залежно від міста, доступу до об’єкта та складності."
-  ],
-  [
-    "Чи можна замовити тільки товар з доставкою?",
-    "Так, готові комплекти та окремі товари відправляємо по Україні."
-  ],
-  [
-    "Який термін виготовлення?",
-    "Термін залежить від комплектації, розміру та завантаження виробництва."
-  ],
-  [
-    "Чи можна обрати інший колір профілю?",
-    "Так, доступні чорний, хром, графіт та інші варіанти залежно від системи."
-  ],
-  [
-    "Чи потрібен точний замір?",
-    "Для індивідуального виробу точний замір обов’язковий перед запуском у роботу."
-  ],
-  [
-    "Яка гарантія на конструкцію?",
-    "Гарантія залежить від типу виробу, фурнітури та умов монтажу."
-  ],
-  [
-    "Чи можна встановити Walk-in без піддона?",
-    "Так, за умови правильної підготовки підлоги, гідроізоляції та ухилу."
-  ],
-  [
-    "Чи робите ви демонтаж старої душової?",
-    "Таку послугу можна додати після огляду об’єкта та оцінки складності."
-  ],
-  [
-    "Як доглядати за склом?",
-    "Рекомендуємо нейтральні засоби без абразиву та регулярне видалення водного нальоту."
-  ],
-  [
-    "Чи можна додати захисне покриття?",
-    "Так, доступні покриття, що полегшують догляд за склом."
-  ],
-  [
-    "Яка висота Walk-in є стандартною?",
-    "Найчастіше використовують висоту близько 1900–2100 мм, але остаточний розмір визначається проєктом."
-  ],
-  [
-    "Чи потрібен стабілізатор?",
-    "У більшості Walk-in конструкцій він потрібен для жорсткості та стабільності скла."
-  ],
-  [
-    "Чи можна зробити матове або тоноване скло?",
-    "Так, доступні прозоре, матове, тоноване, освітлене та декоративне скло."
-  ],
-  [
-    "Чи виконуєте монтаж у Києві?",
-    "Так, монтаж доступний у Києві та області."
-  ],
-  [
-    "Чи працюєте ви у Львові й Одесі?",
-    "Так, маємо монтажні команди та працюємо в цих містах і областях."
-  ],
-  [
-    "Що потрібно надіслати для розрахунку?",
-    "Достатньо фото душової зони, приблизних розмірів і короткого опису бажаної комплектації."
-  ],
-  [
-    "Від чого найбільше залежить кінцева ціна?",
-    "Від площі скла, виду фурнітури, кольору профілю, складності монтажу та логістики."
-  ]
-]
+const priceDisclaimer =
+  'Ціни орієнтовні, за даними виробника Weston, вказані для стартового розміру та можуть змінюватися. Точну вартість, розмір і наявність підтверджуємо за запитом.';
+
+// --- Choose by shape / size ------------------------------------------------
+const byShape = [
+  ['Квадратні', 'Для компактних і кутових душів: 800×800, 900×900, 1000×1000 мм. Симетрична зона під двері або Walk-In.'],
+  ['Прямокутні', 'Для ніш і просторіших зон: 800×1200, 900×1200, 900×1600 мм. Комфортний душ уздовж стіни.'],
+  ['П’ятикутні', 'Зі скошеною передньою гранню для кута кімнати — під п’ятикутну скляну кабіну.']
+];
+const bySize = [
+  ['Компактний душ', '800×800 – 900×900 мм', 'Мінімальна зручна зона для однієї людини у невеликій ванній.'],
+  ['Стандарт', '900×1000 – 900×1200 мм', 'Найпопулярніший діапазон під душові двері та перегородки в нішу.'],
+  ['Walk-In / великий', '900×1400 – 900×1600 мм', 'Видовжена зона під відкриту перегородку без дверей.']
+];
+
+// --- How to choose -------------------------------------------------------
+const chooseSteps = [
+  ['Заміряйте зону', 'Ширина та глибина мокрої зони по чистовому оздобленню, з урахуванням майбутнього скла.'],
+  ['Оберіть форму', 'Квадрат — кут або двері, прямокутник — ніша та Walk-In, п’ятикутник — зрізаний кут.'],
+  ['Профіль і вхід', 'Тонкий піддон 30–32 мм дає майже врівень вхід; висоту входу узгоджуємо зі склом.'],
+  ['Злив і поверхня', 'Розташування випуску, сифон у комплекті, антиковзання — перевіряємо до замовлення.']
+];
+
+// --- Tray vs flush --------------------------------------------------------
+const baseCards = [
+  {
+    name: 'З готовим піддоном',
+    text: 'Штучний камінь спрощує гідроізоляцію та організацію зливу: сифон і декоративна кришка вже в комплекті. Розмір і форму піддона узгоджуємо зі скляною конструкцією до фінального заміру.',
+    href: '#catalog',
+    linkLabel: 'Перейти до каталогу піддонів →'
+  },
+  {
+    name: 'Душ урівень з підлогою',
+    text: 'Плитка по стяжці з ухилом до точкового трапа або лінійного водовідведення — без піддона. Потрібна підготовлена основа з правильною гідроізоляцією; геометрію враховуємо під час заміру.'
+  }
+];
+
+// --- Bundle: tray + Space Glass shower -----------------------------------
+const showerLinks = [
+  ['Скляні перегородки для душу (Walk-In)', '/dushovi-kabiny/peregorodka-dlya-dusha/'],
+  ['Скляні душові двері', '/dushovi-kabiny/dushovi-dveri/'],
+  ['Кутові душові кабіни', '/dushovi-kabiny/kutovi/'],
+  ['Душові кабіни в нішу', '/dushovi-kabiny/u-nishu/'],
+  ['Розсувні душові кабіни', '/dushovi-kabiny/rozsuvni/'],
+  ['П’ятикутні душові кабіни', '/dushovi-kabiny/piatykutni/']
+];
+
+// --- Related / useful links --------------------------------------------
+const relatedLinks = [
+  ['Усі види душових кабін', '/dushovi-kabiny/'],
+  ['Душові піддони: підбір під конструкцію', '/dushovi-kabiny/dushovi-piddony/'],
+  ['Як обрати душову кабіну', '/knowledge/yak-obraty-dushovu-kabinu/'],
+  ['Душова в нішу: замір', '/knowledge/dushova-v-nishu-zamir/'],
+  ['Як підготувати простір до заміру', '/knowledge/yak-pidhotuvaty-prostir-do-zamiru/'],
+  ['Догляд за склом і поверхнями', '/knowledge/doglyad-za-sklyanymy-konstruktsiyamy/'],
+  ['Від чого залежить ціна конструкції', '/knowledge/vid-choho-zalezhyt-tsina-sklyanoyi-konstruktsiyi/'],
+  ['Оплата та доставка', '/oplata-dostavka/']
+];
+
+// --- FAQ (real search intents) ----------------------------------------
+const faq: [string, string][] = [
+  ['Скільки коштує душовий піддон?', 'Піддони зі штучного каменю Weston — орієнтовно від 9 500 грн за стартовий розмір. Кінцева ціна залежить від моделі, розміру, форми та кольору. Ціни за даними виробника, актуальну вартість і наявність підтверджуємо за запитом.'],
+  ['Як підібрати розмір душового піддона?', 'Заміряйте фактичну ширину та глибину мокрої зони по чистовому оздобленню й врахуйте місце під майбутню скляну конструкцію. Компактний душ — 800×800–900×900 мм, стандарт — 900×1000–900×1200 мм, Walk-In — 900×1400–900×1600 мм.'],
+  ['Який матеріал піддона кращий?', 'Штучний камінь (мармурова крихта на кварцовій основі) міцніший за акрил, приємний на дотик, стійкий до подряпин і легко очищається. Моделі Weston витримують навантаження 375–500 кг і мають тонкий профіль 30–32 мм.'],
+  ['Яка форма піддона потрібна?', 'Квадратні моделі — для кутових душів і зон під двері, прямокутні — для ніш і Walk-In, п’ятикутні зі скошеною гранню — для кута невеликої ванної під п’ятикутну кабіну.'],
+  ['Чи слизький піддон зі штучного каменю?', 'Ні. Серія Weston ES має поверхню з 3 класом протиковзання, моделі WPD не стають слизькими при контакті з водою й зберігають комфортні тактильні властивості.'],
+  ['Чи входить сифон у комплект?', 'Так. У піддонах Weston сифон і декоративна кришка (накладка) вже входять у комплектацію — докуповувати ці деталі не потрібно.'],
+  ['Чи обов’язково робити душ із піддоном?', 'Ні. Скляну душову можна встановити і без піддона — на підготовлену підлогу з гідроізоляцією та ухилом до трапа. Піддон спрощує монтаж і водовідведення.'],
+  ['Коли потрібно визначитися з піддоном?', 'До фінального заміру скла. Встановлений або точно обраний піддон задає геометрію, точки кріплення та розміри скляної конструкції.'],
+  ['Чи можна замовити піддон разом зі скляною душовою?', 'Так, це бажаний сценарій. Space Glass підбирає піддон за розміром і формою та узгоджує його зі скляною перегородкою, дверима чи кабіною як одну систему.'],
+  ['Чи є доставка піддонів по Україні?', 'Так. Виробник відправляє піддони по Україні; для замовлень зі скляною конструкцією Space Glass організовує доставку та монтаж у Києві, Одесі та Львові, в інших містах — за домовленістю.'],
+  ['Яка гарантія на душовий піддон?', 'Виробник Weston надає 5 років гарантії на піддони зі штучного каменю за умови правильного монтажу та експлуатації.'],
+  ['Який профіль (висота) у піддонів?', 'Моделі Weston мають тонкий профіль 30–32 мм, що дає майже врівень вхід у душ. Точну висоту входу узгоджуємо зі скляною конструкцією.']
+];
+
+// --- Structured data ----------------------------------------------------
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#models`,
+  name: 'Душові піддони',
+  numberOfItems: models.length,
+  itemListElement: models.map((model, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Product',
+      name: `Душовий піддон ${model.name}`,
+      category: 'Душові піддони',
+      brand: { '@type': 'Brand', name: 'Weston' },
+      material: model.specs[0][1],
+      image: absoluteUrl(`/images/catalog/piddony/${model.image}-900.webp`, origin)
+    }
+  }))
+};
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
 ---
-<BaseLayout title="Душова Walk-in Premium Black — Space Glass" description="Преміальна душова Walk-in з чорним профілем, загартованим склом і доставкою по Україні.">
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image="/images/catalog/piddony/es-h-white-900.webp"
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  heroPreloadSrc="/images/catalog/piddony/piddony-hero-1200.webp"
+  heroPreloadSrcset="/images/catalog/piddony/piddony-hero-480.webp 480w, /images/catalog/piddony/piddony-hero-768.webp 768w, /images/catalog/piddony/piddony-hero-1200.webp 1200w, /images/catalog/piddony/piddony-hero-1600.webp 1600w"
+  heroPreloadSizes="(max-width: 900px) calc(100vw - 48px), 52vw"
+>
 <div class="sg-page-shell">
   <Header />
   <main id="main">
-    <Breadcrumbs contained items={[{label:'Головна',href:'/'},{label:'Каталог',href:'/catalog/'},{label:'Душовий піддон'}]} />
-    <section class="product-premium product-premium--s19">
-      <div class="product-gallery product-gallery--real product-gallery--s20" data-product-gallery>
-        <div class="product-gallery__thumbs" aria-label="Фотографії товару">
-          {gallery.map(([src,alt],index) => (
-            <button class:list={['product-gallery__thumb', index === 0 && 'is-active']} type="button" data-gallery-thumb data-src={src} data-alt={alt} aria-label={`Фото ${index + 1}`}>
-              <img src={src} alt="" width="150" height="120" loading={index === 0 ? 'eager' : 'lazy'} />
-            </button>
+    <section class="category-hero category-hero--photo">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: 'Каталог', href: '/catalog/' }, { label: title }]} />
+        <p class="eyebrow">Душові кабіни / Піддони</p>
+        <h1>Душові піддони</h1>
+        <p class="lead">Душові піддони зі штучного каменю під скляну душову Space Glass. Квадратні, прямокутні та п’ятикутні моделі Weston із сифоном у комплекті, антиковзанням і тонким профілем 30–32 мм. Підбираємо піддон за розміром і формою душової зони, узгоджуємо зі склом, організовуємо доставку та монтаж.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#catalog">Обрати піддон</a>
+          <a class="button button--outline" href="/contacts/#contact-form">Отримати розрахунок</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img
+            src="/images/catalog/piddony/piddony-hero-1200.webp"
+            srcset="/images/catalog/piddony/piddony-hero-480.webp 480w, /images/catalog/piddony/piddony-hero-768.webp 768w, /images/catalog/piddony/piddony-hero-1200.webp 1200w, /images/catalog/piddony/piddony-hero-1600.webp 1600w"
+            sizes="(max-width: 900px) calc(100vw - 48px), 52vw"
+            alt="Прямокутний душовий піддон зі штучного каменю в сучасній ванній кімнаті"
+            width="1600"
+            height="1045"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="uk" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Про піддони</p><h2>Піддон зі штучного каменю як частина душової системи</h2></div><p>Разом зі скляною конструкцією піддон працює як одна система: розміри, форма та вхід не конфліктують між собою.</p></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Душовий піддон формує мокру зону, тримає ухил до зливу та захищає підлогу від протікання. Піддони зі штучного каменю (мармурова крихта на кварцовій основі) міцніші за акрил, мають приємну на дотик матову поверхню з кам’яною текстурою, стійкі до подряпин і легко очищаються.</p>
+          <p>У каталозі — моделі виробника Weston: серії ES зі штучного мармуру з антиковзанням 3 класу та посилені моделі WPD із запасом на навантаження до 500 кг. Тонкий профіль 30–32 мм робить вхід у душ майже врівень з підлогою, а сифон і декоративна кришка входять у комплект.</p>
+          <p>Space Glass підбирає піддон під конкретну душову зону та узгоджує його геометрію зі скляною перегородкою, дверима або кабіною ще до виробництва скла.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>Штучний камінь</b><span>кварцова сировина, матова кам’яна текстура</span></li>
+          <li><b>Профіль 30–32 мм</b><span>майже врівень вхід у душ</span></li>
+          <li><b>Антиковзання</b><span>клас 3 у серії ES</span></li>
+          <li><b>Сифон у комплекті</b><span>сифон + декоративна кришка</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="catalog" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Каталог</p><h2>Душові піддони Weston</h2></div><p>Реальні моделі зі штучного каменю. Ціни орієнтовні, за даними виробника — точну вартість і наявність підтверджуємо за запитом.</p></div>
+      <div class="piddon-grid">
+        {models.map((model) => (
+          <article class={`piddon-card piddon-card--${model.mediaTone}`}>
+            <div class="piddon-card__media">
+              <img
+                src={`/images/catalog/piddony/${model.image}-480.webp`}
+                srcset={`/images/catalog/piddony/${model.image}-480.webp 480w, /images/catalog/piddony/${model.image}-900.webp 900w`}
+                sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw"
+                alt={model.imageAlt}
+                width="480"
+                height="480"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="piddon-card__shape">{model.shape}</span>
+            </div>
+            <div class="piddon-card__body">
+              <h3>{model.name}</h3>
+              <p class="piddon-card__blurb">{model.blurb}</p>
+              <p class="piddon-card__price"><strong>{model.priceFrom}</strong><span>{model.priceNote}</span></p>
+              <dl class="piddon-card__specs">
+                {model.specs.map(([name, value]) => (
+                  <div><dt>{name}</dt><dd>{value}</dd></div>
+                ))}
+              </dl>
+              <p class="piddon-card__meta"><b>Розміри, мм:</b> {model.sizes.join(' · ')}</p>
+              <p class="piddon-card__meta"><b>Колір:</b> {model.colors.join(' · ')}</p>
+              <a class="button button--mint piddon-card__cta" href={`/contacts/#contact-form`}>Підібрати зі скляною душовою</a>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="piddon-note">{priceDisclaimer}</p>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Швидкий вибір</p><h2>Оберіть за формою та розміром</h2></div><p>Форма залежить від планування, розмір — від фактичної мокрої зони та місця під скло.</p></div>
+
+      <div class="material-subblock">
+        <h3>За формою</h3>
+        <div class="category-icon-grid">
+          {byShape.map(([name, text]) => (
+            <div class="category-icon-card category-icon-card--static">
+              <h3>{name}</h3>
+              <p>{text}</p>
+            </div>
           ))}
         </div>
-
-        <button class="product-gallery__main" type="button" aria-label="Відкрити фото" data-gallery-open>
-          <img src={gallery[0][0]} alt={gallery[0][1]} width="1800" height="1500" data-gallery-main />
-          <span class="product-gallery__zoom" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg>
-          </span>
-        </button>
-
-        <dialog class="product-lightbox" data-product-lightbox>
-          <button type="button" class="product-lightbox__close" data-gallery-close aria-label="Закрити">×</button>
-          <img src={gallery[0][0]} alt={gallery[0][1]} width="1800" height="1500" data-lightbox-image />
-        </dialog>
       </div>
 
-      <div class="product-premium__info product-premium__info--sticky">
-        <p class="eyebrow">Душові кабіни / Walk-in</p>
-        <div class="product-meta-row">
-          <div class="product-state product-state--order">● {currentProduct.availabilityLabel}</div>
-          <div class="product-badges">
-            {currentProduct.badges.map(badge => <span class={`product-badge product-badge--${badge}`}>{badgeLabels[badge]}</span>)}
-          </div>
-        </div>
-        <h1>Walk-in Premium Black</h1>
-        <p class="lead">Мінімалістична душова перегородка із загартованого скла та чорного профілю.</p>
-        <div class="product-price-row"><strong>від 18 450 грн</strong><span>Виготовлення під розмір</span></div>
-
-        <div class="configurator-presets">
-          <span>Швидкий вибір:</span>
-          <button type="button" data-preset="basic">Базовий</button>
-          <button type="button" data-preset="premium">Преміум</button>
-          <button type="button" data-preset="business">Для бізнесу</button>
-        </div>
-        <div class="configurator-progress" aria-label="Етапи конфігуратора">
-          <span class="is-active">1. Тип</span>
-          <span>2. Розміри</span>
-          <span>3. Матеріали</span>
-          <span>4. Фурнітура</span>
-          <span>5. Монтаж</span>
-        </div>
-        <div class="product-options product-configurator" data-configurator>
-          <div class="configurator-step is-open" data-config-step="1">
-            <button class="configurator-step__title" type="button"><b>01</b><span>Тип конструкції</span><i>−</i></button>
-            <div class="option-row">
-              <button class="option is-active" data-option-group="type" data-value="Walk-in" data-price="1">Walk-in</button>
-              <button class="option" data-option-group="type" data-value="Кутова" data-price="1.22">Кутова</button>
-              <button class="option" data-option-group="type" data-value="У нішу" data-price="1.14">У нішу</button>
-            </div>
-          </div>
-
-          <div class="configurator-step is-open" data-config-step="2"><button class="configurator-step__title" type="button"><b>02</b><span>Розміри</span><i>−</i></button><div class="product-dimensions">
-            <label>
-              <span>Ширина, мм</span>
-              <input type="number" min="500" max="2500" step="10" value="1000" data-config-width />
-            </label>
-            <label>
-              <span>Висота, мм</span>
-              <input type="number" min="1500" max="2600" step="10" value="2000" data-config-height />
-            </label>
-          </div></div>
-
-          <div class="configurator-step is-open" data-config-step="3"><button class="configurator-step__title" type="button"><b>03</b><span>Матеріали</span><i>−</i></button>
-            <span>Колір профілю</span>
-            <div class="option-row">
-              <button class="option is-active" data-option-group="color" data-value="Black" data-price="1">Black</button>
-              <button class="option" data-option-group="color" data-value="Chrome" data-price="1.05">Chrome</button>
-              <button class="option" data-option-group="color" data-value="Graphite" data-price="1.08">Graphite</button>
-            </div>
-          </div>
-
-          <div>
-            <span>Скло</span>
-            <div class="option-row">
-              <button class="option is-active" data-option-group="glass" data-value="Прозоре" data-price="1">Прозоре</button>
-              <button class="option" data-option-group="glass" data-value="Матовe" data-price="1.12">Матове</button>
-              <button class="option" data-option-group="glass" data-value="Тоноване" data-price="1.18">Тоноване</button>
-            </div>
-          </div>
-
-          <div>
-            <span>Товщина скла</span>
-            <div class="option-row">
-              <button class="option is-active" data-option-group="thickness" data-value="8 мм" data-price="1">8 мм</button>
-              <button class="option" data-option-group="thickness" data-value="10 мм" data-price="1.16">10 мм</button>
-            </div>
-          </div>
-
-          <div class="configurator-step is-open" data-config-step="4"><button class="configurator-step__title" type="button"><b>04</b><span>Фурнітура</span><i>−</i></button>
-            <span>Ручка</span>
-            <div class="option-row">
-              <button class="option is-active" data-option-group="handle" data-value="Стандартна" data-price="1">Стандартна</button>
-              <button class="option" data-option-group="handle" data-value="Преміум" data-price="1.07">Преміум</button>
-              <button class="option" data-option-group="handle" data-value="Прихована" data-price="1.12">Прихована</button>
-            </div>
-          </div>
-
-          <div class="configurator-step is-open" data-config-step="5"><button class="configurator-step__title" type="button"><b>05</b><span>Монтаж</span><i>−</i></button>
-            <span>Монтаж</span>
-            <div class="option-row option-row--services">
-              <button class="option is-active" data-option-group="mounting" data-value="Без монтажу" data-installation="false">Без монтажу</button>
-              <button class="option" data-option-group="mounting" data-value="З монтажем" data-installation="true">З монтажем</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="product-config-summary product-config-summary--price" data-pricing-card
-          data-product-usd-m2={showerTariff.productUsdM2}
-          data-installation-usd-m2={showerTariff.installationUsdM2}
-          data-rate-markup={currencySettings.markupUah}
-          data-fallback-rate={currencySettings.fallbackRateUah}>
-          <div>
-            <span>Обрана конфігурація</span>
-            <b data-config-summary>Попередня ціна</b>
-          </div>
-
-          <div class="product-estimate product-estimate--simple">
-            <span>Попередня ціна</span>
-            <strong data-config-price>Завантаження…</strong>
-            <small data-config-price-usd hidden></small>
-          </div>
-          <small>Орієнтовна загальна вартість. Фінальна ціна підтверджується після перевірки розмірів, комплектації та умов монтажу.</small>
-        </div>
-
-        <div class="product-actions product-actions--three">
-          <a class="button button--mint" href="/contacts/#contact-form" data-quote-link>Отримати КП</a>
-          <button class="button button--outline" type="button" data-add-to-project>Додати до проєкту</button>
-          <button class="button button--outline" type="button" data-add-to-compare>Порівняти</button>
-        </div>
-        <p class="product-project-feedback" data-project-feedback hidden></p>
-
-        <div class="product-trust-row">
-          <span>✓ Безпечне скло</span>
-          <span>✓ Власне виробництво</span>
-          <span>✓ Гарантія</span>
-        </div>
-
-        <div class="product-delivery">
-          <div><b>Доставка</b><span>По всій Україні</span></div>
-          <div><b>Монтаж</b><span>Київ, Львів, Одеса</span></div>
-          <div><b>Гарантія</b><span>2 роки</span></div>
+      <div class="material-subblock">
+        <h3>За розміром зони</h3>
+        <div class="category-steps">
+          {bySize.map(([name, size, text]) => (
+            <div class="category-steps__item"><span>{size}</span><b>{name}</b><p>{text}</p></div>
+          ))}
         </div>
       </div>
     </section>
 
-    <section class="product-spec-section">
-      <div class="product-spec-intro">
-        <p class="eyebrow">Характеристики</p>
-        <h2>Технічні параметри</h2>
-        <p>Фінальна комплектація підтверджується після перевірки розмірів та умов монтажу.</p>
-      </div>
-      <div>
-        <div class="product-spec-table">
-          {specs.map(([name,value]) => <div><span>{name}</span><b>{value}</b></div>)}
-        </div>
-        {documents.length > 0 && (
-          <div class="product-documents">
-            <div class="product-documents__head">
-              <h3>Документація</h3>
-              <p>Відображаються лише матеріали, підготовлені для цієї моделі.</p>
-            </div>
-            {documents.map(document => (
-              <a href={document.url} target="_blank" rel="noopener noreferrer">
-                <span>{document.type}</span><b>{document.title}</b><i>↗</i>
-              </a>
-            ))}
-          </div>
-        )}
-        {documents.length === 0 && (
-          <div class="product-documents product-documents--empty">
-            <b>Документація готується після погодження комплектації.</b>
-            <p>Ми не показуємо універсальні інструкції, якщо вони не відповідають конкретній системі.</p>
-          </div>
-        )}
-      </div>
-    </section>
-
-    <section class="product-feature-band">
-      <article><span>01</span><h3>Безпечне скло</h3><p>Загартоване скло або триплекс залежно від конструкції.</p></article>
-      <article><span>02</span><h3>Преміальна фурнітура</h3><p>Профілі, стабілізатори, петлі та ручки в єдиному стилі.</p></article>
-      <article><span>03</span><h3>Індивідуальні розміри</h3><p>Виготовлення під фактичну геометрію душової зони.</p></article>
-    </section>
-
-    <section class="product-visual-story">
-      <div class="product-visual-story__large product-visual-story__image"><img src="/images/s20/product-interior.webp" alt="Walk-in у сучасному інтер’єрі" width="1800" height="1500" loading="lazy" /><span>01 / PREMIUM GLASS</span></div>
-      <div class="product-visual-story__copy">
-        <p class="eyebrow">Дизайн</p>
-        <h2>Максимум світла. Мінімум зайвих деталей.</h2>
-        <p>Walk-in конструкція створює відкритий простір, легко інтегрується в сучасну ванну кімнату та не перевантажує інтер’єр.</p>
-      </div>
-      <div class="product-visual-story__small product-visual-story__image"><img src="/images/s20/product-detail.webp" alt="Деталі профілю та скла" width="1800" height="1500" loading="lazy" /><span>02 / DETAILS</span></div>
-    </section>
-
-    <section class="product-related">
-      <div class="category-heading">
-        <div><p class="eyebrow">Разом купують</p><h2>Сумісні товари</h2></div>
-        <a href="/catalog/">Перейти в каталог →</a>
-      </div>
-      <div class="category-model-grid product-compatible-grid">
-        {related.map((item) => (
-          <a class="category-model-card product-compatible-card" href={item.href}>
-            <div class="category-model-card__media product-compatible-card__media">
-              <img src={item.image} alt={item.title} width="520" height="390" loading="lazy" />
-              {item.badge && <span class="product-compatible-card__badge">{item.badge}</span>}
-            </div>
-            <small>{item.category}</small>
-            <h3>{item.title}</h3>
-            <strong>{item.price}</strong>
-            <b>Детальніше →</b>
-          </a>
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Підбір</p><h2>Як обрати душовий піддон</h2></div><p>Чотири кроки, які визначають модель, форму та вузол зливу.</p></div>
+      <div class="category-steps">
+        {chooseSteps.map(([name, text], i) => (
+          <div class="category-steps__item"><span>{String(i + 1).padStart(2, '0')}</span><b>{name}</b><p>{text}</p></div>
         ))}
       </div>
     </section>
 
-    <section class="product-related product-related--faq">
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Порівняння</p><h2>Моделі Weston поруч</h2></div><p>Ключові параметри чотирьох серій. Ціни орієнтовні, за даними виробника, для стартового розміру.</p></div>
+      <div class="piddon-table-wrap">
+        <table class="piddon-table">
+          <thead>
+            <tr>
+              <th scope="col">Модель</th>
+              <th scope="col">Форма</th>
+              <th scope="col">Розміри, мм</th>
+              <th scope="col">Профіль</th>
+              <th scope="col">Навантаження</th>
+              <th scope="col">Антиковзання</th>
+              <th scope="col">Колір</th>
+              <th scope="col">Орієнтовна ціна</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Weston ES-H</th>
+              <td>Прямокутний / квадратний</td>
+              <td>900×900 – 900×1600</td>
+              <td>30 мм</td>
+              <td>до 375 кг</td>
+              <td>Клас 3</td>
+              <td>Білий, графіт</td>
+              <td>від 13 000 грн</td>
+            </tr>
+            <tr>
+              <th scope="row">Weston ES-A</th>
+              <td>Квадратний / прямокутний</td>
+              <td>800×800 – 900×1200</td>
+              <td>30 мм</td>
+              <td>до 375 кг</td>
+              <td>Клас 3</td>
+              <td>Білий, графіт</td>
+              <td>від 11 700 грн</td>
+            </tr>
+            <tr>
+              <th scope="row">Weston WPD-K</th>
+              <td>Квадратний / прямокутний</td>
+              <td>900×900, 1200×900</td>
+              <td>32 мм</td>
+              <td>до 500 кг</td>
+              <td>Не слизька поверхня</td>
+              <td>Білий</td>
+              <td>від 10 500 грн</td>
+            </tr>
+            <tr>
+              <th scope="row">Weston WPD-P</th>
+              <td>П’ятикутний</td>
+              <td>900×900, 1000×1000</td>
+              <td>32 мм</td>
+              <td>до 500 кг</td>
+              <td>Не слизька поверхня</td>
+              <td>Білий</td>
+              <td>від 9 500 грн</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="piddon-note">Комплектація всіх моделей: сифон + декоративна кришка / накладка. Гарантія виробника — 5 років. {priceDisclaimer}</p>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Основа</p><h2>Розміри та варіанти встановлення</h2></div><p>Обидва варіанти робочі — різниця у підготовці підлоги та геометрії входу.</p></div>
+      <div class="category-duo">
+        {baseCards.map((item) => (
+          <article>
+            <h3>{item.name}</h3>
+            <p>{item.text}</p>
+            {item.href && item.linkLabel && <a class="category-arrow-link" href={item.href}>{item.linkLabel}</a>}
+          </article>
+        ))}
+      </div>
+      <dl class="material-thickness">
+        <div><dt>Компактні</dt><dd>800×800, 900×900, 1000×1000 мм — кут або двері.</dd></div>
+        <div><dt>Прямокутні</dt><dd>800×1200, 900×1200, 900×1600 мм — ніша та Walk-In.</dd></div>
+      </dl>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Матеріал</p><h2>Покриття, антиковзання та злив</h2></div><p>Що саме забезпечує безпеку та довговічність піддона зі штучного каменю.</p></div>
+      <div class="material-subblock">
+        <div class="material-grid material-grid--parts">
+          <article><b>Штучний камінь</b><p>Кварцова сировина з мінеральним наповнювачем. Тепліший на дотик за акрил, стійкий до подряпин та побутової хімії, не жовтіє.</p></article>
+          <article><b>Кам’яна текстура</b><p>Матова поверхня з рельєфом натурального сланцю. Приховує краплі та розводи, легко очищається неабразивними засобами.</p></article>
+          <article><b>Антиковзання</b><p>Серія Weston ES — 3 клас протиковзання; моделі WPD не стають слизькими при контакті з водою.</p></article>
+          <article><b>Профіль 30–32 мм</b><p>Тонкий борт дає майже врівень вхід у душ і візуально не перевантажує зону.</p></article>
+          <article><b>Злив і сифон</b><p>Сифон та декоративна кришка з каменю або накладка вже в комплекті. Положення випуску перевіряємо до замовлення.</p></article>
+          <article><b>Навантаження</b><p>375 кг для серії ES та до 500 кг для WPD — запас міцності для щоденного користування.</p></article>
+        </div>
+        <div class="hardware-details">
+          <figure class="hardware-details__item">
+            <img src="/images/catalog/piddony/surface-graphite-480.webp" srcset="/images/catalog/piddony/surface-graphite-480.webp 480w, /images/catalog/piddony/surface-graphite-900.webp 900w" sizes="(max-width: 900px) 90vw, 45vw" alt="Графітовий душовий піддон зі штучного каменю з лінійною декоративною кришкою зливу" width="900" height="1351" loading="lazy" decoding="async" />
+            <figcaption>Кам’яна поверхня та кришка зливу</figcaption>
+          </figure>
+          <figure class="hardware-details__item">
+            <img src="/images/catalog/piddony/drain-detail-480.webp" srcset="/images/catalog/piddony/drain-detail-480.webp 480w, /images/catalog/piddony/drain-detail-900.webp 900w" sizes="(max-width: 900px) 90vw, 45vw" alt="Сифон для душового піддона, що входить у комплект" width="900" height="1351" loading="lazy" decoding="async" />
+            <figcaption>Сифон у комплекті</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Комплект</p><h2>Піддон + скляна душова Space Glass</h2></div><p>Піддон і скло краще узгоджувати одночасно, щоб розміри, двері та точки кріплення не конфліктували.</p></div>
+      <div class="piddon-bundle">
+        <figure class="piddon-bundle__media">
+          <img src="/images/catalog/piddony/bundle-lifestyle-480.webp" srcset="/images/catalog/piddony/bundle-lifestyle-480.webp 480w, /images/catalog/piddony/bundle-lifestyle-900.webp 900w" sizes="(max-width: 900px) 90vw, 45vw" alt="Білий душовий піддон зі штучного каменю зі скляною душовою зоною" width="900" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <div class="piddon-bundle__copy">
+          <p>Коли піддон обраний до заміру скла, скляну перегородку чи двері виготовляють точно під його контур: без зайвих зазорів, з правильним притвором і водовідведенням. Space Glass бере на себе підбір піддона, узгодження геометрії, замір, виготовлення скла та монтаж.</p>
+          <ul class="piddon-bundle__links">
+            {showerLinks.map(([label, href]) => <li><a href={href}>{label}</a></li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Монтаж, замір і доставка</h2></div></div>
+      <div class="category-process__grid">
+        <div><span>01</span><b>Запит</b><small>Фото зони та приблизні розміри</small></div>
+        <div><span>02</span><b>Підбір</b><small>Модель, форма та розмір піддона</small></div>
+        <div><span>03</span><b>Замір</b><small>Перевірка геометрії та зливу</small></div>
+        <div><span>04</span><b>Узгодження</b><small>Піддон + скляна конструкція</small></div>
+        <div><span>05</span><b>Доставка</b><small>По Україні, від виробника</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Київ, Одеса, Львів — за потреби</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Рішення Space Glass</p><h2>Душові зі скла та корисне по темі</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={href}>{label}</a>)}
+      </div>
+    </section>
+
+    <section class="category-section category-seo">
+      <div class="category-seo__grid">
+        <div><p class="eyebrow">Експертно</p><h2>Душові піддони під скляну душову</h2></div>
+        <div class="category-prose">
+          <p>Душовий піддон — це основа мокрої зони, яка тримає ухил до зливу, спрощує гідроізоляцію та задає рівень входу в душ. Піддони зі штучного каменю поєднують міцність мінерального наповнювача з приємною матовою поверхнею: вони не бояться подряпин і побутової хімії, не жовтіють з часом і мають виразну кам’яну текстуру, яка приховує краплі води.</p>
+          <p>Форму піддона обирають за плануванням. Квадратні моделі 800×800–900×900 мм ставлять у кут або під душові двері, прямокутні 900×1200–900×1600 мм — у нішу та під Walk-In перегородку, п’ятикутні зі скошеною гранню економлять простір у невеликій ванній. Тонкий профіль 30–32 мм робить вхід майже врівень з підлогою, а сифон і декоративна кришка вже входять у комплект — окремо їх купувати не потрібно.</p>
+          <p>Найкращий сценарій — підбирати піддон і скляну конструкцію разом. Тоді розміри полотна, положення дверей, притвор і точки кріплення розраховують під фактичний контур піддона. Space Glass узгоджує піддон зі скляною перегородкою, дверима чи кабіною, виконує замір, виготовлення та монтаж у Києві, Одесі та Львові, а готові піддони доставляє по Україні від виробника.</p>
+        </div>
+      </div>
+    </section>
+
+    <div id="price">
+      <PriceBlock
+        heading="Вартість піддона зі скляною душовою"
+        kicker="Орієнтир для стартової комплектації"
+        amount="піддон — орієнтовно від 9 500 грн"
+        amountNote="Ціна піддона залежить від моделі, розміру, форми та кольору (дані виробника Weston). Скляну душову конструкцію розраховуємо окремо за фактичними розмірами зони."
+        bullets={[
+          'Піддон Weston — готова основа з сифоном і антиковзанням у комплекті.',
+          'Скляна перегородка, двері або кабіна — виготовлення під контур піддона.',
+          'Замір, доставка та монтаж — узгоджуються за містом і об’єктом.'
+        ]}
+        ctaLabel="Розрахувати піддон і скло"
+        ctaHref="/contacts/#contact-form"
+        factorsTitle="Що впливає на вартість"
+        factors={[
+          ['Модель піддона', 'Серія, матеріал і запас навантаження'],
+          ['Розмір і форма', 'Квадрат, прямокутник або п’ятикутник'],
+          ['Колір', 'Білий або графіт (де доступно)'],
+          ['Скло та монтаж', 'Конструкція душової та умови об’єкта']
+        ]}
+      />
+    </div>
+
+    <section class="category-section category-section--faq">
       <FAQBlock
-        title="FAQ про душову Walk-in: ціна, монтаж, скло та замовлення"
-        intro="Відповідаємо на найпоширеніші питання про розміри, скло, профіль, монтаж, доставку та гарантію."
+        title="FAQ про душові піддони: ціна, розміри, матеріал, монтаж"
+        intro="Відповідаємо на основні питання про піддони зі штучного каменю, форму, розмір, антиковзання, сифон, доставку та сумісність зі скляною душовою."
         items={faq}
         visibleCount={6}
+        expandTo={faq.length}
       />
     </section>
 
-    <section id="product-request" class="inner-cta">
-      <div><p class="eyebrow eyebrow--light">Розрахунок</p><h2>Надішліть розмір або фото душової зони</h2><p>Підготуємо попередню комплектацію та вартість.</p></div>
-      <a class="button button--white" href="mailto:info@space-glass.com.ua">Надіслати запит</a>
+    <section id="category-request" class="inner-cta">
+      <div><p class="eyebrow eyebrow--light">Заявка</p><h2>Потрібен піддон під скляну душову?</h2><p>Надішліть фото душової зони та приблизні розміри — підберемо модель піддона за формою й розміром і врахуємо його у скляній конструкції.</p></div>
+      <a class="button button--white" href="/contacts/#contact-form">Отримати розрахунок</a>
     </section>
   </main>
   <Footer />
 </div>
-<script type="module">
-  import { getUsdRate } from '../../pricing/client/exchange-rate.js';
-  import { calculatePrice } from '../../pricing/client/engine.js';
-
-  const gallery = document.querySelector('[data-product-gallery]');
-
-  if (gallery) {
-    const main = gallery.querySelector('[data-gallery-main]');
-    const lightbox = gallery.querySelector('[data-product-lightbox]');
-    const lightboxImage = gallery.querySelector('[data-lightbox-image]');
-    const summary = document.querySelector('[data-config-summary]');
-    const configurator = document.querySelector('[data-configurator]');
-    const widthInput = document.querySelector('[data-config-width]');
-    const heightInput = document.querySelector('[data-config-height]');
-    const priceOutput = document.querySelector('[data-config-price]');
-    const priceUsdOutput = document.querySelector('[data-config-price-usd]');
-    const pricingCard = document.querySelector('[data-pricing-card]');
-    const quoteLink = document.querySelector('[data-quote-link]');
-    const addToProjectButton = document.querySelector('[data-add-to-project]');
-    const addToCompareButton = document.querySelector('[data-add-to-compare]');
-    const projectFeedback = document.querySelector('[data-project-feedback]');
-
-    const safeNumber = (value, fallback = 0) => {
-      const parsed = Number(value);
-      return Number.isFinite(parsed) ? parsed : fallback;
-    };
-
-    const productUsdM2 = safeNumber(pricingCard?.dataset.productUsdM2, 150);
-    const installationUsdM2 = safeNumber(pricingCard?.dataset.installationUsdM2, 60);
-    const rateMarkup = safeNumber(pricingCard?.dataset.rateMarkup, 0.8);
-    const fallbackRate = safeNumber(pricingCard?.dataset.fallbackRate, 43.5);
-
-    let exchange = {
-      nbuRate: fallbackRate,
-      markup: rateMarkup,
-      workingRate: fallbackRate + rateMarkup,
-      source: 'fallback',
-    };
-    let lastCalculation = null;
-
-    const formatUah = (value) =>
-      `${Math.round(safeNumber(value)).toLocaleString('uk-UA')} грн`;
-
-    const formatUsd = (value) =>
-      `${Number(value).toLocaleString('uk-UA', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2,
-      })} $`;
-
-    const formatArea = (value) =>
-      `${Number(value).toLocaleString('uk-UA', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })} м²`;
-
-    const getActive = (group) =>
-      configurator?.querySelector(`[data-option-group="${group}"].is-active`);
-
-    const updateConfiguration = () => {
-      const width = Math.max(500, Number(widthInput?.value || 1000));
-      const height = Math.max(1500, Number(heightInput?.value || 2000));
-
-      const type = getActive('type');
-      const color = getActive('color');
-      const glass = getActive('glass');
-      const thickness = getActive('thickness');
-      const handle = getActive('handle');
-      const mounting = getActive('mounting');
-
-      const modifiers = [
-        Number(type?.dataset.price || 1),
-        Number(color?.dataset.price || 1),
-        Number(glass?.dataset.price || 1),
-        Number(thickness?.dataset.price || 1),
-        Number(handle?.dataset.price || 1),
-      ];
-
-      const installation = mounting?.dataset.installation === 'true';
-
-      lastCalculation = calculatePrice({
-        widthMm: width,
-        heightMm: height,
-        productUsdM2,
-        installationUsdM2,
-        installation,
-        modifiers,
-        usdRateUah: exchange.workingRate,
-      });
-
-      const values = [
-        type?.dataset.value,
-        `${width} × ${height} мм`,
-        color?.dataset.value,
-        glass?.dataset.value,
-        thickness?.dataset.value,
-        handle?.dataset.value,
-        mounting?.dataset.value,
-      ].filter(Boolean);
-
-      if (summary) summary.textContent = 'Попередня ціна';
-      if (priceOutput) {
-        priceOutput.textContent = formatUah(lastCalculation.totalUah);
-      }
-      if (priceUsdOutput) {
-        priceUsdOutput.textContent =
-          `≈ ${formatUsd(lastCalculation.subtotalUsd)}`;
-      }
-
-      if (quoteLink) {
-        const priceDetails = {
-          areaM2: lastCalculation.areaM2,
-          productUsdM2,
-          installationUsdM2,
-          productUsd: lastCalculation.productUsd,
-          installationUsd: lastCalculation.installationUsd,
-          usdRateUah: lastCalculation.usdRateUah,
-          totalUah: lastCalculation.totalUah,
-        };
-
-        quoteLink.href =
-          `/contacts/#contact-form?product=${encodeURIComponent('Walk-in Premium Black')}` +
-          `&config=${encodeURIComponent(values.join(' · '))}` +
-          `&price=${encodeURIComponent(formatUah(lastCalculation.totalUah))}` +
-          `&pricing=${encodeURIComponent(JSON.stringify(priceDetails))}`;
-      }
-    };
-
-    const readStorage = (key, fallback) => {
-      try {
-        return JSON.parse(
-          localStorage.getItem(key) || JSON.stringify(fallback)
-        );
-      } catch {
-        return fallback;
-      }
-    };
-
-    const currentItem = () => ({
-      id: `walk-in-premium-black-${Date.now()}`,
-      slug: 'walk-in-premium-black',
-      name: 'Walk-in Premium Black',
-      category: 'Душові кабіни',
-      categoryKey: 'shower',
-      image: main?.src || '/images/s20/product-main.webp',
-      configuration:
-        summary?.textContent || 'Індивідуальна конфігурація',
-      price: Math.round(lastCalculation?.totalUah || 0),
-      quantity: 1,
-      pricing: lastCalculation
-        ? {
-            ...lastCalculation,
-            productUsdM2,
-            installationUsdM2,
-            nbuRate: exchange.nbuRate,
-            rateMarkup: exchange.markup,
-            rateSource: exchange.source,
-          }
-        : null,
-      specs: {
-        type: getActive('type')?.dataset.value || 'Walk-in',
-        size:
-          `${widthInput?.value || 1000} × ` +
-          `${heightInput?.value || 2000} мм`,
-        color: getActive('color')?.dataset.value || 'Black',
-        glass: getActive('glass')?.dataset.value || 'Прозоре',
-        thickness:
-          getActive('thickness')?.dataset.value || '8 мм',
-        handle: getActive('handle')?.dataset.value || 'Стандартна',
-        mounting:
-          getActive('mounting')?.dataset.value || 'Без монтажу',
-      },
-    });
-
-    gallery
-      .querySelectorAll('[data-gallery-thumb]')
-      .forEach((thumb) => {
-        thumb.addEventListener('click', () => {
-          gallery
-            .querySelectorAll('[data-gallery-thumb]')
-            .forEach((item) => item.classList.remove('is-active'));
-
-          thumb.classList.add('is-active');
-          main.classList.add('is-changing');
-
-          setTimeout(() => {
-            main.src = thumb.dataset.src;
-            main.alt = thumb.dataset.alt;
-            lightboxImage.src = thumb.dataset.src;
-            lightboxImage.alt = thumb.dataset.alt;
-            main.classList.remove('is-changing');
-          }, 110);
-        });
-      });
-
-    gallery
-      .querySelector('[data-gallery-open]')
-      ?.addEventListener('click', () => lightbox?.showModal());
-
-    gallery
-      .querySelector('[data-gallery-close]')
-      ?.addEventListener('click', () => lightbox?.close());
-
-    lightbox?.addEventListener('click', (event) => {
-      if (event.target === lightbox) lightbox.close();
-    });
-
-    configurator?.addEventListener('click', (event) => {
-      const option = event.target.closest('.option[data-option-group]');
-      if (!option || !configurator.contains(option)) return;
-
-      const group = option.dataset.optionGroup;
-      if (!group) return;
-
-      configurator
-        .querySelectorAll(`[data-option-group="${group}"]`)
-        .forEach((item) => {
-          item.classList.toggle('is-active', item === option);
-          item.setAttribute('aria-pressed', item === option ? 'true' : 'false');
-        });
-
-      updateConfiguration();
-    });
-
-    widthInput?.addEventListener('input', updateConfiguration);
-    heightInput?.addEventListener('input', updateConfiguration);
-
-    document
-      .querySelectorAll('.configurator-step__title')
-      .forEach((button) => {
-        button.addEventListener('click', () => {
-          const step = button.closest('.configurator-step');
-          step?.classList.toggle('is-open');
-
-          const icon = button.querySelector('i');
-          if (icon && step) {
-            icon.textContent =
-              step.classList.contains('is-open') ? '−' : '+';
-          }
-        });
-      });
-
-    const activateOption = (group, value) => {
-      configurator
-        ?.querySelectorAll(`[data-option-group="${group}"]`)
-        .forEach((item) => {
-          item.classList.toggle(
-            'is-active',
-            item.dataset.value === value
-          );
-        });
-    };
-
-    document.querySelectorAll('[data-preset]').forEach((preset) => {
-      preset.addEventListener('click', () => {
-        document
-          .querySelectorAll('[data-preset]')
-          .forEach((item) => item.classList.remove('is-active'));
-
-        preset.classList.add('is-active');
-        const key = preset.dataset.preset;
-
-        if (key === 'basic') {
-          activateOption('type', 'Walk-in');
-          activateOption('color', 'Black');
-          activateOption('glass', 'Прозоре');
-          activateOption('thickness', '8 мм');
-          activateOption('handle', 'Стандартна');
-          activateOption('mounting', 'Без монтажу');
-          widthInput.value = 1000;
-          heightInput.value = 2000;
-        }
-
-        if (key === 'premium') {
-          activateOption('type', 'Кутова');
-          activateOption('color', 'Graphite');
-          activateOption('glass', 'Тоноване');
-          activateOption('thickness', '10 мм');
-          activateOption('handle', 'Преміум');
-          activateOption('mounting', 'З монтажем');
-          widthInput.value = 1200;
-          heightInput.value = 2100;
-        }
-
-        if (key === 'business') {
-          activateOption('type', 'У нішу');
-          activateOption('color', 'Chrome');
-          activateOption('glass', 'Матове');
-          activateOption('thickness', '10 мм');
-          activateOption('handle', 'Прихована');
-          activateOption('mounting', 'З монтажем');
-          widthInput.value = 1400;
-          heightInput.value = 2200;
-        }
-
-        updateConfiguration();
-      });
-    });
-
-    addToProjectButton?.addEventListener('click', () => {
-      updateConfiguration();
-      const project = readStorage(
-        'spaceGlassProject',
-        { items: [], note: '' }
-      );
-
-      if (!Array.isArray(project.items)) project.items = [];
-      project.items.push(currentItem());
-      localStorage.setItem(
-        'spaceGlassProject',
-        JSON.stringify(project)
-      );
-      window.dispatchEvent(
-        new Event('space-glass-project-updated')
-      );
-
-      if (projectFeedback) {
-        projectFeedback.hidden = false;
-        projectFeedback.innerHTML =
-          'Товар додано до проєкту. ' +
-          '<a href="/cart/">Відкрити проєкт →</a>';
-      }
-
-      addToProjectButton.textContent = 'Додано ✓';
-      addToProjectButton.classList.add('is-added');
-
-      setTimeout(() => {
-        addToProjectButton.textContent = 'Додати до проєкту';
-        addToProjectButton.classList.remove('is-added');
-      }, 2200);
-    });
-
-    addToCompareButton?.addEventListener('click', () => {
-      updateConfiguration();
-      const compare = readStorage(
-        'spaceGlassCompare',
-        { items: [] }
-      );
-      if (!Array.isArray(compare.items)) compare.items = [];
-
-      const item = currentItem();
-      const exists = compare.items.some(
-        (existing) =>
-          existing.slug === item.slug &&
-          existing.configuration === item.configuration
-      );
-
-      if (!exists) compare.items.push(item);
-      compare.items = compare.items.slice(-4);
-      localStorage.setItem(
-        'spaceGlassCompare',
-        JSON.stringify(compare)
-      );
-      window.dispatchEvent(
-        new Event('space-glass-compare-updated')
-      );
-
-      if (projectFeedback) {
-        projectFeedback.hidden = false;
-        projectFeedback.innerHTML = exists
-          ? 'Ця конфігурація вже є у порівнянні. ' +
-            '<a href="/compare/">Відкрити →</a>'
-          : 'Додано до порівняння. ' +
-            '<a href="/compare/">Порівняти товари →</a>';
-      }
-
-      addToCompareButton.textContent =
-        exists ? 'Вже у порівнянні' : 'Додано ✓';
-
-      setTimeout(() => {
-        addToCompareButton.textContent = 'Порівняти';
-      }, 2200);
-    });
-
-    updateConfiguration();
-
-    const loadedExchange = await getUsdRate({
-      markup: rateMarkup,
-      fallbackRate,
-      cacheHours: 24,
-    });
-    exchange = {
-      nbuRate: safeNumber(loadedExchange?.nbuRate, fallbackRate),
-      markup: safeNumber(loadedExchange?.markup, rateMarkup),
-      workingRate: safeNumber(loadedExchange?.workingRate, fallbackRate + rateMarkup),
-      source: loadedExchange?.source || 'fallback',
-    };
-    updateConfiguration();
-  }
-</script>
 
 <style>
-/* Page-only configurator state styles */
-.configurator-presets button:hover,
-.configurator-presets button.is-active{
-  border-color:var(--mint-dark);
-  background:#edf8f3;
-  color:#0b5d43;
-}
-.configurator-progress span.is-active{
-  border-color:var(--mint-dark);
-  color:var(--mint-dark);
-}
-.configurator-step.is-open{
-  padding-bottom:16px!important;
-}
-.configurator-step.is-open > .option-row,
-.configurator-step.is-open > span,
-.configurator-step.is-open > .product-dimensions{
-  display:flex;
-  margin-left:14px;
-  margin-right:14px;
-}
-.configurator-step.is-open > span{
-  margin-top:14px;
-}
-.configurator-step.is-open > .product-dimensions{
-  display:grid;
-}
-</style>
+  /* Piddon catalog — scoped page styles built on existing Space Glass tokens
+     (--green-line, --mint, --mint-dark, --muted, --text, --radius). No new
+     global rules; mirrors the .catalog-card / category-pages card rhythm. */
+  .piddon-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+  }
+  .piddon-card{
+    display:flex;
+    flex-direction:column;
+    border:1px solid var(--green-line);
+    border-radius:16px;
+    overflow:hidden;
+    background:#fff;
+  }
+  .piddon-card__media{
+    position:relative;
+    aspect-ratio:16/11;
+    background:#eef4f1;
+  }
+  .piddon-card--dark .piddon-card__media{background:#17171a}
+  .piddon-card__media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .piddon-card__shape{
+    position:absolute;
+    left:14px;
+    bottom:14px;
+    padding:6px 11px;
+    border-radius:999px;
+    background:rgba(255,255,255,.92);
+    color:var(--text);
+    font-size:.78rem;
+    font-weight:700;
+    line-height:1;
+  }
+  .piddon-card__body{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    padding:24px;
+  }
+  .piddon-card__body h3{margin:0}
+  .piddon-card__blurb{
+    margin:0;
+    color:var(--muted);
+    font-size:.95rem;
+    line-height:1.55;
+  }
+  .piddon-card__price{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    margin:2px 0 0;
+  }
+  .piddon-card__price strong{font-size:1.15rem;letter-spacing:-.01em}
+  .piddon-card__price span{color:var(--muted);font-size:.82rem}
+  .piddon-card__specs{
+    display:grid;
+    gap:0;
+    margin:4px 0 0;
+    border-top:1px solid var(--green-line);
+  }
+  .piddon-card__specs div{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    padding:11px 0;
+    border-bottom:1px solid var(--green-line);
+  }
+  .piddon-card__specs dt{color:var(--muted);font-size:.88rem}
+  .piddon-card__specs dd{margin:0;font-weight:700;font-size:.88rem}
+  .piddon-card__meta{margin:0;font-size:.88rem;color:var(--text)}
+  .piddon-card__meta b{color:var(--muted);font-weight:700}
+  .piddon-card__cta{margin-top:8px;text-align:center}
+  .piddon-note{
+    margin:22px 0 0;
+    color:var(--muted);
+    font-size:.86rem;
+    line-height:1.6;
+    max-width:80ch;
+  }
 
+  .category-icon-card--static{min-height:0;padding:24px;cursor:default}
+  .category-icon-card--static:hover{transform:none;border-color:var(--green-line);box-shadow:none}
+  .category-icon-card--static h3{margin:0 0 10px}
+
+  .piddon-table-wrap{
+    overflow-x:auto;
+    border:1px solid var(--green-line);
+    border-radius:16px;
+    background:#fff;
+  }
+  .piddon-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:.9rem;
+    min-width:760px;
+  }
+  .piddon-table th,
+  .piddon-table td{
+    padding:14px 16px;
+    text-align:left;
+    border-bottom:1px solid var(--green-line);
+    vertical-align:top;
+  }
+  .piddon-table thead th{
+    background:#f3fbf7;
+    font-size:.78rem;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--mint-dark);
+  }
+  .piddon-table tbody th{font-weight:800}
+  .piddon-table tbody tr:last-child th,
+  .piddon-table tbody tr:last-child td{border-bottom:0}
+
+  .piddon-bundle{
+    display:grid;
+    grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+    gap:40px;
+    align-items:center;
+  }
+  .piddon-bundle__media{
+    margin:0;
+    border:1px solid var(--green-line);
+    border-radius:16px;
+    overflow:hidden;
+    background:#eef4f1;
+  }
+  .piddon-bundle__media img{display:block;width:100%;height:100%;object-fit:cover}
+  .piddon-bundle__copy p{margin:0 0 18px;color:var(--muted);line-height:1.7}
+  .piddon-bundle__links{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+  .piddon-bundle__links a{
+    display:block;
+    padding:14px 16px;
+    border:1px solid var(--green-line);
+    border-radius:12px;
+    color:var(--text);
+    font-weight:700;
+    font-size:.9rem;
+    line-height:1.4;
+  }
+  .piddon-bundle__links a:hover,
+  .piddon-bundle__links a:focus-visible{border-color:var(--mint-dark);background:#f3fbf7}
+
+  @media(max-width:1100px){
+    .piddon-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media(max-width:900px){
+    .piddon-bundle{grid-template-columns:1fr;gap:24px}
+    .piddon-bundle__links{grid-template-columns:1fr}
+  }
+  @media(max-width:700px){
+    .piddon-grid{grid-template-columns:1fr}
+    .piddon-card__body{padding:20px}
+  }
+</style>
 </BaseLayout>
