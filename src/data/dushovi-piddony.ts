@@ -210,7 +210,7 @@ const piddonySeriesRuCopy: Record<string, Pick<PiddonSeries,
   'publicName' | 'formatBadge' | 'formatsLabel' | 'formatsShort' | 'blurb' | 'material' | 'antiSlip' | 'kit'
 > & { comparisonAntiSlip?: string; imageAlts: string[] }> = {
   s1: {
-    publicName: 'Душевой поддон из искусственного мрамора',
+    publicName: 'Душевой поддон из камня',
     formatBadge: 'квадратный, прямоугольный',
     formatsLabel: 'Доступные форматы: квадратный, прямоугольный',
     formatsShort: 'Квадратный, прямоугольный',
