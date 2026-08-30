@@ -17,7 +17,43 @@ const items = trustBarItems[locale];
 <section class="sg-trustbar" aria-label="Переваги Space Glass">
   {items.map(([title, text, icon]) => (
     <div class="sg-trustbar__item">
-      <span class="sg-trustbar__icon" aria-hidden="true">{icon}</span>
+      <span class="sg-trustbar__icon" aria-hidden="true">
+        {icon === 'shield-check' ? (
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3.5 18.5 6v5.4c0 4.2-2.6 7.7-6.5 9.1-3.9-1.4-6.5-4.9-6.5-9.1V6L12 3.5Z"
+              stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="m9.2 11.9 1.8 1.8 3.8-4"
+              stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        ) : icon === 'factory' ? (
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 20V10l5 3V9l5 3V6l6 3v11H4Z"
+              stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M7 20v-3h3v3M14 16h2M18 16h1"
+              stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        ) : icon === 'truck' ? (
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 6h11v10H3V6Z"
+              stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M14 10h4l3 3v3h-7v-6Z"
+              stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <circle cx="7" cy="18" r="1.7"
+              stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="18" cy="18" r="1.7"
+              stroke="currentColor" stroke-width="1.6"/>
+          </svg>
+        ) : icon === 'custom-design' ? (
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 19 17.5 6.5 20 9 7.5 21H5v-2Z"
+              stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M14.5 9.5 17 12"
+              stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M4 5h7M4 9h4"
+              stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        ) : icon}
+      </span>
       <div>
         <strong>{title}</strong>
         <small>{text}</small>
@@ -63,6 +99,12 @@ const items = trustBarItems[locale];
     font-size:31px;
     font-weight:400;
     line-height:1;
+  }
+
+  .sg-trustbar__icon svg{
+    display:block;
+    width:1em;
+    height:1em;
   }
 
   .sg-trustbar__item div{
