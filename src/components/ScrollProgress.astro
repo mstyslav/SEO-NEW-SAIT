@@ -1,0 +1,451 @@
+---
+---
+
+<button
+  class="sg-scroll-progress"
+  type="button"
+  aria-label="Повернутися на початок сторінки"
+  title="Вгору"
+  data-scroll-progress
+>
+  <svg
+    class="sg-scroll-progress__ring"
+    viewBox="0 0 48 48"
+    aria-hidden="true"
+  >
+    <circle
+      class="sg-scroll-progress__track"
+      cx="24"
+      cy="24"
+      r="21"
+    />
+    <circle
+      class="sg-scroll-progress__value"
+      cx="24"
+      cy="24"
+      r="21"
+      pathLength="100"
+    />
+  </svg>
+
+  <svg
+    class="sg-scroll-progress__arrow"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
+    <path d="M12 18V6M7.5 10.5 12 6l4.5 4.5" />
+  </svg>
+</button>
+
+<style>
+  .sg-scroll-progress {
+    --sg-progress: 0;
+
+    position: fixed;
+    right: max(22px, env(safe-area-inset-right));
+    bottom: max(24px, env(safe-area-inset-bottom));
+    z-index: 90;
+
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+
+    display: grid;
+    place-items: center;
+
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow:
+      0 8px 30px rgba(21, 49, 42, 0.10),
+      0 2px 8px rgba(21, 49, 42, 0.06);
+
+    color: #1f2c28;
+    cursor: pointer;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px) scale(.96);
+
+    transition:
+      opacity .22s ease,
+      visibility .22s ease,
+      transform .22s ease,
+      box-shadow .2s ease;
+
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .sg-scroll-progress.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  .sg-scroll-progress:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 12px 34px rgba(21, 49, 42, 0.14),
+      0 3px 10px rgba(21, 49, 42, 0.08);
+  }
+
+  .sg-scroll-progress__ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    overflow: visible;
+  }
+
+  .sg-scroll-progress__track,
+  .sg-scroll-progress__value {
+    fill: none;
+    stroke-width: 2.25;
+  }
+
+  .sg-scroll-progress__track {
+    stroke: rgba(112, 200, 174, .16);
+  }
+
+  .sg-scroll-progress__value {
+    stroke: #70c8ae;
+    stroke-linecap: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: calc(100 - var(--sg-progress));
+    transition: stroke-dashoffset .08s linear;
+  }
+
+  .sg-scroll-progress__arrow {
+    position: relative;
+    width: 19px;
+    height: 19px;
+  }
+
+  .sg-scroll-progress__arrow path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .sg-scroll-progress:focus-visible {
+    outline: 2px solid #70c8ae;
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 700px) {
+    .sg-scroll-progress {
+      right: max(14px, env(safe-area-inset-right));
+      bottom: max(18px, env(safe-area-inset-bottom));
+      width: 46px;
+      height: 46px;
+    }
+
+    .sg-scroll-progress__arrow {
+      width: 17px;
+      height: 17px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sg-scroll-progress,
+    .sg-scroll-progress__value {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const initScrollProgress = () => {
+    const button = document.querySelector('[data-scroll-progress]');
+
+    if (!(button instanceof HTMLButtonElement)) return;
+    if (button.dataset.ready === 'true') return;
+
+    button.dataset.ready = 'true';
+
+    let ticking = false;
+    let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
+    let scrollDirection = 'up';
+
+    const arrowPath = button.querySelector('.sg-scroll-progress__arrow path');
+
+    const setDirection = (direction) => {
+      if (direction === scrollDirection) return;
+
+      scrollDirection = direction;
+
+      if (arrowPath instanceof SVGPathElement) {
+        arrowPath.setAttribute(
+          'd',
+          direction === 'down'
+            ? 'M12 6v12M7.5 13.5 12 18l4.5-4.5'
+            : 'M12 18V6M7.5 10.5 12 6l4.5 4.5'
+        );
+      }
+
+      button.dataset.direction = direction;
+    };
+
+    const update = () => {
+      const root = document.documentElement;
+      const scrollTop = window.scrollY || root.scrollTop;
+      const scrollable = root.scrollHeight - window.innerHeight;
+
+      const delta = scrollTop - lastScrollTop;
+
+      // Ignore tiny trackpad/touch jitter.
+      if (Math.abs(delta) > 3) {
+        setDirection(delta > 0 ? 'down' : 'up');
+        lastScrollTop = scrollTop;
+      }
+
+      const progress = scrollable > 0
+        ? Math.min(100, Math.max(0, (scrollTop / scrollable) * 100))
+        : 0;
+
+      button.style.setProperty('--sg-progress', progress.toFixed(2));
+
+      const usefulPage = scrollable > 500;
+      const shouldShow = usefulPage && scrollTop > 180;
+
+      button.classList.toggle('is-visible', shouldShow);
+
+      ticking = false;
+    };
+
+    const requestUpdate = () => {
+      if (ticking) return;
+
+      ticking = true;
+      window.requestAnimationFrame(update);
+    };
+
+    button.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'auto'
+          : 'smooth'
+      });
+    });
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate, { passive: true });
+
+    update();
+  };
+
+  initScrollProgress();
+
+  document.addEventListener('astro:page-load', initScrollProgress);
+</script>
+
+<style>
+/* SPACE GLASS SCROLL PROGRESS — PREMIUM VISUAL */
+
+.sg-scroll-progress {
+  width: 58px !important;
+  height: 58px !important;
+
+  background:
+    radial-gradient(
+      circle at 35% 25%,
+      rgba(255,255,255,.14) 0%,
+      rgba(255,255,255,.04) 24%,
+      transparent 48%
+    ),
+    rgba(17, 29, 26, .94) !important;
+
+  border: 1px solid rgba(255,255,255,.14) !important;
+
+  color: #ffffff !important;
+
+  box-shadow:
+    0 0 0 5px rgba(112,200,174,.06),
+    0 8px 24px rgba(10,30,25,.20),
+    0 2px 7px rgba(10,30,25,.14),
+    inset 0 1px 0 rgba(255,255,255,.13) !important;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  transition:
+    opacity .22s ease,
+    visibility .22s ease,
+    transform .28s cubic-bezier(.2,.8,.2,1),
+    box-shadow .28s ease !important;
+}
+
+/* subtle glass halo */
+.sg-scroll-progress::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  pointer-events: none;
+
+  border: 1px solid rgba(255,255,255,.07);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.08),
+      transparent 42%
+    );
+}
+
+/* mint atmospheric glow */
+.sg-scroll-progress::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+
+  background: rgba(112,200,174,.12);
+  filter: blur(9px);
+
+  opacity: .55;
+  transform: scale(.88);
+
+  transition:
+    opacity .3s ease,
+    transform .3s ease;
+}
+
+.sg-scroll-progress.is-visible::after {
+  animation: sgProgressGlow 3.2s ease-in-out infinite;
+}
+
+.sg-scroll-progress__track {
+  stroke: rgba(255,255,255,.13) !important;
+  stroke-width: 2.7 !important;
+}
+
+.sg-scroll-progress__value {
+  stroke: #70c8ae !important;
+  stroke-width: 3 !important;
+  stroke-linecap: round !important;
+
+  filter:
+    drop-shadow(0 0 2px rgba(112,200,174,.8))
+    drop-shadow(0 0 5px rgba(112,200,174,.28));
+}
+
+.sg-scroll-progress__arrow {
+  width: 20px !important;
+  height: 20px !important;
+
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.20));
+
+  transition:
+    transform .28s cubic-bezier(.2,.8,.2,1);
+}
+
+.sg-scroll-progress__arrow path {
+  stroke-width: 1.8 !important;
+}
+
+/* Desktop interaction */
+@media (hover:hover) and (pointer:fine) {
+  .sg-scroll-progress:hover {
+    transform: translateY(-4px) scale(1.055) !important;
+
+    box-shadow:
+      0 0 0 6px rgba(112,200,174,.09),
+      0 13px 34px rgba(10,30,25,.25),
+      0 3px 9px rgba(10,30,25,.14),
+      inset 0 1px 0 rgba(255,255,255,.16) !important;
+  }
+
+  .sg-scroll-progress:hover::after {
+    opacity: .9;
+    transform: scale(1.04);
+  }
+
+  .sg-scroll-progress:hover .sg-scroll-progress__arrow {
+    transform: translateY(-2px);
+  }
+}
+
+.sg-scroll-progress:active {
+  transform: scale(.94) !important;
+}
+
+/* restrained breathing effect */
+@keyframes sgProgressGlow {
+  0%, 100% {
+    opacity: .42;
+    transform: scale(.86);
+  }
+
+  50% {
+    opacity: .72;
+    transform: scale(1);
+  }
+}
+
+/* MOBILE */
+@media (max-width:700px) {
+  .sg-scroll-progress {
+    width: 52px !important;
+    height: 52px !important;
+
+    right: max(14px, env(safe-area-inset-right)) !important;
+    bottom: max(18px, env(safe-area-inset-bottom)) !important;
+
+    box-shadow:
+      0 0 0 4px rgba(112,200,174,.055),
+      0 7px 20px rgba(10,30,25,.18),
+      0 2px 6px rgba(10,30,25,.12),
+      inset 0 1px 0 rgba(255,255,255,.12) !important;
+  }
+
+  .sg-scroll-progress__arrow {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion:reduce) {
+  .sg-scroll-progress.is-visible::after {
+    animation: none !important;
+  }
+}
+</style>
+
+<style>
+/* SPACE GLASS SCROLL DIRECTION */
+.sg-scroll-progress__arrow {
+  transition: transform .26s cubic-bezier(.2,.8,.2,1) !important;
+}
+
+.sg-scroll-progress[data-direction="down"] .sg-scroll-progress__arrow {
+  animation: sgArrowDown .32s cubic-bezier(.2,.8,.2,1);
+}
+
+.sg-scroll-progress[data-direction="up"] .sg-scroll-progress__arrow {
+  animation: sgArrowUp .32s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes sgArrowDown {
+  0%   { transform: translateY(-2px); opacity:.55; }
+  100% { transform: translateY(0); opacity:1; }
+}
+
+@keyframes sgArrowUp {
+  0%   { transform: translateY(2px); opacity:.55; }
+  100% { transform: translateY(0); opacity:1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sg-scroll-progress__arrow {
+    animation: none !important;
+  }
+}
+</style>

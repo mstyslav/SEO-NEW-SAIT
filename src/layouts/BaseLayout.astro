@@ -52,6 +52,7 @@ const schema = jsonLdGraph([
 ]);
 const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
 const availableAlternateLocales = alternateLocales ?? supportedLocales;
+import ScrollProgress from '../components/ScrollProgress.astro';
 ---
 <!doctype html>
 <html lang={resolvedLocale}>
@@ -113,5 +114,6 @@ const availableAlternateLocales = alternateLocales ?? supportedLocales;
     </script>
     <script src="/js/i18n-client.js" defer></script>
     <script src="/js/forms.js" defer></script>
+      <ScrollProgress />
   </body>
 </html>
