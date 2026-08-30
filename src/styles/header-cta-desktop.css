@@ -1,8 +1,19 @@
 /*
  * Desktop header CTA geometry.
  * UA and RU must keep exactly the same button size.
+ *
+ * Scoped to exactly the range where global.css's own Header rules
+ * (the "Sprint 33" block) keep the CTA visible: it's hidden entirely at
+ * max-width:1450px there. This file previously started at min-width:981px,
+ * which overlapped that hidden range — both rules are `!important` and
+ * equal specificity, so whichever one happened to load later in a given
+ * page's bundle won, meaning the CTA could render at a fixed 190px on one
+ * page and stay display:none on another at the *same* viewport width. That
+ * was the real source of the header's right side visibly moving between
+ * pages. Keeping the two ranges non-overlapping removes the conflict
+ * instead of adding another override on top of it.
  */
-@media (min-width: 981px) {
+@media (min-width: 1451px) {
   .sg-header .sg-header-cta {
     width: 190px !important;
     min-width: 190px !important;
