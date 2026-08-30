@@ -74,17 +74,17 @@ export default function aboutCriticalCss() {
           const firstLinkIndex = html.indexOf(matches[0][0]);
           html = html.slice(0, firstLinkIndex) + styleTag + html.slice(firstLinkIndex);
 
-          html = html.replace(STYLESHEET_LINK_RE, (full, href) => {
-            // Desktop needs the complete layout CSS before first paint.
-            // Mobile uses the verified inline critical CSS and loads the
-            // full stylesheet asynchronously.
-            return (
-              `<link rel="stylesheet" href="${href}" media="(min-width: 761px)">` +
-              `<link rel="preload" as="style" href="${href}" media="(max-width: 760px)" ` +
-              `onload="this.onload=null;this.rel='stylesheet'">` +
-              `<noscript><link rel="stylesheet" href="${href}"></noscript>`
-            );
-          });
+          // Defer via preload+onload at every width (deferStylesheet). The
+          // earlier media="(min-width:761px)" / preload media="(max-width:760px)"
+          // split left the page with only the inline critical subset when the
+          // viewport crossed below 761px AFTER load (resize, device rotation,
+          // browser zoom, tablet split-view): the media="(max-width:760px)"
+          // preload is not fetched while its media is unmatched, so its onload
+          // never fires and rel never flips to "stylesheet" — the full
+          // stylesheet then never applies, blowing up decorative SVGs and the
+          // header. This width-independent form matches the
+          // catalog/knowledge/contacts/homepage/projects integrations.
+          html = html.replace(STYLESHEET_LINK_RE, (full, href) => deferStylesheet(href));
 
           fs.writeFileSync(pagePath, html);
         }
