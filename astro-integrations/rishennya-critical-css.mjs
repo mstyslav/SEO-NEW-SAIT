@@ -94,8 +94,17 @@ export default function rishennyaCriticalCss() {
           const inlineTag = `<style ${MARKER}>${commonCriticalCss}</style>` +
             `<style ${PAGE_MARKER}>${generatedRishennyaCss}</style>`;
           const baseLayoutHref = baseLayoutLink[1];
+          /*
+           * Match the poslugy/about integrations: BaseLayout.css stays a normal
+           * render-blocking stylesheet on desktop/tablet (>=761px) so the
+           * canonical global.css header cascade is present at first paint and
+           * cannot be overridden by the inline critical copy. Only <=760px
+           * (mobile, where the inline critical subset is authoritative) defers
+           * it via preload+onload.
+           */
           const deferredBaseLayout =
-            `<link rel="preload" as="style" href="${baseLayoutHref}" onload="this.onload=null;this.rel='stylesheet'">` +
+            `<link rel="stylesheet" href="${baseLayoutHref}" media="(min-width: 761px)">` +
+            `<link rel="preload" as="style" href="${baseLayoutHref}" media="(max-width: 760px)" onload="this.onload=null;this.rel='stylesheet'">` +
             `<noscript><link rel="stylesheet" href="${baseLayoutHref}"></noscript>`;
 
           html = html.replace(rishennyaLink[0], inlineTag);
