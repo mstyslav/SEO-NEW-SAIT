@@ -17,7 +17,7 @@ const items = trustBarItems[locale];
 <section class="sg-trustbar" aria-label="Переваги Space Glass">
   {items.map(([title, text, icon]) => (
     <div class="sg-trustbar__item">
-      <span class="sg-trustbar__icon" aria-hidden="true">
+      <span class="sg-trustbar__icon" data-trust-icon={icon} aria-hidden="true">
         {icon === 'shield-check' ? (
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M12 3.5 18.5 6v5.4c0 4.2-2.6 7.7-6.5 9.1-3.9-1.4-6.5-4.9-6.5-9.1V6L12 3.5Z"
@@ -213,5 +213,93 @@ const items = trustBarItems[locale];
     max-width:none;
     margin-left:calc(50% - 50vw);
     margin-right:calc(50% - 50vw);
+  }
+</style>
+
+<style is:inline>
+  /* SPACE GLASS TRUSTBAR — PREMIUM ICON MOTION */
+
+  .sg-trustbar__icon svg {
+    width: 1.12em;
+    height: 1.12em;
+    overflow: visible;
+    transform-origin: 50% 50%;
+  }
+
+  .sg-trustbar__item:nth-child(1) .sg-trustbar__icon {
+    animation: sgTrustFactoryLoop 5.8s cubic-bezier(.22,.8,.25,1) infinite;
+  }
+
+  .sg-trustbar__item:nth-child(2) .sg-trustbar__icon {
+    animation: sgTrustShieldLoop 5.8s cubic-bezier(.22,.8,.25,1) .7s infinite;
+  }
+
+  .sg-trustbar__item:nth-child(3) .sg-trustbar__icon {
+    animation: sgTrustTruckLoop 5.8s cubic-bezier(.22,.8,.25,1) 1.4s infinite;
+  }
+
+  .sg-trustbar__item:nth-child(4) .sg-trustbar__icon {
+    animation: sgTrustDesignLoop 5.8s cubic-bezier(.22,.8,.25,1) 2.1s infinite;
+  }
+
+  .sg-trustbar__icon[data-trust-icon="shield-check"] svg path:last-child {
+    stroke-dasharray: 12;
+    stroke-dashoffset: 0;
+  }
+
+  .sg-trustbar__item:nth-child(2)
+  .sg-trustbar__icon[data-trust-icon="shield-check"] svg path:last-child {
+    animation: sgTrustCheckLoop 5.8s ease-in-out .7s infinite;
+  }
+
+  @keyframes sgTrustFactoryLoop {
+    0%, 82%, 100% { transform:translateY(0) scale(1); }
+    86% { transform:translateY(-2px) scale(1.04); }
+    90% { transform:translateY(1px) scale(.99); }
+    94% { transform:translateY(0) scale(1.02); }
+  }
+
+  @keyframes sgTrustShieldLoop {
+    0%, 82%, 100% { transform:scale(1); }
+    87% { transform:scale(1.07); }
+    92% { transform:scale(.99); }
+    96% { transform:scale(1.025); }
+  }
+
+  @keyframes sgTrustCheckLoop {
+    0%, 82%, 100% { stroke-dashoffset:0; }
+    86% { stroke-dashoffset:5; }
+    92% { stroke-dashoffset:0; }
+  }
+
+  @keyframes sgTrustTruckLoop {
+    0%, 82%, 100% { transform:translateX(0); }
+    87% { transform:translateX(5px); }
+    91% { transform:translateX(-1px); }
+    95% { transform:translateX(2px); }
+  }
+
+  @keyframes sgTrustDesignLoop {
+    0%, 82%, 100% { transform:translate(0,0) rotate(0); }
+    87% { transform:translate(2px,-2px) rotate(3deg); }
+    92% { transform:translate(-1px,1px) rotate(-2deg); }
+    96% { transform:translate(1px,-1px) rotate(1deg); }
+  }
+
+  @media (hover:hover) and (pointer:fine) {
+    .sg-trustbar__item:hover .sg-trustbar__icon {
+      animation-duration: .65s;
+      animation-iteration-count: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sg-trustbar__icon,
+    .sg-trustbar__icon svg,
+    .sg-trustbar__icon svg path {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
   }
 </style>

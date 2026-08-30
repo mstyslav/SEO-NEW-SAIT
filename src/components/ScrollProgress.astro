@@ -224,8 +224,13 @@
     };
 
     button.addEventListener('click', () => {
+      const root = document.documentElement;
+      const targetTop = scrollDirection === 'down'
+        ? root.scrollHeight - window.innerHeight
+        : 0;
+
       window.scrollTo({
-        top: 0,
+        top: targetTop,
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
           ? 'auto'
           : 'smooth'
