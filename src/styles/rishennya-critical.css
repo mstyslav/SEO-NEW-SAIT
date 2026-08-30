@@ -1,7 +1,7 @@
 /* RISHENNYA — mobile critical CSS */
 
 :root{
-  --mint:#93D1BA;
+  --mint:#7bc2a8;
   /* WCAG AA fix: #67B79A only gave 2.38:1 on white for the small bold
      labels/CTAs/links that use this var (.rishennya-hub__card-body p/b,
      .rishennya-hub__text-link, .rishennya-experience__stats strong, etc.
@@ -154,7 +154,6 @@ a{text-decoration:none;color:inherit}
 }
 .sg-header .language-switcher__button svg{display:none!important}
 .sg-header .language-switcher__button span{font-size:11px;font-weight:800}
-.sg-header .sg-header-cta,
 .button{
   display:inline-flex;
   align-items:center;
@@ -162,7 +161,7 @@ a{text-decoration:none;color:inherit}
   min-height:48px!important;
   padding:0 22px;
   border:1px solid transparent;
-  border-radius:999px;
+  border-radius:10px;
   font-family:Arial,Helvetica,sans-serif;
   font-size:16px;
   font-weight:700;
@@ -171,7 +170,7 @@ a{text-decoration:none;color:inherit}
 }
 .button--outline{background:#fff;color:var(--text);border-color:var(--line)}
 .button--mint{border-color:var(--mint);background:var(--mint);color:#07120e}
-.sg-header .sg-header-cta{margin-left:3px!important;white-space:nowrap!important;border-radius:4px;font-size:clamp(12px, .8vw, 14px)!important;line-height:1.15!important;text-align:center!important}
+.sg-header .sg-header-cta{margin-left:3px!important;white-space:nowrap!important;font-size:clamp(12px, .8vw, 14px)!important;line-height:1.15!important;text-align:center!important}
 .sg-mobile-toggle{display:none}
 .sg-mobile-menu[hidden]{display:none!important}
 
@@ -179,6 +178,9 @@ a{text-decoration:none;color:inherit}
    Astro, so it disappears while that stylesheet is deferred. Mirrored
    verbatim (desktop nav-actions order; ≤1120px override already below). */
 .sg-nav-actions>.nav-icon--search-ua-desktop{order:1}
+.sg-nav-actions>.nav-icon--compare{order:2}
+.sg-nav-actions>.sg-wishlist-header{order:3}
+.sg-nav-actions>.nav-icon--cart{order:4}
 .sg-nav-actions>a[aria-label="Зателефонувати"]{order:5}
 .sg-nav-actions>.language-switcher{order:6}
 .sg-nav-actions>.sg-header-cta{order:7}

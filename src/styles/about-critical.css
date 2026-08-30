@@ -1,7 +1,7 @@
 /* ABOUT — critical CSS for above-the-fold render only */
 
 :root{
-  --mint:#72cdb1;
+  --mint:#7bc2a8;
   --mint-dark:#176f58;
   --green:#176f58;
   --green-deep:#0e5947;
@@ -92,7 +92,19 @@ body{
   display:flex;
   align-items:center;
   gap:8px;
-}.sg-nav-actions .nav-icon,
+}
+/* Desktop action order — mirrored verbatim from HeaderFixes.astro so the
+   critical-only paint already matches it instead of snapping into place
+   once BaseLayout.css (which compiles HeaderFixes.astro's order rules)
+   finishes loading. */
+.sg-nav-actions>.nav-icon--search-ua-desktop{order:1}
+.sg-nav-actions>.nav-icon--compare{order:2}
+.sg-nav-actions>.sg-wishlist-header{order:3}
+.sg-nav-actions>.nav-icon--cart{order:4}
+.sg-nav-actions>a[aria-label="Зателефонувати"]{order:5}
+.sg-nav-actions>.language-switcher{order:6}
+.sg-nav-actions>.sg-header-cta{order:7}
+.sg-nav-actions .nav-icon,
 .language-switcher__button{
   width:44px;
   height:44px;

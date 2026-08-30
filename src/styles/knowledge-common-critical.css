@@ -111,6 +111,17 @@ button, input, textarea { font: inherit; }
 .sg-header .language-switcher,
 .sg-header .nav-icon,
 .sg-header .sg-header-cta { flex: 0 0 auto !important; }
+/* Desktop action order — mirrored verbatim from HeaderFixes.astro so the
+   critical-only paint already matches it instead of snapping into place
+   once BaseLayout.css (which compiles HeaderFixes.astro's order rules)
+   finishes loading. */
+.sg-nav-actions > .nav-icon--search-ua-desktop { order: 1; }
+.sg-nav-actions > .nav-icon--compare { order: 2; }
+.sg-nav-actions > .sg-wishlist-header { order: 3; }
+.sg-nav-actions > .nav-icon--cart { order: 4; }
+.sg-nav-actions > a[aria-label="Зателефонувати"] { order: 5; }
+.sg-nav-actions > .language-switcher { order: 6; }
+.sg-nav-actions > .sg-header-cta { order: 7; }
 .sg-header .nav-icon,
 .sg-header .language-switcher__button {
   display: inline-grid !important;
@@ -138,7 +149,6 @@ button, input, textarea { font: inherit; }
 }
 .sg-header .language-switcher__button svg { display: none !important; }
 .sg-header .language-switcher__button span { font-size: 11px; font-weight: 800; }
-.sg-header .sg-header-cta,
 .button {
   display: inline-flex;
   align-items: center;
@@ -146,7 +156,7 @@ button, input, textarea { font: inherit; }
   min-height: 48px !important;
   padding: 0 22px;
   border: 1px solid transparent;
-  border-radius: 999px;
+  border-radius: 10px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
   font-weight: 700;
@@ -155,7 +165,7 @@ button, input, textarea { font: inherit; }
 }
 .button--outline { background: #fff; color: var(--text); border-color: var(--line); }
 .button--mint { border-color: var(--mint); background: var(--mint); color: #07120e; }
-.sg-header .sg-header-cta { margin-left: 3px !important; white-space: nowrap !important; border-radius: 4px; font-size: clamp(12px, .8vw, 14px) !important; line-height: 1.15 !important; text-align: center !important; }
+.sg-header .sg-header-cta { margin-left: 3px !important; white-space: nowrap !important; font-size: clamp(12px, .8vw, 14px) !important; line-height: 1.15 !important; text-align: center !important; }
 .sg-mobile-toggle { display: none; }
 .sg-mobile-menu[hidden] { display: none !important; }
 
