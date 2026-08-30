@@ -42,8 +42,8 @@ const cardInit = piddonySeries.map((s) => {
     color,
     known,
     priceLabel: known && variant ? formatUah(variant.price as number) : 'Уточнити наявність',
-    ctaHref: `/contacts/?${params.toString()}#contact-form`,
-    ctaLabel: known ? 'Отримати точну вартість' : 'Уточнити наявність'
+    ctaHref: '#tray-order',
+    ctaLabel: known ? 'Замовити піддон' : 'Уточнити наявність'
   };
 });
 
@@ -166,7 +166,7 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
         <p class="lead">Душові піддони зі штучного каменю під скляну душову Space Glass. Квадратні, прямокутні та п’ятикутні піддони із сифоном у комплекті та антиковзанням. Підбираємо піддон за розміром і формою душової зони, узгоджуємо зі склом, організовуємо доставку та монтаж.</p>
         <div class="hero__actions">
           <a class="button button--mint" href="#catalog">Обрати піддон</a>
-          <a class="button button--outline" href="/contacts/#contact-form">Отримати розрахунок</a>
+          <a class="button button--outline" href="#tray-order">Замовити піддон</a>
         </div>
       </div>
       <figure class="category-hero__figure">
@@ -297,7 +297,7 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
                       <span data-price-note hidden={!init.known}>орієнтовна ціна за обраний розмір</span>
                     </div>
                     <div class="piddon-free-delivery" aria-label="Безкоштовна доставка">✓ Безкоштовна доставка</div>
-                    <a class="button button--mint piddon-picker__cta" data-cta href={init.ctaHref}>{init.ctaLabel}</a>
+                    <a class="button button--mint piddon-picker__cta" data-cta href={init.ctaHref}>Замовити піддон</a>
                   </div>
                 </div>
 
@@ -490,8 +490,8 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
           'Скляна перегородка, двері або кабіна — виготовлення під контур піддона.',
           'Замір, доставка та монтаж — узгоджуються за містом і об’єктом.'
         ]}
-        ctaLabel="Розрахувати піддон і скло"
-        ctaHref="/contacts/#contact-form"
+        ctaLabel="Підібрати піддон під свої розміри"
+        ctaHref="#tray-order"
         factorsTitle="Що впливає на вартість"
         factors={[
           ['Серія піддона', 'Матеріал і запас навантаження'],
@@ -512,11 +512,301 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
       />
     </section>
 
-    <section id="category-request" class="inner-cta">
-      <div><p class="eyebrow eyebrow--light">Заявка</p><h2>Потрібен піддон під скляну душову?</h2><p>Надішліть фото душової зони та приблизні розміри — підберемо піддон за формою й розміром і врахуємо його у скляній конструкції.</p></div>
-      <a class="button button--white" href="/contacts/#contact-form">Отримати розрахунок</a>
-    </section>
-  </main>
+
+
+      <!-- TRAY ORDER FORM -->
+
+      <!-- TRAY CONFIG DATA -->
+      <script
+        type="application/json"
+        id="tray-config-data"
+        set:html={JSON.stringify(
+          piddonySeries.flatMap((series) =>
+            series.variants
+              .filter(
+                (variant) =>
+                  variant.availability === 'available' &&
+                  typeof variant.price === 'number'
+              )
+              .map((variant) => {
+                const [a, b] = variant.size
+                  .split('×')
+                  .map(Number);
+
+                const shape =
+                  series.id === 's3'
+                    ? 'pentagon'
+                    : a === b
+                      ? 'square'
+                      : 'rect';
+
+                return {
+                  seriesId: series.id,
+                  product: series.publicName,
+                  shape,
+                  size: variant.size,
+                  color: variant.color,
+                  price: variant.price
+                };
+              })
+          )
+        )}
+      ></script>
+
+      <section id="tray-order" class="tray-order-section">
+        <div class="tray-order">
+
+          <div class="tray-order__intro">
+            <span class="tray-order__eyebrow">ЗАЯВКА</span>
+            <h2>Потрібен душовий піддон?</h2>
+
+            <p>
+              <span class="tray-intro-mobile">
+                Оберіть форму та розмір душового піддона для кабіни, ніші
+                або Walk-In. Залиште номер телефону — допоможемо підібрати
+                варіант, перевіримо комплектацію, доступний розмір і вартість для вашої душової зони
+                та підтвердимо деталі замовлення для проєкту.
+              </span>
+              <span class="tray-intro-desktop">
+                Оберіть душовий піддон за формою та розміром вашої душової зони.
+              Піддони підходять для скляних душових кабін, ніш і відкритих
+              Walk-In рішень. Залиште номер телефону — ми допоможемо перевірити
+              доступний варіант, комплектацію та підтвердимо деталі замовлення.
+            </span>
+            </p>
+
+                        <div class="tray-order__desktop-info">
+              <h3>Душові піддони зі штучного каменю</h3>
+
+              <p>
+                Підбираємо піддони для скляних душових кабін, ніш і Walk-In.
+                Допоможемо врахувати форму душової зони, розташування скла
+                та підібрати відповідний розмір.
+              </p>
+
+              <ul>
+                <li>Прямокутні, квадратні та п'ятикутні форми</li>
+                <li>Штучний камінь і низька конструкція</li>
+                <li>Сифон і декоративна накладка в комплекті</li>
+                <li>Доставка по Україні</li>
+              </ul>
+
+              <div class="tray-order__desktop-note">
+                <strong>Не знайшли потрібний розмір?</strong>
+                <span>
+                  Залиште заявку — перевіримо доступні варіанти
+                  під ваш проєкт.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <form
+            class="tray-order__form"
+            data-lead-form
+            data-tray-order-form
+            data-success-url="/thank-you/"
+          >
+            <fieldset class="tray-order__fieldset">
+              <legend>Форма піддону</legend>
+
+              <div class="tray-order__shapes">
+                <label>
+                  <input
+                    type="radio"
+                    name="tray_shape"
+                    value="Прямокутний"
+                    checked
+                  />
+                  <span class="tray-shape-option">
+<svg class="tray-shape-icon" viewBox="0 0 92 64" aria-hidden="true">
+  <path class="tray-icon-shadow" d="M10 19L72 12L83 22L20 31Z"/>
+  <path class="tray-icon-body" d="M10 16L72 9L83 19L20 28Z"/>
+  <path class="tray-icon-inner" d="M17 17L70 12L76 18L22 24Z"/>
+  <circle class="tray-icon-drain" cx="61" cy="17" r="2.7"/>
+</svg><strong>Прямокутний</strong></span>
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="tray_shape"
+                    value="Квадратний"
+                  />
+                  <span class="tray-shape-option">
+<svg class="tray-shape-icon" viewBox="0 0 92 64" aria-hidden="true">
+  <path class="tray-icon-body" d="M28 14 H64 V50 H28 Z" />
+  <path class="tray-icon-inner" d="M33 19 H59 V45 H33 Z" />
+  <circle class="tray-icon-drain" cx="55" cy="24" r="2.2" />
+</svg><strong>Квадратний</strong></span>
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="tray_shape"
+                    value="П'ятикутний"
+                  />
+                  <span class="tray-shape-option">
+<svg class="tray-shape-icon" viewBox="0 0 92 64" aria-hidden="true">
+  <path
+    class="tray-icon-body"
+    d="M27 15 H65 V49 H38 L27 39 Z"
+  />
+  <path
+    class="tray-icon-inner"
+    d="M32 20 H60 V44 H40 L32 36 Z"
+  />
+  <circle
+    class="tray-icon-drain"
+    cx="55"
+    cy="25"
+    r="2.2"
+  />
+</svg><strong>П'ятикутний</strong></span>
+                </label>
+              </div>
+            </fieldset>
+
+
+            <fieldset class="tray-order__fieldset tray-order__size-fieldset">
+              <legend>Розмір</legend>
+              <div
+                class="tray-order__sizes"
+                data-tray-sizes
+                aria-label="Оберіть розмір піддону"
+              ></div>
+              <input type="hidden" name="tray_size" data-tray-size required />
+            </fieldset>
+
+            <fieldset class="tray-order__fieldset tray-order__color-fieldset">
+              <legend>Колір</legend>
+              <div
+                class="tray-order__colors"
+                data-tray-colors
+                aria-label="Оберіть колір піддону"
+              ></div>
+            <div class="tray-order__live-price" data-tray-live-price hidden>
+              <span>Ціна</span>
+              <strong data-tray-live-price-value></strong>
+            </div>
+              <input type="hidden" name="tray_color" data-tray-color required />
+            </fieldset>
+
+            <label class="tray-order__field">
+              <span>Телефон</span>
+              <input
+                type="tel"
+                name="phone"
+                inputmode="tel"
+                autocomplete="tel"
+                placeholder="+38"
+                required
+              />
+            </label>
+
+            <label class="tray-order__field">
+              <span>
+                Коментар
+                <small>необов’язково</small>
+              </span>
+
+              <textarea
+                name="comment"
+                rows="3"
+                placeholder="Місце доставки, особливості або інші побажання"
+              ></textarea>
+            </label>
+
+            <input
+              type="hidden"
+              name="name"
+              value="Замовлення душового піддону"
+            />
+
+            <input
+              type="hidden"
+              name="configuration"
+              data-tray-configuration
+              value=""
+            />
+
+            <input
+              type="hidden"
+              name="product"
+              value="Душовий піддон"
+              data-tray-product
+            />
+
+            <label class="tray-order__consent">
+              <input
+                type="checkbox"
+                name="consent"
+                value="accepted"
+                required
+              />
+
+              <span>
+                Погоджуюсь з
+                <a href="/privacy-policy/">
+                  політикою конфіденційності
+                </a>
+              </span>
+            </label>
+
+            <button
+              type="submit"
+              class="button button--mint tray-order__submit"
+            >
+              Замовити піддон
+            </button>
+
+            <p class="tray-order__note">
+              Зв’яжемося для підтвердження замовлення та уточнення деталей.
+            </p>
+
+
+            <div class="tray-order__quick-contact">
+              <div class="tray-order__quick-copy">
+                <strong>Бажаєте швидше отримати відповідь?</strong>
+                <span>Зателефонуйте нам або напишіть у Telegram.</span>
+              </div>
+
+              <div class="tray-order__quick-actions">
+                <a
+                  class="tray-order__contact-link"
+                  href="tel:+380734251400"
+                  aria-label="Зателефонувати +38 073 425 14 00"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z"/>
+                  </svg>
+                  <span>+38 (073) 425 14 00</span>
+                </a>
+
+                <a
+                  class="tray-order__contact-link tray-order__contact-link--telegram"
+                  href="https://t.me/spaceglass"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Написати в Telegram"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 4 3.8 10.6c-.8.3-.8 1.4 0 1.7l4.3 1.4 1.6 5c.2.7 1.1.9 1.6.4l2.4-2.5 4.1 3c.6.4 1.4.1 1.6-.6L22 5.2c.2-.8-.3-1.4-1-1.2Z"/>
+                    <path d="m8.1 13.7 9.8-6.2-7.6 8.1"/>
+                  </svg>
+                  <span>Telegram</span>
+                </a>
+              </div>
+            </div>
+
+            <p data-form-status hidden role="status"></p>
+          </form>
+
+        </div>
+      </section>
+
+</main>
   <Footer />
 </div>
 
@@ -569,8 +859,8 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
       const params = new URLSearchParams({ product: productName, config });
       if (known) params.set('price', fmt(v.price));
       if (cta) {
-        cta.setAttribute('href', `/contacts/?${params.toString()}#contact-form`);
-        cta.textContent = known ? 'Отримати точну вартість' : 'Уточнити наявність';
+        cta.setAttribute('href', '#tray-order');
+        cta.textContent = known ? 'Замовити піддон' : 'Уточнити наявність';
       }
     };
 
@@ -1491,6 +1781,1617 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
 }
 </style>
 
+<style>
+/* FINAL TRAY ORDER FORM */
+
+html {
+  scroll-behavior: smooth;
+}
+
+#tray-order {
+  scroll-margin-top: 90px;
+}
+
+.tray-order-section {
+  padding: 72px 24px;
+  background: #f4f7f5;
+}
+
+.tray-order {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(460px, 1.1fr);
+  gap: 72px;
+  align-items: start;
+}
+
+.tray-order__eyebrow {
+  display: block;
+  margin-bottom: 12px;
+  color: #57b99e;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.tray-order__intro h2 {
+  margin: 0 0 18px;
+  max-width: 580px;
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -.045em;
+}
+
+.tray-order__intro p {
+  max-width: 560px;
+  margin: 0;
+  color: #65706b;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.tray-order__form {
+  padding: 30px;
+  background: #fff;
+  border: 1px solid #e0e6e3;
+  border-radius: 24px;
+  box-shadow: 0 16px 45px rgba(22, 42, 35, .06);
+}
+
+.tray-order__fieldset {
+  min-width: 0;
+  padding: 0;
+  margin: 0 0 22px;
+  border: 0;
+}
+
+.tray-order__fieldset legend,
+.tray-order__field > span {
+  display: block;
+  width: 100%;
+  margin: 0 0 9px;
+  color: #19231f;
+  font-size: 14px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.tray-order__field > span small {
+  margin-left: 5px;
+  color: #89918e;
+  font-weight: 400;
+}
+
+.tray-order__shapes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.tray-order__shapes label {
+  position: relative;
+  cursor: pointer;
+}
+
+.tray-order__shapes input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tray-order__shapes span {
+  min-height: 48px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  border: 1px solid #d9e0dc;
+  border-radius: 12px;
+  background: #fff;
+  color: #25312c;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    box-shadow .18s ease;
+}
+
+.tray-order__shapes input:checked + span {
+  border-color: #65c6aa;
+  background: #e1f6ef;
+  box-shadow: inset 0 0 0 1px #65c6aa;
+}
+
+.tray-order__field {
+  display: block;
+  margin: 0 0 20px;
+}
+
+.tray-order__field input,
+.tray-order__field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 15px;
+  border: 1px solid #d9e0dc;
+  border-radius: 12px;
+  background: #fff;
+  color: #19231f;
+  font: inherit;
+  outline: none;
+}
+
+.tray-order__field input {
+  min-height: 50px;
+}
+
+.tray-order__field textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.tray-order__field input:focus,
+.tray-order__field textarea:focus {
+  border-color: #65c6aa;
+  box-shadow: 0 0 0 3px rgba(101,198,170,.13);
+}
+
+.tray-order__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 2px 0 18px;
+  color: #707a76;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.tray-order__consent input {
+  margin-top: 2px;
+}
+
+.tray-order__consent a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.tray-order__submit {
+  width: 100%;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tray-order__submit:hover {
+  filter: brightness(.97);
+}
+
+.tray-order__note {
+  margin: 12px 0 0;
+  color: #858e8a;
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+@media (max-width: 800px) {
+  #tray-order {
+    scroll-margin-top: 72px;
+  }
+
+  .tray-order-section {
+    padding: 48px 16px;
+  }
+
+  .tray-order {
+    display: block;
+  }
+
+  .tray-order__intro {
+    margin-bottom: 26px;
+  }
+
+  .tray-order__intro h2 {
+    margin-bottom: 14px;
+    font-size: 32px;
+    line-height: 1.06;
+  }
+
+  .tray-order__intro p {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .tray-order__form {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+
+  .tray-order__shapes {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tray-order__shapes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tray-order__shapes label {
+    flex: 0 0 auto;
+  }
+
+  .tray-order__shapes span {
+    min-height: 44px;
+    padding-inline: 16px;
+    white-space: nowrap;
+  }
+}
+</style>
+
+<style>
+/* FINAL TRAY SHAPE VISUAL OPTIONS */
+
+.tray-order__shapes {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  overflow: visible !important;
+}
+
+.tray-order__shapes label {
+  min-width: 0;
+  cursor: pointer;
+}
+
+.tray-order__shapes .tray-shape-option {
+  width: 100%;
+  min-height: 105px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 13px 8px;
+
+  border: 1px solid #d9e0dc;
+  border-radius: 14px;
+  background: #fff;
+
+  color: #26322d;
+
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    box-shadow .18s ease,
+    transform .18s ease;
+}
+
+.tray-order__shapes label:hover .tray-shape-option {
+  border-color: #a9bbb4;
+  transform: translateY(-1px);
+}
+
+.tray-shape-icon {
+  width: 56px;
+  height: 42px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  color: #53605b;
+}
+
+.tray-shape-option strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.15;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tray-order__shapes input:checked + .tray-shape-option {
+  border-color: #65c6aa;
+  background: #e5f7f1;
+  box-shadow:
+    inset 0 0 0 1px #65c6aa,
+    0 5px 16px rgba(54, 138, 115, .08);
+}
+
+.tray-order__shapes input:checked + .tray-shape-option .tray-shape-icon {
+  color: #31977c;
+}
+
+@media (max-width: 700px) {
+
+  .tray-order__shapes {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+    padding: 0 !important;
+  }
+
+  .tray-order__shapes label {
+    width: auto !important;
+    min-width: 0 !important;
+    flex: none !important;
+  }
+
+  .tray-order__shapes .tray-shape-option {
+    min-height: 94px;
+    padding: 11px 4px;
+    gap: 7px;
+    border-radius: 12px;
+  }
+
+  .tray-shape-icon {
+    width: 48px;
+    height: 36px;
+  }
+
+  .tray-shape-option strong {
+    font-size: 11px;
+    letter-spacing: -.02em;
+  }
+}
+</style>
+
+
+
+
+
+<style>
+/* DEPENDENT TRAY CONFIGURATOR UI */
+
+.tray-order__sizes,
+.tray-order__colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tray-config-choice {
+  appearance: none;
+  min-height: 44px;
+  box-sizing: border-box;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 9px 14px;
+
+  border: 1px solid #d8e0dc;
+  border-radius: 12px;
+
+  background: #fff;
+  color: #26332e;
+
+  font: inherit;
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    box-shadow .18s ease,
+    transform .18s ease;
+}
+
+.tray-config-choice:hover {
+  border-color: #9ec9bc;
+  transform: translateY(-1px);
+}
+
+.tray-config-choice.is-selected {
+  border-color: #65c6aa;
+  background: #edf9f5;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(101,198,170,.28),
+    0 5px 14px rgba(44,120,99,.07);
+}
+
+.tray-config-color {
+  min-width: 104px;
+}
+
+.tray-config-color__dot {
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  flex: 0 0 20px;
+
+  border-radius: 50%;
+}
+
+.tray-config-color__dot.is-white {
+  background: #fff;
+  border: 1px solid #cbd4d0;
+  box-shadow: inset 0 0 0 3px #f7f8f8;
+}
+
+.tray-config-color__dot.is-graphite {
+  background: #4a504e;
+  border: 1px solid #3b403e;
+}
+
+.tray-order__size-fieldset,
+.tray-order__color-fieldset {
+  margin-bottom: 22px;
+}
+
+@media (max-width:700px) {
+  .tray-order__sizes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 7px;
+  }
+
+  .tray-config-size {
+    width: 100%;
+    min-width: 0;
+    padding-inline: 5px;
+    font-size: 11.5px;
+  }
+
+  .tray-order__colors {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+
+  .tray-config-color {
+    width: 100%;
+    min-width: 0;
+  }
+}
+</style>
+
+<style>
+/* FINAL TRAY SELECTION BRANDING */
+
+.tray-order .tray-config-choice {
+  position: relative !important;
+  min-height: 48px !important;
+  border: 1px solid #d7e0dc !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  color: #26332e !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  transition:
+    background .18s ease,
+    border-color .18s ease,
+    color .18s ease,
+    box-shadow .18s ease,
+    transform .18s ease !important;
+}
+
+.tray-order .tray-config-choice:hover {
+  border-color: #83cbb7 !important;
+  background: #f5fbf8 !important;
+  transform: translateY(-1px);
+}
+
+/* Реально выбранный размер / цвет */
+.tray-order .tray-config-choice.is-selected {
+  border-color: #65c6aa !important;
+  background: #e8f7f2 !important;
+  color: #176b55 !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(101,198,170,.25),
+    0 5px 14px rgba(45,125,103,.08) !important;
+}
+
+/* Галочка только после выбора */
+.tray-order .tray-config-choice.is-selected::after {
+  content: "✓";
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #65c6aa;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+/* Размеры */
+.tray-order .tray-order__sizes {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+  gap: 8px !important;
+}
+
+.tray-order .tray-config-size {
+  width: 100% !important;
+  padding: 10px 25px 10px 10px !important;
+}
+
+/* Цвета */
+.tray-order .tray-order__colors {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  gap: 8px !important;
+}
+
+.tray-order .tray-config-color {
+  width: 100% !important;
+  justify-content: flex-start !important;
+  padding: 9px 28px 9px 12px !important;
+}
+
+.tray-order .tray-config-color__dot {
+  width: 22px !important;
+  height: 22px !important;
+  flex: 0 0 22px !important;
+}
+
+/* Быстрый контакт */
+.tray-order__quick-contact {
+  margin-top: 20px;
+  padding: 17px;
+  border: 1px solid rgba(101,198,170,.32);
+  border-radius: 15px;
+  background: linear-gradient(
+    135deg,
+    rgba(101,198,170,.10),
+    rgba(101,198,170,.025)
+  );
+}
+
+.tray-order__quick-contact > strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #20302a;
+  font-size: 13px;
+}
+
+.tray-order__quick-contact > p {
+  margin: 0;
+  color: #6d7974;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.tray-order__quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tray-order__quick-actions a {
+  min-height: 42px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  border: 1px solid #cfe1da;
+  border-radius: 10px;
+  background: #fff;
+  color: #276d5b;
+  font-size: 12px;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.tray-order__quick-actions a:hover {
+  border-color: #65c6aa;
+  background: #f5fbf8;
+}
+
+@media (max-width:700px) {
+  .tray-order .tray-order__sizes {
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  }
+
+  .tray-order__quick-actions {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+
+
+<style>
+/* TRAY SIZE COLOR SELECTED — FINAL */
+
+/*
+ * Размер и цвет получают ТО ЖЕ визуальное состояние,
+ * что и выбранная форма:
+ * mint border + mint background + круглая галочка.
+ */
+
+.tray-order [data-tray-sizes] .tray-config-choice,
+.tray-order [data-tray-colors] .tray-config-choice {
+  position: relative !important;
+  box-sizing: border-box !important;
+
+  min-height: 48px !important;
+  margin: 0 !important;
+  padding: 10px 34px 10px 12px !important;
+
+  border: 1px solid #dfe5e2 !important;
+  border-radius: 12px !important;
+
+  background: #fff !important;
+  color: #202a26 !important;
+
+  box-shadow: none !important;
+
+  font-size: 13px !important;
+  font-weight: 700 !important;
+
+  cursor: pointer !important;
+
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    box-shadow .18s ease !important;
+}
+
+
+/* HOVER */
+.tray-order [data-tray-sizes] .tray-config-choice:hover,
+.tray-order [data-tray-colors] .tray-config-choice:hover {
+  border-color: #79cbb3 !important;
+  background: #f8fcfa !important;
+}
+
+
+/* SELECTED */
+.tray-order [data-tray-sizes] .tray-config-choice.is-selected,
+.tray-order [data-tray-colors] .tray-config-choice.is-selected {
+  border-color: #62c8aa !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(98,200,170,.13),
+      rgba(98,200,170,.035)
+    ) !important;
+
+  color: #155f4d !important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(98,200,170,.18) !important;
+}
+
+
+/* ГАЛОЧКА — как на карточке формы */
+.tray-order [data-tray-sizes] .tray-config-choice.is-selected::after,
+.tray-order [data-tray-colors] .tray-config-choice.is-selected::after {
+  content: "✓" !important;
+
+  position: absolute !important;
+  top: 7px !important;
+  right: 7px !important;
+
+  width: 18px !important;
+  height: 18px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 50% !important;
+
+  background: #62c8aa !important;
+  color: #fff !important;
+
+  font-size: 10px !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+}
+
+
+/* РАЗМЕРЫ */
+.tray-order [data-tray-sizes] {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  gap: 9px !important;
+}
+
+
+/* ЦВЕТА */
+.tray-order [data-tray-colors] {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  gap: 9px !important;
+}
+
+.tray-order [data-tray-colors] .tray-config-choice {
+  justify-content: flex-start !important;
+}
+
+
+/* MOBILE */
+@media (max-width:700px) {
+  .tray-order [data-tray-sizes],
+  .tray-order [data-tray-colors] {
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  }
+
+  .tray-order [data-tray-sizes] .tray-config-choice,
+  .tray-order [data-tray-colors] .tray-config-choice {
+    min-height: 46px !important;
+    font-size: 12px !important;
+  }
+}
+</style>
+
+
+<style>
+/* TRAY FORM BRAND PRICE FINAL */
+
+:root {
+  --tray-brand: #62bfa5;
+  --tray-brand-dark: #287b66;
+  --tray-brand-soft: #edf8f4;
+  --tray-brand-border: #80cbb6;
+}
+
+
+/* ЗАЯВКА — насыщеннее, не бледная */
+.tray-order__eyebrow {
+  color: var(--tray-brand-dark) !important;
+  font-weight: 800 !important;
+}
+
+
+/* ФОРМА: выбранное состояние делаем спокойнее */
+.tray-order .tray-shape-option:has(input:checked) {
+  border-color: var(--tray-brand-border) !important;
+  background: var(--tray-brand-soft) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(98,191,165,.16) !important;
+}
+
+.tray-order .tray-shape-option:has(input:checked)::after {
+  background: var(--tray-brand) !important;
+}
+
+
+/* ==========================================================
+   SIZE + COLOR
+   ========================================================== */
+
+.tray-order [data-tray-sizes] .tray-config-choice,
+.tray-order [data-tray-colors] .tray-config-choice {
+  position: relative !important;
+  box-sizing: border-box !important;
+
+  min-height: 46px !important;
+
+  padding:
+    10px 34px
+    10px 12px !important;
+
+  border:
+    1px solid #dce4e0 !important;
+
+  border-radius: 11px !important;
+
+  background: #fff !important;
+  color: #26312d !important;
+
+  box-shadow: none !important;
+
+  font-weight: 700 !important;
+
+  cursor: pointer !important;
+
+  transition:
+    border-color .16s ease,
+    background .16s ease,
+    box-shadow .16s ease !important;
+}
+
+
+/* selected — тот же язык, что у FORM */
+.tray-order [data-tray-sizes] .tray-config-choice.is-selected,
+.tray-order [data-tray-colors] .tray-config-choice.is-selected,
+.tray-order [data-tray-sizes] .tray-config-choice[aria-pressed="true"],
+.tray-order [data-tray-colors] .tray-config-choice[aria-pressed="true"] {
+  border-color:
+    var(--tray-brand-border) !important;
+
+  background:
+    var(--tray-brand-soft) !important;
+
+  color:
+    var(--tray-brand-dark) !important;
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(98,191,165,.16) !important;
+}
+
+
+/* check */
+.tray-order [data-tray-sizes] .tray-config-choice.is-selected::after,
+.tray-order [data-tray-colors] .tray-config-choice.is-selected::after,
+.tray-order [data-tray-sizes] .tray-config-choice[aria-pressed="true"]::after,
+.tray-order [data-tray-colors] .tray-config-choice[aria-pressed="true"]::after {
+  content: "✓" !important;
+
+  position: absolute !important;
+
+  top: 7px !important;
+  right: 7px !important;
+
+  width: 18px !important;
+  height: 18px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 50% !important;
+
+  background:
+    var(--tray-brand) !important;
+
+  color: #fff !important;
+
+  font-size: 10px !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+}
+
+
+/* ==========================================================
+   LIVE PRICE
+   ========================================================== */
+
+.tray-order__live-price {
+  margin-top: 14px;
+
+  min-height: 52px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 12px 14px;
+
+  border:
+    1px solid rgba(98,191,165,.32);
+
+  border-radius: 12px;
+
+  background:
+    var(--tray-brand-soft);
+}
+
+.tray-order__live-price[hidden] {
+  display: none !important;
+}
+
+.tray-order__live-price span {
+  color: #56645f;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tray-order__live-price strong {
+  color: var(--tray-brand-dark);
+
+  font-size: 19px;
+  line-height: 1;
+  font-weight: 850;
+}
+
+
+/* ==========================================================
+   MOBILE SPACING
+   ========================================================== */
+
+@media (max-width:700px) {
+
+  /*
+   * Убираем чрезмерный вертикальный воздух перед заявкой.
+   * Не затрагиваем desktop.
+   */
+  .tray-order {
+    margin-top: 34px !important;
+    padding-top: 34px !important;
+  }
+
+  .tray-order__intro {
+    margin-bottom: 18px !important;
+  }
+
+  .tray-order__eyebrow {
+    margin-bottom: 7px !important;
+  }
+
+  .tray-order [data-tray-sizes],
+  .tray-order [data-tray-colors] {
+    gap: 8px !important;
+  }
+
+  .tray-order [data-tray-sizes] .tray-config-choice,
+  .tray-order [data-tray-colors] .tray-config-choice {
+    min-height: 45px !important;
+  }
+
+  .tray-order__live-price {
+    margin-top: 12px;
+  }
+}
+</style>
+
+
+
+
+
+
+<script>
+/* SPACE GLASS TRAY FORM — SINGLE STABLE CONTROLLER */
+(() => {
+  const initTrayForm = () => {
+    const form =
+      document.querySelector('[data-tray-order-form]');
+
+    const json =
+      document.getElementById('tray-config-data');
+
+    if (!form || !json) return;
+
+    let variants;
+
+    try {
+      variants = JSON.parse(
+        json.textContent || '[]'
+      );
+    } catch (error) {
+      console.error('[tray-form] JSON error', error);
+      return;
+    }
+
+    const shapeInputs = Array.from(
+      form.querySelectorAll(
+        'input[name="tray_shape"], input[name="shape"]'
+      )
+    );
+
+    const sizes =
+      form.querySelector('[data-tray-sizes]');
+
+    const colors =
+      form.querySelector('[data-tray-colors]');
+
+    const sizeInput =
+      form.querySelector('[data-tray-size]');
+
+    const colorInput =
+      form.querySelector('[data-tray-color]');
+
+    const configuration =
+      form.querySelector('[data-tray-configuration]');
+
+    const product =
+      form.querySelector('input[name="product"]');
+
+    const priceRow =
+      form.querySelector('[data-tray-live-price]');
+
+    const priceText =
+      form.querySelector('[data-tray-live-price-value]');
+
+    if (
+      !shapeInputs.length ||
+      !sizes ||
+      !colors ||
+      !sizeInput ||
+      !colorInput
+    ) {
+      console.error('[tray-form] markup incomplete');
+      return;
+    }
+
+    const shapeMap = {
+      "Прямокутний": "rect",
+      "Квадратний": "square",
+      "П'ятикутний": "pentagon",
+      "rect": "rect",
+      "square": "square",
+      "pentagon": "pentagon"
+    };
+
+    let selectedSize = '';
+    let selectedColor = '';
+
+    const getShapeInput = () =>
+      shapeInputs.find(input => input.checked);
+
+    const getShape = () => {
+      const input = getShapeInput();
+
+      return input
+        ? shapeMap[input.value] || ''
+        : '';
+    };
+
+    const getShapeLabel = () => {
+      const input = getShapeInput();
+
+      if (!input) return '';
+
+      const label = input.closest('label');
+
+      return (
+        label
+          ?.querySelector(
+            '.tray-shape-option__label'
+          )
+          ?.textContent
+          ?.trim()
+        ||
+        input.value
+      );
+    };
+
+    const uniq = array =>
+      [...new Set(array.filter(Boolean))];
+
+    const availableForShape = () => {
+      const shape = getShape();
+
+      return variants.filter(
+        variant =>
+          variant.shape === shape
+      );
+    };
+
+    const setButtonState = (
+      container,
+      attribute,
+      value
+    ) => {
+      container
+        .querySelectorAll(
+          '.tray-config-choice'
+        )
+        .forEach(button => {
+          const active =
+            button.dataset[attribute] === value;
+
+          button.classList.toggle(
+            'is-selected',
+            active
+          );
+
+          button.setAttribute(
+            'aria-pressed',
+            active ? 'true' : 'false'
+          );
+
+          /*
+           * VISUAL STATE:
+           * inline intentionally wins over
+           * accumulated legacy tray CSS.
+           */
+          button.style.setProperty(
+            'background',
+            active ? '#f0faf6' : '#ffffff',
+            'important'
+          );
+
+          button.style.setProperty(
+            'border',
+            active
+              ? '2px solid #70c8ae'
+              : '1px solid #dfe7e4',
+            'important'
+          );
+
+          button.style.setProperty(
+            'color',
+            '#202925',
+            'important'
+          );
+
+          button.style.setProperty(
+            'border-radius',
+            '14px',
+            'important'
+          );
+
+          button.style.setProperty(
+            'font-weight',
+            active ? '700' : '500',
+            'important'
+          );
+
+          button.style.setProperty(
+            'box-shadow',
+            active
+              ? '0 0 0 1px rgba(112,200,174,.10)'
+              : 'none',
+            'important'
+          );
+        });
+    };
+
+    const updateResult = () => {
+      sizeInput.value = selectedSize;
+      colorInput.value = selectedColor;
+
+      const shape = getShape();
+
+      const match =
+        shape &&
+        selectedSize &&
+        selectedColor
+          ? variants.find(
+              variant =>
+                variant.shape === shape &&
+                variant.size === selectedSize &&
+                variant.color === selectedColor
+            )
+          : null;
+
+      if (configuration) {
+        configuration.value = [
+          getShapeLabel()
+            ? `Форма: ${getShapeLabel()}`
+            : '',
+
+          selectedSize
+            ? `Розмір: ${selectedSize} мм`
+            : '',
+
+          selectedColor
+            ? `Колір: ${selectedColor}`
+            : ''
+        ]
+          .filter(Boolean)
+          .join(' · ');
+      }
+
+      if (match) {
+        if (priceRow && priceText) {
+          priceText.textContent =
+            new Intl.NumberFormat('uk-UA')
+              .format(match.price) +
+            ' грн';
+
+          priceRow.hidden = false;
+        }
+
+        if (product && match.product) {
+          product.value = match.product;
+        }
+      } else {
+        if (priceRow) {
+          priceRow.hidden = true;
+        }
+
+        if (priceText) {
+          priceText.textContent = '';
+        }
+      }
+    };
+
+    const renderColors = () => {
+      /*
+       * ВАЖНО:
+       * полностью создаём кнопки один раз после выбора размера.
+       * Никаких observer и рекурсивных render-вызовов.
+       */
+      colors.replaceChildren();
+
+      selectedColor = '';
+
+      const availableColors =
+        uniq(
+          availableForShape()
+            .filter(
+              variant =>
+                variant.size === selectedSize
+            )
+            .map(
+              variant =>
+                variant.color
+            )
+        );
+
+      for (const color of availableColors) {
+        const button =
+          document.createElement('button');
+
+        button.type = 'button';
+
+        button.className =
+          'tray-config-choice tray-config-color';
+
+        button.dataset.color = color;
+
+        button.setAttribute(
+          'aria-pressed',
+          'false'
+        );
+
+        button.style.setProperty(
+          'background',
+          '#ffffff',
+          'important'
+        );
+
+        button.style.setProperty(
+          'border',
+          '1px solid #dfe7e4',
+          'important'
+        );
+
+        button.style.setProperty(
+          'color',
+          '#202925',
+          'important'
+        );
+
+        button.style.setProperty(
+          'border-radius',
+          '14px',
+          'important'
+        );
+
+        const dot =
+          document.createElement('span');
+
+        dot.className =
+          'tray-config-color__dot';
+
+        const lower =
+          String(color).toLowerCase();
+
+        dot.classList.add(
+          lower.includes('граф') ||
+          lower.includes('graph')
+            ? 'is-graphite'
+            : 'is-white'
+        );
+
+        const label =
+          document.createElement('span');
+
+        label.textContent = color;
+
+        button.append(dot, label);
+
+        /*
+         * ОДИН click handler.
+         */
+        button.onclick = event => {
+          event.preventDefault();
+
+          selectedColor = color;
+
+          setButtonState(
+            colors,
+            'color',
+            color
+          );
+
+          updateResult();
+        };
+
+        colors.append(button);
+      }
+
+      updateResult();
+    };
+
+    const renderSizes = () => {
+      sizes.replaceChildren();
+      colors.replaceChildren();
+
+      selectedSize = '';
+      selectedColor = '';
+
+      const availableSizes =
+        uniq(
+          availableForShape()
+            .map(
+              variant =>
+                variant.size
+            )
+        );
+
+      for (const size of availableSizes) {
+        const button =
+          document.createElement('button');
+
+        button.type = 'button';
+
+        button.className =
+          'tray-config-choice tray-config-size';
+
+        button.dataset.size = size;
+
+        button.setAttribute(
+          'aria-pressed',
+          'false'
+        );
+
+        button.style.setProperty(
+          'background',
+          '#ffffff',
+          'important'
+        );
+
+        button.style.setProperty(
+          'border',
+          '1px solid #dfe7e4',
+          'important'
+        );
+
+        button.style.setProperty(
+          'color',
+          '#202925',
+          'important'
+        );
+
+        button.style.setProperty(
+          'border-radius',
+          '14px',
+          'important'
+        );
+
+        button.textContent = size;
+
+        button.onclick = event => {
+          event.preventDefault();
+
+          selectedSize = size;
+          selectedColor = '';
+
+          setButtonState(
+            sizes,
+            'size',
+            size
+          );
+
+          renderColors();
+        };
+
+        sizes.append(button);
+      }
+
+      updateResult();
+    };
+
+    /*
+     * ФОРМА ПОДДОНА
+     */
+    for (const input of shapeInputs) {
+      input.onchange = () => {
+        selectedSize = '';
+        selectedColor = '';
+
+        renderSizes();
+      };
+    }
+
+    /*
+     * Начальное состояние.
+     */
+    renderSizes();
+
+    console.log(
+      '[tray-form] stable controller initialized',
+      variants.length,
+      'variants'
+    );
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener(
+      'DOMContentLoaded',
+      initTrayForm,
+      { once: true }
+    );
+  } else {
+    initTrayForm();
+  }
+})();
+</script>
+
+
+<style>
+/* TRAY CHOICE VISUAL — AUTHORITATIVE */
+
+/* ВСЕ невыбранные размеры и цвета */
+html body .tray-order [data-tray-sizes] button.tray-config-choice,
+html body .tray-order [data-tray-colors] button.tray-config-choice {
+  position: relative !important;
+  box-sizing: border-box !important;
+
+  background: #ffffff !important;
+  background-image: none !important;
+
+  border: 1px solid #dfe7e4 !important;
+  border-radius: 12px !important;
+
+  color: #202925 !important;
+  box-shadow: none !important;
+
+  opacity: 1 !important;
+
+  padding-right: 38px !important;
+}
+
+/* SELECTED — по классу ИЛИ aria */
+html body .tray-order [data-tray-sizes] button.tray-config-choice.is-selected,
+html body .tray-order [data-tray-colors] button.tray-config-choice.is-selected,
+html body .tray-order [data-tray-sizes] button.tray-config-choice[aria-pressed="true"],
+html body .tray-order [data-tray-colors] button.tray-config-choice[aria-pressed="true"] {
+  background: #f1faf7 !important;
+  background-image: none !important;
+
+  border: 2px solid #70c8ae !important;
+
+  color: #17251f !important;
+
+  box-shadow:
+    0 0 0 1px rgba(112, 200, 174, .08) !important;
+
+  font-weight: 700 !important;
+}
+
+/* CHECK */
+html body .tray-order [data-tray-sizes] button.tray-config-choice.is-selected::after,
+html body .tray-order [data-tray-colors] button.tray-config-choice.is-selected::after,
+html body .tray-order [data-tray-sizes] button.tray-config-choice[aria-pressed="true"]::after,
+html body .tray-order [data-tray-colors] button.tray-config-choice[aria-pressed="true"]::after {
+  content: "✓" !important;
+
+  position: absolute !important;
+  top: 50% !important;
+  right: 10px !important;
+
+  width: 20px !important;
+  height: 20px !important;
+
+  transform: translateY(-50%) !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border: 0 !important;
+  border-radius: 999px !important;
+
+  background: #70c8ae !important;
+
+  color: #ffffff !important;
+
+  font-size: 12px !important;
+  line-height: 20px !important;
+  font-weight: 900 !important;
+
+  opacity: 1 !important;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  html body .tray-order [data-tray-sizes] button.tray-config-choice,
+  html body .tray-order [data-tray-colors] button.tray-config-choice {
+    min-height: 44px !important;
+  }
+}
+</style>
+
+
+<style>
+/* TRAY CHOICE DIRECT STATE — FINAL */
+
+/* Невыбранные */
+[data-tray-sizes] > button,
+[data-tray-colors] > button {
+  position: relative !important;
+  box-sizing: border-box !important;
+
+  background: #fff !important;
+  background-image: none !important;
+
+  border: 1px solid #dce5e1 !important;
+  border-radius: 12px !important;
+
+  color: #202925 !important;
+  box-shadow: none !important;
+
+  opacity: 1 !important;
+}
+
+/* Выбранные */
+[data-tray-sizes] > button.is-selected,
+[data-tray-colors] > button.is-selected,
+[data-tray-sizes] > button[aria-pressed="true"],
+[data-tray-colors] > button[aria-pressed="true"] {
+  background: #f0faf6 !important;
+  background-image: none !important;
+
+  border: 2px solid #70c8ae !important;
+
+  color: #17251f !important;
+  font-weight: 700 !important;
+
+  box-shadow:
+    0 0 0 1px rgba(112,200,174,.10) !important;
+
+  padding-right: 42px !important;
+}
+
+/* Галочка */
+[data-tray-sizes] > button.is-selected::after,
+[data-tray-colors] > button.is-selected::after,
+[data-tray-sizes] > button[aria-pressed="true"]::after,
+[data-tray-colors] > button[aria-pressed="true"]::after {
+  content: "✓" !important;
+
+  position: absolute !important;
+  top: 50% !important;
+  right: 10px !important;
+
+  width: 20px !important;
+  height: 20px !important;
+
+  transform: translateY(-50%) !important;
+
+  display: grid !important;
+  place-items: center !important;
+
+  border: 0 !important;
+  border-radius: 50% !important;
+
+  background: #70c8ae !important;
+  color: #fff !important;
+
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+
+  opacity: 1 !important;
+}
+</style>
+
 </BaseLayout>
 
 <style>
@@ -1512,6 +3413,776 @@ const tableHeads = ['Піддон', 'Форма', 'Розміри, мм', 'То�
 @media (max-width: 700px) {
   .category-steps-title {
     margin-top: 48px !important;
+  }
+}
+</style>
+
+<style>
+/* PREMIUM TRAY SHAPE SELECTOR */
+
+.tray-order__shapes .tray-shape-option {
+  position: relative;
+  min-height: 132px;
+  padding: 17px 8px 14px;
+  overflow: hidden;
+
+  border: 1px solid rgba(25,35,31,.10);
+  border-radius: 18px;
+
+  background:
+    linear-gradient(145deg, #ffffff 0%, #fafcfb 100%);
+
+  box-shadow:
+    0 1px 1px rgba(20,35,29,.02),
+    0 8px 24px rgba(20,35,29,.045);
+
+  transition:
+    transform .22s ease,
+    border-color .22s ease,
+    box-shadow .22s ease,
+    background .22s ease;
+}
+
+.tray-order__shapes label:hover .tray-shape-option {
+  transform: translateY(-3px);
+
+  border-color: rgba(101,198,170,.55);
+
+  box-shadow:
+    0 2px 3px rgba(20,35,29,.03),
+    0 14px 32px rgba(20,35,29,.08);
+}
+
+.tray-shape-icon {
+  width: 82px;
+  height: 58px;
+  overflow: visible;
+}
+
+.tray-icon-shadow {
+  fill: rgba(25,35,31,.09);
+  stroke: none;
+}
+
+.tray-icon-body {
+  fill: #fff;
+  stroke: #4e5d57;
+  stroke-width: 1.7;
+  stroke-linejoin: round;
+}
+
+.tray-icon-inner {
+  fill: rgba(101,198,170,.045);
+  stroke: #a7b4af;
+  stroke-width: 1.15;
+  stroke-linejoin: round;
+}
+
+.tray-icon-drain {
+  fill: #71817a;
+  stroke: #fff;
+  stroke-width: .8;
+}
+
+.tray-shape-option strong {
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 750;
+  color: #27332e;
+}
+
+/* check indicator */
+.tray-shape-option::after {
+  content: "✓";
+
+  position: absolute;
+  top: 9px;
+  right: 9px;
+
+  width: 21px;
+  height: 21px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #65c6aa;
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  opacity: 0;
+  transform: scale(.7);
+
+  transition:
+    opacity .18s ease,
+    transform .18s ease;
+}
+
+.tray-order__shapes input:checked + .tray-shape-option {
+  transform: translateY(-2px);
+
+  border-color: #65c6aa;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #f1fbf7 100%
+    );
+
+  box-shadow:
+    0 0 0 1px rgba(101,198,170,.22),
+    0 14px 34px rgba(44,120,99,.10);
+}
+
+.tray-order__shapes input:checked + .tray-shape-option::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.tray-order__shapes input:checked + .tray-shape-option .tray-icon-body {
+  stroke: #2f8f76;
+}
+
+.tray-order__shapes input:checked + .tray-shape-option .tray-icon-inner {
+  fill: rgba(101,198,170,.12);
+  stroke: #65c6aa;
+}
+
+.tray-order__shapes input:checked + .tray-shape-option .tray-icon-drain {
+  fill: #2f8f76;
+}
+
+@media (max-width:700px) {
+  .tray-order__shapes .tray-shape-option {
+    min-height: 112px;
+    padding: 13px 3px 11px;
+    border-radius: 14px;
+  }
+
+  .tray-shape-icon {
+    width: 65px;
+    height: 48px;
+  }
+
+  .tray-shape-option strong {
+    font-size: 10.5px;
+  }
+
+  .tray-shape-option::after {
+    top: 6px;
+    right: 6px;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+}
+</style>
+
+<style>
+/* FINAL BRANDED TRAY CONFIGURATOR */
+
+/* Размеры */
+.tray-order .tray-order__sizes {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 9px !important;
+}
+
+.tray-order .tray-order__sizes .tray-config-choice {
+  position: relative !important;
+  width: 100% !important;
+  min-height: 48px !important;
+
+  margin: 0 !important;
+  padding: 10px 26px 10px 12px !important;
+
+  border: 1px solid #d8e2de !important;
+  border-radius: 12px !important;
+
+  background: #fff !important;
+  color: #26332e !important;
+
+  box-shadow: none !important;
+
+  font-size: 13px !important;
+  font-weight: 700 !important;
+
+  cursor: pointer !important;
+}
+
+.tray-order .tray-order__sizes .tray-config-choice:hover {
+  border-color: #8bcdb9 !important;
+  background: #f7fcfa !important;
+}
+
+.tray-order .tray-order__sizes .tray-config-choice.is-selected {
+  border-color: #65c6aa !important;
+  background: #eaf8f3 !important;
+  color: #176b55 !important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(101,198,170,.28) !important;
+}
+
+.tray-order .tray-order__sizes .tray-config-choice.is-selected::after {
+  content: "✓";
+
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  transform: translateY(-50%);
+
+  width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #65c6aa;
+  color: #fff;
+
+  font-size: 10px;
+  font-weight: 900;
+}
+
+
+/* Цвет */
+.tray-order .tray-order__colors {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 9px !important;
+}
+
+.tray-order .tray-order__colors .tray-config-choice {
+  position: relative !important;
+
+  width: 100% !important;
+  min-height: 50px !important;
+
+  margin: 0 !important;
+  padding: 9px 30px 9px 12px !important;
+
+  justify-content: flex-start !important;
+
+  border: 1px solid #d8e2de !important;
+  border-radius: 12px !important;
+
+  background: #fff !important;
+  color: #26332e !important;
+
+  box-shadow: none !important;
+
+  font-size: 13px !important;
+  font-weight: 700 !important;
+
+  cursor: pointer !important;
+}
+
+.tray-order .tray-order__colors .tray-config-choice:hover {
+  border-color: #8bcdb9 !important;
+  background: #f7fcfa !important;
+}
+
+.tray-order .tray-order__colors .tray-config-choice.is-selected {
+  border-color: #65c6aa !important;
+  background: #eaf8f3 !important;
+  color: #176b55 !important;
+}
+
+.tray-order .tray-order__colors .tray-config-choice.is-selected::after {
+  content: "✓";
+
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+
+  width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #65c6aa;
+  color: #fff;
+
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.tray-order .tray-config-color__dot {
+  width: 22px !important;
+  height: 22px !important;
+  flex: 0 0 22px !important;
+}
+
+
+/* Быстрый контакт */
+.tray-order__quick-contact {
+  margin-top: 20px;
+  padding: 17px;
+
+  border: 1px solid rgba(101,198,170,.30);
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(101,198,170,.09),
+      rgba(101,198,170,.025)
+    );
+}
+
+.tray-order__quick-copy strong {
+  display: block;
+  margin-bottom: 3px;
+
+  color: #20302a;
+  font-size: 13px;
+}
+
+.tray-order__quick-copy span {
+  color: #6e7975;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.tray-order__quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+
+  margin-top: 12px;
+}
+
+.tray-order__contact-link {
+  min-height: 43px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 8px 10px;
+
+  border: 1px solid #cfe0da;
+  border-radius: 10px;
+
+  background: #fff;
+  color: #284239;
+
+  font-size: 12px;
+  font-weight: 750;
+
+  text-decoration: none;
+}
+
+.tray-order__contact-link:hover {
+  border-color: #65c6aa;
+  background: #f6fcfa;
+}
+
+.tray-order__contact-link svg {
+  width: 18px;
+  height: 18px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tray-order__contact-link--telegram {
+  color: #247b68;
+}
+
+
+/* Пока размер не выбран, цвет визуально пуст */
+.tray-order__colors.tray-color-empty {
+  min-height: 0;
+}
+
+
+/* Mobile */
+@media (max-width:700px) {
+
+  .tray-order .tray-order__sizes {
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  }
+
+  .tray-order .tray-order__sizes .tray-config-choice {
+    font-size: 12px !important;
+  }
+
+  .tray-order__quick-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .tray-order__contact-link {
+    justify-content: flex-start;
+    padding-inline: 13px;
+  }
+}
+</style>
+
+<style>
+/* TRAY SELECTED CHOICE — VISUAL ONLY */
+.tray-config-choice {
+  position: relative;
+  transition:
+    border-color .18s ease,
+    background-color .18s ease,
+    box-shadow .18s ease;
+}
+
+.tray-config-choice.is-selected {
+  background: #edf8f4 !important;
+  border: 2px solid #62bfa5 !important;
+  color: #1f2d29 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 0 1px rgba(98,191,165,.08) !important;
+}
+
+.tray-config-choice.is-selected::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 22px;
+  height: 22px;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #62bfa5;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.tray-config-choice.is-selected .tray-config-color__dot {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px #62bfa5;
+}
+</style>
+
+<style>
+/* TRAY SIZE + COLOR VISUAL STATE — FINAL */
+
+/* Обычные варианты — белые */
+.tray-order [data-tray-sizes] .tray-config-choice,
+.tray-order [data-tray-colors] .tray-config-choice {
+  position: relative !important;
+  box-sizing: border-box !important;
+
+  background: #fff !important;
+  border: 1px solid #dfe7e4 !important;
+  color: #202925 !important;
+
+  box-shadow: none !important;
+}
+
+/* Выбранный размер / цвет */
+.tray-order [data-tray-sizes] .tray-config-choice.is-selected,
+.tray-order [data-tray-colors] .tray-config-choice.is-selected,
+.tray-order [data-tray-sizes] .tray-config-choice[aria-pressed="true"],
+.tray-order [data-tray-colors] .tray-config-choice[aria-pressed="true"] {
+  background: #f1faf7 !important;
+  border: 2px solid #70c8ae !important;
+  color: #202925 !important;
+
+  box-shadow:
+    0 0 0 1px rgba(112, 200, 174, .08) !important;
+
+  font-weight: 700 !important;
+
+  padding-right: 42px !important;
+}
+
+/* Галочка выбранного варианта */
+.tray-order [data-tray-sizes] .tray-config-choice.is-selected::after,
+.tray-order [data-tray-colors] .tray-config-choice.is-selected::after,
+.tray-order [data-tray-sizes] .tray-config-choice[aria-pressed="true"]::after,
+.tray-order [data-tray-colors] .tray-config-choice[aria-pressed="true"]::after {
+  content: "✓" !important;
+
+  position: absolute !important;
+  top: 50% !important;
+  right: 10px !important;
+
+  width: 20px !important;
+  height: 20px !important;
+
+  transform: translateY(-50%) !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 50% !important;
+
+  background: #70c8ae !important;
+  color: #fff !important;
+
+  font-size: 12px !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+}
+</style>
+
+<style>
+/* TRAY SIZE + COLOR — ROUNDED FINAL */
+[data-tray-sizes] > button,
+[data-tray-colors] > button {
+  border-radius: 14px !important;
+  min-height: 46px !important;
+}
+</style>
+
+<style>
+/* TRAY SIZE + COLOR — ROUNDED FINAL */
+[data-tray-sizes] > button,
+[data-tray-colors] > button {
+  border-radius: 14px !important;
+  min-height: 46px !important;
+}
+</style>
+
+
+<style>
+/* TRAY ORDER — DESKTOP LAYOUT FINAL */
+@media (min-width: 1000px) {
+  #tray-order .tray-order {
+    grid-template-columns:
+      minmax(300px, 0.72fr)
+      minmax(680px, 1.28fr) !important;
+    gap: clamp(44px, 5vw, 76px) !important;
+    align-items: start !important;
+  }
+
+  #tray-order .tray-order__intro {
+    max-width: 430px !important;
+  }
+
+  #tray-order .tray-order__form {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  #tray-order [data-tray-sizes] {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  #tray-order [data-tray-colors] {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+</style>
+
+<style>
+/* TRAY ORDER — DESKTOP COMPACT FINAL */
+@media (min-width: 1000px) {
+  #tray-order .tray-order {
+    grid-template-columns:
+      minmax(280px, .62fr)
+      minmax(700px, 1.38fr) !important;
+    gap: clamp(48px, 5vw, 72px) !important;
+  }
+
+  #tray-order .tray-order__form {
+    padding: 32px 34px 30px !important;
+  }
+
+  #tray-order .tray-config-field {
+    margin-bottom: 18px !important;
+  }
+
+  #tray-order [data-tray-sizes],
+  #tray-order [data-tray-colors] {
+    margin-top: 8px !important;
+  }
+
+  #tray-order textarea {
+    min-height: 90px !important;
+  }
+}
+</style>
+
+<style>
+/* TRAY ORDER — DESKTOP INFO */
+.tray-order__desktop-info {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .tray-order__desktop-info {
+    display: block;
+    margin-top: 38px;
+  }
+
+  .tray-order__desktop-info h3 {
+    margin: 0 0 14px;
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .tray-order__desktop-info > p {
+    margin: 0 0 22px;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .tray-order__desktop-info ul {
+    display: grid;
+    gap: 13px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tray-order__desktop-info li {
+    position: relative;
+    padding-left: 25px;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .tray-order__desktop-info li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #23846d;
+    font-weight: 700;
+  }
+
+  .tray-order__desktop-note {
+    margin-top: 30px;
+    padding: 18px 20px;
+    border: 1px solid rgba(80, 180, 150, .28);
+    border-radius: 14px;
+    background: rgba(237, 248, 244, .58);
+  }
+
+  .tray-order__desktop-note strong,
+  .tray-order__desktop-note span {
+    display: block;
+  }
+
+  .tray-order__desktop-note strong {
+    margin-bottom: 5px;
+    font-size: 15px;
+  }
+
+  .tray-order__desktop-note span {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+</style>
+
+<style>
+/* TRAY ORDER — EXPANDED DESKTOP COPY */
+@media (min-width: 1000px) {
+  .tray-order__desktop-info {
+    margin-top: 34px !important;
+  }
+
+  .tray-order__desktop-info > p {
+    margin-bottom: 18px !important;
+  }
+
+  .tray-order__desktop-info h4 {
+    margin: 28px 0 10px;
+    font-size: 17px;
+    line-height: 1.3;
+    color: #202925;
+  }
+
+  .tray-order__desktop-info ul {
+    margin-top: 24px !important;
+  }
+}
+</style>
+
+<style>
+/* TRAY INTRO — RESPONSIVE COPY */
+.tray-intro-mobile {
+  display: inline;
+}
+
+.tray-intro-desktop {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .tray-intro-mobile {
+    display: none;
+  }
+
+  .tray-intro-desktop {
+    display: inline;
+  }
+}
+</style>
+
+<style>
+/* TRAY ORDER — FINAL TEXT BALANCE */
+
+/* Mobile: meaningful description, visually compact */
+@media (max-width: 999px) {
+  #tray-order .tray-order__intro > p {
+    max-width: 100% !important;
+    font-size: 15px !important;
+    line-height: 1.48 !important;
+    margin-bottom: 22px !important;
+  }
+
+  #tray-order .tray-intro-mobile {
+    display: inline !important;
+  }
+
+  #tray-order .tray-intro-desktop {
+    display: none !important;
+  }
+}
+
+/* Desktop: enough information without turning into an article */
+@media (min-width: 1000px) {
+  #tray-order .tray-order__desktop-info {
+    margin-top: 30px !important;
+  }
+
+  #tray-order .tray-order__desktop-info h3 {
+    margin-bottom: 12px !important;
+  }
+
+  #tray-order .tray-order__desktop-info > p {
+    margin-bottom: 20px !important;
+  }
+
+  #tray-order .tray-order__desktop-info ul {
+    margin-top: 0 !important;
+    gap: 11px !important;
+  }
+
+  #tray-order .tray-order__desktop-note {
+    margin-top: 24px !important;
   }
 }
 </style>

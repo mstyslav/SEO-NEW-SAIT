@@ -419,3 +419,67 @@ const links = [
 }
 
 </style>
+
+
+<script is:inline>
+/* SPACE GLASS LANGUAGE — URL SOURCE OF TRUTH */
+(() => {
+  const syncLanguageWithUrl = () => {
+    const isRu =
+      window.location.pathname === '/ru/' ||
+      window.location.pathname.startsWith('/ru/');
+
+    const currentLocale = isRu ? 'ru' : 'uk';
+
+    /*
+     * URL is authoritative.
+     * Prevent an old saved RU choice from making a UA URL
+     * appear to be the Russian version.
+     */
+    localStorage.setItem('spaceGlassLocale', currentLocale);
+
+    const button =
+      document.querySelector('[data-language-button]');
+
+    if (!button) return;
+
+    const targetLocale =
+      currentLocale === 'ru' ? 'uk' : 'ru';
+
+    button.dataset.targetLocale = targetLocale;
+
+    /*
+     * Header button displays the CURRENT locale.
+     */
+    const textNodes = Array.from(button.childNodes).filter(
+      (node) => node.nodeType === Node.TEXT_NODE
+    );
+
+    if (textNodes.length) {
+      textNodes.forEach((node, index) => {
+        if (index === 0) {
+          node.textContent =
+            currentLocale === 'ru' ? 'RU' : 'UA';
+        }
+      });
+    } else {
+      const label =
+        button.querySelector(
+          '[data-language-label], span'
+        );
+
+      if (label) {
+        label.textContent =
+          currentLocale === 'ru' ? 'RU' : 'UA';
+      }
+    }
+  };
+
+  syncLanguageWithUrl();
+
+  document.addEventListener(
+    'astro:page-load',
+    syncLanguageWithUrl
+  );
+})();
+</script>

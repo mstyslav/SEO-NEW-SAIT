@@ -34,10 +34,8 @@ const catalogNavigation = getCatalogNavigation(locale);
 const categories = catalogNavigation.map((category) => {
   const [image, imageWidth, imageHeight] = imageBySlug[category.slug as keyof typeof imageBySlug];
   const isShowerCategory = category.slug === 'dushovi-konstruktsii';
-  const childLinksLimit = isShowerCategory ? 5 : 4;
   const childLinks = category.services
-    .filter((service, index, services) => service.path !== category.href && services.findIndex(({ path }) => path === service.path) === index)
-    .slice(0, childLinksLimit);
+    .filter((service, index, services) => service.path !== category.href && services.findIndex(({ path }) => path === service.path) === index);
   return {
     ...category,
     name: isShowerCategory && locale === 'uk'
