@@ -29,6 +29,13 @@ const localizedArticles = knowledgeArticles.map((article) => {
   return translated ? { ...article, ...translated } : article;
 });
 
+// Filter labels must match the (possibly translated) card categories,
+// otherwise ru shows uk buttons that never match any card.
+const localizedCategories = knowledgeCategories.map((category) => {
+  const index = knowledgeArticles.findIndex((article) => article.category === category);
+  return localizedArticles[index]?.category ?? category;
+});
+
 ---
 <BaseLayout
   title={t.meta.title}
@@ -70,7 +77,7 @@ const localizedArticles = knowledgeArticles.map((article) => {
 
       <nav class="knowledge-filters" aria-label={t.filtersAriaLabel}>
         <button class="is-active" type="button" data-knowledge-filter="all">{t.allFilterLabel}</button>
-        {knowledgeCategories.map((category) => <button type="button" data-knowledge-filter={category}>{category}</button>)}
+        {localizedCategories.map((category) => <button type="button" data-knowledge-filter={category}>{category}</button>)}
       </nav>
 
       <section class="knowledge-library" aria-labelledby="knowledge-library-title">
