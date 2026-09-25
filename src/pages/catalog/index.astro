@@ -18,26 +18,41 @@ const lp = (path: string) => localizedPath(path, locale);
 const t = catalogContent[locale];
 
 const origin = Astro.site ?? Astro.url.origin;
+// Card photo = the category page's own hero photo; categories whose page has
+// no hero photo use a real Space Glass project photo (never the s24-menu mockups).
 const imageBySlug = {
   'dushovi-konstruktsii': ['/images/catalog/dushovi-kabiny/dushovi-kabiny-768.webp', 768, 576],
-  dzerkala: ['/images/s24-menu/mirrors.webp', 1800, 2100],
-  'sklyani-perehorodky': ['/images/s24-menu/partitions.webp', 1800, 2100],
-  'sklyani-dveri': ['/images/s24-menu/doors.webp', 1800, 2100],
-  'sklyani-ohorozhi': ['/images/s24-menu/railings.webp', 1800, 2100],
-  'bezramne-sklinnya': ['/images/s24-menu/frameless.webp', 1800, 2100],
-  'alyuminiievi-konstruktsii': ['/images/s24-menu/aluminium.webp', 1800, 2100],
-  'sklyani-fasady': ['/images/s24-menu/facades.webp', 1800, 2100],
-  'metaloplastykovi-konstruktsii': ['/images/s24-menu/aluminium.webp', 1800, 2100],
+  dzerkala: ['/images/catalog/dzerkala/cat-led-900.webp', 900, 900],
+  'sklyani-perehorodky': ['/images/projects/office-partitions-morskyi-odesa/office-partitions-morskyi-odesa-hero-720.webp', 720, 960],
+  'sklyani-dveri': ['/images/projects/world-of-comics-entrance-odesa/world-of-comics-entrance-odesa-hero-720.webp', 720, 960],
+  'sklyani-ohorozhi': ['/images/projects/glass-stair-railing-private-house-odesa/glass-stair-railing-private-house-odesa-hero.webp', 720, 1280],
+  'bezramne-sklinnya': ['/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp', 720, 960],
+  'alyuminiievi-konstruktsii': ['/images/catalog/profile-systems/cat-alu-rozsuvni-900.webp', 900, 900],
+  'sklyani-fasady': ['/images/catalog/profile-systems/cat-alu-fasady-900.webp', 900, 900],
+  'metaloplastykovi-konstruktsii': ['/images/catalog/profile-systems/cat-pvc-vikna-900.webp', 900, 900],
   'sklo-dlia-biznesu': ['/images/projects/coffee-ocean-facade-odesa/coffee-ocean-glass-entrance-odesa.webp', 960, 1280]
 } as const;
+// Subcategories must match the child pages shown on the category page itself.
+const childOverrides: Record<string, { href: string } & Record<'uk' | 'ru', [string, string][]>> = {
+  'sklyani-perehorodky': {
+    href: '/sklyani-perehorodky/',
+    uk: [['Loft-перегородки', 'loft'], ['Офісні перегородки', 'ofisni'], ['Міжкімнатні перегородки', 'mizhkimnatni'], ['Розсувні перегородки', 'rozsuvni'], ['Телескопічні перегородки', 'teleskopichni'], ['Pivot-перегородки', 'pivot']],
+    ru: [['Лофт-перегородки', 'loft'], ['Офисные перегородки', 'ofisni'], ['Межкомнатные перегородки', 'mizhkimnatni'], ['Раздвижные перегородки', 'rozsuvni'], ['Телескопические перегородки', 'teleskopichni'], ['Pivot-перегородки', 'pivot']]
+  }
+};
 const catalogNavigation = getCatalogNavigation(locale);
 const categories = catalogNavigation.map((category) => {
   const [image, imageWidth, imageHeight] = imageBySlug[category.slug as keyof typeof imageBySlug];
   const isShowerCategory = category.slug === 'dushovi-konstruktsii';
-  const childLinks = category.services
-    .filter((service, index, services) => service.path !== category.href && services.findIndex(({ path }) => path === service.path) === index);
+  const overrideSet = childOverrides[category.slug];
+  const override = overrideSet?.[isRu ? 'ru' : 'uk'];
+  const childLinks = override
+    ? override.map(([shortName, slug]) => ({ shortName, path: `${overrideSet.href}${slug}/` }))
+    : category.services
+      .filter((service, index, services) => service.path !== category.href && services.findIndex(({ path }) => path === service.path) === index);
   return {
     ...category,
+    href: overrideSet?.href ?? category.href,
     name: isShowerCategory && locale === 'uk'
       ? 'Душові кабіни'
       : category.name,

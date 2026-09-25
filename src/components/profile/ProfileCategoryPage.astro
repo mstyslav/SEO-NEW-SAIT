@@ -1,0 +1,320 @@
+---
+/**
+ * Shared child-page template for the aluminium, metal-plastic and mirror
+ * clusters (/alyuminiievi-konstruktsii/{slug}/, /metaloplastykovi-konstruktsii/{slug}/,
+ * /dzerkala/{slug}/).
+ * Structure mirrors the shower-tray catalog (/catalog/piddon/): hero, intro,
+ * model cards with manufacturer specs, comparison table, scenarios, selection
+ * steps, sibling categories, process, SEO copy, FAQ and a request CTA.
+ * Content: src/data/profile-systems.ts and src/data/mirror-catalog.ts.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import FAQBlock from '../FAQBlock.astro';
+import TrustBar from '../TrustBar.astro';
+import ProfileRequestForm from './ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
+import {
+  ALU_HUB,
+  PVC_HUB,
+  IMG_BASE,
+  profileCategoriesByGroup,
+  type ProfileCategory,
+  type ProfileGroup
+} from '../../data/profile-systems';
+import { MIRROR_HUB, mirrorCategories } from '../../data/mirror-catalog';
+import '../../styles/category-pages.css';
+import '../../styles/shower-master.css';
+import '../../styles/profile-systems.css';
+
+interface Props {
+  category: ProfileCategory;
+}
+
+const { category } = Astro.props;
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(category.path, origin);
+
+const HUBS: Record<ProfileGroup, { href: string; label: string }> = {
+  alu: { href: ALU_HUB, label: 'Алюмінієві конструкції' },
+  pvc: { href: PVC_HUB, label: 'Металопластикові конструкції' },
+  mirror: { href: MIRROR_HUB, label: 'Дзеркала' }
+};
+const groupCategories = (group: ProfileGroup) => (group === 'mirror' ? mirrorCategories : profileCategoriesByGroup(group));
+const baseOf = (item: ProfileCategory) => item.imageBase ?? IMG_BASE;
+
+const isAlu = category.group === 'alu';
+const hasSystems = category.models.some((model) => model.image);
+const hubHref = HUBS[category.group].href;
+const hubLabel = HUBS[category.group].label;
+const imgBase = baseOf(category);
+const catalogButton = category.catalogButton ?? (hasSystems ? 'Переглянути системи' : 'Переглянути види');
+const optionsLabel = category.optionsLabel ?? (hasSystems ? 'Система' : 'Вид');
+const siblings = groupCategories(category.group).filter((item) => item.path !== category.path);
+// Mirrors link only within their own section; alu/pvc cross-link each other.
+const crossGroup = category.group === 'mirror' ? [] : profileCategoriesByGroup(isAlu ? 'pvc' : 'alu');
+// Same-group directions first, then the other group; keep full rows of 3.
+const relatedAll = [...siblings, ...crossGroup];
+const related3 = relatedAll.length < 3 ? relatedAll : relatedAll.slice(0, Math.min(9, relatedAll.length - (relatedAll.length % 3)));
+const processSteps = category.process ?? [
+  ['Запит', 'Фото, розміри або креслення'],
+  ['Консультація', 'Підбір системи та склопакета'],
+  ['Замір', 'Перевірка прорізів і вузлів'],
+  ['Проєкт', 'Креслення та специфікація'],
+  ['Виготовлення', 'Власне обладнання, контроль якості'],
+  ['Монтаж', 'З ізоляцією шва та гарантією']
+];
+const catalogNote = category.catalogNote ?? 'Технічні показники наведені за даними виробників профільних систем для базових конфігурацій і залежать від розмірів, склопакета та фурнітури. Остаточну комплектацію та вартість визначаємо за кресленням або після заміру.';
+
+const heroSrc = (w: number) => `${imgBase}/${category.heroImage}-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+// Extra product photos (e.g. mb-79n-2, mb-79n-3) — shown in the gallery strip
+// only when the file actually exists in /public.
+const publicDir = path.join(process.cwd(), 'public');
+const exists = (base: string) => fs.existsSync(path.join(publicDir, `${imgBase}/${base}-900.webp`));
+const galleryAll = category.models.flatMap((model) =>
+  model.image
+    ? [2, 3, 4]
+        .map((n) => `${model.image}-${n}`)
+        .filter(exists)
+        .slice(0, 2)
+        .map((base) => ({ base, alt: `${model.name} — фото конструкції`, label: model.name }))
+    : []
+).slice(0, 6);
+// Keep full rows in the 3-column grid.
+const gallery = galleryAll.slice(0, galleryAll.length - (galleryAll.length % 3));
+
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#models`,
+  name: category.catalogHeading,
+  numberOfItems: category.models.length,
+  itemListElement: category.models.map((model, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Product',
+      name: model.name,
+      category: category.name,
+      description: model.blurb,
+      ...(model.brand ? { brand: { '@type': 'Brand', name: model.brand } } : {}),
+      ...(model.image ? { image: absoluteUrl(`${imgBase}/${model.image}-900.webp`, origin) } : {})
+    }
+  }))
+};
+const faqStructuredData = faqSchema(category.faq.map(([question, answer]) => ({ question, answer })));
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
+---
+<BaseLayout
+  title={category.metaTitle}
+  description={category.metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  alternateLocales={['uk']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: hubLabel, href: hubHref }, { label: category.name }]} />
+        <p class="eyebrow">{category.eyebrow}</p>
+        <h1>{category.h1}</h1>
+        <p class="lead">{category.lead}</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#catalog">{catalogButton}</a>
+          <a class="button button--outline" href="#request">Отримати розрахунок</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt={category.heroAlt} width="1080" height="1080" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="uk" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Про рішення</p><h2>{category.introHeading}</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          {category.intro.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <ul class="category-intro__spec">
+          {category.introSpec.map(([name, note]) => <li><b>{name}</b><span>{note}</span></li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section id="catalog" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Каталог</p><h2>{category.catalogHeading}</h2></div><p>{category.catalogIntro}</p></div>
+      <div class="profile-grid" data-count={category.models.length}>
+        {category.models.map((model) => (
+          <article class={`profile-card${model.image ? '' : ' profile-card--plain'}`} id={model.id}>
+            {model.image ? (
+              <div class="profile-card__media">
+                <img
+                  src={`${imgBase}/${model.image}-480.webp`}
+                  srcset={`${imgBase}/${model.image}-480.webp 480w, ${imgBase}/${model.image}-900.webp 900w`}
+                  sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw"
+                  alt={model.imageAlt ?? model.name}
+                  width="480"
+                  height="480"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="profile-card__kind">{model.kind}</span>
+              </div>
+            ) : (
+              <span class="profile-card__kind profile-card__kind--inline">{model.kind}</span>
+            )}
+            <div class="profile-card__body">
+              <h3>{model.name}</h3>
+              <p class="profile-card__blurb">{model.blurb}</p>
+              <dl class="profile-card__specs">
+                {model.specs.map(([name, value]) => <div><dt>{name}</dt><dd>{value}</dd></div>)}
+              </dl>
+              <ul class="profile-card__features">
+                {model.features.map((feature) => <li>{feature}</li>)}
+              </ul>
+              <p class="profile-card__price">{model.priceFrom ? <><strong>{model.priceFrom}</strong>{model.priceNote && <span>{model.priceNote}</span>}</> : 'Ціна — за індивідуальним розрахунком'}</p>
+              <a class="button button--mint profile-card__cta" href="#request" data-request-model={model.name}>{model.image ? `Розрахувати ${model.name.replace(/^Aluprof /, '')}` : 'Отримати розрахунок'}</a>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="profile-note">{catalogNote}</p>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Порівняння</p><h2>Системи поруч</h2></div><p>Ключові відмінності, які допомагають обрати рішення під ваш об’єкт.</p></div>
+      <div class="profile-table-wrap">
+        <table class="profile-table">
+          <thead><tr>{category.compareColumns.map((column) => <th scope="col">{column}</th>)}</tr></thead>
+          <tbody>
+            {category.compareRows.map(([first, ...rest]) => (
+              <tr><th scope="row">{first}</th>{rest.map((cell) => <td>{cell}</td>)}</tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Застосування</p><h2>{category.useHeading}</h2></div><p>{category.useIntro}</p></div>
+      <div class="category-icon-grid">
+        {category.uses.map(([name, text], i) => (
+          <div class="category-icon-card category-icon-card--static profile-use">
+            <span class="profile-use__num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{name}</h3>
+            <p>{text}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {category.details && (
+      <section class="category-section">
+        <div class="category-heading"><div><p class="eyebrow">Якість</p><h2>{category.details.heading}</h2></div><p>{category.details.intro}</p></div>
+        <div class="profile-details">
+          {category.details.items.map(([name, text, image]) => (
+            <figure>
+              <img src={`${imgBase}/${image}-480.webp`} srcset={`${imgBase}/${image}-480.webp 480w, ${imgBase}/${image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, 24vw" alt={name} width="480" height="480" loading="lazy" decoding="async" />
+              <figcaption><b>{name}</b><span>{text}</span></figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {gallery.length > 0 && (
+      <section class="category-section category-section--mint">
+        <div class="category-heading"><div><p class="eyebrow">Деталі</p><h2>{category.group === 'mirror' ? 'Моделі крупним планом' : 'Конструкції та профілі крупним планом'}</h2></div><p>{category.group === 'mirror' ? 'Деталі готових моделей, з якими ми працюємо.' : 'Перерізи профілів і приклади конструкцій на системах, з якими ми працюємо.'}</p></div>
+        <div class="profile-gallery">
+          {gallery.map((item) => (
+            <figure>
+              <img src={`${imgBase}/${item.base}-480.webp`} srcset={`${imgBase}/${item.base}-480.webp 480w, ${imgBase}/${item.base}-900.webp 900w`} sizes="(max-width: 700px) 45vw, 30vw" alt={item.alt} width="480" height="480" loading="lazy" decoding="async" />
+              <figcaption>{item.label}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Підбір</p><h2>{category.chooseHeading}</h2></div><p>Чотири питання, які визначають систему та комплектацію.</p></div>
+      <div class="category-steps">
+        {category.chooseSteps.map(([name, text], i) => (
+          <div class="category-steps__item"><span>{String(i + 1).padStart(2, '0')}</span><b>{name}</b><p>{text}</p></div>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">{hubLabel}</p><h2>Інші напрями</h2></div><p><a class="category-arrow-link" href={hubHref}>Усі {hubLabel.toLowerCase()} <span aria-hidden="true">→</span></a></p></div>
+      <div class="profile-siblings">
+        {related3.map((item) => (
+          <a class="profile-sibling" href={item.path}>
+            <img src={`${baseOf(item)}/${item.heroImage}-480.webp`} alt="" width="480" height="480" loading="lazy" decoding="async" />
+            <span><b>{item.name}</b><small>{item.cardNote}</small></span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від запиту до монтажу</h2></div></div>
+      <div class="category-process__grid">
+        {processSteps.map(([name, note], index) => <div><span>{String(index + 1).padStart(2, '0')}</span><b>{name}</b><small>{note}</small></div>)}
+      </div>
+    </section>
+
+    <section class="category-section category-seo">
+      <div class="category-seo__grid">
+        <div><p class="eyebrow">Експертно</p><h2>{category.seoHeading}</h2></div>
+        <div class="category-prose">
+          {category.seo.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock
+        title={`FAQ: ${category.name.toLowerCase()}`}
+        intro="Відповіді на питання, які найчастіше ставлять перед замовленням."
+        items={category.faq}
+        visibleCount={6}
+        expandTo={category.faq.length}
+      />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Корисне</p><h2>Далі по темі</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {category.related.map(([label, href]) => <a href={href}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={category.path}
+      product={category.name}
+      title={category.ctaTitle}
+      text={category.ctaText}
+      options={category.models.map((model) => model.name)}
+      optionsLabel={optionsLabel}
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

@@ -21,9 +21,9 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const note = [payload.comment, payload.city && `Місто: ${payload.city}`, payload.product && `Виріб: ${payload.product}`, payload.configuration && `Конфігурація: ${payload.configuration}`, payload.estimatedPrice && `Оцінка: ${payload.estimatedPrice}`].filter(Boolean).join('\n');
+  const note = [payload.page && `Сторінка: ${payload.page}`, payload.comment, payload.city && `Місто: ${payload.city}`, payload.product && `Виріб: ${payload.product}`, payload.configuration && `Конфігурація: ${payload.configuration}`, payload.estimatedPrice && `Оцінка: ${payload.estimatedPrice}`].filter(Boolean).join('\n');
   const lead = [{
-    name: `Сайт — ${payload.name}`,
+    name: payload.product ? `Сайт — ${payload.product} — ${payload.name}` : `Сайт — ${payload.name}`,
     pipeline_id: pipelineId || undefined,
     _embedded: { contacts: [{
       first_name: payload.name,

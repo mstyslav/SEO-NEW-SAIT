@@ -4,108 +4,213 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import ProfileRequestForm from '../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { IMG_BASE, profileCategoriesByGroup } from '../../data/profile-systems';
+import { profileIcons } from '../../data/profile-icons';
 import '../../styles/category-pages.css';
+import '../../styles/shower-master.css';
+import '../../styles/profile-systems.css';
 
-const title = "Алюмінієві конструкції";
-const subtitle = "Вікна, двері, фасади, зимові сади та розсувні системи";
-const items = ["Вікна", "Двері", "Розсувні", "Фасади", "Зимові сади", "Перголи"];
-const faq = [
-  [
-    "Від чого залежить ціна?",
-    "Від габаритів, типу скла, профілю, фурнітури, складності та монтажу."
-  ],
-  [
-    "Чи є індивідуальні розміри?",
-    "Так, більшість конструкцій виготовляємо за погодженими розмірами."
-  ],
-  [
-    "Де доступний монтаж?",
-    "Основні міста монтажу — Київ, Львів та Одеса з областями."
-  ],
-  [
-    "Чи є доставка по Україні?",
-    "Готові товари та комплектуючі доставляємо по всій Україні."
-  ],
-  [
-    "Які матеріали використовуються?",
-    "Матеріали підбираються за призначенням конструкції, навантаженням і дизайном."
-  ],
-  [
-    "Чи можна обрати колір профілю?",
-    "Так, доступні стандартні та індивідуальні кольори залежно від системи."
-  ],
-  [
-    "Які строки виготовлення?",
-    "Термін визначається після погодження креслення, комплектації та завантаження виробництва."
-  ],
-  [
-    "Чи надається гарантія?",
-    "Так, гарантія залежить від типу конструкції, матеріалів та умов монтажу."
-  ],
-  [
-    "Чи потрібен професійний замір?",
-    "Для індивідуальних конструкцій професійний замір рекомендований або обов’язковий."
-  ],
-  [
-    "Чи можна замовити тільки виготовлення?",
-    "Так, у частині проєктів можливе виготовлення без монтажу з доставкою."
-  ],
-  [
-    "Чи робите технічні креслення?",
-    "Так, перед запуском складних конструкцій готуємо та погоджуємо креслення."
-  ],
-  [
-    "Чи можна інтегрувати двері?",
-    "Так, залежно від системи доступні розпашні, розсувні, маятникові та pivot-рішення."
-  ],
-  [
-    "Чи працюєте з дизайнерами й архітекторами?",
-    "Так, надаємо технічні матеріали, консультації та супровід проєкту."
-  ],
-  [
-    "Чи можна використати матове скло?",
-    "Так, доступні матове, тоноване, освітлене, рифлене та декоративне скло."
-  ],
-  [
-    "Чи працюєте з комерційними об’єктами?",
-    "Так, реалізуємо рішення для офісів, магазинів, ресторанів, готелів і клінік."
-  ],
-  [
-    "Чи можливий демонтаж старих конструкцій?",
-    "Так, демонтаж оцінюється окремо після огляду об’єкта."
-  ],
-  [
-    "Що потрібно для попередньої оцінки?",
-    "Фото, приблизні розміри, місто та короткий опис бажаного рішення."
-  ],
-  [
-    "Чи можна замовити поетапну реалізацію?",
-    "Так, великі проєкти можна поділяти на етапи за погодженим графіком."
-  ],
-  [
-    "Які способи оплати доступні?",
-    "Умови оплати залежать від типу товару, обсягу та формату робіт."
-  ],
-  [
-    "Чи є сервіс після монтажу?",
-    "Так, доступні гарантійні та післягарантійні консультації й обслуговування."
-  ]
-]
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl('/alyuminiievi-konstruktsii/', origin);
+
+const title = 'Алюмінієві конструкції';
+const h1 = 'Алюмінієві конструкції на замовлення';
+const metaTitle = 'Алюмінієві конструкції Aluprof — вікна, двері, розсувні системи, фасади, перголи | Space Glass';
+const metaDescription =
+  'Алюмінієві вікна, двері, розсувні двері, офісні перегородки, фасадне скління, зимові сади, сітки плісе та перголи на системах Aluprof. Проєктування, власне виробництво, монтаж і сервіс у Києві, Одесі та Львові.';
+
+const categories = profileCategoriesByGroup('alu');
+const pvc = profileCategoriesByGroup('pvc');
+
+const heroSrc = (w: number) => `${IMG_BASE}/cat-alu-rozsuvni-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const hubItems = [
+  ...categories.map((category) => ({ title: category.name, note: category.cardNote, href: category.path, icon: profileIcons[`alu/${category.slug}`] })),
+  { title: 'Металопластикові вікна', note: 'Коли потрібні стандартні теплі вікна в квартиру за доступною ціною.', href: pvc[0].path, icon: profileIcons['pvc/vikna'] }
+];
+
+const systemsTable = categories.flatMap((category) =>
+  category.models.map((model) => ({
+    name: model.name.replace(/^Aluprof /, ''),
+    href: `${category.path}#${model.id}`,
+    direction: category.name,
+    kind: model.kind,
+    key: model.specs.slice(0, 2).map(([k, v]) => `${k.toLowerCase()}: ${v}`).join('; ')
+  }))
+);
+
+const benefits: [string, string][] = [
+  ['Безпека', 'Жорсткий профіль, багатоточкові замки та протизламне скління до класу RC4. Алюміній не горить і не виділяє токсичних речовин.'],
+  ['Енергоефективність', 'Терморозрив і двокомпонентні ущільнювачі дають Uw від 0,62 W/(m²K) — витрати на опалення та кондиціювання помітно знижуються.'],
+  ['Екологічність', 'Алюміній, поліамід і EPDM повністю переробляються. Профілі Aluprof відповідають принципам Cradle to Cradle.'],
+  ['Довговічність', 'Профіль не гниє, не деформується від сонця й морозу, не жовтіє та не потребує фарбування десятиліттями.'],
+  ['Дизайн', 'Вузькі рами, великі площі скла, будь-який колір RAL, приховані петлі та стулки.'],
+  ['Ціна / якість', 'Алюміній — інвестиція на десятиліття: без заміни, з мінімальним обслуговуванням.']
+];
+
+const services: [string, string][] = [
+  ['Проєктування', 'Інженери-конструктори готують карту прорізів з прив’язкою до горизонту, специфікацію виробів і вузли примикання — ризики враховані ще до виробництва.'],
+  ['Виготовлення', 'Власне обладнання для обробки профілю та системне програмне забезпечення. Складальники цеху проходять навчання та регулярно підвищують кваліфікацію.'],
+  ['Монтаж', 'Монтажники з досвідом понад 10 років встановлюють конструкції з гідро- та пароізоляцією за технічними нормами і прибирають за собою.'],
+  ['Гарантія та сервіс', 'Гарантійне та післягарантійне обслуговування: регулювання фурнітури, заміна ущільнювачів і ремонт за потреби.']
+];
+
+const faq: [string, string][] = [
+  ['З якими профільними системами ви працюєте?', 'Основна система — Aluprof: вікна MB-79N і MB-86N, двері MB-86N Pivot, MB-100GFT і MB-86 Fold Line HD, розсувні MB-82HS і MB-Skyline, фасади MB-MT50N, MB-SR50N ZS, MB-SE85 SG, зимові сади MB-59 Slide та MB-77HS.'],
+  ['Чи теплі алюмінієві конструкції?', 'Так. Системи з терморозривом мають Uw від 0,62 W/(m²K) для вікон і від 0,84 W/(m²K) для підйомно-розсувних дверей. Холодний алюміній без терморозриву використовують лише для нежитлових приміщень.'],
+  ['Що краще: алюміній чи металопластик?', 'Алюміній міцніший, довговічніший і дозволяє великі стулки, вузькі рами, розсувні системи та фасади. Металопластик доступніший для стандартних вікон у квартирі.'],
+  ['Від чого залежить вартість?', 'Від системи й варіанту профілю, розмірів, склопакетів, фурнітури, кольору, автоматики та умов монтажу. Розрахунок робимо за кресленням або після заміру.'],
+  ['Чи можна обрати колір профілю?', 'Так. Профілі фарбуються порошковими фарбами за палітрою RAL; доступні структурні та деревоподібні покриття.'],
+  ['Чи робите проєкт?', 'Так. Готуємо карту прорізів, специфікацію виробів і типові вузли примикання — це дозволяє уникнути непередбачених витрат.'],
+  ['Де виконуєте монтаж?', 'Замір і монтаж — у Києві, Одесі та Львові з областями. Інші міста — за домовленістю.'],
+  ['Чи є гарантія і сервіс?', 'Так. Надаємо гарантійне та післягарантійне обслуговування: регулювання, заміну ущільнювачів, ремонт фурнітури.'],
+  ['Чи працюєте з архітекторами та забудовниками?', 'Так. Надаємо технічні матеріали, допомагаємо підібрати систему та супроводжуємо проєкт від креслень до монтажу.'],
+  ['Що потрібно для попереднього розрахунку?', 'План або креслення, фото прорізів із розмірами, місто та короткий опис задачі.'],
+  ['Чим алюмінієві конструкції кращі за дерев’яні?', 'Алюміній не гниє, не розсихається і не потребує фарбування. Для теплого вигляду доступні деревоподібні покриття профілю.'],
+  ['Що таке терморозрив?', 'Поліамідна вставка між зовнішньою та внутрішньою частинами профілю. Вона не пропускає холод, тому алюмінієве вікно стає теплим.'],
+  ['Які варіанти теплоізоляції бувають?', 'E — базовий, ST — з двокомпонентним ущільнювачем, SI/HI — з додатковими ізоляційними вставками для енергоощадних будинків.'],
+  ['Чи можна замовити лише виготовлення без монтажу?', 'У частині проєктів можливе виготовлення з доставкою без монтажу. Проте гарантія на роботу конструкції найповніша при нашому монтажі.'],
+  ['Чи демонтуєте старі конструкції?', 'Так. Демонтаж оцінюємо окремо після огляду об’єкта.'],
+  ['Чи працюєте з комерційними об’єктами?', 'Так: офіси, магазини, ресторани, готелі та клініки — вітрини, вхідні групи, фасади й розсувні системи.'],
+  ['Чи можна реалізувати проєкт поетапно?', 'Так, великі об’єкти можна ділити на етапи за погодженим графіком виготовлення та монтажу.'],
+  ['Скільки часу займає виготовлення?', 'Строки залежать від системи, кольору профілю та склопакетів. Точні терміни називаємо після погодження креслення.'],
+  ['Чи можна автоматизувати двері та розсувні системи?', 'Так. Доступні приводи, електронні замки та контроль доступу, у тому числі керування зі смартфона.'],
+  ['Чи потрібен професійний замір?', 'Так, для індивідуальних конструкцій замір обов’язковий: він визначає точні розміри та вузли примикання.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Металопластикові вікна', '/metaloplastykovi-konstruktsii/vikna/'],
+  ['Сітки плісе', '/alyuminiievi-konstruktsii/sitky-plise/'],
+  ['Стійково-ригельне скління', '/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/'],
+  ['Скляні вхідні групи', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'],
+  ['Безрамне скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
+  ['Панорамне скління', '/poslugy/bezramne-sklinnya/panoramne-sklinnya/'],
+  ['Склопакет: як обрати', '/knowledge/sklopaket-yak-obraty/'],
+  ['Скління для будинку', '/rishennya/dlya-budynku/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: categories.length,
+  itemListElement: categories.map((category, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: category.name,
+    url: absoluteUrl(category.path, origin)
+  }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
 ---
-<BaseLayout title={`${title} — Space Glass`} description={subtitle}>
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  alternateLocales={['uk']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
 <div class="sg-page-shell">
   <Header />
   <main id="main">
-    <div class="category-breadcrumbs"><Breadcrumbs items={[{label:'Головна',href:'/'},{label:title}]} /></div>
-    <section class="category-hero">
-      <div class="category-hero__copy"><p class="eyebrow">{title}</p><h1>{title} на замовлення</h1><p class="lead">{subtitle}</p><div class="hero__actions"><a class="button button--mint" href="#category-request">Отримати розрахунок</a><a class="button button--outline" href="#types">Переглянути види</a></div></div>
-      <div class="category-hero__visual"><div class="category-hero__glass"></div><span>SPACE GLASS</span></div>
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Алюмінієві вікна та двері, розсувні системи, офісне й фасадне скління, зимові сади, перголи та сітки плісе на профільних системах Aluprof. Проєктуємо, виготовляємо на власному обладнанні та монтуємо конструкції в Києві, Одесі та Львові — з гарантією та сервісом після встановлення.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#types">Переглянути {categories.length} напрямів</a>
+          <a class="button button--outline" href="#request">Отримати розрахунок</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Панорамні алюмінієві розсувні двері на терасу приватного будинку" width="1080" height="1080" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="uk" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>Алюмінієві конструкції під ваш об’єкт</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Space Glass понад 10 років виготовляє та встановлює алюмінієві вікна й двері в Одесі та за її межами. За останні три роки ми засклили понад 10 000 м² об’єктів — від квартир і приватних будинків до ресторанів, офісів і комерційних будівель. До нас повертаються клієнти, з якими ми працювали кілька років тому.</p>
+          <p>Ми працюємо з профільними системами Aluprof — одного з найбільших європейських виробників алюмінієвих систем. Теплі профілі з терморозривом, енергоощадні склопакети та правильний монтаж знижують витрати на опалення й кондиціювання до 30%.</p>
+          <p>Повний цикл — у наших руках: проєктування прорізів і вузлів, виготовлення на власному обладнанні, монтаж з гідро- та пароізоляцією, гарантійний і післягарантійний сервіс.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>10+ років</b><span>на ринку алюмінієвих вікон і дверей</span></li>
+          <li><b>10 000+ м²</b><span>засклено за останні 3 роки</span></li>
+          <li><b>Системи Aluprof</b><span>вікна, двері, розсувні системи, фасади</span></li>
+          <li><b>Київ · Одеса · Львів</b><span>замір, монтаж і сервіс</span></li>
+        </ul>
+      </div>
     </section>
 
     <section id="types" class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Оберіть відповідне рішення</h2></div><p>Після вибору типу уточнимо розміри, матеріали, колір, комплектацію та формат монтажу.</p></div>
-      <div class="category-type-grid">
-        {items.map((item,i)=><a class="category-type-card" href="#"><div class="category-type-card__visual"><span>{String(i+1).padStart(2,'0')}</span></div><div class="category-type-card__body"><small>{String(i+1).padStart(2,'0')}</small><h3>{item}</h3><p>Індивідуальна конфігурація під ваш простір.</p><b>Детальніше →</b></div></a>)}
+      <div class="category-heading"><div><p class="eyebrow">Напрями</p><h2>Що ми виготовляємо з алюмінію</h2></div><p>Оберіть напрям — на сторінці кожного є системи з характеристиками, порівняння та поради з вибору.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Системи</p><h2>Профільні системи Aluprof в одній таблиці</h2></div><p>Показники — за даними виробника для базових конфігурацій. Натисніть на систему, щоб перейти до її опису.</p></div>
+      <div class="profile-table-wrap">
+        <table class="profile-table">
+          <thead><tr><th scope="col">Система</th><th scope="col">Напрям</th><th scope="col">Тип</th><th scope="col">Ключові показники</th></tr></thead>
+          <tbody>
+            {systemsTable.map((row) => (
+              <tr><th scope="row"><a href={row.href}>{row.name}</a></th><td>{row.direction}</td><td>{row.kind}</td><td>{row.key}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Переваги</p><h2>Чому алюміній</h2></div><p>Алюмінієві системи відповідають довгостроковому погляду на будівництво.</p></div>
+      <div class="material-grid material-grid--parts">
+        {benefits.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Профіль</p><h2>Варіанти теплоізоляції та кольори</h2></div><p>Одна система — кілька рівнів теплоізоляції. Обираємо під об’єкт, а не «з запасом».</p></div>
+      <dl class="material-thickness">
+        <div><dt>E — базовий</dt><dd>Однокомпонентний центральний ущільнювач. Для нежитлових і помірно опалюваних приміщень.</dd></div>
+        <div><dt>ST — стандартний</dt><dd>Двокомпонентний центральний ущільнювач. Оптимальний варіант для житла.</dd></div>
+        <div><dt>SI / HI — підвищена ізоляція</dt><dd>Додаткові ізоляційні вставки між терморозривами. Для енергоощадних будинків.</dd></div>
+        <div><dt>Колір</dt><dd>Порошкове фарбування за палітрою RAL, структурні та деревоподібні покриття — однаково для вікон, дверей і фасаду.</dd></div>
+      </dl>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Послуги</p><h2>Повний цикл від проєкту до сервісу</h2></div></div>
+      <div class="category-steps">
+        {services.map(([name, text], i) => (
+          <div class="category-steps__item"><span>{String(i + 1).padStart(2, '0')}</span><b>{name}</b><p>{text}</p></div>
+        ))}
       </div>
     </section>
 
@@ -113,24 +218,52 @@ const faq = [
       <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від запиту до готової конструкції</h2></div></div>
       <div class="category-process__grid">
         <div><span>01</span><b>Запит</b><small>Фото, розміри або креслення</small></div>
-        <div><span>02</span><b>Оцінка</b><small>Попередня комплектація</small></div>
-        <div><span>03</span><b>Замір</b><small>Перевірка геометрії</small></div>
-        <div><span>04</span><b>Креслення</b><small>Технічне узгодження</small></div>
-        <div><span>05</span><b>Виготовлення</b><small>Контроль якості</small></div>
-        <div><span>06</span><b>Монтаж</b><small>Здача та гарантія</small></div>
+        <div><span>02</span><b>Консультація</b><small>Підбір системи та склопакета</small></div>
+        <div><span>03</span><b>Замір</b><small>Перевірка прорізів</small></div>
+        <div><span>04</span><b>Проєкт</b><small>Карта прорізів і вузли</small></div>
+        <div><span>05</span><b>Виготовлення</b><small>Власне обладнання</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Гарантія та сервіс</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">Географія</p>
+          <h2>Алюмінієві конструкції: замір і монтаж<br />у Києві, Одесі та Львові</h2>
+          <p>Офіси Space Glass працюють в Одесі, Києві та Львові. Виїжджаємо на замір, готуємо проєкт і виконуємо монтаж алюмінієвих вікон, дверей, розсувних систем, фасадів і зимових садів у містах та областях.</p>
+          <p>Для об’єктів в інших регіонах умови виїзду, доставки та монтажу узгоджуємо окремо — залежно від обсягу та типу конструкцій.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Київ</b><span>замір і монтаж</span></li><li><b>Одеса</b><span>замір і монтаж</span></li><li><b>Львів</b><span>замір і монтаж</span></li></ul>
       </div>
     </section>
 
     <section class="category-section category-section--faq">
       <FAQBlock
-        title={`FAQ про ${title.toLowerCase()}: ціни, монтаж, матеріали та замовлення`}
-        intro={`Відповідаємо на основні питання про ${title.toLowerCase()}, строки, гарантію, доставку й індивідуальне виготовлення.`}
+        title="FAQ про алюмінієві конструкції"
+        intro="Про системи Aluprof, теплоізоляцію, колір, проєкт, монтаж і гарантію."
         items={faq}
         visibleCount={6}
+        expandTo={faq.length}
       />
     </section>
 
-    <section id="category-request" class="inner-cta"><div><p class="eyebrow eyebrow--light">Заявка</p><h2>Потрібен попередній розрахунок?</h2><p>Надішліть фото, розміри або креслення.</p></div><a class="button button--white" href="mailto:info@space-glass.com.ua">Надіслати запит</a></section>
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Корисне</p><h2>Далі по темі</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={href}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={'/alyuminiievi-konstruktsii/'}
+      product={title}
+      title={'Потрібен попередній розрахунок?'}
+      text={'Надішліть розміри прорізів або опишіть задачу — підберемо систему Aluprof і підготуємо орієнтовну вартість.'}
+      options={[...categories.map((c) => c.name), 'Металопластикові вікна']}
+      optionsLabel="Напрям"
+      commentPlaceholder="Що потрібно: тип конструкції, розміри, кількість, місто об’єкта"
+    />
   </main>
   <Footer />
 </div>

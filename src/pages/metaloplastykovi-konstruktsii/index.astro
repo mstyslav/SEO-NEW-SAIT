@@ -4,89 +4,237 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import ProfileRequestForm from '../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { IMG_BASE, profileCategoriesByGroup, getProfileCategory } from '../../data/profile-systems';
+import { profileIcons } from '../../data/profile-icons';
 import '../../styles/category-pages.css';
+import '../../styles/shower-master.css';
+import '../../styles/profile-systems.css';
 
-const title = "Металопластикові конструкції";
-const subtitle = "Металопластикові вікна, двері, балконні блоки та розсувні ПВХ-системи на замовлення";
-const items = ["Металопластикові вікна", "Металопластикові двері", "Балконні блоки", "Розсувні системи"];
-const faq = [
-  ["Від чого залежить ціна металопластикових конструкцій?","Від розмірів, профільної системи, склопакета, фурнітури, ламінування, монтажу та додаткових опцій."],
-  ["Чи виготовляєте металопластикові вікна за індивідуальними розмірами?","Так, конструкції виготовляються під конкретний проріз після перевірки розмірів і комплектації."],
-  ["Які склопакети можна встановити?","Доступні енергоефективні, мультифункціональні, сонцезахисні та інші типи склопакетів залежно від задачі."],
-  ["Чи можна вибрати колір профілю?","Так, доступні білі профілі, ламінування під дерево та інші декори залежно від обраної системи."],
-  ["Чи є металопластикові двері?","Так, виготовляємо вхідні, балконні та інші ПВХ-двері з відповідною фурнітурою та склопакетами."],
-  ["Чи робите балконні блоки?","Так, можемо виготовити віконно-дверні балконні блоки та комплексні рішення для скління балконів."],
-  ["Чи є розсувні металопластикові системи?","Так, доступні розсувні рішення для терас, балконів та великих світлових прорізів."],
-  ["Чи виконуєте монтаж?","Так, монтаж узгоджується окремо залежно від міста, типу конструкції та стану прорізу."],
-  ["Чи є доставка по Україні?","Так, доставка конструкцій можлива по Україні. Деталі залежать від габаритів і регіону."],
-  ["Яка гарантія?","Гарантія залежить від профільної системи, фурнітури, склопакета та умов монтажу."],
-  ["Чи потрібен професійний замір?","Для індивідуального виготовлення професійний замір рекомендований, щоб коректно визначити монтажні зазори та конфігурацію."],
-  ["Чи можна замовити тільки виготовлення без монтажу?","Так, для частини замовлень можливе виготовлення з доставкою без монтажу."],
-  ["Яку фурнітуру можна обрати?","Комплектація підбирається під вагу стулки, спосіб відкривання, вимоги до безпеки та бюджет."],
-  ["Чи є енергоефективні рішення?","Так, можна підібрати профіль, склопакет і дистанційну рамку з урахуванням вимог до теплоізоляції."],
-  ["Чи можна зробити нестандартну форму або великі розміри?","Можливість залежить від профільної системи, армування, габаритів і статичних вимог."],
-  ["Чи працюєте з приватними та комерційними об’єктами?","Так, підбираємо металопластикові конструкції для квартир, будинків, офісів і комерційних приміщень."],
-  ["Що потрібно для попереднього розрахунку?","Надішліть приблизні розміри, кількість конструкцій, фото прорізів і бажаний тип відкривання."],
-  ["Чи можна замінити старі вікна?","Так, демонтаж старих конструкцій і монтаж нових можна включити до проєкту після оцінки об’єкта."],
-  ["Які строки виготовлення?","Строк залежить від профільної системи, комплектації, кольору, склопакетів і завантаження виробництва."],
-  ["Чи можна отримати консультацію перед замовленням?","Так, допоможемо підібрати профіль, склопакет, відкривання та комплектацію під ваш бюджет і задачу."]
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl('/metaloplastykovi-konstruktsii/', origin);
+
+const title = 'Металопластикові конструкції';
+const h1 = 'Металопластикові вікна, двері та перегородки';
+const metaTitle = 'Металопластикові вікна, двері, розсувні двері та перегородки | Space Glass';
+const metaDescription =
+  'Металопластикові вікна Aluplast, WDS та Ultra, вхідні й балконні двері, розсувні двері HST і Smart-Slide, офісні перегородки з ПВХ. Замір, виготовлення та монтаж у Києві, Одесі та Львові.';
+
+const categories = profileCategoriesByGroup('pvc');
+const windows = getProfileCategory('pvc', 'vikna');
+const alu = profileCategoriesByGroup('alu');
+
+const heroSrc = (w: number) => `${IMG_BASE}/cat-pvc-vikna-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const hubItems = [
+  ...categories.map((category) => ({ title: category.name, note: category.cardNote, href: category.path, icon: profileIcons[`pvc/${category.slug}`] })),
+  { title: 'Сітки плісе', note: 'Москітні сітки, що складаються вбік, — для ПВХ і алюмінієвих вікон та дверей.', href: '/alyuminiievi-konstruktsii/sitky-plise/', icon: profileIcons['alu/sitky-plise'] },
+  { title: 'Алюмінієві конструкції', note: 'Коли потрібні великі стулки, вузькі рами, розсувні системи чи фасад.', href: '/alyuminiievi-konstruktsii/', icon: profileIcons['hub/alu'] }
 ];
+
+const compare: [string, string, string][] = [
+  ['Ціна', 'Доступніші для стандартних вікон', 'Дорожчі, але служать довше'],
+  ['Розміри стулок', 'Стандартні вікна й балконні двері', 'Великі та важкі стулки, скляні стіни'],
+  ['Ширина рами', 'Ширша', 'Вузька — більше скла'],
+  ['Розсувні системи', 'Обмежено', 'Підйомно-розсувні до 4 м'],
+  ['Колір', 'Білий або ламінування плівкою', 'Будь-який RAL, порошкове фарбування'],
+  ['Де доречні', 'Квартири, офіси, типові будинки', 'Приватні будинки, фасади, тераси']
+];
+
+const faq: [string, string][] = [
+  ['Які профілі металопластикових вікон ви пропонуєте?', 'Aluplast IDEAL 8000 (85 мм, 6 камер), WDS 76 MD (76 мм, 6 камер) та Ultra 70 (70 мм, 5 камер). Підбираємо профіль під об’єкт і бюджет.'],
+  ['Що краще: металопластик чи алюміній?', 'Металопластик доступніший для стандартних вікон у квартирі. Алюміній обирають для великих стулок, вузьких рам, розсувних систем і фасадів.'],
+  ['Чи виготовляєте вікна за індивідуальними розмірами?', 'Так. Кожне вікно виготовляємо під конкретний проріз після заміру.'],
+  ['Які склопакети можна встановити?', 'Дво- та трикамерні, енергоощадні, акустичні, сонцезахисні. Товщина — до 48 мм для Aluplast IDEAL 8000 і WDS 76 MD, до 40 мм для Ultra 70.'],
+  ['Чи робите балконні блоки?', 'Так, вікно й балконні двері в одному профілі та кольорі.'],
+  ['Чи встановлюєте москітні сітки?', 'Так. Віконні рамкові та ролетні, дверні та пліссе, розсувні сітки для великих прорізів.'],
+  ['Чи виконуєте демонтаж старих вікон?', 'Так. Демонтуємо старі конструкції, готуємо проріз і монтуємо нові вікна з ізоляцією шва.'],
+  ['Від чого залежить вартість?', 'Від профілю, розмірів, кількості стулок, склопакета, фурнітури, ламінування та монтажу.'],
+  ['Що таке металопластик?', 'ПВХ-профіль із кількома повітряними камерами, посилений сталевим армуванням. Пластик тримає тепло, метал — геометрію стулки.'],
+  ['Скільки служать металопластикові вікна?', 'При правильному монтажі та догляді — десятиліття. Ущільнювачі та фурнітуру можна регулювати й замінювати.'],
+  ['Чи можна зробити кольорові вікна?', 'Так, профіль ламінують плівкою під дерево або в кольори; доступні варіанти залежать від системи.'],
+  ['Який профіль найтепліший?', 'Aluplast IDEAL 8000: 85 мм, 6 камер, 3 контури ущільнення та Uf 1,0 W/(m²K).'],
+  ['Який профіль найекономніший?', 'Ultra 70 — 5-камерний профіль із двома контурами ущільнення для квартир і комерційних приміщень.'],
+  ['Чи можна зробити металопластикові двері?', 'Так, балконні та терасні двері в одній системі з вікнами. Для великих розсувних дверей краще алюміній.'],
+  ['Чи ставите підвіконня та відливи?', 'Так, підвіконня, відливи й оздоблення укосів виконуємо разом із монтажем за погодженням.'],
+  ['Чи можна замінити вікна взимку?', 'Так. Міняємо вікна по одному, тому приміщення не охолоджується.'],
+  ['Які москітні сітки пропонуєте?', 'Віконні рамкові, еліт і ролетні, дверні пліссе та розсувні сітки під великі прорізи.'],
+  ['Скільки часу займає виготовлення?', 'Після заміру й погодження специфікації називаємо точні строки виготовлення та монтажу.'],
+  ['Де виконуєте замір і монтаж?', 'У Києві, Одесі та Львові з областями; інші міста — за домовленістю.'],
+  ['Чи є гарантія?', 'Так, на вікна й монтаж, а також сервісне обслуговування після встановлення.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Алюмінієві вікна', '/alyuminiievi-konstruktsii/vikna/'],
+  ['Алюмінієві розсувні двері', '/alyuminiievi-konstruktsii/rozsuvni-dveri/'],
+  ['Алюмінієві двері', '/alyuminiievi-konstruktsii/dveri/'],
+  ['Зимові сади', '/alyuminiievi-konstruktsii/zymovi-sady/'],
+  ['Безрамне скління балкона', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-balkona/'],
+  ['Склопакет: як обрати', '/knowledge/sklopaket-yak-obraty/'],
+  ['Скління для будинку', '/rishennya/dlya-budynku/'],
+  ['Оплата і доставка', '/oplata-dostavka/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: categories.length,
+  itemListElement: categories.map((category, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: category.name,
+    url: absoluteUrl(category.path, origin)
+  }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
 ---
-<BaseLayout title="Металопластикові конструкції та вікна на замовлення — Space Glass" description="Металопластикові вікна, ПВХ-двері, балконні блоки та розсувні системи на замовлення. Індивідуальні розміри, енергоефективні склопакети, доставка та монтаж.">
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  alternateLocales={['uk']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
 <div class="sg-page-shell">
   <Header />
   <main id="main">
-    <div class="category-breadcrumbs"><Breadcrumbs items={[{label:'Головна',href:'/'},{label:title}]} /></div>
-    <section class="category-hero">
+    <section class="category-hero category-hero--photo profile-hero">
       <div class="category-hero__copy">
-        <p class="eyebrow">Віконні системи</p>
-        <h1>Металопластикові конструкції на замовлення</h1>
-        <p class="lead">{subtitle}. Підбираємо профіль, склопакет і фурнітуру під житлові та комерційні об’єкти.</p>
-        <div class="hero__actions"><a class="button button--mint" href="#category-request">Отримати розрахунок</a><a class="button button--outline" href="#types">Переглянути види</a></div>
+        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Теплі металопластикові вікна, вхідні й балконні двері, розсувні двері на терасу та офісні перегородки на профілях Aluplast, WDS та Ultra. Заміряємо, виготовляємо за розмірами та монтуємо з ізоляцією шва в Києві, Одесі та Львові.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#types">Переглянути напрями</a>
+          <a class="button button--outline" href="#request">Отримати розрахунок</a>
+        </div>
       </div>
-      <div class="category-hero__visual"><div class="category-hero__glass"></div><span>WINDOW SYSTEMS</span></div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Металопластикові вікна у світлій квартирі з видом на місто" width="1080" height="1080" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="uk" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Металопластик</p><h2>Міцність металу й теплота пластику</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Металопластикові вікна поєднують багатокамерний ПВХ-профіль зі сталевим армуванням усередині. Вони забезпечують високий рівень тепло- та звукоізоляції, стійкі до атмосферних впливів, мають довгий термін служби та прості в обслуговуванні.</p>
+          <p>Space Glass виготовляє з металопластику вікна, вхідні та балконні двері, розсувні двері на терасу й офісні перегородки, підбирає склопакет і фурнітуру під об’єкт і бюджет.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>Aluplast · WDS · Ultra</b><span>перевірені профільні системи</span></li>
+          <li><b>5–6 камер</b><span>монтажна ширина 70–85 мм</span></li>
+          <li><b>Склопакет до 48 мм</b><span>тепло- та звукоізоляція</span></li>
+          <li><b>Двері й перегородки</b><span>вхідні, балконні, розсувні, офісні</span></li>
+        </ul>
+      </div>
     </section>
 
     <section id="types" class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Металопластикові вікна, двері та ПВХ-системи</h2></div><p>Після вибору типу уточнимо розміри, профільну систему, склопакет, колір, фурнітуру, доставку та формат монтажу.</p></div>
-      <div class="category-type-grid">
-        {items.map((item,i)=><a class="category-type-card" href="#category-request"><div class="category-type-card__visual"><span>{String(i+1).padStart(2,'0')}</span></div><div class="category-type-card__body"><small>{String(i+1).padStart(2,'0')}</small><h3>{item}</h3><p>Індивідуальна комплектація під розміри, енергоефективність і спосіб використання.</p><b>Отримати розрахунок →</b></div></a>)}
+      <div class="category-heading"><div><p class="eyebrow">Напрями</p><h2>Що ми пропонуємо</h2></div><p>Детальні характеристики, порівняння та поради з вибору — на сторінці кожного напряму.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
       </div>
     </section>
 
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Комплектація</p><h2>Що впливає на комфорт і ціну</h2></div><p>Правильне поєднання профілю, склопакета та фурнітури визначає теплоізоляцію, шумоізоляцію, герметичність і ресурс конструкції.</p></div>
-      <div class="material-grid">
-        <article><span>01</span><h3>Профільна система</h3><p>Підбираємо ПВХ-профіль за монтажною глибиною, кількістю камер, армуванням і вимогами до енергоефективності.</p></article>
-        <article><span>02</span><h3>Склопакет</h3><p>Можливі енергоефективні, мультифункціональні, сонцезахисні та інші склопакети відповідно до орієнтації та призначення приміщення.</p></article>
-        <article><span>03</span><h3>Фурнітура</h3><p>Підбираємо механізми відкривання, мікропровітрювання, посилену або протизламну комплектацію залежно від задачі.</p></article>
+      <div class="category-heading"><div><p class="eyebrow">Профілі</p><h2>Профільні системи поруч</h2></div><p>Характеристики профілів — за даними виробників.</p></div>
+      <div class="profile-table-wrap">
+        <table class="profile-table">
+          <thead><tr>{windows.compareColumns.map((column) => <th scope="col">{column}</th>)}</tr></thead>
+          <tbody>
+            {windows.compareRows.map(([first, ...rest], i) => (
+              <tr><th scope="row"><a href={`${windows.path}#${windows.models[i].id}`}>{first}</a></th>{rest.map((cell) => <td>{cell}</td>)}</tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Вибір матеріалу</p><h2>Металопластик чи алюміній</h2></div><p>Обидва матеріали теплі — різниця в розмірах, вигляді та сценаріях.</p></div>
+      <div class="profile-table-wrap">
+        <table class="profile-table">
+          <thead><tr><th scope="col">Критерій</th><th scope="col">Металопластик</th><th scope="col">Алюміній</th></tr></thead>
+          <tbody>
+            {compare.map(([name, pvcText, aluText]) => <tr><th scope="row">{name}</th><td>{pvcText}</td><td>{aluText}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="profile-note"><a class="category-arrow-link" href="/alyuminiievi-konstruktsii/">Алюмінієві конструкції Aluprof <span aria-hidden="true">→</span></a></p>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Алюміній</p><h2>Потрібно більше скла?</h2></div><p>Для великих прорізів, виходу на терасу та фасадів — алюмінієві системи.</p></div>
+      <div class="profile-siblings">
+        {alu.slice(0, 6).map((item) => (
+          <a class="profile-sibling" href={item.path}>
+            <img src={`${IMG_BASE}/${item.heroImage}-480.webp`} alt="" width="480" height="480" loading="lazy" decoding="async" />
+            <span><b>{item.name}</b><small>{item.cardNote}</small></span>
+          </a>
+        ))}
       </div>
     </section>
 
     <section class="category-process">
-      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від заміру до готових вікон</h2></div></div>
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від заміру до монтажу</h2></div></div>
       <div class="category-process__grid">
-        <div><span>01</span><b>Запит</b><small>Розміри, фото або проєкт</small></div>
-        <div><span>02</span><b>Підбір системи</b><small>Профіль, склопакет, фурнітура</small></div>
-        <div><span>03</span><b>Замір</b><small>Перевірка прорізів</small></div>
-        <div><span>04</span><b>Погодження</b><small>Конфігурація і колір</small></div>
-        <div><span>05</span><b>Виготовлення</b><small>Комплектація та контроль</small></div>
-        <div><span>06</span><b>Доставка / монтаж</b><small>За погодженим форматом</small></div>
-      </div>
-    </section>
-
-    <section class="category-section category-seo">
-      <div class="category-seo__grid">
-        <div><p class="eyebrow">Про категорію</p><h2>Металопластикові вікна та двері для дому і бізнесу</h2></div>
-        <div><p>Металопластикові конструкції — це вікна, двері, балконні блоки та розсувні ПВХ-системи, які виготовляються під конкретні розміри прорізу. При виборі важливо враховувати не лише профіль, а й склопакет, армування, фурнітуру, спосіб відкривання та монтаж.</p><p>Для попереднього розрахунку достатньо приблизних розмірів і фото. Після уточнення конфігурації визначаємо остаточну комплектацію, вартість і строки виготовлення.</p></div>
+        <div><span>01</span><b>Запит</b><small>Кількість вікон і розміри</small></div>
+        <div><span>02</span><b>Підбір</b><small>Профіль, склопакет, фурнітура</small></div>
+        <div><span>03</span><b>Замір</b><small>Точні розміри прорізів</small></div>
+        <div><span>04</span><b>Виготовлення</b><small>За погодженою специфікацією</small></div>
+        <div><span>05</span><b>Демонтаж</b><small>Старих вікон — за потреби</small></div>
+        <div><span>06</span><b>Монтаж</b><small>З ізоляцією шва</small></div>
       </div>
     </section>
 
     <section class="category-section category-section--faq">
-      <FAQBlock title="FAQ про металопластикові конструкції, вікна та двері" intro="Відповідаємо на питання про ПВХ-профілі, склопакети, фурнітуру, ціни, замір, доставку, монтаж і строки виготовлення." items={faq} visibleCount={6} />
+      <FAQBlock
+        title="FAQ про металопластикові конструкції"
+        intro="Про профілі, склопакети, москітні сітки, замір і монтаж."
+        items={faq}
+        visibleCount={6}
+        expandTo={faq.length}
+      />
     </section>
 
-    <section id="category-request" class="inner-cta"><div><p class="eyebrow eyebrow--light">Заявка</p><h2>Потрібен розрахунок металопластикових конструкцій?</h2><p>Надішліть фото, розміри, кількість конструкцій або креслення.</p></div><a class="button button--white" href="mailto:info@space-glass.com.ua">Надіслати запит</a></section>
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Корисне</p><h2>Далі по темі</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={href}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={'/metaloplastykovi-konstruktsii/'}
+      product={title}
+      title={'Порахуємо вікна для вашого об’єкта'}
+      text={'Вкажіть кількість вікон і приблизні розміри — підберемо профіль і склопакет та підготуємо орієнтовну вартість.'}
+      options={[...categories.map((c) => c.name), 'Сітки плісе', 'Алюмінієві конструкції']}
+      optionsLabel="Напрям"
+      commentPlaceholder="Що потрібно: тип конструкції, розміри, кількість, місто об’єкта"
+    />
   </main>
   <Footer />
 </div>

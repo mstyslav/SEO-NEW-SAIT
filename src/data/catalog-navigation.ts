@@ -2,6 +2,29 @@ import { seoCategories } from './seo-services';
 import { getShowerServiceNavigation } from './service-navigation';
 import { mirrorTypes } from './mirror-types';
 import type { Locale } from '../i18n/helpers';
+import { profileCategoriesByGroup, type ProfileGroup } from './profile-systems';
+
+// RU menu labels for the aluminium / metal-plastic pages (the pages themselves are UK-only).
+const profileMenuRu: Record<string, string> = {
+  'alu/vikna': 'Алюминиевые окна',
+  'alu/dveri': 'Алюминиевые двери',
+  'alu/rozsuvni-dveri': 'Раздвижные двери',
+  'alu/ofisne-sklinnya': 'Офисное остекление',
+  'alu/fasadne-sklinnya': 'Фасадное остекление',
+  'alu/zymovi-sady': 'Зимние сады',
+  'alu/sitky-plise': 'Сетки плиссе',
+  'alu/perholy': 'Перголы',
+  'pvc/vikna': 'Металлопластиковые окна',
+  'pvc/dveri': 'Металлопластиковые двери',
+  'pvc/rozsuvni-dveri': 'Раздвижные двери',
+  'pvc/ofisni-perehorodky': 'Офисные стеклянные перегородки'
+};
+const profileMenu = (group: Exclude<ProfileGroup, 'mirror'>, locale: 'uk' | 'ru') =>
+  profileCategoriesByGroup(group).map((category) => ({
+    shortName: locale === 'ru' ? (profileMenuRu[`${group}/${category.slug}`] ?? category.name) : category.name,
+    path: category.path
+  }));
+
 
 export interface CatalogNavigationCategory {
   slug: string;
@@ -91,13 +114,13 @@ const mirrorFeaturedCategory = (locale: Locale): CatalogNavigationCategory => ({
 const featuredCategories: Record<Locale, CatalogNavigationCategory[]> = {
   uk: [
     mirrorFeaturedCategory('uk'),
-    { slug: 'alyuminiievi-konstruktsii', name: 'Алюмінієві конструкції', href: '/alyuminiievi-konstruktsii/', services: ['Алюмінієві вікна', 'Алюмінієві двері', 'Розсувні системи', 'Алюмінієві фасади', 'Зимові сади', 'Перголи'].map(shortName => ({ shortName, path: '/alyuminiievi-konstruktsii/' })) },
-    { slug: 'metaloplastykovi-konstruktsii', name: 'Металопластикові конструкції', href: '/metaloplastykovi-konstruktsii/', services: ['Металопластикові вікна', 'Металопластикові двері', 'Балконні блоки', 'Розсувні ПВХ-системи'].map(shortName => ({ shortName, path: '/metaloplastykovi-konstruktsii/' })) }
+    { slug: 'alyuminiievi-konstruktsii', name: 'Алюмінієві конструкції', href: '/alyuminiievi-konstruktsii/', services: profileMenu('alu', 'uk') },
+    { slug: 'metaloplastykovi-konstruktsii', name: 'Металопластикові конструкції', href: '/metaloplastykovi-konstruktsii/', services: profileMenu('pvc', 'uk') }
   ],
   ru: [
     mirrorFeaturedCategory('ru'),
-    { slug: 'alyuminiievi-konstruktsii', name: 'Алюминиевые конструкции', href: '/alyuminiievi-konstruktsii/', services: ['Алюминиевые окна', 'Алюминиевые двери', 'Раздвижные системы', 'Алюминиевые фасады', 'Зимние сады', 'Перголы'].map(shortName => ({ shortName, path: '/alyuminiievi-konstruktsii/' })) },
-    { slug: 'metaloplastykovi-konstruktsii', name: 'Металлопластиковые конструкции', href: '/metaloplastykovi-konstruktsii/', services: ['Металлопластиковые окна', 'Металлопластиковые двери', 'Балконные блоки', 'Раздвижные ПВХ-системы'].map(shortName => ({ shortName, path: '/metaloplastykovi-konstruktsii/' })) }
+    { slug: 'alyuminiievi-konstruktsii', name: 'Алюминиевые конструкции', href: '/alyuminiievi-konstruktsii/', services: profileMenu('alu', 'ru') },
+    { slug: 'metaloplastykovi-konstruktsii', name: 'Металлопластиковые конструкции', href: '/metaloplastykovi-konstruktsii/', services: profileMenu('pvc', 'ru') }
   ]
 };
 

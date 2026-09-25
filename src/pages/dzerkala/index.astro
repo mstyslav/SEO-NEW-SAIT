@@ -7,10 +7,14 @@ import FAQBlock from '../../components/FAQBlock.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TrustBar from '../../components/TrustBar.astro';
 import ProjectCard from '../../components/projects/ProjectCard.astro';
+import ProfileRequestForm from '../../components/profile/ProfileRequestForm.astro';
 import { faqSchema, type JsonLdObject } from '../../seo/schema';
 import { mirrorTypes } from '../../data/mirror-types';
+import { MIRROR_IMG, mirrorCategories } from '../../data/mirror-catalog';
 import '../../styles/category-pages.css';
 import '../../styles/projects-common.css';
+import '../../styles/shower-master.css';
+import '../../styles/profile-systems.css';
 
 const title = "Дзеркала";
 const h1 = "Дзеркала на замовлення";
@@ -45,6 +49,14 @@ const items = mirrorTypes.map((mirror) => ({
   href: mirror.href,
   icon: icons[mirror.iconKey]
 }));
+
+// Popular ready-made models (one per model name), linked to their child page.
+const popularIds = ['dzerkalo-como', 'dzerkalo-agnes', 'dzerkalo-moon', 'dzerkalo-elara', 'dzerkalo-black-water', 'dzerkalo-mega-crown'];
+const popularModels = popularIds.map((id) => {
+  const category = mirrorCategories.find((item) => item.models.some((model) => model.id === id))!;
+  return { model: category.models.find((model) => model.id === id)!, category };
+});
+const mirrorDetails = mirrorCategories.find((item) => item.details)!.details!;
 
 // Verified existing Knowledge articles about mirrors (core + supplemental sets).
 const relatedLinks: [string, string][] = [
@@ -84,7 +96,9 @@ const faq: [string, string][] = [
   ["Коли потрібен професійний замір?", "Фінальний замір роблять після завершення чистових поверхонь, на які встановлюється дзеркало, і коли відомі точки електровиводу для підсвітки."],
   ["Що підготувати для попереднього розрахунку?", "Фото місця, приблизні розміри, місто, побажання щодо форми, підсвітки, рами та обробки крайки."],
   ["У яких містах виконуєте замір і монтаж?", "Замір і монтаж — Київ, Львів та Одеса з областями. Готові дзеркала й комплектуючі доставляємо по всій Україні залежно від габаритів і доступу до об'єкта."],
-  ["Чи можна замовити тільки виготовлення дзеркала, без монтажу?", "Так, у частині замовлень можливе виготовлення з доставкою без монтажу — за умови безпечного транспортування габаритів."]
+  ["Чи можна замовити тільки виготовлення дзеркала, без монтажу?", "Так, у частині замовлень можливе виготовлення з доставкою без монтажу — за умови безпечного транспортування габаритів."],
+  ["Які готові моделі дзеркал ви пропонуєте?", "У каталозі Space Glass є готові моделі: дзеркала з LED-підсвіткою (COMO, KING, AGNES, MOON), аморфні AMO, дзеркала в металевій, алюмінієвій і дерев'яній рамі та великі MEGA MIRROR. Орієнтовні ціни — на сторінках видів дзеркал."],
+  ["Чи підходять дзеркала з підсвіткою для ванної кімнати?", "Так. Готові моделі Space Glass мають клас захисту IP44 і полотно Saint-Gobain MIRALITE PURE, стійке до корозії та подряпин."]
 ];
 
 const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
@@ -97,31 +111,34 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
   structuredData={structuredData}
   locale="uk"
   alternateLocales={['uk']}
-  image="/images/projects/led-mirror-private-house-kyiv/led-mirror-private-house-kyiv-hero.webp"
+  image={`${MIRROR_IMG}/cat-led-1080.webp`}
+  heroPreloadSrc={`${MIRROR_IMG}/cat-led-900.webp`}
+  heroPreloadSrcset={`${MIRROR_IMG}/cat-led-480.webp 480w, ${MIRROR_IMG}/cat-led-900.webp 900w, ${MIRROR_IMG}/cat-led-1080.webp 1080w`}
+  heroPreloadSizes="(max-width: 900px) 100vw, 50vw"
 >
 <div class="sg-page-shell">
   <Header />
   <main id="main">
-    <section class="category-hero category-hero--photo">
+    <section class="category-hero category-hero--photo profile-hero">
       <div class="category-hero__copy">
         <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: title }]} />
         <p class="eyebrow">{title}</p>
         <h1>{h1}</h1>
         <p class="lead">{subtitle}. Підбираємо тип дзеркального полотна, обробку крайки, раму та підсвітку, виконуємо замір, виготовлення та монтаж.</p>
         <div class="hero__actions">
-          <a class="button button--mint" href="#category-request">Отримати розрахунок</a>
-          <a class="button button--outline" href="#types">Переглянути види</a>
+          <a class="button button--mint" href="#types">Переглянути види</a>
+          <a class="button button--outline" href="#request">Отримати розрахунок</a>
         </div>
       </div>
       <figure class="category-hero__figure">
         <div class="category-hero__frame">
           <img
-            src="/images/projects/led-mirror-private-house-kyiv/led-mirror-private-house-kyiv-hero.webp"
-            srcset="/images/projects/led-mirror-private-house-kyiv/led-mirror-private-house-kyiv-hero-480.webp 480w, /images/projects/led-mirror-private-house-kyiv/led-mirror-private-house-kyiv-hero.webp 720w"
-            sizes="(max-width: 900px) calc(100vw - 48px), 52vw"
+            src={`${MIRROR_IMG}/cat-led-900.webp`}
+            srcset={`${MIRROR_IMG}/cat-led-480.webp 480w, ${MIRROR_IMG}/cat-led-900.webp 900w, ${MIRROR_IMG}/cat-led-1080.webp 1080w`}
+            sizes="(max-width: 900px) 100vw, 50vw"
             alt="Кругле дзеркало з LED-підсвіткою на замовлення в інтер'єрі приватного будинку"
-            width="720"
-            height="1280"
+            width="1080"
+            height="1080"
             decoding="async"
             fetchpriority="high"
           />
@@ -149,7 +166,7 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
 
     <section id="types" class="category-section">
       <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Види дзеркал</h2></div><p>Оберіть тип — далі уточнимо розміри, форму, крайку, раму, підсвітку та формат монтажу.</p></div>
-      <div class="category-icon-grid">
+      <div class="category-icon-grid category-icon-grid--showers">
         {items.map((item)=>(
           <a class="category-icon-card" href={item.href}>
             <span class="category-icon-card__icon" set:html={item.icon} />
@@ -162,12 +179,44 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
     </section>
 
     <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Каталог</p><h2>Популярні моделі Space Glass</h2></div><p>Готові дзеркала з підсвіткою та в рамі. Ціни орієнтовні, для мінімального розміру.</p></div>
+      <div class="profile-grid">
+        {popularModels.map(({ model, category }) => (
+          <article class="profile-card">
+            <div class="profile-card__media">
+              <img src={`${MIRROR_IMG}/${model.image}-480.webp`} srcset={`${MIRROR_IMG}/${model.image}-480.webp 480w, ${MIRROR_IMG}/${model.image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" alt={model.imageAlt ?? model.name} width="480" height="480" loading="lazy" decoding="async" />
+              <span class="profile-card__kind">{model.kind}</span>
+            </div>
+            <div class="profile-card__body">
+              <h3>{model.name}</h3>
+              <p class="profile-card__blurb">{model.blurb}</p>
+              <p class="profile-card__price"><strong>{model.priceFrom}</strong><span>{model.priceNote}</span></p>
+              <a class="button button--outline profile-card__cta" href={`${category.path}#${model.id}`}>{category.name} →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Якість</p><h2>{mirrorDetails.heading}</h2></div><p>{mirrorDetails.intro}</p></div>
+      <div class="profile-details">
+        {mirrorDetails.items.map(([name, text, image]) => (
+          <figure>
+            <img src={`${MIRROR_IMG}/${image}-480.webp`} srcset={`${MIRROR_IMG}/${image}-480.webp 480w, ${MIRROR_IMG}/${image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, 24vw" alt={name} width="480" height="480" loading="lazy" decoding="async" />
+            <figcaption><b>{name}</b><span>{text}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
       <div class="category-heading"><div><p class="eyebrow">Для бізнесу</p><h2>Дзеркала для комерційних просторів</h2></div><p>Спортзали й салони краси — окремі напрями вище. Тут — рішення для ресторанів, готелів, офісів і шоурумів.</p></div>
       <div class="category-prose">
         <p>Для ресторанів, барів і кафе дзеркальні стіни візуально розширюють зал і працюють зі сценічним освітленням. Для готелів — дзеркала в номери, санвузли та ліфтові холи за єдиним стандартом об'єкта. Для офісів, шоурумів і магазинів — великі дзеркальні площини, дзеркала для приміряльних і вхідних зон.</p>
         <p>Для комерційних об'єктів узгоджуємо розкладку модулів, спосіб кріплення та безпечне полотно під фактичне навантаження, графік робіт і доступ на об'єкт.</p>
       </div>
-      <a class="category-arrow-link" href="#category-request">Обговорити проєкт для бізнесу <span aria-hidden="true">→</span></a>
+      <a class="category-arrow-link" href="#request">Обговорити проєкт для бізнесу <span aria-hidden="true">→</span></a>
     </section>
 
     {mirrorProjects.length > 0 && (
@@ -232,10 +281,15 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
       </div>
     </section>
 
-    <section id="category-request" class="inner-cta">
-      <div><p class="eyebrow eyebrow--light">Заявка</p><h2>Потрібен попередній розрахунок?</h2><p>Надішліть фото, приблизні розміри та побажання щодо форми, рами й підсвітки — підготуємо конфігурацію та орієнтовну вартість.</p></div>
-      <a class="button button--white" href="/contacts/#contact-form">Отримати розрахунок</a>
-    </section>
+    <ProfileRequestForm
+      page="/dzerkala/"
+      product="Дзеркала"
+      title="Потрібен попередній розрахунок?"
+      text="Надішліть фото, приблизні розміри та побажання щодо форми, рами й підсвітки — підготуємо конфігурацію та орієнтовну вартість."
+      options={mirrorTypes.map((mirror) => mirror.label.uk)}
+      optionsLabel="Вид дзеркала"
+      commentPlaceholder="Розмір, форма, рама, підсвітка, місце встановлення"
+    />
   </main>
   <Footer />
 </div>

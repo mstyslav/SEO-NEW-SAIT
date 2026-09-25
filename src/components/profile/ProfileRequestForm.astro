@@ -1,0 +1,77 @@
+---
+/**
+ * Inline request form for the aluminium / metal-plastic cluster pages.
+ * Submits through the global `[data-lead-form]` handler (public/js/forms.js)
+ * → /api/kommo-lead. Hidden fields tell the CRM exactly where the lead came
+ * from: `page` (path), `product` (section name) and `configuration`
+ * (the chosen system). Any link with `data-request-model="<option>"` scrolls
+ * here and preselects that option.
+ */
+interface Props {
+  id?: string;
+  page: string;
+  product: string;
+  title: string;
+  text: string;
+  /** Options for "Що цікавить" — systems on a child page, directions on a hub. */
+  options: string[];
+  optionsLabel?: string;
+  commentPlaceholder?: string;
+}
+
+const {
+  id = 'request',
+  page,
+  product,
+  title,
+  text,
+  options,
+  optionsLabel = 'Система',
+  commentPlaceholder = 'Розміри прорізів, кількість виробів, побажання щодо кольору чи скла'
+} = Astro.props;
+---
+<section id={id} class="profile-request" aria-labelledby={`${id}-title`}>
+  <div class="profile-request__intro">
+    <p class="eyebrow">Заявка з цієї сторінки</p>
+    <h2 id={`${id}-title`}>{title}</h2>
+    <p>{text}</p>
+    <ul class="profile-request__points">
+      <li>Відповімо протягом робочого дня</li>
+      <li>Підберемо систему та склопакет</li>
+      <li>Попередній розрахунок — безкоштовно</li>
+    </ul>
+    <p class="profile-request__phone">Або телефонуйте: <a href="tel:+380734251400">+38 (073) 425 14 00</a></p>
+  </div>
+
+  <form class="quote-form contacts-v15-form profile-request__form" data-lead-form data-success-url="/thank-you/">
+    <input name="page" type="hidden" value={page} />
+    <input name="product" type="hidden" value={product} />
+    <div class="contacts-form-grid">
+      <label>Ім’я<input name="name" type="text" autocomplete="name" placeholder="Ваше ім’я" required /></label>
+      <label>Телефон<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
+    </div>
+    <div class="contacts-form-grid">
+      <label>{optionsLabel}
+        <select name="configuration" data-request-select>
+          <option value="">Ще не визначились — допоможіть обрати</option>
+          {options.map((option) => <option value={option}>{option}</option>)}
+        </select>
+      </label>
+      <label>Місто<input name="city" autocomplete="address-level2" type="text" placeholder="Київ, Одеса, Львів..." /></label>
+    </div>
+    <label>Коментар<textarea name="comment" rows="4" placeholder={commentPlaceholder}></textarea></label>
+    <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>Погоджуюсь із <a href="/privacy-policy/">політикою конфіденційності</a>.</span></label>
+    <button class="button button--mint" type="submit">Надіслати заявку</button>
+    <p data-form-status hidden role="status"></p>
+  </form>
+</section>
+
+<script>
+  document.addEventListener('click', (event) => {
+    const link = (event.target as HTMLElement | null)?.closest<HTMLElement>('[data-request-model]');
+    if (!link) return;
+    const select = document.querySelector<HTMLSelectElement>('[data-request-select]');
+    const model = link.dataset.requestModel;
+    if (select && model && [...select.options].some((option) => option.value === model)) select.value = model;
+  });
+</script>

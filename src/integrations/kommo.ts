@@ -9,6 +9,8 @@ export type KommoLeadPayload = {
   product?: string;
   configuration?: string;
   estimatedPrice?: string;
+  /** Site path the request was sent from (forms.js posts it as `source`). */
+  page?: string;
   project?: unknown;
   utm?: {
     source?: string;
@@ -19,7 +21,9 @@ export type KommoLeadPayload = {
   };
 };
 
-export function createKommoPayload(input: Partial<KommoLeadPayload>): KommoLeadPayload {
+export function createKommoPayload(input: Partial<Omit<KommoLeadPayload, 'source'>> & { source?: string }): KommoLeadPayload {
+  // forms.js sends the page path in `source`; keep it instead of losing it to the constant.
+  const pagePath = input.page ?? (typeof input.source === 'string' && input.source.startsWith('/') ? input.source : undefined);
   return {
     source: 'website',
     locale: input.locale ?? 'uk',
@@ -31,6 +35,7 @@ export function createKommoPayload(input: Partial<KommoLeadPayload>): KommoLeadP
     product: input.product,
     configuration: input.configuration,
     estimatedPrice: input.estimatedPrice,
+    page: pagePath,
     project: input.project,
     utm: input.utm,
   };
