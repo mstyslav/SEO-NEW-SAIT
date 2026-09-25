@@ -222,21 +222,9 @@ const choosePoints = t.choosePoints;
           </div>
         </section>
 
-        <section class="rishennya-hub__section" aria-labelledby="experience-title">
-          <div class="rh-experience">
-            <div class="rh-experience__copy">
-              <p class="eyebrow">{t.experienceSection.eyebrow}</p>
-              <h2 id="experience-title">{t.experienceSection.title}</h2>
-              <p>{t.experienceSection.intro}</p>
-              <div class="rh-experience__stats">
-                {experienceStats.map(([value, label]) => <article><strong>{value}</strong><span>{label}</span></article>)}
-              </div>
-              <a class="rh-experience__link" href={lp("/about/")}>{t.experienceSection.aboutLinkLabel}</a>
-            </div>
-            <div class="rh-experience__media">
-              <img src="/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp" alt={isRu ? 'Реализованный объект Space Glass — остекление резиденции в Киеве' : 'Реалізований об’єкт Space Glass — скління резиденції в Києві'} width="720" height="960" loading="lazy" decoding="async" />
-            </div>
-          </div>
+        <section class="rh-proof" aria-label={t.experienceSection.eyebrow}>
+          {experienceStats.map(([value, label]) => <div><strong>{value}</strong><span>{label}</span></div>)}
+          <a class="rh-proof__link" href={lp("/about/")}>{t.experienceSection.aboutLinkLabel}</a>
         </section>
 
         <section class="rishennya-hub__section" aria-labelledby="choose-title">

@@ -82,3 +82,17 @@
   .rh-cities{grid-template-columns:1fr}
   .rh-city{min-height:260px}
 }
+
+/* Proof strip — slim trust numbers (replaces the dark experience band) */
+.rh-proof{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;align-items:center;gap:0;margin:8px 0 0;padding:28px 0;border-top:1px solid var(--green-line);border-bottom:1px solid var(--green-line)}
+.rh-proof>div{display:grid;gap:4px;padding:0 24px;border-left:1px solid var(--green-line)}
+.rh-proof>div:first-child{padding-left:0;border-left:0}
+.rh-proof strong{color:#153f34;font-size:clamp(1.6rem,2.6vw,2.4rem);line-height:1;letter-spacing:-.04em}
+.rh-proof span{color:var(--muted);font-size:.86rem}
+.rh-proof__link{padding-left:24px;color:var(--mint-dark);font-weight:700;white-space:nowrap;text-decoration:none}
+.rh-proof__link:hover{text-decoration:underline}
+@media(max-width:900px){
+  .rh-proof{grid-template-columns:1fr 1fr;row-gap:22px}
+  .rh-proof>div:nth-child(3){padding-left:0;border-left:0}
+  .rh-proof__link{grid-column:1/-1;padding-left:0}
+}
