@@ -27,6 +27,7 @@ import {
   type ProfileGroup
 } from '../../data/profile-systems';
 import { MIRROR_HUB, mirrorCategories } from '../../data/mirror-catalog';
+import { SHOWER_HUB, showerCategories } from '../../data/shower-catalog';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
@@ -42,9 +43,11 @@ const pageUrl = absoluteUrl(category.path, origin);
 const HUBS: Record<ProfileGroup, { href: string; label: string }> = {
   alu: { href: ALU_HUB, label: 'Алюмінієві конструкції' },
   pvc: { href: PVC_HUB, label: 'Металопластикові конструкції' },
-  mirror: { href: MIRROR_HUB, label: 'Дзеркала' }
+  mirror: { href: MIRROR_HUB, label: 'Дзеркала' },
+  shower: { href: SHOWER_HUB, label: 'Душові кабіни' }
 };
-const groupCategories = (group: ProfileGroup) => (group === 'mirror' ? mirrorCategories : profileCategoriesByGroup(group));
+const groupCategories = (group: ProfileGroup) =>
+  group === 'mirror' ? mirrorCategories : group === 'shower' ? showerCategories : profileCategoriesByGroup(group);
 const baseOf = (item: ProfileCategory) => item.imageBase ?? IMG_BASE;
 
 const isAlu = category.group === 'alu';
@@ -55,8 +58,8 @@ const imgBase = baseOf(category);
 const catalogButton = category.catalogButton ?? (hasSystems ? 'Переглянути системи' : 'Переглянути види');
 const optionsLabel = category.optionsLabel ?? (hasSystems ? 'Система' : 'Вид');
 const siblings = groupCategories(category.group).filter((item) => item.path !== category.path);
-// Mirrors link only within their own section; alu/pvc cross-link each other.
-const crossGroup = category.group === 'mirror' ? [] : profileCategoriesByGroup(isAlu ? 'pvc' : 'alu');
+// Mirrors and showers link only within their own section; alu/pvc cross-link each other.
+const crossGroup = category.group === 'mirror' || category.group === 'shower' ? [] : profileCategoriesByGroup(isAlu ? 'pvc' : 'alu');
 // Same-group directions first, then the other group; keep full rows of 3.
 const relatedAll = [...siblings, ...crossGroup];
 const related3 = relatedAll.length < 3 ? relatedAll : relatedAll.slice(0, Math.min(9, relatedAll.length - (relatedAll.length % 3)));
@@ -240,7 +243,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
 
     {gallery.length > 0 && (
       <section class="category-section category-section--mint">
-        <div class="category-heading"><div><p class="eyebrow">Деталі</p><h2>{category.group === 'mirror' ? 'Моделі крупним планом' : 'Конструкції та профілі крупним планом'}</h2></div><p>{category.group === 'mirror' ? 'Деталі готових моделей, з якими ми працюємо.' : 'Перерізи профілів і приклади конструкцій на системах, з якими ми працюємо.'}</p></div>
+        <div class="category-heading"><div><p class="eyebrow">Деталі</p><h2>{category.group === 'mirror' || category.group === 'shower' ? 'Моделі крупним планом' : 'Конструкції та профілі крупним планом'}</h2></div><p>{category.group === 'mirror' || category.group === 'shower' ? 'Деталі готових моделей, з якими ми працюємо.' : 'Перерізи профілів і приклади конструкцій на системах, з якими ми працюємо.'}</p></div>
         <div class="profile-gallery">
           {gallery.map((item) => (
             <figure>

@@ -19,7 +19,7 @@ const profileMenuRu: Record<string, string> = {
   'pvc/rozsuvni-dveri': 'Раздвижные двери',
   'pvc/ofisni-perehorodky': 'Офисные стеклянные перегородки'
 };
-const profileMenu = (group: Exclude<ProfileGroup, 'mirror'>, locale: 'uk' | 'ru') =>
+const profileMenu = (group: Exclude<ProfileGroup, 'mirror' | 'shower'>, locale: 'uk' | 'ru') =>
   profileCategoriesByGroup(group).map((category) => ({
     shortName: locale === 'ru' ? (profileMenuRu[`${group}/${category.slug}`] ?? category.name) : category.name,
     path: category.path

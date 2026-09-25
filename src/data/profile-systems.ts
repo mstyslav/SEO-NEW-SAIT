@@ -15,7 +15,7 @@
  * source, so none are shown — every page sends users to an individual quote.
  */
 
-export type ProfileGroup = 'alu' | 'pvc' | 'mirror';
+export type ProfileGroup = 'alu' | 'pvc' | 'mirror' | 'shower';
 
 export interface ProfileModel {
   id: string;
@@ -1988,19 +1988,19 @@ export const profileCategories: ProfileCategory[] = [
   }
 ];
 
-export const getProfileCategory = (group: Exclude<ProfileGroup, 'mirror'>, slug: string) => {
+export const getProfileCategory = (group: Exclude<ProfileGroup, 'mirror' | 'shower'>, slug: string) => {
   const category = profileCategories.find((item) => item.group === group && item.slug === slug);
   if (!category) throw new Error(`Unknown profile category ${group}/${slug}`);
   return category;
 };
 
 /** Menu / hub order — mirrors the main-menu layout approved by the owner. */
-const CATEGORY_ORDER: Record<Exclude<ProfileGroup, 'mirror'>, string[]> = {
+const CATEGORY_ORDER: Record<Exclude<ProfileGroup, 'mirror' | 'shower'>, string[]> = {
   alu: ['vikna', 'dveri', 'rozsuvni-dveri', 'ofisne-sklinnya', 'fasadne-sklinnya', 'zymovi-sady', 'sitky-plise', 'perholy'],
   pvc: ['vikna', 'dveri', 'rozsuvni-dveri', 'ofisni-perehorodky']
 };
 
-export const profileCategoriesByGroup = (group: Exclude<ProfileGroup, 'mirror'>) =>
+export const profileCategoriesByGroup = (group: Exclude<ProfileGroup, 'mirror' | 'shower'>) =>
   profileCategories
     .filter((item) => item.group === group)
     .sort((a, b) => CATEGORY_ORDER[group].indexOf(a.slug) - CATEGORY_ORDER[group].indexOf(b.slug));
