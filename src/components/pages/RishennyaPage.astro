@@ -15,6 +15,9 @@ import { localizedPath, type Locale } from '../../i18n/helpers';
 import translations from '../../i18n/translations.json';
 import { rishennyaContent } from '../../content/i18n/pages/rishennya';
 import '../../styles/solutions.css';
+import '../../styles/profile-systems.css';
+import '../../styles/rishennya-lower.css';
+import ProfileRequestForm from '../profile/ProfileRequestForm.astro';
 
 interface Props {
   locale: Locale;
@@ -62,6 +65,31 @@ const featuredProjects = (await getCollection('projects', ({ data }) => data.sta
   .map(({ data }) => data)
   .sort((a, b) => a.sortOrder - b.sortOrder);
 const experienceStats = t.experienceStats;
+const isRu = locale === 'ru';
+
+// Four line icons for the "what to consider" cards (purpose, glass, privacy, opening).
+const chooseIcon = (p: string) => `<svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const chooseIcons = [
+  chooseIcon('<path d="M4 24h20M6 24V11l8-6 8 6v13"/><path d="M11 24v-7h6v7"/>'),
+  chooseIcon('<path d="M7 4h14v20H7z"/><path d="M10 9l5-5M10 15l9-9M13 20l8-8"/>'),
+  chooseIcon('<path d="M3 14s4-7 11-7 11 7 11 7-4 7-11 7S3 14 3 14z"/><circle cx="14" cy="14" r="3"/><path d="M5 23 23 5"/>'),
+  chooseIcon('<path d="M4 24h20M6 24V5h16v19"/><path d="M14 5v19M17 14h2"/>')
+];
+
+// City cards: real published project photo + number of projects in that city.
+const CITY_NAME_UK: Record<string, string> = { '/city/kyiv/': 'Київ', '/city/odesa/': 'Одеса', '/city/lviv/': 'Львів' };
+const CITY_COVER: Record<string, string> = {
+  '/city/kyiv/': '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp',
+  '/city/odesa/': '/images/projects/office-partitions-morskyi-odesa/office-partitions-morskyi-odesa-hero-720.webp',
+  '/city/lviv/': '/images/projects/trapezoid-shower-lviv/trapezoid-shower-lviv-hero-720.webp'
+};
+const cityCards = CITY_LINKS.map((city) => ({
+  ...city,
+  name: cityLabelByHref[city.href] ?? city.label,
+  cover: CITY_COVER[city.href],
+  count: featuredProjects.filter((project) => project.city === CITY_NAME_UK[city.href]).length
+}));
+const projectsWord = (n: number) => (isRu ? `${n} проектов на сайте` : `${n} проєктів на сайті`);
 const choosePoints = t.choosePoints;
 ---
 <BaseLayout
@@ -183,42 +211,58 @@ const choosePoints = t.choosePoints;
 
         <section class="rishennya-hub__section rishennya-hub__categories" aria-labelledby="categories-title">
           <div class="solution-section-head"><p class="eyebrow">{t.categoriesSection.eyebrow}</p><h2 id="categories-title">{t.categoriesSection.title}</h2><p>{t.categoriesSection.intro}</p></div>
-          <div class="rishennya-hub__category-links">
-            {categoryLinks.map((item) => <a href={lp(item.href)}>{item.label}<span aria-hidden="true" class="rishennya-arrow"><svg viewBox="0 0 16 16" width="16" height="16" fill="none"><path d="M4 12L12 4M6 4h6v6" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>)}
+          <div class="rh-tiles">
+            {categoryLinks.map((item) => (
+              <a class="rh-tile" href={lp(item.href)}>
+                <img src={item.image} alt="" width="480" height="480" loading="lazy" decoding="async" />
+                <span class="rh-tile__arrow" aria-hidden="true">→</span>
+                <span class="rh-tile__body"><b>{item.label}</b><span>{item.note}</span></span>
+              </a>
+            ))}
           </div>
         </section>
 
-        <section class="rishennya-hub__section rishennya-experience" aria-labelledby="experience-title">
-          <div class="rishennya-experience__copy">
-            <p class="eyebrow">{t.experienceSection.eyebrow}</p>
-            <h2 id="experience-title">{t.experienceSection.title}</h2>
-            <p>{t.experienceSection.intro}</p>
-            <a class="rishennya-hub__section-link" href={lp("/about/")}>{t.experienceSection.aboutLinkLabel}</a>
-          </div>
-          <div class="rishennya-experience__stats">
-            {experienceStats.map(([value, label]) => <article><strong>{value}</strong><span>{label}</span></article>)}
+        <section class="rishennya-hub__section" aria-labelledby="experience-title">
+          <div class="rh-experience">
+            <div class="rh-experience__copy">
+              <p class="eyebrow">{t.experienceSection.eyebrow}</p>
+              <h2 id="experience-title">{t.experienceSection.title}</h2>
+              <p>{t.experienceSection.intro}</p>
+              <div class="rh-experience__stats">
+                {experienceStats.map(([value, label]) => <article><strong>{value}</strong><span>{label}</span></article>)}
+              </div>
+              <a class="rh-experience__link" href={lp("/about/")}>{t.experienceSection.aboutLinkLabel}</a>
+            </div>
+            <div class="rh-experience__media">
+              <img src="/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp" alt={isRu ? 'Реализованный объект Space Glass — остекление резиденции в Киеве' : 'Реалізований об’єкт Space Glass — скління резиденції в Києві'} width="720" height="960" loading="lazy" decoding="async" />
+            </div>
           </div>
         </section>
 
-        <section class="rishennya-hub__section rishennya-choose" aria-labelledby="choose-title">
+        <section class="rishennya-hub__section" aria-labelledby="choose-title">
           <div class="solution-section-head"><p class="eyebrow">{t.chooseSection.eyebrow}</p><h2 id="choose-title">{t.chooseSection.title}</h2></div>
-          <div class="rishennya-choose__grid">
-            {choosePoints.map(([title, text], index) => <article><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}
+          <div class="rh-choose">
+            {choosePoints.map(([title, text], index) => <article><span class="rh-choose__icon" set:html={chooseIcons[index % chooseIcons.length]} /><h3>{title}</h3><p>{text}</p></article>)}
           </div>
-          <a class="rishennya-hub__section-link" href={`${lp("/contacts/")}#contact-form`}>{t.chooseSection.ctaLabel}</a>
+          <a class="rishennya-hub__section-link rh-choose-cta" href="#request">{t.chooseSection.ctaLabel}</a>
         </section>
 
         <section class="rishennya-hub__section rishennya-process" aria-labelledby="process-title">
           <div class="solution-section-head"><p class="eyebrow">{t.processSection.eyebrow}</p><h2 id="process-title">{t.processSection.title}</h2></div>
-          <div class="solution-process-grid">
-            {t.processSteps.map(([title, text], index) => <article class="solution-process-step"><span>0{index + 1}</span><b>{title}</b><p>{text}</p></article>)}
-          </div>
+          <ol class="rh-timeline">
+            {t.processSteps.map(([title, text], index) => <li><span class="rh-timeline__num">0{index + 1}</span><b>{title}</b><p>{text}</p></li>)}
+          </ol>
         </section>
 
         <section class="rishennya-hub__section rishennya-hub__geography" aria-labelledby="geography-title">
           <div class="solution-section-head"><p class="eyebrow">{t.geographySection.eyebrow}</p><h2 id="geography-title">{t.geographySection.title}</h2><p>{t.geographySection.intro}</p></div>
-          <div class="rishennya-cities">
-            {CITY_LINKS.map((city) => <a href={lp(city.href)}><span>{cityLabelByHref[city.href] ?? city.label}</span><b>{t.geographySection.cityCtaLabel}</b></a>)}
+          <div class="rh-cities">
+            {cityCards.map((city) => (
+              <a class="rh-city" href={lp(city.href)}>
+                <img src={city.cover} alt="" width="720" height="960" loading="lazy" decoding="async" />
+                <span class="rh-city__body"><strong>{city.name}</strong>{city.count > 0 && <span>{projectsWord(city.count)}</span>}<b>{t.geographySection.cityCtaLabel}</b></span>
+              </a>
+            ))}
           </div>
           <p class="rishennya-hub__geography-note">{t.geographySection.footnote}</p>
         </section>
@@ -227,10 +271,16 @@ const choosePoints = t.choosePoints;
           <FAQBlock title={t.faqSectionTitle} items={faqItems} visibleCount={6} variant="compact" locale={locale} />
         </section>
 
-        <section class="rishennya-final-cta" aria-labelledby="cta-title">
-          <div><p class="eyebrow">{t.finalCta.eyebrow}</p><h2 id="cta-title">{t.finalCta.title}</h2><p>{t.finalCta.intro}</p></div>
-          <div class="rishennya-final-cta__actions"><a class="button button--mint" href={`${lp('/contacts/')}#contact-form`}>{t.finalCta.ctaPrimary}</a><a class="button button--outline" href={lp("/contacts/")}>{t.finalCta.ctaSecondary}</a></div>
-        </section>
+        <ProfileRequestForm
+          page={isRu ? '/ru/rishennya/' : '/rishennya/'}
+          product={isRu ? 'Решения' : 'Рішення'}
+          title={t.finalCta.title}
+          text={t.finalCta.intro}
+          options={categoryLinks.map((item) => item.label)}
+          optionsLabel={isRu ? 'Что интересует' : 'Що цікавить'}
+          commentPlaceholder={isRu ? 'Тип объекта, размеры, пожелания' : 'Тип об’єкта, розміри, побажання'}
+          locale={isRu ? 'ru' : 'uk'}
+        />
       </div>
     </main>
     <Footer locale={locale} />

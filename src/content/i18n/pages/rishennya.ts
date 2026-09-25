@@ -34,7 +34,7 @@ export interface RishennyaContent {
     viewAllLabel: string;
   };
   categoriesSection: { eyebrow: string; title: string; intro: string };
-  categoryLinks: { label: string; href: string }[];
+  categoryLinks: { label: string; href: string; image: string; note: string }[];
   experienceSection: { eyebrow: string; title: string; intro: string; aboutLinkLabel: string };
   experienceStats: [string, string][];
   chooseSection: { eyebrow: string; title: string; ctaLabel: string };
@@ -93,14 +93,14 @@ export const rishennyaContent: Record<Locale, RishennyaContent> = {
       intro: 'В одному проєкті Space Glass поєднує скляні та алюмінієві конструкції: перегородки, двері, огорожі, навіси, безрамне скління, алюмінієві вікна й розсувні системи, перголи та ZIP-системи сонцезахисту. Узгоджуємо скло, профіль, фурнітуру, колір і геометрію конструкцій для квартир, будинків, офісів та комерційних об’єктів.'
     },
     categoryLinks: [
-      { label: 'Скляні перегородки', href: '/sklyani-perehorodky/' },
-      { label: 'Скляні двері', href: '/sklyani-dveri/' },
-      { label: 'Душові кабіни', href: '/dushovi-kabiny/' },
-      { label: 'Скляні огорожі', href: '/sklyani-ohorozhi/' },
-      { label: 'Безрамне скління', href: '/bezramne-configurator/' },
-      { label: 'Дзеркала', href: '/dzerkala/' },
-      { label: 'Архітектурні системи', href: '/arkhitekturni-systemy/' },
-      { label: 'Алюмінієві конструкції', href: '/alyuminiievi-konstruktsii/' }
+      { label: 'Скляні перегородки', href: '/sklyani-perehorodky/', image: '/images/projects/office-partitions-morskyi-odesa/office-partitions-morskyi-odesa-hero-720.webp', note: 'Loft, офісні, міжкімнатні, розсувні та Pivot' },
+      { label: 'Скляні двері', href: '/sklyani-dveri/', image: '/images/projects/world-of-comics-entrance-odesa/world-of-comics-entrance-odesa-hero-720.webp', note: 'Розпашні, розсувні, маятникові та безрамні' },
+      { label: 'Душові кабіни', href: '/dushovi-kabiny/', image: '/images/catalog/dushovi-kabiny/dushovi-kabiny-768.webp', note: 'Walk-In, кутові, у нішу, розсувні та піддони' },
+      { label: 'Скляні огорожі', href: '/sklyani-ohorozhi/', image: '/images/projects/glass-stair-railing-private-house-odesa/glass-stair-railing-private-house-odesa-hero-480.webp', note: 'Сходи, балкони, тераси та басейни' },
+      { label: 'Безрамне скління', href: '/poslugy/bezramne-sklinnya/', image: '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp', note: 'Тераси, балкони, альтанки та панорами' },
+      { label: 'Дзеркала', href: '/dzerkala/', image: '/images/catalog/dzerkala/cat-led-480.webp', note: 'LED, у рамі, на стіну та дзеркальні панно' },
+      { label: 'Алюмінієві конструкції', href: '/alyuminiievi-konstruktsii/', image: '/images/catalog/profile-systems/cat-alu-rozsuvni-480.webp', note: 'Вікна, двері, фасади, зимові сади, перголи' },
+      { label: 'Металопластикові конструкції', href: '/metaloplastykovi-konstruktsii/', image: '/images/catalog/profile-systems/cat-pvc-vikna-480.webp', note: 'Вікна, двері, розсувні системи, перегородки' }
     ],
     experienceSection: {
       eyebrow: 'Досвід Space Glass',
@@ -218,14 +218,14 @@ export const rishennyaContent: Record<Locale, RishennyaContent> = {
       intro: 'В одном проекте Space Glass объединяет стеклянные и алюминиевые конструкции: перегородки, двери, ограждения, навесы, безрамное остекление, алюминиевые окна и раздвижные системы, перголы и ZIP-системы солнцезащиты. Согласовываем стекло, профиль, фурнитуру, цвет и геометрию конструкций для квартир, домов, офисов и коммерческих объектов.'
     },
     categoryLinks: [
-      { label: 'Стеклянные перегородки', href: '/sklyani-perehorodky/' },
-      { label: 'Стеклянные двери', href: '/sklyani-dveri/' },
-      { label: 'Душевые кабины', href: '/dushovi-kabiny/' },
-      { label: 'Стеклянные ограждения', href: '/sklyani-ohorozhi/' },
-      { label: 'Безрамное остекление', href: '/bezramne-configurator/' },
-      { label: 'Зеркала', href: '/dzerkala/' },
-      { label: 'Архитектурные системы', href: '/arkhitekturni-systemy/' },
-      { label: 'Алюминиевые конструкции', href: '/alyuminiievi-konstruktsii/' }
+      { label: 'Стеклянные перегородки', href: '/sklyani-perehorodky/', image: '/images/projects/office-partitions-morskyi-odesa/office-partitions-morskyi-odesa-hero-720.webp', note: 'Лофт, офисные, межкомнатные, раздвижные и Pivot' },
+      { label: 'Стеклянные двери', href: '/sklyani-dveri/', image: '/images/projects/world-of-comics-entrance-odesa/world-of-comics-entrance-odesa-hero-720.webp', note: 'Распашные, раздвижные, маятниковые и безрамные' },
+      { label: 'Душевые кабины', href: '/dushovi-kabiny/', image: '/images/catalog/dushovi-kabiny/dushovi-kabiny-768.webp', note: 'Walk-In, угловые, в нишу, раздвижные и поддоны' },
+      { label: 'Стеклянные ограждения', href: '/sklyani-ohorozhi/', image: '/images/projects/glass-stair-railing-private-house-odesa/glass-stair-railing-private-house-odesa-hero-480.webp', note: 'Лестницы, балконы, террасы и бассейны' },
+      { label: 'Безрамное остекление', href: '/poslugy/bezramne-sklinnya/', image: '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp', note: 'Террасы, балконы, беседки и панорамы' },
+      { label: 'Зеркала', href: '/dzerkala/', image: '/images/catalog/dzerkala/cat-led-480.webp', note: 'LED, в раме, на стену и зеркальные панно' },
+      { label: 'Алюминиевые конструкции', href: '/alyuminiievi-konstruktsii/', image: '/images/catalog/profile-systems/cat-alu-rozsuvni-480.webp', note: 'Окна, двери, фасады, зимние сады, перголы' },
+      { label: 'Металлопластиковые конструкции', href: '/metaloplastykovi-konstruktsii/', image: '/images/catalog/profile-systems/cat-pvc-vikna-480.webp', note: 'Окна, двери, раздвижные системы, перегородки' }
     ],
     experienceSection: {
       eyebrow: 'Опыт Space Glass',

@@ -1,0 +1,84 @@
+/* /rishennya/ — lower half of the hub (after the solution cards):
+   photo category tiles, dark experience band, icon "choose" cards,
+   timeline process, city cards with project photos, inline request form.
+   Scoped to .rh-* classes; tokens from the global palette. */
+
+/* Categories — photo tiles */
+.rh-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.rh-tile{position:relative;display:flex;min-height:300px;overflow:hidden;border-radius:18px;background:#0f2a22;color:#fff;isolation:isolate;text-decoration:none}
+.rh-tile img{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.rh-tile::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,24,19,0) 30%,rgba(8,24,19,.82) 100%)}
+.rh-tile:hover img,.rh-tile:focus-visible img{transform:scale(1.05)}
+.rh-tile__body{align-self:flex-end;display:grid;gap:6px;width:100%;padding:22px}
+.rh-tile__body b{font-size:1.2rem;line-height:1.2;letter-spacing:-.02em}
+.rh-tile__body span{color:rgba(255,255,255,.82);font-size:.86rem;line-height:1.45}
+.rh-tile__arrow{position:absolute;top:16px;right:16px;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);color:#153f34;font-weight:700;transition:transform .2s ease}
+.rh-tile:hover .rh-tile__arrow,.rh-tile:focus-visible .rh-tile__arrow{transform:rotate(-45deg)}
+
+/* Experience — dark rounded band with photo (same family as .rishennya-final-cta) */
+.rh-experience{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:0;overflow:hidden;border-radius:28px;background:#153f34;color:#fff}
+.rh-experience__copy{padding:84px 58px}
+.rh-experience__copy .eyebrow{color:#91dbc4}
+.rh-experience__copy h2{color:#fff;max-width:14ch}
+.rh-experience__copy>p{max-width:560px;color:#cfe0da;line-height:1.65}
+.rh-experience__stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:34px 0 30px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);border-radius:16px;overflow:hidden}
+.rh-experience__stats article{display:grid;gap:6px;padding:22px 24px;background:#153f34}
+.rh-experience__stats strong{color:#91dbc4;font-size:clamp(2rem,3.4vw,3.2rem);line-height:1;letter-spacing:-.05em}
+.rh-experience__stats span{color:#d4e2dd;font-size:.9rem}
+.rh-experience__link{color:#fff;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:3px}
+.rh-experience__link:hover{border-color:#91dbc4;color:#91dbc4}
+.rh-experience__media{position:relative;min-height:100%}
+.rh-experience__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+/* Choose — icon cards */
+.rh-choose{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.rh-choose article{display:flex;flex-direction:column;gap:12px;padding:26px 24px;border:1px solid var(--green-line);border-radius:18px;background:#fff;transition:border-color .2s ease,box-shadow .2s ease}
+.rh-choose article:hover{border-color:var(--mint-dark);box-shadow:0 12px 30px rgba(24,107,76,.09)}
+.rh-choose__icon{display:grid;place-items:center;width:52px;height:52px;border-radius:14px;background:#f3fbf7;color:var(--mint-dark)}
+.rh-choose h3{margin:4px 0 0;font-size:1.1rem}
+.rh-choose p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.6}
+.rh-choose-cta{margin-top:26px}
+
+/* Process — timeline */
+.rh-timeline{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin:0;padding:0;list-style:none}
+.rh-timeline::before{content:"";position:absolute;top:27px;left:28px;right:28px;height:2px;background:linear-gradient(90deg,var(--mint,#7bc2a8),var(--green-line))}
+.rh-timeline li{position:relative;display:grid;gap:10px}
+.rh-timeline__num{position:relative;z-index:1;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:#153f34;color:#91dbc4;font-weight:800;box-shadow:0 0 0 6px #f4f8f6}
+.rh-timeline b{margin-top:8px;font-size:1.05rem}
+.rh-timeline p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.55}
+
+/* Geography — city cards with project photos */
+.rh-cities{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.rh-city{position:relative;display:flex;min-height:340px;overflow:hidden;border-radius:18px;color:#fff;isolation:isolate;text-decoration:none}
+.rh-city img{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.rh-city::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,24,19,.1) 20%,rgba(8,24,19,.85) 100%)}
+.rh-city:hover img{transform:scale(1.05)}
+.rh-city__body{align-self:flex-end;display:grid;gap:4px;width:100%;padding:24px 26px}
+.rh-city__body strong{font-size:clamp(1.8rem,3vw,2.6rem);line-height:1;letter-spacing:-.04em}
+.rh-city__body span{color:#cfe0da;font-size:.9rem}
+.rh-city__body b{margin-top:10px;color:#91dbc4;font-size:.9rem}
+
+@media(max-width:1100px){
+  .rh-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rh-choose{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rh-experience{grid-template-columns:1fr}
+  .rh-experience__copy{padding:64px 38px}
+  .rh-experience__media{min-height:320px}
+}
+@media(max-width:760px){
+  .rh-tiles{grid-template-columns:1fr 1fr;gap:10px}
+  .rh-tile{min-height:220px}
+  .rh-tile__body{padding:16px}
+  .rh-tile__body b{font-size:1rem}
+  .rh-tile__body span{display:none}
+  .rh-choose{grid-template-columns:1fr}
+  .rh-experience{border-radius:22px}
+  .rh-experience__copy{padding:52px 22px}
+  .rh-timeline{grid-template-columns:1fr;gap:22px}
+  .rh-timeline::before{top:28px;bottom:28px;left:27px;right:auto;width:2px;height:auto}
+  .rh-timeline li{grid-template-columns:56px 1fr;column-gap:16px;align-items:start}
+  .rh-timeline__num{grid-row:span 2}
+  .rh-timeline b{margin-top:14px}
+  .rh-cities{grid-template-columns:1fr}
+  .rh-city{min-height:260px}
+}

@@ -17,6 +17,7 @@ interface Props {
   options: string[];
   optionsLabel?: string;
   commentPlaceholder?: string;
+  locale?: 'uk' | 'ru';
 }
 
 const {
@@ -26,42 +27,63 @@ const {
   title,
   text,
   options,
-  optionsLabel = 'Система',
-  commentPlaceholder = 'Розміри прорізів, кількість виробів, побажання щодо кольору чи скла'
+  optionsLabel,
+  commentPlaceholder,
+  locale = 'uk'
 } = Astro.props;
+
+const L = {
+  uk: {
+    eyebrow: 'Заявка з цієї сторінки',
+    points: ['Відповімо протягом робочого дня', 'Підберемо систему та склопакет', 'Попередній розрахунок — безкоштовно'],
+    call: 'Або телефонуйте:',
+    name: 'Ім’я', namePh: 'Ваше ім’я', phone: 'Телефон', city: 'Місто', cityPh: 'Київ, Одеса, Львів...',
+    comment: 'Коментар', undecided: 'Ще не визначились — допоможіть обрати', option: 'Система',
+    commentPh: 'Розміри прорізів, кількість виробів, побажання щодо кольору чи скла',
+    consent: 'Погоджуюсь із', policy: 'політикою конфіденційності', submit: 'Надіслати заявку', policyHref: '/privacy-policy/'
+  },
+  ru: {
+    eyebrow: 'Заявка с этой страницы',
+    points: ['Ответим в течение рабочего дня', 'Подберём систему и стеклопакет', 'Предварительный расчёт — бесплатно'],
+    call: 'Или звоните:',
+    name: 'Имя', namePh: 'Ваше имя', phone: 'Телефон', city: 'Город', cityPh: 'Киев, Одесса, Львов...',
+    comment: 'Комментарий', undecided: 'Ещё не определились — помогите выбрать', option: 'Система',
+    commentPh: 'Размеры проёмов, количество изделий, пожелания по цвету или стеклу',
+    consent: 'Соглашаюсь с', policy: 'политикой конфиденциальности', submit: 'Отправить заявку', policyHref: '/ru/privacy-policy/'
+  }
+}[locale];
 ---
 <section id={id} class="profile-request" aria-labelledby={`${id}-title`}>
   <div class="profile-request__intro">
-    <p class="eyebrow">Заявка з цієї сторінки</p>
+    <p class="eyebrow">{L.eyebrow}</p>
     <h2 id={`${id}-title`}>{title}</h2>
     <p>{text}</p>
     <ul class="profile-request__points">
-      <li>Відповімо протягом робочого дня</li>
-      <li>Підберемо систему та склопакет</li>
-      <li>Попередній розрахунок — безкоштовно</li>
+      {L.points.map((point) => <li>{point}</li>)}
     </ul>
-    <p class="profile-request__phone">Або телефонуйте: <a href="tel:+380734251400">+38 (073) 425 14 00</a></p>
+    <p class="profile-request__phone">{L.call} <a href="tel:+380734251400">+38 (073) 425 14 00</a></p>
   </div>
 
   <form class="quote-form contacts-v15-form profile-request__form" data-lead-form data-success-url="/thank-you/">
+    <input name="locale" type="hidden" value={locale} />
     <input name="page" type="hidden" value={page} />
     <input name="product" type="hidden" value={product} />
     <div class="contacts-form-grid">
-      <label>Ім’я<input name="name" type="text" autocomplete="name" placeholder="Ваше ім’я" required /></label>
-      <label>Телефон<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
+      <label>{L.name}<input name="name" type="text" autocomplete="name" placeholder={L.namePh} required /></label>
+      <label>{L.phone}<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
     </div>
     <div class="contacts-form-grid">
-      <label>{optionsLabel}
+      <label>{optionsLabel ?? L.option}
         <select name="configuration" data-request-select>
-          <option value="">Ще не визначились — допоможіть обрати</option>
+          <option value="">{L.undecided}</option>
           {options.map((option) => <option value={option}>{option}</option>)}
         </select>
       </label>
-      <label>Місто<input name="city" autocomplete="address-level2" type="text" placeholder="Київ, Одеса, Львів..." /></label>
+      <label>{L.city}<input name="city" autocomplete="address-level2" type="text" placeholder={L.cityPh} /></label>
     </div>
-    <label>Коментар<textarea name="comment" rows="4" placeholder={commentPlaceholder}></textarea></label>
-    <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>Погоджуюсь із <a href="/privacy-policy/">політикою конфіденційності</a>.</span></label>
-    <button class="button button--mint" type="submit">Надіслати заявку</button>
+    <label>{L.comment}<textarea name="comment" rows="4" placeholder={commentPlaceholder ?? L.commentPh}></textarea></label>
+    <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>{L.consent} <a href={L.policyHref}>{L.policy}</a>.</span></label>
+    <button class="button button--mint" type="submit">{L.submit}</button>
     <p data-form-status hidden role="status"></p>
   </form>
 </section>
