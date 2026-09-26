@@ -9,7 +9,7 @@ const categoryLabelsByLocale = {
   ru: ['Душевые конструкции','Зеркала','Стеклянные перегородки','Стеклянные двери','Стеклянные ограждения','Безрамное остекление','Алюминиевые конструкции','Стеклянные фасады','Металлопластиковые конструкции','Стекло для бизнеса']
 };
 const categoryLabels = categoryLabelsByLocale[locale] ?? categoryLabelsByLocale.uk;
-const categoryHrefs = ['/dushovi-kabiny/','/dzerkala/','/sklyani-perehorodky/','/sklyani-dveri/','/sklyani-ohorozhi/','/poslugy/bezramne-sklinnya/','/alyuminiyevi-konstrukcziyi/','/arkhitekturni-systemy/','/metaloplastykovi-konstrukcziyi/','/poslugy/sklo-dlia-biznesu/'];
+const categoryHrefs = ['/dushovi-kabiny/','/dzerkala/','/sklyani-perehorodky/','/sklyani-dveri/','/sklyani-ohorozhi/','/poslugy/bezramne-sklinnya/','/alyuminiyevi-konstrukcziyi/','/poslugy/sklyani-fasady/','/metaloplastykovi-konstrukcziyi/','/poslugy/sklo-dlia-biznesu/'];
 const categoryTypes = ['shower','mirror','partition','door','railing','frameless','aluminium','facade','pvc','business-glass'];
 const categories = categoryLabels.map((label, i) => [label, categoryHrefs[i]]);
 const productStrip = categoryLabels.map((label, i) => [label, categoryHrefs[i], categoryTypes[i]]);
