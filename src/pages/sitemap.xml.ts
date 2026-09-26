@@ -4,6 +4,7 @@ import { knowledgeArticles } from '../data/knowledge-articles';
 import { KNOWLEDGE_ARTICLES_RU } from '../content/i18n/knowledge/articles-ru';
 import { ukSeoServices, seoCategories } from '../data/seo-services';
 import { framelessCategories } from '../data/frameless-catalog';
+import { facadeCategories } from '../data/facade-catalog';
 import { mirrorTypes } from '../data/mirror-types';
 const pages = import.meta.glob('./**/*.astro');
 // uk/* pages are non-canonical duplicates of the unprefixed root pages (their own
@@ -59,6 +60,7 @@ export const GET: APIRoute = async ({ site }) => {
   // Frameless glazing child pages — src/pages/poslugy/bezramne-sklinnya/[slug].astro
   // (the old programmatic pages of this silo are replaced by these).
   const framelessUrls = framelessCategories.map(({ path }) => path);
+  const facadeUrls = facadeCategories.map(({ path }) => path);
 
   const urls = [...new Set([
     ...fileUrls,
@@ -69,6 +71,7 @@ export const GET: APIRoute = async ({ site }) => {
     ...seoServiceUrls,
     ...mirrorChildUrls,
     ...framelessUrls,
+    ...facadeUrls,
   ])].sort();
   const body=`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(path=>`\n  <url><loc>${origin}${path}</loc><changefreq>${path==='/'?'weekly':'monthly'}</changefreq><priority>${path==='/'?'1.0':'0.7'}</priority></url>`).join('')}\n</urlset>`;
   return new Response(body,{headers:{'content-type':'application/xml; charset=utf-8','cache-control':'public, max-age=3600'}});

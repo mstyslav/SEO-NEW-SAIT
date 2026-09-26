@@ -6,7 +6,7 @@ import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import { seoCategories } from '../../../data/seo-services';
 export function getStaticPaths() {
   return seoCategories
-    .filter((category) => category.slug !== 'dushovi-konstruktsii' && category.slug !== 'bezramne-sklinnya')
+    .filter((category) => category.slug !== 'dushovi-konstruktsii' && category.slug !== 'bezramne-sklinnya' && category.slug !== 'sklyani-fasady')
     .map((category) => ({ params: { category: category.slug }, props: { category } }));
 }
 const { category } = Astro.props;

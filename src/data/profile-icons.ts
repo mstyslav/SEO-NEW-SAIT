@@ -30,4 +30,10 @@ export const profileIcons: Record<string, string> = {
   'frameless/bezramne-sklinnya-terasy': iconWrap('<path d="M3 12l17-7 17 7"/><path d="M6 12v22M34 12v22"/><path d="M12 14v20M18 14v20M24 14v20M30 14v20"/><path d="M3 34h34"/>'),
   'frameless/bezramne-sklinnya-altanky': iconWrap('<path d="M20 4L6 14h28z"/><path d="M8 14v20M32 14v20M14 14v20M26 14v20M20 14v20"/><path d="M5 34h30"/>'),
   'frameless/panoramne-sklinnya': iconWrap('<rect x="3" y="9" width="34" height="22"/><path d="M14 9v22M26 9v22"/><path d="M3 24l8-5 7 4 8-6 11 7"/>'),
+  'facade/stiykovo-ryhelne-sklinnya': iconWrap('<rect x="6" y="4" width="28" height="32"/><path d="M6 14h28M6 24h28M15 4v32M25 4v32"/>'),
+  'facade/strukturne-sklinnya-fasadu': iconWrap('<rect x="6" y="4" width="28" height="32" stroke-dasharray="3 2"/><path d="M6 14h28M6 24h28M15 4v32M25 4v32" stroke-width="0.8"/>'),
+  'facade/sklyani-fasady-budynkiv': iconWrap('<path d="M4 18L20 6l16 12"/><path d="M8 16v18h24V16"/><path d="M13 20h14v14H13z"/><path d="M20 20v14M13 27h14"/>'),
+  'facade/enerhoefektyvni-fasady': iconWrap('<rect x="6" y="8" width="20" height="28"/><path d="M6 17h20M6 26h20M16 8v28"/><circle cx="32" cy="8" r="3"/><path d="M32 2v1M32 13v1M26 8h1M37 8h1"/>'),
+  'facade/vitrinne-sklinnya': iconWrap('<path d="M4 10h32"/><path d="M6 10l2-5h24l2 5"/><rect x="6" y="12" width="28" height="22"/><path d="M22 12v22M6 34h28"/>'),
+  'facade/sklyani-vkhidni-hrupy': iconWrap('<rect x="5" y="6" width="30" height="28"/><path d="M5 12h30"/><path d="M14 12v22M26 12v22"/><path d="M18 24h.01M22 24h.01"/>'),
 };

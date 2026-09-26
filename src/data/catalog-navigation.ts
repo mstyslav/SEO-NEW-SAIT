@@ -4,6 +4,7 @@ import { mirrorTypes } from './mirror-types';
 import type { Locale } from '../i18n/helpers';
 import { profileCategoriesByGroup, type ProfileGroup } from './profile-systems';
 import { FRAMELESS_HUB, framelessCategories } from './frameless-catalog';
+import { FACADE_HUB, facadeCategories } from './facade-catalog';
 
 // RU menu labels for the aluminium / metal-plastic pages (the pages themselves are UK-only).
 const profileMenuRu: Record<string, string> = {
@@ -20,7 +21,7 @@ const profileMenuRu: Record<string, string> = {
   'pvc/rozsuvni-dveri': 'Раздвижные двери',
   'pvc/ofisni-perehorodky': 'Офисные стеклянные перегородки'
 };
-const profileMenu = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless'>, locale: 'uk' | 'ru') =>
+const profileMenu = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade'>, locale: 'uk' | 'ru') =>
   profileCategoriesByGroup(group).map((category) => ({
     shortName: locale === 'ru' ? (profileMenuRu[`${group}/${category.slug}`] ?? category.name) : category.name,
     path: category.path
@@ -88,6 +89,7 @@ const serviceShortNameRu: Record<string, string> = {
   '/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/': 'Структурное остекление',
   '/poslugy/sklyani-fasady/vitrinne-sklinnya/': 'Витринное остекление',
   '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/': 'Входные группы',
+  '/poslugy/sklyani-fasady/enerhoefektyvni-fasady/': 'Энергоэффективные фасады',
 
   '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/': 'Остекление террасы',
   '/poslugy/bezramne-sklinnya/bezramne-sklinnya-balkona/': 'Остекление балкона',
@@ -134,6 +136,17 @@ const categoryOrder = ['dushovi-konstruktsii', 'dzerkala', 'sklyani-perehorodky'
 function buildServiceCategories(locale: Locale): CatalogNavigationCategory[] {
   return seoCategories.map((category) => {
     const name = locale === 'uk' ? category.name : (categoryNameRu[category.slug] ?? category.name);
+    if (category.slug === 'sklyani-fasady') {
+      return {
+        slug: category.slug,
+        name,
+        href: FACADE_HUB,
+        services: facadeCategories.map((item) => ({
+          shortName: locale === 'uk' ? item.name : (serviceShortNameRu[item.path] ?? item.name),
+          path: item.path
+        }))
+      };
+    }
     if (category.slug === 'bezramne-sklinnya') {
       return {
         slug: category.slug,

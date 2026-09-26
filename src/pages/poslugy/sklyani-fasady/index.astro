@@ -1,0 +1,265 @@
+---
+// Glass facades MASTER — hub for /poslugy/sklyani-fasady/{slug}/ (content: src/data/facade-catalog.ts).
+// Role split: /alyuminiyevi-konstrukcziyi/fasadne-sklinnya/ (the live site's URL, kept) targets
+// "фасадне скління" / aluminium facade systems; this hub targets glass facades by type and building.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import TrustBar from '../../../components/TrustBar.astro';
+import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../seo/schema';
+import { FACADE_HUB, facadeCategories } from '../../../data/facade-catalog';
+import { IMG_BASE } from '../../../data/profile-systems';
+import { profileIcons } from '../../../data/profile-icons';
+import '../../../styles/category-pages.css';
+import '../../../styles/shower-master.css';
+import '../../../styles/profile-systems.css';
+
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(FACADE_HUB, origin);
+
+const title = 'Скляні фасади';
+const h1 = 'Скляні фасади будівель на замовлення';
+const metaTitle = 'Скляні фасади будівель на замовлення — стійково-ригельні, структурні | Space Glass';
+const metaDescription =
+  'Скляні фасади будівель на системах Aluprof: стійково-ригельні, структурні та елементні, енергоефективні фасади, фасади приватних будинків, вітрини та вхідні групи. Проєкт, виготовлення й монтаж у Києві, Одесі, Львові.';
+
+const heroSrc = (w: number) => `${IMG_BASE}/cat-fas-hub-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const hubItems = facadeCategories.map((category) => ({
+  title: category.name,
+  note: category.cardNote,
+  href: category.path,
+  icon: profileIcons[`facade/${category.slug}`]
+}));
+
+// One row per system, linked to the first page that describes it.
+const seen = new Set<string>();
+const systemsTable = facadeCategories.flatMap((category) =>
+  category.models
+    .filter((model) => (seen.has(model.id) ? false : (seen.add(model.id), true)))
+    .map((model) => ({
+      name: model.name.replace(/^Aluprof /, ''),
+      href: `${category.path}#${model.id}`,
+      direction: category.name,
+      kind: model.kind,
+      key: model.specs.slice(0, 2).map(([k, v]) => `${k.toLowerCase()}: ${v}`).join('; ')
+    }))
+);
+
+const benefits: [string, string][] = [
+  ['Світло й простір', 'Скло від перекриття до перекриття наповнює приміщення денним світлом і відкриває вигляд.'],
+  ['Енергоефективність', 'Теплі системи з Uf від 0,55 W/(m²K), енергоощадні склопакети й сонцезахист знижують витрати на клімат.'],
+  ['Швидкий монтаж', 'Легка конструкція, а елементні фасади монтують модулями заводського складання без риштувань.'],
+  ['Безпека', 'Ламіноване скло, клас ударостійкості I5/E5, протипожежні рішення EI30–EI60.'],
+  ['Довговічність', 'Алюміній не кородує, не деформується, ущільнення EPDM стійкі до ультрафіолету.'],
+  ['Свобода архітектури', 'Будь-які форми, криволінійні й гранчасті фасади, колір RAL, скляні дахи.']
+];
+
+const types: [string, string][] = [
+  ['Стійково-ригельний', 'Каркас зі стійок і ригелів збирають на будівлі, скло фіксують притискними планками.'],
+  ['Напівструктурний', 'Без зовнішніх планок: зовні — суцільне скло з тонкими швами 2 см.'],
+  ['Елементний', 'Модулі збирають і склять на заводі, на будівлі лише навішують.'],
+  ['Накладний', 'Алюмінієві притискні профілі на дерев’яному або сталевому несучому каркасі.']
+];
+
+const faq: [string, string][] = [
+  ['Що таке скляний фасад?', 'Навісна стіна будівлі з алюмінієвого каркаса та склопакетів, що закріплена на перекриттях. Вона захищає від погоди, пропускає світло й може мати вбудовані вікна та двері.'],
+  ['Які бувають скляні фасади?', 'Стійково-ригельні, напівструктурні (EFEKT), структурні та елементні, накладні на дерев’яний чи сталевий каркас. Окремо — енергоефективні фасади, вітрини та вхідні групи.'],
+  ['Чим фасадне скління відрізняється від вікон?', 'Фасад — це несуча навісна стіна, що перекриває кілька поверхів і тримає велике скло. Вікна встановлюють в окремі прорізи стіни.'],
+  ['Скільки коштує скляний фасад?', 'Вартість залежить від системи, площі, висоти, склопакетів, відкривних елементів і монтажу. Розрахунок робимо за кресленнями або після заміру.'],
+  ['Який фасад найтепліший?', 'MB-MT50N з Uf від 0,55 W/(m²K) і MB-SR50N HI+ із сертифікатом A+ Інституту пасивного будинку.'],
+  ['Що таке структурне скління?', 'Фасад без зовнішніх притискних планок: склопакети тримаються на утримувачах чи клеї, зовні видно лише скло й тонкі шви.'],
+  ['Що таке елементний фасад?', 'Фасад із модулів заводського складання, які на будівлі лише навішують. Підходить для висоток і великих об’єктів.'],
+  ['Чи можна вбудувати вікна у скляний фасад?', 'Так: відкидні, поворотно-відкидні, паралельно-відсувні, приховані вікна MB-SR50N IW, а в дах — вікна MB-SR50N RW.'],
+  ['Як захистити скляний фасад від перегріву?', 'Сонцезахисні склопакети, фасад із жалюзі MB-SR50N ZS або зовнішні ламелі MB-SUNPROF.'],
+  ['Чи безпечне скло у фасаді?', 'Так, використовуємо загартоване й ламіноване скло та системи з класом ударостійкості I5/E5.'],
+  ['Чи бувають протипожежні скляні фасади?', 'Так, MB-SR50N EI та EI EFEKT мають класи вогнестійкості EI30 та EI60.'],
+  ['Чи можна зробити скляний фасад приватного будинку?', 'Так: вітражі вітальні, скління сходів і другого світла, скляні дахи — на теплих системах з енергоощадними склопакетами.'],
+  ['Чи робите вітрини та вхідні групи?', 'Так, вітрини магазинів і кафе та вхідні групи з дверима Pivot, MB-100GFT і панельними дверима.'],
+  ['Чи потрібен проєкт фасаду?', 'Так. Розраховуємо вітрове навантаження, вагу скла, кріплення до перекриттів і вузли примикання, готуємо специфікацію.'],
+  ['Скільки триває монтаж фасаду?', 'Залежить від площі й системи. Графік виготовлення й монтажу узгоджуємо після погодження креслень.'],
+  ['Чи можна фарбувати фасадний профіль?', 'Так, порошкове фарбування в будь-який колір RAL, анодування або деревоподібні покриття.'],
+  ['З якими системами ви працюєте?', 'Зі стійково-ригельними, структурними та елементними фасадними системами Aluprof, а також вікнами й дверима, сумісними з ними.'],
+  ['Чи працюєте з архітекторами й забудовниками?', 'Так, підбираємо систему під проєкт, готуємо технічні рішення й супроводжуємо об’єкт до здачі.'],
+  ['Де виконуєте роботи?', 'Проєкт, замір і монтаж — у Києві, Одесі та Львові з областями. Великі об’єкти в інших регіонах — за домовленістю.'],
+  ['Чи є гарантія?', 'Так, на конструкції та монтаж, а також сервіс після здачі об’єкта.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Фасадне скління — системи Aluprof', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
+  ['Алюмінієві вікна', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/'],
+  ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
+  ['Зимові сади', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
+  ['Безрамне скління', '/poslugy/bezramne-sklinnya/'],
+  ['Склопакет: як обрати', '/knowledge/sklopaket-yak-obraty/'],
+  ['Скління для офісу', '/rishennya/dlya-ofisu/'],
+  ['Скління для магазину', '/rishennya/dlya-magazynu/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: facadeCategories.length,
+  itemListElement: facadeCategories.map((category, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: category.name,
+    url: absoluteUrl(category.path, origin)
+  }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
+---
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  alternateLocales={['uk']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: 'Послуги', href: '/poslugy/' }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Стійково-ригельні, структурні та елементні скляні фасади, енергоефективні фасади, скління приватних будинків, вітрини та вхідні групи на системах Aluprof. Проєктуємо, виготовляємо й монтуємо в Києві, Одесі та Львові.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#types">Переглянути {facadeCategories.length} напрямів</a>
+          <a class="button button--outline" href="#request">Отримати розрахунок</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Скляний фасад сучасної будівлі на тлі неба" width="1080" height="1080" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="uk" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>Скляний фасад під вашу будівлю</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Скляний фасад визначає вигляд будівлі, кількість світла всередині та витрати на опалення й кондиціювання. Тому ми починаємо не з профілю, а з задачі: приватний будинок чи бізнес-центр, класичні планки чи суцільне скло, пасивний стандарт чи швидкий монтаж.</p>
+          <p>Працюємо з фасадними системами Aluprof — стійково-ригельними MB-SR50N, MB-MT50N, MB-SR60N, напівструктурними EFEKT, елементними MB-SE65 і MB-SE85 SG, енергоефективними HI+ та PV. У фасад вбудовуємо вікна, двері, дахові вікна й сонцезахист.</p>
+          <p>Повний цикл: проєкт і розрахунок, виготовлення на власному обладнанні, монтаж із гідро- та пароізоляцією і сервіс після здачі.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>Uf від 0,55 W/(m²K)</b><span>теплі фасадні системи</span></li>
+          <li><b>До 3000 Pa</b><span>вітрове навантаження</span></li>
+          <li><b>Модуль до 1100 кг</b><span>великоформатне скло</span></li>
+          <li><b>Київ · Одеса · Львів</b><span>проєкт, монтаж і сервіс</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Напрями</p><h2>Типи скляних фасадів і рішення</h2></div><p>Оберіть тип фасаду або об’єкт — на кожній сторінці є системи з характеристиками, креслення, порівняння та поради з вибору.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Системи</p><h2>Фасадні системи в одній таблиці</h2></div><p>Показники — за даними виробника для базових конфігурацій. Натисніть на систему, щоб перейти до її опису.</p></div>
+      <div class="profile-table-wrap">
+        <table class="profile-table">
+          <thead><tr><th scope="col">Система</th><th scope="col">Напрям</th><th scope="col">Тип</th><th scope="col">Ключові показники</th></tr></thead>
+          <tbody>
+            {systemsTable.map((row) => (
+              <tr><th scope="row"><a href={row.href}>{row.name}</a></th><td>{row.direction}</td><td>{row.kind}</td><td>{row.key}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Переваги</p><h2>Чому скляний фасад</h2></div><p>Сучасна архітектура, світло та енергоефективність в одній конструкції.</p></div>
+      <div class="material-grid material-grid--parts">
+        {benefits.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Конструкція</p><h2>Як влаштований скляний фасад</h2></div><p>Чотири конструктивні принципи — під різний вигляд, масштаб і бюджет.</p></div>
+      <dl class="material-thickness">
+        {types.map(([name, text]) => <div><dt>{name}</dt><dd>{text}</dd></div>)}
+      </dl>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від креслення до готового фасаду</h2></div></div>
+      <div class="category-process__grid">
+        <div><span>01</span><b>Запит</b><small>Креслення або фото фасаду</small></div>
+        <div><span>02</span><b>Консультація</b><small>Підбір системи та скла</small></div>
+        <div><span>03</span><b>Замір</b><small>Перекриття, осі, прорізи</small></div>
+        <div><span>04</span><b>Проєкт</b><small>Статика, вузли, специфікація</small></div>
+        <div><span>05</span><b>Виготовлення</b><small>Власне обладнання</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Гідро- та пароізоляція</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">Географія</p>
+          <h2>Скляні фасади: проєкт і монтаж<br />у Києві, Одесі та Львові</h2>
+          <p>Виїжджаємо на об’єкт, перевіряємо перекриття й осі, готуємо проєкт і монтуємо скляні фасади приватних будинків, офісів, магазинів і громадських будівель.</p>
+          <p>Для великих об’єктів в інших регіонах умови узгоджуємо окремо.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Київ</b><span>проєкт і монтаж</span></li><li><b>Одеса</b><span>проєкт і монтаж</span></li><li><b>Львів</b><span>проєкт і монтаж</span></li></ul>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock
+        title="FAQ про скляні фасади"
+        intro="Про типи фасадів, системи, тепло, безпеку, вбудовані вікна, проєкт, ціну та монтаж."
+        items={faq}
+        visibleCount={6}
+        expandTo={faq.length}
+      />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Корисне</p><h2>Далі по темі</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={href}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={FACADE_HUB}
+      product={title}
+      title={'Потрібен попередній розрахунок?'}
+      text={'Надішліть креслення, фото чи розміри фасаду — підберемо систему та підготуємо орієнтовну вартість.'}
+      options={facadeCategories.map((c) => c.name)}
+      optionsLabel="Напрям"
+      commentPlaceholder="Тип будівлі, площа або розміри фасаду, місто"
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

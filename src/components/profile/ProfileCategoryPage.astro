@@ -29,6 +29,7 @@ import {
 import { MIRROR_HUB, mirrorCategories } from '../../data/mirror-catalog';
 import { SHOWER_HUB, showerCategories } from '../../data/shower-catalog';
 import { FRAMELESS_HUB, framelessCategories } from '../../data/frameless-catalog';
+import { FACADE_HUB, facadeCategories } from '../../data/facade-catalog';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
@@ -46,10 +47,11 @@ const HUBS: Record<ProfileGroup, { href: string; label: string }> = {
   pvc: { href: PVC_HUB, label: 'Металопластикові конструкції' },
   mirror: { href: MIRROR_HUB, label: 'Дзеркала' },
   shower: { href: SHOWER_HUB, label: 'Душові кабіни' },
-  frameless: { href: FRAMELESS_HUB, label: 'Безрамне скління' }
+  frameless: { href: FRAMELESS_HUB, label: 'Безрамне скління' },
+  facade: { href: FACADE_HUB, label: 'Скляні фасади' }
 };
 const groupCategories = (group: ProfileGroup) =>
-  group === 'mirror' ? mirrorCategories : group === 'shower' ? showerCategories : group === 'frameless' ? framelessCategories : profileCategoriesByGroup(group);
+  group === 'mirror' ? mirrorCategories : group === 'shower' ? showerCategories : group === 'frameless' ? framelessCategories : group === 'facade' ? facadeCategories : profileCategoriesByGroup(group);
 const baseOf = (item: ProfileCategory) => item.imageBase ?? IMG_BASE;
 
 const isAlu = category.group === 'alu';
@@ -61,7 +63,7 @@ const catalogButton = category.catalogButton ?? (hasSystems ? 'Переглян�
 const optionsLabel = category.optionsLabel ?? (hasSystems ? 'Система' : 'Вид');
 const siblings = groupCategories(category.group).filter((item) => item.path !== category.path);
 // Mirrors and showers link only within their own section; alu/pvc cross-link each other.
-const crossGroup = category.group === 'mirror' || category.group === 'shower' || category.group === 'frameless' ? [] : profileCategoriesByGroup(isAlu ? 'pvc' : 'alu');
+const crossGroup = category.group === 'mirror' || category.group === 'shower' || category.group === 'frameless' || category.group === 'facade' ? [] : profileCategoriesByGroup(isAlu ? 'pvc' : 'alu');
 // Same-group directions first, then the other group; keep full rows of 3.
 const relatedAll = [...siblings, ...crossGroup];
 const related3 = relatedAll.length < 3 ? relatedAll : relatedAll.slice(0, Math.min(9, relatedAll.length - (relatedAll.length % 3)));

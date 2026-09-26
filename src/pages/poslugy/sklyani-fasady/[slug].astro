@@ -1,0 +1,10 @@
+---
+// Glass facades subsections — shared catalog template; content in src/data/facade-catalog.ts.
+import ProfileCategoryPage from '../../../components/profile/ProfileCategoryPage.astro';
+import { facadeCategories } from '../../../data/facade-catalog';
+export function getStaticPaths() {
+  return facadeCategories.map((category) => ({ params: { slug: category.slug }, props: { category } }));
+}
+const { category } = Astro.props;
+---
+<ProfileCategoryPage category={category} />
