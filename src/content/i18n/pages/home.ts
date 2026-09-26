@@ -62,13 +62,13 @@ export const homeContent: Record<Locale, HomeContent> = {
     popularSolutions: [
       ['Душові кабіни','Душові кабіни зі скла: walk-in, кутові, розсувні та індивідуальні конструкції.','/dushovi-kabiny/','/images/catalog/dushovi-kabiny/dushovi-kabiny-480.webp',480,360],
       ['Скляні перегородки','Скляні перегородки для квартир, офісів і комерційних просторів — безрамні та профільні системи.','/sklyani-perehorodky/','/images/projects/office-partitions-morskyi-odesa/office-partitions-morskyi-odesa-hero-480.webp',480,640],
-      ['Розсувні скляні системи','Розсувні системи зі скла для терас, великих прорізів та зонування внутрішніх просторів.','/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/','/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-detail-01.webp',960,1280],
-      ['Скляні огорожі','Скляні огорожі для сходів, балконів і терас — безрамні та профільні рішення.','/sklyani-ohorozhi/','/images/projects/glass-stair-railing-private-house-odesa/glass-stair-railing-private-house-odesa-hero-480.webp',480,853],
-      ['Скляні двері','Скляні двері для житлових і комерційних просторів — розпашні, розсувні та маятникові.','/sklyani-dveri/','/images/projects/world-of-comics-entrance-odesa/world-of-comics-entrance-odesa-hero-480.webp',480,640],
-      ['Скління терас','Безрамне скління терас, веранд і відкритих просторів із можливістю повного відкривання.','/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/','/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-480.webp',480,640],
+      ['Розсувні скляні системи','Розсувні системи зі скла для терас, великих прорізів та зонування внутрішніх просторів.','/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/','/images/catalog/bezramne/cat-sklyani-rozsuvni-systemy-480.webp',960,1280],
+      ['Скляні огорожі','Скляні огорожі для сходів, балконів і терас — безрамні та профільні рішення.','/sklyani-ohorozhi/','/images/catalog/sklyani-ohorozhi/hero-hub-480.webp',480,853],
+      ['Скляні двері','Скляні двері для житлових і комерційних просторів — розпашні, розсувні та маятникові.','/sklyani-dveri/','/images/catalog/sklyani-dveri/hero5-hub-480.webp',480,640],
+      ['Скління терас','Безрамне скління терас, веранд і відкритих просторів із можливістю повного відкривання.','/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/','/images/catalog/bezramne/cat-bezramne-sklinnya-terasy-480.webp',480,640],
       ['Дзеркала','Дзеркала для ванних кімнат, житлових та комерційних інтер’єрів — індивідуальне виготовлення за розмірами.','/dzerkala/','/images/catalog/dzerkala/sg-moon-480.webp',480,480],
-      ['Безрамне скління','Панорамні безрамні системи для балконів, терас, альтанок та інших відкритих просторів.','/poslugy/bezramne-sklinnya/','/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-detail-03.webp',960,1280],
-      ['Скляні фасади','Сучасне фасадне скління для приватних і комерційних будівель із застосуванням скла та алюмінієвих систем.','/poslugy/sklyani-fasady/','/images/catalog/profile-systems/cat-alu-fasady-480.webp',480,480],
+      ['Безрамне скління','Панорамні безрамні системи для балконів, терас, альтанок та інших відкритих просторів.','/poslugy/bezramne-sklinnya/','/images/catalog/bezramne/cat-hub-480.webp',960,1280],
+      ['Скляні фасади','Сучасне фасадне скління для приватних і комерційних будівель із застосуванням скла та алюмінієвих систем.','/poslugy/sklyani-fasady/','/images/catalog/profile-systems/cat-fas2-hub-480.webp',480,480],
       ['Алюмінієві конструкції','Алюмінієві вікна, двері, фасади та розсувні системи для житлових і комерційних об’єктів.','/alyuminiyevi-konstrukcziyi/','/images/catalog/profile-systems/cat-alu-rozsuvni-480.webp',480,480]
     ],
     projects: {
@@ -158,13 +158,13 @@ export const homeContent: Record<Locale, HomeContent> = {
     popularSolutions: [
       ['Душевые кабины','Душевые кабины из стекла: walk-in, угловые, раздвижные и индивидуальные конструкции.','/dushovi-kabiny/','/images/catalog/dushovi-kabiny/dushovi-kabiny-480.webp',480,360],
       ['Стеклянные перегородки','Стеклянные перегородки для квартир, офисов и коммерческих пространств — безрамные и профильные системы.','/sklyani-perehorodky/','/images/projects/office-partitions-morskyi-odesa/office-partitions-morskyi-odesa-hero-480.webp',480,640],
-      ['Раздвижные стеклянные системы','Раздвижные системы из стекла для террас, больших проёмов и зонирования внутренних пространств.','/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/','/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-detail-01.webp',960,1280],
-      ['Стеклянные ограждения','Стеклянные ограждения для лестниц, балконов и террас — безрамные и профильные решения.','/sklyani-ohorozhi/','/images/projects/glass-stair-railing-private-house-odesa/glass-stair-railing-private-house-odesa-hero-480.webp',480,853],
-      ['Стеклянные двери','Стеклянные двери для жилых и коммерческих пространств — распашные, раздвижные и маятниковые.','/sklyani-dveri/','/images/projects/world-of-comics-entrance-odesa/world-of-comics-entrance-odesa-hero-480.webp',480,640],
-      ['Остекление террас','Безрамное остекление террас, веранд и открытых пространств с возможностью полного открывания.','/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/','/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-480.webp',480,640],
+      ['Раздвижные стеклянные системы','Раздвижные системы из стекла для террас, больших проёмов и зонирования внутренних пространств.','/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/','/images/catalog/bezramne/cat-sklyani-rozsuvni-systemy-480.webp',960,1280],
+      ['Стеклянные ограждения','Стеклянные ограждения для лестниц, балконов и террас — безрамные и профильные решения.','/sklyani-ohorozhi/','/images/catalog/sklyani-ohorozhi/hero-hub-480.webp',480,853],
+      ['Стеклянные двери','Стеклянные двери для жилых и коммерческих пространств — распашные, раздвижные и маятниковые.','/sklyani-dveri/','/images/catalog/sklyani-dveri/hero5-hub-480.webp',480,640],
+      ['Остекление террас','Безрамное остекление террас, веранд и открытых пространств с возможностью полного открывания.','/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/','/images/catalog/bezramne/cat-bezramne-sklinnya-terasy-480.webp',480,640],
       ['Зеркала','Зеркала для ванных комнат, жилых и коммерческих интерьеров — индивидуальное изготовление по размерам.','/dzerkala/','/images/catalog/dzerkala/sg-moon-480.webp',480,480],
-      ['Безрамное остекление','Панорамные безрамные системы для балконов, террас, беседок и других открытых пространств.','/poslugy/bezramne-sklinnya/','/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-detail-03.webp',960,1280],
-      ['Стеклянные фасады','Современное фасадное остекление для частных и коммерческих зданий с применением стекла и алюминиевых систем.','/poslugy/sklyani-fasady/','/images/catalog/profile-systems/cat-alu-fasady-480.webp',480,480],
+      ['Безрамное остекление','Панорамные безрамные системы для балконов, террас, беседок и других открытых пространств.','/poslugy/bezramne-sklinnya/','/images/catalog/bezramne/cat-hub-480.webp',960,1280],
+      ['Стеклянные фасады','Современное фасадное остекление для частных и коммерческих зданий с применением стекла и алюминиевых систем.','/poslugy/sklyani-fasady/','/images/catalog/profile-systems/cat-fas2-hub-480.webp',480,480],
       ['Алюминиевые конструкции','Алюминиевые окна, двери, фасады и раздвижные системы для жилых и коммерческих объектов.','/alyuminiyevi-konstrukcziyi/','/images/catalog/profile-systems/cat-alu-rozsuvni-480.webp',480,480]
     ],
     projects: {
