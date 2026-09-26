@@ -11,7 +11,7 @@ import TrustBar from '../../components/TrustBar.astro';
 import ProjectCard from '../../components/projects/ProjectCard.astro';
 import ProfileRequestForm from '../../components/profile/ProfileRequestForm.astro';
 import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
-import { BUSINESS_GUARANTEES, BUSINESS_HUB, BUSINESS_IMG, BUSINESS_STEPS, businessPagesOrdered, businessPath, businessProducts } from '../../data/business-pages';
+import { BUSINESS_GUARANTEES, BUSINESS_HUB, BUSINESS_IMG, BUSINESS_STEPS, businessPagesOrdered, businessPath } from '../../data/business-pages';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
@@ -113,19 +113,6 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       </div>
     </section>
 
-    <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Вироби</p><h2>Популярні вироби для бізнесу</h2></div><p>Те, що найчастіше замовляють заклади, магазини й офіси.</p></div>
-      <div class="rh-tiles biz-products">
-        {businessProducts.map((item) => (
-          <a class="rh-tile" href={item.href}>
-            <img src={item.image} alt="" width="480" height="480" loading="lazy" decoding="async" />
-            <span class="rh-tile__arrow" aria-hidden="true">→</span>
-            <span class="rh-tile__body"><b>{item.title}</b><span>{item.text}</span></span>
-          </a>
-        ))}
-      </div>
-    </section>
-
     <section class="category-process">
       <div class="category-heading"><div><p class="eyebrow eyebrow--light">Етапи роботи</p><h2>Як ми працюємо з бізнесом</h2></div></div>
       <div class="category-process__grid">
@@ -180,8 +167,3 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
   <Footer />
 </div>
 </BaseLayout>
-
-<style>
-  .biz-products{grid-template-columns:repeat(3,minmax(0,1fr))}
-  @media (max-width:900px){.biz-products{grid-template-columns:repeat(2,minmax(0,1fr))}}
-</style>

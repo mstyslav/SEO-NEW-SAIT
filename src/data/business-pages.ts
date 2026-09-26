@@ -446,12 +446,3 @@ export const BUSINESS_ORDER = ['bazam-vidpochynku', 'zhytlovym-kompleksam', 'sal
 export const businessPagesOrdered = BUSINESS_ORDER.map((slug) => businessPages.find((p) => p.slug === slug)!);
 export const businessPath = (slug: string) => `${BUSINESS_HUB}${slug}/`;
 
-/** Popular products for business (hub block). */
-export const businessProducts: { title: string; text: string; href: string; image: string }[] = [
-  { title: 'Скляні козирки', text: 'Козирки над входом у магазин, офіс чи під’їзд.', href: '/sklyani-kozyrky/', image: '/images/catalog/sklyani-kozyrky/gp-spada-480.webp' },
-  { title: 'Вітринне скління', text: 'Вітрини фасаду, що показують товар.', href: '/poslugy/sklyani-fasady/vitrinne-sklinnya/', image: `${PS}/cat-fas2-vitrinne-sklinnya-480.webp` },
-  { title: 'Скляні вхідні групи', text: 'Представницький вхід для будь-якого бізнесу.', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: `${PS}/cat-fas2-sklyani-vkhidni-hrupy-480.webp` },
-  { title: 'Скляні двері для офісу', text: 'Двері кабінетів, переговорних і рецепції.', href: '/sklyani-dveri/sklyani-dveri-dlia-ofisu/', image: `${DV}/hero4-sklyani-dveri-dlia-ofisu-480.webp` },
-  { title: 'Офісні перегородки', text: 'Кабінети й переговорні зі скла.', href: '/sklyani-perehorodky/ofisni/', image: P('office-partitions-morskyi-odesa') },
-  { title: 'Дзеркала для салонів', text: 'Дзеркала для робочих місць майстрів.', href: '/dzerkala/dzerkala-dlya-salonu-krasy/', image: `${DZ}/cat-salon-480.webp` }
-];
