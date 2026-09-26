@@ -73,7 +73,7 @@ const processSteps = category.process ?? [
 ];
 const catalogNote = category.catalogNote ?? 'Технічні показники наведені за даними виробників профільних систем для базових конфігурацій і залежать від розмірів, склопакета та фурнітури. Остаточну комплектацію та вартість визначаємо за кресленням або після заміру.';
 
-// Product renders (showers) must be shown whole: contain + blurred backdrop.
+// Product renders (showers) are square: shown whole in a square photo column.
 const heroContain = category.group === 'shower';
 const heroSrc = (w: number) => `${imgBase}/${category.heroImage}-${w}.webp`;
 const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
@@ -142,7 +142,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         </div>
       </div>
       <figure class="category-hero__figure">
-        <div class="category-hero__frame" style={heroContain ? `--hero-bg:url(${heroSrc(480)})` : undefined}>
+        <div class="category-hero__frame" >
           <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt={category.heroAlt} width="1080" height="1080" decoding="async" fetchpriority="high" />
         </div>
       </figure>
