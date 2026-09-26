@@ -1,0 +1,10 @@
+---
+// Glass doors subsections — shared catalog template; content in src/data/door-catalog.ts.
+import ProfileCategoryPage from '../../components/profile/ProfileCategoryPage.astro';
+import { doorCategories } from '../../data/door-catalog';
+export function getStaticPaths() {
+  return doorCategories.map((category) => ({ params: { slug: category.slug }, props: { category } }));
+}
+const { category } = Astro.props;
+---
+<ProfileCategoryPage category={category} />

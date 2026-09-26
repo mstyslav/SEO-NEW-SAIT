@@ -445,7 +445,7 @@ export const facadeCategories: ProfileCategory[] = [
       ['Чи потрібен тамбур?', 'Для інтенсивного входу взимку — так: тамбур зменшує тепловтрати. Внутрішні двері тамбура можна зробити на MB-45S.'],
       ['Чи можна вхідну групу для під’їзду ЖК?', 'Так, з домофоном, доводчиком і антивандальним склом.']
     ],
-    related: [['Вітринне скління', P('vitrinne-sklinnya')], ['Стійково-ригельне скління', P('stiykovo-ryhelne-sklinnya')], ['Алюмінієві двері', `${ALU}alyuminiyevi-dveri/`], ['Скляні двері', '/poslugy/sklyani-dveri/'], ['Скляні козирки', '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/'], ['Скління для офісу', '/rishennya/dlya-ofisu/'], ...REL],
+    related: [['Вітринне скління', P('vitrinne-sklinnya')], ['Стійково-ригельне скління', P('stiykovo-ryhelne-sklinnya')], ['Алюмінієві двері', `${ALU}alyuminiyevi-dveri/`], ['Скляні двері', '/sklyani-dveri/'], ['Скляні козирки', '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/'], ['Скління для офісу', '/rishennya/dlya-ofisu/'], ...REL],
     ctaTitle: 'Потрібна вхідна група?',
     ctaText: 'Надішліть фото входу й розміри — підберемо систему, фурнітуру й підготуємо розрахунок.'
   })

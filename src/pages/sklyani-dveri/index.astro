@@ -1,136 +1,233 @@
 ---
+// Glass doors MASTER — hub for /sklyani-dveri/{slug}/ (content: src/data/door-catalog.ts).
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import ProfileRequestForm from '../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { DOORS_HUB, DOORS_IMG, doorCategories } from '../../data/door-catalog';
+import { profileIcons } from '../../data/profile-icons';
 import '../../styles/category-pages.css';
+import '../../styles/shower-master.css';
+import '../../styles/profile-systems.css';
 
-const title = "Скляні двері";
-const subtitle = "Розпашні, розсувні, маятникові та приховані системи";
-const items = ["Розпашні", "Розсувні", "Маятникові", "Pivot", "У профілі", "Безрамні"];
-const faq = [
-  [
-    "Від чого залежить ціна?",
-    "Від габаритів, типу скла, профілю, фурнітури, складності та монтажу."
-  ],
-  [
-    "Чи є індивідуальні розміри?",
-    "Так, більшість конструкцій виготовляємо за погодженими розмірами."
-  ],
-  [
-    "Де доступний монтаж?",
-    "Основні міста монтажу — Київ, Львів та Одеса з областями."
-  ],
-  [
-    "Чи є доставка по Україні?",
-    "Готові товари та комплектуючі доставляємо по всій Україні."
-  ],
-  [
-    "Які матеріали використовуються?",
-    "Матеріали підбираються за призначенням конструкції, навантаженням і дизайном."
-  ],
-  [
-    "Чи можна обрати колір профілю?",
-    "Так, доступні стандартні та індивідуальні кольори залежно від системи."
-  ],
-  [
-    "Які строки виготовлення?",
-    "Термін визначається після погодження креслення, комплектації та завантаження виробництва."
-  ],
-  [
-    "Чи надається гарантія?",
-    "Так, гарантія залежить від типу конструкції, матеріалів та умов монтажу."
-  ],
-  [
-    "Чи потрібен професійний замір?",
-    "Для індивідуальних конструкцій професійний замір рекомендований або обов’язковий."
-  ],
-  [
-    "Чи можна замовити тільки виготовлення?",
-    "Так, у частині проєктів можливе виготовлення без монтажу з доставкою."
-  ],
-  [
-    "Чи робите технічні креслення?",
-    "Так, перед запуском складних конструкцій готуємо та погоджуємо креслення."
-  ],
-  [
-    "Чи можна інтегрувати двері?",
-    "Так, залежно від системи доступні розпашні, розсувні, маятникові та pivot-рішення."
-  ],
-  [
-    "Чи працюєте з дизайнерами й архітекторами?",
-    "Так, надаємо технічні матеріали, консультації та супровід проєкту."
-  ],
-  [
-    "Чи можна використати матове скло?",
-    "Так, доступні матове, тоноване, освітлене, рифлене та декоративне скло."
-  ],
-  [
-    "Чи працюєте з комерційними об’єктами?",
-    "Так, реалізуємо рішення для офісів, магазинів, ресторанів, готелів і клінік."
-  ],
-  [
-    "Чи можливий демонтаж старих конструкцій?",
-    "Так, демонтаж оцінюється окремо після огляду об’єкта."
-  ],
-  [
-    "Що потрібно для попередньої оцінки?",
-    "Фото, приблизні розміри, місто та короткий опис бажаного рішення."
-  ],
-  [
-    "Чи можна замовити поетапну реалізацію?",
-    "Так, великі проєкти можна поділяти на етапи за погодженим графіком."
-  ],
-  [
-    "Які способи оплати доступні?",
-    "Умови оплати залежать від типу товару, обсягу та формату робіт."
-  ],
-  [
-    "Чи є сервіс після монтажу?",
-    "Так, доступні гарантійні та післягарантійні консультації й обслуговування."
-  ]
-]
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(DOORS_HUB, origin);
+
+const title = 'Скляні двері';
+const h1 = 'Скляні двері на замовлення';
+const metaTitle = 'Скляні двері на замовлення — міжкімнатні, розсувні, маятникові, лофт | Space Glass';
+const metaDescription =
+  'Скляні двері за розміром прорізу: розпашні, розсувні, маятникові, у лофт-профілі, матові, для офісу. Загартоване скло 8–12 мм, фурнітура, декор і логотип на склі. Замір і монтаж у Києві, Одесі та Львові.';
+
+const heroSrc = (w: number) => `${DOORS_IMG}/hero-hub-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const hubItems = doorCategories.map((category) => ({
+  title: category.name,
+  note: category.cardNote,
+  href: category.path,
+  icon: profileIcons[`doors/${category.slug}`]
+}));
+
+const benefits: [string, string][] = [
+  ['Світло в усіх кімнатах', 'Скляне полотно пропускає денне світло в коридори й приміщення без вікон.'],
+  ['Під ваш проріз', 'Скло ріжемо за фактичним розміром — без доборів, наличників і розширювачів.'],
+  ['Безпека', 'Лише загартоване скло або триплекс: уламки тупі або тримаються на плівці.'],
+  ['Не бояться вологи', 'Скло не розсихається, не деформується й не вигорає — для санвузлів і кухонь.'],
+  ['Приватність на вибір', 'Прозоре, матове, тоноване скло, малюнок чи логотип.'],
+  ['Довговічність', 'Фурнітура з нержавіючої сталі та анодованого алюмінію служить роками.']
+];
+
+const glassTypes: [string, string][] = [
+  ['Загартоване скло (ESG)', 'Основний матеріал дверей: 8–10 мм, у кілька разів міцніше за звичайне, розсипається на тупі фрагменти.'],
+  ['Триплекс', 'Два листи скла з плівкою: уламки не осипаються, краща звукоізоляція — для дитячих, клінік і переговорних.'],
+  ['Матове й тоноване', 'Сатин по всій площі чи частково, тонування в масі під бронзу й графіт.'],
+  ['Декор', 'Піскоструминний малюнок, смуги, номер кабінету чи логотип за векторним макетом.']
+];
+
+const faq: [string, string][] = [
+  ['Які бувають скляні двері?', 'Розпашні, розсувні, маятникові, безрамні та в алюмінієвому профілі (лофт). За склом — прозорі, матові, тоновані, з декором.'],
+  ['Яке скло використовують для дверей?', 'Безпечне загартоване скло 8–10 мм або триплекс. Отвори під фурнітуру роблять до гартування.'],
+  ['Скільки важать скляні двері?', 'Приблизно 20 кг/м² для скла 8 мм і 25 кг/м² для 10 мм. Полотно 800×2200 мм зі скла 10 мм важить близько 44 кг.'],
+  ['Чи безпечні скляні двері в квартирі з дітьми?', 'Так, загартоване скло розсипається на тупі фрагменти, а триплекс утримує уламки на плівці. На рівні очей можна додати матову смугу.'],
+  ['Чи потрібна дверна коробка?', 'Ні, безрамні двері кріпляться петлями прямо до стіни або скляної панелі. Двері в профілі можуть мати коробку.'],
+  ['Які двері обрати для вузького коридору?', 'Розсувні — вони зсуваються вздовж стіни й не займають місця перед прорізом.'],
+  ['Які двері для магазину чи офісу?', 'Маятникові з підлоговим доводчиком для входів із потоком людей і розпашні в перегородках для кабінетів.'],
+  ['Чи можна матове скло або логотип?', 'Так: повне чи часткове матування, малюнок, номер кабінету або логотип піскоструминною обробкою.'],
+  ['Що таке лофт-двері?', 'Скляні двері в тонкому алюмінієвому профілі з розкладкою, зазвичай чорному. Жорсткі, з повноцінним замком.'],
+  ['Чи можна поставити замок?', 'Так: замки під ключ, фіксатори «вільно/зайнято», магнітні та електромеханічні замки.'],
+  ['Чи підходять скляні двері для санвузла?', 'Так, скло не боїться вологи. Для приватності — матове скло й фіксатор.'],
+  ['Від чого залежить ціна?', 'Від розміру, скла, декору, способу відкривання, фурнітури та монтажу. Точну ціну рахуємо після заміру.'],
+  ['Чи можна двері нестандартного розміру?', 'Так, усі двері виготовляємо під фактичний проріз після заміру.'],
+  ['Чи шумоізолюють скляні двері?', 'Менше, ніж глуха стіна. Для кращої ізоляції — триплекс і ущільнювачі по периметру.'],
+  ['Чи можна скляні двері на вхід з вулиці?', 'Одинарне скло не тримає тепло; для зовнішнього входу обирайте алюмінієві двері з терморозривом.'],
+  ['Скільки часу займає виготовлення?', 'Залежить від скла й декору. Строки називаємо після погодження креслення.'],
+  ['Як доглядати за скляними дверима?', 'Мити звичайними засобами для скла без абразивів, періодично перевіряти регулювання фурнітури.'],
+  ['Чи можна двері разом зі скляною перегородкою?', 'Так, двері вбудовуються в скляну або лофт-перегородку в одному стилі.'],
+  ['Де виконуєте замір і монтаж?', 'У Києві, Одесі та Львові з областями. Інші регіони — за домовленістю.'],
+  ['Чи є гарантія?', 'Так, на скло, фурнітуру й монтаж, а також сервіс: регулювання петель, роликів і доводчиків.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Скляні перегородки', '/sklyani-perehorodky/'],
+  ['Loft-перегородки', '/sklyani-perehorodky/loft/'],
+  ['Офісні перегородки', '/sklyani-perehorodky/ofisni/'],
+  ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
+  ['Скляні вхідні групи', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'],
+  ['Дзеркала', '/dzerkala/'],
+  ['Скління для офісу', '/rishennya/dlya-ofisu/'],
+  ['Скління для квартири', '/rishennya/dlya-kvartyry/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: doorCategories.length,
+  itemListElement: doorCategories.map((category, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: category.name,
+    url: absoluteUrl(category.path, origin)
+  }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
 ---
-<BaseLayout title={`${title} — Space Glass`} description={subtitle}>
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  alternateLocales={['uk']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
 <div class="sg-page-shell">
   <Header />
   <main id="main">
-    <div class="category-breadcrumbs"><Breadcrumbs items={[{label:'Головна',href:'/'},{label:title}]} /></div>
-    <section class="category-hero">
-      <div class="category-hero__copy"><p class="eyebrow">{title}</p><h1>{title} на замовлення</h1><p class="lead">{subtitle}</p><div class="hero__actions"><a class="button button--mint" href="#category-request">Отримати розрахунок</a><a class="button button--outline" href="#types">Переглянути види</a></div></div>
-      <div class="category-hero__visual"><div class="category-hero__glass"></div><span>SPACE GLASS</span></div>
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Розпашні, розсувні, маятникові та лофт-двері зі скла під розмір вашого прорізу — для квартир, будинків, офісів і клінік. Загартоване скло, надійна фурнітура, матування й логотип на склі. Замір, виготовлення й монтаж у Києві, Одесі та Львові.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#types">Переглянути {doorCategories.length} видів</a>
+          <a class="button button--outline" href="#request">Отримати розрахунок</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Скляні лофт-двері в чорному профілі, виготовлені Space Glass" width="1080" height="771" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
     </section>
 
-    <section id="types" class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Оберіть відповідне рішення</h2></div><p>Після вибору типу уточнимо розміри, матеріали, колір, комплектацію та формат монтажу.</p></div>
-      <div class="category-type-grid">
-        {items.map((item,i)=><a class="category-type-card" href="#"><div class="category-type-card__visual"><span>{String(i+1).padStart(2,'0')}</span></div><div class="category-type-card__body"><small>{String(i+1).padStart(2,'0')}</small><h3>{item}</h3><p>Індивідуальна конфігурація під ваш простір.</p><b>Детальніше →</b></div></a>)}
+    <TrustBar locale="uk" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>Двері, які пропускають світло</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Скляні двері роблять простір світлішим і легшим: денне світло проходить у коридори й кімнати без вікон, а інтер’єр не дробиться глухими полотнами. Скло не боїться вологи, не розсихається й не вигорає, тому такі двері ставлять і в квартирах, і в офісах, клініках, салонах.</p>
+          <p>Ми виготовляємо двері під фактичний проріз: розпашні безрамні та в лофт-профілі, розсувні на роликах чи в профілі, маятникові для входів із потоком людей. Підбираємо скло, декор і фурнітуру — від петель і ручок до доводчиків і електрозамків.</p>
+          <p>На фото — наші реальні роботи в Києві та Одесі.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>Скло 8–12 мм</b><span>загартоване або триплекс</span></li>
+          <li><b>Під ваш проріз</b><span>без доборів і наличників</span></li>
+          <li><b>Декор і логотип</b><span>матування за макетом</span></li>
+          <li><b>Київ · Одеса · Львів</b><span>замір, монтаж і сервіс</span></li>
+        </ul>
       </div>
     </section>
 
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Які скляні двері ми робимо</h2></div><p>Оберіть тип — на кожній сторінці є варіанти з фото, характеристики, порівняння та поради з вибору.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Переваги</p><h2>Чому скляні двері</h2></div><p>Практичність і естетика, яких не дають двері з МДФ чи шпону.</p></div>
+      <div class="material-grid material-grid--parts">
+        {benefits.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Скло</p><h2>Скло та декор для дверей</h2></div><p>У дверях працює лише безпечне скло. Прозорість і малюнок обираєте ви.</p></div>
+      <dl class="material-thickness">
+        {glassTypes.map(([name, text]) => <div><dt>{name}</dt><dd>{text}</dd></div>)}
+      </dl>
+    </section>
+
     <section class="category-process">
-      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від запиту до готової конструкції</h2></div></div>
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від заміру до встановлених дверей</h2></div></div>
       <div class="category-process__grid">
-        <div><span>01</span><b>Запит</b><small>Фото, розміри або креслення</small></div>
-        <div><span>02</span><b>Оцінка</b><small>Попередня комплектація</small></div>
-        <div><span>03</span><b>Замір</b><small>Перевірка геометрії</small></div>
-        <div><span>04</span><b>Креслення</b><small>Технічне узгодження</small></div>
-        <div><span>05</span><b>Виготовлення</b><small>Контроль якості</small></div>
-        <div><span>06</span><b>Монтаж</b><small>Здача та гарантія</small></div>
+        <div><span>01</span><b>Запит</b><small>Фото та розміри прорізу</small></div>
+        <div><span>02</span><b>Консультація</b><small>Тип дверей, скло, фурнітура</small></div>
+        <div><span>03</span><b>Замір</b><small>Проріз, стіни, підлога</small></div>
+        <div><span>04</span><b>Креслення</b><small>Отвори під фурнітуру</small></div>
+        <div><span>05</span><b>Виготовлення</b><small>Різання, гартування, декор</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Встановлення й регулювання</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">Географія</p>
+          <h2>Скляні двері: замір і монтаж<br />у Києві, Одесі та Львові</h2>
+          <p>Виїжджаємо на замір, перевіряємо проріз і стіни, погоджуємо креслення з розташуванням фурнітури, виготовляємо та встановлюємо двері в квартирах, будинках, офісах і закладах.</p>
+          <p>Для об’єктів в інших регіонах умови узгоджуємо окремо.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Київ</b><span>замір і монтаж</span></li><li><b>Одеса</b><span>замір і монтаж</span></li><li><b>Львів</b><span>замір і монтаж</span></li></ul>
       </div>
     </section>
 
     <section class="category-section category-section--faq">
       <FAQBlock
-        title={`FAQ про ${title.toLowerCase()}: ціни, монтаж, матеріали та замовлення`}
-        intro={`Відповідаємо на основні питання про ${title.toLowerCase()}, строки, гарантію, доставку й індивідуальне виготовлення.`}
+        title="FAQ про скляні двері"
+        intro="Про види дверей, скло, безпеку, фурнітуру, декор, ціну та монтаж."
         items={faq}
         visibleCount={6}
+        expandTo={faq.length}
       />
     </section>
 
-    <section id="category-request" class="inner-cta"><div><p class="eyebrow eyebrow--light">Заявка</p><h2>Потрібен попередній розрахунок?</h2><p>Надішліть фото, розміри або креслення.</p></div><a class="button button--white" href="mailto:info@space-glass.com.ua">Надіслати запит</a></section>
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Корисне</p><h2>Далі по темі</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={href}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={DOORS_HUB}
+      product={title}
+      title={'Потрібен попередній розрахунок?'}
+      text={'Надішліть фото й розміри прорізу — підберемо тип дверей, скло та фурнітуру й підготуємо орієнтовну вартість.'}
+      options={doorCategories.map((c) => c.name)}
+      optionsLabel="Вид дверей"
+      commentPlaceholder="Де двері, розміри прорізу, скло (прозоре/матове), місто"
+    />
   </main>
   <Footer />
 </div>

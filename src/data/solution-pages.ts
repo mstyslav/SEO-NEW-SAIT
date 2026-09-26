@@ -86,7 +86,7 @@ export const solutionExtras: Record<string, SolutionExtra> = {
       { label: 'Офісні скляні перегородки', href: '/sklyani-perehorodky/ofisni/', image: P('office-partitions-morskyi-odesa'), note: 'Кабінети й переговорні' },
       { label: 'Алюмінієве офісне скління', href: '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/', image: `${PS}/mb-45-office-2-480.webp`, note: 'Звукоізоляція до 50 дБ' },
       { label: 'Loft-перегородки', href: '/sklyani-perehorodky/loft/', image: P('loft-partitions-kselena-odesa'), note: 'Стильне зонування open space' },
-      { label: 'Скляні двері для офісу', href: '/poslugy/sklyani-dveri/sklyani-dveri-dlia-ofisu/', image: P('world-of-comics-entrance-odesa'), note: 'Розпашні, маятникові, розсувні' },
+      { label: 'Скляні двері для офісу', href: '/sklyani-dveri/sklyani-dveri-dlia-ofisu/', image: P('world-of-comics-entrance-odesa'), note: 'Розпашні, маятникові, розсувні' },
       { label: 'Скляні вхідні групи', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('coffee-ocean-facade-odesa'), note: 'Представницький вхід' },
       { label: 'Маркерні дошки зі скла', href: '/poslugy/sklo-dlia-biznesu/sklyani-doshky-dlia-ofisu/', image: '/images/solutions-new/solution-office-meeting-room-640.webp', note: 'Для переговорних' },
       { label: 'Перегородки з ПВХ', href: '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/', image: `${PS}/cat-pvc-perehorodky-480.webp`, note: 'Економічне зонування' },

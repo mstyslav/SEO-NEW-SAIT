@@ -36,4 +36,10 @@ export const profileIcons: Record<string, string> = {
   'facade/enerhoefektyvni-fasady': iconWrap('<rect x="6" y="8" width="20" height="28"/><path d="M6 17h20M6 26h20M16 8v28"/><circle cx="32" cy="8" r="3"/><path d="M32 2v1M32 13v1M26 8h1M37 8h1"/>'),
   'facade/vitrinne-sklinnya': iconWrap('<path d="M4 10h32"/><path d="M6 10l2-5h24l2 5"/><rect x="6" y="12" width="28" height="22"/><path d="M22 12v22M6 34h28"/>'),
   'facade/sklyani-vkhidni-hrupy': iconWrap('<rect x="5" y="6" width="30" height="28"/><path d="M5 12h30"/><path d="M14 12v22M26 12v22"/><path d="M18 24h.01M22 24h.01"/>'),
+  'doors/rozpashni-sklyani-dveri': iconWrap('<path d="M8 34V6h24v28"/><path d="M8 6l14 4v28l-14-4"/><path d="M18 21h.01"/><path d="M4 34h32"/>'),
+  'doors/rozsuvni-sklyani-dveri': iconWrap('<path d="M4 7h32"/><rect x="7" y="9" width="13" height="25"/><rect x="18" y="9" width="13" height="25"/><path d="M24 21h4M26 19l2 2-2 2"/><path d="M4 34h32"/>'),
+  'doors/mayatnykovi-sklyani-dveri': iconWrap('<path d="M20 6v28"/><path d="M20 6l-12 6v22M20 6l12 6v22"/><path d="M4 34h32"/><path d="M14 22l-3 2 3 2M26 22l3 2-3 2"/>'),
+  'doors/dveri-v-aliuminiievomu-profili': iconWrap('<rect x="10" y="4" width="20" height="30"/><path d="M10 14h20M10 24h20M20 4v30"/><path d="M4 34h32"/>'),
+  'doors/matovi-sklyani-dveri': iconWrap('<rect x="10" y="4" width="20" height="30"/><path d="M13 8l4 4M13 14l10 10M17 8l10 10M23 8l4 4M13 20l10 10"/><path d="M4 34h32"/>'),
+  'doors/sklyani-dveri-dlia-ofisu': iconWrap('<rect x="4" y="6" width="32" height="28"/><path d="M4 12h32M16 12v22M26 12v22"/><path d="M19 23h.01"/>'),
 };

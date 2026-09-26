@@ -15,7 +15,7 @@
  * source, so none are shown — every page sends users to an individual quote.
  */
 
-export type ProfileGroup = 'alu' | 'pvc' | 'mirror' | 'shower' | 'frameless' | 'facade';
+export type ProfileGroup = 'alu' | 'pvc' | 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors';
 
 export interface ProfileModel {
   id: string;
@@ -544,7 +544,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Фасадне скління', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
       ['Скляні вхідні групи', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'],
       ['Вітринне скління', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
-      ['Скляні двері в алюмінієвому профілі', '/poslugy/sklyani-dveri/dveri-v-aliuminiievomu-profili/'],
+      ['Скляні двері в алюмінієвому профілі', '/sklyani-dveri/dveri-v-aliuminiievomu-profili/'],
       ['Зимові сади', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
       ['Скління для ресторану', '/rishennya/dlya-restoranu/']
     ],
@@ -1702,7 +1702,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Офісні перегородки з ПВХ', '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/'],
       ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
       ['Фасадне скління', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
-      ['Скляні двері в алюмінієвому профілі', '/poslugy/sklyani-dveri/dveri-v-aliuminiievomu-profili/'],
+      ['Скляні двері в алюмінієвому профілі', '/sklyani-dveri/dveri-v-aliuminiievomu-profili/'],
       ['Скляні маркерні дошки', '/poslugy/sklo-dlia-biznesu/sklyani-doshky-dlia-ofisu/'],
       ['Проєкти', '/projects/']
     ],
@@ -2807,19 +2807,19 @@ export const profileCategories: ProfileCategory[] = [
   }
 ];
 
-export const getProfileCategory = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade'>, slug: string) => {
+export const getProfileCategory = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors'>, slug: string) => {
   const category = profileCategories.find((item) => item.group === group && item.slug === slug);
   if (!category) throw new Error(`Unknown profile category ${group}/${slug}`);
   return category;
 };
 
 /** Menu / hub order — mirrors the main-menu layout approved by the owner. */
-const CATEGORY_ORDER: Record<Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade'>, string[]> = {
+const CATEGORY_ORDER: Record<Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors'>, string[]> = {
   alu: ['vikna', 'dveri', 'rozsuvni-dveri', 'ofisne-sklinnya', 'fasadne-sklinnya', 'zymovi-sady', 'sitky-plise', 'perholy'],
   pvc: ['vikna', 'dveri', 'rozsuvni-dveri', 'ofisni-perehorodky']
 };
 
-export const profileCategoriesByGroup = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade'>) =>
+export const profileCategoriesByGroup = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors'>) =>
   profileCategories
     .filter((item) => item.group === group)
     .sort((a, b) => CATEGORY_ORDER[group].indexOf(a.slug) - CATEGORY_ORDER[group].indexOf(b.slug));

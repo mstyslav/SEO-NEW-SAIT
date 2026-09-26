@@ -5,6 +5,7 @@ import type { Locale } from '../i18n/helpers';
 import { profileCategoriesByGroup, type ProfileGroup } from './profile-systems';
 import { FRAMELESS_HUB, framelessCategories } from './frameless-catalog';
 import { FACADE_HUB, facadeCategories } from './facade-catalog';
+import { DOORS_HUB, doorCategories } from './door-catalog';
 
 // RU menu labels for the aluminium / metal-plastic pages (the pages themselves are UK-only).
 const profileMenuRu: Record<string, string> = {
@@ -21,7 +22,7 @@ const profileMenuRu: Record<string, string> = {
   'pvc/rozsuvni-dveri': 'Раздвижные двери',
   'pvc/ofisni-perehorodky': 'Офисные стеклянные перегородки'
 };
-const profileMenu = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade'>, locale: 'uk' | 'ru') =>
+const profileMenu = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors'>, locale: 'uk' | 'ru') =>
   profileCategoriesByGroup(group).map((category) => ({
     shortName: locale === 'ru' ? (profileMenuRu[`${group}/${category.slug}`] ?? category.name) : category.name,
     path: category.path
@@ -70,12 +71,12 @@ const serviceShortNameRu: Record<string, string> = {
   '/poslugy/sklyani-perehorodky/akustychni-sklyani-perehorodky/': 'Акустические перегородки',
   '/poslugy/sklyani-perehorodky/perehorodky-dlia-restoranu/': 'Перегородки для ресторана',
 
-  '/poslugy/sklyani-dveri/rozpashni-sklyani-dveri/': 'Распашные двери',
-  '/poslugy/sklyani-dveri/rozsuvni-sklyani-dveri/': 'Раздвижные двери',
-  '/poslugy/sklyani-dveri/mayatnykovi-sklyani-dveri/': 'Маятниковые двери',
-  '/poslugy/sklyani-dveri/dveri-v-aliuminiievomu-profili/': 'Двери в профиле',
-  '/poslugy/sklyani-dveri/matovi-sklyani-dveri/': 'Матовые двери',
-  '/poslugy/sklyani-dveri/sklyani-dveri-dlia-ofisu/': 'Офисные двери',
+  '/sklyani-dveri/rozpashni-sklyani-dveri/': 'Распашные двери',
+  '/sklyani-dveri/rozsuvni-sklyani-dveri/': 'Раздвижные двери',
+  '/sklyani-dveri/mayatnykovi-sklyani-dveri/': 'Маятниковые двери',
+  '/sklyani-dveri/dveri-v-aliuminiievomu-profili/': 'Двери в профиле',
+  '/sklyani-dveri/matovi-sklyani-dveri/': 'Матовые двери',
+  '/sklyani-dveri/sklyani-dveri-dlia-ofisu/': 'Офисные двери',
 
   '/poslugy/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/': 'Перила для лестниц',
   '/poslugy/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/': 'Безрамные ограждения',
@@ -136,6 +137,17 @@ const categoryOrder = ['dushovi-konstruktsii', 'dzerkala', 'sklyani-perehorodky'
 function buildServiceCategories(locale: Locale): CatalogNavigationCategory[] {
   return seoCategories.map((category) => {
     const name = locale === 'uk' ? category.name : (categoryNameRu[category.slug] ?? category.name);
+    if (category.slug === 'sklyani-dveri') {
+      return {
+        slug: category.slug,
+        name,
+        href: DOORS_HUB,
+        services: doorCategories.map((item) => ({
+          shortName: locale === 'uk' ? item.name : (serviceShortNameRu[item.path] ?? item.name),
+          path: item.path
+        }))
+      };
+    }
     if (category.slug === 'sklyani-fasady') {
       return {
         slug: category.slug,
