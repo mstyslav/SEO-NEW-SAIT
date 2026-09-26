@@ -23,8 +23,8 @@ const metaTitle = 'Скляні двері на замовлення — між�
 const metaDescription =
   'Скляні двері за розміром прорізу: розпашні, розсувні, маятникові, у лофт-профілі, матові, для офісу. Загартоване скло 8–12 мм, фурнітура, декор і логотип на склі. Замір і монтаж у Києві, Одесі та Львові.';
 
-const heroSrc = (w: number) => `${DOORS_IMG}/hero2-hub-${w}.webp`;
-const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSrc = (w: number) => `${DOORS_IMG}/hero5-hub-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1000)} 1000w`;
 const heroSizes = '(max-width: 900px) 100vw, 50vw';
 
 const typeCategories = doorCategories.filter((category) => category.path.startsWith(DOORS_HUB));
@@ -104,7 +104,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
 <BaseLayout
   title={metaTitle}
   description={metaDescription}
-  image={heroSrc(1080)}
+  image={heroSrc(1000)}
   schemaType="CollectionPage"
   structuredData={structuredData}
   alternateLocales={['uk']}
@@ -128,7 +128,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       </div>
       <figure class="category-hero__figure">
         <div class="category-hero__frame">
-          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Розсувні скляні двері з матовими смугами між кухнею та вітальнею" width="1080" height="771" decoding="async" fetchpriority="high" />
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Розсувні скляні двері в алюмінієвому профілі між вітальнею та спальнею" width="1000" height="650" decoding="async" fetchpriority="high" />
         </div>
       </figure>
     </section>
