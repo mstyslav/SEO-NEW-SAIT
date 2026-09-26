@@ -34,6 +34,7 @@ const LOCALIZED_ROUTES: Record<'ru', ReadonlySet<string>> = {
     '/dushovi-kabiny/dushovi-piddony/',
     '/knowledge/',
     '/oplata-dostavka/',
+    '/privacy-policy/',
     '/poslugy/',
     '/projects/',
     '/projects/loft-kyiv/',
@@ -67,10 +68,16 @@ export function hasLocalizedRoute(pathname: string, locale: Locale): boolean {
  * content the user would have reached anyway, just not yet translated.
  */
 export function localizedPath(pathname: string, locale: Locale): string {
-  const base = stripLocale(pathname);
-  if (locale === 'uk') return base;
-  if (!hasLocalizedRoute(base, locale)) return base;
-  return `/${locale}${base === '/' ? '/' : base}`;
+  // Keep a trailing #anchor / ?query (e.g. '/contacts/#contact-form') and
+  // localize only the path part, so anchored CTAs also get the /ru/ prefix.
+  const cut = pathname.search(/[?#]/);
+  if (cut === 0) return pathname;
+  const path = cut === -1 ? pathname : pathname.slice(0, cut);
+  const suffix = cut === -1 ? '' : pathname.slice(cut);
+  const base = stripLocale(path);
+  if (locale === 'uk') return `${base}${suffix}`;
+  if (!hasLocalizedRoute(base, locale)) return `${base}${suffix}`;
+  return `/${locale}${base === '/' ? '/' : base}${suffix}`;
 }
 
 export function localeFromPath(pathname: string): Locale {
