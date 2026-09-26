@@ -38,12 +38,12 @@ export const solutionExtras: Record<string, SolutionExtra> = {
     image: '/images/solutions-new/solution-apartment-640.webp',
     tiles: [
       { label: 'Душові кабіни', href: '/dushovi-kabiny/', image: '/images/catalog/dushovi-kabiny/dushovi-kabiny-768.webp', note: 'Кутові, у нішу, розсувні та Walk-In' },
-      { label: 'Перегородки для душу', href: '/dushovi-kabiny/peregorodka-dlya-dusha/', image: `${SH}/cat-peregorodka-dlya-dusha-480.webp`, note: 'Walk-In без дверей від 10 526 грн' },
+      { label: 'Перегородки для душу', href: '/dushovi-kabiny/peregorodka-dlya-dusha/', image: `${SH}/hero-peregorodka-dlya-dusha-480.webp`, note: 'Walk-In без дверей від 10 526 грн' },
       { label: 'Loft-перегородки', href: '/sklyani-perehorodky/loft/', image: P('loft-kyiv', 'loft-partition-atlant-kyiv-hero-480.webp'), note: 'Кухня, вітальня, спальня' },
       { label: 'Міжкімнатні перегородки', href: '/sklyani-perehorodky/mizhkimnatni/', image: P('kitchen-partition-fjord-kyiv'), note: 'Зонування без втрати світла' },
       { label: 'Скляні двері', href: '/sklyani-dveri/', image: P('wardrobe-partition-crystal-springs-kyiv'), note: 'Розпашні, розсувні, приховані' },
       { label: 'Дзеркала з підсвіткою', href: '/dzerkala/led-dzerkala/', image: `${DZ}/cat-led-480.webp`, note: 'Для ванної та передпокою' },
-      { label: 'Шторки на ванну', href: '/dushovi-kabiny/shtorky-dlya-vannoyi/', image: `${SH}/cat-shtorky-dlya-vannoyi-480.webp`, note: 'Замість текстильної шторки' },
+      { label: 'Шторки на ванну', href: '/dushovi-kabiny/shtorky-dlya-vannoyi/', image: `${SH}/hero-shtorky-dlya-vannoyi-480.webp`, note: 'Замість текстильної шторки' },
       { label: 'Металопластикові вікна', href: '/metaloplastykovi-konstruktsii/vikna/', image: `${PS}/cat-pvc-vikna-480.webp`, note: 'Теплі багатокамерні профілі' }
     ],
     projectSlugs: ['loft-kyiv', 'kitchen-partition-fjord-kyiv', 'bath-screen-akvarel-odesa', 'mirrored-wardrobe-doors-milos-odesa', 'wardrobe-partition-crystal-springs-kyiv', 'folding-shower-doors-varshavskyi-kyiv'],
@@ -107,8 +107,8 @@ export const solutionExtras: Record<string, SolutionExtra> = {
     image: '/images/solutions-new/solution-hotel-640.webp',
     tiles: [
       { label: 'Душові кабіни для номерів', href: '/dushovi-kabiny/', image: P('hotel-dvoryanskyi-showers-odesa'), note: 'Однаковий стандарт для всіх номерів' },
-      { label: 'Перегородки для душу', href: '/dushovi-kabiny/peregorodka-dlya-dusha/', image: `${SH}/cat-peregorodka-dlya-dusha-480.webp`, note: 'Walk-In без дверей' },
-      { label: 'Шторки на ванну', href: '/dushovi-kabiny/shtorky-dlya-vannoyi/', image: `${SH}/cat-shtorky-dlya-vannoyi-480.webp`, note: 'Для номерів із ванною' },
+      { label: 'Перегородки для душу', href: '/dushovi-kabiny/peregorodka-dlya-dusha/', image: `${SH}/hero-peregorodka-dlya-dusha-480.webp`, note: 'Walk-In без дверей' },
+      { label: 'Шторки на ванну', href: '/dushovi-kabiny/shtorky-dlya-vannoyi/', image: `${SH}/hero-shtorky-dlya-vannoyi-480.webp`, note: 'Для номерів із ванною' },
       { label: 'Дзеркала з підсвіткою', href: '/dzerkala/led-dzerkala/', image: `${DZ}/cat-led-480.webp`, note: 'IP44 для санвузлів' },
       { label: 'Скляні огорожі', href: '/sklyani-ohorozhi/', image: P('glass-railing-primorski-sady-odesa'), note: 'Балкони, сходи, тераси' },
       { label: 'Скляні вхідні групи', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('restaurant-glazing-artshat-odesa'), note: 'Вхід і лобі' },

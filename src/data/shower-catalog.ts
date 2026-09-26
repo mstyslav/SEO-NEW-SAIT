@@ -532,7 +532,7 @@ export const showerCategories: ProfileCategory[] = [
     "catalogButton": "Переглянути моделі",
     "optionsLabel": "Модель",
     "path": "/dushovi-kabiny/peregorodka-dlya-dusha/",
-    "heroImage": "cat-peregorodka-dlya-dusha"
+    "heroImage": "hero-peregorodka-dlya-dusha"
   },
   {
     "slug": "dushovi-dveri",
@@ -1059,7 +1059,7 @@ export const showerCategories: ProfileCategory[] = [
     "catalogButton": "Переглянути моделі",
     "optionsLabel": "Модель",
     "path": "/dushovi-kabiny/dushovi-dveri/",
-    "heroImage": "cat-dushovi-dveri"
+    "heroImage": "hero-dushovi-dveri"
   },
   {
     "slug": "kutovi",
@@ -1574,7 +1574,7 @@ export const showerCategories: ProfileCategory[] = [
     "catalogButton": "Переглянути моделі",
     "optionsLabel": "Модель",
     "path": "/dushovi-kabiny/kutovi/",
-    "heroImage": "cat-kutovi"
+    "heroImage": "hero-kutovi"
   },
   {
     "slug": "rozsuvni",
@@ -2095,7 +2095,7 @@ export const showerCategories: ProfileCategory[] = [
     "catalogButton": "Переглянути моделі",
     "optionsLabel": "Модель",
     "path": "/dushovi-kabiny/rozsuvni/",
-    "heroImage": "cat-rozsuvni"
+    "heroImage": "hero-rozsuvni"
   },
   {
     "slug": "u-nishu",
@@ -2610,7 +2610,7 @@ export const showerCategories: ProfileCategory[] = [
     "catalogButton": "Переглянути моделі",
     "optionsLabel": "Модель",
     "path": "/dushovi-kabiny/u-nishu/",
-    "heroImage": "cat-u-nishu"
+    "heroImage": "hero-u-nishu"
   },
   {
     "slug": "skladni",
@@ -2990,7 +2990,7 @@ export const showerCategories: ProfileCategory[] = [
     "catalogButton": "Переглянути моделі",
     "optionsLabel": "Модель",
     "path": "/dushovi-kabiny/skladni/",
-    "heroImage": "cat-skladni"
+    "heroImage": "hero-skladni"
   },
   {
     "slug": "piatykutni",
@@ -3384,7 +3384,7 @@ export const showerCategories: ProfileCategory[] = [
       ]
     ],
     "path": "/dushovi-kabiny/piatykutni/",
-    "heroImage": "cat-piatykutni"
+    "heroImage": "hero-piatykutni"
   },
   {
     "slug": "shtorky-dlya-vannoyi",
@@ -3770,7 +3770,7 @@ export const showerCategories: ProfileCategory[] = [
     "catalogButton": "Переглянути моделі",
     "optionsLabel": "Модель",
     "path": "/dushovi-kabiny/shtorky-dlya-vannoyi/",
-    "heroImage": "cat-shtorky-dlya-vannoyi"
+    "heroImage": "hero-shtorky-dlya-vannoyi"
   }
 ] as ProfileCategory[];
 

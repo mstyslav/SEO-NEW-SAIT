@@ -123,3 +123,10 @@
 .profile-card__price strong{display:block;font-size:1.1rem}
 .profile-card__price span{display:block;margin-top:2px;color:var(--muted);font-size:.8rem;font-weight:400}
 @media(max-width:1100px){.profile-details{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Hero with a product render: show the whole product (no crop) over a
+   blurred copy of the same image, so there are no empty side bars. */
+.profile-hero--contain .category-hero__frame{overflow:hidden;background:#e7e1d9}
+.profile-hero--contain .category-hero__frame::before{content:"";position:absolute;inset:-40px;background:var(--hero-bg) center/cover no-repeat;filter:blur(30px) saturate(.9);transform:scale(1.1)}
+.category-hero--photo.profile-hero--contain .category-hero__frame img{position:relative;z-index:1;object-fit:contain;object-position:center;filter:none}
+@media(max-width:900px){.profile-hero--contain .category-hero__frame{position:relative}}
