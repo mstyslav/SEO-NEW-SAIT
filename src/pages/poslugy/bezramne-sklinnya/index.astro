@@ -1,0 +1,281 @@
+---
+// Frameless glazing MASTER — hub for /poslugy/bezramne-sklinnya/{slug}/ (content: src/data/frameless-catalog.ts).
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import TrustBar from '../../../components/TrustBar.astro';
+import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../seo/schema';
+import { FRAMELESS_HUB, FRAMELESS_IMG, framelessCategories } from '../../../data/frameless-catalog';
+import { profileIcons } from '../../../data/profile-icons';
+import '../../../styles/category-pages.css';
+import '../../../styles/shower-master.css';
+import '../../../styles/profile-systems.css';
+
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(FRAMELESS_HUB, origin);
+
+const title = 'Безрамне скління';
+const h1 = 'Безрамне скління на замовлення';
+const metaTitle = 'Безрамне скління терас, балконів і альтанок на замовлення | Space Glass';
+const metaDescription =
+  'Безрамне скління терас, веранд, балконів, альтанок і ресторанів: поворотно-складні, розсувні, гільйотинні та безпорогові системи, тепле скління зі склопакетом. Замір, виготовлення й монтаж у Києві, Одесі та Львові.';
+
+const heroSrc = (w: number) => `${FRAMELESS_IMG}/cat-hub-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const hubItems = framelessCategories.map((category) => ({
+  title: category.name,
+  note: category.cardNote,
+  href: category.path,
+  icon: profileIcons[`frameless/${category.slug}`]
+}));
+
+// One row per system, linked to the first page that describes it.
+const seen = new Set<string>();
+const systemsTable = framelessCategories.flatMap((category) =>
+  category.models
+    .filter((model) => (seen.has(model.id) ? false : (seen.add(model.id), true)))
+    .map((model) => {
+      const specs = Object.fromEntries(model.specs);
+      return {
+        name: model.name,
+        href: `${category.path}#${model.id}`,
+        direction: category.name,
+        kind: model.kind,
+        height: specs['Висота конструкції'] ?? specs['Висота огорожі'] ?? '—',
+        glass: specs['Скло'] ?? specs['Склопакет'] ?? specs['Скло огорожі'] ?? '—',
+        threshold: specs['Поріг'] ?? '—'
+      };
+    })
+);
+
+const details = framelessCategories[0].details!;
+
+const benefits: [string, string][] = [
+  ['Панорама без рам', 'Між стулками немає вертикальних профілів — лише скло від підлоги до стелі.'],
+  ['Проріз відкривається повністю', 'Стулки складаються, розсуваються або піднімаються — тераса знову відкрита за секунди.'],
+  ['Безпечне скло', 'Лише гартоване скло 8–10 мм, склопакет або триплекс, що не ранить при руйнуванні.'],
+  ['Захист від погоди', 'Ущільнювачі між стулками та відведення води захищають від вітру, дощу, снігу й пилу.'],
+  ['Будь-яка форма', 'Прямі, Г- і П-подібні, радіусні прорізи та альтанки з багатьма кутами.'],
+  ['Довший сезон', 'Тераса чи літній майданчик працює на кілька місяців довше, а зі склопакетом — майже цілий рік.']
+];
+
+const types: [string, string][] = [
+  ['Поворотно-складні («книжка»)', 'Стулки складаються пачкою біля стіни й відкривають проріз повністю. Поріг від 7 до 61 мм.'],
+  ['Розсувні (слайдинг)', 'Широкі стулки до 1,3 м ковзають, як у шафі-купе. Поріг від 7,5 мм.'],
+  ['Гільйотинні', 'Стулки рухаються вертикально від електроприводу — пульт, кнопка, смартфон.'],
+  ['Безпорогові', 'Стулки висять на верхній напрямній — підлога залишається рівною.']
+];
+
+const faq: [string, string][] = [
+  ['Що таке безрамне скління?', 'Скління, у якому стулки з гартованого скла не мають вертикальних рам: скло тримається лише у верхньому й нижньому профілі. Відкриті стулки складаються, розсуваються або піднімаються, звільняючи проріз.'],
+  ['Які види безрамного скління бувають?', 'Поворотно-складні системи («книжка»), розсувні (слайдинг), гільйотинні з електроприводом і безпорогові верхньопідвісні. Для теплішого скління — системи під склопакет.'],
+  ['Що краще для тераси: «книжка», слайдинг чи гільйотина?', '«Книжка» відкриває проріз повністю, слайдинг має ширші стулки й менше стиків, гільйотина керується з пульта й не займає місця всередині. Обираємо під сценарій і проріз.'],
+  ['Яке скло використовується?', 'Гартоване скло 8 або 10 мм, гартований склопакет 20–28 мм або триплекс. Скло буває прозорим, сатинованим і тонованим у масі під бронзу чи графіт.'],
+  ['Чи тепле безрамне скління?', 'Системи з одинарним склом — для сезонного використання. Системи під склопакет (TIARA TWIN, SLIDING MAX, GILIOTINA THERMO) помітно тепліші й продовжують сезон.'],
+  ['Чи можна засклити без порога?', 'Так: верхньопідвісні ATRIUM, CENTRUM, MOMENTUM не мають порога, а TIARA MAX ZERO і TIARA TWIN ZERO виступають над підлогою лише на 7 мм.'],
+  ['Від чого залежить вартість?', 'Від типу системи, висоти й довжини прорізу, кількості стулок, скла чи склопакета, кольору профілю, автоматики та умов монтажу. Точна ціна — після заміру.'],
+  ['Чи витримує скління вітер?', 'Так. Поворотно-складні системи TIARA розраховані на вітрове навантаження до 174–176 кг/м²; для вітряних місць обираємо вищі пороги й посилені профілі.'],
+  ['Чи безпечне безрамне скління для дітей?', 'Так. Гартоване скло при руйнуванні розсипається на тупі фрагменти, а замки першої стулки мають блокування від відкриття дітьми.'],
+  ['Чи можна засклити радіусну альтанку чи балкон?', 'Так, поворотно-складні системи склять радіусні, Г- і П-подібні прорізи та альтанки з багатьма кутами.'],
+  ['Чи потрібен дах для безрамного скління?', 'Так, систему встановлюють між підлогою й дахом або балкою. Якщо даху немає, пропонуємо скляний дах VERANDA TWIN або алюмінієву перголу.'],
+  ['Чи підходить безрамне скління для ресторану?', 'Так, для літніх майданчиків найчастіше ставимо гільйотини GILIOTINA й слайдинги SLIDING — вони швидко відкриваються й подовжують сезон на кілька місяців.'],
+  ['Чи можна пофарбувати профіль?', 'Так: анодований алюміній, Anthracite Grey або будь-який колір RAL, для частини систем — фарбування під дерево.'],
+  ['Як доглядати за безрамним склінням?', 'Мити скло звичайними засобами без абразивів і раз на сезон очищувати напрямні від піску та листя.'],
+  ['Чи буде продувати?', 'Між стулками й по периметру стоять ущільнювачі — фетрові, силіконові або магнітні залежно від системи, тому скління не продуває.'],
+  ['Чи можна скляти балкон у багатоповерхівці?', 'Так, для балконів є панорамні системи BALCONMAX INTEGRA, BALCONTWIN INTEGRA і гільйотина GILIOTINA BALCON. Погодження фасаду з ОСББ радимо уточнити заздалегідь.'],
+  ['Скільки триває монтаж?', 'Монтаж однієї тераси, балкона чи альтанки зазвичай займає від одного до кількох днів після виготовлення скла.'],
+  ['Де ви працюєте?', 'Замір і монтаж — у Києві, Одесі та Львові з областями. Інші регіони — за домовленістю.'],
+  ['Що потрібно для попереднього розрахунку?', 'Фото прорізу, приблизні розміри (ширина й висота), місто та побажання щодо типу відкривання, порога й скла.'],
+  ['Чи є гарантія та сервіс?', 'Так, на систему й монтаж, а також сервіс після здачі: регулювання, заміна ущільнювачів і роликів.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Алюмінієві розсувні двері', '/alyuminiievi-konstruktsii/rozsuvni-dveri/'],
+  ['Зимові сади', '/alyuminiievi-konstruktsii/zymovi-sady/'],
+  ['Перголи', '/alyuminiievi-konstruktsii/perholy/'],
+  ['Сітки плісе', '/alyuminiievi-konstruktsii/sitky-plise/'],
+  ['Скляні огорожі балконів', '/poslugy/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/'],
+  ['Тепле чи холодне скління тераси', '/knowledge/teple-chy-kholodne-sklinnya-terasy/'],
+  ['Скляний дах: що врахувати', '/knowledge/sklyanyi-dakh-shcho-vrakhuvaty/'],
+  ['Скління для ресторану', '/rishennya/dlya-restoranu/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: framelessCategories.length,
+  itemListElement: framelessCategories.map((category, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: category.name,
+    url: absoluteUrl(category.path, origin)
+  }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
+---
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  alternateLocales={['uk']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: 'Послуги', href: '/poslugy/' }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Безрамне скління терас, веранд, балконів, альтанок і ресторанів: поворотно-складні, розсувні, гільйотинні та безпорогові системи з гартованого скла або склопакета. Проєктуємо, виготовляємо й монтуємо в Києві, Одесі та Львові.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#types">Переглянути {framelessCategories.length} напрямів</a>
+          <a class="button button--outline" href="#request">Отримати розрахунок</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Безрамне скління тераси з видом на море" width="1080" height="1080" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="uk" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>Скло замість стін — і відкритий простір у теплий день</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Безрамне скління захищає терасу, веранду, балкон чи альтанку від вітру, дощу й пилу, але не ховає вид за рамами. Між скляними стулками немає вертикальних профілів, а у відкритому стані стулки складаються «книжкою», розсуваються, піднімаються чи паркуються збоку — проріз звільняється майже повністю.</p>
+          <p>Ми підбираємо систему під сценарій: сезонна тераса чи тераса-вітальня, частий прохід чи вітряний берег, ручне відкривання чи пульт. Для міжсезоння пропонуємо тепле безрамне скління під склопакет, для ресторанів — автоматичні гільйотини, для входів і вітрин — системи без порога.</p>
+          <p>Повний цикл — у наших руках: замір і перевірка перекриття, проєкт схеми стулок і паркування, виготовлення з гартованого скла, монтаж і сервіс.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>29 систем</b><span>«книжка», слайдинг, гільйотина, без порога</span></li>
+          <li><b>Скло 8–10 мм</b><span>або склопакет 20–28 мм</span></li>
+          <li><b>До 4 м заввишки</b><span>поріг від 0 мм</span></li>
+          <li><b>Київ · Одеса · Львів</b><span>замір, монтаж і сервіс</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Напрями</p><h2>Системи та рішення безрамного скління</h2></div><p>Оберіть тип системи або місце встановлення — на кожній сторінці є системи з характеристиками, фото, креслення та порівняння.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Системи</p><h2>Усі системи безрамного скління в одній таблиці</h2></div><p>Показники — для базових конфігурацій. Натисніть на систему, щоб перейти до її опису.</p></div>
+      <div class="profile-table-wrap">
+        <table class="profile-table">
+          <thead><tr><th scope="col">Система</th><th scope="col">Напрям</th><th scope="col">Тип</th><th scope="col">Висота</th><th scope="col">Скло</th><th scope="col">Поріг</th></tr></thead>
+          <tbody>
+            {systemsTable.map((row) => (
+              <tr><th scope="row"><a href={row.href}>{row.name}</a></th><td>{row.direction}</td><td>{row.kind}</td><td>{row.height}</td><td>{row.glass}</td><td>{row.threshold}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Переваги</p><h2>Чому безрамне скління</h2></div><p>Легкий вигляд і функціональність, яких не дають класичні рами.</p></div>
+      <div class="material-grid material-grid--parts">
+        {benefits.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Типи</p><h2>Як відкривається безрамне скління</h2></div><p>Чотири принципи руху стулок — під різні прорізи та сценарії.</p></div>
+      <dl class="material-thickness">
+        {types.map(([name, text]) => <div><dt>{name}</dt><dd>{text}</dd></div>)}
+      </dl>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Скло</p><h2>{details.heading}</h2></div><p>{details.intro}</p></div>
+      <div class="profile-details">
+        {details.items.map(([name, text, image]) => (
+          <figure>
+            <img src={`${FRAMELESS_IMG}/${image}-480.webp`} srcset={`${FRAMELESS_IMG}/${image}-480.webp 480w, ${FRAMELESS_IMG}/${image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, 24vw" alt={`Скло ${name.toLowerCase()} для безрамного скління`} width="480" height="480" loading="lazy" decoding="async" />
+            <figcaption><b>{name}</b><span>{text}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від запиту до засклененої тераси</h2></div></div>
+      <div class="category-process__grid">
+        <div><span>01</span><b>Запит</b><small>Фото та розміри прорізу</small></div>
+        <div><span>02</span><b>Консультація</b><small>Підбір системи та скла</small></div>
+        <div><span>03</span><b>Замір</b><small>Геометрія, поріг, перекриття</small></div>
+        <div><span>04</span><b>Проєкт</b><small>Схема стулок і паркування</small></div>
+        <div><span>05</span><b>Виготовлення</b><small>Гартування й збирання</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Регулювання та здача</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">Географія</p>
+          <h2>Безрамне скління: замір і монтаж<br />у Києві, Одесі та Львові</h2>
+          <p>Виїжджаємо на замір, перевіряємо перекриття та підлогу, готуємо проєкт і монтуємо безрамне скління терас, балконів, альтанок і ресторанів у містах та областях.</p>
+          <p>Для об’єктів в інших регіонах умови виїзду, доставки та монтажу узгоджуємо окремо.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Київ</b><span>замір і монтаж</span></li><li><b>Одеса</b><span>замір і монтаж</span></li><li><b>Львів</b><span>замір і монтаж</span></li></ul>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock
+        title="FAQ про безрамне скління"
+        intro="Про типи систем, скло, пороги, тепло, вітер, догляд, ціну та монтаж."
+        items={faq}
+        visibleCount={6}
+        expandTo={faq.length}
+      />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Корисне</p><h2>Далі по темі</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={href}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={FRAMELESS_HUB}
+      product={title}
+      title={'Потрібен попередній розрахунок?'}
+      text={'Надішліть фото й розміри прорізу — підберемо систему безрамного скління та підготуємо орієнтовну вартість.'}
+      options={framelessCategories.map((c) => c.name)}
+      optionsLabel="Напрям"
+      commentPlaceholder="Що скляємо: тераса, балкон, альтанка; розміри прорізу, місто"
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

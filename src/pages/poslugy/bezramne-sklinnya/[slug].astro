@@ -1,0 +1,10 @@
+---
+// Frameless glazing subsections — shared catalog template; content in src/data/frameless-catalog.ts.
+import ProfileCategoryPage from '../../../components/profile/ProfileCategoryPage.astro';
+import { framelessCategories } from '../../../data/frameless-catalog';
+export function getStaticPaths() {
+  return framelessCategories.map((category) => ({ params: { slug: category.slug }, props: { category } }));
+}
+const { category } = Astro.props;
+---
+<ProfileCategoryPage category={category} />

@@ -3,6 +3,7 @@ import { getShowerServiceNavigation } from './service-navigation';
 import { mirrorTypes } from './mirror-types';
 import type { Locale } from '../i18n/helpers';
 import { profileCategoriesByGroup, type ProfileGroup } from './profile-systems';
+import { FRAMELESS_HUB, framelessCategories } from './frameless-catalog';
 
 // RU menu labels for the aluminium / metal-plastic pages (the pages themselves are UK-only).
 const profileMenuRu: Record<string, string> = {
@@ -19,7 +20,7 @@ const profileMenuRu: Record<string, string> = {
   'pvc/rozsuvni-dveri': 'Раздвижные двери',
   'pvc/ofisni-perehorodky': 'Офисные стеклянные перегородки'
 };
-const profileMenu = (group: Exclude<ProfileGroup, 'mirror' | 'shower'>, locale: 'uk' | 'ru') =>
+const profileMenu = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless'>, locale: 'uk' | 'ru') =>
   profileCategoriesByGroup(group).map((category) => ({
     shortName: locale === 'ru' ? (profileMenuRu[`${group}/${category.slug}`] ?? category.name) : category.name,
     path: category.path
@@ -93,6 +94,10 @@ const serviceShortNameRu: Record<string, string> = {
   '/poslugy/bezramne-sklinnya/bezramne-sklinnya-altanky/': 'Остекление беседки',
   '/poslugy/bezramne-sklinnya/panoramne-sklinnya/': 'Панорамное остекление',
   '/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/': 'Раздвижные системы',
+  '/poslugy/bezramne-sklinnya/povorotno-skladni-systemy/': 'Поворотно-складные системы',
+  '/poslugy/bezramne-sklinnya/giljotynni-systemy/': 'Гильотинные системы',
+  '/poslugy/bezramne-sklinnya/bezporogovi-systemy/': 'Беспороговые системы',
+  '/poslugy/bezramne-sklinnya/teple-bezramne-sklinnya/': 'Теплое безрамное остекление',
 
   '/poslugy/sklo-dlia-biznesu/sklyani-vitriny-dlia-mahazynu/': 'Витрины для магазина',
   '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/': 'Стеклянные козырьки',
@@ -129,6 +134,17 @@ const categoryOrder = ['dushovi-konstruktsii', 'dzerkala', 'sklyani-perehorodky'
 function buildServiceCategories(locale: Locale): CatalogNavigationCategory[] {
   return seoCategories.map((category) => {
     const name = locale === 'uk' ? category.name : (categoryNameRu[category.slug] ?? category.name);
+    if (category.slug === 'bezramne-sklinnya') {
+      return {
+        slug: category.slug,
+        name,
+        href: FRAMELESS_HUB,
+        services: framelessCategories.map((item) => ({
+          shortName: locale === 'uk' ? item.name : (serviceShortNameRu[item.path] ?? item.name),
+          path: item.path
+        }))
+      };
+    }
     if (category.slug === 'dushovi-konstruktsii') {
       return { slug: category.slug, name, href: '/dushovi-kabiny/', services: getShowerServiceNavigation(locale).map(({ label, href }) => ({ shortName: label, path: href })) };
     }
