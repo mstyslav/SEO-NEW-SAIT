@@ -7,6 +7,7 @@ import { FRAMELESS_HUB, framelessCategories } from './frameless-catalog';
 import { FACADE_HUB, facadeCategories } from './facade-catalog';
 import { DOORS_HUB, doorCategories } from './door-catalog';
 import { RAILINGS_HUB, railingCategories } from './railing-catalog';
+import { BUSINESS_HUB, businessPagesOrdered, businessPath } from './business-pages';
 
 // RU menu labels for the aluminium / metal-plastic pages (the pages themselves are UK-only).
 const profileMenuRu: Record<string, string> = {
@@ -109,7 +110,15 @@ const serviceShortNameRu: Record<string, string> = {
   '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/': 'Стеклянные козырьки',
   '/poslugy/sklo-dlia-biznesu/sklyani-stilnytsi/': 'Стеклянные столешницы',
   '/poslugy/sklo-dlia-biznesu/sklyani-politsi/': 'Стеклянные полки',
-  '/poslugy/sklo-dlia-biznesu/sklyani-doshky-dlia-ofisu/': 'Стеклянные маркерные доски'
+  '/poslugy/sklo-dlia-biznesu/sklyani-doshky-dlia-ofisu/': 'Стеклянные маркерные доски',
+  '/dlya-biznesu/bazam-vidpochynku/': 'Базам отдыха',
+  '/dlya-biznesu/zhytlovym-kompleksam/': 'Жилым комплексам',
+  '/dlya-biznesu/salonam-krasy/': 'Салонам красоты',
+  '/dlya-biznesu/stomatologiyi-ta-kliniky/': 'Стоматологиям и клиникам',
+  '/dlya-biznesu/magazynam/': 'Магазинам',
+  '/dlya-biznesu/restoranam/': 'Ресторанам',
+  '/dlya-biznesu/dlya-ofisu/': 'Для офиса',
+  '/dlya-biznesu/goteli/': 'Отелям'
 };
 
 // Дзеркала: власний MASTER /dzerkala/ + 4 фінальні дочірні сторінки
@@ -148,6 +157,17 @@ function buildServiceCategories(locale: Locale): CatalogNavigationCategory[] {
         services: doorCategories.map((item) => ({
           shortName: locale === 'uk' ? item.name : (serviceShortNameRu[item.path] ?? item.name),
           path: item.path
+        }))
+      };
+    }
+    if (category.slug === 'sklo-dlia-biznesu') {
+      return {
+        slug: category.slug,
+        name,
+        href: BUSINESS_HUB,
+        services: businessPagesOrdered.map((item) => ({
+          shortName: locale === 'uk' ? item.name : (serviceShortNameRu[businessPath(item.slug)] ?? item.name),
+          path: businessPath(item.slug)
         }))
       };
     }

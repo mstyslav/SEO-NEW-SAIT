@@ -1,0 +1,194 @@
+---
+/**
+ * Business-type page /dlya-biznesu/{slug}/ (content: src/data/business-pages.ts).
+ * Old-site structure in the site's visual system: hero → what it is → zones of the
+ * venue with photo tiles to the product pages → benefits → projects → work stages →
+ * guarantees → cities → FAQ → other business types → request form.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import TrustBar from '../TrustBar.astro';
+import FAQBlock from '../FAQBlock.astro';
+import ProjectCard from '../projects/ProjectCard.astro';
+import ProfileRequestForm from '../profile/ProfileRequestForm.astro';
+import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { BUSINESS_GUARANTEES, BUSINESS_HUB, BUSINESS_IMG, BUSINESS_STEPS, businessPagesOrdered, businessPath, type BusinessPage } from '../../data/business-pages';
+import '../../styles/category-pages.css';
+import '../../styles/shower-master.css';
+import '../../styles/profile-systems.css';
+import '../../styles/rishennya-lower.css';
+import '../../styles/projects-common.css';
+
+interface Props { page: BusinessPage }
+const { page: p } = Astro.props;
+const path = businessPath(p.slug);
+const origin = Astro.site ?? Astro.url.origin;
+
+const hero = (w: number) => `${BUSINESS_IMG}/biz-${p.slug}-${w}.webp`;
+const heroSrcset = `${hero(640)} 640w, ${hero(800)} 800w, ${hero(1280)} 1280w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const allProjects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk')).map(({ data }) => data);
+const projects = p.projectSlugs
+  .map((slug) => allProjects.find((project) => project.slug === slug))
+  .filter((project): project is NonNullable<typeof project> => Boolean(project));
+
+const selfIndex = businessPagesOrdered.findIndex((item) => item.slug === p.slug);
+const others = [1, 2, 3, 4].map((step) => businessPagesOrdered[(selfIndex + step) % businessPagesOrdered.length]);
+
+const breadcrumbItems = [
+  { label: 'Головна', href: '/' },
+  { label: 'Для бізнесу', href: BUSINESS_HUB },
+  { label: p.name, href: path }
+];
+const structuredData: JsonLdObject[] = [
+  breadcrumbSchema(breadcrumbItems.map((item) => ({ label: item.label, href: absoluteUrl(item.href, origin) }))),
+  faqSchema(p.faq.map(([question, answer]) => ({ question, answer })))
+].filter(Boolean) as JsonLdObject[];
+---
+<BaseLayout
+  title={p.metaTitle}
+  description={p.metaDescription}
+  locale="uk"
+  alternateLocales={['uk']}
+  schemaType="Service"
+  structuredData={structuredData}
+  image={hero(1280)}
+  heroPreloadSrc={hero(800)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={breadcrumbItems.map((item, index) => index === breadcrumbItems.length - 1 ? { label: item.label } : item)} />
+        <p class="eyebrow">Для бізнесу · {p.name}</p>
+        <h1>{p.h1}</h1>
+        <p class="lead">{p.lead}</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#zones">Що ми робимо</a>
+          <a class="button button--outline" href="#request">Залишити заявку</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={hero(800)} srcset={heroSrcset} sizes={heroSizes} alt={p.heroAlt} width="1280" height="960" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="uk" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Що це?</p><h2>{p.introHeading}</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">{p.intro.map((paragraph) => <p>{paragraph}</p>)}</div>
+        <ul class="category-intro__spec">
+          {p.introSpec.map(([name, note]) => <li><b>{name}</b><span>{note}</span></li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section id="zones" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Що робимо</p><h2>{p.zonesHeading}</h2></div><p>{p.zonesIntro}</p></div>
+      <div class="rh-tiles rh-tiles--3">
+        {p.zones.map((zone) => (
+          <a class="rh-tile" href={zone.href}>
+            <img src={zone.image} alt="" width="480" height="480" loading="lazy" decoding="async" />
+            <span class="rh-tile__arrow" aria-hidden="true">→</span>
+            <span class="rh-tile__body"><b>{zone.title}</b><span>{zone.text}</span></span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Переваги</p><h2>Чому скло {p.forWhom}</h2></div></div>
+      <div class="material-grid material-grid--parts">
+        {p.benefits.map(([title, text]) => <article><b>{title}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    {projects.length > 0 && (
+      <section class="category-section">
+        <div class="category-heading category-heading--projects">
+          <div class="category-heading--projects__title"><p class="eyebrow">Портфоліо</p><h2>Реалізовані проєкти</h2></div>
+          <div class="category-heading--projects__aside"><a class="category-arrow-link" href="/projects/">Усі проєкти <span aria-hidden="true">→</span></a></div>
+        </div>
+        <div class="projects-index-v2__grid category-projects-grid">
+          {projects.map((project) => <ProjectCard project={project} hrefPrefix="/projects" />)}
+        </div>
+      </section>
+    )}
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Етапи роботи</p><h2>Як ми працюємо з бізнесом</h2></div></div>
+      <div class="category-process__grid">
+        {BUSINESS_STEPS.map(([name, note], index) => <div><span>{String(index + 1).padStart(2, '0')}</span><b>{name}</b><small>{note}</small></div>)}
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Гарантії</p><h2>2 роки гарантії на фурнітуру, 1 рік — на монтаж</h2></div><p>Відповідаємо за результат і після здачі об’єкта.</p></div>
+      <div class="material-grid material-grid--parts">
+        {BUSINESS_GUARANTEES.map(([title, text]) => <article><b>{title}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">Географія</p>
+          <h2>{p.h1}: замір і монтаж<br />у Києві, Одесі та Львові</h2>
+          <p>Виїжджаємо на об’єкт, робимо заміри й креслення, виготовляємо та монтуємо конструкції {p.forWhom} у трьох містах і областях; для інших регіонів умови погоджуємо окремо.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Київ</b><span>замір і монтаж</span></li><li><b>Одеса</b><span>замір і монтаж</span></li><li><b>Львів</b><span>замір і монтаж</span></li></ul>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock
+        title={`FAQ: скло ${p.forWhom}`}
+        intro="Відповіді на питання, які найчастіше ставлять власники й керівники закладів."
+        items={p.faq}
+        visibleCount={6}
+        expandTo={p.faq.length}
+      />
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Для бізнесу</p><h2>Рішення для іншого бізнесу</h2></div><p><a class="category-arrow-link" href={BUSINESS_HUB}>Усі напрями для бізнесу <span aria-hidden="true">→</span></a></p></div>
+      <div class="rh-tiles">
+        {others.map((item) => (
+          <a class="rh-tile" href={businessPath(item.slug)}>
+            <img src={`${BUSINESS_IMG}/biz-${item.slug}-480.webp`} alt="" width="480" height="360" loading="lazy" decoding="async" />
+            <span class="rh-tile__arrow" aria-hidden="true">→</span>
+            <span class="rh-tile__body"><b>{item.name}</b><span>{item.cardNote}</span></span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={path}
+      product={`Для бізнесу: ${p.name}`}
+      title="Обговоримо ваш проєкт?"
+      text="Надішліть план приміщення, фото або розміри — підберемо конструкції для кожної зони й підготуємо попередній розрахунок."
+      options={p.zones.map((zone) => zone.title)}
+      optionsLabel="Що цікавить"
+      commentPlaceholder={p.formExample}
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>
+
+<style>
+  .rh-tiles--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  @media (max-width:900px){.rh-tiles--3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>

@@ -1,0 +1,10 @@
+---
+// Business-type pages at the old site's URLs /dlya-biznesu/{slug}/ (content: src/data/business-pages.ts).
+import BusinessPage from '../../components/business/BusinessPage.astro';
+import { businessPages } from '../../data/business-pages';
+export function getStaticPaths() {
+  return businessPages.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+const { page } = Astro.props;
+---
+<BusinessPage page={page} />

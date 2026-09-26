@@ -625,7 +625,7 @@ export const mirrorCategories: ProfileCategory[] = [
       ['Дзеркала на стіну', '/dzerkala/dzerkala-na-stinu/'],
       ['Дзеркала для салонів краси', '/dzerkala/dzerkala-dlya-salonu-krasy/'],
       ['Скляні перегородки', '/sklyani-perehorodky/'],
-      ['Скло для бізнесу', '/poslugy/sklo-dlia-biznesu/'],
+      ['Скло для бізнесу', '/dlya-biznesu/'],
       ['Проєкти', '/projects/']
     ],
     ctaTitle: 'Розрахуємо дзеркальну стіну для залу',
@@ -733,7 +733,7 @@ export const mirrorCategories: ProfileCategory[] = [
       ['Дзеркала для спортзалів', '/dzerkala/dzerkala-dlya-sportzalu/'],
       ['Дзеркала на стіну', '/dzerkala/dzerkala-na-stinu/'],
       ['Скління для магазину', '/rishennya/dlya-magazynu/'],
-      ['Скло для бізнесу', '/poslugy/sklo-dlia-biznesu/'],
+      ['Скло для бізнесу', '/dlya-biznesu/'],
       ['Проєкти', '/projects/']
     ],
     ctaTitle: 'Підберемо дзеркала для вашого салону',
