@@ -98,7 +98,7 @@ export const rishennyaContent: Record<Locale, RishennyaContent> = {
       { label: 'Душові кабіни', href: '/dushovi-kabiny/', image: '/images/catalog/dushovi-kabiny/dushovi-kabiny-768.webp', note: 'Walk-In, кутові, у нішу, розсувні та піддони' },
       { label: 'Скляні огорожі', href: '/sklyani-ohorozhi/', image: '/images/projects/glass-stair-railing-private-house-odesa/glass-stair-railing-private-house-odesa-hero-480.webp', note: 'Сходи, балкони, тераси та басейни' },
       { label: 'Безрамне скління', href: '/poslugy/bezramne-sklinnya/', image: '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp', note: 'Тераси, балкони, альтанки та панорами' },
-      { label: 'Дзеркала', href: '/dzerkala/', image: '/images/catalog/dzerkala/cat-led-480.webp', note: 'LED, у рамі, на стіну та дзеркальні панно' },
+      { label: 'Дзеркала', href: '/dzerkala/', image: '/images/catalog/dzerkala/sg-moon-480.webp', note: 'LED, у рамі, на стіну та дзеркальні панно' },
       { label: 'Алюмінієві конструкції', href: '/alyuminiyevi-konstrukcziyi/', image: '/images/catalog/profile-systems/cat-alu-rozsuvni-480.webp', note: 'Вікна, двері, фасади, зимові сади, перголи' },
       { label: 'Металопластикові конструкції', href: '/metaloplastykovi-konstrukcziyi/', image: '/images/catalog/profile-systems/cat-pvc-vikna-480.webp', note: 'Вікна, двері, розсувні системи, перегородки' }
     ],
@@ -223,7 +223,7 @@ export const rishennyaContent: Record<Locale, RishennyaContent> = {
       { label: 'Душевые кабины', href: '/dushovi-kabiny/', image: '/images/catalog/dushovi-kabiny/dushovi-kabiny-768.webp', note: 'Walk-In, угловые, в нишу, раздвижные и поддоны' },
       { label: 'Стеклянные ограждения', href: '/sklyani-ohorozhi/', image: '/images/projects/glass-stair-railing-private-house-odesa/glass-stair-railing-private-house-odesa-hero-480.webp', note: 'Лестницы, балконы, террасы и бассейны' },
       { label: 'Безрамное остекление', href: '/poslugy/bezramne-sklinnya/', image: '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp', note: 'Террасы, балконы, беседки и панорамы' },
-      { label: 'Зеркала', href: '/dzerkala/', image: '/images/catalog/dzerkala/cat-led-480.webp', note: 'LED, в раме, на стену и зеркальные панно' },
+      { label: 'Зеркала', href: '/dzerkala/', image: '/images/catalog/dzerkala/sg-moon-480.webp', note: 'LED, в раме, на стену и зеркальные панно' },
       { label: 'Алюминиевые конструкции', href: '/alyuminiyevi-konstrukcziyi/', image: '/images/catalog/profile-systems/cat-alu-rozsuvni-480.webp', note: 'Окна, двери, фасады, зимние сады, перголы' },
       { label: 'Металлопластиковые конструкции', href: '/metaloplastykovi-konstrukcziyi/', image: '/images/catalog/profile-systems/cat-pvc-vikna-480.webp', note: 'Окна, двери, раздвижные системы, перегородки' }
     ],
