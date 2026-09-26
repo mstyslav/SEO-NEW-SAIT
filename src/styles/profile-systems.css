@@ -124,14 +124,8 @@
 .profile-card__price span{display:block;margin-top:2px;color:var(--muted);font-size:.8rem;font-weight:400}
 @media(max-width:1100px){.profile-details{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
-/* Hero with a product render (showers): the photo column is exactly square,
-   so the whole square render is shown sharp — no crop, no blur, no bars.
-   Hero height stays 550px like the homepage. */
-@media(min-width:901px){
-  .profile-hero--contain{grid-template-columns:minmax(0,1fr) 550px}
-  .profile-hero--contain .category-hero__figure{min-height:550px}
-}
-.category-hero--photo.profile-hero--contain .category-hero__frame img{object-fit:cover;object-position:center;filter:none}
-@media(max-width:900px){
-  .category-hero--photo.profile-hero--contain .category-hero__figure{height:auto;aspect-ratio:1/1}
-}
+/* Hero with a product render (showers): same hero geometry as every page
+   (no size change, no blur). The renders keep the cabin between ~20% and ~92%
+   of the frame height, so the crop window is anchored low enough to show the
+   whole product instead of the ceiling. */
+.category-hero--photo.profile-hero--contain .category-hero__frame img{object-fit:cover;object-position:50% 72%;filter:none}
