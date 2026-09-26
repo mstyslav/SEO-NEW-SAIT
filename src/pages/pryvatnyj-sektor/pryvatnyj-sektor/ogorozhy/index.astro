@@ -1,0 +1,8 @@
+---
+// Glass railings for a private house. Lives at the live site's URL
+// (/pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/) so it keeps its ranking; content
+// and breadcrumbs belong to the glass-railings section (src/data/railing-catalog.ts).
+import ProfileCategoryPage from '../../../../components/profile/ProfileCategoryPage.astro';
+import { getRailingCategory } from '../../../../data/railing-catalog';
+---
+<ProfileCategoryPage category={getRailingCategory('ohorozhi-dlia-pryvatnoho-budynku')} />

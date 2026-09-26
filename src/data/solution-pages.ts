@@ -60,13 +60,13 @@ export const solutionExtras: Record<string, SolutionExtra> = {
     navLabel: 'Для будинку',
     image: '/images/solutions-new/solution-house-640.webp',
     tiles: [
-      { label: 'Перила для сходів', href: '/poslugy/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/', image: P('glass-stair-railing-private-house-odesa'), note: 'Безрамні та на стійках' },
+      { label: 'Перила для сходів', href: '/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/', image: P('glass-stair-railing-private-house-odesa'), note: 'Безрамні та на стійках' },
       { label: 'Безрамне скління тераси', href: '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/', image: P('osocor-residence-glazing-kyiv'), note: 'Стулки повністю відкриваються' },
       { label: 'Розсувні двері на терасу', href: '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/', image: `${PS}/cat-alu-rozsuvni-480.webp`, note: 'Панорамні, до 4 м заввишки' },
       { label: 'Алюмінієві вікна', href: '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/', image: `${PS}/cat-alu-vikna-480.webp`, note: 'Теплі, з терморозривом' },
       { label: 'Зимові сади', href: '/alyuminiyevi-konstrukcziyi/zymovi-sady/', image: `${PS}/cat-alu-zymovi-sady-480.webp`, note: 'Теплий або сезонний сад' },
       { label: 'Перголи', href: '/alyuminiyevi-konstrukcziyi/pergoly/', image: `${PS}/cat-alu-perholy-480.webp`, note: 'Ламелі, тент або скло' },
-      { label: 'Огорожі балконів і терас', href: '/poslugy/sklyani-ohorozhi/sklyani-ohorozhi-teras/', image: P('glass-railing-primorski-sady-odesa'), note: 'Триплекс, безпечне скло' },
+      { label: 'Огорожі балконів і терас', href: '/sklyani-ohorozhi/sklyani-ohorozhi-teras/', image: P('glass-railing-primorski-sady-odesa'), note: 'Триплекс, безпечне скло' },
       { label: 'Дзеркала', href: '/dzerkala/', image: `${DZ}/cat-stina-480.webp`, note: 'LED, у рамі, на всю стіну' }
     ],
     projectSlugs: ['glass-stair-railing-private-house-odesa', 'osocor-residence-glazing-kyiv', 'led-mirror-private-house-kyiv', 'led-mirror-private-house-odesa', 'glass-railing-primorski-sady-odesa', 'shower-glass-to-ceiling-kyiv'],

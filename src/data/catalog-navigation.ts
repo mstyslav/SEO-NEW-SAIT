@@ -6,6 +6,7 @@ import { profileCategoriesByGroup, type ProfileGroup } from './profile-systems';
 import { FRAMELESS_HUB, framelessCategories } from './frameless-catalog';
 import { FACADE_HUB, facadeCategories } from './facade-catalog';
 import { DOORS_HUB, doorCategories } from './door-catalog';
+import { RAILINGS_HUB, railingCategories } from './railing-catalog';
 
 // RU menu labels for the aluminium / metal-plastic pages (the pages themselves are UK-only).
 const profileMenuRu: Record<string, string> = {
@@ -22,7 +23,7 @@ const profileMenuRu: Record<string, string> = {
   'pvc/rozsuvni-dveri': 'Раздвижные двери',
   'pvc/ofisni-perehorodky': 'Офисные стеклянные перегородки'
 };
-const profileMenu = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors'>, locale: 'uk' | 'ru') =>
+const profileMenu = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings'>, locale: 'uk' | 'ru') =>
   profileCategoriesByGroup(group).map((category) => ({
     shortName: locale === 'ru' ? (profileMenuRu[`${group}/${category.slug}`] ?? category.name) : category.name,
     path: category.path
@@ -79,12 +80,13 @@ const serviceShortNameRu: Record<string, string> = {
   '/sklyani-dveri/sklyani-dveri-dlia-ofisu/': 'Офисные двери',
   '/sklyani-perehorodky/sklyani-mizhkimnatni-dveri/': 'Межкомнатные стеклянные двери',
 
-  '/poslugy/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/': 'Перила для лестниц',
-  '/poslugy/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/': 'Безрамные ограждения',
-  '/poslugy/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/': 'Ограждения балконов',
-  '/poslugy/sklyani-ohorozhi/sklyani-ohorozhi-teras/': 'Ограждения террас',
-  '/poslugy/sklyani-ohorozhi/sklyani-ohorozhi-na-stiykakh/': 'Ограждения на стойках',
-  '/poslugy/sklyani-ohorozhi/sklyani-poruchni/': 'Ограждения с поручнем',
+  '/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/': 'Перила для лестниц',
+  '/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/': 'Безрамные ограждения',
+  '/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/': 'Ограждения балконов',
+  '/sklyani-ohorozhi/sklyani-ohorozhi-teras/': 'Ограждения террас',
+  '/sklyani-ohorozhi/sklyani-ohorozhi-na-stiykakh/': 'Ограждения на стойках',
+  '/sklyani-ohorozhi/sklyani-ohorozhi-baseiniv/': 'Ограждения бассейнов',
+  '/pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/': 'Ограждения для частного дома',
 
   '/poslugy/sklyani-fasady/sklyani-fasady-budynkiv/': 'Фасады домов',
   '/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/': 'Стоечно-ригельное остекление',
@@ -144,6 +146,17 @@ function buildServiceCategories(locale: Locale): CatalogNavigationCategory[] {
         name,
         href: DOORS_HUB,
         services: doorCategories.map((item) => ({
+          shortName: locale === 'uk' ? item.name : (serviceShortNameRu[item.path] ?? item.name),
+          path: item.path
+        }))
+      };
+    }
+    if (category.slug === 'sklyani-ohorozhi') {
+      return {
+        slug: category.slug,
+        name,
+        href: RAILINGS_HUB,
+        services: railingCategories.map((item) => ({
           shortName: locale === 'uk' ? item.name : (serviceShortNameRu[item.path] ?? item.name),
           path: item.path
         }))

@@ -1,0 +1,10 @@
+---
+// Glass railings subsections — shared catalog template; content in src/data/railing-catalog.ts.
+import ProfileCategoryPage from '../../components/profile/ProfileCategoryPage.astro';
+import { RAILINGS_HUB, railingCategories } from '../../data/railing-catalog';
+export function getStaticPaths() {
+  return railingCategories.filter((category) => category.path.startsWith(RAILINGS_HUB)).map((category) => ({ params: { slug: category.slug }, props: { category } }));
+}
+const { category } = Astro.props;
+---
+<ProfileCategoryPage category={category} />

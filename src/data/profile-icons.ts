@@ -42,4 +42,11 @@ export const profileIcons: Record<string, string> = {
   'doors/dveri-v-aliuminiievomu-profili': iconWrap('<rect x="10" y="4" width="20" height="30"/><path d="M10 14h20M10 24h20M20 4v30"/><path d="M4 34h32"/>'),
   'doors/matovi-sklyani-dveri': iconWrap('<rect x="10" y="4" width="20" height="30"/><path d="M13 8l4 4M13 14l10 10M17 8l10 10M23 8l4 4M13 20l10 10"/><path d="M4 34h32"/>'),
   'doors/sklyani-dveri-dlia-ofisu': iconWrap('<rect x="4" y="6" width="32" height="28"/><path d="M4 12h32M16 12v22M26 12v22"/><path d="M19 23h.01"/>'),
+  'railings/sklyani-peryla-dlia-skhodiv': iconWrap('<path d="M4 34h8v-6h8v-6h8v-6h8"/><path d="M8 28V16l24-12v12"/><path d="M8 16l24-12"/>'),
+  'railings/sklyani-ohorozhi-balkoniv': iconWrap('<path d="M4 22h32"/><path d="M6 22V10h28v12"/><path d="M4 26h32"/><path d="M12 4v6M28 4v6"/>'),
+  'railings/sklyani-ohorozhi-teras': iconWrap('<path d="M3 30h34"/><path d="M5 30V16h30v14"/><path d="M15 16v14M25 16v14"/><circle cx="31" cy="7" r="3"/>'),
+  'railings/sklyani-ohorozhi-baseiniv': iconWrap('<rect x="4" y="18" width="32" height="14" rx="2"/><path d="M8 25c3-2 5 2 8 0s5 2 8 0 5 2 8 0"/><path d="M6 18V8h28v10"/>'),
+  'railings/bezramni-sklyani-ohorozhi': iconWrap('<rect x="6" y="8" width="28" height="20"/><path d="M4 28h32v6H4z"/><path d="M11 12l6 12M18 12l4 8"/>'),
+  'railings/sklyani-ohorozhi-na-stiykakh': iconWrap('<path d="M4 8h32"/><path d="M6 8v26M20 8v26M34 8v26"/><rect x="9" y="12" width="8" height="18"/><rect x="23" y="12" width="8" height="18"/>'),
+  'railings/ohorozhi-dlia-pryvatnoho-budynku': iconWrap('<path d="M4 18L20 5l16 13"/><path d="M8 16v18h24V16"/><path d="M4 34h32"/><path d="M12 26h16v8H12z"/>'),
 };

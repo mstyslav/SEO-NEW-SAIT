@@ -15,7 +15,7 @@
  * source, so none are shown — every page sends users to an individual quote.
  */
 
-export type ProfileGroup = 'alu' | 'pvc' | 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors';
+export type ProfileGroup = 'alu' | 'pvc' | 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings';
 
 export interface ProfileModel {
   id: string;
@@ -78,6 +78,8 @@ export interface ProfileCategory {
   process?: [string, string][];
   /** Optional "materials & quality" cards: [title, text, image base in imageBase]. */
   details?: { heading: string; intro: string; items: [string, string, string][] };
+  /** Extra hero button [label, href], e.g. a configurator link. */
+  heroExtra?: [string, string];
 }
 
 export const IMG_BASE = '/images/catalog/profile-systems';
@@ -2807,19 +2809,19 @@ export const profileCategories: ProfileCategory[] = [
   }
 ];
 
-export const getProfileCategory = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors'>, slug: string) => {
+export const getProfileCategory = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings'>, slug: string) => {
   const category = profileCategories.find((item) => item.group === group && item.slug === slug);
   if (!category) throw new Error(`Unknown profile category ${group}/${slug}`);
   return category;
 };
 
 /** Menu / hub order — mirrors the main-menu layout approved by the owner. */
-const CATEGORY_ORDER: Record<Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors'>, string[]> = {
+const CATEGORY_ORDER: Record<Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings'>, string[]> = {
   alu: ['vikna', 'dveri', 'rozsuvni-dveri', 'ofisne-sklinnya', 'fasadne-sklinnya', 'zymovi-sady', 'sitky-plise', 'perholy'],
   pvc: ['vikna', 'dveri', 'rozsuvni-dveri', 'ofisni-perehorodky']
 };
 
-export const profileCategoriesByGroup = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors'>) =>
+export const profileCategoriesByGroup = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings'>) =>
   profileCategories
     .filter((item) => item.group === group)
     .sort((a, b) => CATEGORY_ORDER[group].indexOf(a.slug) - CATEGORY_ORDER[group].indexOf(b.slug));

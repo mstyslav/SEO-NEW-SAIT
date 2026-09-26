@@ -3240,7 +3240,7 @@ export const framelessCategories: ProfileCategory[] = [
       ],
       [
         "Скляні огорожі балконів",
-        "/poslugy/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/"
+        "/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/"
       ],
       [
         "Скління для квартири",
