@@ -125,7 +125,7 @@
 @media(max-width:1100px){.profile-details{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* Hero with a product render (showers): same hero geometry as every page
-   (no size change, no blur). The renders keep the cabin between ~20% and ~92%
-   of the frame height, so the crop window is anchored low enough to show the
-   whole product instead of the ceiling. */
-.category-hero--photo.profile-hero--contain .category-hero__frame img{object-fit:cover;object-position:50% 72%;filter:none}
+   (no size change, no blur). wide-{slug} renders are 1.4:1 with the whole
+   cabin in frame, so cover only trims the empty wall at the sides. */
+.category-hero--photo.profile-hero--contain .category-hero__frame img{object-fit:cover;object-position:50% 60%;filter:none}
+.profile-hero--shtorky-dlya-vannoyi .category-hero__frame img{object-position:12% 60%}
