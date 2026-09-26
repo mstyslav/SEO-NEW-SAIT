@@ -1,0 +1,10 @@
+---
+// Glass canopies subsections — shared catalog template; content in src/data/canopy-catalog.ts.
+import ProfileCategoryPage from '../../components/profile/ProfileCategoryPage.astro';
+import { canopyCategories } from '../../data/canopy-catalog';
+export function getStaticPaths() {
+  return canopyCategories.map((category) => ({ params: { slug: category.slug }, props: { category } }));
+}
+const { category } = Astro.props;
+---
+<ProfileCategoryPage category={category} />

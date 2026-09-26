@@ -49,4 +49,10 @@ export const profileIcons: Record<string, string> = {
   'railings/bezramni-sklyani-ohorozhi': iconWrap('<rect x="6" y="8" width="28" height="20"/><path d="M4 28h32v6H4z"/><path d="M11 12l6 12M18 12l4 8"/>'),
   'railings/sklyani-ohorozhi-na-stiykakh': iconWrap('<path d="M4 8h32"/><path d="M6 8v26M20 8v26M34 8v26"/><rect x="9" y="12" width="8" height="18"/><rect x="23" y="12" width="8" height="18"/>'),
   'railings/ohorozhi-dlia-pryvatnoho-budynku': iconWrap('<path d="M4 18L20 5l16 13"/><path d="M8 16v18h24V16"/><path d="M4 34h32"/><path d="M12 26h16v8H12z"/>'),
+  'canopies/konsolni-kozyrky': iconWrap('<path d="M6 6v28"/><path d="M6 12h26l-2 3H6"/><rect x="12" y="18" width="10" height="16"/>'),
+  'canopies/kozyrky-na-tyahakh': iconWrap('<path d="M6 4v30"/><path d="M6 16h26"/><path d="M6 6l24 10"/><rect x="12" y="20" width="10" height="14"/>'),
+  'canopies/kozyrky-na-kronshteinakh': iconWrap('<path d="M6 4v30"/><path d="M6 12h26"/><path d="M6 20l22-8"/><rect x="12" y="22" width="10" height="12"/>'),
+  'canopies/kozyrky-v-rami': iconWrap('<path d="M6 4v30"/><rect x="6" y="10" width="26" height="5"/><path d="M10 12.5h18"/><rect x="12" y="19" width="10" height="15"/>'),
+  'canopies/kozyrky-z-bokovym-zakhystom': iconWrap('<path d="M6 4v30"/><path d="M6 10h26"/><rect x="26" y="10" width="6" height="24"/><rect x="11" y="18" width="10" height="16"/>'),
+  'canopies/kozyrky-dlya-biznesu': iconWrap('<path d="M4 34h32"/><rect x="6" y="14" width="28" height="20"/><path d="M4 11h32l-2 3H6z"/><path d="M16 22h8v12h-8z"/>')
 };

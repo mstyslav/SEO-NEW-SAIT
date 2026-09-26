@@ -5,12 +5,12 @@ const locale = normalizeLocale(Astro.props.locale ?? Astro.url.searchParams.get(
 const lp = (path: string) => localizedPath(path, locale);
 
 const categoryLabelsByLocale = {
-  uk: ['Душові конструкції','Дзеркала','Скляні перегородки','Скляні двері','Скляні огорожі','Безрамне скління','Алюмінієві конструкції','Скляні фасади','Металопластикові конструкції','Скло для бізнесу'],
-  ru: ['Душевые конструкции','Зеркала','Стеклянные перегородки','Стеклянные двери','Стеклянные ограждения','Безрамное остекление','Алюминиевые конструкции','Стеклянные фасады','Металлопластиковые конструкции','Стекло для бизнеса']
+  uk: ['Душові конструкції','Дзеркала','Скляні перегородки','Скляні двері','Скляні огорожі','Скляні козирки','Безрамне скління','Алюмінієві конструкції','Скляні фасади','Металопластикові конструкції','Скло для бізнесу'],
+  ru: ['Душевые конструкции','Зеркала','Стеклянные перегородки','Стеклянные двери','Стеклянные ограждения','Стеклянные козырьки','Безрамное остекление','Алюминиевые конструкции','Стеклянные фасады','Металлопластиковые конструкции','Стекло для бизнеса']
 };
 const categoryLabels = categoryLabelsByLocale[locale] ?? categoryLabelsByLocale.uk;
-const categoryHrefs = ['/dushovi-kabiny/','/dzerkala/','/sklyani-perehorodky/','/sklyani-dveri/','/sklyani-ohorozhi/','/poslugy/bezramne-sklinnya/','/alyuminiyevi-konstrukcziyi/','/poslugy/sklyani-fasady/','/metaloplastykovi-konstrukcziyi/','/dlya-biznesu/'];
-const categoryTypes = ['shower','mirror','partition','door','railing','frameless','aluminium','facade','pvc','business-glass'];
+const categoryHrefs = ['/dushovi-kabiny/','/dzerkala/','/sklyani-perehorodky/','/sklyani-dveri/','/sklyani-ohorozhi/','/sklyani-kozyrky/','/poslugy/bezramne-sklinnya/','/alyuminiyevi-konstrukcziyi/','/poslugy/sklyani-fasady/','/metaloplastykovi-konstrukcziyi/','/dlya-biznesu/'];
+const categoryTypes = ['shower','mirror','partition','door','railing','canopy','frameless','aluminium','facade','pvc','business-glass'];
 const categories = categoryLabels.map((label, i) => [label, categoryHrefs[i]]);
 const productStrip = categoryLabels.map((label, i) => [label, categoryHrefs[i], categoryTypes[i]]);
 
@@ -154,6 +154,7 @@ const currentYear = new Date().getFullYear();
             {type === 'partition' && <svg viewBox="0 0 72 72"><path d="M12 12h48v48H12z"/><path d="M28 12v48M44 12v48M12 28h48M12 44h48"/></svg>}
             {type === 'door' && <svg viewBox="0 0 72 72"><path d="M18 12h36v48H18z"/><path d="M36 12v48"/><circle cx="31" cy="36" r="1.8"/><circle cx="41" cy="36" r="1.8"/></svg>}
             {type === 'railing' && <svg viewBox="0 0 72 72"><path d="M12 58h48"/><path d="M18 58V40l10-8v26"/><path d="M28 32l10-8v34"/><path d="M38 24l10-8v42"/><path d="M16 37 48 12"/></svg>}
+            {type === 'canopy' && <svg viewBox="0 0 72 72"><path d="M14 10v50"/><path d="M14 22h44l-4 6H14"/><path d="M14 12l40 10"/><path d="M24 34h18v26H24z"/><path d="M10 60h52"/></svg>}
             {type === 'mirror' && <svg viewBox="0 0 72 72"><path d="M36 9 57 36 36 63 15 36 36 9Z"/><path d="M36 9v54"/></svg>}
             {type === 'facade' && <svg viewBox="0 0 72 72"><path d="M12 58V18l14-6v46"/><path d="M26 58V10l20 8v40"/><path d="M46 58V24l14 5v29"/><path d="M12 58h48"/><path d="M18 22v5M18 33v5M18 44v5M34 20v5M34 32v5M34 44v5M52 32v5M52 44v5"/></svg>}
             {type === 'aluminium' && <svg viewBox="0 0 72 72">

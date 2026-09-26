@@ -70,6 +70,7 @@ export const catalogContent: Record<Locale, CatalogContent> = {
       'sklyani-perehorodky': 'Loft, офісні, міжкімнатні, розсувні, телескопічні та Pivot-перегородки зі скла.',
       'sklyani-dveri': 'Розпашні, розсувні, маятникові двері та рішення в алюмінієвому профілі.',
       'sklyani-ohorozhi': 'Огорожі сходів, балконів і терас — безрамні, на стійках або в профілі.',
+      'sklyani-kozyrky': 'Козирки над входом — консольні, на тягах, на кронштейнах і в рамі.',
       'bezramne-sklinnya': 'Скління терас, балконів, альтанок і панорамні розсувні системи.',
       'alyuminiievi-konstruktsii': 'Вікна, двері, розсувні системи, офісне й фасадне скління, зимові сади, сітки плісе та перголи на замовлення.',
       'sklyani-fasady': 'Вітринне, структурне та стійково-ригельне скління фасадів і вхідних груп.',
@@ -82,6 +83,7 @@ export const catalogContent: Record<Locale, CatalogContent> = {
       'sklyani-perehorodky': 'Скляна перегородка для зонування простору',
       'sklyani-dveri': 'Скляні двері Space Glass',
       'sklyani-ohorozhi': 'Скляна огорожа для сходів',
+      'sklyani-kozyrky': 'Скляний козирок над входом',
       'bezramne-sklinnya': 'Безрамне скління тераси',
       'alyuminiievi-konstruktsii': 'Алюмінієва конструкція зі склінням',
       'sklyani-fasady': 'Скляний фасад комерційного об’єкта',
@@ -102,7 +104,7 @@ export const catalogContent: Record<Locale, CatalogContent> = {
       ['Панорамне скління', '/poslugy/bezramne-sklinnya/panoramne-sklinnya/'],
       ['Дзеркала на замовлення', '/dzerkala/'],
       ['Вітринне скління', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
-      ['Скляні козирки', '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/'],
+      ['Скляні козирки', '/sklyani-kozyrky/'],
       ['Скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/']
     ],
     objectsSection: {
@@ -229,6 +231,7 @@ export const catalogContent: Record<Locale, CatalogContent> = {
       dzerkala: 'Зеркала по размеру, с подсветкой, для ванной, дома и коммерческих пространств.',
       'sklyani-perehorodky': 'Лофт, офисные, межкомнатные, раздвижные, телескопические и Pivot-перегородки из стекла.',
       'sklyani-dveri': 'Распашные, раздвижные, маятниковые двери и решения в алюминиевом профиле.',
+      'sklyani-kozyrky': 'Козырьки над входом — консольные, на тягах, на кронштейнах и в раме.',
       'sklyani-ohorozhi': 'Ограждения лестниц, балконов и террас — безрамные, на стойках или в профиле.',
       'bezramne-sklinnya': 'Остекление террас, балконов, беседок и панорамные раздвижные системы.',
       'alyuminiievi-konstruktsii': 'Окна, двери, раздвижные системы, офисное и фасадное остекление, зимние сады, сетки плиссе и перголы на заказ.',
@@ -242,6 +245,7 @@ export const catalogContent: Record<Locale, CatalogContent> = {
       'sklyani-perehorodky': 'Стеклянная перегородка для зонирования пространства',
       'sklyani-dveri': 'Стеклянные двери Space Glass',
       'sklyani-ohorozhi': 'Стеклянное ограждение для лестницы',
+      'sklyani-kozyrky': 'Стеклянный козырек над входом',
       'bezramne-sklinnya': 'Безрамное остекление террасы',
       'alyuminiievi-konstruktsii': 'Алюминиевая конструкция с остеклением',
       'sklyani-fasady': 'Стеклянный фасад коммерческого объекта',
@@ -262,7 +266,7 @@ export const catalogContent: Record<Locale, CatalogContent> = {
       ['Панорамное остекление', '/poslugy/bezramne-sklinnya/panoramne-sklinnya/'],
       ['Зеркала на заказ', '/dzerkala/'],
       ['Витринное остекление', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
-      ['Стеклянные козырьки', '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/'],
+      ['Стеклянные козырьки', '/sklyani-kozyrky/'],
       ['Остекление террасы', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/']
     ],
     objectsSection: {

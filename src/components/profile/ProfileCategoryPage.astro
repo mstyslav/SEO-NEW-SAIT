@@ -32,6 +32,7 @@ import { FRAMELESS_HUB, framelessCategories } from '../../data/frameless-catalog
 import { FACADE_HUB, facadeCategories } from '../../data/facade-catalog';
 import { DOORS_HUB, doorCategories } from '../../data/door-catalog';
 import { RAILINGS_HUB, railingCategories } from '../../data/railing-catalog';
+import { CANOPY_HUB, canopyCategories } from '../../data/canopy-catalog';
 import { ruCategoriesByGroup } from '../../data/ru';
 import { hasLocalizedRoute, localeFromPath, localizedPath, normalizeLocale, type Locale } from '../../i18n/helpers';
 import '../../styles/category-pages.css';
@@ -62,7 +63,7 @@ const tx = {
     price: 'Ціна — за індивідуальним розрахунком', calc: 'Розрахувати', photo: 'фото конструкції',
     note: 'Технічні показники наведені за даними виробників профільних систем для базових конфігурацій і залежать від розмірів, склопакета та фурнітури. Остаточну комплектацію та вартість визначаємо за кресленням або після заміру.',
     steps: [['Запит', 'Фото, розміри або креслення'], ['Консультація', 'Підбір системи та склопакета'], ['Замір', 'Перевірка прорізів і вузлів'], ['Проєкт', 'Креслення та специфікація'], ['Виготовлення', 'Власне обладнання, контроль якості'], ['Монтаж', 'З ізоляцією шва та гарантією']] as [string, string][],
-    hubs: { alu: 'Алюмінієві конструкції', pvc: 'Металопластикові конструкції', mirror: 'Дзеркала', shower: 'Душові кабіни', frameless: 'Безрамне скління', facade: 'Скляні фасади', doors: 'Скляні двері', railings: 'Скляні огорожі' }
+    hubs: { alu: 'Алюмінієві конструкції', pvc: 'Металопластикові конструкції', mirror: 'Дзеркала', shower: 'Душові кабіни', frameless: 'Безрамне скління', facade: 'Скляні фасади', doors: 'Скляні двері', railings: 'Скляні огорожі', canopies: 'Скляні козирки' }
   },
   ru: {
     home: 'Главная', systems: 'Смотреть системы', kinds: 'Смотреть виды', system: 'Система', kind: 'Вид', request: 'Получить расчёт',
@@ -74,7 +75,7 @@ const tx = {
     price: 'Цена — по индивидуальному расчёту', calc: 'Рассчитать', photo: 'фото конструкции',
     note: 'Технические показатели приведены по данным производителей профильных систем для базовых конфигураций и зависят от размеров, стеклопакета и фурнитуры. Окончательную комплектацию и стоимость определяем по чертежу или после замера.',
     steps: [['Запрос', 'Фото, размеры или чертёж'], ['Консультация', 'Подбор системы и стеклопакета'], ['Замер', 'Проверка проёмов и узлов'], ['Проект', 'Чертежи и спецификация'], ['Изготовление', 'Собственное оборудование, контроль качества'], ['Монтаж', 'С изоляцией шва и гарантией']] as [string, string][],
-    hubs: { alu: 'Алюминиевые конструкции', pvc: 'Металлопластиковые конструкции', mirror: 'Зеркала', shower: 'Душевые кабины', frameless: 'Безрамное остекление', facade: 'Стеклянные фасады', doors: 'Стеклянные двери', railings: 'Стеклянные ограждения' }
+    hubs: { alu: 'Алюминиевые конструкции', pvc: 'Металлопластиковые конструкции', mirror: 'Зеркала', shower: 'Душевые кабины', frameless: 'Безрамное остекление', facade: 'Стеклянные фасады', doors: 'Стеклянные двери', railings: 'Стеклянные ограждения', canopies: 'Стеклянные козырьки' }
   }
 }[locale];
 
@@ -86,11 +87,12 @@ const HUBS: Record<ProfileGroup, { href: string; label: string }> = {
   frameless: { href: FRAMELESS_HUB, label: tx.hubs.frameless },
   facade: { href: FACADE_HUB, label: tx.hubs.facade },
   doors: { href: DOORS_HUB, label: tx.hubs.doors },
-  railings: { href: RAILINGS_HUB, label: tx.hubs.railings }
+  railings: { href: RAILINGS_HUB, label: tx.hubs.railings },
+  canopies: { href: CANOPY_HUB, label: tx.hubs.canopies }
 };
 const groupCategories = (group: ProfileGroup) => (isRu && ruCategoriesByGroup[group]) || ukGroupCategories(group);
 const ukGroupCategories = (group: ProfileGroup) =>
-  group === 'mirror' ? mirrorCategories : group === 'shower' ? showerCategories : group === 'frameless' ? framelessCategories : group === 'facade' ? facadeCategories : group === 'doors' ? doorCategories : group === 'railings' ? railingCategories : profileCategoriesByGroup(group);
+  group === 'mirror' ? mirrorCategories : group === 'shower' ? showerCategories : group === 'frameless' ? framelessCategories : group === 'facade' ? facadeCategories : group === 'doors' ? doorCategories : group === 'railings' ? railingCategories : group === 'canopies' ? canopyCategories : profileCategoriesByGroup(group);
 const baseOf = (item: ProfileCategory) => item.imageBase ?? IMG_BASE;
 
 const isAlu = category.group === 'alu';
@@ -102,7 +104,7 @@ const catalogButton = category.catalogButton ?? (hasSystems ? tx.systems : tx.ki
 const optionsLabel = category.optionsLabel ?? (hasSystems ? tx.system : tx.kind);
 const siblings = groupCategories(category.group).filter((item) => item.path !== category.path);
 // Mirrors and showers link only within their own section; alu/pvc cross-link each other.
-const crossGroup = category.group === 'mirror' || category.group === 'shower' || category.group === 'frameless' || category.group === 'facade' || category.group === 'doors' || category.group === 'railings' ? [] : groupCategories(isAlu ? 'pvc' : 'alu');
+const crossGroup = category.group === 'mirror' || category.group === 'shower' || category.group === 'frameless' || category.group === 'facade' || category.group === 'doors' || category.group === 'railings' || category.group === 'canopies' ? [] : groupCategories(isAlu ? 'pvc' : 'alu');
 // Same-group directions first, then the other group; keep full rows of 3.
 const relatedAll = [...siblings, ...crossGroup];
 const related3 = relatedAll.length < 3 ? relatedAll : relatedAll.slice(0, Math.min(9, relatedAll.length - (relatedAll.length % 3)));

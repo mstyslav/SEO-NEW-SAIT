@@ -8,6 +8,7 @@ import { FACADE_HUB, facadeCategories } from './facade-catalog';
 import { DOORS_HUB, doorCategories } from './door-catalog';
 import { RAILINGS_HUB, railingCategories } from './railing-catalog';
 import { BUSINESS_HUB, businessPagesOrdered, businessPath } from './business-pages';
+import { CANOPY_HUB, canopyCategories } from './canopy-catalog';
 
 // RU menu labels for the aluminium / metal-plastic pages (the pages themselves are UK-only).
 const profileMenuRu: Record<string, string> = {
@@ -24,7 +25,7 @@ const profileMenuRu: Record<string, string> = {
   'pvc/rozsuvni-dveri': 'Раздвижные двери',
   'pvc/ofisni-perehorodky': 'Офисные стеклянные перегородки'
 };
-const profileMenu = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings'>, locale: 'uk' | 'ru') =>
+const profileMenu = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings' | 'canopies'>, locale: 'uk' | 'ru') =>
   profileCategoriesByGroup(group).map((category) => ({
     shortName: locale === 'ru' ? (profileMenuRu[`${group}/${category.slug}`] ?? category.name) : category.name,
     path: category.path
@@ -106,11 +107,6 @@ const serviceShortNameRu: Record<string, string> = {
   '/poslugy/bezramne-sklinnya/bezporogovi-systemy/': 'Беспороговые системы',
   '/poslugy/bezramne-sklinnya/teple-bezramne-sklinnya/': 'Теплое безрамное остекление',
 
-  '/poslugy/sklo-dlia-biznesu/sklyani-vitriny-dlia-mahazynu/': 'Витрины для магазина',
-  '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/': 'Стеклянные козырьки',
-  '/poslugy/sklo-dlia-biznesu/sklyani-stilnytsi/': 'Стеклянные столешницы',
-  '/poslugy/sklo-dlia-biznesu/sklyani-politsi/': 'Стеклянные полки',
-  '/poslugy/sklo-dlia-biznesu/sklyani-doshky-dlia-ofisu/': 'Стеклянные маркерные доски',
   '/dlya-biznesu/bazam-vidpochynku/': 'Базам отдыха',
   '/dlya-biznesu/zhytlovym-kompleksam/': 'Жилым комплексам',
   '/dlya-biznesu/salonam-krasy/': 'Салонам красоты',
@@ -131,20 +127,32 @@ const mirrorFeaturedCategory = (locale: Locale): CatalogNavigationCategory => ({
   services: mirrorTypes.map((mirror) => ({ shortName: mirror.label[locale] ?? mirror.label.uk, path: mirror.href }))
 });
 
+const canopyNamesRu: Record<string, string> = {
+  'konsolni-kozyrky': 'Консольные козырьки',
+  'kozyrky-na-tyahakh': 'Козырьки на тягах',
+  'kozyrky-na-kronshteinakh': 'Козырьки на кронштейнах',
+  'kozyrky-v-rami': 'Козырьки в раме',
+  'kozyrky-z-bokovym-zakhystom': 'Козырьки с боковой защитой',
+  'kozyrky-dlya-biznesu': 'Козырьки для бизнеса'
+};
+
 const featuredCategories: Record<Locale, CatalogNavigationCategory[]> = {
   uk: [
     mirrorFeaturedCategory('uk'),
     { slug: 'alyuminiievi-konstruktsii', name: 'Алюмінієві конструкції', href: '/alyuminiyevi-konstrukcziyi/', services: profileMenu('alu', 'uk') },
-    { slug: 'metaloplastykovi-konstruktsii', name: 'Металопластикові конструкції', href: '/metaloplastykovi-konstrukcziyi/', services: profileMenu('pvc', 'uk') }
+    { slug: 'metaloplastykovi-konstruktsii', name: 'Металопластикові конструкції', href: '/metaloplastykovi-konstrukcziyi/', services: profileMenu('pvc', 'uk') },
+    { slug: 'sklyani-kozyrky', name: 'Скляні козирки', href: CANOPY_HUB, services: canopyCategories.map((item) => ({ shortName: item.name, path: item.path })) }
   ],
   ru: [
     mirrorFeaturedCategory('ru'),
     { slug: 'alyuminiievi-konstruktsii', name: 'Алюминиевые конструкции', href: '/alyuminiyevi-konstrukcziyi/', services: profileMenu('alu', 'ru') },
-    { slug: 'metaloplastykovi-konstruktsii', name: 'Металлопластиковые конструкции', href: '/metaloplastykovi-konstrukcziyi/', services: profileMenu('pvc', 'ru') }
+    { slug: 'metaloplastykovi-konstruktsii', name: 'Металлопластиковые конструкции', href: '/metaloplastykovi-konstrukcziyi/', services: profileMenu('pvc', 'ru') },
+    { slug: 'sklyani-kozyrky', name: 'Стеклянные козырьки', href: CANOPY_HUB, services: canopyCategories.map((item) => ({ shortName: canopyNamesRu[item.slug] ?? item.name, path: item.path })) }
   ]
 };
 
-const categoryOrder = ['dushovi-konstruktsii', 'dzerkala', 'sklyani-perehorodky', 'sklyani-dveri', 'sklyani-ohorozhi', 'bezramne-sklinnya', 'alyuminiievi-konstruktsii', 'sklyani-fasady', 'metaloplastykovi-konstruktsii', 'sklo-dlia-biznesu'];
+
+const categoryOrder = ['dushovi-konstruktsii', 'dzerkala', 'sklyani-perehorodky', 'sklyani-dveri', 'sklyani-ohorozhi', 'sklyani-kozyrky', 'bezramne-sklinnya', 'alyuminiievi-konstruktsii', 'sklyani-fasady', 'metaloplastykovi-konstruktsii', 'sklo-dlia-biznesu'];
 
 function buildServiceCategories(locale: Locale): CatalogNavigationCategory[] {
   return seoCategories.map((category) => {

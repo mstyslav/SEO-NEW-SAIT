@@ -390,7 +390,7 @@ export const facadeCategories: ProfileCategory[] = [
       ['Чи потрібне погодження вітрини?', 'Для фасаду будинку може знадобитися погодження з власником будівлі чи місцевою владою. Радимо уточнити заздалегідь.'],
       ['Чи робите віконце видачі для кафе?', 'Так, у вітрину можна вбудувати відкидне або розсувне віконце видачі.']
     ],
-    related: [['Скляні вхідні групи', P('sklyani-vkhidni-hrupy')], ['Стійково-ригельне скління', P('stiykovo-ryhelne-sklinnya')], ['Структурне скління фасаду', P('strukturne-sklinnya-fasadu')], ['Скляні вітрини для магазину', '/poslugy/sklo-dlia-biznesu/sklyani-vitriny-dlia-mahazynu/'], ['Скління для магазину', '/rishennya/dlya-magazynu/'], ['Скління для ресторану', '/rishennya/dlya-restoranu/'], ...REL],
+    related: [['Скляні вхідні групи', P('sklyani-vkhidni-hrupy')], ['Стійково-ригельне скління', P('stiykovo-ryhelne-sklinnya')], ['Структурне скління фасаду', P('strukturne-sklinnya-fasadu')], ['Скляні козирки', '/sklyani-kozyrky/'], ['Скління для магазину', '/rishennya/dlya-magazynu/'], ['Скління для ресторану', '/rishennya/dlya-restoranu/'], ...REL],
     ctaTitle: 'Потрібна вітрина?',
     ctaText: 'Надішліть фото фасаду й розміри — підберемо систему та підготуємо розрахунок.'
   }),
@@ -445,7 +445,7 @@ export const facadeCategories: ProfileCategory[] = [
       ['Чи потрібен тамбур?', 'Для інтенсивного входу взимку — так: тамбур зменшує тепловтрати. Внутрішні двері тамбура можна зробити на MB-45S.'],
       ['Чи можна вхідну групу для під’їзду ЖК?', 'Так, з домофоном, доводчиком і антивандальним склом.']
     ],
-    related: [['Вітринне скління', P('vitrinne-sklinnya')], ['Стійково-ригельне скління', P('stiykovo-ryhelne-sklinnya')], ['Алюмінієві двері', `${ALU}alyuminiyevi-dveri/`], ['Скляні двері', '/sklyani-dveri/'], ['Скляні козирки', '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/'], ['Скління для офісу', '/rishennya/dlya-ofisu/'], ...REL],
+    related: [['Вітринне скління', P('vitrinne-sklinnya')], ['Стійково-ригельне скління', P('stiykovo-ryhelne-sklinnya')], ['Алюмінієві двері', `${ALU}alyuminiyevi-dveri/`], ['Скляні двері', '/sklyani-dveri/'], ['Скляні козирки', '/sklyani-kozyrky/'], ['Скління для офісу', '/rishennya/dlya-ofisu/'], ...REL],
     ctaTitle: 'Потрібна вхідна група?',
     ctaText: 'Надішліть фото входу й розміри — підберемо систему, фурнітуру й підготуємо розрахунок.'
   })

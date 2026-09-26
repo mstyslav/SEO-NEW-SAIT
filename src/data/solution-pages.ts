@@ -88,7 +88,7 @@ export const solutionExtras: Record<string, SolutionExtra> = {
       { label: 'Loft-перегородки', href: '/sklyani-perehorodky/loft/', image: P('loft-partitions-kselena-odesa'), note: 'Стильне зонування open space' },
       { label: 'Скляні двері для офісу', href: '/sklyani-dveri/sklyani-dveri-dlia-ofisu/', image: P('world-of-comics-entrance-odesa'), note: 'Розпашні, маятникові, розсувні' },
       { label: 'Скляні вхідні групи', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('coffee-ocean-facade-odesa'), note: 'Представницький вхід' },
-      { label: 'Маркерні дошки зі скла', href: '/poslugy/sklo-dlia-biznesu/sklyani-doshky-dlia-ofisu/', image: '/images/solutions-new/solution-office-meeting-room-640.webp', note: 'Для переговорних' },
+      { label: 'Pivot-перегородки', href: '/sklyani-perehorodky/pivot/', image: '/images/solutions-new/solution-office-meeting-room-640.webp', note: 'Ефектний вхід у кабінет' },
       { label: 'Перегородки з ПВХ', href: '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/', image: `${PS}/cat-pvc-perehorodky-480.webp`, note: 'Економічне зонування' },
       { label: 'Фасадне скління', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/', image: `${PS}/cat-alu-fasady-480.webp`, note: 'Стійково-ригельні системи' }
     ],
@@ -152,13 +152,13 @@ export const solutionExtras: Record<string, SolutionExtra> = {
     navLabel: 'Для магазину',
     image: '/images/solutions-new/solution-shop-640.webp',
     tiles: [
-      { label: 'Вітрини для магазину', href: '/poslugy/sklo-dlia-biznesu/sklyani-vitriny-dlia-mahazynu/', image: P('world-of-comics-entrance-odesa'), note: 'Презентація товару' },
+      { label: 'Скляні двері', href: '/sklyani-dveri/', image: P('world-of-comics-entrance-odesa'), note: 'Вхід і службові зони' },
       { label: 'Вітринне скління', href: '/poslugy/sklyani-fasady/vitrinne-sklinnya/', image: P('coffee-ocean-facade-odesa'), note: 'Фасад, що продає' },
       { label: 'Скляні вхідні групи', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('restaurant-glazing-artshat-odesa'), note: 'Помітний вхід із вулиці' },
       { label: 'Алюмінієві двері', href: '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/', image: `${PS}/cat-alu-dveri-480.webp`, note: 'Ресурс до 1 000 000 відкривань' },
       { label: 'Скляні перегородки', href: '/sklyani-perehorodky/', image: P('loft-partitions-kselena-odesa'), note: 'Службові зони й примірочні' },
-      { label: 'Скляні полиці', href: '/poslugy/sklo-dlia-biznesu/sklyani-politsi/', image: P('dental-clinic-partitions-odesa'), note: 'Торгове обладнання' },
-      { label: 'Скляні козирки', href: '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/', image: `${PS}/cat-alu-fasady-480.webp`, note: 'Захист входу від опадів' },
+      { label: 'Дзеркальні панно', href: '/dzerkala/dzerkalne-panno/', image: `${DZ}/cat-panno-480.webp`, note: 'Декор торгового залу' },
+      { label: 'Скляні козирки', href: '/sklyani-kozyrky/', image: '/images/catalog/sklyani-kozyrky/hero-hub-480.webp', note: 'Захист входу від опадів' },
       { label: 'Дзеркала для примірки', href: '/dzerkala/dzerkala-na-stinu/', image: `${DZ}/cat-stina-480.webp`, note: 'Ростові й на всю стіну' }
     ],
     projectSlugs: ['world-of-comics-entrance-odesa', 'coffee-ocean-facade-odesa', 'loft-partitions-kselena-odesa', 'dental-clinic-partitions-odesa', 'restaurant-glazing-artshat-odesa', 'office-partitions-morskyi-odesa'],

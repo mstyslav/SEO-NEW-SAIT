@@ -15,7 +15,7 @@
  * source, so none are shown — every page sends users to an individual quote.
  */
 
-export type ProfileGroup = 'alu' | 'pvc' | 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings';
+export type ProfileGroup = 'alu' | 'pvc' | 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings' | 'canopies';
 
 export interface ProfileModel {
   id: string;
@@ -1705,7 +1705,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
       ['Фасадне скління', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
       ['Скляні двері в алюмінієвому профілі', '/sklyani-dveri/dveri-v-aliuminiievomu-profili/'],
-      ['Скляні маркерні дошки', '/poslugy/sklo-dlia-biznesu/sklyani-doshky-dlia-ofisu/'],
+      ['Скло для офісу', '/dlya-biznesu/dlya-ofisu/'],
       ['Проєкти', '/projects/']
     ],
     ctaTitle: 'Розрахуємо перегородки для вашого офісу',
@@ -2128,7 +2128,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Сітки плісе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
       ['Безрамне скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
       ['Безрамне скління альтанки', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-altanky/'],
-      ['Скляні козирки', '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/'],
+      ['Скляні козирки', '/sklyani-kozyrky/'],
       ['Тепле чи холодне скління тераси', '/knowledge/teple-chy-kholodne-sklinnya-terasy/'],
       ['Скління для ресторану', '/rishennya/dlya-restoranu/']
     ],
@@ -2809,19 +2809,19 @@ export const profileCategories: ProfileCategory[] = [
   }
 ];
 
-export const getProfileCategory = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings'>, slug: string) => {
+export const getProfileCategory = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings' | 'canopies'>, slug: string) => {
   const category = profileCategories.find((item) => item.group === group && item.slug === slug);
   if (!category) throw new Error(`Unknown profile category ${group}/${slug}`);
   return category;
 };
 
 /** Menu / hub order — mirrors the main-menu layout approved by the owner. */
-const CATEGORY_ORDER: Record<Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings'>, string[]> = {
+const CATEGORY_ORDER: Record<Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings' | 'canopies'>, string[]> = {
   alu: ['vikna', 'dveri', 'rozsuvni-dveri', 'ofisne-sklinnya', 'fasadne-sklinnya', 'zymovi-sady', 'sitky-plise', 'perholy'],
   pvc: ['vikna', 'dveri', 'rozsuvni-dveri', 'ofisni-perehorodky']
 };
 
-export const profileCategoriesByGroup = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings'>) =>
+export const profileCategoriesByGroup = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings' | 'canopies'>) =>
   profileCategories
     .filter((item) => item.group === group)
     .sort((a, b) => CATEGORY_ORDER[group].indexOf(a.slug) - CATEGORY_ORDER[group].indexOf(b.slug));

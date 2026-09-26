@@ -1,0 +1,238 @@
+---
+// Glass canopies MASTER — hub for /sklyani-kozyrky/{slug}/ (content: src/data/canopy-catalog.ts).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FAQBlock from '../../components/FAQBlock.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import ProfileRequestForm from '../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { CANOPY_HUB, CANOPY_IMG, canopyCategories, canopyHubSystems } from '../../data/canopy-catalog';
+import { profileIcons } from '../../data/profile-icons';
+import '../../styles/category-pages.css';
+import '../../styles/shower-master.css';
+import '../../styles/profile-systems.css';
+
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(CANOPY_HUB, origin);
+
+const title = 'Скляні козирки';
+const h1 = 'Скляні козирки над входом';
+const metaTitle = 'Скляні козирки над входом на замовлення — ціни, системи, монтаж | Space Glass';
+const metaDescription =
+  'Скляні козирки над входом у будинок, офіс, магазин і під’їзд: консольні, на тягах, на кронштейнах, у рамі, з бічним вітрозахистом. Німецькі системи, триплекс, ціни від. Замір і монтаж у Києві, Одесі та Львові.';
+
+const heroSrc = (w: number) => `${CANOPY_IMG}/hero-hub-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const hubItems = canopyCategories.map((category) => ({ title: category.name, note: category.cardNote, href: category.path, icon: profileIcons[`canopies/${category.slug}`] }));
+
+const benefits: [string, string][] = [
+  ['Сухий вхід', 'Козирок захищає двері й людей від дощу та снігу.'],
+  ['Світло', 'Скло не затінює вхід і не закриває фасад.'],
+  ['Безпека', 'Лише триплекс: уламки залишаються на плівці.'],
+  ['Німецькі системи', 'Перевірене снігове навантаження й фурнітура з нержавійки.'],
+  ['Під фасад', 'Прозоре, екстрапрозоре чи матове скло, колір кріплень під RAL.'],
+  ['Швидкий монтаж', 'Зазвичай кілька годин на об’єкті.']
+];
+
+const types: [string, string][] = [
+  ['Консольні', 'Кріплення лише до стіни, без тяг і опор — найчистіший вигляд.'],
+  ['На тягах', 'Тяги з нержавійки забирають навантаження на стіну вище — для глибших козирків.'],
+  ['На кронштейнах', 'Кронштейни під склом — коли над дверима немає місця для тяг.'],
+  ['У рамі', 'Алюмінієва чи сталева рама з жолобом і підсвіткою — для великих площ.']
+];
+
+const faq: [string, string][] = [
+  ['Які бувають скляні козирки?', 'Консольні (тільки на стіні), на тягах, на кронштейнах, у рамі та з бічною стінкою від вітру.'],
+  ['Яке скло для козирка?', 'Лише триплекс із загартованого скла — при пошкодженні уламки тримаються на плівці.'],
+  ['Скільки коштує скляний козирок?', 'На картках — ціни від для прикладових розмірів без монтажу. Точну вартість рахуємо після заміру.'],
+  ['Який козирок обрати для будинку?', 'Мінімалізм — консольний DURA PLUS, класика — PUNTO на тягах, зі світлом і жолобом — ATHENA.'],
+  ['Який козирок для магазину чи офісу?', 'Великі — ELLA чи TUBO, з логотипом — SPADA, зі світлом — ATHENA.'],
+  ['Чи витримає козирок сніг?', 'Так, системи розраховані на снігове навантаження; глибину й скло підбираємо під регіон.'],
+  ['Куди стікає вода?', 'Козирок має нахил від стіни; за потреби — жолоб і водостік.'],
+  ['Чи можна козирок на утеплений фасад?', 'Так, зі спеціальними кріпленнями через утеплювач.'],
+  ['Яка глибина козирка?', 'Від 50 см до 2 м залежно від системи.'],
+  ['Чи можна арочний козирок?', 'Так, ARCATA з гнутого скла.'],
+  ['Чи захищає козирок від вітру?', 'Для захисту збоку додаємо бічну скляну стінку.'],
+  ['Чи можна з підсвіткою?', 'Так, LED-споти в рамі ATHENA або окрема підсвітка.'],
+  ['Чи можна матове скло?', 'Так, матове, екстрапрозоре чи сіре.'],
+  ['Чи іржавіють кріплення?', 'Ні, нержавіюча сталь або алюміній з покриттям.'],
+  ['Чи потрібен дозвіл?', 'Для приватного будинку зазвичай ні; для фасаду багатоквартирного будинку може знадобитися погодження.'],
+  ['Скільки триває монтаж?', 'Зазвичай кілька годин після виготовлення.'],
+  ['Скільки чекати виготовлення?', 'Кілька тижнів; точні строки після заміру.'],
+  ['Як доглядати за козирком?', 'Мити засобом для скла кілька разів на сезон.'],
+  ['Де виконуєте замір і монтаж?', 'У Києві, Одесі та Львові з областями.'],
+  ['Чи є гарантія?', 'Так, на скло, фурнітуру й монтаж.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Скляні вхідні групи', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'],
+  ['Скляні двері', '/sklyani-dveri/'],
+  ['Скляні огорожі', '/sklyani-ohorozhi/'],
+  ['Для бізнесу', '/dlya-biznesu/'],
+  ['Вітринне скління', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
+  ['Безрамне скління терас', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
+  ['Перголи', '/alyuminiyevi-konstrukcziyi/pergoly/'],
+  ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: canopyCategories.length,
+  itemListElement: canopyCategories.map((category, index) => ({ '@type': 'ListItem', position: index + 1, name: category.name, url: absoluteUrl(category.path, origin) }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
+---
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  alternateLocales={['uk']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Козирки зі скла для приватних будинків, офісів, магазинів і під’їздів: консольні, на тягах, на кронштейнах, у рамі та з бічним вітрозахистом. Німецькі системи з перевіреним сніговим навантаженням — замір, виготовлення й монтаж у Києві, Одесі та Львові.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#systems">Переглянути системи</a>
+          <a class="button button--outline" href="#request">Отримати розрахунок</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Скляний козирок на кронштейнах над входом у будинок" width="1080" height="771" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="uk" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>Захист входу, який не закриває фасад</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Скляний козирок захищає вхід від дощу й снігу, але не затінює двері й не перевантажує фасад. Тому його ставлять над входами в будинки, офіси, магазини, ресторани та під’їзди житлових комплексів.</p>
+          <p>Ми працюємо з німецькими системами козирків: консольними в затискному профілі, на тягах і кронштейнах із нержавійки, у алюмінієвій чи сталевій рамі з жолобом і підсвіткою, а також з бічними скляними стінками від вітру.</p>
+          <p>Нижче — типи козирків і системи з цінами від для прикладових розмірів.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>11 систем</b><span>консольні, тяги, кронштейни, рами</span></li>
+          <li><b>Триплекс</b><span>уламки тримаються на плівці</span></li>
+          <li><b>До 2 м</b><span>глибина козирка</span></li>
+          <li><b>Київ · Одеса · Львів</b><span>замір, монтаж і сервіс</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Які скляні козирки ми робимо</h2></div><p>Оберіть тип — на кожній сторінці системи з фото, характеристиками, цінами й порадами.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section id="systems" class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Системи</p><h2>Системи скляних козирків</h2></div><p>Ціни — від, для прикладових розмірів без монтажу. SEMPLICE і бічний вітрозахист — на сторінках «У рамі» та «З бічним захистом».</p></div>
+      <div class="profile-grid">
+        {canopyHubSystems.map((system) => (
+          <article class="profile-card">
+            <div class="profile-card__media">
+              <img src={`${CANOPY_IMG}/${system.image}-480.webp`} srcset={`${CANOPY_IMG}/${system.image}-480.webp 480w, ${CANOPY_IMG}/${system.image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" alt={system.alt} width="480" height="480" loading="lazy" decoding="async" />
+              <span class="profile-card__kind">{system.kind}</span>
+            </div>
+            <div class="profile-card__body">
+              <h3>{system.name}</h3>
+              <p class="profile-card__blurb">{system.blurb}</p>
+              <p class="profile-card__price"><strong>{system.price}</strong><span>{system.size}</span></p>
+              <a class="button button--mint profile-card__cta" href={system.href}>Детальніше про систему →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Кріплення</p><h2>Як кріпиться козирок</h2></div><p>Від типу кріплення залежать глибина козирка й вигляд фасаду.</p></div>
+      <dl class="material-thickness">
+        {types.map(([name, text]) => <div><dt>{name}</dt><dd>{text}</dd></div>)}
+      </dl>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Переваги</p><h2>Чому скляний козирок</h2></div></div>
+      <div class="material-grid material-grid--parts">
+        {benefits.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від заміру до готового козирка</h2></div></div>
+      <div class="category-process__grid">
+        <div><span>01</span><b>Запит</b><small>Фото входу й розміри</small></div>
+        <div><span>02</span><b>Консультація</b><small>Система, скло, кріплення</small></div>
+        <div><span>03</span><b>Замір</b><small>Стіна, фасад, водовідвід</small></div>
+        <div><span>04</span><b>Креслення</b><small>Розміри, кріплення, нахил</small></div>
+        <div><span>05</span><b>Виготовлення</b><small>Скло й фурнітура під розмір</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Встановлення й герметизація</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">Географія</p>
+          <h2>Скляні козирки: замір і монтаж<br />у Києві, Одесі та Львові</h2>
+          <p>Виїжджаємо на замір, перевіряємо стіну й фасад, погоджуємо креслення, виготовляємо та встановлюємо козирки над входами будинків, офісів, магазинів і під’їздів.</p>
+          <p>Для об’єктів в інших регіонах умови узгоджуємо окремо.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Київ</b><span>замір і монтаж</span></li><li><b>Одеса</b><span>замір і монтаж</span></li><li><b>Львів</b><span>замір і монтаж</span></li></ul>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock title="FAQ про скляні козирки" intro="Про види, скло, сніг, воду, ціну й монтаж." items={faq} visibleCount={6} expandTo={faq.length} />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Корисне</p><h2>Далі по темі</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={href}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={CANOPY_HUB}
+      product={title}
+      title={'Потрібен попередній розрахунок?'}
+      text={'Надішліть фото входу й ширину дверей — підберемо систему козирка й підготуємо орієнтовну вартість.'}
+      options={[...canopyCategories.map((c) => c.name), ...canopyHubSystems.map((s) => s.name)]}
+      optionsLabel="Вид або система"
+      commentPlaceholder="Де козирок (будинок, магазин, під’їзд), ширина й глибина, тип стіни, місто"
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

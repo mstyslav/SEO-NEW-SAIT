@@ -745,7 +745,7 @@ body{background:#202020}
 /* Product strip icons */
 .footer-refined__products{padding:28px 0 30px;border-bottom:1px solid #202622}
 .footer-refined__products h3{margin:0 0 22px;color:#fff;font-size:13px;text-transform:uppercase}
-.footer-refined__product-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr))}
+.footer-refined__product-grid{display:grid;grid-template-columns:repeat(11,minmax(0,1fr))}
 .footer-refined__product-grid a{display:grid;justify-items:center;align-content:start;gap:14px;min-height:155px;padding:16px 10px 12px;border-right:1px solid #202622;color:#d6dad7;text-align:center}
 .footer-refined__product-grid a:last-child{border-right:0}
 .footer-refined__icon{display:grid;place-items:center;width:74px;height:78px}

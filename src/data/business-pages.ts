@@ -194,7 +194,7 @@ export const businessPages: BusinessPage[] = [
       { title: 'Open space', text: 'Loft-перегородки для зонування без стін.', href: '/sklyani-perehorodky/loft/', image: P('loft-partitions-kselena-odesa') },
       { title: 'Двері', text: 'Скляні двері для кабінетів і переговорних.', href: '/sklyani-dveri/sklyani-dveri-dlia-ofisu/', image: `${DV}/hero4-sklyani-dveri-dlia-ofisu-480.webp` },
       { title: 'Рецепція й вхід', text: 'Скляні вхідні групи та маятникові двері.', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('world-of-comics-entrance-odesa') },
-      { title: 'Маркерні дошки', text: 'Скляні дошки для переговорних і командних зон.', href: '/poslugy/sklo-dlia-biznesu/sklyani-doshky-dlia-ofisu/', image: `${PS}/cat-pvc-perehorodky-480.webp` }
+      { title: 'Рецепція з потоком людей', text: 'Маятникові скляні двері з підлоговим доводчиком.', href: '/sklyani-dveri/mayatnykovi-sklyani-dveri/', image: `${DV}/hero4-mayatnykovi-sklyani-dveri-480.webp` }
     ],
     benefits: [['Денне світло', 'Скло пропускає світло до кожного робочого місця.'], ['Продуктивність', 'Відкритий простір допомагає команді співпрацювати.'], ['Приватність за потреби', 'Матові смуги, жалюзі в склопакеті, звукоізоляція.'], ['Швидка зміна планування', 'Перегородки монтуються й переносяться без будівельного бруду.']],
     projectSlugs: ['office-partitions-morskyi-odesa', 'loft-partitions-kselena-odesa', 'dental-clinic-partitions-odesa', 'world-of-comics-entrance-odesa', 'loft-kyiv', 'coffee-ocean-facade-odesa'],
@@ -236,8 +236,8 @@ export const businessPages: BusinessPage[] = [
     zones: [
       { title: 'Вітрина', text: 'Вітринне скління фасаду, що показує товар.', href: '/poslugy/sklyani-fasady/vitrinne-sklinnya/', image: `${PS}/cat-fas2-vitrinne-sklinnya-480.webp` },
       { title: 'Вхідна група', text: 'Скляні й алюмінієві двері на інтенсивний потік.', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('world-of-comics-entrance-odesa') },
-      { title: 'Козирок над входом', text: 'Скляний козирок захищає вхід від опадів.', href: '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/', image: `${PS}/cat-alu-fasady-480.webp` },
-      { title: 'Торговий зал', text: 'Скляні полиці й вітрини для товару.', href: '/poslugy/sklo-dlia-biznesu/sklyani-politsi/', image: P('coffee-ocean-facade-odesa') },
+      { title: 'Козирок над входом', text: 'Скляний козирок захищає вхід від опадів.', href: '/sklyani-kozyrky/kozyrky-dlya-biznesu/', image: '/images/catalog/sklyani-kozyrky/gp-spada-480.webp' },
+      { title: 'Торговий зал', text: 'Дзеркальні панно й дзеркала для залу.', href: '/dzerkala/dzerkalne-panno/', image: `${DZ}/cat-panno-480.webp` },
       { title: 'Примірочні', text: 'Ростові дзеркала й дзеркала на всю стіну.', href: '/dzerkala/dzerkala-na-stinu/', image: `${DZ}/cat-stina-480.webp` },
       { title: 'Службові зони', text: 'Скляні перегородки для складу й офісу магазину.', href: '/sklyani-perehorodky/', image: P('loft-partitions-kselena-odesa') }
     ],
@@ -373,7 +373,7 @@ export const businessPages: BusinessPage[] = [
       { title: 'Скління балконів', text: 'Безрамне скління лоджій в одному стилі.', href: '/poslugy/bezramne-sklinnya/bezramne-sklinnya-balkona/', image: `${BZ}/cat-bezramne-sklinnya-balkona-480.webp` },
       { title: 'Входи в під’їзди', text: 'Скляні вхідні групи й алюмінієві двері.', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: `${PS}/cat-fas2-sklyani-vkhidni-hrupy-480.webp` },
       { title: 'Лобі й комерція', text: 'Фасадне скління лобі та перших поверхів.', href: '/poslugy/sklyani-fasady/', image: `${PS}/cat-fas2-hub-480.webp` },
-      { title: 'Козирки', text: 'Скляні козирки над входами.', href: '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/', image: `${PS}/cat-alu-fasady-480.webp` },
+      { title: 'Козирки', text: 'Скляні козирки над входами в під’їзди.', href: '/sklyani-kozyrky/kozyrky-dlya-biznesu/', image: '/images/catalog/sklyani-kozyrky/gp-ella-480.webp' },
       { title: 'Квартири з ремонтом', text: 'Душові кабіни й перегородки від забудовника.', href: '/dushovi-kabiny/', image: SHOWERS }
     ],
     benefits: [['Сучасний фасад', 'Однакові скляні огорожі на всіх поверхах.'], ['Вид із квартир', 'Скло не закриває краєвид.'], ['Вища вартість м²', 'Скло підвищує клас будинку.'], ['Одна специфікація', 'Простіше закупівля, монтаж і сервіс.']],
@@ -446,12 +446,12 @@ export const BUSINESS_ORDER = ['bazam-vidpochynku', 'zhytlovym-kompleksam', 'sal
 export const businessPagesOrdered = BUSINESS_ORDER.map((slug) => businessPages.find((p) => p.slug === slug)!);
 export const businessPath = (slug: string) => `${BUSINESS_HUB}${slug}/`;
 
-/** Products for business, kept as their own pages under /poslugy/sklo-dlia-biznesu/. */
+/** Popular products for business (hub block). */
 export const businessProducts: { title: string; text: string; href: string; image: string }[] = [
-  { title: 'Скляні вітрини для магазину', text: 'Вітрини та прилавки зі скла для торгових залів.', href: '/poslugy/sklo-dlia-biznesu/sklyani-vitriny-dlia-mahazynu/', image: `${PS}/cat-fas2-vitrinne-sklinnya-480.webp` },
-  { title: 'Скляні козирки', text: 'Козирки над входом із триплексу.', href: '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/', image: `${PS}/cat-alu-fasady-480.webp` },
-  { title: 'Скляні стільниці', text: 'Стільниці для ресепшн, кафе й офісів.', href: '/poslugy/sklo-dlia-biznesu/sklyani-stilnytsi/', image: P('coffee-ocean-facade-odesa') },
-  { title: 'Скляні полиці', text: 'Полиці для торгового обладнання й барів.', href: '/poslugy/sklo-dlia-biznesu/sklyani-politsi/', image: P('world-of-comics-entrance-odesa') },
-  { title: 'Маркерні дошки зі скла', text: 'Дошки для переговорних і командних зон.', href: '/poslugy/sklo-dlia-biznesu/sklyani-doshky-dlia-ofisu/', image: `${PS}/cat-pvc-perehorodky-480.webp` },
-  { title: 'Скляні вхідні групи', text: 'Представницький вхід для будь-якого бізнесу.', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: `${PS}/cat-fas2-sklyani-vkhidni-hrupy-480.webp` }
+  { title: 'Скляні козирки', text: 'Козирки над входом у магазин, офіс чи під’їзд.', href: '/sklyani-kozyrky/', image: '/images/catalog/sklyani-kozyrky/gp-spada-480.webp' },
+  { title: 'Вітринне скління', text: 'Вітрини фасаду, що показують товар.', href: '/poslugy/sklyani-fasady/vitrinne-sklinnya/', image: `${PS}/cat-fas2-vitrinne-sklinnya-480.webp` },
+  { title: 'Скляні вхідні групи', text: 'Представницький вхід для будь-якого бізнесу.', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: `${PS}/cat-fas2-sklyani-vkhidni-hrupy-480.webp` },
+  { title: 'Скляні двері для офісу', text: 'Двері кабінетів, переговорних і рецепції.', href: '/sklyani-dveri/sklyani-dveri-dlia-ofisu/', image: `${DV}/hero4-sklyani-dveri-dlia-ofisu-480.webp` },
+  { title: 'Офісні перегородки', text: 'Кабінети й переговорні зі скла.', href: '/sklyani-perehorodky/ofisni/', image: P('office-partitions-morskyi-odesa') },
+  { title: 'Дзеркала для салонів', text: 'Дзеркала для робочих місць майстрів.', href: '/dzerkala/dzerkala-dlya-salonu-krasy/', image: `${DZ}/cat-salon-480.webp` }
 ];

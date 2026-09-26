@@ -2139,8 +2139,8 @@ export const framelessCategories: ProfileCategory[] = [
         "/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/"
       ],
       [
-        "Скляні вітрини для магазину",
-        "/poslugy/sklo-dlia-biznesu/sklyani-vitriny-dlia-mahazynu/"
+        "Вітринне скління",
+        "/poslugy/sklyani-fasady/vitrinne-sklinnya/"
       ],
       [
         "Мобільні скляні перегородки",
