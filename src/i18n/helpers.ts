@@ -45,7 +45,15 @@ const LOCALIZED_ROUTES: Record<'ru', ReadonlySet<string>> = {
     '/fasadne-configurator/',
     '/loft-configurator/',
     '/ogorozhi-configurator/',
-    '/peregorodky-configurator/'
+    '/peregorodky-configurator/',
+    '/sklyani-ohorozhi/',
+    '/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/',
+    '/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/',
+    '/sklyani-ohorozhi/sklyani-ohorozhi-teras/',
+    '/sklyani-ohorozhi/sklyani-ohorozhi-baseiniv/',
+    '/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/',
+    '/sklyani-ohorozhi/sklyani-ohorozhi-na-stiykakh/',
+    '/pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/'
   ])
 };
 

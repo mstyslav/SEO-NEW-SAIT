@@ -1,0 +1,11 @@
+---
+// RU glass railings subsections — content in src/data/ru/railing-catalog.ru.ts.
+import ProfileCategoryPage from '../../../components/profile/ProfileCategoryPage.astro';
+import { RAILINGS_HUB } from '../../../data/railing-catalog';
+import { railingCategoriesRu } from '../../../data/ru/railing-catalog.ru';
+export function getStaticPaths() {
+  return railingCategoriesRu.filter((category) => category.path.startsWith(RAILINGS_HUB)).map((category) => ({ params: { slug: category.slug }, props: { category } }));
+}
+const { category } = Astro.props;
+---
+<ProfileCategoryPage category={category} locale="ru" />

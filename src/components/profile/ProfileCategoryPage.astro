@@ -32,54 +32,82 @@ import { FRAMELESS_HUB, framelessCategories } from '../../data/frameless-catalog
 import { FACADE_HUB, facadeCategories } from '../../data/facade-catalog';
 import { DOORS_HUB, doorCategories } from '../../data/door-catalog';
 import { RAILINGS_HUB, railingCategories } from '../../data/railing-catalog';
+import { ruCategoriesByGroup } from '../../data/ru';
+import { hasLocalizedRoute, localeFromPath, localizedPath, normalizeLocale, type Locale } from '../../i18n/helpers';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
 
 interface Props {
   category: ProfileCategory;
+  locale?: Locale;
 }
 
 const { category } = Astro.props;
+const locale = normalizeLocale(Astro.props.locale ?? localeFromPath(Astro.url.pathname));
+const isRu = locale === 'ru';
+const lp = (href: string) => (href.startsWith('/') ? localizedPath(href, locale) : href);
 const origin = Astro.site ?? Astro.url.origin;
-const pageUrl = absoluteUrl(category.path, origin);
+const pageUrl = absoluteUrl(lp(category.path), origin);
+const hasRu = hasLocalizedRoute(category.path, 'ru');
+
+const tx = {
+  uk: {
+    home: 'Головна', systems: 'Переглянути системи', kinds: 'Переглянути види', system: 'Система', kind: 'Вид', request: 'Отримати розрахунок',
+    about: 'Про рішення', catalog: 'Каталог', compare: 'Порівняння', compareTitle: 'Системи поруч', compareIntro: 'Ключові відмінності, які допомагають обрати рішення під ваш об’єкт.',
+    use: 'Застосування', quality: 'Якість', details: 'Деталі', closeModels: 'Моделі крупним планом', closeProfiles: 'Конструкції та профілі крупним планом',
+    closeModelsIntro: 'Деталі готових моделей, з якими ми працюємо.', closeProfilesIntro: 'Перерізи профілів і приклади конструкцій на системах, з якими ми працюємо.',
+    choose: 'Підбір', chooseIntro: 'Чотири питання, які визначають систему та комплектацію.', other: 'Інші напрями', all: 'Усі', process: 'Процес', processTitle: 'Від запиту до монтажу',
+    expert: 'Експертно', faqIntro: 'Відповіді на питання, які найчастіше ставлять перед замовленням.', useful: 'Корисне', next: 'Далі по темі',
+    price: 'Ціна — за індивідуальним розрахунком', calc: 'Розрахувати', photo: 'фото конструкції',
+    note: 'Технічні показники наведені за даними виробників профільних систем для базових конфігурацій і залежать від розмірів, склопакета та фурнітури. Остаточну комплектацію та вартість визначаємо за кресленням або після заміру.',
+    steps: [['Запит', 'Фото, розміри або креслення'], ['Консультація', 'Підбір системи та склопакета'], ['Замір', 'Перевірка прорізів і вузлів'], ['Проєкт', 'Креслення та специфікація'], ['Виготовлення', 'Власне обладнання, контроль якості'], ['Монтаж', 'З ізоляцією шва та гарантією']] as [string, string][],
+    hubs: { alu: 'Алюмінієві конструкції', pvc: 'Металопластикові конструкції', mirror: 'Дзеркала', shower: 'Душові кабіни', frameless: 'Безрамне скління', facade: 'Скляні фасади', doors: 'Скляні двері', railings: 'Скляні огорожі' }
+  },
+  ru: {
+    home: 'Главная', systems: 'Смотреть системы', kinds: 'Смотреть виды', system: 'Система', kind: 'Вид', request: 'Получить расчёт',
+    about: 'О решении', catalog: 'Каталог', compare: 'Сравнение', compareTitle: 'Системы рядом', compareIntro: 'Ключевые отличия, которые помогают выбрать решение под ваш объект.',
+    use: 'Применение', quality: 'Качество', details: 'Детали', closeModels: 'Модели крупным планом', closeProfiles: 'Конструкции и профили крупным планом',
+    closeModelsIntro: 'Детали готовых моделей, с которыми мы работаем.', closeProfilesIntro: 'Сечения профилей и примеры конструкций на системах, с которыми мы работаем.',
+    choose: 'Подбор', chooseIntro: 'Четыре вопроса, которые определяют систему и комплектацию.', other: 'Другие направления', all: 'Все', process: 'Процесс', processTitle: 'От запроса до монтажа',
+    expert: 'Экспертно', faqIntro: 'Ответы на вопросы, которые чаще всего задают перед заказом.', useful: 'Полезное', next: 'Дальше по теме',
+    price: 'Цена — по индивидуальному расчёту', calc: 'Рассчитать', photo: 'фото конструкции',
+    note: 'Технические показатели приведены по данным производителей профильных систем для базовых конфигураций и зависят от размеров, стеклопакета и фурнитуры. Окончательную комплектацию и стоимость определяем по чертежу или после замера.',
+    steps: [['Запрос', 'Фото, размеры или чертёж'], ['Консультация', 'Подбор системы и стеклопакета'], ['Замер', 'Проверка проёмов и узлов'], ['Проект', 'Чертежи и спецификация'], ['Изготовление', 'Собственное оборудование, контроль качества'], ['Монтаж', 'С изоляцией шва и гарантией']] as [string, string][],
+    hubs: { alu: 'Алюминиевые конструкции', pvc: 'Металлопластиковые конструкции', mirror: 'Зеркала', shower: 'Душевые кабины', frameless: 'Безрамное остекление', facade: 'Стеклянные фасады', doors: 'Стеклянные двери', railings: 'Стеклянные ограждения' }
+  }
+}[locale];
 
 const HUBS: Record<ProfileGroup, { href: string; label: string }> = {
-  alu: { href: ALU_HUB, label: 'Алюмінієві конструкції' },
-  pvc: { href: PVC_HUB, label: 'Металопластикові конструкції' },
-  mirror: { href: MIRROR_HUB, label: 'Дзеркала' },
-  shower: { href: SHOWER_HUB, label: 'Душові кабіни' },
-  frameless: { href: FRAMELESS_HUB, label: 'Безрамне скління' },
-  facade: { href: FACADE_HUB, label: 'Скляні фасади' },
-  doors: { href: DOORS_HUB, label: 'Скляні двері' },
-  railings: { href: RAILINGS_HUB, label: 'Скляні огорожі' }
+  alu: { href: ALU_HUB, label: tx.hubs.alu },
+  pvc: { href: PVC_HUB, label: tx.hubs.pvc },
+  mirror: { href: MIRROR_HUB, label: tx.hubs.mirror },
+  shower: { href: SHOWER_HUB, label: tx.hubs.shower },
+  frameless: { href: FRAMELESS_HUB, label: tx.hubs.frameless },
+  facade: { href: FACADE_HUB, label: tx.hubs.facade },
+  doors: { href: DOORS_HUB, label: tx.hubs.doors },
+  railings: { href: RAILINGS_HUB, label: tx.hubs.railings }
 };
-const groupCategories = (group: ProfileGroup) =>
+const groupCategories = (group: ProfileGroup) => (isRu && ruCategoriesByGroup[group]) || ukGroupCategories(group);
+const ukGroupCategories = (group: ProfileGroup) =>
   group === 'mirror' ? mirrorCategories : group === 'shower' ? showerCategories : group === 'frameless' ? framelessCategories : group === 'facade' ? facadeCategories : group === 'doors' ? doorCategories : group === 'railings' ? railingCategories : profileCategoriesByGroup(group);
 const baseOf = (item: ProfileCategory) => item.imageBase ?? IMG_BASE;
 
 const isAlu = category.group === 'alu';
 const hasSystems = category.models.some((model) => model.image);
-const hubHref = HUBS[category.group].href;
+const hubHref = lp(HUBS[category.group].href);
 const hubLabel = HUBS[category.group].label;
 const imgBase = baseOf(category);
-const catalogButton = category.catalogButton ?? (hasSystems ? 'Переглянути системи' : 'Переглянути види');
-const optionsLabel = category.optionsLabel ?? (hasSystems ? 'Система' : 'Вид');
+const catalogButton = category.catalogButton ?? (hasSystems ? tx.systems : tx.kinds);
+const optionsLabel = category.optionsLabel ?? (hasSystems ? tx.system : tx.kind);
 const siblings = groupCategories(category.group).filter((item) => item.path !== category.path);
 // Mirrors and showers link only within their own section; alu/pvc cross-link each other.
-const crossGroup = category.group === 'mirror' || category.group === 'shower' || category.group === 'frameless' || category.group === 'facade' || category.group === 'doors' || category.group === 'railings' ? [] : profileCategoriesByGroup(isAlu ? 'pvc' : 'alu');
+const crossGroup = category.group === 'mirror' || category.group === 'shower' || category.group === 'frameless' || category.group === 'facade' || category.group === 'doors' || category.group === 'railings' ? [] : groupCategories(isAlu ? 'pvc' : 'alu');
 // Same-group directions first, then the other group; keep full rows of 3.
 const relatedAll = [...siblings, ...crossGroup];
 const related3 = relatedAll.length < 3 ? relatedAll : relatedAll.slice(0, Math.min(9, relatedAll.length - (relatedAll.length % 3)));
-const processSteps = category.process ?? [
-  ['Запит', 'Фото, розміри або креслення'],
-  ['Консультація', 'Підбір системи та склопакета'],
-  ['Замір', 'Перевірка прорізів і вузлів'],
-  ['Проєкт', 'Креслення та специфікація'],
-  ['Виготовлення', 'Власне обладнання, контроль якості'],
-  ['Монтаж', 'З ізоляцією шва та гарантією']
-];
-const catalogNote = category.catalogNote ?? 'Технічні показники наведені за даними виробників профільних систем для базових конфігурацій і залежать від розмірів, склопакета та фурнітури. Остаточну комплектацію та вартість визначаємо за кресленням або після заміру.';
+const processSteps = category.process ?? tx.steps;
+const catalogNote = category.catalogNote ?? tx.note;
 
 // Showers use interior renders. Desktop: a landscape wide2-/wide-{slug} file when it
 // exists (extended scene, 1.4:1), otherwise the square sq-{slug} render with a per-page
@@ -110,7 +138,7 @@ const galleryAll = category.models.flatMap((model) =>
         .map((n) => `${model.image}-${n}`)
         .filter(exists)
         .slice(0, 2)
-        .map((base) => ({ base, alt: `${model.name} — фото конструкції`, label: model.name }))
+        .map((base) => ({ base, alt: `${model.name} — ${tx.photo}`, label: model.name }))
     : []
 ).slice(0, 6);
 // Keep full rows in the 3-column grid.
@@ -143,7 +171,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
   image={heroSrc(1080)}
   schemaType="CollectionPage"
   structuredData={structuredData}
-  alternateLocales={['uk']}
+  locale={locale}
+  alternateLocales={hasRu ? ['uk', 'ru'] : ['uk']}
   heroPreloadSrc={heroSrc(900)}
   heroPreloadSrcset={heroSrcset}
   heroPreloadSizes={heroSizes}
@@ -155,14 +184,14 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
   <main id="main">
     <section class={`category-hero category-hero--photo profile-hero${heroContain ? ` profile-hero--contain profile-hero--${category.slug}` : ''}`}>
       <div class="category-hero__copy">
-        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: hubLabel, href: hubHref }, { label: category.name }]} />
+        <Breadcrumbs items={[{ label: tx.home, href: lp('/') }, { label: hubLabel, href: hubHref }, { label: category.name }]} />
         <p class="eyebrow">{category.eyebrow}</p>
         <h1>{category.h1}</h1>
         <p class="lead">{category.lead}</p>
         <div class="hero__actions">
           <a class="button button--mint" href="#catalog">{catalogButton}</a>
-          <a class="button button--outline" href="#request">Отримати розрахунок</a>
-          {category.heroExtra && <a class="button button--outline" href={category.heroExtra[1]}>{category.heroExtra[0]}</a>}
+          <a class="button button--outline" href="#request">{tx.request}</a>
+          {category.heroExtra && <a class="button button--outline" href={lp(category.heroExtra[1])}>{category.heroExtra[0]}</a>}
         </div>
       </div>
       <figure class="category-hero__figure">
@@ -175,10 +204,10 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       </figure>
     </section>
 
-    <TrustBar locale="uk" />
+    <TrustBar locale={locale} />
 
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Про рішення</p><h2>{category.introHeading}</h2></div></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.about}</p><h2>{category.introHeading}</h2></div></div>
       <div class="category-intro-grid">
         <div class="category-prose">
           {category.intro.map((paragraph) => <p>{paragraph}</p>)}
@@ -190,7 +219,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <section id="catalog" class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Каталог</p><h2>{category.catalogHeading}</h2></div><p>{category.catalogIntro}</p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.catalog}</p><h2>{category.catalogHeading}</h2></div><p>{category.catalogIntro}</p></div>
       <div class="profile-grid" data-count={category.models.length}>
         {category.models.map((model) => (
           <article class={`profile-card${model.image ? '' : ' profile-card--plain'}`} id={model.id}>
@@ -220,8 +249,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
               <ul class="profile-card__features">
                 {model.features.map((feature) => <li>{feature}</li>)}
               </ul>
-              <p class="profile-card__price">{model.priceFrom ? <><strong>{model.priceFrom}</strong>{model.priceNote && <span>{model.priceNote}</span>}</> : 'Ціна — за індивідуальним розрахунком'}</p>
-              <a class="button button--mint profile-card__cta" href="#request" data-request-model={model.name}>{model.image ? `Розрахувати ${model.name.replace(/^Aluprof /, '')}` : 'Отримати розрахунок'}</a>
+              <p class="profile-card__price">{model.priceFrom ? <><strong>{model.priceFrom}</strong>{model.priceNote && <span>{model.priceNote}</span>}</> : tx.price}</p>
+              <a class="button button--mint profile-card__cta" href="#request" data-request-model={model.name}>{model.image ? `${tx.calc} ${model.name.replace(/^Aluprof /, '')}` : tx.request}</a>
             </div>
           </article>
         ))}
@@ -230,7 +259,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Порівняння</p><h2>Системи поруч</h2></div><p>Ключові відмінності, які допомагають обрати рішення під ваш об’єкт.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.compare}</p><h2>{tx.compareTitle}</h2></div><p>{tx.compareIntro}</p></div>
       <div class="profile-table-wrap">
         <table class="profile-table">
           <thead><tr>{category.compareColumns.map((column) => <th scope="col">{column}</th>)}</tr></thead>
@@ -244,7 +273,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <section class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Застосування</p><h2>{category.useHeading}</h2></div><p>{category.useIntro}</p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.use}</p><h2>{category.useHeading}</h2></div><p>{category.useIntro}</p></div>
       <div class="category-icon-grid">
         {category.uses.map(([name, text], i) => (
           <div class="category-icon-card category-icon-card--static profile-use">
@@ -258,7 +287,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
 
     {category.details && (
       <section class="category-section">
-        <div class="category-heading"><div><p class="eyebrow">Якість</p><h2>{category.details.heading}</h2></div><p>{category.details.intro}</p></div>
+        <div class="category-heading"><div><p class="eyebrow">{tx.quality}</p><h2>{category.details.heading}</h2></div><p>{category.details.intro}</p></div>
         <div class="profile-details">
           {category.details.items.map(([name, text, image]) => (
             <figure>
@@ -272,7 +301,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
 
     {gallery.length > 0 && (
       <section class="category-section category-section--mint">
-        <div class="category-heading"><div><p class="eyebrow">Деталі</p><h2>{category.group === 'mirror' || category.group === 'shower' ? 'Моделі крупним планом' : 'Конструкції та профілі крупним планом'}</h2></div><p>{category.group === 'mirror' || category.group === 'shower' ? 'Деталі готових моделей, з якими ми працюємо.' : 'Перерізи профілів і приклади конструкцій на системах, з якими ми працюємо.'}</p></div>
+        <div class="category-heading"><div><p class="eyebrow">{tx.details}</p><h2>{category.group === 'mirror' || category.group === 'shower' ? tx.closeModels : tx.closeProfiles}</h2></div><p>{category.group === 'mirror' || category.group === 'shower' ? tx.closeModelsIntro : tx.closeProfilesIntro}</p></div>
         <div class="profile-gallery">
           {gallery.map((item) => (
             <figure>
@@ -285,7 +314,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     )}
 
     <section class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Підбір</p><h2>{category.chooseHeading}</h2></div><p>Чотири питання, які визначають систему та комплектацію.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.choose}</p><h2>{category.chooseHeading}</h2></div><p>{tx.chooseIntro}</p></div>
       <div class="category-steps">
         {category.chooseSteps.map(([name, text], i) => (
           <div class="category-steps__item"><span>{String(i + 1).padStart(2, '0')}</span><b>{name}</b><p>{text}</p></div>
@@ -294,10 +323,10 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">{hubLabel}</p><h2>Інші напрями</h2></div><p><a class="category-arrow-link" href={hubHref}>Усі {hubLabel.toLowerCase()} <span aria-hidden="true">→</span></a></p></div>
+      <div class="category-heading"><div><p class="eyebrow">{hubLabel}</p><h2>{tx.other}</h2></div><p><a class="category-arrow-link" href={hubHref}>{tx.all} {hubLabel.toLowerCase()} <span aria-hidden="true">→</span></a></p></div>
       <div class="profile-siblings">
         {related3.map((item) => (
-          <a class="profile-sibling" href={item.path}>
+          <a class="profile-sibling" href={lp(item.path)}>
             <img src={`${baseOf(item)}/${item.heroImage}-480.webp`} alt="" width="480" height="480" loading="lazy" decoding="async" />
             <span><b>{item.name}</b><small>{item.cardNote}</small></span>
           </a>
@@ -306,7 +335,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <section class="category-process">
-      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від запиту до монтажу</h2></div></div>
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">{tx.process}</p><h2>{tx.processTitle}</h2></div></div>
       <div class="category-process__grid">
         {processSteps.map(([name, note], index) => <div><span>{String(index + 1).padStart(2, '0')}</span><b>{name}</b><small>{note}</small></div>)}
       </div>
@@ -314,7 +343,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
 
     <section class="category-section category-seo">
       <div class="category-seo__grid">
-        <div><p class="eyebrow">Експертно</p><h2>{category.seoHeading}</h2></div>
+        <div><p class="eyebrow">{tx.expert}</p><h2>{category.seoHeading}</h2></div>
         <div class="category-prose">
           {category.seo.map((paragraph) => <p>{paragraph}</p>)}
         </div>
@@ -324,7 +353,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     <section class="category-section category-section--faq">
       <FAQBlock
         title={`FAQ: ${category.name.toLowerCase()}`}
-        intro="Відповіді на питання, які найчастіше ставлять перед замовленням."
+        intro={tx.faqIntro}
+        locale={locale}
         items={category.faq}
         visibleCount={6}
         expandTo={category.faq.length}
@@ -332,14 +362,15 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <section class="category-section category-links">
-      <div class="category-heading"><div><p class="eyebrow">Корисне</p><h2>Далі по темі</h2></div></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.useful}</p><h2>{tx.next}</h2></div></div>
       <div class="category-links__grid category-links__grid--8">
-        {category.related.map(([label, href]) => <a href={href}>{label}</a>)}
+        {category.related.map(([label, href]) => <a href={lp(href)}>{label}</a>)}
       </div>
     </section>
 
     <ProfileRequestForm
-      page={category.path}
+      page={lp(category.path)}
+      locale={locale}
       product={category.name}
       title={category.ctaTitle}
       text={category.ctaText}

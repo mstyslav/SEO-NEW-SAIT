@@ -1,0 +1,274 @@
+---
+// RU glass railings hub (mirrors src/pages/sklyani-ohorozhi/index.astro; content: src/data/ru/railing-catalog.ru.ts).
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import TrustBar from '../../../components/TrustBar.astro';
+import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../seo/schema';
+import { RAILINGS_CONFIGURATOR, RAILINGS_HUB, RAILINGS_IMG } from '../../../data/railing-catalog';
+import { railingCategoriesRu, railingSystemsRu } from '../../../data/ru/railing-catalog.ru';
+import { profileIcons } from '../../../data/profile-icons';
+import { localizedPath } from '../../../i18n/helpers';
+import '../../../styles/category-pages.css';
+import '../../../styles/shower-master.css';
+import '../../../styles/profile-systems.css';
+
+const lp = (path: string) => localizedPath(path, 'ru');
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(lp(RAILINGS_HUB), origin);
+
+const title = 'Стеклянные ограждения';
+const h1 = 'Стеклянные ограждения на заказ';
+const metaTitle = 'Стеклянные ограждения на заказ — лестницы, балконы, террасы, бассейны | Space Glass';
+const metaDescription =
+  'Стеклянные ограждения для лестниц, балконов, террас и бассейнов: безрамные в зажимном профиле, на стойках, точечном креплении, французские балконы. Немецкие системы, триплекс, конфигуратор цены. Замер и монтаж в Киеве, Одессе и Львове.';
+
+const heroSrc = (w: number) => `${RAILINGS_IMG}/hero-hub-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const typeCategories = railingCategoriesRu.filter((category) => category.path.startsWith(RAILINGS_HUB));
+const houseCategory = railingCategoriesRu.find((category) => !category.path.startsWith(RAILINGS_HUB))!;
+const hubItems = typeCategories.map((category) => ({
+  title: category.name,
+  note: category.cardNote,
+  href: lp(category.path),
+  icon: profileIcons[`railings/${category.slug}`]
+}));
+const gridSystems = railingSystemsRu.slice(0, 9);
+
+const benefits: [string, string][] = [
+  ['Открытый вид', 'Стекло не закрывает пейзаж, сад или интерьер и не затеняет помещение.'],
+  ['Безопасность', 'Только триплекс: если один лист разобьётся, ограждение останется на месте.'],
+  ['Немецкие системы', 'Профили, стойки и держатели с испытаниями на нагрузку до 3 кН/м.'],
+  ['Не требует ухода', 'Стекло не красят, алюминий и нержавейка не ржавеют.'],
+  ['Защита от ветра', 'На террасах и балконах стекло гасит сквозняк и шум.'],
+  ['Под ваш объект', 'Любая длина, форма I, L, U, углы и перепады.']
+];
+
+const glassTypes: [string, string][] = [
+  ['Триплекс 17,52 и 21,52 мм', 'Два закалённых листа по 8 или 10 мм с прочной плёнкой — для безрамных ограждений в профиле и на точечных держателях.'],
+  ['Триплекс 8,76 и 12,76 мм', 'Два листа по 4 или 6 мм — для ограждений на стойках, где стекло держат зажимы с обеих сторон.'],
+  ['Цвет стекла', 'Прозрачное, сверхпрозрачное (без зелёного оттенка), серое и тёмно-серое.'],
+  ['Матирование и покрытие', 'Полное или частичное матирование для приватности и покрытие, которое отталкивает грязь и воду.']
+];
+
+const faq: [string, string][] = [
+  ['Какие бывают стеклянные ограждения?', 'Безрамные в зажимном профиле (стекло держится снизу), на точечном креплении (держатели на торце), на стойках с поручнем и французские балконы в оконном проёме.'],
+  ['Какое стекло используют?', 'Только триплекс: 17,52 или 21,52 мм для безрамных систем и 8,76 или 12,76 мм для ограждений на стойках.'],
+  ['Какая высота ограждения?', 'Обычно от 0,9 м на лестницах и 1,0–1,1 м на балконах и террасах. Безрамные профили держат стекло высотой до 1,3 м. Высоту проверяем по ДБН для вашего объекта.'],
+  ['Безопасно ли ограждение без стоек?', 'Да. Профиль зажимает стекло по всей длине и рассчитан на горизонтальную нагрузку 1–3 кН/м в зависимости от системы.'],
+  ['Что такое французский балкон?', 'Стеклянное ограждение в проёме панорамного окна: створки можно открывать, а стекло не даёт выпасть. Крепится к раме (LINEO) или в откосы (CANTO).'],
+  ['Какое ограждение выбрать для лестницы?', 'Для минимализма — CLIP или SOLO на точечных держателях, для доступного бюджета — GARDO на стойках с поручнем.'],
+  ['Какое ограждение выбрать для балкона?', 'DELGADO или ANTE для чистого фасада, BALDOSA — если нужно спрятать толстую плиту, GARDO — самый доступный вариант.'],
+  ['Подходит ли стекло для бассейна?', 'Да, рекомендуем высоту от 1,2 м и фурнитуру из нержавейки AISI 316. Можно добавить стеклянную калитку с доводчиком.'],
+  ['Можно ли ограждение на деревянное основание?', 'Да, стойки и точечные держатели крепят в деревянный каркас; зажимному профилю нужно жёсткое основание.'],
+  ['Сколько стоит стеклянное ограждение?', 'Зависит от системы, длины, высоты, стекла, поручня и монтажа. Ориентировочную цену покажет конфигуратор, точную — расчёт после замера.'],
+  ['Как работает конфигуратор?', 'Выберите систему, форму, размеры, цвет, стекло и поручень — цена пересчитывается сразу. Готовую конфигурацию можно отправить нам в заявке.'],
+  ['Можно ли профиль в цвет фасада?', 'Да: под нержавейку, чёрный, антрацит, белый или любой цвет RAL.'],
+  ['Нужен ли поручень?', 'Для безрамных ограждений — по желанию, но он защищает кромку и даёт опору. На стойках поручень — часть системы.'],
+  ['Можно ли ограждение с углами?', 'Да, формы I, L и U, углы 90° и нестандартные, с учётом уклонов и перепадов.'],
+  ['Сколько времени занимает изготовление?', 'Обычно несколько недель: изготовление стекла и профилей под ваши размеры. Точные сроки называем после замера.'],
+  ['Кто устанавливает ограждение?', 'Наша бригада: замер, проверка основания, монтаж профилей или стоек и стекла.'],
+  ['Выдержит ли стекло мороз и солнце?', 'Да, закалённый триплекс не боится перепадов температур, а плёнка защищает от ультрафиолета.'],
+  ['Как ухаживать за ограждением?', 'Мыть средством для стекла без абразивов. Покрытие от грязи уменьшает следы от дождя.'],
+  ['Где выполняете замер и монтаж?', 'В Киеве, Одессе и Львове с областями. Другие регионы — по договорённости.'],
+  ['Есть ли гарантия?', 'Да, на стекло, фурнитуру и монтаж, а также сервис после установки.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Конфигуратор ограждения', RAILINGS_CONFIGURATOR],
+  ['Ограждения для частного дома', houseCategory.path],
+  ['Остекление балконов', '/bezramne-sklinnya/sklinnya-balkoniv/'],
+  ['Безрамное остекление террас', '/poslugy/bezramne-sklinnya/'],
+  ['Стеклянные двери', '/sklyani-dveri/'],
+  ['Стеклянные перегородки', '/sklyani-perehorodky/'],
+  ['Решения для дома', '/rishennya/dlya-budynku/'],
+  ['Требования к стеклянным ограждениям', '/knowledge/sklyani-ohorozhi-vymohy-bezpeka/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: railingCategoriesRu.length,
+  itemListElement: railingCategoriesRu.map((category, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: category.name,
+    url: absoluteUrl(lp(category.path), origin)
+  }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
+---
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  locale="ru"
+  alternateLocales={['uk', 'ru']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Ограждения для лестниц, балконов, террас и бассейнов на немецких системах: безрамные в зажимном профиле, на точечных держателях, на стойках и французские балконы. Посчитайте ориентировочную цену в конфигураторе — замер, изготовление и монтаж в Киеве, Одессе и Львове.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href={lp(RAILINGS_CONFIGURATOR)}>Рассчитать в конфигураторе</a>
+          <a class="button button--outline" href="#types">Смотреть {typeCategories.length} видов</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Консольная лестница с безрамным стеклянным ограждением в современном доме" width="1080" height="771" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="ru" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>Безопасность, которая не закрывает вид</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Стеклянное ограждение защищает от падения, ветра и перепада высоты, но оставляет открытым вид и свет. Поэтому его ставят на лестницах и антресолях, балконах, террасах, крышах и у бассейнов — в квартирах, частных домах, отелях и ресторанах.</p>
+          <p>Мы работаем с немецкими системами ограждений: зажимными профилями, которые крепятся сверху или на торец плиты, точечными держателями, стойками из нержавейки и французскими балконами. Каждая система прошла испытания на нагрузку и подбирается под основание и назначение.</p>
+          <p>Ниже — виды ограждений по месту установки и системы, из которых мы их собираем.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>11 систем</b><span>профили, стойки, точки, французские балконы</span></li>
+          <li><b>Триплекс</b><span>8,76–21,52 мм</span></li>
+          <li><b>До 3 кН/м</b><span>нагрузка на ограждение</span></li>
+          <li><b>Киев · Одесса · Львов</b><span>замер, монтаж и сервис</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Виды</p><h2>Где ставим стеклянные ограждения</h2></div><p>Выберите вид — на каждой странице системы с фото, характеристики, сравнение и советы по выбору.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+      <a class="category-arrow-link" href={lp(houseCategory.path)}>{houseCategory.name}: лестница, балкон, терраса и бассейн в одном стиле <span aria-hidden="true">→</span></a>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Системы</p><h2>Системы стеклянных ограждений</h2></div><p>Безрамные профили, точечное крепление и стойки. Французские балконы LINEO и CANTO — на странице балконов.</p></div>
+      <div class="profile-grid">
+        {gridSystems.map((system) => (
+          <article class="profile-card">
+            <div class="profile-card__media">
+              <img src={`${RAILINGS_IMG}/${system.image}-480.webp`} srcset={`${RAILINGS_IMG}/${system.image}-480.webp 480w, ${RAILINGS_IMG}/${system.image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" alt={system.alt} width="480" height="480" loading="lazy" decoding="async" />
+              <span class="profile-card__kind">{system.kind}</span>
+            </div>
+            <div class="profile-card__body">
+              <h3>{system.name}</h3>
+              <p class="profile-card__blurb">{system.blurb}</p>
+              <a class="button button--mint profile-card__cta" href={lp(system.href)}>Подробнее о системе →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="inner-cta">
+        <div>
+          <p class="eyebrow eyebrow--light">Конфигуратор</p>
+          <h2>Посчитайте ограждение за 2 минуты</h2>
+          <p>Выберите систему, форму, размеры, стекло и поручень — увидите схему ограждения и ориентировочную стоимость. Готовую конфигурацию отправите нам одним кликом.</p>
+        </div>
+        <a class="button button--white" href={lp(RAILINGS_CONFIGURATOR)}>Открыть конфигуратор</a>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Преимущества</p><h2>Почему стеклянное ограждение</h2></div><p>Лёгкость стекла и надёжность металла — без покраски и обслуживания.</p></div>
+      <div class="material-grid material-grid--parts">
+        {benefits.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Стекло</p><h2>Стекло для ограждений</h2></div><p>В ограждениях работает только безопасное ламинированное стекло.</p></div>
+      <dl class="material-thickness">
+        {glassTypes.map(([name, text]) => <div><dt>{name}</dt><dd>{text}</dd></div>)}
+      </dl>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процесс</p><h2>От замера до готового ограждения</h2></div></div>
+      <div class="category-process__grid">
+        <div><span>01</span><b>Запрос</b><small>Фото, размеры, тип основания</small></div>
+        <div><span>02</span><b>Консультация</b><small>Система, стекло, поручень</small></div>
+        <div><span>03</span><b>Замер</b><small>Лазерный замер и проверка основания</small></div>
+        <div><span>04</span><b>Чертёж</b><small>Раскладка панелей и креплений</small></div>
+        <div><span>05</span><b>Изготовление</b><small>Стекло и профили под ваши размеры</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Установка и проверка</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">География</p>
+          <h2>Стеклянные ограждения: замер и монтаж<br />в Киеве, Одессе и Львове</h2>
+          <p>Выезжаем на замер, проверяем основание и перепады, согласовываем чертёж с раскладкой панелей, изготавливаем и устанавливаем ограждения в квартирах, домах, отелях и заведениях.</p>
+          <p>Для объектов в других регионах условия согласовываем отдельно.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Киев</b><span>замер и монтаж</span></li><li><b>Одесса</b><span>замер и монтаж</span></li><li><b>Львов</b><span>замер и монтаж</span></li></ul>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock
+        title="FAQ о стеклянных ограждениях"
+        intro="О системах, стекле, высоте, безопасности, цене и монтаже."
+        items={faq}
+        visibleCount={6}
+        expandTo={faq.length}
+        locale="ru"
+      />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Полезное</p><h2>Дальше по теме</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={lp(href)}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={lp(RAILINGS_HUB)}
+      product={title}
+      title={'Нужен предварительный расчёт?'}
+      text={'Пришлите фото и длину ограждения — подберём систему, стекло и поручень и подготовим ориентировочную стоимость.'}
+      options={[...railingCategoriesRu.map((c) => c.name), ...railingSystemsRu.map((s) => s.name)]}
+      optionsLabel="Вид или система"
+      commentPlaceholder="Где ограждение (лестница, балкон, терраса), длина, высота, основание, город"
+      locale="ru"
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>
