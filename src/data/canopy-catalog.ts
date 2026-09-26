@@ -2,16 +2,14 @@
  * Glass canopies section /sklyani-kozyrky/{slug}/ in the shared catalog format
  * (ProfileCategoryPage). Hub: src/pages/sklyani-kozyrky/index.astro.
  * Cards are the partner's canopy systems (Space Glass is a dealer; supplier never named).
- * Prices: partner retail EUR for the stated example size × EUR_RATE × COEFFICIENT
- * (src/data/railing-pricing.ts), shown as "від …".
+ * Prices are not shown ("за індивідуальним розрахунком"); `eur`/`size` keep the partner's
+ * reference price for a future configurator (EUR × EUR_RATE × COEFFICIENT, railing-pricing.ts).
  */
 import type { ProfileCategory, ProfileModel } from './profile-systems';
-import { COEFFICIENT, EUR_RATE } from './railing-pricing';
 
 export const CANOPY_HUB = '/sklyani-kozyrky/';
 export const CANOPY_IMG = '/images/catalog/sklyani-kozyrky';
 const P = (slug: string) => `${CANOPY_HUB}${slug}/`;
-const uah = (eur: number) => `від ${(Math.round((eur * EUR_RATE * COEFFICIENT) / 10) * 10).toLocaleString('uk-UA')} грн`;
 
 type Sys = { name: string; kind: string; blurb: string; specs: [string, string][]; features: string[]; alt: string; eur: number; size: string };
 export const CANOPY_SYSTEMS: Record<string, Sys> = {
@@ -30,7 +28,7 @@ export const CANOPY_SYSTEMS: Record<string, Sys> = {
 
 const sys = (key: string, image = key, blurb?: string): ProfileModel => {
   const s = CANOPY_SYSTEMS[key];
-  return { id: key, name: s.name, kind: s.kind, image: `gp-${image}`, imageAlt: s.alt, blurb: blurb ?? s.blurb, specs: s.specs, features: s.features, priceFrom: uah(s.eur), priceNote: s.size };
+  return { id: key, name: s.name, kind: s.kind, image: `gp-${image}`, imageAlt: s.alt, blurb: blurb ?? s.blurb, specs: s.specs, features: s.features };
 };
 
 const COMMON: [string, string][] = [
@@ -42,7 +40,7 @@ const COMMON: [string, string][] = [
   ['Чи іржавіє фурнітура?', 'Ні, тримачі, тяги й кронштейни — з нержавіючої сталі або алюмінію з покриттям.'],
   ['Чи потрібен дозвіл на козирок?', 'Для приватного будинку зазвичай ні; для багатоквартирного будинку чи комерційного фасаду може знадобитися погодження — готуємо креслення.'],
   ['Як доглядати за скляним козирком?', 'Мити засобом для скла кілька разів на сезон; гідрофобне покриття зменшує сліди від дощу.'],
-  ['Скільки коштує скляний козирок?', 'На картках вказана ціна від — для прикладового розміру без монтажу. Точну вартість рахуємо після заміру з урахуванням розміру, скла й кріплення.'],
+  ['Скільки коштує скляний козирок?', 'Вартість залежить від системи, розміру, скла й кріплення. Надішліть фото входу й розміри — підготуємо розрахунок, точну ціну фіксуємо після заміру.'],
   ['Скільки часу займає виготовлення?', 'Зазвичай кілька тижнів: скло й фурнітуру виготовляють під ваш розмір. Точні строки — після заміру.'],
   ['Де виконуєте замір і монтаж?', 'У Києві, Одесі та Львові з областями. Інші регіони — за домовленістю.'],
   ['Чи є гарантія?', 'Так, на скло, фурнітуру й монтаж.']
@@ -76,7 +74,7 @@ const page = (p: CanopyPage): ProfileCategory => {
     faq: [...p.faq, ...COMMON],
     catalogButton: 'Переглянути системи',
     optionsLabel: 'Система',
-    catalogNote: 'Ціни вказані для прикладових розмірів без монтажу й доставки. Остаточну вартість, товщину скла й кріплення визначаємо після заміру.'
+    catalogNote: 'Технічні параметри наведені для типових конфігурацій. Вартість, товщину скла й кріплення визначаємо після заміру — надішліть фото й розміри для розрахунку.'
   };
 };
 
@@ -86,7 +84,7 @@ export const canopyCategories: ProfileCategory[] = [
     name: 'Консольні козирки',
     h1: 'Консольні скляні козирки без опор',
     metaTitle: 'Консольні скляні козирки над входом — без тяг і опор | Space Glass',
-    metaDescription: 'Консольні скляні козирки над входом: безрамні в затискному профілі, з бічною стінкою, в алюмінієвій рамі з жолобом і підсвіткою. Триплекс, ціни від, замір і монтаж у Києві, Одесі та Львові.',
+    metaDescription: 'Консольні скляні козирки над входом: безрамні в затискному профілі, з бічною стінкою, в алюмінієвій рамі з жолобом і підсвіткою. Триплекс, замір і монтаж у Києві, Одесі та Львові.',
     eyebrow: 'Консольні',
     lead: 'Козирок, що тримається тільки на стіні — без тяг, стійок і кронштейнів. Найчистіший вигляд над входом у будинок чи офіс.',
     cardNote: 'Без тяг і опор: скло тримає профіль на стіні.',
@@ -136,7 +134,7 @@ export const canopyCategories: ProfileCategory[] = [
     name: 'Козирки на тягах',
     h1: 'Скляні козирки на тягах',
     metaTitle: 'Скляні козирки на тягах — прямі та арочні | Space Glass',
-    metaDescription: 'Скляні козирки на тягах із нержавійки: класичні прямі, арочні з гнутого скла, у підвісній трубчастій рамі для великих входів. Триплекс, ціни від. Київ, Одеса, Львів.',
+    metaDescription: 'Скляні козирки на тягах із нержавійки: класичні прямі, арочні з гнутого скла, у підвісній трубчастій рамі для великих входів. Триплекс. Київ, Одеса, Львів.',
     eyebrow: 'На тягах',
     lead: 'Класичний козирок: скло тримають точкові тримачі й тяги з нержавійки до стіни. Прямий, арочний або у великій підвісній рамі.',
     cardNote: 'Прямі, арочні й великі козирки на тягах.',
@@ -186,7 +184,7 @@ export const canopyCategories: ProfileCategory[] = [
     name: 'Козирки на кронштейнах',
     h1: 'Скляні козирки на кронштейнах',
     metaTitle: 'Скляні козирки на кронштейнах — мечі та трубчасті кронштейни | Space Glass',
-    metaDescription: 'Скляні козирки на кронштейнах із нержавійки: мечі SPADA з глибиною до 2 м, трубчасті кронштейни TRAVE для тісних місць. Триплекс, ціни від. Київ, Одеса, Львів.',
+    metaDescription: 'Скляні козирки на кронштейнах із нержавійки: мечі SPADA з глибиною до 2 м, трубчасті кронштейни TRAVE для тісних місць. Триплекс. Київ, Одеса, Львів.',
     eyebrow: 'На кронштейнах',
     lead: 'Скло лежить на кронштейнах, що кріпляться до стіни під козирком. Не потрібне місце над дверима для тяг — ідеально для низьких входів.',
     cardNote: 'Мечі та трубчасті кронштейни з нержавійки.',
@@ -286,7 +284,7 @@ export const canopyCategories: ProfileCategory[] = [
     name: 'Козирки з бічним захистом',
     h1: 'Скляні козирки з бічним вітрозахистом',
     metaTitle: 'Скляні козирки з бічною стінкою — захист від вітру й дощу | Space Glass',
-    metaDescription: 'Скляні козирки з бічною стінкою та окремі бічні вітрозахисти: захист входу від косого дощу й вітру. Триплекс, прозоре чи матове скло, ціни від. Київ, Одеса, Львів.',
+    metaDescription: 'Скляні козирки з бічною стінкою та окремі бічні вітрозахисти: захист входу від косого дощу й вітру. Триплекс, прозоре чи матове скло. Київ, Одеса, Львів.',
     eyebrow: 'З бічним захистом',
     lead: 'Козирок захищає зверху, бічна скляна стінка — від вітру й косого дощу. Вхід залишається сухим у будь-яку погоду.',
     cardNote: 'Козирок + скляна бічна стінка від вітру й дощу.',
@@ -325,7 +323,7 @@ export const canopyCategories: ProfileCategory[] = [
       ['Чи підходить вітрозахист для балкона?', 'Так, і для тераси чи бічного входу.'],
       ['Чи затінює стінка вхід?', 'Ні, прозоре скло пропускає світло.'],
       ['Як кріпиться стінка?', 'До стіни тримачами, за потреби з опорою до підлоги.'],
-      ['Скільки коштує комплект?', 'DURAVENTO — від ціни на картці; точно після заміру.']
+      ['Скільки коштує комплект?', 'Залежить від розміру козирка й стінки; розрахунок готуємо за фото й розмірами.']
     ],
     related: [['Консольні козирки', P('konsolni-kozyrky')], ['Козирки в рамі', P('kozyrky-v-rami')], ['Скляні огорожі терас', '/sklyani-ohorozhi/sklyani-ohorozhi-teras/']],
     ctaTitle: 'Потрібен захист входу від вітру?',
@@ -336,7 +334,7 @@ export const canopyCategories: ProfileCategory[] = [
     name: 'Козирки для бізнесу',
     h1: 'Скляні козирки для бізнесу та ЖК',
     metaTitle: 'Скляні козирки для магазинів, офісів і під’їздів ЖК | Space Glass',
-    metaDescription: 'Скляні козирки над входом для бізнесу: магазини, офіси, ресторани, під’їзди ЖК. Великі козирки в рамі, логотип на кронштейнах, підсвітка. Ціни від, замір і монтаж у Києві, Одесі та Львові.',
+    metaDescription: 'Скляні козирки над входом для бізнесу: магазини, офіси, ресторани, під’їзди ЖК. Великі козирки в рамі, логотип на кронштейнах, підсвітка.  замір і монтаж у Києві, Одесі та Львові.',
     eyebrow: 'Для бізнесу',
     lead: 'Вхід, який помічають: великі скляні козирки над магазином, офісом, рестораном чи під’їздом ЖК — з логотипом, підсвіткою й водовідведенням.',
     cardNote: 'Магазини, офіси, ресторани й під’їзди ЖК.',
@@ -391,4 +389,4 @@ export const canopyHubSystems = ([
   ['dura-plus', 'konsolni-kozyrky'], ['duravento', 'kozyrky-z-bokovym-zakhystom'], ['athena', 'kozyrky-v-rami'],
   ['trave', 'kozyrky-na-kronshteinakh'], ['spada', 'kozyrky-na-kronshteinakh'], ['punto', 'kozyrky-na-tyahakh'],
   ['tubo', 'kozyrky-na-tyahakh'], ['arcata', 'kozyrky-na-tyahakh'], ['ella', 'kozyrky-v-rami']
-] as const).map(([key, slug]) => ({ key, ...CANOPY_SYSTEMS[key], price: uah(CANOPY_SYSTEMS[key].eur), image: `gp-${key}`, href: `${P(slug)}#${key}` }));
+] as const).map(([key, slug]) => ({ key, ...CANOPY_SYSTEMS[key], image: `gp-${key}`, href: `${P(slug)}#${key}` }));

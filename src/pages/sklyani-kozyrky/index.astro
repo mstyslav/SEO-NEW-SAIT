@@ -19,9 +19,9 @@ const pageUrl = absoluteUrl(CANOPY_HUB, origin);
 
 const title = 'Скляні козирки';
 const h1 = 'Скляні козирки над входом';
-const metaTitle = 'Скляні козирки над входом на замовлення — ціни, системи, монтаж | Space Glass';
+const metaTitle = 'Скляні козирки над входом на замовлення — системи, монтаж, розрахунок | Space Glass';
 const metaDescription =
-  'Скляні козирки над входом у будинок, офіс, магазин і під’їзд: консольні, на тягах, на кронштейнах, у рамі, з бічним вітрозахистом. Німецькі системи, триплекс, ціни від. Замір і монтаж у Києві, Одесі та Львові.';
+  'Скляні козирки над входом у будинок, офіс, магазин і під’їзд: консольні, на тягах, на кронштейнах, у рамі, з бічним вітрозахистом. Німецькі системи, триплекс, розрахунок за фото. Замір і монтаж у Києві, Одесі та Львові.';
 
 const heroSrc = (w: number) => `${CANOPY_IMG}/hero-hub-${w}.webp`;
 const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
@@ -48,7 +48,7 @@ const types: [string, string][] = [
 const faq: [string, string][] = [
   ['Які бувають скляні козирки?', 'Консольні (тільки на стіні), на тягах, на кронштейнах, у рамі та з бічною стінкою від вітру.'],
   ['Яке скло для козирка?', 'Лише триплекс із загартованого скла — при пошкодженні уламки тримаються на плівці.'],
-  ['Скільки коштує скляний козирок?', 'На картках — ціни від для прикладових розмірів без монтажу. Точну вартість рахуємо після заміру.'],
+  ['Скільки коштує скляний козирок?', 'Залежить від системи, розміру, скла й кріплення. Надішліть фото входу й розміри — підготуємо розрахунок.'],
   ['Який козирок обрати для будинку?', 'Мінімалізм — консольний DURA PLUS, класика — PUNTO на тягах, зі світлом і жолобом — ATHENA.'],
   ['Який козирок для магазину чи офісу?', 'Великі — ELLA чи TUBO, з логотипом — SPADA, зі світлом — ATHENA.'],
   ['Чи витримає козирок сніг?', 'Так, системи розраховані на снігове навантаження; глибину й скло підбираємо під регіон.'],
@@ -129,7 +129,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <div class="category-prose">
           <p>Скляний козирок захищає вхід від дощу й снігу, але не затінює двері й не перевантажує фасад. Тому його ставлять над входами в будинки, офіси, магазини, ресторани та під’їзди житлових комплексів.</p>
           <p>Ми працюємо з німецькими системами козирків: консольними в затискному профілі, на тягах і кронштейнах із нержавійки, у алюмінієвій чи сталевій рамі з жолобом і підсвіткою, а також з бічними скляними стінками від вітру.</p>
-          <p>Нижче — типи козирків і системи з цінами від для прикладових розмірів.</p>
+          <p>Нижче — типи козирків і системи, з яких ми їх виготовляємо.</p>
         </div>
         <ul class="category-intro__spec">
           <li><b>11 систем</b><span>консольні, тяги, кронштейни, рами</span></li>
@@ -141,7 +141,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <section id="types" class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Які скляні козирки ми робимо</h2></div><p>Оберіть тип — на кожній сторінці системи з фото, характеристиками, цінами й порадами.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Які скляні козирки ми робимо</h2></div><p>Оберіть тип — на кожній сторінці системи з фото, характеристиками й порадами.</p></div>
       <div class="category-icon-grid category-icon-grid--showers">
         {hubItems.map((item) => (
           <a class="category-icon-card" href={item.href}>
@@ -155,7 +155,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <section id="systems" class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Системи</p><h2>Системи скляних козирків</h2></div><p>Ціни — від, для прикладових розмірів без монтажу. SEMPLICE і бічний вітрозахист — на сторінках «У рамі» та «З бічним захистом».</p></div>
+      <div class="category-heading"><div><p class="eyebrow">Системи</p><h2>Системи скляних козирків</h2></div><p>Ціна — за індивідуальним розрахунком. SEMPLICE і бічний вітрозахист — на сторінках «У рамі» та «З бічним захистом».</p></div>
       <div class="profile-grid">
         {canopyHubSystems.map((system) => (
           <article class="profile-card">
@@ -166,7 +166,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
             <div class="profile-card__body">
               <h3>{system.name}</h3>
               <p class="profile-card__blurb">{system.blurb}</p>
-              <p class="profile-card__price"><strong>{system.price}</strong><span>{system.size}</span></p>
+              <p class="profile-card__price">Ціна — за індивідуальним розрахунком</p>
               <a class="button button--mint profile-card__cta" href={system.href}>Детальніше про систему →</a>
             </div>
           </article>
