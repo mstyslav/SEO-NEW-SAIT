@@ -3037,7 +3037,7 @@ export const showerCategories: ProfileCategory[] = [
         "name": "Space Glass VICTORIA Chrome",
         "brand": "Space Glass",
         "kind": "Хром",
-        "image": "sg-victoria-white",
+        "image": "sg-victoria-chrome",
         "imageAlt": "П’ятикутна скляна душова кабіна VICTORIA з хромованою фурнітурою",
         "blurb": "Класичне виконання п’ятикутної кабіни: прозоре гартоване скло та хромована фурнітура.",
         "priceFrom": "орієнтовно від 25 828 грн",
