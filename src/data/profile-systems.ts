@@ -1,7 +1,7 @@
 /**
  * Aluminium + metal-plastic (PVC) profile-system catalog.
  *
- * Powers the two hubs (/alyuminiievi-konstruktsii/, /metaloplastykovi-konstruktsii/)
+ * Powers the two hubs (/alyuminiyevi-konstrukcziyi/, /metaloplastykovi-konstrukcziyi/)
  * and their child pages, rendered by src/components/profile/ProfileCategoryPage.astro.
  *
  * SOURCES (checked 2026-09-25)
@@ -82,8 +82,8 @@ export interface ProfileCategory {
 
 export const IMG_BASE = '/images/catalog/profile-systems';
 
-export const ALU_HUB = '/alyuminiievi-konstruktsii/';
-export const PVC_HUB = '/metaloplastykovi-konstruktsii/';
+export const ALU_HUB = '/alyuminiyevi-konstrukcziyi/';
+export const PVC_HUB = '/metaloplastykovi-konstrukcziyi/';
 
 const cta = '/contacts/#contact-form';
 
@@ -92,7 +92,7 @@ export const profileCategories: ProfileCategory[] = [
   {
     slug: 'vikna',
     group: 'alu',
-    path: '/alyuminiievi-konstruktsii/vikna/',
+    path: '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/',
     name: 'Алюмінієві вікна',
     h1: 'Алюмінієві вікна на замовлення',
     metaTitle: 'Алюмінієві вікна Aluprof на замовлення — MB-79N, MB-86N | Space Glass',
@@ -307,12 +307,12 @@ export const profileCategories: ProfileCategory[] = [
       ['Чи працюєте з новобудовами та забудовниками?', 'Так. Готуємо карту прорізів і специфікацію на весь об’єкт і можемо виконувати поетапні поставки та монтаж.']
     ],
     related: [
-      ['Алюмінієві вхідні двері', '/alyuminiievi-konstruktsii/dveri/'],
-      ['Розсувні двері', '/alyuminiievi-konstruktsii/rozsuvni-dveri/'],
-      ['Фасадне скління', '/alyuminiievi-konstruktsii/fasadne-sklinnya/'],
-      ['Зимові сади', '/alyuminiievi-konstruktsii/zymovi-sady/'],
-      ['Металопластикові вікна', '/metaloplastykovi-konstruktsii/vikna/'],
-      ['Сітки плісе', '/alyuminiievi-konstruktsii/sitky-plise/'],
+      ['Алюмінієві вхідні двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
+      ['Розсувні двері', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
+      ['Фасадне скління', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
+      ['Зимові сади', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
+      ['Металопластикові вікна', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/'],
+      ['Сітки плісе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
       ['Склопакет: як обрати', '/knowledge/sklopaket-yak-obraty/'],
       ['Панорамне скління', '/poslugy/bezramne-sklinnya/panoramne-sklinnya/']
     ],
@@ -324,7 +324,7 @@ export const profileCategories: ProfileCategory[] = [
   {
     slug: 'dveri',
     group: 'alu',
-    path: '/alyuminiievi-konstruktsii/dveri/',
+    path: '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/',
     name: 'Алюмінієві двері',
     h1: 'Алюмінієві вхідні двері на замовлення',
     metaTitle: 'Алюмінієві вхідні двері Aluprof — Pivot, комерційні, гармошка | Space Glass',
@@ -539,13 +539,13 @@ export const profileCategories: ProfileCategory[] = [
       ['Який колір дверей можна обрати?', 'Будь-який колір RAL, а також структурні та деревоподібні покриття — однаково з вікнами та фасадом.']
     ],
     related: [
-      ['Алюмінієві вікна', '/alyuminiievi-konstruktsii/vikna/'],
-      ['Розсувні двері', '/alyuminiievi-konstruktsii/rozsuvni-dveri/'],
-      ['Фасадне скління', '/alyuminiievi-konstruktsii/fasadne-sklinnya/'],
+      ['Алюмінієві вікна', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/'],
+      ['Розсувні двері', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
+      ['Фасадне скління', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
       ['Скляні вхідні групи', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'],
       ['Вітринне скління', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
       ['Скляні двері в алюмінієвому профілі', '/poslugy/sklyani-dveri/dveri-v-aliuminiievomu-profili/'],
-      ['Зимові сади', '/alyuminiievi-konstruktsii/zymovi-sady/'],
+      ['Зимові сади', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
       ['Скління для ресторану', '/rishennya/dlya-restoranu/']
     ],
     ctaTitle: 'Підберемо двері під ваш вхід',
@@ -556,7 +556,7 @@ export const profileCategories: ProfileCategory[] = [
   {
     slug: 'rozsuvni-dveri',
     group: 'alu',
-    path: '/alyuminiievi-konstruktsii/rozsuvni-dveri/',
+    path: '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/',
     name: 'Розсувні двері',
     h1: 'Алюмінієві розсувні системи',
     metaTitle: 'Алюмінієві розсувні двері Aluprof — MB-77HS, MB-82HS, Skyline | Space Glass',
@@ -771,10 +771,10 @@ export const profileCategories: ProfileCategory[] = [
       ['Чи є гарантія на механізми?', 'Так, надаємо гарантію на конструкцію та монтаж, а також сервіс: регулювання роликів, заміну ущільнювачів, налаштування приводу.']
     ],
     related: [
-      ['Зимові сади', '/alyuminiievi-konstruktsii/zymovi-sady/'],
-      ['Алюмінієві вікна', '/alyuminiievi-konstruktsii/vikna/'],
-      ['Алюмінієві двері', '/alyuminiievi-konstruktsii/dveri/'],
-      ['Фасадне скління', '/alyuminiievi-konstruktsii/fasadne-sklinnya/'],
+      ['Зимові сади', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
+      ['Алюмінієві вікна', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/'],
+      ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
+      ['Фасадне скління', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
       ['Безрамне скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
       ['Розсувні безрамні системи', '/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/'],
       ['Панорамне скління', '/poslugy/bezramne-sklinnya/panoramne-sklinnya/'],
@@ -788,7 +788,7 @@ export const profileCategories: ProfileCategory[] = [
   {
     slug: 'fasadne-sklinnya',
     group: 'alu',
-    path: '/alyuminiievi-konstruktsii/fasadne-sklinnya/',
+    path: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/',
     name: 'Фасадне скління',
     h1: 'Алюмінієві фасадні системи',
     metaTitle: 'Алюмінієві фасади Aluprof — стійково-ригельні та структурні | Space Glass',
@@ -1007,8 +1007,8 @@ export const profileCategories: ProfileCategory[] = [
       ['Структурне скління фасаду', '/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/'],
       ['Скляні фасади будинків', '/poslugy/sklyani-fasady/sklyani-fasady-budynkiv/'],
       ['Вітринне скління', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
-      ['Алюмінієві вікна', '/alyuminiievi-konstruktsii/vikna/'],
-      ['Алюмінієві двері', '/alyuminiievi-konstruktsii/dveri/'],
+      ['Алюмінієві вікна', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/'],
+      ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
       ['Скляний дах: що врахувати', '/knowledge/sklyanyi-dakh-shcho-vrakhuvaty/'],
       ['Архітектурні системи', '/arkhitekturni-systemy/']
     ],
@@ -1020,7 +1020,7 @@ export const profileCategories: ProfileCategory[] = [
   {
     slug: 'zymovi-sady',
     group: 'alu',
-    path: '/alyuminiievi-konstruktsii/zymovi-sady/',
+    path: '/alyuminiyevi-konstrukcziyi/zymovi-sady/',
     name: 'Зимові сади',
     h1: 'Алюмінієві зимові сади та тераси',
     metaTitle: 'Алюмінієві зимові сади та скління терас — Aluprof | Space Glass',
@@ -1235,9 +1235,9 @@ export const profileCategories: ProfileCategory[] = [
       ['Чи надаєте гарантію?', 'Так, на конструкції та монтаж, а також сервісне обслуговування після здачі.']
     ],
     related: [
-      ['Розсувні двері', '/alyuminiievi-konstruktsii/rozsuvni-dveri/'],
-      ['Фасадне скління', '/alyuminiievi-konstruktsii/fasadne-sklinnya/'],
-      ['Алюмінієві вікна', '/alyuminiievi-konstruktsii/vikna/'],
+      ['Розсувні двері', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
+      ['Фасадне скління', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
+      ['Алюмінієві вікна', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/'],
       ['Безрамне скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
       ['Безрамне скління альтанки', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-altanky/'],
       ['Тепле чи холодне скління тераси', '/knowledge/teple-chy-kholodne-sklinnya-terasy/'],
@@ -1252,7 +1252,7 @@ export const profileCategories: ProfileCategory[] = [
   {
     slug: 'vikna',
     group: 'pvc',
-    path: '/metaloplastykovi-konstruktsii/vikna/',
+    path: '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/',
     name: 'Металопластикові вікна',
     h1: 'Металопластикові вікна на замовлення',
     metaTitle: 'Металопластикові вікна Aluplast, WDS — ціна та монтаж | Space Glass',
@@ -1466,9 +1466,9 @@ export const profileCategories: ProfileCategory[] = [
       ['Де ви виконуєте монтаж?', 'У Києві, Одесі та Львові з областями; інші міста — за домовленістю.']
     ],
     related: [
-      ['Сітки плісе', '/alyuminiievi-konstruktsii/sitky-plise/'],
-      ['Алюмінієві вікна', '/alyuminiievi-konstruktsii/vikna/'],
-      ['Алюмінієві розсувні двері', '/alyuminiievi-konstruktsii/rozsuvni-dveri/'],
+      ['Сітки плісе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
+      ['Алюмінієві вікна', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/'],
+      ['Алюмінієві розсувні двері', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
       ['Склопакет: як обрати', '/knowledge/sklopaket-yak-obraty/'],
       ['Безрамне скління балкона', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-balkona/'],
       ['Скління для будинку', '/rishennya/dlya-budynku/'],
@@ -1482,7 +1482,7 @@ export const profileCategories: ProfileCategory[] = [
   {
     slug: 'ofisne-sklinnya',
     group: 'alu',
-    path: '/alyuminiievi-konstruktsii/ofisne-sklinnya/',
+    path: '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/',
     name: 'Офісне скління',
     h1: 'Алюмінієві офісні перегородки',
     metaTitle: 'Офісне скління та алюмінієві перегородки Aluprof | Space Glass',
@@ -1699,9 +1699,9 @@ export const profileCategories: ProfileCategory[] = [
     related: [
       ['Скляні перегородки', '/sklyani-perehorodky/'],
       ['Скління для офісу', '/rishennya/dlya-ofisu/'],
-      ['Офісні перегородки з ПВХ', '/metaloplastykovi-konstruktsii/ofisni-perehorodky/'],
-      ['Алюмінієві двері', '/alyuminiievi-konstruktsii/dveri/'],
-      ['Фасадне скління', '/alyuminiievi-konstruktsii/fasadne-sklinnya/'],
+      ['Офісні перегородки з ПВХ', '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/'],
+      ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
+      ['Фасадне скління', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
       ['Скляні двері в алюмінієвому профілі', '/poslugy/sklyani-dveri/dveri-v-aliuminiievomu-profili/'],
       ['Скляні маркерні дошки', '/poslugy/sklo-dlia-biznesu/sklyani-doshky-dlia-ofisu/'],
       ['Проєкти', '/projects/']
@@ -1714,7 +1714,7 @@ export const profileCategories: ProfileCategory[] = [
   {
     slug: 'sitky-plise',
     group: 'alu',
-    path: '/alyuminiievi-konstruktsii/sitky-plise/',
+    path: '/alyuminiyevi-konstrukcziyi/sitky-plise/',
     name: 'Сітки плісе',
     h1: 'Москітні сітки плісе',
     metaTitle: 'Москітні сітки плісе на двері та вікна — на замовлення | Space Glass',
@@ -1905,12 +1905,12 @@ export const profileCategories: ProfileCategory[] = [
       ['Чи є гарантія?', 'Так, надаємо гарантію на виготовлення та монтаж.']
     ],
     related: [
-      ['Металопластикові вікна', '/metaloplastykovi-konstruktsii/vikna/'],
-      ['Металопластикові двері', '/metaloplastykovi-konstruktsii/dveri/'],
-      ['Алюмінієві вікна', '/alyuminiievi-konstruktsii/vikna/'],
-      ['Розсувні двері', '/alyuminiievi-konstruktsii/rozsuvni-dveri/'],
-      ['Зимові сади', '/alyuminiievi-konstruktsii/zymovi-sady/'],
-      ['Перголи', '/alyuminiievi-konstruktsii/perholy/'],
+      ['Металопластикові вікна', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/'],
+      ['Металопластикові двері', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-dveri/'],
+      ['Алюмінієві вікна', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/'],
+      ['Розсувні двері', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
+      ['Зимові сади', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
+      ['Перголи', '/alyuminiyevi-konstrukcziyi/pergoly/'],
       ['Безрамне скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
       ['Скління для будинку', '/rishennya/dlya-budynku/']
     ],
@@ -1922,7 +1922,7 @@ export const profileCategories: ProfileCategory[] = [
   {
     slug: 'perholy',
     group: 'alu',
-    path: '/alyuminiievi-konstruktsii/perholy/',
+    path: '/alyuminiyevi-konstrukcziyi/pergoly/',
     name: 'Перголи',
     h1: 'Алюмінієві перголи для тераси',
     metaTitle: 'Алюмінієві перголи для тераси — біокліматичні, з тентом, зі склом | Space Glass',
@@ -2121,9 +2121,9 @@ export const profileCategories: ProfileCategory[] = [
       ['Чи є гарантія?', 'Так, на конструкцію, приводи та монтаж, а також сервісне обслуговування.']
     ],
     related: [
-      ['Зимові сади', '/alyuminiievi-konstruktsii/zymovi-sady/'],
-      ['Розсувні двері', '/alyuminiievi-konstruktsii/rozsuvni-dveri/'],
-      ['Сітки плісе', '/alyuminiievi-konstruktsii/sitky-plise/'],
+      ['Зимові сади', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
+      ['Розсувні двері', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
+      ['Сітки плісе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
       ['Безрамне скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
       ['Безрамне скління альтанки', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-altanky/'],
       ['Скляні козирки', '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/'],
@@ -2138,7 +2138,7 @@ export const profileCategories: ProfileCategory[] = [
   {
     slug: 'dveri',
     group: 'pvc',
-    path: '/metaloplastykovi-konstruktsii/dveri/',
+    path: '/metaloplastykovi-konstrukcziyi/metaloplastykovi-dveri/',
     name: 'Металопластикові двері',
     h1: 'Металопластикові двері на замовлення',
     metaTitle: 'Металопластикові двері Aluplast — вхідні та балконні | Space Glass',
@@ -2353,10 +2353,10 @@ export const profileCategories: ProfileCategory[] = [
       ['Чи є гарантія?', 'Так, на двері та монтаж; умови фіксуємо в договорі.']
     ],
     related: [
-      ['Металопластикові вікна', '/metaloplastykovi-konstruktsii/vikna/'],
-      ['Розсувні двері з ПВХ', '/metaloplastykovi-konstruktsii/rozsuvni-dveri/'],
-      ['Алюмінієві двері', '/alyuminiievi-konstruktsii/dveri/'],
-      ['Сітки плісе', '/alyuminiievi-konstruktsii/sitky-plise/'],
+      ['Металопластикові вікна', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/'],
+      ['Розсувні двері з ПВХ', '/metaloplastykovi-konstrukcziyi/rozsuvni-dveri/'],
+      ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
+      ['Сітки плісе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
       ['Скляні двері', '/sklyani-dveri/'],
       ['Скління для будинку', '/rishennya/dlya-budynku/'],
       ['Склопакет: як обрати', '/knowledge/sklopaket-yak-obraty/'],
@@ -2370,7 +2370,7 @@ export const profileCategories: ProfileCategory[] = [
   {
     slug: 'rozsuvni-dveri',
     group: 'pvc',
-    path: '/metaloplastykovi-konstruktsii/rozsuvni-dveri/',
+    path: '/metaloplastykovi-konstrukcziyi/rozsuvni-dveri/',
     name: 'Розсувні двері',
     h1: 'Металопластикові розсувні двері',
     metaTitle: 'Розсувні металопластикові двері Aluplast HST, Smart-Slide | Space Glass',
@@ -2585,11 +2585,11 @@ export const profileCategories: ProfileCategory[] = [
       ['Чи є гарантія?', 'Так, на конструкцію та монтаж, а також сервісне регулювання.']
     ],
     related: [
-      ['Металопластикові двері', '/metaloplastykovi-konstruktsii/dveri/'],
-      ['Металопластикові вікна', '/metaloplastykovi-konstruktsii/vikna/'],
-      ['Алюмінієві розсувні двері', '/alyuminiievi-konstruktsii/rozsuvni-dveri/'],
-      ['Сітки плісе', '/alyuminiievi-konstruktsii/sitky-plise/'],
-      ['Перголи', '/alyuminiievi-konstruktsii/perholy/'],
+      ['Металопластикові двері', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-dveri/'],
+      ['Металопластикові вікна', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/'],
+      ['Алюмінієві розсувні двері', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
+      ['Сітки плісе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
+      ['Перголи', '/alyuminiyevi-konstrukcziyi/pergoly/'],
       ['Безрамне скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
       ['Тепле чи холодне скління тераси', '/knowledge/teple-chy-kholodne-sklinnya-terasy/'],
       ['Скління для будинку', '/rishennya/dlya-budynku/']
@@ -2602,7 +2602,7 @@ export const profileCategories: ProfileCategory[] = [
   {
     slug: 'ofisni-perehorodky',
     group: 'pvc',
-    path: '/metaloplastykovi-konstruktsii/ofisni-perehorodky/',
+    path: '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/',
     name: 'Офісні скляні перегородки',
     h1: 'Металопластикові офісні перегородки',
     metaTitle: 'Офісні перегородки з металопластику та скла — на замовлення | Space Glass',
@@ -2793,10 +2793,10 @@ export const profileCategories: ProfileCategory[] = [
       ['Чи є гарантія?', 'Так, на конструкцію та монтаж, а також сервіс після встановлення.']
     ],
     related: [
-      ['Алюмінієві офісні перегородки', '/alyuminiievi-konstruktsii/ofisne-sklinnya/'],
+      ['Алюмінієві офісні перегородки', '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/'],
       ['Скляні перегородки', '/sklyani-perehorodky/'],
-      ['Металопластикові двері', '/metaloplastykovi-konstruktsii/dveri/'],
-      ['Металопластикові вікна', '/metaloplastykovi-konstruktsii/vikna/'],
+      ['Металопластикові двері', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-dveri/'],
+      ['Металопластикові вікна', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/'],
       ['Скління для офісу', '/rishennya/dlya-ofisu/'],
       ['Скління для магазину', '/rishennya/dlya-magazynu/'],
       ['Проєкти', '/projects/'],

@@ -14,7 +14,7 @@ import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
 
 const origin = Astro.site ?? Astro.url.origin;
-const pageUrl = absoluteUrl('/alyuminiievi-konstruktsii/', origin);
+const pageUrl = absoluteUrl('/alyuminiyevi-konstrukcziyi/', origin);
 
 const title = 'Алюмінієві конструкції';
 const h1 = 'Алюмінієві конструкції на замовлення';
@@ -84,8 +84,8 @@ const faq: [string, string][] = [
 ];
 
 const relatedLinks: [string, string][] = [
-  ['Металопластикові вікна', '/metaloplastykovi-konstruktsii/vikna/'],
-  ['Сітки плісе', '/alyuminiievi-konstruktsii/sitky-plise/'],
+  ['Металопластикові вікна', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/'],
+  ['Сітки плісе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
   ['Стійково-ригельне скління', '/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/'],
   ['Скляні вхідні групи', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'],
   ['Безрамне скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
@@ -256,7 +256,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <ProfileRequestForm
-      page={'/alyuminiievi-konstruktsii/'}
+      page={'/alyuminiyevi-konstrukcziyi/'}
       product={title}
       title={'Потрібен попередній розрахунок?'}
       text={'Надішліть розміри прорізів або опишіть задачу — підберемо систему Aluprof і підготуємо орієнтовну вартість.'}

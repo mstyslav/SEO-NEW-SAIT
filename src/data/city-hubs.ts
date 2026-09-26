@@ -296,7 +296,7 @@ const kyivUk: CityHub = {
       'Повний цикл роботи зі склом та алюмінієм: від душових і перегородок для квартири до фасадного скління й алюмінієвих систем для комерційних об’єктів. Оберіть напрям, щоб побачити конкретні рішення, приклади та умови.',
     allLinkLabel: 'Переглянути всі напрямки та послуги →',
     allLinkHref: '/poslugy/',
-    categoryOverrides: { '/alyuminiievi-konstruktsii/': ALU_OVERRIDE_UK }
+    categoryOverrides: { '/alyuminiyevi-konstrukcziyi/': ALU_OVERRIDE_UK }
   },
 
   localIntro: {
@@ -493,7 +493,7 @@ const odesaUk: CityHub = {
       'Повний цикл роботи зі склом та алюмінієм — від душових і дзеркал для квартири до вітрин, вхідних груп і фасадного скління для кафе, ресторанів і магазинів. Оберіть напрям, щоб побачити конкретні рішення та приклади.',
     allLinkLabel: 'Переглянути всі напрямки та послуги →',
     allLinkHref: '/poslugy/',
-    categoryOverrides: { '/alyuminiievi-konstruktsii/': ALU_OVERRIDE_UK }
+    categoryOverrides: { '/alyuminiyevi-konstrukcziyi/': ALU_OVERRIDE_UK }
   },
 
   localIntro: {
@@ -690,7 +690,7 @@ const lvivUk: CityHub = {
       'Повний цикл роботи зі склом та алюмінієм — від душових і перегородок за індивідуальними розмірами до огорож, дзеркал, безрамного скління й алюмінієвих систем. Оберіть напрям, щоб побачити конкретні рішення та приклади.',
     allLinkLabel: 'Переглянути всі напрямки та послуги →',
     allLinkHref: '/poslugy/',
-    categoryOverrides: { '/alyuminiievi-konstruktsii/': ALU_OVERRIDE_UK }
+    categoryOverrides: { '/alyuminiyevi-konstrukcziyi/': ALU_OVERRIDE_UK }
   },
 
   localIntro: {
@@ -887,7 +887,7 @@ const kyivRu: CityHub = {
       'Полный цикл работы со стеклом и алюминием: от душевых и перегородок для квартиры до фасадного остекления и алюминиевых систем для коммерческих объектов. Выберите направление, чтобы увидеть конкретные решения, примеры и условия.',
     allLinkLabel: 'Смотреть все направления и услуги →',
     allLinkHref: '/poslugy/',
-    categoryOverrides: { '/alyuminiievi-konstruktsii/': ALU_OVERRIDE_RU }
+    categoryOverrides: { '/alyuminiyevi-konstrukcziyi/': ALU_OVERRIDE_RU }
   },
 
   localIntro: {
@@ -1084,7 +1084,7 @@ const odesaRu: CityHub = {
       'Полный цикл работы со стеклом и алюминием — от душевых и зеркал для квартиры до витрин, входных групп и фасадного остекления для кафе, ресторанов и магазинов. Выберите направление, чтобы увидеть конкретные решения и примеры.',
     allLinkLabel: 'Смотреть все направления и услуги →',
     allLinkHref: '/poslugy/',
-    categoryOverrides: { '/alyuminiievi-konstruktsii/': ALU_OVERRIDE_RU }
+    categoryOverrides: { '/alyuminiyevi-konstrukcziyi/': ALU_OVERRIDE_RU }
   },
 
   localIntro: {
@@ -1281,7 +1281,7 @@ const lvivRu: CityHub = {
       'Полный цикл работы со стеклом и алюминием — от душевых и перегородок по индивидуальным размерам до ограждений, зеркал, безрамного остекления и алюминиевых систем. Выберите направление, чтобы увидеть конкретные решения и примеры.',
     allLinkLabel: 'Смотреть все направления и услуги →',
     allLinkHref: '/poslugy/',
-    categoryOverrides: { '/alyuminiievi-konstruktsii/': ALU_OVERRIDE_RU }
+    categoryOverrides: { '/alyuminiyevi-konstrukcziyi/': ALU_OVERRIDE_RU }
   },
 
   localIntro: {

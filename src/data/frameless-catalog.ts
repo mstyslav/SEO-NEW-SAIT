@@ -2690,11 +2690,11 @@ export const framelessCategories: ProfileCategory[] = [
       ],
       [
         "Алюмінієві розсувні двері",
-        "/alyuminiievi-konstruktsii/rozsuvni-dveri/"
+        "/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/"
       ],
       [
         "Зимові сади",
-        "/alyuminiievi-konstruktsii/zymovi-sady/"
+        "/alyuminiyevi-konstrukcziyi/zymovi-sady/"
       ],
       [
         "Тепле чи холодне скління тераси",
@@ -3790,7 +3790,7 @@ export const framelessCategories: ProfileCategory[] = [
       ],
       [
         "Перголи",
-        "/alyuminiievi-konstruktsii/perholy/"
+        "/alyuminiyevi-konstrukcziyi/pergoly/"
       ],
       [
         "Скління для будинку",
@@ -4340,11 +4340,11 @@ export const framelessCategories: ProfileCategory[] = [
       ],
       [
         "Перголи",
-        "/alyuminiievi-konstruktsii/perholy/"
+        "/alyuminiyevi-konstrukcziyi/pergoly/"
       ],
       [
         "Сітки плісе",
-        "/alyuminiievi-konstruktsii/sitky-plise/"
+        "/alyuminiyevi-konstrukcziyi/sitky-plise/"
       ],
       [
         "Тепле чи холодне скління тераси",
@@ -4890,11 +4890,11 @@ export const framelessCategories: ProfileCategory[] = [
       ],
       [
         "Фасадне скління",
-        "/alyuminiievi-konstruktsii/fasadne-sklinnya/"
+        "/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/"
       ],
       [
         "Алюмінієві розсувні двері",
-        "/alyuminiievi-konstruktsii/rozsuvni-dveri/"
+        "/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/"
       ],
       [
         "Тепле чи холодне скління тераси",

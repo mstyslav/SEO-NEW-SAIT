@@ -5,9 +5,9 @@ export const projectCategories = [
   { id: 'glass-doors', label: 'Скляні двері', labelRu: 'Стеклянные двери', serviceHref: '/sklyani-dveri/' },
   { id: 'railings', label: 'Скляні огорожі', labelRu: 'Стеклянные ограждения', serviceHref: '/sklyani-ohorozhi/' },
   { id: 'frameless-glazing', label: 'Безрамне скління', labelRu: 'Безрамное остекление', serviceHref: '/bezramne-configurator/' },
-  { id: 'aluminium', label: 'Алюмінієві конструкції', labelRu: 'Алюминиевые конструкции', serviceHref: '/alyuminiievi-konstruktsii/' },
+  { id: 'aluminium', label: 'Алюмінієві конструкції', labelRu: 'Алюминиевые конструкции', serviceHref: '/alyuminiyevi-konstrukcziyi/' },
   { id: 'glass-facades', label: 'Скляні фасади', labelRu: 'Стеклянные фасады', serviceHref: '/arkhitekturni-systemy/' },
-  { id: 'pvc', label: 'Металопластикові конструкції', labelRu: 'Металлопластиковые конструкции', serviceHref: '/metaloplastykovi-konstruktsii/' },
+  { id: 'pvc', label: 'Металопластикові конструкції', labelRu: 'Металлопластиковые конструкции', serviceHref: '/metaloplastykovi-konstrukcziyi/' },
   { id: 'business-glass', label: 'Скло для бізнесу', labelRu: 'Стекло для бизнеса', serviceHref: '/rishennya/dlya-ofisu/' }
 ] as const;
 

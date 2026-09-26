@@ -9,7 +9,7 @@ const allowedCategories = new Set([
 ]);
 const serviceRoutePrefixes = [
   '/dushovi-kabiny/', '/dzerkala/', '/sklyani-perehorodky/', '/sklyani-dveri/',
-  '/sklyani-ohorozhi/', '/alyuminiievi-konstruktsii/', '/metaloplastykovi-konstruktsii/',
+  '/sklyani-ohorozhi/', '/alyuminiyevi-konstrukcziyi/', '/metaloplastykovi-konstrukcziyi/',
   '/arkhitekturni-systemy/', '/poslugy/'
 ];
 const files = fs.readdirSync(contentDir).filter((file) => file.endsWith('.json'));

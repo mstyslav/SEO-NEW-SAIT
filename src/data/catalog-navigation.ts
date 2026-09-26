@@ -119,13 +119,13 @@ const mirrorFeaturedCategory = (locale: Locale): CatalogNavigationCategory => ({
 const featuredCategories: Record<Locale, CatalogNavigationCategory[]> = {
   uk: [
     mirrorFeaturedCategory('uk'),
-    { slug: 'alyuminiievi-konstruktsii', name: 'Алюмінієві конструкції', href: '/alyuminiievi-konstruktsii/', services: profileMenu('alu', 'uk') },
-    { slug: 'metaloplastykovi-konstruktsii', name: 'Металопластикові конструкції', href: '/metaloplastykovi-konstruktsii/', services: profileMenu('pvc', 'uk') }
+    { slug: 'alyuminiievi-konstruktsii', name: 'Алюмінієві конструкції', href: '/alyuminiyevi-konstrukcziyi/', services: profileMenu('alu', 'uk') },
+    { slug: 'metaloplastykovi-konstruktsii', name: 'Металопластикові конструкції', href: '/metaloplastykovi-konstrukcziyi/', services: profileMenu('pvc', 'uk') }
   ],
   ru: [
     mirrorFeaturedCategory('ru'),
-    { slug: 'alyuminiievi-konstruktsii', name: 'Алюминиевые конструкции', href: '/alyuminiievi-konstruktsii/', services: profileMenu('alu', 'ru') },
-    { slug: 'metaloplastykovi-konstruktsii', name: 'Металлопластиковые конструкции', href: '/metaloplastykovi-konstruktsii/', services: profileMenu('pvc', 'ru') }
+    { slug: 'alyuminiievi-konstruktsii', name: 'Алюминиевые конструкции', href: '/alyuminiyevi-konstrukcziyi/', services: profileMenu('alu', 'ru') },
+    { slug: 'metaloplastykovi-konstruktsii', name: 'Металлопластиковые конструкции', href: '/metaloplastykovi-konstrukcziyi/', services: profileMenu('pvc', 'ru') }
   ]
 };
 

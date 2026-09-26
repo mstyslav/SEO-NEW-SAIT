@@ -83,7 +83,7 @@ export const aboutContent: Record<Locale, AboutContent> = {
         { label: 'Скляні навіси', href: '/arkhitekturni-systemy/' },
         { label: 'Безрамне скління', href: '/arkhitekturni-systemy/' },
         { label: 'Фасадне скління', href: '/fasadne-configurator/' },
-        { label: 'Алюмінієві вікна та двері', href: '/alyuminiievi-konstruktsii/' }
+        { label: 'Алюмінієві вікна та двері', href: '/alyuminiyevi-konstrukcziyi/' }
       ]
     },
     story: {
@@ -199,7 +199,7 @@ export const aboutContent: Record<Locale, AboutContent> = {
         { label: 'Стеклянные навесы', href: '/arkhitekturni-systemy/' },
         { label: 'Безрамное остекление', href: '/arkhitekturni-systemy/' },
         { label: 'Фасадное остекление', href: '/fasadne-configurator/' },
-        { label: 'Алюминиевые окна и двери', href: '/alyuminiievi-konstruktsii/' }
+        { label: 'Алюминиевые окна и двери', href: '/alyuminiyevi-konstrukcziyi/' }
       ]
     },
     story: {

@@ -44,7 +44,7 @@ export const solutionExtras: Record<string, SolutionExtra> = {
       { label: 'Скляні двері', href: '/sklyani-dveri/', image: P('wardrobe-partition-crystal-springs-kyiv'), note: 'Розпашні, розсувні, приховані' },
       { label: 'Дзеркала з підсвіткою', href: '/dzerkala/led-dzerkala/', image: `${DZ}/cat-led-480.webp`, note: 'Для ванної та передпокою' },
       { label: 'Шторки на ванну', href: '/dushovi-kabiny/shtorky-dlya-vannoyi/', image: `${SH}/hero-shtorky-dlya-vannoyi-480.webp`, note: 'Замість текстильної шторки' },
-      { label: 'Металопластикові вікна', href: '/metaloplastykovi-konstruktsii/vikna/', image: `${PS}/cat-pvc-vikna-480.webp`, note: 'Теплі багатокамерні профілі' }
+      { label: 'Металопластикові вікна', href: '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/', image: `${PS}/cat-pvc-vikna-480.webp`, note: 'Теплі багатокамерні профілі' }
     ],
     projectSlugs: ['loft-kyiv', 'kitchen-partition-fjord-kyiv', 'bath-screen-akvarel-odesa', 'mirrored-wardrobe-doors-milos-odesa', 'wardrobe-partition-crystal-springs-kyiv', 'folding-shower-doors-varshavskyi-kyiv'],
     seoHeading: 'Скляні конструкції для квартири на замовлення',
@@ -62,10 +62,10 @@ export const solutionExtras: Record<string, SolutionExtra> = {
     tiles: [
       { label: 'Перила для сходів', href: '/poslugy/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/', image: P('glass-stair-railing-private-house-odesa'), note: 'Безрамні та на стійках' },
       { label: 'Безрамне скління тераси', href: '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/', image: P('osocor-residence-glazing-kyiv'), note: 'Стулки повністю відкриваються' },
-      { label: 'Розсувні двері на терасу', href: '/alyuminiievi-konstruktsii/rozsuvni-dveri/', image: `${PS}/cat-alu-rozsuvni-480.webp`, note: 'Панорамні, до 4 м заввишки' },
-      { label: 'Алюмінієві вікна', href: '/alyuminiievi-konstruktsii/vikna/', image: `${PS}/cat-alu-vikna-480.webp`, note: 'Теплі, з терморозривом' },
-      { label: 'Зимові сади', href: '/alyuminiievi-konstruktsii/zymovi-sady/', image: `${PS}/cat-alu-zymovi-sady-480.webp`, note: 'Теплий або сезонний сад' },
-      { label: 'Перголи', href: '/alyuminiievi-konstruktsii/perholy/', image: `${PS}/cat-alu-perholy-480.webp`, note: 'Ламелі, тент або скло' },
+      { label: 'Розсувні двері на терасу', href: '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/', image: `${PS}/cat-alu-rozsuvni-480.webp`, note: 'Панорамні, до 4 м заввишки' },
+      { label: 'Алюмінієві вікна', href: '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/', image: `${PS}/cat-alu-vikna-480.webp`, note: 'Теплі, з терморозривом' },
+      { label: 'Зимові сади', href: '/alyuminiyevi-konstrukcziyi/zymovi-sady/', image: `${PS}/cat-alu-zymovi-sady-480.webp`, note: 'Теплий або сезонний сад' },
+      { label: 'Перголи', href: '/alyuminiyevi-konstrukcziyi/pergoly/', image: `${PS}/cat-alu-perholy-480.webp`, note: 'Ламелі, тент або скло' },
       { label: 'Огорожі балконів і терас', href: '/poslugy/sklyani-ohorozhi/sklyani-ohorozhi-teras/', image: P('glass-railing-primorski-sady-odesa'), note: 'Триплекс, безпечне скло' },
       { label: 'Дзеркала', href: '/dzerkala/', image: `${DZ}/cat-stina-480.webp`, note: 'LED, у рамі, на всю стіну' }
     ],
@@ -84,13 +84,13 @@ export const solutionExtras: Record<string, SolutionExtra> = {
     image: '/images/solutions-new/solution-office-meeting-room-640.webp',
     tiles: [
       { label: 'Офісні скляні перегородки', href: '/sklyani-perehorodky/ofisni/', image: P('office-partitions-morskyi-odesa'), note: 'Кабінети й переговорні' },
-      { label: 'Алюмінієве офісне скління', href: '/alyuminiievi-konstruktsii/ofisne-sklinnya/', image: `${PS}/mb-45-office-2-480.webp`, note: 'Звукоізоляція до 50 дБ' },
+      { label: 'Алюмінієве офісне скління', href: '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/', image: `${PS}/mb-45-office-2-480.webp`, note: 'Звукоізоляція до 50 дБ' },
       { label: 'Loft-перегородки', href: '/sklyani-perehorodky/loft/', image: P('loft-partitions-kselena-odesa'), note: 'Стильне зонування open space' },
       { label: 'Скляні двері для офісу', href: '/poslugy/sklyani-dveri/sklyani-dveri-dlia-ofisu/', image: P('world-of-comics-entrance-odesa'), note: 'Розпашні, маятникові, розсувні' },
       { label: 'Скляні вхідні групи', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('coffee-ocean-facade-odesa'), note: 'Представницький вхід' },
       { label: 'Маркерні дошки зі скла', href: '/poslugy/sklo-dlia-biznesu/sklyani-doshky-dlia-ofisu/', image: '/images/solutions-new/solution-office-meeting-room-640.webp', note: 'Для переговорних' },
-      { label: 'Перегородки з ПВХ', href: '/metaloplastykovi-konstruktsii/ofisni-perehorodky/', image: `${PS}/cat-pvc-perehorodky-480.webp`, note: 'Економічне зонування' },
-      { label: 'Фасадне скління', href: '/alyuminiievi-konstruktsii/fasadne-sklinnya/', image: `${PS}/cat-alu-fasady-480.webp`, note: 'Стійково-ригельні системи' }
+      { label: 'Перегородки з ПВХ', href: '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/', image: `${PS}/cat-pvc-perehorodky-480.webp`, note: 'Економічне зонування' },
+      { label: 'Фасадне скління', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/', image: `${PS}/cat-alu-fasady-480.webp`, note: 'Стійково-ригельні системи' }
     ],
     projectSlugs: ['office-partitions-morskyi-odesa', 'dental-clinic-partitions-odesa', 'loft-partitions-kselena-odesa', 'world-of-comics-entrance-odesa', 'coffee-ocean-facade-odesa', 'restaurant-glazing-artshat-odesa'],
     seoHeading: 'Скляні перегородки та скління для офісу',
@@ -129,10 +129,10 @@ export const solutionExtras: Record<string, SolutionExtra> = {
     navLabel: 'Для ресторану',
     image: '/images/solutions-new/solution-restaurant-640.webp',
     tiles: [
-      { label: 'Тепле скління ресторану', href: '/alyuminiievi-konstruktsii/fasadne-sklinnya/', image: P('restaurant-glazing-artshat-odesa'), note: 'Теплі алюмінієві системи' },
+      { label: 'Тепле скління ресторану', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/', image: P('restaurant-glazing-artshat-odesa'), note: 'Теплі алюмінієві системи' },
       { label: 'Безрамне скління тераси', href: '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/', image: P('osocor-residence-glazing-kyiv'), note: 'Літній майданчик цілий рік' },
-      { label: 'Розсувні двері', href: '/alyuminiievi-konstruktsii/rozsuvni-dveri/', image: `${PS}/cat-alu-rozsuvni-480.webp`, note: 'Відкриття залу на терасу' },
-      { label: 'Перголи', href: '/alyuminiievi-konstruktsii/perholy/', image: `${PS}/cat-alu-perholy-480.webp`, note: 'Тінь і захист від дощу' },
+      { label: 'Розсувні двері', href: '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/', image: `${PS}/cat-alu-rozsuvni-480.webp`, note: 'Відкриття залу на терасу' },
+      { label: 'Перголи', href: '/alyuminiyevi-konstrukcziyi/pergoly/', image: `${PS}/cat-alu-perholy-480.webp`, note: 'Тінь і захист від дощу' },
       { label: 'Вітринне скління', href: '/poslugy/sklyani-fasady/vitrinne-sklinnya/', image: P('coffee-ocean-facade-odesa'), note: 'Кав’ярні та бари' },
       { label: 'Скляні перегородки', href: '/sklyani-perehorodky/', image: P('loft-partitions-kselena-odesa'), note: 'VIP-зали та кухня' },
       { label: 'Скляні вхідні групи', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('world-of-comics-entrance-odesa'), note: 'Помітний вхід' },
@@ -155,7 +155,7 @@ export const solutionExtras: Record<string, SolutionExtra> = {
       { label: 'Вітрини для магазину', href: '/poslugy/sklo-dlia-biznesu/sklyani-vitriny-dlia-mahazynu/', image: P('world-of-comics-entrance-odesa'), note: 'Презентація товару' },
       { label: 'Вітринне скління', href: '/poslugy/sklyani-fasady/vitrinne-sklinnya/', image: P('coffee-ocean-facade-odesa'), note: 'Фасад, що продає' },
       { label: 'Скляні вхідні групи', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('restaurant-glazing-artshat-odesa'), note: 'Помітний вхід із вулиці' },
-      { label: 'Алюмінієві двері', href: '/alyuminiievi-konstruktsii/dveri/', image: `${PS}/cat-alu-dveri-480.webp`, note: 'Ресурс до 1 000 000 відкривань' },
+      { label: 'Алюмінієві двері', href: '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/', image: `${PS}/cat-alu-dveri-480.webp`, note: 'Ресурс до 1 000 000 відкривань' },
       { label: 'Скляні перегородки', href: '/sklyani-perehorodky/', image: P('loft-partitions-kselena-odesa'), note: 'Службові зони й примірочні' },
       { label: 'Скляні полиці', href: '/poslugy/sklo-dlia-biznesu/sklyani-politsi/', image: P('dental-clinic-partitions-odesa'), note: 'Торгове обладнання' },
       { label: 'Скляні козирки', href: '/poslugy/sklo-dlia-biznesu/sklyani-kozyrky/', image: `${PS}/cat-alu-fasady-480.webp`, note: 'Захист входу від опадів' },
