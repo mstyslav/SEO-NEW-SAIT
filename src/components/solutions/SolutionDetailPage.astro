@@ -1,0 +1,243 @@
+---
+/**
+ * Shared template for the 6 solution pages /rishennya/dlya-{...}/.
+ * Same visual system as the catalog sections and the /rishennya/ hub:
+ * homepage hero geometry, photo tiles to exact subpages, icon cards, projects,
+ * proof strip, timeline, city cards, FAQ, other solutions and the inline form.
+ * Page files keep their own texts and pass them in; per-page extras
+ * (tiles, projects, SEO copy) live in src/data/solution-pages.ts.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import TrustBar from '../TrustBar.astro';
+import FAQBlock from '../FAQBlock.astro';
+import ProjectCard from '../projects/ProjectCard.astro';
+import ProfileRequestForm from '../profile/ProfileRequestForm.astro';
+import type { JsonLdObject } from '../../seo/schema';
+import { solutionExtras } from '../../data/solution-pages';
+import '../../styles/category-pages.css';
+import '../../styles/shower-master.css';
+import '../../styles/profile-systems.css';
+import '../../styles/rishennya-lower.css';
+import '../../styles/projects-common.css';
+
+interface Point { title: string; text: string; link?: { label: string; href: string } }
+interface Props {
+  path: string;
+  title: string;
+  description: string;
+  h1: string;
+  heroLead: string;
+  heroImage: { base: string; width: number; height: number; alt: string };
+  scenarios: Point[];
+  choosePoints: Point[];
+  materials: Point[];
+  safetyPoints: Point[];
+  priceFactors: string[];
+  processSteps: { title: string; text: string }[];
+  experienceStats: { value: string; label: string }[];
+  faq: [string, string][];
+  breadcrumbItems: { label: string; href: string }[];
+  structuredData: JsonLdObject[];
+  formExample: string;
+}
+
+const p = Astro.props;
+const extra = solutionExtras[p.path];
+if (!extra) throw new Error(`No solution extras for ${p.path}`);
+
+const hero = (suffix: string) => `/images/solutions-new/${p.heroImage.base}${suffix}.webp`;
+const heroSrcset = `${hero('-640')} 640w, ${hero('-800')} 800w, ${hero('')} ${p.heroImage.width}w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const allProjects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk')).map(({ data }) => data);
+const projects = extra.projectSlugs
+  .map((slug) => allProjects.find((project) => project.slug === slug))
+  .filter((project): project is NonNullable<typeof project> => Boolean(project));
+
+const icon = (d: string) => `<svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const scenarioIcons = [
+  icon('<path d="M4 24h20M6 24V11l8-6 8 6v13"/><path d="M11 24v-7h6v7"/>'),
+  icon('<rect x="5" y="4" width="18" height="20"/><path d="M14 4v20M5 14h18"/>'),
+  icon('<path d="M3 14s4-7 11-7 11 7 11 7-4 7-11 7S3 14 3 14z"/><circle cx="14" cy="14" r="3"/>'),
+  icon('<path d="M4 24h20M6 24V5h16v19"/><path d="M14 5v19M17 14h2"/>')
+];
+
+const CITIES = [
+  { href: '/city/kyiv/', name: 'Київ', key: 'Київ', cover: '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp' },
+  { href: '/city/odesa/', name: 'Одеса', key: 'Одеса', cover: '/images/projects/office-partitions-morskyi-odesa/office-partitions-morskyi-odesa-hero-720.webp' },
+  { href: '/city/lviv/', name: 'Львів', key: 'Львів', cover: '/images/projects/trapezoid-shower-lviv/trapezoid-shower-lviv-hero-720.webp' }
+];
+const cities = CITIES.map((city) => ({ ...city, count: allProjects.filter((project) => project.city === city.key).length }));
+
+const otherSolutions = Object.entries(solutionExtras)
+  .filter(([path]) => path !== p.path)
+  .map(([path, item]) => ({ path, label: item.navLabel, image: item.image, note: item.tiles.slice(0, 3).map((tile) => tile.label).join(' · ') }));
+---
+<BaseLayout
+  title={p.title}
+  description={p.description}
+  locale="uk"
+  alternateLocales={['uk']}
+  schemaType="Service"
+  structuredData={p.structuredData}
+  image={hero('')}
+  heroPreloadSrc={hero('-800')}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={p.breadcrumbItems.map((item, index) => index === p.breadcrumbItems.length - 1 ? { label: item.label } : item)} />
+        <p class="eyebrow">Рішення · {extra.navLabel}</p>
+        <h1>{p.h1}</h1>
+        <p class="lead">{p.heroLead}</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#products">Що можна зробити</a>
+          <a class="button button--outline" href="#request">Отримати розрахунок</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={hero('-800')} srcset={heroSrcset} sizes={heroSizes} alt={p.heroImage.alt} width={p.heroImage.width} height={p.heroImage.height} decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="uk" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass {extra.forWhom}</p><h2>{extra.seoHeading}</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">{extra.seo.map((paragraph) => <p>{paragraph}</p>)}</div>
+        <ul class="category-intro__spec">
+          <li><b>Замір і проєкт</b><span>креслення під фактичні розміри</span></li>
+          <li><b>Власне виробництво</b><span>скло, профіль і фурнітура</span></li>
+          <li><b>{projects.length}+ схожих об’єктів</b><span>реалізовані проєкти нижче</span></li>
+          <li><b>Київ · Одеса · Львів</b><span>замір, монтаж і сервіс</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="products" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Продукти</p><h2>Що ми робимо {extra.forWhom}</h2></div><p>Кожна плитка веде на сторінку з моделями, характеристиками та цінами.</p></div>
+      <div class="rh-tiles">
+        {extra.tiles.map((tile) => (
+          <a class="rh-tile" href={tile.href}>
+            <img src={tile.image} alt="" width="480" height="480" loading="lazy" decoding="async" />
+            <span class="rh-tile__arrow" aria-hidden="true">→</span>
+            <span class="rh-tile__body"><b>{tile.label}</b><span>{tile.note}</span></span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Задачі об’єкта</p><h2>Реальні сценарії</h2></div><p>Ситуації, з якими до нас звертаються найчастіше.</p></div>
+      <div class="rh-choose">
+        {p.scenarios.map((item, index) => <article><span class="rh-choose__icon" set:html={scenarioIcons[index % scenarioIcons.length]} /><h3>{item.title}</h3><p>{item.text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Вибір рішення</p><h2>Як обрати рішення</h2></div><p>Формат конструкції залежить від приміщення, навантаження й потрібної приватності.</p></div>
+      <div class="material-grid material-grid--parts">
+        {p.choosePoints.map((item) => <article><b>{item.title}</b><p>{item.text}</p>{item.link && <a class="category-arrow-link" href={item.link.href}>{item.link.label} →</a>}</article>)}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Матеріали й безпека</p><h2>Скло, профіль і безпека</h2></div><p>З чого виготовляємо конструкції і чому вони безпечні.</p></div>
+      <div class="material-grid material-grid--parts">
+        {[...p.materials, ...p.safetyPoints].map((item) => <article><b>{item.title}</b><p>{item.text}</p>{item.link && <a class="category-arrow-link" href={item.link.href}>{item.link.label} →</a>}</article>)}
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Вартість</p><h2>Від чого залежить ціна</h2></div><p>Фіксованої ціни немає — кожен проєкт рахуємо під об’єкт. Орієнтовні ціни готових моделей — на сторінках продуктів.</p></div>
+      <div class="category-steps">
+        {p.priceFactors.map((factor, index) => <div class="category-steps__item"><span>{String(index + 1).padStart(2, '0')}</span><b>{factor.charAt(0).toUpperCase() + factor.slice(1)}</b></div>)}
+      </div>
+    </section>
+
+    {projects.length > 0 && (
+      <section class="category-section category-section--mint">
+        <div class="category-heading category-heading--projects">
+          <div class="category-heading--projects__title"><p class="eyebrow">Портфоліо</p><h2>Реалізовані об’єкти</h2></div>
+          <div class="category-heading--projects__aside"><a class="category-arrow-link" href="/projects/">Усі проєкти <span aria-hidden="true">→</span></a></div>
+        </div>
+        <div class="projects-index-v2__grid category-projects-grid">
+          {projects.map((project) => <ProjectCard project={project} hrefPrefix="/projects" />)}
+        </div>
+      </section>
+    )}
+
+    <section class="category-section">
+      <div class="rh-proof" aria-label="Досвід Space Glass">
+        {p.experienceStats.map((stat) => <div><strong>{stat.value}</strong><span>{stat.label.split(' ').slice(0, 4).join(' ')}</span></div>)}
+        <div><strong>3 міста</strong><span>Київ · Одеса · Львів</span></div>
+        <a class="rh-proof__link" href="/about/">Про Space Glass →</a>
+      </div>
+    </section>
+
+    <section class="category-section rishennya-process">
+      <div class="category-heading"><div><p class="eyebrow">Процес</p><h2>Як ми працюємо</h2></div></div>
+      <ol class={`rh-timeline${p.processSteps.length > 4 ? ' rh-timeline--6' : ''}`}>
+        {p.processSteps.map((step, index) => <li><span class="rh-timeline__num">{String(index + 1).padStart(2, '0')}</span><b>{step.title}</b><p>{step.text}</p></li>)}
+      </ol>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Географія</p><h2>{p.h1} у Києві, Одесі та Львові</h2></div><p>Виїжджаємо на замір, виготовляємо та монтуємо конструкції {extra.forWhom} у трьох містах і областях; для інших міст України умови погоджуємо окремо.</p></div>
+      <div class="rh-cities">
+        {cities.map((city) => (
+          <a class="rh-city" href={city.href}>
+            <img src={city.cover} alt="" width="720" height="960" loading="lazy" decoding="async" />
+            <span class="rh-city__body"><strong>{city.name}</strong>{city.count > 0 && <span>{city.count} проєктів на сайті</span>}<b>Скло {extra.forWhom} — {city.name} →</b></span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock
+        title={`FAQ: скляні конструкції ${extra.forWhom}`}
+        intro="Відповіді на питання, які найчастіше ставлять перед замовленням."
+        items={p.faq}
+        visibleCount={6}
+        expandTo={p.faq.length}
+      />
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Інші рішення</p><h2>Рішення для інших об’єктів</h2></div><p><a class="category-arrow-link" href="/rishennya/">Усі рішення <span aria-hidden="true">→</span></a></p></div>
+      <div class="rh-tiles rh-tiles--5">
+        {otherSolutions.map((item) => (
+          <a class="rh-tile" href={item.path}>
+            <img src={item.image} alt="" width="640" height="500" loading="lazy" decoding="async" />
+            <span class="rh-tile__arrow" aria-hidden="true">→</span>
+            <span class="rh-tile__body"><b>{item.label}</b><span>{item.note}</span></span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={p.path}
+      product={`Рішення ${extra.forWhom}`}
+      title={`Розрахуємо рішення ${extra.forWhom}`}
+      text="Надішліть фото, приблизні розміри або креслення — підберемо конструкції й підготуємо попередній розрахунок."
+      options={extra.tiles.map((tile) => tile.label)}
+      optionsLabel="Що цікавить"
+      commentPlaceholder={p.formExample}
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

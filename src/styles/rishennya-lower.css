@@ -96,3 +96,21 @@
   .rh-proof>div:nth-child(3){padding-left:0;border-left:0}
   .rh-proof__link{grid-column:1/-1;padding-left:0}
 }
+
+/* Variants used by the solution detail pages */
+.rh-timeline--6{grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}
+.rh-tiles--5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.rh-tiles--5 .rh-tile{min-height:260px}
+@media(max-width:1100px){
+  .rh-timeline--6{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:34px}
+  .rh-timeline--6::before{display:none}
+  .rh-tiles--5{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:760px){
+  .rh-timeline--6{grid-template-columns:1fr}
+  .rh-timeline--6::before{display:block}
+  .rh-tiles--5{grid-template-columns:1fr 1fr}
+  .rh-tiles--5 .rh-tile{min-height:200px}
+}
+.rh-timeline li{align-content:start}
+.material-grid .category-arrow-link{display:inline-block;max-width:100%;margin-top:10px;white-space:normal}
