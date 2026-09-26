@@ -1,0 +1,410 @@
+---
+/**
+ * Step-by-step glass railing configurator (/ogorozhi-configurator/): system → shape →
+ * dimensions → colour → glass → handrail → installation → request. Live SVG drawing,
+ * instant price with a breakdown; the request goes through the global
+ * `[data-lead-form]` handler with the full configuration in hidden fields.
+ * Prices: src/data/railing-pricing.ts (EUR × EUR_RATE × COEFFICIENT).
+ */
+import { COEFFICIENT, EUR, EUR_RATE, INSTALL_UAH_MIN, INSTALL_UAH_PER_M, REFERENCE, SYSTEMS } from '../../data/railing-pricing';
+import { RAILINGS_IMG } from '../../data/railing-catalog';
+
+const data = { systems: SYSTEMS, eur: EUR, rate: EUR_RATE, coef: COEFFICIENT, installPerM: INSTALL_UAH_PER_M, installMin: INSTALL_UAH_MIN, ref: REFERENCE, img: RAILINGS_IMG };
+const steps = ['Система', 'Форма', 'Розміри', 'Колір', 'Скло', 'Поручень', 'Монтаж', 'Заявка'];
+---
+<section class="rc" data-rc>
+  <script type="application/json" data-rc-data set:html={JSON.stringify(data)} />
+  <ol class="rc__steps" aria-label="Кроки конфігуратора">
+    {steps.map((label, i) => <li><button type="button" data-rc-goto={i}><span>{i + 1}</span>{label}</button></li>)}
+  </ol>
+
+  <div class="rc__layout">
+    <div class="rc__visual">
+      <div class="rc__canvas" data-rc-svg aria-hidden="true"></div>
+      <div class="rc__visual-meta">
+        <img data-rc-photo alt="" width="96" height="96" />
+        <div><b data-rc-sysname></b><span data-rc-sysnote></span></div>
+      </div>
+      <p class="rc__hint">Схема показує сторону A в масштабі. Фото — приклад системи.</p>
+    </div>
+
+    <div class="rc__panel">
+      <div class="rc__price">
+        <div><small>Орієнтовна вартість</small><strong data-rc-total>—</strong></div>
+        <button type="button" class="rc__toggle" data-rc-toggle aria-expanded="false">Склад ціни</button>
+      </div>
+      <dl class="rc__breakdown" data-rc-breakdown hidden></dl>
+
+      <form class="rc__body" data-rc-form onsubmit="return false">
+        <!-- 1 system -->
+        <fieldset class="rc__step" data-rc-step="0">
+          <legend>Оберіть систему огорожі</legend>
+          <div class="rc__systems" data-rc-systems></div>
+        </fieldset>
+        <!-- 2 shape -->
+        <fieldset class="rc__step" data-rc-step="1" hidden>
+          <legend>Оберіть форму огорожі</legend>
+          <div class="rc__options rc__options--shapes">
+            <label><input type="radio" name="shape" value="I" checked /><span><svg viewBox="0 0 60 40"><path d="M8 20h44"/></svg>Пряма (I)</span></label>
+            <label><input type="radio" name="shape" value="L" /><span><svg viewBox="0 0 60 40"><path d="M10 6v28h40"/></svg>Кутова (L)</span></label>
+            <label><input type="radio" name="shape" value="U" /><span><svg viewBox="0 0 60 40"><path d="M10 6v28h40V6"/></svg>П-подібна (U)</span></label>
+          </div>
+          <p class="rc__note" data-rc-shape-note></p>
+        </fieldset>
+        <!-- 3 dimensions -->
+        <fieldset class="rc__step" data-rc-step="2" hidden>
+          <legend>Вкажіть розміри</legend>
+          <div class="rc__fields">
+            <label data-side="A">Сторона A, см<input type="number" name="A" min="30" max="3000" step="1" value="400" inputmode="numeric" /></label>
+            <label data-side="B">Сторона B, см<input type="number" name="B" min="30" max="3000" step="1" value="200" inputmode="numeric" /></label>
+            <label data-side="C">Сторона C, см<input type="number" name="C" min="30" max="3000" step="1" value="200" inputmode="numeric" /></label>
+            <label>Висота огорожі, см<input type="number" name="H" min="60" max="130" step="1" value="100" inputmode="numeric" /></label>
+          </div>
+          <p class="rc__note" data-rc-dim-note></p>
+        </fieldset>
+        <!-- 4 colour -->
+        <fieldset class="rc__step" data-rc-step="3" hidden>
+          <legend>Колір профілю та фурнітури</legend>
+          <div class="rc__options rc__options--swatches" data-rc-colours></div>
+        </fieldset>
+        <!-- 5 glass -->
+        <fieldset class="rc__step" data-rc-step="4" hidden>
+          <legend>Скло</legend>
+          <p class="rc__label">Товщина</p>
+          <div class="rc__options" data-rc-thickness></div>
+          <p class="rc__label">Колір скла</p>
+          <div class="rc__options rc__options--swatches" data-rc-glass></div>
+          <p class="rc__label">Матування</p>
+          <div class="rc__options" data-rc-satin></div>
+          <label class="rc__check"><input type="checkbox" name="coating" /> Покриття від бруду та води</label>
+        </fieldset>
+        <!-- 6 handrail -->
+        <fieldset class="rc__step" data-rc-step="5" hidden>
+          <legend>Поручень</legend>
+          <div class="rc__options" data-rc-handrail></div>
+          <p class="rc__note" data-rc-handrail-note></p>
+        </fieldset>
+        <!-- 7 installation -->
+        <fieldset class="rc__step" data-rc-step="6" hidden>
+          <legend>Монтаж</legend>
+          <div class="rc__options">
+            <label><input type="radio" name="install" value="yes" checked /><span>Монтаж Space Glass<small>Замір, доставка, встановлення</small></span></label>
+            <label><input type="radio" name="install" value="no" /><span>Без монтажу<small>Тільки виготовлення</small></span></label>
+          </div>
+          <label class="rc__select">Місто
+            <select name="city">
+              <option>Київ</option><option>Одеса</option><option>Львів</option><option value="Інше">Інше місто</option>
+            </select>
+          </label>
+        </fieldset>
+      </form>
+
+      <!-- 8 request -->
+      <div class="rc__step" data-rc-step="7" hidden>
+        <h2 class="rc__legend">Ваша конфігурація</h2>
+        <dl class="rc__summary" data-rc-summary></dl>
+        <form class="quote-form contacts-v15-form rc__request" data-lead-form data-success-url="/thank-you/">
+          <input name="locale" type="hidden" value="uk" />
+          <input name="page" type="hidden" value="/ogorozhi-configurator/" />
+          <input name="product" type="hidden" value="Скляні огорожі — конфігуратор" />
+          <input name="configuration" type="hidden" data-rc-config />
+          <div class="contacts-form-grid">
+            <label>Ім’я<input name="name" type="text" autocomplete="name" placeholder="Ваше ім’я" required /></label>
+            <label>Телефон<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
+          </div>
+          <label>Коментар<textarea name="comment" rows="3" placeholder="Основа (бетон, дерево), поверх, побажання" data-rc-comment></textarea></label>
+          <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>Погоджуюсь із <a href="/privacy-policy/">політикою конфіденційності</a>.</span></label>
+          <button class="button button--mint" type="submit">Надіслати конфігурацію</button>
+          <p data-form-status hidden role="status"></p>
+        </form>
+      </div>
+
+      <div class="rc__nav">
+        <button type="button" class="button button--outline" data-rc-prev>← Назад</button>
+        <button type="button" class="button button--mint" data-rc-next>Далі →</button>
+      </div>
+      <p class="rc__disclaimer">Ціна орієнтовна: остаточну вартість, товщину скла й кріплення визначаємо після заміру.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  type Sys = { id: string; name: string; type: 'profile' | 'points' | 'posts' | 'french'; note: string; image: string; referenceEur: number; maxHeight: number; maxPanel: number; glass: { id: string; label: string; heavy: boolean }[]; handrailIncluded?: boolean; shapes: string[] };
+
+  const root = document.querySelector<HTMLElement>('[data-rc]');
+  if (root) {
+    const D = JSON.parse(root.querySelector('[data-rc-data]')!.textContent || '{}');
+    const E = D.eur;
+    const $ = <T extends Element = HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const form = $<HTMLFormElement>('[data-rc-form]');
+    const state = { step: 0, sys: D.systems[0] as Sys, glass: 'clear', satin: 'none', colour: 'steel', handrail: 'none', thickness: 'g17' };
+    const uah = (n: number) => `${(Math.round(n / 10) * 10).toLocaleString('uk-UA')} грн`;
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+
+    // ---- option builders
+    const radio = (name: string, value: string, label: string, checked: boolean, extra = '') =>
+      `<label><input type="radio" name="${name}" value="${value}"${checked ? ' checked' : ''} /><span>${extra}${esc(label)}</span></label>`;
+    $('[data-rc-systems]').innerHTML = (D.systems as Sys[]).map((s, i) =>
+      `<label class="rc__sys"><input type="radio" name="system" value="${s.id}"${i === 0 ? ' checked' : ''} /><span><img src="${D.img}/${s.image}-480.webp" alt="" width="120" height="120" loading="lazy" /><b>${s.name}</b><small>${esc(s.note)}</small></span></label>`).join('');
+    $('[data-rc-colours]').innerHTML = Object.entries(E.colour).map(([k, v]: [string, any]) => radio('colour', k, v.label, k === 'steel', `<i style="background:${v.swatch}"></i>`)).join('');
+    $('[data-rc-glass]').innerHTML = Object.entries(E.glass).map(([k, v]: [string, any]) => radio('glass', k, v.label, k === 'clear', `<i style="background:${v.tint}"></i>`)).join('');
+    $('[data-rc-satin]').innerHTML = Object.entries(E.satin).map(([k, v]: [string, any]) => radio('satin', k, v.label, k === 'none')).join('');
+    const renderThickness = () => {
+      const opts = state.sys.glass;
+      if (!opts.some((g) => g.id === state.thickness)) state.thickness = opts[0].id;
+      $('[data-rc-thickness]').innerHTML = opts.map((g) => radio('thickness', g.id, g.label, g.id === state.thickness)).join('');
+    };
+    const renderHandrail = () => {
+      const incl = !!state.sys.handrailIncluded;
+      const entries = Object.entries(E.handrail).filter(([k]) => !incl || k === 'none');
+      if (incl) state.handrail = 'none';
+      $('[data-rc-handrail]').innerHTML = entries.map(([k, v]: [string, any]) => radio('handrail', k, incl ? 'Поручень входить у систему' : v.label, k === state.handrail)).join('');
+      $('[data-rc-handrail-note]').textContent = incl ? 'У системах на стійках поручень уже входить у комплект.' : 'Поручень захищає верхню кромку скла й дає опору — рекомендуємо для сходів і громадських місць.';
+    };
+
+    const num = (name: string) => Number((form.elements.namedItem(name) as HTMLInputElement).value) || 0;
+    const shape = () => (form.querySelector<HTMLInputElement>('input[name="shape"]:checked')?.value || 'I') as 'I' | 'L' | 'U';
+    const sides = () => {
+      const s = shape();
+      const list: [string, number][] = [['A', num('A')]];
+      if (s !== 'I') list.push(['B', num('B')]);
+      if (s === 'U') list.push(['C', num('C')]);
+      return list.map(([k, v]) => [k, Math.max(30, Math.min(3000, v))] as [string, number]);
+    };
+
+    // ---- price
+    const price = () => {
+      const s = state.sys;
+      const sh = shape();
+      const L = sides().reduce((a, [, v]) => a + v, 0) / 100;
+      const H = Math.min(num('H'), s.maxHeight / 10) / 100;
+      const heavy = s.glass.find((g) => g.id === state.thickness)?.heavy ? 1 : 0;
+      const french = s.type === 'french';
+      const glassRef = E.glass.clear.perM2[0] * D.ref.length * D.ref.height;
+      const fixedRef = french ? glassRef : E.shape.I + E.materialPerM * D.ref.length + glassRef;
+      const basePerM = s.referenceEur - fixedRef;
+      const corners = french ? 0 : sh === 'L' ? 1 : sh === 'U' ? 2 : 0;
+      const area = L * H;
+      const col = E.colour[state.colour];
+      const lines: [string, number][] = [
+        [`Система ${s.name}, ${L.toFixed(2).replace('.', ',')} м`, basePerM * L + (french ? 0 : E.materialPerM * L)],
+        [`Форма ${sh}${corners ? `, кутів: ${corners}` : ''}`, (french ? 0 : E.shape[sh]) + corners * E.corner],
+        [`Скло ${E.glass[state.glass].label.toLowerCase()}, ${area.toFixed(2).replace('.', ',')} м²`, E.glass[state.glass].perM2[heavy] * area],
+        [E.satin[state.satin].label, E.satin[state.satin].perM2 * area],
+        ['Покриття від бруду', (form.elements.namedItem('coating') as HTMLInputElement).checked ? E.coatingPerM2 * area : 0],
+        [`Колір: ${col.label}`, col.perM * L + col.once],
+        [E.handrail[state.handrail].label, E.handrail[state.handrail].perM * L]
+      ];
+      const factor = (E.volume as [number | null, number][]).find(([max]) => max === null || L <= (max as number))?.[1] ?? 1;
+      const k = D.rate * D.coef;
+      const items = lines.filter(([, v]) => v > 0.01).map(([t, v]) => [t, v * factor * k] as [string, number]);
+      if (factor < 1) items.push([`Знижка за довжину ${Math.round((1 - factor) * 100)}%`, 0]);
+      const install = (form.querySelector<HTMLInputElement>('input[name="install"]:checked')?.value || 'yes') === 'yes';
+      if (install) items.push(['Замір, доставка й монтаж', Math.max(D.installMin, D.installPerM * L)]);
+      return { items, total: items.reduce((a, [, v]) => a + v, 0), L, H };
+    };
+
+    // ---- drawing
+    const draw = () => {
+      const s = state.sys;
+      const [[, aCm]] = sides();
+      const Lmm = aCm * 10, Hmm = Math.min(num('H') * 10, s.maxHeight);
+      const W = 800, Hh = 470, x0 = 70, floor = 360;
+      const sc = Math.min(600 / Lmm, 250 / Hmm);
+      const w = Lmm * sc, h = Hmm * sc;
+      const tint = E.glass[state.glass].tint;
+      const colour = state.colour === 'ral' ? '#7a6f9b' : E.colour[state.colour].swatch;
+      const posts = s.type === 'posts';
+      const spacing = posts ? 1200 : s.maxPanel;
+      const n = Math.max(1, Math.ceil(Lmm / spacing));
+      const pw = w / n;
+      let g = '';
+      // floor slab
+      g += `<rect x="${x0 - 30}" y="${floor}" width="${w + 60}" height="34" fill="#e6e6e2"/><line x1="${x0 - 30}" y1="${floor}" x2="${x0 + w + 30}" y2="${floor}" stroke="#c9c9c4" stroke-width="2"/>`;
+      const profH = s.type === 'profile' ? Math.max(8, 124 * sc) : 0;
+      const gTop = floor - h, gBot = s.type === 'points' ? floor + 20 : posts ? floor - 40 * sc : floor - (s.type === 'profile' ? profH * 0.2 : 0);
+      for (let i = 0; i < n; i++) {
+        const px = x0 + i * pw + (posts ? 14 : 1.5), pww = pw - (posts ? 28 : 3);
+        g += `<rect x="${px}" y="${gTop}" width="${pww}" height="${gBot - gTop}" fill="${tint}" fill-opacity=".7" stroke="#9fb7bd" stroke-width="1.2"/>`;
+        if (state.satin === 'full') g += `<rect x="${px}" y="${gTop}" width="${pww}" height="${gBot - gTop}" fill="#fff" fill-opacity=".72"/>`;
+        if (state.satin === 'partial') g += `<rect x="${px}" y="${gTop + (gBot - gTop) * 0.35}" width="${pww}" height="${(gBot - gTop) * 0.3}" fill="#fff" fill-opacity=".75"/>`;
+        g += `<line x1="${px + pww * 0.18}" y1="${gBot - (gBot - gTop) * 0.2}" x2="${px + pww * 0.34}" y2="${gTop + (gBot - gTop) * 0.2}" stroke="#fff" stroke-opacity=".8" stroke-width="3"/>`;
+        if (s.type === 'points') for (const fx of [0.2, 0.8]) g += `<circle cx="${px + pww * fx}" cy="${floor + 12}" r="7" fill="${colour}" stroke="#777" stroke-width="1"/>`;
+        if (posts) for (const cx of [px + 4, px + pww - 4]) for (const cy of [gTop + 30, gBot - 30]) g += `<rect x="${cx - 7}" y="${cy - 5}" width="14" height="10" rx="2" fill="${colour}" stroke="#777"/>`;
+      }
+      if (s.type === 'profile') g += `<rect x="${x0 - 2}" y="${floor - profH}" width="${w + 4}" height="${profH}" fill="${colour}" stroke="#777" stroke-width="1"/>`;
+      if (posts) {
+        for (let i = 0; i <= n; i++) { const px = x0 + i * pw; g += `<rect x="${px - 5}" y="${gTop - 18}" width="10" height="${floor - gTop + 18}" rx="${s.id === 'gardo' ? 5 : 1}" fill="${colour}" stroke="#777"/>`; }
+        g += `<rect x="${x0 - 10}" y="${gTop - 26}" width="${w + 20}" height="12" rx="${s.id === 'gardo' ? 6 : 1}" fill="${colour}" stroke="#777"/>`;
+      }
+      if (s.type === 'french') {
+        g += `<rect x="${x0 - 14}" y="${gTop - 40}" width="12" height="${floor - gTop + 40}" fill="#d9d9d4"/><rect x="${x0 + w + 2}" y="${gTop - 40}" width="12" height="${floor - gTop + 40}" fill="#d9d9d4"/>`;
+        if (s.id === 'lineo') g += `<rect x="${x0 - 4}" y="${gTop}" width="6" height="${h}" fill="${colour}"/><rect x="${x0 + w - 2}" y="${gTop}" width="6" height="${h}" fill="${colour}"/>`;
+        else for (const cx of [x0 + 4, x0 + w - 4]) for (const cy of [gTop + 20, floor - 20]) g += `<circle cx="${cx}" cy="${cy}" r="6" fill="${colour}" stroke="#777"/>`;
+      }
+      const hr = state.handrail;
+      if (hr === 'round') g += `<rect x="${x0 - 8}" y="${gTop - 14}" width="${w + 16}" height="12" rx="6" fill="${colour}" stroke="#777"/>`;
+      if (hr === 'square') g += `<rect x="${x0 - 8}" y="${gTop - 14}" width="${w + 16}" height="12" rx="1" fill="${colour}" stroke="#777"/>`;
+      if (hr === 'u') g += `<rect x="${x0 - 2}" y="${gTop - 5}" width="${w + 4}" height="8" rx="2" fill="${colour}" stroke="#777"/>`;
+      // dimensions
+      g += `<g stroke="#347a66" stroke-width="1.4" fill="none"><path d="M${x0} ${floor + 58}h${w}M${x0} ${floor + 50}v16M${x0 + w} ${floor + 50}v16"/><path d="M${x0 + w + 44} ${gTop}v${h}M${x0 + w + 36} ${gTop}h16M${x0 + w + 36} ${floor}h16"/></g>`;
+      g += `<text x="${x0 + w / 2}" y="${floor + 82}" text-anchor="middle" font-size="18" font-weight="700" fill="#1c211e">A = ${(aCm / 100).toFixed(2).replace('.', ',')} м</text>`;
+      g += `<text x="${x0 + w + 56}" y="${gTop + h / 2}" font-size="18" font-weight="700" fill="#1c211e">H = ${(Hmm / 1000).toFixed(2).replace('.', ',')} м</text>`;
+      // plan
+      const sh = shape();
+      const plan = sh === 'I' ? 'M660 60h110' : sh === 'L' ? 'M660 26v60h110' : 'M660 26v60h110V26';
+      g += `<g><rect x="640" y="14" width="150" height="96" rx="12" fill="#f4f8f6"/><path d="${plan}" stroke="#176f58" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+      g += sh === 'I' ? `<text x="715" y="50" text-anchor="middle" font-size="14" fill="#176f58">A</text>` : sh === 'L' ? `<text x="648" y="60" font-size="14" fill="#176f58">B</text><text x="715" y="104" text-anchor="middle" font-size="14" fill="#176f58">A</text>` : `<text x="648" y="60" font-size="14" fill="#176f58">B</text><text x="715" y="104" text-anchor="middle" font-size="14" fill="#176f58">A</text><text x="776" y="60" font-size="14" fill="#176f58">C</text>`;
+      g += `</g>`;
+      $('[data-rc-svg]').innerHTML = `<svg viewBox="0 0 ${W} ${Hh}" role="img">${g}</svg>`;
+      const photo = $<HTMLImageElement>('[data-rc-photo]');
+      photo.src = `${D.img}/${s.image}-480.webp`;
+      $('[data-rc-sysname]').textContent = s.name;
+      $('[data-rc-sysnote]').textContent = s.note;
+    };
+
+    const summaryRows = () => {
+      const s = state.sys;
+      return [
+        ['Система', `${s.name} — ${s.note}`],
+        ['Форма', { I: 'пряма', L: 'кутова (L)', U: 'П-подібна (U)' }[shape()]],
+        ['Розміри', `${sides().map(([k, v]) => `${k} ${v} см`).join(', ')}, висота ${Math.min(num('H'), s.maxHeight / 10)} см`],
+        ['Колір', E.colour[state.colour].label],
+        ['Скло', `${s.glass.find((g) => g.id === state.thickness)?.label}, ${E.glass[state.glass].label.toLowerCase()}, ${E.satin[state.satin].label.toLowerCase()}${(form.elements.namedItem('coating') as HTMLInputElement).checked ? ', покриття від бруду' : ''}`],
+        ['Поручень', s.handrailIncluded ? 'входить у систему' : E.handrail[state.handrail].label],
+        ['Монтаж', `${(form.querySelector<HTMLInputElement>('input[name="install"]:checked')?.value || 'yes') === 'yes' ? 'так' : 'ні'}, ${(form.elements.namedItem('city') as HTMLSelectElement).value}`]
+      ];
+    };
+
+    const update = () => {
+      const s = state.sys;
+      // limits per system
+      const hIn = form.elements.namedItem('H') as HTMLInputElement;
+      hIn.max = String(s.maxHeight / 10);
+      $('[data-rc-dim-note]').textContent = `${s.name}: висота скла до ${s.maxHeight / 10} см, ширина однієї панелі до ${s.maxPanel / 10} см — довгі сторони ділимо на панелі автоматично.`;
+      root.querySelectorAll<HTMLInputElement>('input[name="shape"]').forEach((inp) => { inp.disabled = !s.shapes.includes(inp.value); if (inp.disabled && inp.checked) (root.querySelector('input[name="shape"][value="I"]') as HTMLInputElement).checked = true; });
+      $('[data-rc-shape-note]').textContent = s.type === 'french' ? 'Французький балкон встановлюється в один проріз — лише пряма форма.' : 'Кути з’єднуємо під 90°; нестандартні кути й ухили враховуємо після заміру.';
+      const sh = shape();
+      root.querySelectorAll<HTMLElement>('[data-side]').forEach((el) => { el.hidden = (el.dataset.side === 'B' && sh === 'I') || (el.dataset.side === 'C' && sh !== 'U'); });
+      const p = price();
+      $('[data-rc-total]').textContent = uah(p.total);
+      $('[data-rc-breakdown]').innerHTML = p.items.map(([t, v]) => `<div><dt>${esc(t)}</dt><dd>${v ? uah(v) : '✓'}</dd></div>`).join('') + `<div class="rc__breakdown-total"><dt>Разом</dt><dd>${uah(p.total)}</dd></div>`;
+      const rows = summaryRows();
+      $('[data-rc-summary]').innerHTML = rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(String(v))}</dd></div>`).join('') + `<div><dt>Орієнтовно</dt><dd><b>${uah(p.total)}</b></dd></div>`;
+      $<HTMLInputElement>('[data-rc-config]').value = rows.map(([k, v]) => `${k}: ${v}`).join('; ') + `; Орієнтовно: ${uah(p.total)}`;
+      draw();
+    };
+
+    const go = (i: number) => {
+      state.step = Math.max(0, Math.min(7, i));
+      root.querySelectorAll<HTMLElement>('[data-rc-step]').forEach((el) => { el.hidden = Number(el.dataset.rcStep) !== state.step; });
+      root.querySelectorAll<HTMLButtonElement>('[data-rc-goto]').forEach((b) => { const k = Number(b.dataset.rcGoto); b.classList.toggle('is-active', k === state.step); b.classList.toggle('is-done', k < state.step); });
+      $<HTMLButtonElement>('[data-rc-prev]').disabled = state.step === 0;
+      const next = $<HTMLButtonElement>('[data-rc-next]');
+      next.hidden = state.step === 7;
+      next.textContent = state.step === 6 ? 'До заявки →' : 'Далі →';
+      update();
+      if (window.innerWidth < 900) root.querySelector('.rc__panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    root.addEventListener('change', (e) => {
+      const t = e.target as HTMLInputElement;
+      if (t.name === 'system') { state.sys = (D.systems as Sys[]).find((s) => s.id === t.value)!; renderThickness(); renderHandrail(); }
+      if (t.name === 'glass') state.glass = t.value;
+      if (t.name === 'satin') state.satin = t.value;
+      if (t.name === 'colour') state.colour = t.value;
+      if (t.name === 'handrail') state.handrail = t.value;
+      if (t.name === 'thickness') state.thickness = t.value;
+      update();
+    });
+    root.addEventListener('input', (e) => { if ((e.target as HTMLElement).matches('input[type="number"]')) update(); });
+    root.querySelectorAll<HTMLButtonElement>('[data-rc-goto]').forEach((b) => b.addEventListener('click', () => go(Number(b.dataset.rcGoto))));
+    $('[data-rc-prev]').addEventListener('click', () => go(state.step - 1));
+    $('[data-rc-next]').addEventListener('click', () => go(state.step + 1));
+    const toggle = $<HTMLButtonElement>('[data-rc-toggle]');
+    toggle.addEventListener('click', () => { const bd = $('[data-rc-breakdown]'); bd.hidden = !bd.hidden; toggle.setAttribute('aria-expanded', String(!bd.hidden)); });
+
+    // Preselect a system from ?system=delgado
+    const pre = new URLSearchParams(location.search).get('system');
+    const preSys = (D.systems as Sys[]).find((s) => s.id === pre);
+    if (preSys) { state.sys = preSys; (root.querySelector(`input[name="system"][value="${preSys.id}"]`) as HTMLInputElement).checked = true; }
+    renderThickness();
+    renderHandrail();
+    go(0);
+  }
+</script>
+
+<style is:global>
+  .rc{--rc-green:#176f58;--rc-mint:#7bc2a8;--rc-line:#dfe7e3;--rc-soft:#f4f8f6;width:min(calc(100% - 32px),1280px);margin:0 auto 64px}
+  .rc__steps{display:flex;gap:6px;margin:0 0 20px;padding:0;list-style:none;overflow-x:auto;scrollbar-width:none}
+  .rc__steps button{display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--rc-line);border-radius:999px;background:#fff;color:#4f5a55;font:inherit;font-size:14px;white-space:nowrap;cursor:pointer}
+  .rc__steps button span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--rc-soft);font-size:12px;font-weight:700}
+  .rc__steps button.is-done{color:var(--rc-green)}
+  .rc__steps button.is-done span{background:var(--rc-mint);color:#fff}
+  .rc__steps button.is-active{border-color:var(--rc-green);background:var(--rc-green);color:#fff}
+  .rc__steps button.is-active span{background:#fff;color:var(--rc-green)}
+  .rc__layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(360px,1fr);gap:24px;align-items:start}
+  .rc__visual{position:sticky;top:96px;padding:20px;border:1px solid var(--rc-line);border-radius:24px;background:#fbfcfb}
+  .rc__canvas svg{display:block;width:100%;height:auto}
+  .rc__visual-meta{display:flex;gap:14px;align-items:center;margin-top:12px;padding-top:14px;border-top:1px solid var(--rc-line)}
+  .rc__visual-meta img{width:72px;height:72px;border-radius:12px;object-fit:cover}
+  .rc__visual-meta b{display:block;font-size:18px}
+  .rc__visual-meta span{color:#5e6864;font-size:14px}
+  .rc__hint{margin:10px 0 0;color:#7b8580;font-size:12px}
+  .rc__panel{padding:22px;border:1px solid var(--rc-line);border-radius:24px;background:#fff}
+  .rc__price{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:var(--rc-soft)}
+  .rc__price small{display:block;color:#5e6864;font-size:13px}
+  .rc__price strong{font-size:28px;line-height:1.1;color:#0e5947}
+  .rc__toggle{border:0;background:none;color:var(--rc-green);font:inherit;font-size:14px;text-decoration:underline;cursor:pointer}
+  .rc__breakdown{margin:10px 0 0;padding:6px 16px;border:1px solid var(--rc-line);border-radius:14px;font-size:14px}
+  .rc__breakdown div,.rc__summary div{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-bottom:1px solid var(--rc-line)}
+  .rc__breakdown div:last-child,.rc__summary div:last-child{border-bottom:0}
+  .rc__breakdown dd,.rc__summary dd{margin:0;text-align:right;white-space:nowrap}
+  .rc__summary dd{white-space:normal}
+  .rc__breakdown-total{font-weight:700}
+  .rc__body{margin:0}
+  .rc__step{min-width:0;margin:18px 0 0;padding:0;border:0}
+  .rc__step legend,.rc__legend{margin:0 0 14px;padding:0;font-size:22px;font-weight:700}
+  .rc__label{margin:14px 0 8px;font-weight:700}
+  .rc__systems{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-height:560px;overflow:auto;padding-right:4px}
+  .rc__systems label,.rc__options label{position:relative;cursor:pointer}
+  .rc__systems input,.rc__options input{position:absolute;opacity:0;pointer-events:none}
+  .rc__systems span{display:grid;grid-template-columns:64px 1fr;grid-template-rows:auto 1fr;column-gap:10px;padding:10px;border:1.5px solid var(--rc-line);border-radius:16px;align-items:start}
+  .rc__systems img{grid-row:1/3;width:64px;height:64px;border-radius:10px;object-fit:cover}
+  .rc__systems b{font-size:15px}
+  .rc__systems small{color:#5e6864;font-size:12.5px;line-height:1.35}
+  .rc__options{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .rc__options span{display:flex;flex-direction:column;gap:4px;height:100%;padding:12px 14px;border:1.5px solid var(--rc-line);border-radius:14px;font-size:14.5px;line-height:1.3}
+  .rc__options small{color:#5e6864;font-size:12.5px}
+  .rc__options--swatches span{flex-direction:row;align-items:center;gap:10px}
+  .rc__options i{flex:0 0 22px;width:22px;height:22px;border:1px solid #c9d1cd;border-radius:50%}
+  .rc__options--shapes span{align-items:center;text-align:center}
+  .rc__options--shapes svg{width:60px;height:40px;stroke:var(--rc-green);stroke-width:4;fill:none;stroke-linecap:round}
+  .rc__systems input:checked+span,.rc__options input:checked+span{border-color:var(--rc-green);background:#eef7f3;box-shadow:0 0 0 1px var(--rc-green)}
+  .rc__systems input:focus-visible+span,.rc__options input:focus-visible+span{outline:2px solid var(--rc-green);outline-offset:2px}
+  .rc__options input:disabled+span{opacity:.4;cursor:not-allowed}
+  .rc__fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .rc__fields label,.rc__select{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600}
+  .rc__fields label[hidden]{display:none}
+  .rc__fields input,.rc__select select{padding:12px 14px;border:1.5px solid var(--rc-line);border-radius:12px;font:inherit;font-size:16px}
+  .rc__select{margin-top:14px}
+  .rc__check{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:14.5px}
+  .rc__note{margin:12px 0 0;color:#5e6864;font-size:13.5px}
+  .rc__summary{margin:0 0 18px;font-size:14.5px}
+  .rc__request{display:grid;gap:12px}
+  .rc__nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+  .rc__nav .button[disabled]{opacity:.4;pointer-events:none}
+  .rc__nav .button[hidden]{display:none}
+  .rc__disclaimer{margin:14px 0 0;color:#7b8580;font-size:12.5px}
+  @media (max-width:900px){
+    .rc{width:auto;margin:0 16px 48px}
+    .rc__layout{grid-template-columns:1fr}
+    .rc__visual{position:static;padding:12px}
+    .rc__panel{padding:16px}
+    .rc__systems{grid-template-columns:1fr;max-height:none}
+    .rc__fields{grid-template-columns:1fr 1fr}
+    .rc__price strong{font-size:24px}
+    .rc__nav{position:sticky;bottom:0;margin:18px -16px -16px;padding:12px 16px;border-top:1px solid var(--rc-line);border-radius:0 0 24px 24px;background:#fff}
+    .rc__nav .button{flex:1}
+  }
+</style>
