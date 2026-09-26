@@ -8,9 +8,11 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TrustBar from '../../components/TrustBar.astro';
 import PriceBlock from '../../components/PriceBlock.astro';
 import ProjectCard from '../../components/projects/ProjectCard.astro';
+import ProfileRequestForm from '../../components/profile/ProfileRequestForm.astro';
 import '../../styles/category-pages.css';
 import '../../styles/projects-common.css';
 import '../../styles/shower-master.css';
+import '../../styles/profile-systems.css';
 
 const title = "Скляні душові кабіни";
 const h1 = "Скляні душові кабіни на замовлення";
@@ -154,7 +156,7 @@ const faq = [
         <h1>{h1}</h1>
         <p class="lead">Виготовляємо скляні душові кабіни на замовлення за індивідуальними розмірами. Проєктуємо душові кабіни зі скла, скляні перегородки для душу Walk-In, душові двері, кутові та нішеві кабіни, розсувні й складні системи. Виконуємо замір, виготовлення та монтаж у Києві, Одесі та Львові.</p>
         <div class="hero__actions">
-          <a class="button button--mint" href="#price">Отримати розрахунок</a>
+          <a class="button button--mint" href="#request">Отримати розрахунок</a>
           <a class="button button--outline" href="#types">Переглянути 9 напрямів</a>
         </div>
       </div>
@@ -287,7 +289,7 @@ const faq = [
           "Скло та фурнітура — тип скла, петлі, профілі, ручки й система відкривання впливають на підсумкову вартість."
         ]}
         ctaLabel="Розрахувати мою душову"
-        ctaHref="/contacts/#contact-form"
+        ctaHref="#request"
         factorsTitle="Що впливає на вартість"
         factors={priceFactors}
       />
@@ -346,10 +348,15 @@ const faq = [
       </div>
     </section>
 
-    <section id="category-request" class="inner-cta">
-      <div><p class="eyebrow eyebrow--light">Заявка</p><h2>Потрібен попередній розрахунок?</h2><p>Надішліть фото, приблизні розміри або креслення — запропонуємо тип скляної душової конструкції та підготуємо орієнтовну вартість.</p></div>
-      <a class="button button--white" href="/contacts/#contact-form">Отримати розрахунок</a>
-    </section>
+    <ProfileRequestForm
+      page="/dushovi-kabiny/"
+      product="Душові кабіни"
+      title="Потрібен попередній розрахунок?"
+      text="Надішліть фото, приблизні розміри або креслення — запропонуємо тип скляної душової конструкції та підготуємо орієнтовну вартість."
+      options={items.map((item) => item.title)}
+      optionsLabel="Тип конструкції"
+      commentPlaceholder="Розміри душової зони, піддон чи трап, побажання щодо скла й фурнітури"
+    />
   </main>
   <Footer />
 </div>

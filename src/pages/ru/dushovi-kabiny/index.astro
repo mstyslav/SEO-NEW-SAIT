@@ -13,9 +13,11 @@ import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import TrustBar from '../../../components/TrustBar.astro';
 import PriceBlock from '../../../components/PriceBlock.astro';
 import ProjectCard from '../../../components/projects/ProjectCard.astro';
+import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
 import { localizedPath } from '../../../i18n/helpers';
 import '../../../styles/category-pages.css';
 import '../../../styles/projects-common.css';
+import '../../../styles/profile-systems.css';
 
 const locale = 'ru' as const;
 const lp = (path: string) => localizedPath(path, locale);
@@ -167,7 +169,7 @@ const faq = [
         <h1>{h1}</h1>
         <p class="lead">Изготавливаем душевые кабины из стекла по индивидуальным размерам — угловые, в нишу, душевые перегородки, раздвижные системы и двери. Подбираем закалённое стекло и фурнитуру, выполняем замер, проектирование, изготовление и монтаж.</p>
         <div class="hero__actions">
-          <a class="button button--mint" href="#price">Получить расчёт</a>
+          <a class="button button--mint" href="#request">Получить расчёт</a>
           <a class="button button--outline" href="#types">Смотреть виды</a>
         </div>
       </div>
@@ -324,7 +326,7 @@ const faq = [
           "Стекло и фурнитура — тип стекла, петли, профили, ручки и система открывания влияют на итоговую стоимость."
         ]}
         ctaLabel="Рассчитать мою душевую"
-        ctaHref={localizeHref('/contacts/#contact-form')}
+        ctaHref="#request"
         factorsTitle="Что влияет на стоимость"
         factors={priceFactors}
       />
@@ -402,10 +404,16 @@ const faq = [
     </section>
 
     <!-- 14. FINAL CTA -->
-    <section id="category-request" class="inner-cta">
-      <div><p class="eyebrow eyebrow--light">Заявка</p><h2>Нужен предварительный расчёт?</h2><p>Отправьте фото, приблизительные размеры или чертёж — подготовим конфигурацию и ориентировочную стоимость.</p></div>
-      <a class="button button--white" href={localizeHref('/contacts/#contact-form')}>Получить расчёт</a>
-    </section>
+    <ProfileRequestForm
+      page="/ru/dushovi-kabiny/"
+      product="Душевые кабины"
+      title="Нужен предварительный расчёт?"
+      text="Отправьте фото, приблизительные размеры или чертёж — подготовим конфигурацию и ориентировочную стоимость."
+      options={items.map((item) => item.title)}
+      optionsLabel="Тип конструкции"
+      commentPlaceholder="Размеры душевой зоны, поддон или трап, пожелания по стеклу и фурнитуре"
+      locale="ru"
+    />
   </main>
   <Footer locale="ru" />
 </div>
