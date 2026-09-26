@@ -8,7 +8,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TrustBar from '../../components/TrustBar.astro';
 import ProfileRequestForm from '../../components/profile/ProfileRequestForm.astro';
 import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
-import { RAILINGS_CONFIGURATOR, RAILINGS_HUB, RAILINGS_IMG, railingCategories, railingSystems } from '../../data/railing-catalog';
+import { RAILINGS_HUB, RAILINGS_IMG, railingCategories, railingSystems } from '../../data/railing-catalog';
 import { profileIcons } from '../../data/profile-icons';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
@@ -21,7 +21,7 @@ const title = 'Скляні огорожі';
 const h1 = 'Скляні огорожі на замовлення';
 const metaTitle = 'Скляні огорожі на замовлення — сходи, балкони, тераси, басейни | Space Glass';
 const metaDescription =
-  'Скляні огорожі для сходів, балконів, терас і басейнів: безрамні в затискному профілі, на стійках, точковому кріпленні, французькі балкони. Німецькі системи, триплекс, конфігуратор ціни. Замір і монтаж у Києві, Одесі та Львові.';
+  'Скляні огорожі для сходів, балконів, терас і басейнів: безрамні в затискному профілі, на стійках, точковому кріпленні, французькі балкони. Німецькі системи, триплекс 8,76–21,52 мм. Замір і монтаж у Києві, Одесі та Львові.';
 
 const heroSrc = (w: number) => `${RAILINGS_IMG}/hero-hub-${w}.webp`;
 const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
@@ -63,8 +63,8 @@ const faq: [string, string][] = [
   ['Яку огорожу обрати для балкона?', 'DELGADO чи ANTE для чистого фасаду, BALDOSA, якщо треба сховати товсту плиту, GARDO — найдоступніший варіант.'],
   ['Чи підходить скло для басейну?', 'Так, рекомендуємо висоту від 1,2 м і фурнітуру з нержавійки AISI 316. Можна додати скляну хвіртку з доводчиком.'],
   ['Чи можна огорожу на дерев’яну основу?', 'Так, стійки й точкові тримачі кріплять у дерев’яний каркас; затискний профіль потребує жорсткої основи.'],
-  ['Скільки коштує скляна огорожа?', 'Залежить від системи, довжини, висоти, скла, поручня й монтажу. Орієнтовну ціну покаже конфігуратор, точну — розрахунок після заміру.'],
-  ['Як працює конфігуратор?', 'Оберіть систему, форму, розміри, колір, скло й поручень — ціна перераховується одразу. Готову конфігурацію можна надіслати нам у заявці.'],
+  ['Скільки коштує скляна огорожа?', 'Залежить від системи, довжини, висоти, скла, поручня й монтажу. Орієнтовну ціну називаємо за фото й розмірами, точну — після заміру.'],
+  ['Що потрібно для попереднього розрахунку?', 'Фото місця, довжина огорожі, висота, тип основи (бетон, метал, дерево) і місто. Цього достатньо, щоб підібрати систему й назвати орієнтовну ціну.'],
   ['Чи можна профіль у колір фасаду?', 'Так: під нержавійку, чорний, антрацит, білий або будь-який колір RAL.'],
   ['Чи потрібен поручень?', 'Для безрамних огорож — за бажанням, але він захищає кромку й дає опору. На стійках поручень є частиною системи.'],
   ['Чи можна огорожу з кутами?', 'Так, форми I, L та U, кути 90° і нестандартні, з урахуванням ухилів і перепадів.'],
@@ -77,7 +77,7 @@ const faq: [string, string][] = [
 ];
 
 const relatedLinks: [string, string][] = [
-  ['Конфігуратор огорожі', RAILINGS_CONFIGURATOR],
+  ['Безрамні скляні огорожі', `${RAILINGS_HUB}bezramni-sklyani-ohorozhi/`],
   ['Огорожі для приватного будинку', houseCategory.path],
   ['Скління балконів', '/bezramne-sklinnya/sklinnya-balkoniv/'],
   ['Безрамне скління терас', '/poslugy/bezramne-sklinnya/'],
@@ -121,10 +121,10 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: title }]} />
         <p class="eyebrow">{title}</p>
         <h1>{h1}</h1>
-        <p class="lead">Огорожі для сходів, балконів, терас і басейнів на німецьких системах: безрамні в затискному профілі, на точкових тримачах, на стійках і французькі балкони. Порахуйте орієнтовну ціну в конфігураторі — замір, виготовлення й монтаж у Києві, Одесі та Львові.</p>
+        <p class="lead">Огорожі для сходів, балконів, терас і басейнів на німецьких системах: безрамні в затискному профілі, на точкових тримачах, на стійках і французькі балкони. Замір, виготовлення й монтаж у Києві, Одесі та Львові.</p>
         <div class="hero__actions">
-          <a class="button button--mint" href={RAILINGS_CONFIGURATOR}>Розрахувати в конфігураторі</a>
-          <a class="button button--outline" href="#types">Переглянути {typeCategories.length} видів</a>
+          <a class="button button--mint" href="#types">Переглянути {typeCategories.length} видів</a>
+          <a class="button button--outline" href="#request">Отримати розрахунок</a>
         </div>
       </div>
       <figure class="category-hero__figure">
@@ -184,17 +184,6 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
             </div>
           </article>
         ))}
-      </div>
-    </section>
-
-    <section class="category-section">
-      <div class="inner-cta">
-        <div>
-          <p class="eyebrow eyebrow--light">Конфігуратор</p>
-          <h2>Порахуйте огорожу за 2 хвилини</h2>
-          <p>Оберіть систему, форму, розміри, скло й поручень — побачите схему огорожі та орієнтовну вартість. Готову конфігурацію надішлете нам одним кліком.</p>
-        </div>
-        <a class="button button--white" href={RAILINGS_CONFIGURATOR}>Відкрити конфігуратор</a>
       </div>
     </section>
 
