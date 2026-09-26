@@ -1,0 +1,8 @@
+---
+// Interior glass doors model range. Lives at the live site's URL
+// (/sklyani-perehorodky/sklyani-mizhkimnatni-dveri/) so it keeps its ranking; content
+// and breadcrumbs belong to the glass-doors section (src/data/door-catalog.ts).
+import ProfileCategoryPage from '../../../components/profile/ProfileCategoryPage.astro';
+import { getDoorCategory } from '../../../data/door-catalog';
+---
+<ProfileCategoryPage category={getDoorCategory('mizhkimnatni-sklyani-dveri')} />

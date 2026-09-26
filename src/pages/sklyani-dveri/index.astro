@@ -27,7 +27,9 @@ const heroSrc = (w: number) => `${DOORS_IMG}/hero2-hub-${w}.webp`;
 const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
 const heroSizes = '(max-width: 900px) 100vw, 50vw';
 
-const hubItems = doorCategories.map((category) => ({
+const typeCategories = doorCategories.filter((category) => category.path.startsWith(DOORS_HUB));
+const modelRange = doorCategories.find((category) => category.slug === 'mizhkimnatni-sklyani-dveri')!;
+const hubItems = typeCategories.map((category) => ({
   title: category.name,
   note: category.cardNote,
   href: category.path,
@@ -120,7 +122,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <h1>{h1}</h1>
         <p class="lead">Розпашні, розсувні, маятникові та лофт-двері зі скла під розмір вашого прорізу — для квартир, будинків, офісів і клінік. Загартоване скло, надійна фурнітура, матування й логотип на склі. Замір, виготовлення й монтаж у Києві, Одесі та Львові.</p>
         <div class="hero__actions">
-          <a class="button button--mint" href="#types">Переглянути {doorCategories.length} видів</a>
+          <a class="button button--mint" href="#types">Переглянути {typeCategories.length} видів</a>
           <a class="button button--outline" href="#request">Отримати розрахунок</a>
         </div>
       </div>
@@ -165,13 +167,33 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Модельний ряд</p><h2>Міжкімнатні скляні двері Space Glass</h2></div><p>Шість моделей в алюмінієвому профілі — кожна в прозорому, матовому, бронзовому, графітовому, рифленому чи рефлекторному склі.</p></div>
+      <div class="profile-grid">
+        {modelRange.models.map((model) => (
+          <article class="profile-card">
+            <div class="profile-card__media">
+              <img src={`${DOORS_IMG}/${model.image}-480.webp`} srcset={`${DOORS_IMG}/${model.image}-480.webp 480w, ${DOORS_IMG}/${model.image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" alt={model.imageAlt ?? model.name} width="480" height="480" loading="lazy" decoding="async" />
+              <span class="profile-card__kind">{model.kind}</span>
+            </div>
+            <div class="profile-card__body">
+              <h3>{model.name}</h3>
+              <p class="profile-card__blurb">{model.blurb}</p>
+              <a class="button button--outline profile-card__cta" href={`${modelRange.path}#${model.id}`}>Детальніше про модель →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+      <a class="category-arrow-link" href={modelRange.path}>Увесь модельний ряд і види скла <span aria-hidden="true">→</span></a>
+    </section>
+
+    <section class="category-section">
       <div class="category-heading"><div><p class="eyebrow">Переваги</p><h2>Чому скляні двері</h2></div><p>Практичність і естетика, яких не дають двері з МДФ чи шпону.</p></div>
       <div class="material-grid material-grid--parts">
         {benefits.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
       </div>
     </section>
 
-    <section class="category-section">
+    <section class="category-section category-section--mint">
       <div class="category-heading"><div><p class="eyebrow">Скло</p><h2>Скло та декор для дверей</h2></div><p>У дверях працює лише безпечне скло. Прозорість і малюнок обираєте ви.</p></div>
       <dl class="material-thickness">
         {glassTypes.map(([name, text]) => <div><dt>{name}</dt><dd>{text}</dd></div>)}
@@ -224,7 +246,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       product={title}
       title={'Потрібен попередній розрахунок?'}
       text={'Надішліть фото й розміри прорізу — підберемо тип дверей, скло та фурнітуру й підготуємо орієнтовну вартість.'}
-      options={doorCategories.map((c) => c.name)}
+      options={[...typeCategories.map((c) => c.name), modelRange.name]}
       optionsLabel="Вид дверей"
       commentPlaceholder="Де двері, розміри прорізу, скло (прозоре/матове), місто"
     />

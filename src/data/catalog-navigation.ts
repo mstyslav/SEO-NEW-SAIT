@@ -77,6 +77,7 @@ const serviceShortNameRu: Record<string, string> = {
   '/sklyani-dveri/dveri-v-aliuminiievomu-profili/': 'Двери в профиле',
   '/sklyani-dveri/matovi-sklyani-dveri/': 'Матовые двери',
   '/sklyani-dveri/sklyani-dveri-dlia-ofisu/': 'Офисные двери',
+  '/sklyani-perehorodky/sklyani-mizhkimnatni-dveri/': 'Межкомнатные стеклянные двери',
 
   '/poslugy/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/': 'Перила для лестниц',
   '/poslugy/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/': 'Безрамные ограждения',
