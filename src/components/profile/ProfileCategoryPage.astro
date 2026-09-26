@@ -79,13 +79,23 @@ const processSteps = category.process ?? [
 ];
 const catalogNote = category.catalogNote ?? 'Технічні показники наведені за даними виробників профільних систем для базових конфігурацій і залежать від розмірів, склопакета та фурнітури. Остаточну комплектацію та вартість визначаємо за кресленням або після заміру.';
 
-// Showers: a landscape render (wide-{slug}, 1.4:1) with the whole cabin in frame;
-// the square hero-{slug} files stay for thumbnails.
+// Showers use interior renders. Desktop: a landscape wide2-/wide-{slug} file when it
+// exists (extended scene, 1.4:1), otherwise the square sq-{slug} render with a per-page
+// vertical crop (HERO_Y) — the cabin spans ~70% of those renders so it fits whole.
+// Mobile (portrait frame): always the square sq-{slug} render, cabin centred.
+const heroFile = (name: string) => fs.existsSync(path.join(process.cwd(), 'public', `${imgBase}/${name}-900.webp`));
 const heroContain = category.group === 'shower';
-const heroName = heroContain ? `wide-${category.slug}` : category.heroImage;
-const heroMax = heroContain ? 1440 : 1080;
+const HERO_Y: Record<string, string> = { 'peregorodka-dlya-dusha': '71%', 'dushovi-dveri': '71%', 'u-nishu': '71%', rozsuvni: '29%' };
+const mobileName = heroContain && heroFile(`sq-${category.slug}`) ? `sq-${category.slug}` : null;
+const heroName = !heroContain
+  ? category.heroImage
+  : heroFile(`wide2-${category.slug}`) ? `wide2-${category.slug}` : heroFile(`wide-${category.slug}`) ? `wide-${category.slug}` : `sq-${category.slug}`;
+const heroIsSquare = heroName.startsWith('sq-');
+const heroMax = heroContain && !heroIsSquare ? 1440 : 1080;
 const heroSrc = (w: number) => `${imgBase}/${heroName}-${w}.webp`;
 const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(heroMax)} ${heroMax}w`;
+const mobileSrcset = mobileName ? `${imgBase}/${mobileName}-480.webp 480w, ${imgBase}/${mobileName}-900.webp 900w` : null;
+const heroObjectY = heroIsSquare ? HERO_Y[category.slug] ?? '50%' : null;
 const heroSizes = '(max-width: 900px) 100vw, 50vw';
 
 // Extra product photos (e.g. mb-79n-2, mb-79n-3) — shown in the gallery strip
@@ -135,6 +145,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
   heroPreloadSrc={heroSrc(900)}
   heroPreloadSrcset={heroSrcset}
   heroPreloadSizes={heroSizes}
+  heroPreloadMobileSrc={mobileName ? `${imgBase}/${mobileName}-900.webp` : undefined}
+  heroPreloadMobileSrcset={mobileSrcset ?? undefined}
 >
 <div class="sg-page-shell">
   <Header />
@@ -152,7 +164,10 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       </div>
       <figure class="category-hero__figure">
         <div class="category-hero__frame" >
-          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt={category.heroAlt} width={heroMax} height={heroContain ? 1029 : 1080} decoding="async" fetchpriority="high" />
+          <picture>
+            {mobileSrcset && <source media="(max-width: 900px)" srcset={mobileSrcset} sizes="100vw" />}
+            <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt={category.heroAlt} width={heroMax} height={heroContain && !heroIsSquare ? 1029 : 1080} decoding="async" fetchpriority="high" style={heroObjectY ? `--hero-y:${heroObjectY}` : undefined} />
+          </picture>
         </div>
       </figure>
     </section>
