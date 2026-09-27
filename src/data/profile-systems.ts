@@ -1246,7 +1246,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Безрамне скління альтанки', '/bezramne-sklinnya/bezramne-sklinnya-altanky/'],
       ['Тепле чи холодне скління тераси', '/knowledge/teple-chy-kholodne-sklinnya-terasy/'],
       ['Скляний дах: що врахувати', '/knowledge/sklyanyi-dakh-shcho-vrakhuvaty/'],
-      ['Скління для будинку', '/rishennya/dlya-budynku/']
+      ['Скління для будинку', '/pryvatnyj-sektor/']
     ],
     ctaTitle: 'Мрієте про зимовий сад?',
     ctaText: 'Надішліть фото місця та приблизні розміри — запропонуємо формат саду, систему дверей і підготуємо попередню оцінку.'
@@ -1475,7 +1475,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Алюмінієві розсувні двері', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
       ['Склопакет: як обрати', '/knowledge/sklopaket-yak-obraty/'],
       ['Безрамне скління балкона', '/bezramne-sklinnya/sklinnya-balkoniv/'],
-      ['Скління для будинку', '/rishennya/dlya-budynku/'],
+      ['Скління для будинку', '/pryvatnyj-sektor/'],
       ['Скління для офісу', '/rishennya/dlya-ofisu/'],
       ['Оплата і доставка', '/oplata-dostavka/']
     ],
@@ -1916,7 +1916,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Зимові сади', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
       ['Перголи', '/alyuminiyevi-konstrukcziyi/pergoly/'],
       ['Безрамне скління тераси', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/'],
-      ['Скління для будинку', '/rishennya/dlya-budynku/']
+      ['Скління для будинку', '/pryvatnyj-sektor/']
     ],
     ctaTitle: 'Потрібна сітка плісе?',
     ctaText: 'Вкажіть, на які двері чи вікна потрібна сітка, та приблизні розміри — підберемо варіант і колір і порахуємо вартість.'
@@ -2362,7 +2362,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
       ['Сітки плісе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
       ['Скляні двері', '/sklyani-dveri/'],
-      ['Скління для будинку', '/rishennya/dlya-budynku/'],
+      ['Скління для будинку', '/pryvatnyj-sektor/'],
       ['Склопакет: як обрати', '/knowledge/sklopaket-yak-obraty/'],
       ['Оплата і доставка', '/oplata-dostavka/']
     ],
@@ -2596,7 +2596,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Перголи', '/alyuminiyevi-konstrukcziyi/pergoly/'],
       ['Безрамне скління тераси', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/'],
       ['Тепле чи холодне скління тераси', '/knowledge/teple-chy-kholodne-sklinnya-terasy/'],
-      ['Скління для будинку', '/rishennya/dlya-budynku/']
+      ['Скління для будинку', '/pryvatnyj-sektor/']
     ],
     ctaTitle: 'Плануєте розсувні двері на терасу?',
     ctaText: 'Надішліть ширину й висоту прорізу — підберемо систему та схему відкривання і порахуємо вартість.'

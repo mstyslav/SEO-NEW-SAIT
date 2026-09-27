@@ -55,29 +55,6 @@ export const solutionExtras: Record<string, SolutionExtra> = {
       'Працюємо з квартирами в новобудовах і вторинному житлі Києва, Одеси та Львова: від однієї душової кабіни до комплексного скління всієї квартири за дизайн-проєктом, з монтажем без пошкодження ремонту.'
     ]
   },
-  '/rishennya/dlya-budynku/': {
-    forWhom: 'для будинку',
-    navLabel: 'Для будинку',
-    image: '/images/solutions-new/solution-house-640.webp',
-    tiles: [
-      { label: 'Перила для сходів', href: '/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/', image: P('glass-stair-railing-private-house-odesa'), note: 'Безрамні та на стійках' },
-      { label: 'Безрамне скління тераси', href: '/bezramne-sklinnya/sklinnya-teras-ta-altanok/', image: P('osocor-residence-glazing-kyiv'), note: 'Стулки повністю відкриваються' },
-      { label: 'Розсувні двері на терасу', href: '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/', image: `${PS}/cat-alu-rozsuvni-480.webp`, note: 'Панорамні, до 4 м заввишки' },
-      { label: 'Алюмінієві вікна', href: '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/', image: `${PS}/cat-alu-vikna-480.webp`, note: 'Теплі, з терморозривом' },
-      { label: 'Зимові сади', href: '/alyuminiyevi-konstrukcziyi/zymovi-sady/', image: `${PS}/cat-alu-zymovi-sady-480.webp`, note: 'Теплий або сезонний сад' },
-      { label: 'Перголи', href: '/alyuminiyevi-konstrukcziyi/pergoly/', image: `${PS}/cat-alu-perholy-480.webp`, note: 'Ламелі, тент або скло' },
-      { label: 'Огорожі балконів і терас', href: '/sklyani-ohorozhi/sklyani-ohorozhi-teras/', image: P('glass-railing-primorski-sady-odesa'), note: 'Триплекс, безпечне скло' },
-      { label: 'Дзеркала', href: '/dzerkala/', image: `${DZ}/cat-stina-480.webp`, note: 'LED, у рамі, на всю стіну' }
-    ],
-    projectSlugs: ['ogorozha-shodiv-ta-drugogo-poverhu', 'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv', 'dzerkalo-z-pidsvidkoyu-v-m-odesa', 'dzerkalo-z-pidsvidkoyu-v-m-odesa-2', 'dzerkalni-dveri-v-garderob-2', 'shower-glass-to-ceiling-kyiv'],
-    seoHeading: 'Скло та алюміній для приватного будинку',
-    seo: [
-      'Скляні та алюмінієві конструкції для приватного будинку на замовлення: панорамні вікна й розсувні двері на терасу, скляні огорожі сходів і балконів, безрамне скління тераси, зимовий сад, пергола над зоною відпочинку, душові кабіни та дзеркала для ванних кімнат.',
-      'Для будинку важливо, щоб усі конструкції працювали як одна система: однаковий колір профілю, теплі алюмінієві вікна й двері з терморозривом, безпечний триплекс для огорож і загартоване скло для душових. Підбираємо рішення під архітектуру будинку та клімат.',
-      'Найкращий момент для проєктування — до стяжки й оздоблення: так ми правильно закладаємо пороги розсувних дверей, закладні для огорож і водовідведення терас. Ціну скління будинку розраховуємо за планом, кресленнями або фото з розмірами.',
-      'Виконуємо замір, виготовлення та монтаж скла й алюмінію для приватних будинків і котеджів у Києві, Одесі, Львові та областях — від окремої огорожі сходів до повного скління будинку.'
-    ]
-  },
   '/rishennya/dlya-ofisu/': {
     forWhom: 'для офісу',
     navLabel: 'Для офісу',
@@ -211,3 +188,7 @@ export const privateSectorExtra: SolutionExtra = {
     'Працюємо з приватним сектором у Києві, Одесі, Львові та по всій Україні: від однієї огорожі сходів чи душової до комплексного скління котеджу під ключ — із заміром, кресленням, виробництвом і монтажем.'
   ]
 };
+
+// «Для будинку» in the solutions strip now points to the private-sector landing
+// (/rishennya/dlya-budynku/ → 301 → /pryvatnyj-sektor/).
+solutionExtras['/pryvatnyj-sektor/'] = privateSectorExtra;

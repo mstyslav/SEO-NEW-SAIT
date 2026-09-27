@@ -6,3 +6,89 @@
 /project/rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa-2/ /project/rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa/ 301
 /project/shtorka-dlya-vannoyi-v-m-odesa-2/ /project/shtorka-dlya-vannoyi-v-m-odesa/ 301
 /project/mizhkimnatni-peregorodky-v-styli-loft-dlya-salonu-krasy-v-m-odesa/ /project/sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2/ 301
+
+# SEO migration — old production URLs (approved 2026-09-27, each pair validated by seo-audit/validate_redirects.py:
+# target 200 + indexable + canonical self, no chain, not homepage, UA→UA / RU→RU). Query strings pass through.
+# NOTE: /dushovi-kabiny/kutovi/ targets must be switched to /dushovi-kabiny/kytova-dushova-kabina/ in the same commit as that rename.
+# PRODUCT
+/product/kopiyakutova-dushova-kabina-librablack/ /dushovi-kabiny/kutovi/ 301
+/product/kopiyadushova-kabina-apus/ /dushovi-kabiny/kutovi/ 301
+/product/dushovyj-piddon-kvadratnyj-8080/ /dushovi-kabiny/dushovi-piddony/ 301
+/product/dushova-kabina-pyatykutna-pictorblack/ /dushovi-kabiny/piatykutni/ 301
+/product/dushovyj-piddon-100x100-pyatykutnyj/ /dushovi-kabiny/dushovi-piddony/ 301
+/product/dushova-kabina-apusblack/ /dushovi-kabiny/kutovi/ 301
+/product/kutova-dushova-kabina-libra/ /dushovi-kabiny/kutovi/ 301
+/product/dushovyj-piddon-kvadratnyj-9090/ /dushovi-kabiny/dushovi-piddony/ 301
+/product/dushova-kabina-pyatykutna-pictor/ /dushovi-kabiny/piatykutni/ 301
+/product/dushovyj-piddon-pyatykutnyj-chornyj/ /dushovi-kabiny/dushovi-piddony/ 301
+/product/peregorodka-sp9/ /sklyani-perehorodky/ 301
+/product/kopiyaperegorodka-sp14/ /sklyani-perehorodky/ 301
+/product/peregorodka-sp4/ /sklyani-perehorodky/ 301
+/product/peregorodka-sp2/ /sklyani-perehorodky/ 301
+/product/peregorodka-sp8/ /sklyani-perehorodky/ 301
+/product/peregorodka-sp6/ /sklyani-perehorodky/ 301
+/product/peregorodka-sp5/ /sklyani-perehorodky/ 301
+/product/peregorodka-sp13/ /sklyani-perehorodky/ 301
+/product/peregorodka-sp3/ /sklyani-perehorodky/ 301
+/product/eregorodka-sp7/ /sklyani-perehorodky/ 301
+/product/peregorodka-sp12/ /sklyani-perehorodky/ 301
+/product/peregorodka-sp10/ /sklyani-perehorodky/ 301
+/product/dushova-kabina-mod11/ /dushovi-kabiny/ 301
+/product/peregorodka-sp11/ /sklyani-perehorodky/ 301
+/product/dushova-kabina-mod1/ /dushovi-kabiny/ 301
+# RU
+/ru/dushovi-kabiny/dushevye-poddony/ /ru/dushovi-kabiny/dushovi-piddony/ 301
+/ru/peregorodki/transformiruyushhie-peregorodki/ /ru/sklyani-perehorodky/transformuyuchi-sklyani-peregorodky/ 301
+/ru/label/chastnye-proekty/ /ru/project/ 301
+/ru/peregorodki/ /ru/sklyani-perehorodky/ 301
+/ru/peregorodki/nizhneopornye-peregorodki/ /ru/sklyani-perehorodky/nyzhnooporni-sklyani-perehorodky/ 301
+/ru/product/dushovyj-piddon-kvadratnyj-9090/ /ru/dushovi-kabiny/dushovi-piddony/ 301
+/ru/dushovi-kabiny-2/ /ru/dushovi-kabiny/ 301
+/ru/product/kopiyaperegorodka-sp14/ /ru/sklyani-perehorodky/ 301
+/ru/peregorodki/teleskopicheskie-peregorodki/ /ru/sklyani-perehorodky/teleskopichni-sklyani-perehorodky/ 301
+/ru/blog/ /ru/knowledge/ 301
+/ru/peregorodki/podvesnye-peregorodki/ /ru/sklyani-perehorodky/pidvisni-sklyani-peregorodky/ 301
+/ru/bezramne-sklinnya/sklinnya-ofisiv/ /ru/sklyani-perehorodky/ofisni/ 301
+/ru/product-category/dushevye-kabyny/ /ru/dushovi-kabiny/ 301
+/ru/product/peregorodka-sp5/ /ru/sklyani-perehorodky/ 301
+/ru/product/dushovyj-piddon-pyatykutnyj-chornyj/ /ru/dushovi-kabiny/dushovi-piddony/ 301
+/ru/product/peregorodka-sp11/ /ru/sklyani-perehorodky/ 301
+/ru/product/peregorodka-sp12/ /ru/sklyani-perehorodky/ 301
+/ru/product/dushovyj-piddon-kvadratnyj-8080/ /ru/dushovi-kabiny/dushovi-piddony/ 301
+/ru/product-category/mezhkomnatnye-peregorodky/ /ru/sklyani-perehorodky/mizhkimnatni/ 301
+/ru/product/peregorodka-sp2/ /ru/sklyani-perehorodky/ 301
+/ru/product/peregorodka-sp3/ /ru/sklyani-perehorodky/ 301
+/ru/product/peregorodka-sp8/ /ru/sklyani-perehorodky/ 301
+/ru/product/eregorodka-sp7/ /ru/sklyani-perehorodky/ 301
+/ru/product/peregorodka-sp10/ /ru/sklyani-perehorodky/ 301
+/ru/peregorodki/czelnosteklyannye-peregorodki/ /ru/sklyani-perehorodky/tsilnosklyani-perehorodky/ 301
+/ru/product/peregorodka-sp9/ /ru/sklyani-perehorodky/ 301
+/ru/product/peregorodka-sp6/ /ru/sklyani-perehorodky/ 301
+/ru/sklyani-peregorodky/ /ru/sklyani-perehorodky/ 301
+# UA-OTHER
+/peregorodki/loft-peregorodku/ /sklyani-perehorodky/loft-sklyani-peregorodku/ 301
+/peregorodki/ /sklyani-perehorodky/ 301
+/metaloplastykovi-konstrukcziyi/ofisni-peregorodky/ /metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/ 301
+/peregorodki/transformuyuchi-peregorodky/ /sklyani-perehorodky/transformuyuchi-sklyani-peregorodky/ 301
+/peregorodki/nyzhnooporni-perehorodky/ /sklyani-perehorodky/nyzhnooporni-sklyani-perehorodky/ 301
+/private-houses/dushovi-kabiny/ /dushovi-kabiny/ 301
+/peregorodki/door/ /sklyani-perehorodky/sklyani-mizhkimnatni-dveri/ 301
+/peregorodki/teleskopichni-perehorodky/ /sklyani-perehorodky/teleskopichni-sklyani-perehorodky/ 301
+/sklyani-perehorodky/door/ /sklyani-perehorodky/sklyani-mizhkimnatni-dveri/ 301
+/peregorodki/pidvisni-peregorodky/ /sklyani-perehorodky/pidvisni-sklyani-peregorodky/ 301
+/bezramne-sklinnya/sklinnya-ofisiv/ /sklyani-perehorodky/ofisni/ 301
+/rewievs/ /about/ 301
+/product-category/mizhkimnatni-peregorodky/ /sklyani-perehorodky/mizhkimnatni/ 301
+/private-houses/sklyani-mizhkimnatni-dveri/ /sklyani-perehorodky/sklyani-mizhkimnatni-dveri/ 301
+/product-category/piddony/ /dushovi-kabiny/dushovi-piddony/ 301
+/private-houses/sklyani-peregorodky/ /sklyani-perehorodky/ 301
+/private-houses/dashok/ /sklyani-kozyrky/ 301
+/dlya-biznesu/bazam-vidpochynku/reczepshn/ /dlya-biznesu/bazam-vidpochynku/ 301
+/private-houses/ /pryvatnyj-sektor/ 301
+/private-houses/dzerkala/ /dzerkala/ 301
+/private-houses/sklinnya-na-vannu/ /dushovi-kabiny/shtorky-dlya-vannoyi/ 301
+/private-houses/sklinnya-teras-ta-altanok/ /bezramne-sklinnya/sklinnya-teras-ta-altanok/ 301
+/product-category/shower-cabins/ /dushovi-kabiny/ 301
+/pryvatnyj-sektor/pryvatnyj-sektor/garderobna/ /sklyani-perehorodky/mizhkimnatni/ 301
+# Approved 2026-09-27: solution page merged into the private-sector landing (same intent, no history)
+/rishennya/dlya-budynku/ /pryvatnyj-sektor/ 301

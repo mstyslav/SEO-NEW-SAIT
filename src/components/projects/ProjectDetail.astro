@@ -46,7 +46,7 @@ const projectSchema: JsonLdObject = {
     caption: image.caption ?? image.alt
   })),
   creator: { '@id': `${new URL('/', origin).href}#organization` },
-  locationCreated: { '@type': 'Place', name: project.city },
+  ...(project.city ? { locationCreated: { '@type': 'Place', name: project.city } } : {}),
   about: [project.constructionType, category.label]
 };
 
@@ -86,7 +86,7 @@ const structuredData = [
 
       <section class="project-detail-v2__hero">
         <div class="project-detail-v2__hero-copy">
-          <p class="eyebrow">{project.city} / {project.objectType}</p>
+          <p class="eyebrow">{[project.city, project.objectType].filter(Boolean).join(' / ')}</p>
           <h1>{project.h1}</h1>
           <p class="lead">{project.shortDescription}</p>
           <a class="button button--mint" href="#project-request">Розрахувати подібний проєкт</a>
@@ -155,7 +155,7 @@ const structuredData = [
 
       <GoogleReviews />
 
-      <ProjectRequestForm projectTitle={project.cardTitle} city={project.city} requestExample={requestExample} locale={locale} />
+      <ProjectRequestForm projectTitle={project.cardTitle} city={project.city ?? ''} requestExample={requestExample} locale={locale} />
     </main>
     <Footer locale={locale} />
   </div>

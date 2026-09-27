@@ -21,8 +21,8 @@ const requestExamples: Record<string, string> = {
   'chastne-zamovlennya-odesa-dushova-ta-peregorodka': 'Скляна вхідна група для магазину з двостулковими маятниковими дверима'
 };
 
-export function projectRequestExample(project: { slug: string; city: string; constructionType: string; objectType: string }) {
-  const cityPhrase = project.city === 'Київ' ? 'у Києві' : project.city === 'Одеса' ? 'в Одесі' : 'у Львові';
+export function projectRequestExample(project: { slug: string; city?: string; constructionType: string; objectType: string }) {
+  const cityPhrase = project.city === 'Київ' ? 'у Києві' : project.city === 'Одеса' ? 'в Одесі' : project.city === 'Львів' ? 'у Львові' : '';
   const example = requestExamples[project.slug] ?? `${project.constructionType} за індивідуальними розмірами для об’єкта ${project.objectType.toLowerCase()}`;
-  return `${example} ${cityPhrase}`;
+  return cityPhrase ? `${example} ${cityPhrase}` : example;
 }

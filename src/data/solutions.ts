@@ -147,7 +147,7 @@ export const SOLUTIONS: Solution[] = [
   },
   {
     slug: 'dlya-budynku',
-    path: '/rishennya/dlya-budynku/',
+    path: '/pryvatnyj-sektor/',
     navLabel: 'Для будинку',
     navLabelRu: 'Для дома',
     eyebrow: 'Рішення · Для будинку',

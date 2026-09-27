@@ -3794,7 +3794,7 @@ export const framelessCategories: ProfileCategory[] = [
       ],
       [
         "Скління для будинку",
-        "/rishennya/dlya-budynku/"
+        "/pryvatnyj-sektor/"
       ],
       [
         "Тепле чи холодне скління тераси",

@@ -2,7 +2,7 @@ import type { ProjectCategoryId } from './project-taxonomy';
 
 type ProjectFaqItem = { question: string; answer: string };
 type ProjectFaqSource = {
-  city: string;
+  city?: string;
   objectType: string;
   constructionType: string;
   category: ProjectCategoryId;
@@ -116,7 +116,9 @@ export function buildProjectFaq(project: ProjectFaqSource): ProjectFaqItem[] {
   const construction = project.constructionType.toLowerCase();
   const practical: ProjectFaqItem[] = [
     { question: 'Що потрібно для попереднього розрахунку такого рішення?', answer: `Надішліть приблизні розміри, фото місця монтажу та короткий опис задачі. Цього достатньо для попередньої оцінки вартості ${construction}.` },
-    { question: `Чи доступний замір у місті ${project.city}?`, answer: `Так. На об’єкті в місті ${project.city} фахівець перевірить геометрію, основу для кріплення, доступ і умови монтажу.` },
+    project.city
+      ? { question: `Чи доступний замір у місті ${project.city}?`, answer: `Так. На об’єкті в місті ${project.city} фахівець перевірить геометрію, основу для кріплення, доступ і умови монтажу.` }
+      : { question: 'Чи доступний замір на об’єкті?', answer: 'Так. Фахівець перевірить на об’єкті геометрію, основу для кріплення, доступ і умови монтажу.' },
     { question: 'Від чого залежить вартість подібної конструкції?', answer: 'Від габаритів, типу та обробки скла, фурнітури, кількості елементів, складності доставки й монтажних вузлів.' },
     { question: 'Скільки часу займають виготовлення та монтаж?', answer: 'Строк визначаємо після заміру й погодження креслень. Він залежить від складності, матеріалів і завантаження виробництва.' },
     { question: 'Чи можна адаптувати рішення до іншого об’єкта?', answer: `Так. Для об’єкта «${project.objectType}» та інших приміщень змінюємо розміри, конфігурацію, скло й оздоблення відповідно до умов.` },

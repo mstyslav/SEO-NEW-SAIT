@@ -40,7 +40,7 @@ const sizes = '(max-width: 700px) calc(100vw - 32px), (max-width: 1050px) calc((
 const loading = priority || eager ? 'eager' : 'lazy';
 const fetchpriority = priority ? 'high' : eager ? 'auto' : undefined;
 ---
-<article class="project-card-v2" data-project-card data-category={project.category} data-city={project.city}>
+<article class="project-card-v2" data-project-card data-category={project.category} data-city={project.city ?? ''}>
   <a href={href} aria-label={`${viewProjectAriaPrefix} ${cardTitle}`}>
     <div class="project-card-v2__media">
       <img
@@ -56,7 +56,7 @@ const fetchpriority = priority ? 'high' : eager ? 'auto' : undefined;
       />
     </div>
     <div class="project-card-v2__body">
-      <p>{city} <span aria-hidden="true">/</span> {categoryLabel}</p>
+      <p>{city && <>{city} <span aria-hidden="true">/</span> </>}{categoryLabel}</p>
       <h2>{cardTitle}</h2>
       <span class="project-card-v2__type">{constructionType}</span>
       <span class="project-card-v2__description">{shortDescription}</span>

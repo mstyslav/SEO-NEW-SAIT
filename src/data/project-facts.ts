@@ -1,6 +1,6 @@
 type ProjectFactsSource = {
   objectType: string;
-  city: string;
+  city?: string;
   residentialComplex?: string;
   district?: string;
   constructionType: string;
@@ -27,7 +27,7 @@ export type ProjectFact = { label: string; value: string };
 export function buildProjectFacts(project: ProjectFactsSource): ProjectFact[] {
   const optional: ProjectFact[] = [];
 
-  if (project.residentialComplex) optional.push({ label: 'Локація', value: `${project.residentialComplex}, ${project.city}` });
+  if (project.residentialComplex) optional.push({ label: 'Локація', value: [project.residentialComplex, project.city].filter(Boolean).join(', ') });
   if (project.district) optional.push({ label: 'Район', value: project.district });
   if (project.glassType) optional.push({ label: 'Скло', value: project.glassType });
   if (project.glassThickness) optional.push({ label: 'Товщина скла', value: project.glassThickness });
