@@ -18,11 +18,11 @@ import '../../styles/project-detail-v2.css';
 const { project, relatedProjects = [], locale = 'uk' } = Astro.props;
 const origin = Astro.site ?? Astro.url.origin;
 // Unprefixed path: this is the canonical (uk) URL regardless of which route
-// (/projects/ or the /uk/projects/ duplicate) actually rendered the page —
+// (/project/ or the /uk/project/ duplicate) actually rendered the page —
 // matches BaseLayout's own stripLocale()/localizedPath() canonical logic and
 // what sitemap.xml.ts lists, so structured data always describes the real
 // canonical URL instead of the redundant /uk/-prefixed one.
-const projectPath = `/projects/${project.slug}/`;
+const projectPath = `/project/${project.slug}/`;
 const canonical = absoluteUrl(projectPath, origin);
 const category = projectCategoryMap[project.category];
 const projectFaq = buildProjectFaq(project);
@@ -52,7 +52,7 @@ const projectSchema: JsonLdObject = {
 
 const breadcrumbItems = [
   { label: 'Головна', href: '/' },
-  { label: 'Наші проєкти', href: '/projects/' },
+  { label: 'Наші проєкти', href: '/project/' },
   { label: project.h1, href: projectPath }
 ];
 
@@ -148,7 +148,7 @@ const structuredData = [
         {relatedProjects.length > 0 && (
           <section class="project-detail-v2__related">
             <div class="project-section-head-v2"><p class="eyebrow">Схожі проєкти</p><h2>Інші реалізовані рішення</h2></div>
-            <div class="projects-index-v2__grid">{relatedProjects.map((item) => <ProjectCard project={item} hrefPrefix="/projects" />)}</div>
+            <div class="projects-index-v2__grid">{relatedProjects.map((item) => <ProjectCard project={item} hrefPrefix="/project" />)}</div>
           </section>
         )}
       </div>

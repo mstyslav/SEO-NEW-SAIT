@@ -2,3 +2,7 @@
 # list does not cover (e.g. if a new page is added before this file is
 # regenerated) — it now also renders an instant (0s) meta-refresh, not the
 # previous 2s delay, so the fallback itself is safe even if this file is stale.
+# SEO migration stage 3 (approved 2026-09-27): duplicates of old project pages → the kept primary project URL
+/project/rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa-2/ /project/rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa/ 301
+/project/shtorka-dlya-vannoyi-v-m-odesa-2/ /project/shtorka-dlya-vannoyi-v-m-odesa/ 301
+/project/mizhkimnatni-peregorodky-v-styli-loft-dlya-salonu-krasy-v-m-odesa/ /project/sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2/ 301

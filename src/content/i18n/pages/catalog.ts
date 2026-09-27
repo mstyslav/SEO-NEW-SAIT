@@ -96,7 +96,7 @@ export const catalogContent: Record<Locale, CatalogContent> = {
       intro: 'Перейдіть одразу до потрібної конфігурації, якщо тип конструкції вже відомий.'
     },
     popularDirections: [
-      ['Душова Walk-in', '/poslugy/dushovi-konstruktsii/dushova-kabina-walk-in/'],
+      ['Душова Walk-in', '/dushovi-kabiny/peregorodka-dlya-dusha/'],
       ['Перегородки Loft', '/sklyani-perehorodky/loft-sklyani-peregorodku/'],
       ['Офісні перегородки', '/sklyani-perehorodky/ofisni/'],
       ['Розсувні скляні двері', '/sklyani-dveri/rozsuvni-sklyani-dveri/'],
@@ -258,7 +258,7 @@ export const catalogContent: Record<Locale, CatalogContent> = {
       intro: 'Перейдите сразу к нужной конфигурации, если тип конструкции уже известен.'
     },
     popularDirections: [
-      ['Душевая Walk-in', '/poslugy/dushovi-konstruktsii/dushova-kabina-walk-in/'],
+      ['Душевая Walk-in', '/dushovi-kabiny/peregorodka-dlya-dusha/'],
       ['Перегородки Loft', '/sklyani-perehorodky/loft-sklyani-peregorodku/'],
       ['Офисные перегородки', '/sklyani-perehorodky/ofisni/'],
       ['Раздвижные стеклянные двери', '/sklyani-dveri/rozsuvni-sklyani-dveri/'],

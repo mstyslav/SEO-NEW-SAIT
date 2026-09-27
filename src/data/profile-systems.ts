@@ -1708,7 +1708,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Фасадне скління', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
       ['Скляні двері в алюмінієвому профілі', '/sklyani-dveri/dveri-v-aliuminiievomu-profili/'],
       ['Скло для офісу', '/dlya-biznesu/dlya-ofisu/'],
-      ['Проєкти', '/projects/']
+      ['Проєкти', '/project/']
     ],
     ctaTitle: 'Розрахуємо перегородки для вашого офісу',
     ctaText: 'Надішліть план офісу або фото з розмірами — запропонуємо систему, схему дверей і підготуємо попередній розрахунок.'
@@ -2803,7 +2803,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Металопластикові вікна', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/'],
       ['Скління для офісу', '/rishennya/dlya-ofisu/'],
       ['Скління для магазину', '/rishennya/dlya-magazynu/'],
-      ['Проєкти', '/projects/'],
+      ['Проєкти', '/project/'],
       ['Оплата і доставка', '/oplata-dostavka/']
     ],
     ctaTitle: 'Розрахуємо перегородку для вашого приміщення',

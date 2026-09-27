@@ -1,5 +1,5 @@
 {
-  "slug": "bath-screen-custom-odesa",
+  "slug": "shtorka-dlya-vannoyi-v-m-odesa",
   "locale": "uk",
   "status": "published",
   "featured": false,
@@ -118,11 +118,11 @@
   ],
   "serviceLink": {
     "label": "Скляні шторки для ванни на замовлення",
-    "href": "/dushovi-kabiny/shtorky-dlia-vanny/"
+    "href": "/dushovi-kabiny/shtorky-dlya-vannoyi/"
   },
   "relatedProjectSlugs": [
-    "bath-screen-akvarel-odesa",
+    "shtorka-dlya-vannoyi-zhk-akvarel-v-m-odesa",
     "bath-screen-teremky-kyiv",
-    "hotel-dvoryanskyi-showers-odesa"
+    "gotel-dvoryanskyj-odesa-dushovi-ta-shtorky-na-vanu"
   ]
 }

@@ -4,7 +4,7 @@ import ProjectDetail from '../../components/projects/ProjectDetail.astro';
 import { selectRelatedProjects } from '../../data/select-related-projects';
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects', ({ data }) => data.status === 'published' && data.slug !== 'loft-kyiv');
+  const projects = await getCollection('projects', ({ data }) => data.status === 'published' && data.slug !== 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv');
   return projects.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
 }
 

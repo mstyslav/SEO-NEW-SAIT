@@ -118,10 +118,10 @@ const structuredData: JsonLdObject[] = [
       <section class="category-section">
         <div class="category-heading category-heading--projects">
           <div class="category-heading--projects__title"><p class="eyebrow">Портфоліо</p><h2>Реалізовані проєкти</h2></div>
-          <div class="category-heading--projects__aside"><a class="category-arrow-link" href="/projects/">Усі проєкти <span aria-hidden="true">→</span></a></div>
+          <div class="category-heading--projects__aside"><a class="category-arrow-link" href="/project/">Усі проєкти <span aria-hidden="true">→</span></a></div>
         </div>
         <div class="projects-index-v2__grid category-projects-grid">
-          {projects.map((project) => <ProjectCard project={project} hrefPrefix="/projects" />)}
+          {projects.map((project) => <ProjectCard project={project} hrefPrefix="/project" />)}
         </div>
       </section>
     )}

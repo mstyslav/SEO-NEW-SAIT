@@ -287,7 +287,7 @@ export const railingCategories: ProfileCategory[] = [
       ['Чи можна зробити секції знімними?', 'Так, для сезонних майданчиків робимо секції на знімних основах.'],
       ['Що з кутами огорожі?', 'Кути з’єднуємо кутовими затискачами або закінчуємо профіль під 90°, скло не стикується впритул.']
     ],
-    related: [['Огорожі для басейнів', P('sklyani-ohorozhi-baseiniv')], ['Огорожі на стійках', P('sklyani-ohorozhi-na-stiykakh')], ['Скління терас', '/bezramne-sklinnya/sklinnya-teras/']],
+    related: [['Огорожі для басейнів', P('sklyani-ohorozhi-baseiniv')], ['Огорожі на стійках', P('sklyani-ohorozhi-na-stiykakh')], ['Скління терас', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/']],
     ctaTitle: 'Потрібна огорожа тераси?',
     ctaText: 'Надішліть фото тераси й довжину огорожі — підберемо кріплення й висоту та підготуємо розрахунок.'
   }),

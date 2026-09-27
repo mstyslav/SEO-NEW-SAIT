@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const MARKER = 'data-projects-common-critical';
-const TARGET_PAGES = ['projects/index.html', 'ru/projects/index.html'];
+const TARGET_PAGES = ['project/index.html', 'ru/project/index.html'];
 const STYLESHEET_LINK_RE = /<link rel="stylesheet" href="([^"]+)">/g;
 const criticalCssPath = fileURLToPath(
   new URL('../src/styles/projects-common-critical.css', import.meta.url)

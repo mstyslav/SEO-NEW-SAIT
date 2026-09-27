@@ -203,10 +203,10 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       <section class="category-section">
         <div class="category-heading category-heading--projects">
           <div class="category-heading--projects__title"><p class="eyebrow">Портфолио</p><h2>Наши стеклянные перегородки</h2></div>
-          <div class="category-heading--projects__aside"><a class="category-arrow-link" href={lp('/projects/')}>Все проекты <span aria-hidden="true">→</span></a></div>
+          <div class="category-heading--projects__aside"><a class="category-arrow-link" href={lp('/project/')}>Все проекты <span aria-hidden="true">→</span></a></div>
         </div>
         <div class="projects-index-v2__grid category-projects-grid">
-          {projects.map((project) => <ProjectCard project={project} locale="ru" href={lp(`/projects/${project.slug}/`)} />)}
+          {projects.map((project) => <ProjectCard project={project} locale="ru" href={lp(`/project/${project.slug}/`)} />)}
         </div>
       </section>
     )}

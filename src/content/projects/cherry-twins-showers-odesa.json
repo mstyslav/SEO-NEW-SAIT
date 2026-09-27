@@ -1,0 +1,110 @@
+{
+  "slug": "sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu",
+  "locale": "uk",
+  "status": "published",
+  "featured": false,
+  "sortOrder": 177,
+  "seo": {
+    "title": "Скляні душові перегородки для Cherry Twins в Одесі | Space Glass",
+    "description": "Скляні душові перегородки для санвузлів комплексу Cherry Twins Odessa: безпечне скло, чорна фурнітура та зручне прибирання в місцях з великим потоком гостей."
+  },
+  "h1": "Скляні душові перегородки для Cherry Twins Odessa",
+  "cardTitle": "Душові перегородки Cherry Twins, Одеса",
+  "cardTitleRu": "Душевые перегородки Cherry Twins, Одесса",
+  "city": "Одеса",
+  "cityRu": "Одесса",
+  "category": "showers",
+  "constructionType": "Скляні душові перегородки",
+  "constructionTypeRu": "Стеклянные душевые перегородки",
+  "objectType": "Комплекс Cherry Twins Odessa",
+  "shortDescription": "Скляні душові перегородки для санвузлів комплексу Cherry Twins Odessa: безпечне скло, чорна фурнітура та зручне прибирання в місцях з великим потоком гостей.",
+  "shortDescriptionRu": "Стеклянные душевые перегородки для санузлов комплекса Cherry Twins Odessa: безопасное стекло, чёрная фурнитура и удобная уборка в местах с большим потоком гостей.",
+  "clientTask": {
+    "title": "Завдання замовника",
+    "text": "Замовник попросив розробити й виготовити скляні душові перегородки для комплексу Cherry Twins Odessa, щоб забезпечити комфорт і приватність гостей."
+  },
+  "solution": {
+    "title": "Скляні душові перегородки",
+    "text": "Виготовили душові перегородки з безпечного загартованого скла з урахуванням особливостей кожного санвузла та інтенсивного щоденного використання."
+  },
+  "characteristics": [
+    {
+      "label": "Тип",
+      "value": "Скляні душові перегородки"
+    },
+    {
+      "label": "Об’єкт",
+      "value": "Комплекс Cherry Twins Odessa"
+    },
+    {
+      "label": "Скло",
+      "value": "Безпечне загартоване"
+    },
+    {
+      "label": "Фурнітура",
+      "value": "Чорна"
+    },
+    {
+      "label": "Місто",
+      "value": "Одеса"
+    }
+  ],
+  "materials": [
+    "Загартоване безпечне скло",
+    "Душова фурнітура",
+    "Ущільнювачі"
+  ],
+  "installation": {
+    "title": "Монтаж",
+    "text": "Роботи виконали в погоджені строки; за відгуком замовника — навіть раніше строку, вказаного в договорі."
+  },
+  "result": {
+    "title": "Результат",
+    "text": "Санвузли отримали сучасні душові зони, які легко доглядати в закладі з великим потоком гостей."
+  },
+  "cover": {
+    "src": "/images/projects/cherry-twins-showers-odesa/cherry-twins-showers-odesa-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Скляна душова перегородка у санвузлі Cherry Twins Odessa"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/cherry-twins-showers-odesa/cherry-twins-showers-odesa-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Душова зона зі скляною перегородкою та чорною фурнітурою",
+      "caption": "Душова зона зі скляною перегородкою та чорною фурнітурою"
+    },
+    {
+      "src": "/images/projects/cherry-twins-showers-odesa/cherry-twins-showers-odesa-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Скляна душова перегородка з трапом у підлозі",
+      "caption": "Скляна душова перегородка з трапом у підлозі"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Чи можна виготовити таку конструкцію під мої розміри?",
+      "answer": "Так. Кожну конструкцію проєктуємо за фактичними розмірами приміщення після заміру, з урахуванням кріплень і оздоблення."
+    },
+    {
+      "question": "Яке скло використовуєте?",
+      "answer": "Загартоване безпечне скло або триплекс: прозоре, матове чи тоноване — підбираємо під задачу об’єкта."
+    },
+    {
+      "question": "Скільки триває монтаж?",
+      "answer": "Зазвичай один день на кілька душових зон після виготовлення скла."
+    }
+  ],
+  "serviceLink": {
+    "label": "Скляні перегородки для душу",
+    "href": "/dushovi-kabiny/peregorodka-dlya-dusha/"
+  },
+  "relatedProjectSlugs": [
+    "gotel-dvoryanskyj-odesa-dushovi-ta-shtorky-na-vanu",
+    "shtorka-dlya-vannoyi-zhk-akvarel-v-m-odesa",
+    "teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat"
+  ]
+}

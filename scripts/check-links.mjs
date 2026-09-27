@@ -8,7 +8,7 @@ const broken = [];
 const seoSlugs = new Set([
   'rishennia', 'mista', 'baza-znan',
   'glass-partitions', 'glass-showers', 'glass-railings', 'glass-doors', 'custom-mirrors', 'glass-facades',
-  'mista/kyiv', 'mista/lviv', 'mista/odesa', 'baza-znan/yak-obraty-sklo', 'projects/loft-kyiv'
+  'mista/kyiv', 'mista/lviv', 'mista/odesa', 'baza-znan/yak-obraty-sklo'
 ]);
 
 function walk(dir) {

@@ -1,6 +1,6 @@
 // SEO cluster "Рішення" (/rishennya/): one entry per object-type solution page.
 // Product-category hrefs are pulled from the site's real, already-canonical routes
-// (see project-taxonomy.ts serviceHref for the same mapping used by /projects/).
+// (see project-taxonomy.ts serviceHref for the same mapping used by /project/).
 // City hrefs point at the existing /city/{kyiv,odesa,lviv}/ pages.
 
 export interface SolutionProductLink {

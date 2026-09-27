@@ -1,0 +1,125 @@
+{
+  "slug": "dzerkalo-na-stinu-v-zhk-kontynent-m-odesa",
+  "locale": "uk",
+  "status": "published",
+  "featured": false,
+  "sortOrder": 179,
+  "seo": {
+    "title": "Дзеркало на стіну 3,2 × 1,1 м у ЖК Континент, Одеса",
+    "description": "Велике дзеркало на стіну 3,2 × 1,1 м у тонкій чорній рамі для квартири в ЖК Континент в Одесі — від підлоги майже до стелі."
+  },
+  "h1": "Велике дзеркало на стіну в чорній рамі, ЖК Континент, Одеса",
+  "cardTitle": "Дзеркало на стіну, ЖК Континент, Одеса",
+  "cardTitleRu": "Зеркало на стену, ЖК Континент, Одесса",
+  "city": "Одеса",
+  "cityRu": "Одесса",
+  "category": "mirrors",
+  "constructionType": "Дзеркало на стіну",
+  "constructionTypeRu": "Зеркало на стену",
+  "objectType": "Квартира, ЖК Континент",
+  "shortDescription": "Велике дзеркало на стіну 3,2 × 1,1 м у тонкій чорній рамі для квартири в ЖК Континент в Одесі — від підлоги майже до стелі.",
+  "shortDescriptionRu": "Большое зеркало на стену 3,2 × 1,1 м в тонкой чёрной раме для квартиры в ЖК Континент в Одессе — от пола почти до потолка.",
+  "clientTask": {
+    "title": "Завдання замовника",
+    "text": "Замовник попросив розробити й виготовити дзеркало на стіну для квартири, щоб зробити простір естетичнішим і функціональнішим."
+  },
+  "solution": {
+    "title": "Дзеркало на стіну",
+    "text": "Виготовили дзеркало висотою 3,2 м і шириною 1,1 м у тонкій чорній рамі, яке спирається на підлогу й візуально збільшує кімнату."
+  },
+  "characteristics": [
+    {
+      "label": "Тип",
+      "value": "Дзеркало на стіну"
+    },
+    {
+      "label": "Висота",
+      "value": "3,2 м"
+    },
+    {
+      "label": "Ширина",
+      "value": "1,1 м"
+    },
+    {
+      "label": "Рама",
+      "value": "Чорна, тонка"
+    },
+    {
+      "label": "Місто",
+      "value": "Одеса"
+    }
+  ],
+  "materials": [
+    "Дзеркальне полотно",
+    "Металева рама",
+    "Кріплення до стіни"
+  ],
+  "installation": {
+    "title": "Монтаж",
+    "text": "Дзеркало доставили й змонтували в квартирі з готовим ремонтом."
+  },
+  "result": {
+    "title": "Результат",
+    "text": "Кімната стала візуально більшою та світлішою завдяки великому дзеркалу."
+  },
+  "cover": {
+    "src": "/images/projects/wall-mirror-kontynent-odesa/wall-mirror-kontynent-odesa-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Дзеркало на стіну в чорній рамі в квартирі ЖК Континент"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/wall-mirror-kontynent-odesa/wall-mirror-kontynent-odesa-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Велике дзеркало від підлоги в спальні",
+      "caption": "Велике дзеркало від підлоги в спальні"
+    },
+    {
+      "src": "/images/projects/wall-mirror-kontynent-odesa/wall-mirror-kontynent-odesa-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Відображення спальні у великому дзеркалі на стіні",
+      "caption": "Відображення спальні у великому дзеркалі на стіні"
+    },
+    {
+      "src": "/images/projects/wall-mirror-kontynent-odesa/wall-mirror-kontynent-odesa-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Чорна рама великого дзеркала крупним планом",
+      "caption": "Чорна рама великого дзеркала крупним планом"
+    },
+    {
+      "src": "/images/projects/wall-mirror-kontynent-odesa/wall-mirror-kontynent-odesa-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Чорна рама великого дзеркала крупним планом",
+      "caption": "Чорна рама великого дзеркала крупним планом"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Чи можна виготовити таку конструкцію під мої розміри?",
+      "answer": "Так. Кожну конструкцію проєктуємо за фактичними розмірами приміщення після заміру, з урахуванням кріплень і оздоблення."
+    },
+    {
+      "question": "Яке скло використовуєте?",
+      "answer": "Загартоване безпечне скло або триплекс: прозоре, матове чи тоноване — підбираємо під задачу об’єкта."
+    },
+    {
+      "question": "Скільки триває монтаж?",
+      "answer": "Зазвичай кілька годин після виготовлення дзеркала."
+    }
+  ],
+  "serviceLink": {
+    "label": "Дзеркала на стіну",
+    "href": "/dzerkala/dzerkala-na-stinu/"
+  },
+  "relatedProjectSlugs": [
+    "dzerkalo-z-pidsvidkoyu-v-m-odesa-2",
+    "dzerkalo-z-pidsvidkoyu-v-m-odesa",
+    "shtorka-dlya-vannoyi-zhk-akvarel-v-m-odesa"
+  ],
+  "dimensions": "3,2 × 1,1 м"
+}

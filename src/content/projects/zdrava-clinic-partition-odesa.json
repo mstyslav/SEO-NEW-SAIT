@@ -1,0 +1,132 @@
+{
+  "slug": "rozdilennya-zony-pryjomu-kliyenta-mizh-pidgotovchoyu-zonoyu-v-kliniczi-zdrava",
+  "locale": "uk",
+  "status": "published",
+  "featured": false,
+  "sortOrder": 176,
+  "seo": {
+    "title": "Скляна перегородка для клініки ZDRAVA в Одесі | Space Glass",
+    "description": "Нерухома скляна перегородка висотою 2,8 м і шириною 2,1 м відокремлює зону прийому від підготовчої зони в клініці сімейної медицини ZDRAVA в Одесі."
+  },
+  "h1": "Скляна зонуюча перегородка для клініки ZDRAVA в Одесі",
+  "cardTitle": "Перегородка клініки ZDRAVA, Одеса",
+  "cardTitleRu": "Перегородка клиники ZDRAVA, Одесса",
+  "city": "Одеса",
+  "cityRu": "Одесса",
+  "category": "business-glass",
+  "constructionType": "Стаціонарна зонуюча скляна перегородка",
+  "constructionTypeRu": "Стационарная зонирующая стеклянная перегородка",
+  "objectType": "Клініка сімейної медицини ZDRAVA",
+  "shortDescription": "Нерухома скляна перегородка висотою 2,8 м і шириною 2,1 м відокремлює зону прийому від підготовчої зони в клініці сімейної медицини ZDRAVA в Одесі.",
+  "shortDescriptionRu": "Неподвижная стеклянная перегородка высотой 2,8 м и шириной 2,1 м отделяет зону приёма от подготовительной зоны в клинике семейной медицины ZDRAVA в Одессе.",
+  "clientTask": {
+    "title": "Завдання замовника",
+    "text": "Клініці потрібна була нерухома зонуюча перегородка, яка розділить зону прийому пацієнтів і підготовчу зону, збереже світло й легко митиметься та дезінфікуватиметься."
+  },
+  "solution": {
+    "title": "Стаціонарна зонуюча скляна перегородка",
+    "text": "Виготовили стаціонарну скляну перегородку 2,8 × 2,1 м з безпечного скла з матовою поверхнею для приватності пацієнтів і гладкими поверхнями, зручними для дезінфекції."
+  },
+  "characteristics": [
+    {
+      "label": "Тип",
+      "value": "Стаціонарна зонуюча перегородка"
+    },
+    {
+      "label": "Висота",
+      "value": "2,8 м"
+    },
+    {
+      "label": "Ширина",
+      "value": "2,1 м"
+    },
+    {
+      "label": "Скло",
+      "value": "Безпечне, матове"
+    },
+    {
+      "label": "Місто",
+      "value": "Одеса"
+    }
+  ],
+  "materials": [
+    "Безпечне загартоване скло",
+    "Матування для приватності",
+    "Профіль і кріплення для комерційних приміщень"
+  ],
+  "installation": {
+    "title": "Монтаж",
+    "text": "Монтаж виконали в працюючій клініці, узгодивши час робіт із графіком прийому пацієнтів."
+  },
+  "result": {
+    "title": "Результат",
+    "text": "Зона прийому відокремлена від підготовчої зони, приміщення лишилося світлим, а скло легко обробляти."
+  },
+  "cover": {
+    "src": "/images/projects/zdrava-clinic-partition-odesa/zdrava-clinic-partition-odesa-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Матова скляна перегородка в клініці ZDRAVA в Одесі"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/zdrava-clinic-partition-odesa/zdrava-clinic-partition-odesa-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Скляна перегородка відокремлює кушетку в кабінеті клініки",
+      "caption": "Скляна перегородка відокремлює кушетку в кабінеті клініки"
+    },
+    {
+      "src": "/images/projects/zdrava-clinic-partition-odesa/zdrava-clinic-partition-odesa-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Матове скло зонуючої перегородки крупним планом",
+      "caption": "Матове скло зонуючої перегородки крупним планом"
+    },
+    {
+      "src": "/images/projects/zdrava-clinic-partition-odesa/zdrava-clinic-partition-odesa-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Примикання скляної перегородки до стіни в клініці",
+      "caption": "Примикання скляної перегородки до стіни в клініці"
+    },
+    {
+      "src": "/images/projects/zdrava-clinic-partition-odesa/zdrava-clinic-partition-odesa-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Примикання скляної перегородки до стіни в клініці",
+      "caption": "Примикання скляної перегородки до стіни в клініці"
+    },
+    {
+      "src": "/images/projects/zdrava-clinic-partition-odesa/zdrava-clinic-partition-odesa-detail-05.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Примикання скляної перегородки до стіни в клініці",
+      "caption": "Примикання скляної перегородки до стіни в клініці"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Чи можна виготовити таку конструкцію під мої розміри?",
+      "answer": "Так. Кожну конструкцію проєктуємо за фактичними розмірами приміщення після заміру, з урахуванням кріплень і оздоблення."
+    },
+    {
+      "question": "Яке скло використовуєте?",
+      "answer": "Загартоване безпечне скло або триплекс: прозоре, матове чи тоноване — підбираємо під задачу об’єкта."
+    },
+    {
+      "question": "Скільки триває монтаж?",
+      "answer": "Зазвичай кілька годин — роботи плануємо поза часом прийому."
+    }
+  ],
+  "serviceLink": {
+    "label": "Скло для стоматологій і клінік",
+    "href": "/dlya-biznesu/stomatologiyi-ta-kliniky/"
+  },
+  "relatedProjectSlugs": [
+    "rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa",
+    "sklyani-peregorodky-dlya-ofisu-v-m-odesa",
+    "chastne-zamovlennya-odesa-dushova-ta-peregorodka"
+  ],
+  "dimensions": "2,8 × 2,1 м"
+}

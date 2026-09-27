@@ -219,7 +219,7 @@ const structuredData: JsonLdObject[] = [
           {localProjects.length > 0 ? (
             <div class="city-hub__project-grid projects-index-v2__grid" aria-label={hub.projectsSection.gridAriaLabel}>
               {localProjects.map((project) => (
-                <ProjectCard project={project} href={localizeHref(`/projects/${project.slug}/`)} locale={locale} />
+                <ProjectCard project={project} href={localizeHref(`/project/${project.slug}/`)} locale={locale} />
               ))}
             </div>
           ) : (

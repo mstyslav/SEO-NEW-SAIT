@@ -3,8 +3,8 @@ import { getCollection, getEntry } from 'astro:content';
 import ProjectDetail from '../../../components/projects/ProjectDetail.astro';
 import { selectRelatedProjects } from '../../../data/select-related-projects';
 
-const entry = await getEntry('projects', 'loft-kyiv');
-if (!entry) throw new Error('Missing project data: loft-kyiv');
+const entry = await getEntry('projects', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv');
+if (!entry) throw new Error('Missing project data: mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv');
 const allProjects = await getCollection('projects', ({ data }) => data.status === 'published');
 const relatedProjects = selectRelatedProjects(entry.data, allProjects, 5);
 ---

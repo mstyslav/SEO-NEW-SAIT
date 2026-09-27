@@ -274,7 +274,7 @@ export const railingCategoriesRu: ProfileCategory[] = [
       ['Можно ли сделать секции съёмными?', 'Да, для сезонных площадок делаем секции на съёмных основаниях.'],
       ['Что с углами ограждения?', 'Углы соединяем угловыми зажимами или заканчиваем профиль под 90°, стекло не стыкуется вплотную.']
     ],
-    related: [['Ограждения для бассейнов', P('sklyani-ohorozhi-baseiniv')], ['Ограждения на стойках', P('sklyani-ohorozhi-na-stiykakh')], ['Остекление террас', '/bezramne-sklinnya/sklinnya-teras/']],
+    related: [['Ограждения для бассейнов', P('sklyani-ohorozhi-baseiniv')], ['Ограждения на стойках', P('sklyani-ohorozhi-na-stiykakh')], ['Остекление террас', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/']],
     ctaTitle: 'Нужно ограждение террасы?',
     ctaText: 'Пришлите фото террасы и длину ограждения — подберём крепление и высоту и подготовим расчёт.'
   }),

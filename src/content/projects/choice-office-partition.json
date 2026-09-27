@@ -1,0 +1,132 @@
+{
+  "slug": "choice-osklinya-kabinetu-v-vzhe-diyuchomu-magazyni",
+  "locale": "uk",
+  "status": "draft",
+  "featured": false,
+  "sortOrder": 180,
+  "seo": {
+    "title": "Скляна перегородка кабінету в магазині Choice | Space Glass",
+    "description": "Скляна перегородка кабінету висотою 2,4 м і шириною 3,1 м у діючому магазині Choice — для переговорів і підписання дилерських угод."
+  },
+  "h1": "Скляні перегородки кабінету в магазині Choice",
+  "cardTitle": "Перегородка кабінету Choice",
+  "cardTitleRu": "Перегородка кабинета Choice",
+  "city": "Одеса",
+  "cityRu": "Одесса",
+  "category": "business-glass",
+  "constructionType": "Скляна перегородка з дверима",
+  "constructionTypeRu": "Стеклянная перегородка с дверью",
+  "objectType": "Магазин Choice",
+  "shortDescription": "Скляна перегородка кабінету висотою 2,4 м і шириною 3,1 м у діючому магазині Choice — для переговорів і підписання дилерських угод.",
+  "shortDescriptionRu": "Стеклянная перегородка кабинета высотой 2,4 м и шириной 3,1 м в действующем магазине Choice — для переговоров и подписания дилерских соглашений.",
+  "clientTask": {
+    "title": "Завдання замовника",
+    "text": "Замовник попросив відокремити кабінет у вже діючому магазині Choice для комфортного підписання дилерських угод і ведення переговорів."
+  },
+  "solution": {
+    "title": "Скляна перегородка з дверима",
+    "text": "Виготовили скляну перегородку 2,4 × 3,1 м з дверима на скобовій ручці й брендуванням на склі, не зупиняючи роботу магазину."
+  },
+  "characteristics": [
+    {
+      "label": "Тип",
+      "value": "Скляна перегородка з дверима"
+    },
+    {
+      "label": "Висота",
+      "value": "2,4 м"
+    },
+    {
+      "label": "Ширина",
+      "value": "3,1 м"
+    },
+    {
+      "label": "Об’єкт",
+      "value": "Магазин Choice"
+    },
+    {
+      "label": "Особливість",
+      "value": "Брендування на склі"
+    }
+  ],
+  "materials": [
+    "Загартоване безпечне скло",
+    "Скобова ручка",
+    "Фурнітура для скляних дверей"
+  ],
+  "installation": {
+    "title": "Монтаж",
+    "text": "Монтаж у діючому магазині без зупинки його роботи."
+  },
+  "result": {
+    "title": "Результат",
+    "text": "Магазин отримав окремий кабінет для переговорів, простір лишився відкритим і світлим."
+  },
+  "cover": {
+    "src": "/images/projects/choice-office-partition/choice-office-partition-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Скляна перегородка кабінету з брендуванням Choice"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/choice-office-partition/choice-office-partition-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Скобова ручка скляних дверей кабінету",
+      "caption": "Скобова ручка скляних дверей кабінету"
+    },
+    {
+      "src": "/images/projects/choice-office-partition/choice-office-partition-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Кріплення скляних дверей кабінету",
+      "caption": "Кріплення скляних дверей кабінету"
+    },
+    {
+      "src": "/images/projects/choice-office-partition/choice-office-partition-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Скляний кабінет у магазині Choice",
+      "caption": "Скляний кабінет у магазині Choice"
+    },
+    {
+      "src": "/images/projects/choice-office-partition/choice-office-partition-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Скляний кабінет у магазині Choice",
+      "caption": "Скляний кабінет у магазині Choice"
+    },
+    {
+      "src": "/images/projects/choice-office-partition/choice-office-partition-detail-05.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Скляний кабінет у магазині Choice",
+      "caption": "Скляний кабінет у магазині Choice"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Чи можна виготовити таку конструкцію під мої розміри?",
+      "answer": "Так. Кожну конструкцію проєктуємо за фактичними розмірами приміщення після заміру, з урахуванням кріплень і оздоблення."
+    },
+    {
+      "question": "Яке скло використовуєте?",
+      "answer": "Загартоване безпечне скло або триплекс: прозоре, матове чи тоноване — підбираємо під задачу об’єкта."
+    },
+    {
+      "question": "Скільки триває монтаж?",
+      "answer": "Зазвичай один день, у тому числі в діючих магазинах."
+    }
+  ],
+  "serviceLink": {
+    "label": "Офісні скляні перегородки",
+    "href": "/sklyani-perehorodky/ofisni/"
+  },
+  "relatedProjectSlugs": [
+    "sklyani-peregorodky-dlya-ofisu-v-m-odesa",
+    "chastne-zamovlennya-odesa-dushova-ta-peregorodka",
+    "rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa"
+  ],
+  "dimensions": "2,4 × 3,1 м"
+}

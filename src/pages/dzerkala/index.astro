@@ -228,12 +228,12 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
             <h2>Реалізовані дзеркала</h2>
           </div>
           <div class="category-heading--projects__aside">
-            <a class="category-arrow-link" href="/projects/">Переглянути всі проєкти <span aria-hidden="true">→</span></a>
+            <a class="category-arrow-link" href="/project/">Переглянути всі проєкти <span aria-hidden="true">→</span></a>
             <p>Добірка реалізованих дзеркал Space Glass — з LED-підсвіткою, для житлових і комерційних інтер'єрів.</p>
           </div>
         </div>
         <div class="projects-index-v2__grid category-projects-grid">
-          {mirrorProjects.map((project) => <ProjectCard project={project} hrefPrefix="/projects" />)}
+          {mirrorProjects.map((project) => <ProjectCard project={project} hrefPrefix="/project" />)}
         </div>
       </section>
     )}

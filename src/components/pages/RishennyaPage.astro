@@ -181,7 +181,7 @@ const choosePoints = t.choosePoints;
           <div class="rishennya-project-viewport" data-rishennya-projects-carousel tabindex="0" aria-label={t.projectsSection.carouselAriaLabel}>
             <div class="rishennya-showcase">
               {featuredProjects.map((project) => (
-                <a class="rishennya-showcase__card" href={lp(`/projects/${project.slug}/`)}>
+                <a class="rishennya-showcase__card" href={lp(`/project/${project.slug}/`)}>
                   <div class="rishennya-showcase__media">
                     <img
                       src={project.cover.src.replace('.webp', '-480.webp')}
@@ -202,7 +202,7 @@ const choosePoints = t.choosePoints;
             </div>
           </div>
 
-          <a class="rishennya-hub__section-link" href={lp("/projects/")}>{t.projectsSection.viewAllLabel}</a>
+          <a class="rishennya-hub__section-link" href={lp("/project/")}>{t.projectsSection.viewAllLabel}</a>
         </section>
 
         <section class="rishennya-hub__section rishennya-hub__categories" aria-labelledby="categories-title">

@@ -188,7 +188,7 @@ const kyivImageBase = {
   sizes: '(max-width: 900px) 100vw, 48vw',
   width: 1440,
   height: 958,
-  href: '/projects/osocor-residence-glazing-kyiv/',
+  href: '/project/sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv/',
   mobileSrc: '/images/city/kyiv/kyiv-hero-osocor-768.webp',
   mobileSrcset: '/images/city/kyiv/kyiv-hero-osocor-768.webp 768w'
 };
@@ -200,7 +200,7 @@ const odesaImageBase = {
   sizes: '(max-width: 900px) 100vw, 48vw',
   width: 960,
   height: 1280,
-  href: '/projects/coffee-ocean-facade-odesa/',
+  href: '/project/zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya/',
   mobileSrc: '/images/projects/coffee-ocean-facade-odesa/coffee-ocean-facade-odesa-hero-720.webp',
   mobileSrcset:
     '/images/projects/coffee-ocean-facade-odesa/coffee-ocean-facade-odesa-hero-480.webp 480w, /images/projects/coffee-ocean-facade-odesa/coffee-ocean-facade-odesa-hero-720.webp 720w'
@@ -213,7 +213,7 @@ const lvivImageBase = {
   sizes: '(max-width: 900px) 100vw, 48vw',
   width: 960,
   height: 1280,
-  href: '/projects/shower-sloped-ceiling-lviv/',
+  href: '/project/shower-sloped-ceiling-lviv/',
   mobileSrc: '/images/projects/shower-sloped-ceiling-lviv/shower-sloped-ceiling-lviv-hero-720.webp',
   mobileSrcset:
     '/images/projects/shower-sloped-ceiling-lviv/shower-sloped-ceiling-lviv-hero-480.webp 480w, /images/projects/shower-sloped-ceiling-lviv/shower-sloped-ceiling-lviv-hero-720.webp 720w'
@@ -285,7 +285,7 @@ const kyivUk: CityHub = {
     ctaPrimary: 'Отримати розрахунок',
     ctaPrimaryHref: CONTACT_FORM,
     ctaSecondary: 'Переглянути проєкти в Києві',
-    ctaSecondaryHref: '/projects/',
+    ctaSecondaryHref: '/project/',
     image: { ...kyivImageBase, alt: 'Скляне фасадне та безрамне скління тераси OSOCOR RESIDENCE у Києві' }
   },
 
@@ -328,7 +328,7 @@ const kyivUk: CityHub = {
     title: 'Реалізовані проєкти в Києві',
     intro: 'Реальні об’єкти Space Glass у квартирах, приватних будинках і комерційних просторах Києва: задача клієнта, технічне рішення, матеріали та готовий результат на конкретному об’єкті.',
     viewAllLabel: 'Переглянути всі проєкти →',
-    viewAllHref: '/projects/',
+    viewAllHref: '/project/',
     emptyText: 'Проєкти для цього міста готуються до публікації.',
     gridAriaLabel: 'Реалізовані проєкти в Києві'
   },
@@ -482,7 +482,7 @@ const odesaUk: CityHub = {
     ctaPrimary: 'Отримати розрахунок',
     ctaPrimaryHref: CONTACT_FORM,
     ctaSecondary: 'Переглянути проєкти в Одесі',
-    ctaSecondaryHref: '/projects/',
+    ctaSecondaryHref: '/project/',
     image: { ...odesaImageBase, alt: 'Фасадне скління закладу Coffee Ocean — реалізований проєкт Space Glass в Одесі' }
   },
 
@@ -525,7 +525,7 @@ const odesaUk: CityHub = {
     title: 'Реалізовані проєкти в Одесі',
     intro: 'Реальні об’єкти Space Glass в Одесі — квартири, приватні будинки, ресторани, кафе, готелі та бізнес-центри: задача клієнта, технічне рішення, матеріали та готовий результат.',
     viewAllLabel: 'Переглянути всі проєкти →',
-    viewAllHref: '/projects/',
+    viewAllHref: '/project/',
     emptyText: 'Проєкти для цього міста готуються до публікації.',
     gridAriaLabel: 'Реалізовані проєкти в Одесі'
   },
@@ -679,7 +679,7 @@ const lvivUk: CityHub = {
     ctaPrimary: 'Отримати розрахунок',
     ctaPrimaryHref: CONTACT_FORM,
     ctaSecondary: 'Переглянути проєкти у Львові',
-    ctaSecondaryHref: '/projects/',
+    ctaSecondaryHref: '/project/',
     image: { ...lvivImageBase, alt: 'Скляна душова перегородка під скошену стелю — реалізований проєкт Space Glass у Львові' }
   },
 
@@ -722,7 +722,7 @@ const lvivUk: CityHub = {
     title: 'Реалізовані проєкти у Львові',
     intro: 'Реальні об’єкти Space Glass у Львові — переважно душові конструкції за індивідуальними розмірами, зокрема під скошені стелі та нестандартну геометрію приміщень.',
     viewAllLabel: 'Переглянути всі проєкти →',
-    viewAllHref: '/projects/',
+    viewAllHref: '/project/',
     emptyText: 'Проєкти для цього міста готуються до публікації.',
     gridAriaLabel: 'Реалізовані проєкти у Львові'
   },
@@ -876,7 +876,7 @@ const kyivRu: CityHub = {
     ctaPrimary: 'Получить расчёт',
     ctaPrimaryHref: CONTACT_FORM,
     ctaSecondary: 'Смотреть проекты в Киеве',
-    ctaSecondaryHref: '/projects/',
+    ctaSecondaryHref: '/project/',
     image: { ...kyivImageBase, alt: 'Фасадное и безрамное остекление террасы OSOCOR RESIDENCE в Киеве' }
   },
 
@@ -919,7 +919,7 @@ const kyivRu: CityHub = {
     title: 'Реализованные проекты в Киеве',
     intro: 'Реальные объекты Space Glass в квартирах, частных домах и коммерческих пространствах Киева: задача клиента, техническое решение, материалы и готовый результат на конкретном объекте.',
     viewAllLabel: 'Смотреть все проекты →',
-    viewAllHref: '/projects/',
+    viewAllHref: '/project/',
     emptyText: 'Проекты для этого города готовятся к публикации.',
     gridAriaLabel: 'Реализованные проекты в Киеве'
   },
@@ -1073,7 +1073,7 @@ const odesaRu: CityHub = {
     ctaPrimary: 'Получить расчёт',
     ctaPrimaryHref: CONTACT_FORM,
     ctaSecondary: 'Смотреть проекты в Одессе',
-    ctaSecondaryHref: '/projects/',
+    ctaSecondaryHref: '/project/',
     image: { ...odesaImageBase, alt: 'Фасадное остекление заведения Coffee Ocean — реализованный проект Space Glass в Одессе' }
   },
 
@@ -1116,7 +1116,7 @@ const odesaRu: CityHub = {
     title: 'Реализованные проекты в Одессе',
     intro: 'Реальные объекты Space Glass в Одессе — квартиры, частные дома, рестораны, кафе, отели и бизнес-центры: задача клиента, техническое решение, материалы и готовый результат.',
     viewAllLabel: 'Смотреть все проекты →',
-    viewAllHref: '/projects/',
+    viewAllHref: '/project/',
     emptyText: 'Проекты для этого города готовятся к публикации.',
     gridAriaLabel: 'Реализованные проекты в Одессе'
   },
@@ -1270,7 +1270,7 @@ const lvivRu: CityHub = {
     ctaPrimary: 'Получить расчёт',
     ctaPrimaryHref: CONTACT_FORM,
     ctaSecondary: 'Смотреть проекты во Львове',
-    ctaSecondaryHref: '/projects/',
+    ctaSecondaryHref: '/project/',
     image: { ...lvivImageBase, alt: 'Стеклянная душевая перегородка под скошенный потолок — реализованный проект Space Glass во Львове' }
   },
 
@@ -1313,7 +1313,7 @@ const lvivRu: CityHub = {
     title: 'Реализованные проекты во Львове',
     intro: 'Реальные объекты Space Glass во Львове — преимущественно душевые конструкции по индивидуальным размерам, в том числе под скошенные потолки и нестандартную геометрию помещений.',
     viewAllLabel: 'Смотреть все проекты →',
-    viewAllHref: '/projects/',
+    viewAllHref: '/project/',
     emptyText: 'Проекты для этого города готовятся к публикации.',
     gridAriaLabel: 'Реализованные проекты во Львове'
   },

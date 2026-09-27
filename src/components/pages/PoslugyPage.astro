@@ -57,7 +57,7 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
       <div class="services-cycle__breadcrumbs"><Breadcrumbs items={[{label:t.breadcrumbs.home,href:lp('/')},{label:t.breadcrumbs.current}]} ariaLabel={t.breadcrumbs.ariaLabel} /></div>
 
       <section class="services-cycle__hero" aria-labelledby="services-title">
-        <div class="services-cycle__hero-copy"><p class="eyebrow">{t.hero.eyebrow}</p><h1 id="services-title">{t.hero.h1}</h1><p>{t.hero.lead}</p><div class="hero__actions"><a class="button button--mint" href={`${lp("/contacts/")}#contact-form`}>{t.hero.ctaPrimary}</a><a class="button button--outline" href={lp('/projects/')}>{t.hero.ctaSecondary}</a></div></div>
+        <div class="services-cycle__hero-copy"><p class="eyebrow">{t.hero.eyebrow}</p><h1 id="services-title">{t.hero.h1}</h1><p>{t.hero.lead}</p><div class="hero__actions"><a class="button button--mint" href={`${lp("/contacts/")}#contact-form`}>{t.hero.ctaPrimary}</a><a class="button button--outline" href={lp('/project/')}>{t.hero.ctaSecondary}</a></div></div>
         <div class="services-cycle__hero-image"><picture><source media="(max-width: 700px)" srcset="/images/services/services-hero-mobile.webp" /><img src="/images/services/services-hero-desktop.webp" width="1536" height="1024" alt={t.hero.heroImageAlt} loading="eager" fetchpriority="high" decoding="async" /></picture></div>
       </section>
       <TrustBar locale={locale} />
@@ -75,10 +75,10 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
         <div class="services-cycle__section-head services-cycle__section-head--split"><div><p class="eyebrow">{t.projectsSection.eyebrow}</p><h2 id="projects-title">{t.projectsSection.title}</h2></div><div class="services-cycle__projects-controls" aria-label={t.projectsSection.controlsAria}><button type="button" aria-label={t.projectsSection.prevAria} data-poslugy-projects-direction="-1">←</button><button type="button" aria-label={t.projectsSection.nextAria} data-poslugy-projects-direction="1">→</button></div></div>
         <div class="services-cycle__projects-viewport" data-poslugy-projects-rail tabindex="0" aria-label={t.projectsSection.carouselAria}>
           <div class="services-cycle__projects-track">
-            {allProjects.map((project) => <div class="services-cycle__projects-item"><ProjectCard project={project} hrefPrefix="/projects" locale={locale} /></div>)}
+            {allProjects.map((project) => <div class="services-cycle__projects-item"><ProjectCard project={project} hrefPrefix="/project" locale={locale} /></div>)}
           </div>
         </div>
-        <a class="services-cycle__text-link" href={lp('/projects/')}>{t.projectsSection.viewAllLink} <span aria-hidden="true">→</span></a>
+        <a class="services-cycle__text-link" href={lp('/project/')}>{t.projectsSection.viewAllLink} <span aria-hidden="true">→</span></a>
       </section>
 
       <section class="services-cycle__section services-cycle__directions" aria-labelledby="directions-title"><div class="services-cycle__section-head"><p class="eyebrow">{t.directionsSection.eyebrow}</p><h2 id="directions-title">{t.directionsSection.title}</h2><p>{t.directionsSection.intro}</p></div><nav aria-label={t.directionsSection.navAria}><ul>{directions.map(([title,href]) => <li><a href={lp(href)}><span>{title}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 15L15 5M8 5h7v7" /></svg></a></li>)}</ul></nav></section>

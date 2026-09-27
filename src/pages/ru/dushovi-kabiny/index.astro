@@ -50,7 +50,7 @@ const items = [
   { title: "Душевые в нишу", note: "Одна стеклянная плоскость с дверью между трёх стен — когда под душ уже выделена готовая ниша.", href: lp("/dushovi-kabiny/u-nishu/"), icon: icons.niche },
   { title: "Раздвижные душевые кабины", note: "Створки ездят по направляющей и не требуют места на открывание. Для узких помещений.", href: lp("/dushovi-kabiny/rozsuvni/"), icon: icons.sliding },
   { title: "Душевые двери", note: "Только дверной блок в готовый проём или между стеной и стационарным стеклом, в том числе на замену старых.", href: lp("/dushovi-kabiny/dushovi-dveri/"), icon: icons.door },
-  { title: "Шторки на ванну", note: "Стеклянная перегородка на борт ванны вместо тканевой шторки — когда душ совмещён с ванной.", href: lp("/dushovi-kabiny/shtorky-dlia-vanny/"), icon: icons.bath }
+  { title: "Шторки на ванну", note: "Стеклянная перегородка на борт ванны вместо тканевой шторки — когда душ совмещён с ванной.", href: lp("/dushovi-kabiny/shtorky-dlya-vannoyi/"), icon: icons.bath }
 ];
 
 const priceFactors: [string, string][] = [
@@ -342,13 +342,13 @@ const faq = [
           </div>
 
           <div class="category-heading--projects__aside">
-            <a class="category-arrow-link" href={lp('/projects/')}>Смотреть все проекты <span aria-hidden="true">→</span></a>
+            <a class="category-arrow-link" href={lp('/project/')}>Смотреть все проекты <span aria-hidden="true">→</span></a>
             <p>Подборка реализованных душевых Space Glass — угловые кабины, душевые в нишу, перегородки и двери из стекла для квартир, домов и коммерческих объектов.</p>
           </div>
         </div>
         <div class="projects-index-v2__grid category-projects-grid">
           {showerProjects.map((project) => (
-            <ProjectCard project={project} locale="ru" href={lp(`/projects/${project.slug}/`)} />
+            <ProjectCard project={project} locale="ru" href={lp(`/project/${project.slug}/`)} />
           ))}
         </div>
       </section>

@@ -310,7 +310,7 @@ export const mirrorCategories: ProfileCategory[] = [
       ['Дзеркала на стіну', '/dzerkala/dzerkala-na-stinu/'],
       ['Дзеркальне панно', '/dzerkala/dzerkalne-panno/'],
       ['Конфігуратор дзеркал', '/dzerkala-configurator/'],
-      ['Проєкти', '/projects/']
+      ['Проєкти', '/project/']
     ],
     ctaTitle: 'Підберемо дзеркало в рамі',
     ctaText: 'Надішліть фото стіни та бажаний стиль — запропонуємо модель або індивідуальне рішення й порахуємо вартість.',
@@ -421,7 +421,7 @@ export const mirrorCategories: ProfileCategory[] = [
       ['Дзеркальне панно', '/dzerkala/dzerkalne-panno/'],
       ['Дзеркала для спортзалів', '/dzerkala/dzerkala-dlya-sportzalu/'],
       ['Скляні перегородки', '/sklyani-perehorodky/'],
-      ['Проєкти', '/projects/']
+      ['Проєкти', '/project/']
     ],
     ctaTitle: 'Розрахуємо дзеркало для вашої стіни',
     ctaText: 'Надішліть фото стіни та її розміри — запропонуємо готову модель або полотно за розміром.'
@@ -524,7 +524,7 @@ export const mirrorCategories: ProfileCategory[] = [
       ['Дзеркала в рамі', '/dzerkala/dzerkala-v-rami/'],
       ['LED-дзеркала', '/dzerkala/led-dzerkala/'],
       ['Скління для ресторану', '/rishennya/dlya-restoranu/'],
-      ['Проєкти', '/projects/']
+      ['Проєкти', '/project/']
     ],
     ctaTitle: 'Розробимо панно для вашої стіни',
     ctaText: 'Надішліть фото стіни, розміри та референс — запропонуємо композицію й підготуємо розрахунок.'
@@ -626,7 +626,7 @@ export const mirrorCategories: ProfileCategory[] = [
       ['Дзеркала для салонів краси', '/dzerkala/dzerkala-dlya-salonu-krasy/'],
       ['Скляні перегородки', '/sklyani-perehorodky/'],
       ['Скло для бізнесу', '/dlya-biznesu/'],
-      ['Проєкти', '/projects/']
+      ['Проєкти', '/project/']
     ],
     ctaTitle: 'Розрахуємо дзеркальну стіну для залу',
     ctaText: 'Надішліть план залу та розміри стін — запропонуємо розкладку модулів і підготуємо розрахунок.'
@@ -734,7 +734,7 @@ export const mirrorCategories: ProfileCategory[] = [
       ['Дзеркала на стіну', '/dzerkala/dzerkala-na-stinu/'],
       ['Скління для магазину', '/rishennya/dlya-magazynu/'],
       ['Скло для бізнесу', '/dlya-biznesu/'],
-      ['Проєкти', '/projects/']
+      ['Проєкти', '/project/']
     ],
     ctaTitle: 'Підберемо дзеркала для вашого салону',
     ctaText: 'Надішліть план салону та кількість робочих місць — запропонуємо моделі й порахуємо вартість.',

@@ -141,7 +141,7 @@ const faq = t.faq.items;
               const cardHeight = Math.round(480 * project.cover.height / project.cover.width);
               const cardTitle = pageLocale === 'ru' && project.cardTitleRu ? project.cardTitleRu : project.cardTitle;
               return (
-              <a class="sg-project-image" href={lp(`/projects/${project.slug}/`)} aria-label={`${t.projects.viewProjectPrefix} ${cardTitle}`}>
+              <a class="sg-project-image" href={lp(`/project/${project.slug}/`)} aria-label={`${t.projects.viewProjectPrefix} ${cardTitle}`}>
                 <img
                   src={cardSrc}
                   width={cardWidth}
@@ -156,7 +156,7 @@ const faq = t.faq.items;
             })}
           </div>
         </div>
-        <a class="sg-projects__all-link" href={lp('/projects/')}>{t.projects.allLink}</a>
+        <a class="sg-projects__all-link" href={lp('/project/')}>{t.projects.allLink}</a>
       </section>
 
       <section class="sg-final-benefits">

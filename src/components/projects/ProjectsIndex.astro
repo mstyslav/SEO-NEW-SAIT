@@ -7,7 +7,7 @@ import '../../styles/projects-common.css';
 import '../../styles/projects-index-v2.css';
 
 // PSI (mobile + desktop) consistently reports this card's image as the actual LCP element
-// on /projects/, not just the first card in sort order — give it fetchpriority=high too.
+// on /project/, not just the first card in sort order — give it fetchpriority=high too.
 const LCP_SLUG = 'bath-screen-akvarel-odesa';
 const LCP_CARD_COVER = {
   src: '/images/projects/bath-screen-akvarel-odesa/bath-screen-akvarel-odesa-card-720.webp',
@@ -71,7 +71,7 @@ const t = isRu ? {
       {projects.map((project, index) => (
         <ProjectCard
           project={project}
-          hrefPrefix="/projects"
+          hrefPrefix="/project"
           locale={locale}
           priority={index === 0 || project.slug === LCP_SLUG}
           eager={index === 1 || index === 2}
