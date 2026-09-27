@@ -9,6 +9,7 @@ import type { ProfileCategory, ProfileModel } from './profile-systems';
 
 export const CANOPY_HUB = '/sklyani-kozyrky/';
 export const CANOPY_IMG = '/images/catalog/sklyani-kozyrky';
+export const CANOPY_CONFIGURATOR = '/kozyrky-configurator/';
 const P = (slug: string) => `${CANOPY_HUB}${slug}/`;
 
 type Sys = { name: string; kind: string; blurb: string; specs: [string, string][]; features: string[]; alt: string; eur: number; size: string };
@@ -87,6 +88,7 @@ const page = (p: CanopyPage): ProfileCategory => {
     compareColumns: ['Система', 'Кріплення', 'Скло', 'Особливість', 'Для чого'],
     faq: [...p.faq, ...COMMON],
     catalogButton: 'Переглянути системи',
+    heroExtra: ['Розрахувати в конфігураторі', CANOPY_CONFIGURATOR],
     optionsLabel: 'Система',
     catalogNote: 'Технічні параметри наведені для типових конфігурацій. Вартість, товщину скла й кріплення визначаємо після заміру — надішліть фото й розміри для розрахунку.'
   };

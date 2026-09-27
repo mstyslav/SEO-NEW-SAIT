@@ -1,0 +1,42 @@
+---
+// Glass canopy configurator (UK). Price model: src/data/canopy-pricing.ts.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FAQBlock from '../components/FAQBlock.astro';
+import CanopyConfigurator from '../components/canopies/CanopyConfigurator.astro';
+import { CANOPY_HUB } from '../data/canopy-catalog';
+import '../styles/category-pages.css';
+
+const faq: [string, string][] = [
+  ['Наскільки точна ціна в конфігураторі?', 'Це орієнтовна вартість для типових умов. Товщину скла, кількість кронштейнів і кріплення визначаємо після заміру — остаточна ціна може відрізнятися.'],
+  ['Що входить у ціну?', 'Скло-триплекс, тримачі чи рама обраної системи, обрані опції (скло, покриття, кріплення, жолоб) і, якщо обрано, замір, доставка й монтаж.'],
+  ['Який козирок обрати?', 'Мінімалізм без тяг — консольний, класика — на тягах, мало місця над дверима — на кронштейнах, великі входи — у рамі чи підвісній рамі, захист від вітру — з бічною стінкою.'],
+  ['Що таке виліт козирка?', 'Відстань від стіни до переднього краю козирка. Для входу в будинок зазвичай достатньо 80–120 см.'],
+  ['Що робити з готовою конфігурацією?', 'На останньому кроці залиште ім’я й телефон — ми отримаємо всі параметри й зв’яжемося, щоб домовитися про замір.'],
+  ['Де виконуєте монтаж?', 'У Києві, Одесі та Львові з областями. Інші регіони — за домовленістю.']
+];
+---
+<BaseLayout
+  title="Конфігуратор скляного козирка — розрахунок ціни онлайн | Space Glass"
+  description="Конфігуратор скляного козирка: оберіть тип, розміри, скло, кріплення й жолоб — побачите схему та орієнтовну вартість у гривнях і надішлете заявку на замір."
+  alternateLocales={['uk']}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-section" style="padding-bottom:24px">
+      <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: 'Скляні козирки', href: CANOPY_HUB }, { label: 'Конфігуратор' }]} />
+      <p class="eyebrow">Конфігуратор</p>
+      <h1>Конфігуратор скляного козирка</h1>
+      <p class="lead">Оберіть тип козирка, розміри, скло й кріплення — схема та орієнтовна вартість оновлюються одразу. Готову конфігурацію надішліть нам, і ми домовимося про замір.</p>
+    </section>
+    <CanopyConfigurator />
+    <section class="category-section category-section--faq">
+      <FAQBlock title="Питання про конфігуратор" intro="Як працює розрахунок і що буде після заявки." items={faq} visibleCount={6} />
+    </section>
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

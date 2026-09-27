@@ -8,7 +8,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TrustBar from '../../components/TrustBar.astro';
 import ProfileRequestForm from '../../components/profile/ProfileRequestForm.astro';
 import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
-import { CANOPY_HUB, CANOPY_IMG, canopyCategories, canopyHubSystems } from '../../data/canopy-catalog';
+import { CANOPY_CONFIGURATOR, CANOPY_HUB, CANOPY_IMG, canopyCategories, canopyHubSystems } from '../../data/canopy-catalog';
 import { profileIcons } from '../../data/profile-icons';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
@@ -69,14 +69,14 @@ const faq: [string, string][] = [
 ];
 
 const relatedLinks: [string, string][] = [
+  ['Конфігуратор козирка', CANOPY_CONFIGURATOR],
   ['Скляні вхідні групи', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'],
   ['Скляні двері', '/sklyani-dveri/'],
   ['Скляні огорожі', '/sklyani-ohorozhi/'],
   ['Для бізнесу', '/dlya-biznesu/'],
   ['Вітринне скління', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
   ['Безрамне скління терас', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
-  ['Перголи', '/alyuminiyevi-konstrukcziyi/pergoly/'],
-  ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/']
+  ['Перголи', '/alyuminiyevi-konstrukcziyi/pergoly/']
 ];
 
 const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
@@ -110,8 +110,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <h1>{h1}</h1>
         <p class="lead">Козирки зі скла для приватних будинків, офісів, магазинів і під’їздів: консольні, на тягах, на кронштейнах, у рамі та з бічним вітрозахистом. Німецькі системи з перевіреним сніговим навантаженням — замір, виготовлення й монтаж у Києві, Одесі та Львові.</p>
         <div class="hero__actions">
-          <a class="button button--mint" href="#systems">Переглянути системи</a>
-          <a class="button button--outline" href="#request">Отримати розрахунок</a>
+          <a class="button button--mint" href={CANOPY_CONFIGURATOR}>Розрахувати в конфігураторі</a>
+          <a class="button button--outline" href="#systems">Переглянути системи</a>
         </div>
       </div>
       <figure class="category-hero__figure">
@@ -171,6 +171,17 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
             </div>
           </article>
         ))}
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="inner-cta">
+        <div>
+          <p class="eyebrow eyebrow--light">Конфігуратор</p>
+          <h2>Порахуйте козирок за 2 хвилини</h2>
+          <p>Оберіть тип, розміри, скло, кріплення й жолоб — побачите схему козирка та орієнтовну вартість. Готову конфігурацію надішлете нам одним кліком.</p>
+        </div>
+        <a class="button button--white" href={CANOPY_CONFIGURATOR}>Відкрити конфігуратор</a>
       </div>
     </section>
 
