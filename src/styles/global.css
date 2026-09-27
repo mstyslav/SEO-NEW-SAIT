@@ -3108,3 +3108,11 @@ body main .config-demo-hero~.section h2{
 @media (max-width: 900px) {
   html { background: #020302; }
 }
+
+/* Touch: no double-tap-to-zoom wait on links/buttons, and visible press feedback so a tap
+   never feels "missed" on phones. */
+html { touch-action: manipulation; }
+@media (hover: none) {
+  a, button, [role="button"], label { -webkit-tap-highlight-color: rgba(123, 194, 168, .25); }
+  .button:active, .profile-card__cta:active, .category-icon-card:active, .rh-tile:active, .sg-product-card:active, .profile-card:active { transform: scale(.98); transition: transform .08s ease; }
+}
