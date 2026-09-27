@@ -1,14 +1,9 @@
 (() => {
-  const params = new URLSearchParams(location.search);
-  const pathLocale = location.pathname.match(/^\/(uk|ru)(?=\/|$)/)?.[1];
-  const isUaRishennya = /^\/rishennya\/?$/.test(location.pathname);
-  const requestedLocale = pathLocale || (isUaRishennya ? 'uk' : params.get('lang') || localStorage.getItem('spaceGlassLocale') || 'uk');
-  const locale = requestedLocale === 'ru' ? 'ru' : 'uk';
-  localStorage.setItem('spaceGlassLocale', locale);
-
-  document.querySelectorAll('[data-language-button] span').forEach((el) => {
-    el.textContent = locale === 'uk' ? 'UA' : locale.toUpperCase();
-  });
+  // The page language comes ONLY from the URL: /ru/… is Russian, everything else is
+  // Ukrainian. A previously chosen language (localStorage / ?lang=) must never change
+  // the texts of a UA URL — the server already rendered the right language.
+  const locale = /^\/ru(\/|$)/.test(location.pathname) ? 'ru' : 'uk';
+  try { localStorage.setItem('spaceGlassLocale', locale); } catch {}
 
   document.querySelectorAll('[data-language-switcher] [data-locale]').forEach((el) => {
     el.classList.toggle('is-active', el.dataset.locale === locale);
@@ -64,9 +59,4 @@
     if (dict[value]) el.setAttribute('placeholder', dict[value]);
   });
 
-  document.querySelectorAll('[data-language-switcher] [data-locale]').forEach((link) => {
-    link.addEventListener('click', () => {
-      localStorage.setItem('spaceGlassLocale', link.dataset.locale || 'uk');
-    });
-  });
 })();
