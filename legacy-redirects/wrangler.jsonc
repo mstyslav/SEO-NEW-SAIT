@@ -1,0 +1,11 @@
+{
+  "name": "space-glass-legacy-redirects",
+  "main": "index.js",
+  "compatibility_date": "2026-08-13",
+  "workers_dev": false,
+  "routes": [
+    { "pattern": "space-glass.com.ua/peregorodki/*", "zone_name": "space-glass.com.ua" },
+    { "pattern": "space-glass.com.ua/sklyani-perehorodky/door*", "zone_name": "space-glass.com.ua" },
+    { "pattern": "space-glass.com.ua/metaloplastykovi-konstrukcziyi/ofisni-peregorodky*", "zone_name": "space-glass.com.ua" }
+  ]
+}
