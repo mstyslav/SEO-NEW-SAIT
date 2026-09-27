@@ -155,15 +155,12 @@ const itemList: JsonLdObject = {
   numberOfItems: category.models.length,
   itemListElement: category.models.map((model, index) => ({
     '@type': 'ListItem',
+    // Systems are priced by individual calculation (no firm Offer), so they are plain list
+    // items, not schema.org Product (Google requires offers/review/aggregateRating on Product).
     position: index + 1,
-    item: {
-      '@type': 'Product',
-      name: model.title ? `${model.title} ${model.name}` : model.name,
-      category: category.name,
-      description: model.blurb,
-      ...(model.brand ? { brand: { '@type': 'Brand', name: model.brand } } : {}),
-      ...(model.image ? { image: absoluteUrl(`${imgBase}/${model.image}-900.webp`, origin) } : {})
-    }
+    name: model.title ? `${model.title} ${model.name}` : model.name,
+    description: model.blurb,
+    ...(model.image ? { image: absoluteUrl(`${imgBase}/${model.image}-900.webp`, origin) } : {})
   }))
 };
 const faqStructuredData = faqSchema(category.faq.map(([question, answer]) => ({ question, answer })));

@@ -134,14 +134,11 @@ const itemList: JsonLdObject = {
     const cover = s.images[0];
     return {
       '@type': 'ListItem',
+      // Series/models are chosen via a request, prices are indicative only — no firm Offer,
+      // so they are plain list items, not schema.org Product (Google requires offers/review/rating).
       position: index + 1,
-      item: {
-        '@type': 'Product',
-        name: s.publicName,
-        category: 'Душевые поддоны',
-        material: s.material,
-        image: absoluteUrl(`${cover.base}-${cover.widths[cover.widths.length - 1]}.webp`, origin)
-      }
+      name: s.publicName,
+      image: absoluteUrl(`${cover.base}-${cover.widths[cover.widths.length - 1]}.webp`, origin)
     };
   })
 };

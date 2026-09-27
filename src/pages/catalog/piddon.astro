@@ -193,15 +193,10 @@ const itemList: JsonLdObject = {
   numberOfItems: models.length,
   itemListElement: models.map((model, index) => ({
     '@type': 'ListItem',
+    // Request-based models without a firm Offer → plain list items, not schema.org Product.
     position: index + 1,
-    item: {
-      '@type': 'Product',
-      name: `Душовий піддон ${model.name}`,
-      category: 'Душові піддони',
-      brand: { '@type': 'Brand', name: 'Weston' },
-      material: model.specs[0][1],
-      image: absoluteUrl(`/images/catalog/piddony/${model.image}-900.webp`, origin)
-    }
+    name: `Душовий піддон ${model.name}`,
+    image: absoluteUrl(`/images/catalog/piddony/${model.image}-900.webp`, origin)
   }))
 };
 const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
