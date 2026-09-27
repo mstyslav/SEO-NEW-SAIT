@@ -11,11 +11,17 @@
  *   3. Kommo CRM        — (next step)
  * The request succeeds if at least one channel accepted the lead.
  *
+ * Anti-spam (silently dropped with a fake "ok"): hidden honeypot field, JS-only marker +
+ * header, < 3 s on the page, no real interaction, links / junk names, foreign Origin;
+ * phone must be a valid Ukrainian (or explicit +international) number; 3 leads/min per IP.
+ *
  * Secrets are set with `npx wrangler secret put NAME` — never commit them.
  */
 
 export interface Env {
   ASSETS: Fetcher;
+  /** Workers Rate Limiting binding (wrangler.jsonc → ratelimits). */
+  LEAD_LIMITER?: { limit(options: { key: string }): Promise<{ success: boolean }> };
   TELEGRAM_BOT_TOKEN?: string;
   TELEGRAM_CHAT_ID?: string;
 }
@@ -41,13 +47,40 @@ const json = (body: unknown, status = 200) =>
 
 const str = (value: unknown, max = 500) => (typeof value === 'string' ? value.trim().slice(0, max) : undefined) || undefined;
 
+/** Ukrainian numbers (0XXXXXXXXX / 380XXXXXXXXX) or an explicit international +number. */
+function normalisePhone(raw: string): string | null {
+  if (/[a-zа-яіїєґ]/i.test(raw)) return null;
+  const digits = raw.replace(/\D/g, '');
+  if (/^0\d{9}$/.test(digits)) return `+38${digits}`;
+  if (/^380\d{9}$/.test(digits)) return `+${digits}`;
+  if (/^80\d{9}$/.test(digits)) return `+3${digits}`;
+  if (raw.trim().startsWith('+') && /^\d{10,15}$/.test(digits) && !/^(\d)\1+$/.test(digits)) return `+${digits}`;
+  return null;
+}
+
+const URL_RE = /(https?:\/\/|www\.|\.(ru|com|net|org|xyz|top|io|biz|info|site|online|click|link)\b|\[url|<a\s)/i;
+
+/** Reasons a submission is treated as spam (silently dropped), empty = looks human. */
+function spamReasons(input: Record<string, unknown>, lead: Lead): string[] {
+  const reasons: string[] = [];
+  if (typeof input.website === 'string' && input.website) reasons.push('honeypot');
+  if (typeof input._js !== 'string' || !input._js.startsWith('sg-')) reasons.push('no_js');
+  const elapsed = Number(input._elapsed);
+  if (!Number.isFinite(elapsed) || elapsed < 3000) reasons.push('too_fast');
+  if (input._h !== '1') reasons.push('no_interaction');
+  if (URL_RE.test(lead.name) || URL_RE.test(lead.comment ?? '')) reasons.push('link');
+  if (!/[a-zа-яіїєґ]/i.test(lead.name) || /\d{3,}/.test(lead.name) || lead.name.length < 2) reasons.push('bad_name');
+  if (/[\u4e00-\u9fff]/.test(lead.name + (lead.comment ?? ''))) reasons.push('cjk');
+  return reasons;
+}
+
 function parseLead(input: Record<string, unknown>): Lead | null {
   const name = str(input.name, 120);
   const phone = str(input.phone, 40);
-  if (!name || !phone || phone.replace(/\D/g, '').length < 7) return null;
+  if (!name || !phone) return null;
   const page = str(input.page, 300) ?? (typeof input.source === 'string' && input.source.startsWith('/') ? str(input.source, 300) : undefined);
   // Any extra select the form had (e.g. «Система», «Ваш бізнес») arrives under its own name.
-  const known = new Set(['name', 'phone', 'email', 'city', 'comment', 'message', 'product', 'configuration', 'estimatedPrice', 'page', 'source', 'locale', 'createdAt', 'consent', 'website']);
+  const known = new Set(['name', 'phone', 'email', 'city', 'comment', 'message', 'product', 'configuration', 'estimatedPrice', 'page', 'source', 'locale', 'createdAt', 'consent', 'website', '_elapsed', '_h', '_js']);
   const options = Object.entries(input)
     .filter(([key, value]) => !known.has(key) && typeof value === 'string' && value.trim())
     .map(([key, value]) => `${key}: ${String(value).trim().slice(0, 200)}`)
@@ -110,10 +143,28 @@ async function handleLead(request: Request, env: Env): Promise<Response> {
   } catch {
     return json({ ok: false, error: 'invalid_json' }, 400);
   }
-  // Honeypot: real visitors never fill a hidden `website` field.
-  if (typeof body.website === 'string' && body.website) return json({ ok: true });
   const lead = parseLead(body);
   if (!lead) return json({ ok: false, error: 'name_and_phone_required' }, 400);
+
+  // Spam: answer "ok" so bots don't retry, but deliver nothing.
+  const reasons = spamReasons(body, lead);
+  if (request.headers.get('x-sg-form') !== '1') reasons.push('no_header');
+  const origin0 = request.headers.get('origin');
+  if (origin0 && new URL(origin0).host !== new URL(request.url).host) reasons.push('foreign_origin');
+  if (reasons.length) {
+    console.log('lead dropped as spam', reasons.join(','), lead.phone);
+    return json({ ok: true });
+  }
+  const phone = normalisePhone(lead.phone);
+  if (!phone) return json({ ok: false, error: 'invalid_phone' }, 400);
+  lead.phone = phone;
+
+  // Rate limit per visitor IP (3 leads / minute).
+  const ip = request.headers.get('cf-connecting-ip') ?? 'unknown';
+  if (env.LEAD_LIMITER && !(await env.LEAD_LIMITER.limit({ key: ip })).success) {
+    console.log('lead rate-limited', ip);
+    return json({ ok: false, error: 'too_many_requests' }, 429);
+  }
 
   const origin = new URL(request.url).origin;
   const results = await Promise.allSettled([sendTelegram(lead, env, origin)]);
