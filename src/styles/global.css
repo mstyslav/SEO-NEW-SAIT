@@ -3100,3 +3100,9 @@ body main .config-demo-hero~.section h2{
   min-width:32px;
   max-width:32px;
 }
+
+/* Mobile: the page shell is full-width, so no rubber-band past the footer and no grey
+   #202020 strip when iOS bounces — background matches the black header/footer. */
+@media (max-width: 900px) {
+  html, html body { overscroll-behavior-y: none; background: #020302; }
+}
