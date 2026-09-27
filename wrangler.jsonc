@@ -12,5 +12,9 @@
   },
   // Anti-spam: at most 3 form submissions per visitor IP per minute.
   "ratelimits": [{ "name": "LEAD_LIMITER", "namespace_id": "1001", "simple": { "limit": 3, "period": 60 } }],
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
+  // Production is served only on space-glass.com.ua (Worker Route). The *.workers.dev
+  // test domain and preview URLs are switched off so they can never duplicate it in Google.
+  "workers_dev": false,
+  "preview_urls": false
 }
