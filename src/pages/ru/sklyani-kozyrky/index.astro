@@ -1,0 +1,243 @@
+---
+// RU glass canopies hub (mirrors src/pages/sklyani-kozyrky/index.astro; content: src/data/ru/canopy-catalog.ru.ts).
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import TrustBar from '../../../components/TrustBar.astro';
+import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../seo/schema';
+import { CANOPY_HUB, CANOPY_IMG } from '../../../data/canopy-catalog';
+import { canopyCategoriesRu, canopyHubSystemsRu } from '../../../data/ru/canopy-catalog.ru';
+import { profileIcons } from '../../../data/profile-icons';
+import { localizedPath } from '../../../i18n/helpers';
+import '../../../styles/category-pages.css';
+import '../../../styles/shower-master.css';
+import '../../../styles/profile-systems.css';
+
+const lp = (path: string) => localizedPath(path, 'ru');
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(lp(CANOPY_HUB), origin);
+
+const title = 'Стеклянные козырьки';
+const h1 = 'Стеклянные козырьки над входом';
+const metaTitle = 'Стеклянные козырьки над входом на заказ — системы, монтаж, расчёт | Space Glass';
+const metaDescription =
+  'Стеклянные козырьки над входом в дом, офис, магазин и подъезд: консольные, на тягах, на кронштейнах, в раме, с боковой ветрозащитой. Немецкие системы, триплекс, расчёт по фото. Замер и монтаж в Киеве, Одессе и Львове.';
+
+const heroSrc = (w: number) => `${CANOPY_IMG}/hero-hub-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const hubItems = canopyCategoriesRu.map((category) => ({ title: category.name, note: category.cardNote, href: lp(category.path), icon: profileIcons[`canopies/${category.slug}`] }));
+
+const benefits: [string, string][] = [
+  ['Сухой вход', 'Козырёк защищает дверь и людей от дождя и снега.'],
+  ['Свет', 'Стекло не затеняет вход и не закрывает фасад.'],
+  ['Безопасность', 'Только триплекс: осколки остаются на плёнке.'],
+  ['Немецкие системы', 'Проверенная снеговая нагрузка и фурнитура из нержавейки.'],
+  ['Под фасад', 'Прозрачное, сверхпрозрачное или матовое стекло, цвет креплений под RAL.'],
+  ['Быстрый монтаж', 'Обычно несколько часов на объекте.']
+];
+
+const types: [string, string][] = [
+  ['Консольные', 'Крепление только к стене, без тяг и опор — самый чистый вид.'],
+  ['На тягах', 'Тяги из нержавейки забирают нагрузку на стену выше — для более глубоких козырьков.'],
+  ['На кронштейнах', 'Кронштейны под стеклом — когда над дверью нет места для тяг.'],
+  ['В раме', 'Алюминиевая или стальная рама с желобом и подсветкой — для больших площадей.']
+];
+
+const faq: [string, string][] = [
+  ['Какие бывают стеклянные козырьки?', 'Консольные (только на стене), на тягах, на кронштейнах, в раме и с боковой стенкой от ветра.'],
+  ['Какое стекло для козырька?', 'Только триплекс из закалённого стекла — при повреждении осколки держатся на плёнке.'],
+  ['Сколько стоит стеклянный козырёк?', 'Зависит от системы, размера, стекла и крепления. Пришлите фото входа и размеры — подготовим расчёт.'],
+  ['Какой козырёк выбрать для дома?', 'Минимализм — консольный DURA PLUS, классика — PUNTO на тягах, со светом и желобом — ATHENA.'],
+  ['Какой козырёк для магазина или офиса?', 'Большие — ELLA или TUBO, с логотипом — SPADA, со светом — ATHENA.'],
+  ['Выдержит ли козырёк снег?', 'Да, системы рассчитаны на снеговую нагрузку; глубину и стекло подбираем под регион.'],
+  ['Куда стекает вода?', 'Козырёк имеет наклон от стены; при необходимости — желоб и водосток.'],
+  ['Можно ли козырёк на утеплённый фасад?', 'Да, со специальными креплениями через утеплитель.'],
+  ['Какая глубина козырька?', 'От 50 см до 2 м в зависимости от системы.'],
+  ['Можно ли арочный козырёк?', 'Да, ARCATA из гнутого стекла.'],
+  ['Защищает ли козырёк от ветра?', 'Для защиты сбоку добавляем боковую стеклянную стенку.'],
+  ['Можно ли с подсветкой?', 'Да, LED-споты в раме ATHENA или отдельная подсветка.'],
+  ['Можно ли матовое стекло?', 'Да, матовое, сверхпрозрачное или серое.'],
+  ['Ржавеют ли крепления?', 'Нет, нержавеющая сталь или алюминий с покрытием.'],
+  ['Нужно ли разрешение?', 'Для частного дома обычно нет; для фасада многоквартирного дома может понадобиться согласование.'],
+  ['Сколько длится монтаж?', 'Обычно несколько часов после изготовления.'],
+  ['Сколько ждать изготовления?', 'Несколько недель; точные сроки после замера.'],
+  ['Как ухаживать за козырьком?', 'Мыть средством для стекла несколько раз за сезон.'],
+  ['Где выполняете замер и монтаж?', 'В Киеве, Одессе и Львове с областями.'],
+  ['Есть ли гарантия?', 'Да, на стекло, фурнитуру и монтаж.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Стеклянные входные группы', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'],
+  ['Стеклянные двери', '/sklyani-dveri/'],
+  ['Стеклянные ограждения', '/sklyani-ohorozhi/'],
+  ['Для бизнеса', '/dlya-biznesu/'],
+  ['Витринное остекление', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
+  ['Безрамное остекление террас', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
+  ['Перголы', '/alyuminiyevi-konstrukcziyi/pergoly/'],
+  ['Алюминиевые двери', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: canopyCategoriesRu.length,
+  itemListElement: canopyCategoriesRu.map((category, index) => ({ '@type': 'ListItem', position: index + 1, name: category.name, url: absoluteUrl(lp(category.path), origin) }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
+---
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  locale="ru"
+  alternateLocales={['uk', 'ru']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Козырьки из стекла для частных домов, офисов, магазинов и подъездов: консольные, на тягах, на кронштейнах, в раме и с боковой ветрозащитой. Немецкие системы с проверенной снеговой нагрузкой — замер, изготовление и монтаж в Киеве, Одессе и Львове.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#systems">Смотреть системы</a>
+          <a class="button button--outline" href="#request">Получить расчёт</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Стеклянный козырёк на кронштейнах над входом в дом" width="1080" height="771" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="ru" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>Защита входа, которая не закрывает фасад</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Стеклянный козырёк защищает вход от дождя и снега, но не затеняет дверь и не перегружает фасад. Поэтому его ставят над входами в дома, офисы, магазины, рестораны и подъезды жилых комплексов.</p>
+          <p>Мы работаем с немецкими системами козырьков: консольными в зажимном профиле, на тягах и кронштейнах из нержавейки, в алюминиевой или стальной раме с желобом и подсветкой, а также с боковыми стеклянными стенками от ветра.</p>
+          <p>Ниже — типы козырьков и системы, из которых мы их изготавливаем.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>11 систем</b><span>консольные, тяги, кронштейны, рамы</span></li>
+          <li><b>Триплекс</b><span>осколки держатся на плёнке</span></li>
+          <li><b>До 2 м</b><span>глубина козырька</span></li>
+          <li><b>Киев · Одесса · Львов</b><span>замер, монтаж и сервис</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Виды</p><h2>Какие стеклянные козырьки мы делаем</h2></div><p>Выберите тип — на каждой странице системы с фото, характеристиками и советами.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section id="systems" class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Системы</p><h2>Системы стеклянных козырьков</h2></div><p>Цена — по индивидуальному расчёту. SEMPLICE и боковая ветрозащита — на страницах «В раме» и «С боковой защитой».</p></div>
+      <div class="profile-grid">
+        {canopyHubSystemsRu.map((system) => (
+          <article class="profile-card">
+            <div class="profile-card__media">
+              <img src={`${CANOPY_IMG}/${system.image}-480.webp`} srcset={`${CANOPY_IMG}/${system.image}-480.webp 480w, ${CANOPY_IMG}/${system.image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" alt={system.alt} width="480" height="480" loading="lazy" decoding="async" />
+              <span class="profile-card__kind">{system.kind}</span>
+            </div>
+            <div class="profile-card__body">
+              <h3>{system.name}</h3>
+              <p class="profile-card__blurb">{system.blurb}</p>
+              <p class="profile-card__price">Цена — по индивидуальному расчёту</p>
+              <a class="button button--mint profile-card__cta" href={lp(system.href)}>Подробнее о системе →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Крепление</p><h2>Как крепится козырёк</h2></div><p>От типа крепления зависят глубина козырька и вид фасада.</p></div>
+      <dl class="material-thickness">
+        {types.map(([name, text]) => <div><dt>{name}</dt><dd>{text}</dd></div>)}
+      </dl>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Преимущества</p><h2>Почему стеклянный козырёк</h2></div></div>
+      <div class="material-grid material-grid--parts">
+        {benefits.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процесс</p><h2>От замера до готового козырька</h2></div></div>
+      <div class="category-process__grid">
+        <div><span>01</span><b>Запрос</b><small>Фото входа и размеры</small></div>
+        <div><span>02</span><b>Консультация</b><small>Система, стекло, крепление</small></div>
+        <div><span>03</span><b>Замер</b><small>Стена, фасад, водоотвод</small></div>
+        <div><span>04</span><b>Чертёж</b><small>Размеры, крепление, наклон</small></div>
+        <div><span>05</span><b>Изготовление</b><small>Стекло и фурнитура под размер</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Установка и герметизация</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">География</p>
+          <h2>Стеклянные козырьки: замер и монтаж<br />в Киеве, Одессе и Львове</h2>
+          <p>Выезжаем на замер, проверяем стену и фасад, согласовываем чертёж, изготавливаем и устанавливаем козырьки над входами домов, офисов, магазинов и подъездов.</p>
+          <p>Для объектов в других регионах условия согласовываем отдельно.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Киев</b><span>замер и монтаж</span></li><li><b>Одесса</b><span>замер и монтаж</span></li><li><b>Львов</b><span>замер и монтаж</span></li></ul>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock title="FAQ о стеклянных козырьках" intro="О видах, стекле, снеге, воде, цене и монтаже." items={faq} visibleCount={6} expandTo={faq.length} locale="ru" />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Полезное</p><h2>Дальше по теме</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={lp(href)}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={lp(CANOPY_HUB)}
+      product={title}
+      title={'Нужен предварительный расчёт?'}
+      text={'Пришлите фото входа и ширину двери — подберём систему козырька и подготовим ориентировочную стоимость.'}
+      options={[...canopyCategoriesRu.map((c) => c.name), ...canopyHubSystemsRu.map((s) => s.name)]}
+      optionsLabel="Вид или система"
+      commentPlaceholder="Где козырёк (дом, магазин, подъезд), ширина и глубина, тип стены, город"
+      locale="ru"
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

@@ -53,7 +53,14 @@ const LOCALIZED_ROUTES: Record<'ru', ReadonlySet<string>> = {
     '/sklyani-ohorozhi/sklyani-ohorozhi-baseiniv/',
     '/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/',
     '/sklyani-ohorozhi/sklyani-ohorozhi-na-stiykakh/',
-    '/pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/'
+    '/pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/',
+    '/sklyani-kozyrky/',
+    '/sklyani-kozyrky/konsolni-kozyrky/',
+    '/sklyani-kozyrky/kozyrky-na-tyahakh/',
+    '/sklyani-kozyrky/kozyrky-na-kronshteinakh/',
+    '/sklyani-kozyrky/kozyrky-v-rami/',
+    '/sklyani-kozyrky/kozyrky-z-bokovym-zakhystom/',
+    '/sklyani-kozyrky/kozyrky-dlya-biznesu/'
   ])
 };
 

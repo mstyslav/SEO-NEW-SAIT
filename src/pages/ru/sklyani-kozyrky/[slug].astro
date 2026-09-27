@@ -1,0 +1,10 @@
+---
+// RU glass canopies subsections — content in src/data/ru/canopy-catalog.ru.ts.
+import ProfileCategoryPage from '../../../components/profile/ProfileCategoryPage.astro';
+import { canopyCategoriesRu } from '../../../data/ru/canopy-catalog.ru';
+export function getStaticPaths() {
+  return canopyCategoriesRu.map((category) => ({ params: { slug: category.slug }, props: { category } }));
+}
+const { category } = Astro.props;
+---
+<ProfileCategoryPage category={category} locale="ru" />
