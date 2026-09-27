@@ -161,10 +161,10 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
           <article class="profile-card">
             <div class="profile-card__media">
               <img src={`${CANOPY_IMG}/${system.image}-480.webp`} srcset={`${CANOPY_IMG}/${system.image}-480.webp 480w, ${CANOPY_IMG}/${system.image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" alt={system.alt} width="480" height="480" loading="lazy" decoding="async" />
-              <span class="profile-card__kind">{system.kind}</span>
+              <span class="profile-card__kind">{system.title ? `${system.name} · ${system.kind}` : system.kind}</span>
             </div>
             <div class="profile-card__body">
-              <h3>{system.name}</h3>
+              <h3>{system.title ?? system.name}</h3>
               <p class="profile-card__blurb">{system.blurb}</p>
               <p class="profile-card__price">Ціна — за індивідуальним розрахунком</p>
               <a class="button button--mint profile-card__cta" href={system.href}>Детальніше про систему →</a>
@@ -228,7 +228,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       product={title}
       title={'Потрібен попередній розрахунок?'}
       text={'Надішліть фото входу й ширину дверей — підберемо систему козирка й підготуємо орієнтовну вартість.'}
-      options={[...canopyCategories.map((c) => c.name), ...canopyHubSystems.map((s) => s.name)]}
+      options={[...canopyCategories.map((c) => c.name), ...canopyHubSystems.map((s) => s.title ?? s.name)]}
       optionsLabel="Вид або система"
       commentPlaceholder="Де козирок (будинок, магазин, під’їзд), ширина й глибина, тип стіни, місто"
     />

@@ -36,9 +36,24 @@ export const SYSTEMS: Record<string, Sys> = {
   lineo: { name: 'LINEO', kind: 'Французький балкон', blurb: 'Скляний французький балкон на затискних профілях, що прикручуються прямо до віконної рами, — легкий захист панорамного вікна.', specs: [['Кріплення', 'затискні профілі на раму вікна'], ['Скло', 'триплекс'], ['Висота', 'під вікно, типово 0,9–1,1 м'], ['Колір', 'нерж., білий, антрацит, RAL'], ['Монтаж', 'без укосів і стін']], features: ['Кріплення до рами вікна', 'Мінімальний профіль', 'Для панорамних вікон', 'Часткове матування'], alt: 'Скляний французький балкон LINEO на панорамному вікні' },
   canto: { name: 'CANTO', kind: 'Французький балкон на тримачах', blurb: 'Французький балкон на тримачах із нержавійки в укосах вікна — скло наче висить у прорізі.', specs: [['Кріплення', 'тримачі в укоси прорізу'], ['Матеріал', '100% нержавіюча сталь'], ['Скло', 'триплекс'], ['Висота', 'під вікно, типово 0,9–1,1 м'], ['Ширина', 'під проріз']], features: ['Скло «висить» у прорізі', 'Нержавійка', 'Для цегли й штукатурки', 'Не торкається рами'], alt: 'Скляний французький балкон CANTO на білому фасаді' }
 };
+/** Search-phrase card titles (the system name stays in the image tag). */
+export const RAILING_TITLES: Record<string, string> = {
+  'delgado': 'Скляна огорожа в профілі врівень із плитою',
+  'formal': 'Скляна огорожа у вузькому профілі зверху',
+  'clip': 'Скляна огорожа в компактному профілі',
+  'ante': 'Скляна огорожа з торцевим кріпленням',
+  'variante': 'Торцева огорожа з декоративною накладкою',
+  'baldosa': 'Скляна огорожа з облицюванням торця',
+  'solo': 'Скляна огорожа на точкових тримачах',
+  'gardo': 'Скляна огорожа на круглих стійках',
+  'densaro': 'Скляна огорожа на квадратних стійках',
+  'lineo': 'Скляний французький балкон',
+  'canto': 'Французький балкон на тримачах'
+};
+
 const sys = (key: string, image: string, blurb?: string, alt?: string): ProfileModel => {
   const s = SYSTEMS[key];
-  return m(key, s.name, s.kind, blurb ?? s.blurb, s.specs, s.features, alt ?? s.alt, `gp-${image}`);
+  return { ...m(key, s.name, s.kind, blurb ?? s.blurb, s.specs, s.features, alt ?? s.alt, `gp-${image}`), title: RAILING_TITLES[key] };
 };
 
 const COMMON: [string, string][] = [
@@ -542,4 +557,4 @@ export const railingSystems = ([
   ['densaro', 'densaro-balkon', 'sklyani-ohorozhi-na-stiykakh'],
   ['lineo', 'lineo-balkon', 'sklyani-ohorozhi-balkoniv'],
   ['canto', 'canto-fasad', 'sklyani-ohorozhi-balkoniv']
-] as const).map(([key, image, slug]) => ({ key, ...SYSTEMS[key], image: `gp-${image}`, href: `${P(slug)}#${key}` }));
+] as const).map(([key, image, slug]) => ({ key, ...SYSTEMS[key], title: RAILING_TITLES[key] as string | undefined, image: `gp-${image}`, href: `${P(slug)}#${key}` }));

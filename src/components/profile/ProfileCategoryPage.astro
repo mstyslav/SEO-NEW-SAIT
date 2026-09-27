@@ -158,7 +158,7 @@ const itemList: JsonLdObject = {
     position: index + 1,
     item: {
       '@type': 'Product',
-      name: model.name,
+      name: model.title ? `${model.title} ${model.name}` : model.name,
       category: category.name,
       description: model.blurb,
       ...(model.brand ? { brand: { '@type': 'Brand', name: model.brand } } : {}),
@@ -239,13 +239,13 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
                   loading="lazy"
                   decoding="async"
                 />
-                <span class="profile-card__kind">{model.kind}</span>
+                <span class="profile-card__kind">{model.title ? `${model.name} · ${model.kind}` : model.kind}</span>
               </div>
             ) : (
-              <span class="profile-card__kind profile-card__kind--inline">{model.kind}</span>
+              <span class="profile-card__kind profile-card__kind--inline">{model.title ? `${model.name} · ${model.kind}` : model.kind}</span>
             )}
             <div class="profile-card__body">
-              <h3>{model.name}</h3>
+              <h3>{model.title ?? model.name}</h3>
               <p class="profile-card__blurb">{model.blurb}</p>
               <dl class="profile-card__specs">
                 {model.specs.map(([name, value]) => <div><dt>{name}</dt><dd>{value}</dd></div>)}
@@ -254,7 +254,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
                 {model.features.map((feature) => <li>{feature}</li>)}
               </ul>
               <p class="profile-card__price">{model.priceFrom ? <><strong>{model.priceFrom}</strong>{model.priceNote && <span>{model.priceNote}</span>}</> : tx.price}</p>
-              <a class="button button--mint profile-card__cta" href="#request" data-request-model={model.name}>{model.image ? `${tx.calc} ${model.name.replace(/^Aluprof /, '')}` : tx.request}</a>
+              <a class="button button--mint profile-card__cta" href="#request" data-request-model={model.title ?? model.name}>{model.image ? `${tx.calc} ${model.name.replace(/^Aluprof /, '')}` : tx.request}</a>
             </div>
           </article>
         ))}
@@ -378,7 +378,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       product={category.name}
       title={category.ctaTitle}
       text={category.ctaText}
-      options={category.models.map((model) => model.name)}
+      options={category.models.map((model) => model.title ?? model.name)}
       optionsLabel={optionsLabel}
     />
   </main>

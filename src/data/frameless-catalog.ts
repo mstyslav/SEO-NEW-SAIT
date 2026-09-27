@@ -4966,6 +4966,40 @@ export const framelessCategories: ProfileCategory[] = [
   }
 ] as ProfileCategory[];
 
+/** Search-phrase card titles (the system name stays in the image tag). */
+export const FRAMELESS_TITLES: Record<string, string> = {
+  'tiara-max': 'Безрамне скління «книжка»',
+  'tiara-max-slim': 'Безрамне скління з низьким порогом 23 мм',
+  'tiara-max-flat': 'Безрамне скління із заокругленим порогом',
+  'tiara-max-zero': 'Безрамне скління з порогом у підлозі',
+  'tiara-twin': 'Тепле безрамне скління під склопакет',
+  'optima': 'Бюджетне безрамне скління «книжка»',
+  'sliding-slim': 'Розсувне безрамне скління з порогом 7,5 мм',
+  'sliding-smart': 'Розсувне скління, що відкривається одним рухом',
+  'sliding-track': 'Розсувне скління з порогом 30 мм',
+  'sliding-next': 'Розсувне скління нового покоління',
+  'sliding-next-flat': 'Розсувне скління з низьким порогом 16 мм',
+  'sliding-next-all-glass': 'Панорамне розсувне скління без верхнього профілю',
+  'giliotina-mono': 'Гільйотинне скління',
+  'giliotina-twin': 'Тепле гільйотинне скління',
+  'giliotina-twin-top': 'Гільйотина зі стулками вгорі',
+  'giliotina-thermo': 'Гільйотинне скління з терморозривом',
+  'giliotina-balcon': 'Гільйотинне скління балкона',
+  'veranda-twin': 'Скляний дах для веранди',
+  'atrium': 'Безпорогове скління висотою до 4 м',
+  'centrum': 'Безпорогове скління з поворотом 360°',
+  'momentum': 'Безпорогове скління «гармошка»',
+  'tiara-twin-zero': 'Тепле скління з порогом 7 мм',
+  'tiara-twin-slim': 'Тепле скління з низьким порогом',
+  'tiara-twin-flat': 'Тепле скління з плавним порогом',
+  'sliding-max-slim': 'Тепле розсувне скління під склопакет',
+  'sliding-max-track': 'Тепле розсувне скління з порогом 42 мм',
+  'balconmax-integra': 'Балконна огорожа зі склінням «книжка»',
+  'balcontwin-integra': 'Балконна огорожа з теплим склінням',
+  'balconmax-sliding': 'Балконна огорожа з розсувним склінням'
+};
+for (const category of framelessCategories) for (const model of category.models) model.title ??= FRAMELESS_TITLES[model.id];
+
 export const getFramelessCategory = (slug: string) => {
   const category = framelessCategories.find((item) => item.slug === slug);
   if (!category) throw new Error(`Unknown frameless category ${slug}`);

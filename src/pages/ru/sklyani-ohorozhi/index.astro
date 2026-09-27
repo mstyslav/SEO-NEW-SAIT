@@ -179,10 +179,10 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
           <article class="profile-card">
             <div class="profile-card__media">
               <img src={`${RAILINGS_IMG}/${system.image}-480.webp`} srcset={`${RAILINGS_IMG}/${system.image}-480.webp 480w, ${RAILINGS_IMG}/${system.image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" alt={system.alt} width="480" height="480" loading="lazy" decoding="async" />
-              <span class="profile-card__kind">{system.kind}</span>
+              <span class="profile-card__kind">{system.title ? `${system.name} · ${system.kind}` : system.kind}</span>
             </div>
             <div class="profile-card__body">
-              <h3>{system.name}</h3>
+              <h3>{system.title ?? system.name}</h3>
               <p class="profile-card__blurb">{system.blurb}</p>
               <a class="button button--mint profile-card__cta" href={lp(system.href)}>Подробнее о системе →</a>
             </div>
@@ -263,7 +263,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       product={title}
       title={'Нужен предварительный расчёт?'}
       text={'Пришлите фото и длину ограждения — подберём систему, стекло и поручень и подготовим ориентировочную стоимость.'}
-      options={[...railingCategoriesRu.map((c) => c.name), ...railingSystemsRu.map((s) => s.name)]}
+      options={[...railingCategoriesRu.map((c) => c.name), ...railingSystemsRu.map((s) => s.title ?? s.name)]}
       optionsLabel="Вид или система"
       commentPlaceholder="Где ограждение (лестница, балкон, терраса), длина, высота, основание, город"
       locale="ru"

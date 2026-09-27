@@ -173,10 +173,10 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
           <article class="profile-card">
             <div class="profile-card__media">
               <img src={`${DOORS_IMG}/${model.image}-480.webp`} srcset={`${DOORS_IMG}/${model.image}-480.webp 480w, ${DOORS_IMG}/${model.image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" alt={model.imageAlt ?? model.name} width="480" height="480" loading="lazy" decoding="async" />
-              <span class="profile-card__kind">{model.kind}</span>
+              <span class="profile-card__kind">{model.title ? `${model.name} · ${model.kind}` : model.kind}</span>
             </div>
             <div class="profile-card__body">
-              <h3>{model.name}</h3>
+              <h3>{model.title ?? model.name}</h3>
               <p class="profile-card__blurb">{model.blurb}</p>
               <a class="button button--mint profile-card__cta" href={`${modelRange.path}#${model.id}`}>Детальніше про модель →</a>
             </div>

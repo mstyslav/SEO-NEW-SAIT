@@ -37,9 +37,30 @@ export const PARTITION_SYSTEMS: Record<string, Sys> = {
   momentum: { name: 'MOMENTUM', kind: '«Гармошка» без порога', img: 'int-momentum', blurb: 'Трансформована перегородка-«гармошка»: полотна складаються біля краю прорізу й повністю відкривають простір. Фіксатори відкриваються натисканням ноги.', specs: [['Висота', 'до 3000 мм'], ['Ширина полотна', 'до 1000 мм'], ['Скло', 'загартоване 10 мм або триплекс'], ['Поріг', 'відсутній'], ['Центральний вхід', 'так']], features: ['Повне відкриття прорізу', 'Тиха робота', 'Фіксатори ногою', 'Зали, офіси, ресторани'], alt: 'Трансформована скляна перегородка-гармошка MOMENTUM' }
 };
 
+/** Search-phrase card titles (the system name stays in the image tag). */
+export const PARTITION_TITLES: Record<string, string> = {
+  'pur': 'Цільноскляна перегородка без рами',
+  'pendula': 'Перегородка з маятниковими дверима',
+  'piano': 'Розсувна перегородка з доводчиком',
+  'suspens': 'Розсувна перегородка на відкритій шині',
+  'ligera': 'Розсувні скляні двері на чорній шині',
+  'mercato': 'Розсувна перегородка в алюмінієвому профілі',
+  'caja': 'Скляна переговорна «кімната в кімнаті»',
+  'perto': 'Скляні міжкімнатні двері',
+  'sliding-slim': 'Розсувна перегородка з порогом 7,5 мм',
+  'sliding-smart': 'Розсувна перегородка, що відкривається одним рухом',
+  'sliding-next-flat': 'Розсувна перегородка з низьким порогом',
+  'sliding-next-all-glass': 'Розсувна перегородка без верхнього профілю',
+  'sliding-next': 'Розсувна перегородка із замком',
+  'sliding-track': 'Розсувна перегородка з захистом від протягів',
+  'atrium': 'Підвісна перегородка без порога до 4 м',
+  'momentum': 'Скляна перегородка-гармошка',
+  'centrum': 'Перегородка з поворотними полотнами 360°'
+};
+
 const sys = (key: string, image?: string, blurb?: string): ProfileModel => {
   const s = PARTITION_SYSTEMS[key];
-  return { id: key, name: s.name, kind: s.kind, image: image ?? s.img, imageAlt: s.alt, blurb: blurb ?? s.blurb, specs: s.specs, features: s.features };
+  return { id: key, name: s.name, title: PARTITION_TITLES[key], kind: s.kind, image: image ?? s.img, imageAlt: s.alt, blurb: blurb ?? s.blurb, specs: s.specs, features: s.features };
 };
 
 /** Our own project photos (proj-{slug}) for the `details` block. */
@@ -585,4 +606,4 @@ export const partitionHubSystems = ([
   ['slim', 'tsilnosklyani-perehorodky'], ['slim-black', 'loft-sklyani-peregorodku'], ['pur', 'tsilnosklyani-perehorodky'],
   ['pendula', 'tsilnosklyani-perehorodky'], ['piano', 'pidvisni-sklyani-peregorodky'], ['caja', 'ofisni'],
   ['sliding-next-flat', 'nyzhnooporni-sklyani-perehorodky'], ['atrium', 'teleskopichni-sklyani-perehorodky'], ['momentum', 'transformuyuchi-sklyani-peregorodky']
-] as const).map(([key, slug]) => ({ key, ...PARTITION_SYSTEMS[key], image: PARTITION_SYSTEMS[key].img, href: `${P(slug)}#${key}` }));
+] as const).map(([key, slug]) => ({ key, ...PARTITION_SYSTEMS[key], title: PARTITION_TITLES[key] as string | undefined, image: PARTITION_SYSTEMS[key].img, href: `${P(slug)}#${key}` }));

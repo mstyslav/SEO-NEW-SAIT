@@ -22,9 +22,23 @@ export const CANOPY_SYSTEMS_RU: Record<string, Sys> = {
   windschutz: { name: 'Боковая ветрозащита', kind: 'Стеклянная боковая стенка', blurb: 'Стеклянная боковая стенка к любому козырьку — защищает вход от ветра и косого дождя; подходит и для балкона или террасы.', specs: [['Стекло', 'прозрачное или матовое'], ['Размер', 'под вход, напр. 65×180 см'], ['Крепление', 'разные системы держателей'], ['Применение', 'вход, балкон, терраса'], ['Цвет держателей', 'нерж., антрацит']], features: ['К любому козырьку', 'Защита от ветра', 'Матовое стекло для приватности', 'Для входа и террасы'], alt: 'Стеклянная боковая стенка-ветрозащита у входной двери' }
 };
 
+/** Search-phrase card titles (the system name stays in the image tag). */
+export const CANOPY_TITLES_RU: Record<string, string> = {
+  'dura-plus': 'Консольный стеклянный козырёк без тяг',
+  'duravento': 'Стеклянный козырёк с боковой стенкой',
+  'athena': 'Козырёк в алюминиевой раме с подсветкой',
+  'trave': 'Козырёк на трубчатых кронштейнах',
+  'spada': 'Козырёк на кронштейнах-мечах',
+  'punto': 'Стеклянный козырёк на тягах',
+  'tubo': 'Большой козырёк в подвесной раме',
+  'arcata': 'Арочный стеклянный козырёк',
+  'ella': 'Козырёк в стальной раме',
+  'semplice': 'Алюминиевый козырёк с боковыми стенками'
+};
+
 const sys = (key: string, image = key, blurb?: string): ProfileModel => {
   const s = CANOPY_SYSTEMS_RU[key];
-  return { id: key, name: s.name, kind: s.kind, image: `gp-${image}`, imageAlt: s.alt, blurb: blurb ?? s.blurb, specs: s.specs, features: s.features };
+  return { id: key, name: s.name, title: CANOPY_TITLES_RU[key], kind: s.kind, image: `gp-${image}`, imageAlt: s.alt, blurb: blurb ?? s.blurb, specs: s.specs, features: s.features };
 };
 
 const COMMON: [string, string][] = [
@@ -194,7 +208,7 @@ export const canopyCategoriesRu: ProfileCategory[] = [
     introSpec: [['Кронштейны снизу', 'без тяг над дверью'], ['До 2 м', 'глубина SPADA'], ['Нержавейка', 'или антрацит'], ['Киев · Одесса · Львов', 'замер и монтаж']],
     catalogHeading: 'Системы на кронштейнах',
     catalogIntro: 'Кронштейны-мечи и трубчатые кронштейны.',
-    models: [sys('spada'), sys('trave'), { ...sys('trave', 'trave-2', 'Вариант TRAVE с трубчатой рамой — кронштейны соединены в раму, козырёк выглядит цельной конструкцией.'), id: 'trave-rama', name: 'TRAVE с рамой', kind: 'Трубчатая рама' }],
+    models: [sys('spada'), sys('trave'), { ...sys('trave', 'trave-2', 'Вариант TRAVE с трубчатой рамой — кронштейны соединены в раму, козырёк выглядит цельной конструкцией.'), id: 'trave-rama', name: 'TRAVE с рамой', title: 'Козырёк в трубчатой раме', kind: 'Трубчатая рама' }],
     compareRows: [
       ['SPADA', 'мечи', 'прозрачное, матовое', 'Глубина до 2 м', 'Дома, бизнес'],
       ['TRAVE', 'трубчатые кронштейны', 'триплекс', 'Для тесных мест', 'Низкие входы'],
@@ -385,4 +399,4 @@ export const canopyHubSystemsRu = ([
   ['dura-plus', 'konsolni-kozyrky'], ['duravento', 'kozyrky-z-bokovym-zakhystom'], ['athena', 'kozyrky-v-rami'],
   ['trave', 'kozyrky-na-kronshteinakh'], ['spada', 'kozyrky-na-kronshteinakh'], ['punto', 'kozyrky-na-tyahakh'],
   ['tubo', 'kozyrky-na-tyahakh'], ['arcata', 'kozyrky-na-tyahakh'], ['ella', 'kozyrky-v-rami']
-] as const).map(([key, slug]) => ({ key, ...CANOPY_SYSTEMS_RU[key], image: `gp-${key}`, href: `${P(slug)}#${key}` }));
+] as const).map(([key, slug]) => ({ key, ...CANOPY_SYSTEMS_RU[key], title: CANOPY_TITLES_RU[key] as string | undefined, image: `gp-${key}`, href: `${P(slug)}#${key}` }));

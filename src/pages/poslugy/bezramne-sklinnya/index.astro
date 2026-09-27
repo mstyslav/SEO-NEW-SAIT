@@ -45,7 +45,7 @@ const systemsTable = framelessCategories.flatMap((category) =>
         name: model.name,
         href: `${category.path}#${model.id}`,
         direction: category.name,
-        kind: model.kind,
+        kind: model.title ?? model.kind,
         height: specs['Висота конструкції'] ?? specs['Висота огорожі'] ?? '—',
         glass: specs['Скло'] ?? specs['Склопакет'] ?? specs['Скло огорожі'] ?? '—',
         threshold: specs['Поріг'] ?? '—'

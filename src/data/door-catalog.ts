@@ -20,7 +20,16 @@ const m = (id: string, name: string, kind: string, blurb: string, specs: [string
   ({ id, name, kind, image: id, imageAlt, blurb, specs, features });
 
 // Model renders: anchor id stays model-*, image files are versioned for cache busting.
-const sg = (...a: Parameters<typeof m>): ProfileModel => ({ ...m(...a), image: `${a[0]}-v2` });
+/** Search-phrase card titles for the SG model series (the model name stays in the image tag). */
+const SG_TITLES: Record<string, string> = {
+  'model-line': 'Скляні двері без розкладки',
+  'model-trio': 'Скляні двері з трьома полями',
+  'model-vertical': 'Скляні двері з вертикальною розкладкою',
+  'model-grid': 'Скляні двері з сіткою',
+  'model-modern': 'Скляні двері з асиметричною розкладкою',
+  'model-arch': 'Скляні двері з аркою'
+};
+const sg = (...a: Parameters<typeof m>): ProfileModel => ({ ...m(...a), title: SG_TITLES[a[0]], image: `${a[0]}-v2` });
 
 const COMMON: [string, string][] = [
   ['Яке скло використовують для дверей?', 'Лише безпечне: загартоване (ESG) товщиною 8–10 мм або ламіноване (триплекс). Загартоване скло в кілька разів міцніше за звичайне й розсипається на дрібні тупі фрагменти.'],

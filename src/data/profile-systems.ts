@@ -20,6 +20,8 @@ export type ProfileGroup = 'alu' | 'pvc' | 'mirror' | 'shower' | 'frameless' | '
 export interface ProfileModel {
   id: string;
   name: string;
+  /** Search-phrase card title (e.g. «Скляний козирок на тягах»); when set, `name` moves to the image tag. */
+  title?: string;
   brand?: string;
   /** Short label shown on the card image, e.g. "Розпашні вікна". */
   kind: string;
