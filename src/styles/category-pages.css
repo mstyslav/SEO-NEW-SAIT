@@ -316,3 +316,14 @@
   .material-subblock .swatch-grid + .material-subblock__text{margin-top:28px}
   .material-subblock + .material-subblock{margin-top:72px}
 }
+
+/* Mobile rhythm: the desktop two-column heading (title left, note right) stacks on phones —
+   drop the 48px column gap and stacked margins so title → note → content read as one block. */
+@media (max-width: 900px) {
+  .category-section { padding-top: 40px; padding-bottom: 40px; }
+  .category-heading { gap: 10px; margin-bottom: 22px; }
+  .category-heading h2 { margin-bottom: 0; }
+  .category-heading > p, .category-heading > div > p:last-child { margin-bottom: 0; }
+  .category-heading .eyebrow { margin-bottom: 10px; }
+  .category-seo__grid { gap: 14px; }
+}

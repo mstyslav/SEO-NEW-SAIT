@@ -51,8 +51,8 @@ const faq = t.faq.items;
           <h1>{t.hero.h1Line1}<br>{t.hero.h1Line2}</h1>
           <p class="sg-hero__lead">{t.hero.lead}</p>
           <div class="sg-home-hero__actions">
-            <a class="button button--mint" href={`${lp('/contacts/')}#contact-form`}>{t.hero.ctaPrimary}</a>
-            <a class="button sg-home-hero__secondary" href={lp('/rishennya/')}>{t.hero.ctaSecondary}</a>
+            <a class="button button--mint" href="#directions">{t.hero.ctaSecondary}</a>
+            <a class="button sg-home-hero__secondary" href="#quote">{t.hero.ctaPrimary}</a>
           </div>
         </div>
         <div class="sg-hero__image">
@@ -80,7 +80,7 @@ const faq = t.faq.items;
 
       <TrustBar locale={pageLocale} />
 
-      <section class="sg-categories">
+      <section id="directions" class="sg-categories">
         <div class="sg-categories__grid sg-home-category-grid">
           {categories.map(([title,text,href,icon,tabletMobileOnly]) => (
             <a class={`sg-category-card${tabletMobileOnly ? ' sg-category-card--tablet-mobile-only' : ''}`} href={lp(href)}>

@@ -3116,3 +3116,12 @@ html { touch-action: manipulation; }
   a, button, [role="button"], label { -webkit-tap-highlight-color: rgba(123, 194, 168, .25); }
   .button:active, .profile-card__cta:active, .category-icon-card:active, .rh-tile:active, .sg-product-card:active, .profile-card:active { transform: scale(.98); transition: transform .08s ease; }
 }
+
+/* Mobile rhythm for blocks outside the category template. */
+@media (max-width: 900px) {
+  .quote-v4.section { padding-top: 44px; padding-bottom: 44px; }
+  .quote-v4__grid { gap: 24px; }
+  body .sg-page-shell .project-detail-v2__service-link { gap: 14px; }
+  body .sg-page-shell .project-detail-v2__service-link h2 { margin-bottom: 0; }
+  body .sg-page-shell .knowledge-library { padding-bottom: 44px; }
+}
