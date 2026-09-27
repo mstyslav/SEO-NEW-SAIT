@@ -9,6 +9,7 @@ import { knowledgeArticles, getKnowledgeArticle } from '../../data/knowledge-art
 import { getFullKnowledgeSections } from '../../data/knowledge-expert-sections';
 import { breadcrumbSchema, faqSchema } from '../../seo/schema';
 import { expandFaq } from '../../data/expand-faq';
+import { KNOWLEDGE_ARTICLES_RU } from '../../content/i18n/knowledge/articles-ru';
 
 export function getStaticPaths() {
   return knowledgeArticles.map((article) => ({ params: { slug: article.slug }, props: { article } }));
@@ -47,7 +48,7 @@ const structuredData = [
   description={article.description}
   schemaType="Article"
   structuredData={structuredData}
-  alternateLocales={['uk']}
+  alternateLocales={article.slug in KNOWLEDGE_ARTICLES_RU ? ['uk', 'ru'] : ['uk']}
 >
   <div class="sg-page-shell">
     <Header />
