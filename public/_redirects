@@ -159,3 +159,5 @@
 /ru/dlya-biznesu/restoranam/ /dlya-biznesu/restoranam/ 301
 /ru/pryvatnyj-sektor/budynkam/ /bezramne-sklinnya/sklinnya-budynkiv/ 301
 /ru/pryvatnyj-sektor/taun-hausy/ /bezramne-sklinnya/sklinnya-budynkiv/ 301
+# Approved 2026-09-27: old «Безрамне скління для квартир» → frameless balcony/loggia glazing (exact path only; /pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/ stays 200)
+/pryvatnyj-sektor/pryvatnyj-sektor/ /bezramne-sklinnya/sklinnya-balkoniv/ 301
