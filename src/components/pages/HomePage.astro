@@ -176,15 +176,17 @@ const faq = t.faq.items;
       <section id="quote" class="section quote-v4">
         <div class="container quote-v4__grid">
           <div><p class="eyebrow eyebrow--light">{t.quote.eyebrow}</p><h2>{t.quote.title}</h2><p>{t.quote.intro}</p></div>
-          <form class="quote-form quote-form--home-final" data-home-quote-form>
+          <form class="quote-form quote-form--home-final" data-lead-form>
+            <input type="hidden" name="locale" value={pageLocale} />
+            <input type="hidden" name="product" value={pageLocale === 'ru' ? 'Главная — предварительный расчёт' : 'Головна — попередній розрахунок'} />
             <label>
               <span>{pageT.name}</span>
-              <input type="text" name="name" autocomplete="name" />
+              <input type="text" name="name" autocomplete="name" required />
             </label>
 
             <label>
               <span>{pageT.phone}</span>
-              <input type="tel" name="phone" autocomplete="tel" />
+              <input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="+38" required />
             </label>
 
             <label>
@@ -200,6 +202,7 @@ const faq = t.faq.items;
             <button class="button button--white quote-form--home-final__submit" type="submit">
               {pageT.preliminaryQuote}
             </button>
+            <p data-form-status hidden role="status"></p>
           </form>
         </div>
       </section>
@@ -344,22 +347,7 @@ const faq = t.faq.items;
         }
       });
 
-      const homeQuoteForm = document.querySelector('[data-home-quote-form]');
-      homeQuoteForm?.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const data = new FormData(homeQuoteForm);
-        const request = [
-          data.get('name'),
-          data.get('phone'),
-          data.get('city'),
-          data.get('message')
-        ].filter(Boolean).join(' · ');
-
-        const contactsPath = document.documentElement.lang === 'ru'
-          ? '/ru/contacts/'
-          : '/contacts/';
-        window.location.href = `${contactsPath}?request=${encodeURIComponent(request)}#contact-form`;
-      });
+      // The quote form is a regular [data-lead-form] (public/js/forms.js) — sent in place.
     </script>
   </div>
 </BaseLayout>

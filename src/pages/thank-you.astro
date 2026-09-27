@@ -1,6 +1,55 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'; import Header from '../components/Header.astro'; import Footer from '../components/Footer.astro';
+// Fallback confirmation page. Forms now show a success pop-up in place (public/js/forms.js);
+// this page is still reachable directly or from older links.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const steps: [string, string][] = [
+  ['Дзвінок менеджера', 'Уточнимо розміри, побажання й адресу об’єкта.'],
+  ['Розрахунок', 'Підготуємо варіанти й орієнтовну вартість.'],
+  ['Замір', 'Приїдемо в зручний час у Києві, Одесі чи Львові.']
+];
 ---
 <BaseLayout title="Запит отримано | Space Glass" description="Дякуємо за звернення до Space Glass." noindex>
-  <Header/><main id="main" class="confirmation-page"><section><span aria-hidden="true">✓</span><p class="eyebrow">Запит успішно надіслано</p><h1>Дякуємо! Ми вже готуємо відповідь</h1><p>Менеджер зв’яжеться з вами у робочий час, перевірить деталі та підготує комерційну пропозицію.</p><div class="hero__actions"><a class="button button--mint" href="/proposal/">Переглянути пропозицію</a><a class="button button--outline" href="/">На головну</a></div><small>Термінове питання? <a href="tel:+380734251400">+38 (073) 425 14 00</a></small></section></main><Footer/>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main" class="ty">
+    <section class="ty__card">
+      <div class="ty__icon" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M10 21l7 7 14-15" /></svg></div>
+      <p class="eyebrow">Запит успішно надіслано</p>
+      <h1>Дякуємо! Ми вже готуємо відповідь</h1>
+      <p class="ty__lead">Менеджер зв’яжеться з вами найближчим робочим часом, уточнить деталі та підготує розрахунок.</p>
+      <ol class="ty__steps">
+        {steps.map(([title, text], i) => <li><span>{i + 1}</span><div><b>{title}</b><small>{text}</small></div></li>)}
+      </ol>
+      <div class="ty__actions">
+        <a class="button button--mint" href="/">На головну</a>
+        <a class="button button--outline" href="tel:+380734251400">Зателефонувати · +38 073 425 14 00</a>
+      </div>
+      <p class="ty__more">Поки чекаєте — перегляньте <a href="/projects/">наші проєкти</a> або <a href="/catalog/">каталог</a>.</p>
+    </section>
+  </main>
+  <Footer />
+</div>
 </BaseLayout>
+
+<style>
+  .ty{display:grid;place-items:center;padding:56px 20px 72px;background:linear-gradient(180deg,#f3faf7 0%,#fff 70%)}
+  .ty__card{width:min(620px,100%);padding:44px 40px 36px;border:1px solid #dfe7e3;border-radius:32px;background:#fff;text-align:center;box-shadow:0 24px 60px rgba(16,40,30,.08)}
+  .ty__icon{display:grid;place-items:center;width:84px;height:84px;margin:0 auto 22px;border-radius:50%;background:#e8f6f0;box-shadow:0 0 0 12px #f3faf7}
+  .ty__icon svg{width:44px;height:44px;stroke:var(--green-dark,#07583a);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;animation:tyCheck .5s .2s ease forwards}
+  @keyframes tyCheck{to{stroke-dashoffset:0}}
+  .ty h1{margin:0 0 14px;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.03em}
+  .ty__lead{margin:0 auto 26px;max-width:460px;color:#56625c;font-size:16px;line-height:1.55}
+  .ty__steps{display:grid;gap:10px;margin:0 0 26px;padding:0;list-style:none;text-align:left}
+  .ty__steps li{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-radius:18px;background:#f5f8f6}
+  .ty__steps span{flex:0 0 30px;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--mint,#7bc2a8);color:#07120e;font-weight:800;font-size:14px}
+  .ty__steps b{display:block;font-size:15.5px}
+  .ty__steps small{color:#5e6864;font-size:14px}
+  .ty__actions{display:grid;gap:10px}
+  .ty__more{margin:18px 0 0;color:#7b8580;font-size:14px}
+  .ty__more a{color:var(--green-dark,#07583a);text-decoration:underline}
+  @media (max-width:600px){.ty{padding:28px 14px 48px}.ty__card{padding:32px 20px 26px;border-radius:26px}}
+  @media (prefers-reduced-motion:reduce){.ty__icon svg{animation:none;stroke-dashoffset:0}}
+</style>
