@@ -19,6 +19,9 @@ const d = details[locale] ?? details.uk;
  return [...cityPages,{slug:'baza-znan/yak-obraty-sklo',kind:'article',title:'Safety glass guide | Space Glass',description:d.article,eyebrow:({uk:'База знань',ru:'База знаний',en:'Knowledge base',de:'Ratgeber'} as any)[locale],h1:({uk:'Як обрати безпечне скло',ru:'Как выбрать безопасное стекло',en:'How to choose safety glass',de:'Sicherheitsglas richtig wählen'} as any)[locale],intro:d.article,sections:[{title:({uk:'Гартоване чи триплекс',ru:'Закалённое или триплекс',en:'Tempered or laminated',de:'ESG oder VSG'} as any)[locale],text:d.article}],faq:[]},{slug:'projects/loft-kyiv',kind:'project',title:'Loft partition Kyiv | Space Glass',description:d.project,eyebrow:({uk:'Проєкт',ru:'Проект',en:'Project',de:'Referenz'} as any)[locale],h1:({uk:'Loft-перегородка в Києві',ru:'Loft-перегородка в Киеве',en:'Loft partition in Kyiv',de:'Loft-Trennwand in Kyjiw'} as any)[locale],intro:d.project,sections:[{title:({uk:'Завдання і реалізація',ru:'Задача и реализация',en:'Brief and delivery',de:'Aufgabe und Umsetzung'} as any)[locale],text:d.project}],faq:[]}];
 }
 export function getStaticPaths() {
+  // Early scaffold hubs duplicated the real ones (/city/, /rishennya/, /knowledge/, /project/):
+  // one indexable hub per topic, so they are no longer generated (no production history).
+  const SCAFFOLD = /^(rishennia|mista|baza-znan|projects)(\/|$)/;
   const existingRoutes = new Set(['projects']);
   const details = {
    uk:{ city:'Професійний замір, продумана логістика та монтаж скляних конструкцій у місті й області.', article:'Порівнюємо гартоване та ламіноване скло за руйнуванням, навантаженням і сферою застосування.', project:'Loft-перегородка з рифленим склом: технічне рішення, чорний профіль і акуратний монтаж.' },
@@ -34,7 +37,7 @@ export function getStaticPaths() {
    return [...cityPages,{slug:'baza-znan/yak-obraty-sklo',kind:'article',title:'Safety glass guide | Space Glass',description:d.article,eyebrow:({uk:'База знань',ru:'База знаний',en:'Knowledge base',de:'Ratgeber'} as any)[locale],h1:({uk:'Як обрати безпечне скло',ru:'Как выбрать безопасное стекло',en:'How to choose safety glass',de:'Sicherheitsglas richtig wählen'} as any)[locale],intro:d.article,sections:[{title:({uk:'Гартоване чи триплекс',ru:'Закалённое или триплекс',en:'Tempered or laminated',de:'ESG oder VSG'} as any)[locale],text:d.article}],faq:[]},{slug:'projects/loft-kyiv',kind:'project',title:'Loft partition Kyiv | Space Glass',description:d.project,eyebrow:({uk:'Проєкт',ru:'Проект',en:'Project',de:'Referenz'} as any)[locale],h1:({uk:'Loft-перегородка в Києві',ru:'Loft-перегородка в Киеве',en:'Loft partition in Kyiv',de:'Loft-Trennwand in Kyjiw'} as any)[locale],intro:d.project,sections:[{title:({uk:'Завдання і реалізація',ru:'Задача и реализация',en:'Brief and delivery',de:'Aufgabe und Umsetzung'} as any)[locale],text:d.project}],faq:[]}];
   }
   const locales: Locale[] = ['uk','ru'];
- return locales.flatMap(locale => [...allSeoPages(locale),...supporting(locale)].filter(page=>!existingRoutes.has(page.slug) && page.slug !== 'projects/loft-kyiv').map(page=>({params:{seo:pathFor(locale,page.slug).replace(/^\//,'').replace(/\/$/,'')},props:{page,locale}})));
+ return locales.flatMap(locale => [...allSeoPages(locale),...supporting(locale)].filter(page=>!existingRoutes.has(page.slug) && !SCAFFOLD.test(page.slug)).map(page=>({params:{seo:pathFor(locale,page.slug).replace(/^\//,'').replace(/\/$/,'')},props:{page,locale}})));
 }
 const { page, locale } = Astro.props;
 ---
