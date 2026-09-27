@@ -101,11 +101,11 @@ export const catalogContent: Record<Locale, CatalogContent> = {
       ['Офісні перегородки', '/sklyani-perehorodky/ofisni/'],
       ['Розсувні скляні двері', '/sklyani-dveri/rozsuvni-sklyani-dveri/'],
       ['Безрамні огорожі', '/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/'],
-      ['Панорамне скління', '/poslugy/bezramne-sklinnya/panoramne-sklinnya/'],
+      ['Панорамне скління', '/bezramne-sklinnya/sklinnya-budynkiv/'],
       ['Дзеркала на замовлення', '/dzerkala/'],
       ['Вітринне скління', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
       ['Скляні козирки', '/sklyani-kozyrky/'],
-      ['Скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/']
+      ['Скління тераси', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/']
     ],
     objectsSection: {
       eyebrow: 'За типом об’єкта',
@@ -263,11 +263,11 @@ export const catalogContent: Record<Locale, CatalogContent> = {
       ['Офисные перегородки', '/sklyani-perehorodky/ofisni/'],
       ['Раздвижные стеклянные двери', '/sklyani-dveri/rozsuvni-sklyani-dveri/'],
       ['Безрамные ограждения', '/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/'],
-      ['Панорамное остекление', '/poslugy/bezramne-sklinnya/panoramne-sklinnya/'],
+      ['Панорамное остекление', '/bezramne-sklinnya/sklinnya-budynkiv/'],
       ['Зеркала на заказ', '/dzerkala/'],
       ['Витринное остекление', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
       ['Стеклянные козырьки', '/sklyani-kozyrky/'],
-      ['Остекление террасы', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/']
+      ['Остекление террасы', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/']
     ],
     objectsSection: {
       eyebrow: 'По типу объекта',

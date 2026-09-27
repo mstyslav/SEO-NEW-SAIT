@@ -326,7 +326,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Как чистить направляющие?', 'Пылесосом или влажной салфеткой раз в несколько недель.']
     ],
     details: projects('Раздвижные перегородки в наших проектах', 'Стеклянные решения, которые делят пространство без глухих стен.', ['kitchen-partition-fjord-kyiv', 'wardrobe-partition-crystal-springs-kyiv', 'loft-kyiv', 'office-partitions-morskyi-odesa']),
-    related: [['Телескопические перегородки', P('teleskopichni-sklyani-perehorodky')], ['Подвесные перегородки', P('pidvisni-sklyani-peregorodky')], ['Безрамное остекление', '/poslugy/bezramne-sklinnya/']],
+    related: [['Телескопические перегородки', P('teleskopichni-sklyani-perehorodky')], ['Подвесные перегородки', P('pidvisni-sklyani-peregorodky')], ['Безрамное остекление', '/bezramne-sklinnya/']],
     ctaTitle: 'Нужна нижнеопорная перегородка?',
     ctaText: 'Пришлите фото проёма и размеры — подберём систему и подготовим расчёт.'
   }),

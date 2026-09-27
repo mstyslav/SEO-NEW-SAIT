@@ -104,7 +104,7 @@ export const businessPages: BusinessPage[] = [
       { title: 'Дзеркала для номерів', text: 'Дзеркала з LED-підсвіткою IP44 за єдиним дизайн-кодом.', href: '/dzerkala/led-dzerkala/', image: `${DZ}/cat-led-480.webp` },
       { title: 'Розділення зон', text: 'Скляні перегородки для лобі, лаунжу та конференц-зали.', href: '/sklyani-perehorodky/', image: P('loft-partitions-kselena-odesa') },
       { title: 'Огорожі балконів', text: 'Безрамні огорожі балконів і сходів — вид без перешкод.', href: '/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/', image: `${GO}/gp-baldosa-budynok-480.webp` },
-      { title: 'Тераси й ресторан', text: 'Безрамне скління терас і літніх майданчиків.', href: '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/', image: `${BZ}/cat-bezramne-sklinnya-terasy-480.webp` }
+      { title: 'Тераси й ресторан', text: 'Безрамне скління терас і літніх майданчиків.', href: '/bezramne-sklinnya/sklinnya-teras-ta-altanok/', image: `${BZ}/cat-bezramne-sklinnya-terasy-480.webp` }
     ],
     benefits: [['Вид без перешкод', 'Панорамне скління та скляні огорожі відкривають краєвид із лобі й номерів.'], ['Багато світла', 'Скляні перегородки й двері пропускають денне світло в глибину приміщень.'], ['Естетика й статус', 'Скло робить інтер’єр сучасним і дорожчим на вигляд.'], ['Практичність', 'Скло легко мити між заїздами, воно не боїться вологи й не вигорає.']],
     projectSlugs: ['hotel-dvoryanskyi-showers-odesa', 'shower-glass-to-ceiling-kyiv', 'glass-railing-primorski-sady-odesa', 'restaurant-glazing-artshat-odesa', 'osocor-residence-glazing-kyiv', 'shower-wall-to-wall-brass-kyiv'],
@@ -144,7 +144,7 @@ export const businessPages: BusinessPage[] = [
     zonesHeading: 'Зони ресторану та скло для них',
     zonesIntro: 'Від тераси до санвузла — кожна плитка веде на сторінку з варіантами.',
     zones: [
-      { title: 'Тераса й літній майданчик', text: 'Безрамне розсувне скління — тераса працює цілий рік.', href: '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/', image: `${BZ}/cat-bezramne-sklinnya-terasy-480.webp` },
+      { title: 'Тераса й літній майданчик', text: 'Безрамне розсувне скління — тераса працює цілий рік.', href: '/bezramne-sklinnya/sklinnya-teras-ta-altanok/', image: `${BZ}/cat-bezramne-sklinnya-terasy-480.webp` },
       { title: 'Зони відпочинку й лаунж', text: 'Перголи та розсувні системи, що відкривають зал на терасу.', href: '/alyuminiyevi-konstrukcziyi/pergoly/', image: `${PS}/cat-alu-perholy-480.webp` },
       { title: 'Розділення зон', text: 'Скляні й Loft-перегородки для VIP-залів і кухні.', href: '/sklyani-perehorodky/loft-sklyani-peregorodku/', image: P('loft-partitions-kselena-odesa') },
       { title: 'Вхідна група', text: 'Скляні двері й вітрини, помітні з вулиці.', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('world-of-comics-entrance-odesa') },
@@ -370,7 +370,7 @@ export const businessPages: BusinessPage[] = [
     zonesIntro: 'Кожна плитка веде на сторінку з системами й характеристиками.',
     zones: [
       { title: 'Огорожі балконів', text: 'Серійні безрамні огорожі й французькі балкони.', href: '/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/', image: `${GO}/gp-baldosa-budynok-480.webp` },
-      { title: 'Скління балконів', text: 'Безрамне скління лоджій в одному стилі.', href: '/poslugy/bezramne-sklinnya/bezramne-sklinnya-balkona/', image: `${BZ}/cat-bezramne-sklinnya-balkona-480.webp` },
+      { title: 'Скління балконів', text: 'Безрамне скління лоджій в одному стилі.', href: '/bezramne-sklinnya/sklinnya-balkoniv/', image: `${BZ}/cat-bezramne-sklinnya-balkona-480.webp` },
       { title: 'Входи в під’їзди', text: 'Скляні вхідні групи й алюмінієві двері.', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: `${PS}/cat-fas2-sklyani-vkhidni-hrupy-480.webp` },
       { title: 'Лобі й комерція', text: 'Фасадне скління лобі та перших поверхів.', href: '/poslugy/sklyani-fasady/', image: `${PS}/cat-fas2-hub-480.webp` },
       { title: 'Козирки', text: 'Скляні козирки над входами в під’їзди.', href: '/sklyani-kozyrky/kozyrky-dlya-biznesu/', image: '/images/catalog/sklyani-kozyrky/gp-ella-480.webp' },
@@ -414,8 +414,8 @@ export const businessPages: BusinessPage[] = [
     zonesHeading: 'Зони бази відпочинку та скло для них',
     zonesIntro: 'Кожна плитка веде на сторінку з системами й характеристиками.',
     zones: [
-      { title: 'Тераси й веранди', text: 'Безрамне розсувне скління терас.', href: '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/', image: `${BZ}/cat-bezramne-sklinnya-terasy-480.webp` },
-      { title: 'Альтанки', text: 'Скління альтанок і бесідок.', href: '/poslugy/bezramne-sklinnya/bezramne-sklinnya-altanky/', image: `${BZ}/cat-bezramne-sklinnya-altanky-480.webp` },
+      { title: 'Тераси й веранди', text: 'Безрамне розсувне скління терас.', href: '/bezramne-sklinnya/sklinnya-teras-ta-altanok/', image: `${BZ}/cat-bezramne-sklinnya-terasy-480.webp` },
+      { title: 'Альтанки', text: 'Скління альтанок і бесідок.', href: '/bezramne-sklinnya/bezramne-sklinnya-altanky/', image: `${BZ}/cat-bezramne-sklinnya-altanky-480.webp` },
       { title: 'Огорожі терас', text: 'Скляні огорожі, що не закривають вид.', href: '/sklyani-ohorozhi/sklyani-ohorozhi-teras/', image: `${GO}/gp-delgado-terasa-480.webp` },
       { title: 'Басейни', text: 'Огорожі басейнів із хвірткою.', href: '/sklyani-ohorozhi/sklyani-ohorozhi-baseiniv/', image: `${GO}/hero-sklyani-ohorozhi-baseiniv-480.webp` },
       { title: 'Всесезонні зали', text: 'Зимові сади й перголи для ресторану.', href: '/alyuminiyevi-konstrukcziyi/zymovi-sady/', image: `${PS}/cat-alu-zymovi-sady-480.webp` },

@@ -1,7 +1,7 @@
 /**
- * Frameless glazing child pages /poslugy/bezramne-sklinnya/{slug}/ in the shared
+ * Frameless glazing child pages /bezramne-sklinnya/{slug}/ in the shared
  * catalog format (rendered by src/components/profile/ProfileCategoryPage.astro).
- * Hub: src/pages/poslugy/bezramne-sklinnya/index.astro.
+ * Hub: src/pages/bezramne-sklinnya/index.astro.
  *
  * SOURCES (checked 2026-09-26): system names, specs, photos and drawings from the
  * partner's dealer catalog. The partner/manufacturer name is never shown — systems
@@ -10,14 +10,14 @@
  */
 import type { ProfileCategory } from './profile-systems';
 
-export const FRAMELESS_HUB = '/poslugy/bezramne-sklinnya/';
+export const FRAMELESS_HUB = '/bezramne-sklinnya/';
 export const FRAMELESS_IMG = '/images/catalog/bezramne';
 
 export const framelessCategories: ProfileCategory[] = [
   {
     "slug": "povorotno-skladni-systemy",
     "group": "frameless",
-    "path": "/poslugy/bezramne-sklinnya/povorotno-skladni-systemy/",
+    "path": "/bezramne-sklinnya/povorotno-skladni-systemy/",
     "name": "Поворотно-складні системи",
     "h1": "Поворотно-складне безрамне скління «книжка»",
     "metaTitle": "Поворотно-складне безрамне скління TIARA, OPTIMA на замовлення | Space Glass",
@@ -474,27 +474,27 @@ export const framelessCategories: ProfileCategory[] = [
     "related": [
       [
         "Тепле безрамне скління",
-        "/poslugy/bezramne-sklinnya/teple-bezramne-sklinnya/"
+        "/bezramne-sklinnya/teple-bezramne-sklinnya/"
       ],
       [
         "Безпорогові системи",
-        "/poslugy/bezramne-sklinnya/bezporogovi-systemy/"
+        "/bezramne-sklinnya/bezporogovi-systemy/"
       ],
       [
         "Скління тераси",
-        "/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/"
+        "/bezramne-sklinnya/sklinnya-teras-ta-altanok/"
       ],
       [
         "Скління балкона",
-        "/poslugy/bezramne-sklinnya/bezramne-sklinnya-balkona/"
+        "/bezramne-sklinnya/sklinnya-balkoniv/"
       ],
       [
         "Скління альтанки",
-        "/poslugy/bezramne-sklinnya/bezramne-sklinnya-altanky/"
+        "/bezramne-sklinnya/bezramne-sklinnya-altanky/"
       ],
       [
         "Розсувні системи",
-        "/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
+        "/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
       ],
       [
         "Тепле чи холодне скління тераси",
@@ -567,7 +567,7 @@ export const framelessCategories: ProfileCategory[] = [
   {
     "slug": "sklyani-rozsuvni-systemy",
     "group": "frameless",
-    "path": "/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/",
+    "path": "/bezramne-sklinnya/sklyani-rozsuvni-systemy/",
     "name": "Розсувні безрамні системи",
     "h1": "Розсувні безрамні системи скління (слайдинг)",
     "metaTitle": "Розсувні безрамні системи SLIDING на замовлення — поріг від 7,5 мм | Space Glass",
@@ -1024,27 +1024,27 @@ export const framelessCategories: ProfileCategory[] = [
     "related": [
       [
         "Тепле безрамне скління",
-        "/poslugy/bezramne-sklinnya/teple-bezramne-sklinnya/"
+        "/bezramne-sklinnya/teple-bezramne-sklinnya/"
       ],
       [
         "Поворотно-складні системи",
-        "/poslugy/bezramne-sklinnya/povorotno-skladni-systemy/"
+        "/bezramne-sklinnya/povorotno-skladni-systemy/"
       ],
       [
         "Безпорогові системи",
-        "/poslugy/bezramne-sklinnya/bezporogovi-systemy/"
+        "/bezramne-sklinnya/bezporogovi-systemy/"
       ],
       [
         "Скління тераси",
-        "/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/"
+        "/bezramne-sklinnya/sklinnya-teras-ta-altanok/"
       ],
       [
         "Панорамне скління",
-        "/poslugy/bezramne-sklinnya/panoramne-sklinnya/"
+        "/bezramne-sklinnya/sklinnya-budynkiv/"
       ],
       [
         "Гільйотинні системи",
-        "/poslugy/bezramne-sklinnya/giljotynni-systemy/"
+        "/bezramne-sklinnya/giljotynni-systemy/"
       ],
       [
         "Тепле чи холодне скління тераси",
@@ -1117,7 +1117,7 @@ export const framelessCategories: ProfileCategory[] = [
   {
     "slug": "giljotynni-systemy",
     "group": "frameless",
-    "path": "/poslugy/bezramne-sklinnya/giljotynni-systemy/",
+    "path": "/bezramne-sklinnya/giljotynni-systemy/",
     "name": "Гільйотинні системи",
     "h1": "Гільйотинне скління — вертикально-розсувні системи",
     "metaTitle": "Гільйотинне скління GILIOTINA з електроприводом на замовлення | Space Glass",
@@ -1574,23 +1574,23 @@ export const framelessCategories: ProfileCategory[] = [
     "related": [
       [
         "Скління тераси",
-        "/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/"
+        "/bezramne-sklinnya/sklinnya-teras-ta-altanok/"
       ],
       [
         "Скління балкона",
-        "/poslugy/bezramne-sklinnya/bezramne-sklinnya-balkona/"
+        "/bezramne-sklinnya/sklinnya-balkoniv/"
       ],
       [
         "Тепле безрамне скління",
-        "/poslugy/bezramne-sklinnya/teple-bezramne-sklinnya/"
+        "/bezramne-sklinnya/teple-bezramne-sklinnya/"
       ],
       [
         "Розсувні системи",
-        "/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
+        "/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
       ],
       [
         "Панорамне скління",
-        "/poslugy/bezramne-sklinnya/panoramne-sklinnya/"
+        "/bezramne-sklinnya/sklinnya-budynkiv/"
       ],
       [
         "Скління для ресторану",
@@ -1667,7 +1667,7 @@ export const framelessCategories: ProfileCategory[] = [
   {
     "slug": "bezporogovi-systemy",
     "group": "frameless",
-    "path": "/poslugy/bezramne-sklinnya/bezporogovi-systemy/",
+    "path": "/bezramne-sklinnya/bezporogovi-systemy/",
     "name": "Безпорогові системи",
     "h1": "Безпорогове безрамне скління",
     "metaTitle": "Безпорогове безрамне скління ATRIUM, CENTRUM, MOMENTUM | Space Glass",
@@ -2124,19 +2124,19 @@ export const framelessCategories: ProfileCategory[] = [
     "related": [
       [
         "Поворотно-складні системи",
-        "/poslugy/bezramne-sklinnya/povorotno-skladni-systemy/"
+        "/bezramne-sklinnya/povorotno-skladni-systemy/"
       ],
       [
         "Розсувні системи",
-        "/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
+        "/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
       ],
       [
         "Панорамне скління",
-        "/poslugy/bezramne-sklinnya/panoramne-sklinnya/"
+        "/bezramne-sklinnya/sklinnya-budynkiv/"
       ],
       [
         "Скління тераси",
-        "/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/"
+        "/bezramne-sklinnya/sklinnya-teras-ta-altanok/"
       ],
       [
         "Вітринне скління",
@@ -2217,7 +2217,7 @@ export const framelessCategories: ProfileCategory[] = [
   {
     "slug": "teple-bezramne-sklinnya",
     "group": "frameless",
-    "path": "/poslugy/bezramne-sklinnya/teple-bezramne-sklinnya/",
+    "path": "/bezramne-sklinnya/teple-bezramne-sklinnya/",
     "name": "Тепле безрамне скління",
     "h1": "Тепле безрамне скління зі склопакетом",
     "metaTitle": "Тепле безрамне скління зі склопакетом на замовлення | Space Glass",
@@ -2674,19 +2674,19 @@ export const framelessCategories: ProfileCategory[] = [
     "related": [
       [
         "Поворотно-складні системи",
-        "/poslugy/bezramne-sklinnya/povorotno-skladni-systemy/"
+        "/bezramne-sklinnya/povorotno-skladni-systemy/"
       ],
       [
         "Розсувні системи",
-        "/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
+        "/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
       ],
       [
         "Гільйотинні системи",
-        "/poslugy/bezramne-sklinnya/giljotynni-systemy/"
+        "/bezramne-sklinnya/giljotynni-systemy/"
       ],
       [
         "Скління тераси",
-        "/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/"
+        "/bezramne-sklinnya/sklinnya-teras-ta-altanok/"
       ],
       [
         "Алюмінієві розсувні двері",
@@ -2765,9 +2765,9 @@ export const framelessCategories: ProfileCategory[] = [
     }
   },
   {
-    "slug": "bezramne-sklinnya-balkona",
+    "slug": "sklinnya-balkoniv",
     "group": "frameless",
-    "path": "/poslugy/bezramne-sklinnya/bezramne-sklinnya-balkona/",
+    "path": "/bezramne-sklinnya/sklinnya-balkoniv/",
     "name": "Безрамне скління балкона",
     "h1": "Безрамне скління балкона та лоджії",
     "metaTitle": "Безрамне скління балкона й лоджії, панорамні балкони | Space Glass",
@@ -3224,19 +3224,19 @@ export const framelessCategories: ProfileCategory[] = [
     "related": [
       [
         "Поворотно-складні системи",
-        "/poslugy/bezramne-sklinnya/povorotno-skladni-systemy/"
+        "/bezramne-sklinnya/povorotno-skladni-systemy/"
       ],
       [
         "Гільйотинні системи",
-        "/poslugy/bezramne-sklinnya/giljotynni-systemy/"
+        "/bezramne-sklinnya/giljotynni-systemy/"
       ],
       [
         "Тепле безрамне скління",
-        "/poslugy/bezramne-sklinnya/teple-bezramne-sklinnya/"
+        "/bezramne-sklinnya/teple-bezramne-sklinnya/"
       ],
       [
         "Панорамне скління",
-        "/poslugy/bezramne-sklinnya/panoramne-sklinnya/"
+        "/bezramne-sklinnya/sklinnya-budynkiv/"
       ],
       [
         "Скляні огорожі балконів",
@@ -3315,9 +3315,9 @@ export const framelessCategories: ProfileCategory[] = [
     }
   },
   {
-    "slug": "bezramne-sklinnya-terasy",
+    "slug": "sklinnya-teras-ta-altanok",
     "group": "frameless",
-    "path": "/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/",
+    "path": "/bezramne-sklinnya/sklinnya-teras-ta-altanok/",
     "name": "Безрамне скління тераси",
     "h1": "Безрамне скління тераси та веранди",
     "metaTitle": "Безрамне скління тераси й веранди на замовлення | Space Glass",
@@ -3774,19 +3774,19 @@ export const framelessCategories: ProfileCategory[] = [
     "related": [
       [
         "Поворотно-складні системи",
-        "/poslugy/bezramne-sklinnya/povorotno-skladni-systemy/"
+        "/bezramne-sklinnya/povorotno-skladni-systemy/"
       ],
       [
         "Розсувні системи",
-        "/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
+        "/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
       ],
       [
         "Гільйотинні системи",
-        "/poslugy/bezramne-sklinnya/giljotynni-systemy/"
+        "/bezramne-sklinnya/giljotynni-systemy/"
       ],
       [
         "Безпорогові системи",
-        "/poslugy/bezramne-sklinnya/bezporogovi-systemy/"
+        "/bezramne-sklinnya/bezporogovi-systemy/"
       ],
       [
         "Перголи",
@@ -3867,7 +3867,7 @@ export const framelessCategories: ProfileCategory[] = [
   {
     "slug": "bezramne-sklinnya-altanky",
     "group": "frameless",
-    "path": "/poslugy/bezramne-sklinnya/bezramne-sklinnya-altanky/",
+    "path": "/bezramne-sklinnya/bezramne-sklinnya-altanky/",
     "name": "Безрамне скління альтанки",
     "h1": "Безрамне скління альтанки",
     "metaTitle": "Безрамне скління альтанки на замовлення | Space Glass",
@@ -4324,19 +4324,19 @@ export const framelessCategories: ProfileCategory[] = [
     "related": [
       [
         "Поворотно-складні системи",
-        "/poslugy/bezramne-sklinnya/povorotno-skladni-systemy/"
+        "/bezramne-sklinnya/povorotno-skladni-systemy/"
       ],
       [
         "Розсувні системи",
-        "/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
+        "/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
       ],
       [
         "Гільйотинні системи",
-        "/poslugy/bezramne-sklinnya/giljotynni-systemy/"
+        "/bezramne-sklinnya/giljotynni-systemy/"
       ],
       [
         "Безпорогові системи",
-        "/poslugy/bezramne-sklinnya/bezporogovi-systemy/"
+        "/bezramne-sklinnya/bezporogovi-systemy/"
       ],
       [
         "Перголи",
@@ -4415,11 +4415,11 @@ export const framelessCategories: ProfileCategory[] = [
     }
   },
   {
-    "slug": "panoramne-sklinnya",
+    "slug": "sklinnya-budynkiv",
     "group": "frameless",
-    "path": "/poslugy/bezramne-sklinnya/panoramne-sklinnya/",
+    "path": "/bezramne-sklinnya/sklinnya-budynkiv/",
     "name": "Панорамне скління",
-    "h1": "Панорамне безрамне скління на замовлення",
+    "h1": "Безрамне панорамне скління будинків і котеджів",
     "metaTitle": "Панорамне безрамне скління на замовлення | Space Glass",
     "metaDescription": "Панорамне безрамне скління будинків, терас і комерційних об’єктів: ATRIUM до 4 м, SLIDING NEXT ALL GLASS, GILIOTINA TWIN TOP, TIARA MAX, BALCONMAX INTEGRA, скляний дах VERANDA TWIN. Проєкт і монтаж у Києві, Одесі, Львові.",
     "eyebrow": "Безрамне скління / Панорамне скління",
@@ -4874,19 +4874,19 @@ export const framelessCategories: ProfileCategory[] = [
     "related": [
       [
         "Безпорогові системи",
-        "/poslugy/bezramne-sklinnya/bezporogovi-systemy/"
+        "/bezramne-sklinnya/bezporogovi-systemy/"
       ],
       [
         "Розсувні системи",
-        "/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
+        "/bezramne-sklinnya/sklyani-rozsuvni-systemy/"
       ],
       [
         "Гільйотинні системи",
-        "/poslugy/bezramne-sklinnya/giljotynni-systemy/"
+        "/bezramne-sklinnya/giljotynni-systemy/"
       ],
       [
         "Скління балкона",
-        "/poslugy/bezramne-sklinnya/bezramne-sklinnya-balkona/"
+        "/bezramne-sklinnya/sklinnya-balkoniv/"
       ],
       [
         "Фасадне скління",

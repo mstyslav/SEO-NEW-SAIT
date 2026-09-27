@@ -1,18 +1,18 @@
 ---
-// Frameless glazing MASTER — hub for /poslugy/bezramne-sklinnya/{slug}/ (content: src/data/frameless-catalog.ts).
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Header from '../../../components/Header.astro';
-import Footer from '../../../components/Footer.astro';
-import FAQBlock from '../../../components/FAQBlock.astro';
-import Breadcrumbs from '../../../components/Breadcrumbs.astro';
-import TrustBar from '../../../components/TrustBar.astro';
-import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
-import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../seo/schema';
-import { FRAMELESS_HUB, FRAMELESS_IMG, framelessCategories } from '../../../data/frameless-catalog';
-import { profileIcons } from '../../../data/profile-icons';
-import '../../../styles/category-pages.css';
-import '../../../styles/shower-master.css';
-import '../../../styles/profile-systems.css';
+// Frameless glazing MASTER — hub for /bezramne-sklinnya/{slug}/ (content: src/data/frameless-catalog.ts).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FAQBlock from '../../components/FAQBlock.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import ProfileRequestForm from '../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { FRAMELESS_HUB, FRAMELESS_IMG, framelessCategories } from '../../data/frameless-catalog';
+import { profileIcons } from '../../data/profile-icons';
+import '../../styles/category-pages.css';
+import '../../styles/shower-master.css';
+import '../../styles/profile-systems.css';
 
 const origin = Astro.site ?? Astro.url.origin;
 const pageUrl = absoluteUrl(FRAMELESS_HUB, origin);
@@ -136,7 +136,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
   <main id="main">
     <section class="category-hero category-hero--photo profile-hero">
       <div class="category-hero__copy">
-        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: 'Послуги', href: '/poslugy/' }, { label: title }]} />
+        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: title }]} />
         <p class="eyebrow">{title}</p>
         <h1>{h1}</h1>
         <p class="lead">Безрамне скління терас, веранд, балконів, альтанок і ресторанів: поворотно-складні, розсувні, гільйотинні та безпорогові системи з гартованого скла або склопакета. Проєктуємо, виготовляємо й монтуємо в Києві, Одесі та Львові.</p>

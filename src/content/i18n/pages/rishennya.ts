@@ -97,7 +97,7 @@ export const rishennyaContent: Record<Locale, RishennyaContent> = {
       { label: 'Скляні двері', href: '/sklyani-dveri/', image: '/images/catalog/sklyani-dveri/hero5-hub-900.webp', note: 'Розпашні, розсувні, маятникові та безрамні' },
       { label: 'Душові кабіни', href: '/dushovi-kabiny/', image: '/images/catalog/dushovi-kabiny/dushovi-kabiny-768.webp', note: 'Walk-In, кутові, у нішу, розсувні та піддони' },
       { label: 'Скляні огорожі', href: '/sklyani-ohorozhi/', image: '/images/catalog/sklyani-ohorozhi/hero-hub-900.webp', note: 'Сходи, балкони, тераси та басейни' },
-      { label: 'Безрамне скління', href: '/poslugy/bezramne-sklinnya/', image: '/images/catalog/bezramne/cat-hub-900.webp', note: 'Тераси, балкони, альтанки та панорами' },
+      { label: 'Безрамне скління', href: '/bezramne-sklinnya/', image: '/images/catalog/bezramne/cat-hub-900.webp', note: 'Тераси, балкони, альтанки та панорами' },
       { label: 'Дзеркала', href: '/dzerkala/', image: '/images/catalog/dzerkala/sg-moon-900.webp', note: 'LED, у рамі, на стіну та дзеркальні панно' },
       { label: 'Алюмінієві конструкції', href: '/alyuminiyevi-konstrukcziyi/', image: '/images/catalog/profile-systems/cat-alu-rozsuvni-900.webp', note: 'Вікна, двері, фасади, зимові сади, перголи' },
       { label: 'Металопластикові конструкції', href: '/metaloplastykovi-konstrukcziyi/', image: '/images/catalog/profile-systems/cat-pvc-vikna-900.webp', note: 'Вікна, двері, розсувні системи, перегородки' }
@@ -222,7 +222,7 @@ export const rishennyaContent: Record<Locale, RishennyaContent> = {
       { label: 'Стеклянные двери', href: '/sklyani-dveri/', image: '/images/catalog/sklyani-dveri/hero5-hub-900.webp', note: 'Распашные, раздвижные, маятниковые и безрамные' },
       { label: 'Душевые кабины', href: '/dushovi-kabiny/', image: '/images/catalog/dushovi-kabiny/dushovi-kabiny-768.webp', note: 'Walk-In, угловые, в нишу, раздвижные и поддоны' },
       { label: 'Стеклянные ограждения', href: '/sklyani-ohorozhi/', image: '/images/catalog/sklyani-ohorozhi/hero-hub-900.webp', note: 'Лестницы, балконы, террасы и бассейны' },
-      { label: 'Безрамное остекление', href: '/poslugy/bezramne-sklinnya/', image: '/images/catalog/bezramne/cat-hub-900.webp', note: 'Террасы, балконы, беседки и панорамы' },
+      { label: 'Безрамное остекление', href: '/bezramne-sklinnya/', image: '/images/catalog/bezramne/cat-hub-900.webp', note: 'Террасы, балконы, беседки и панорамы' },
       { label: 'Зеркала', href: '/dzerkala/', image: '/images/catalog/dzerkala/sg-moon-900.webp', note: 'LED, в раме, на стену и зеркальные панно' },
       { label: 'Алюминиевые конструкции', href: '/alyuminiyevi-konstrukcziyi/', image: '/images/catalog/profile-systems/cat-alu-rozsuvni-900.webp', note: 'Окна, двери, фасады, зимние сады, перголы' },
       { label: 'Металлопластиковые конструкции', href: '/metaloplastykovi-konstrukcziyi/', image: '/images/catalog/profile-systems/cat-pvc-vikna-900.webp', note: 'Окна, двери, раздвижные системы, перегородки' }

@@ -318,7 +318,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Металопластикові вікна', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/'],
       ['Сітки плісе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
       ['Склопакет: як обрати', '/knowledge/sklopaket-yak-obraty/'],
-      ['Панорамне скління', '/poslugy/bezramne-sklinnya/panoramne-sklinnya/']
+      ['Панорамне скління', '/bezramne-sklinnya/sklinnya-budynkiv/']
     ],
     ctaTitle: 'Розрахуємо алюмінієві вікна за вашим проєктом',
     ctaText: 'Надішліть план, креслення або фото прорізів з розмірами — підберемо систему, склопакет і підготуємо попередній розрахунок.'
@@ -779,9 +779,9 @@ export const profileCategories: ProfileCategory[] = [
       ['Алюмінієві вікна', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/'],
       ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
       ['Фасадне скління', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
-      ['Безрамне скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
-      ['Розсувні безрамні системи', '/poslugy/bezramne-sklinnya/sklyani-rozsuvni-systemy/'],
-      ['Панорамне скління', '/poslugy/bezramne-sklinnya/panoramne-sklinnya/'],
+      ['Безрамне скління тераси', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/'],
+      ['Розсувні безрамні системи', '/bezramne-sklinnya/sklyani-rozsuvni-systemy/'],
+      ['Панорамне скління', '/bezramne-sklinnya/sklinnya-budynkiv/'],
       ['Тепле чи холодне скління тераси', '/knowledge/teple-chy-kholodne-sklinnya-terasy/']
     ],
     ctaTitle: 'Плануєте скляну стіну на терасу?',
@@ -1242,8 +1242,8 @@ export const profileCategories: ProfileCategory[] = [
       ['Розсувні двері', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
       ['Фасадне скління', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
       ['Алюмінієві вікна', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/'],
-      ['Безрамне скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
-      ['Безрамне скління альтанки', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-altanky/'],
+      ['Безрамне скління тераси', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/'],
+      ['Безрамне скління альтанки', '/bezramne-sklinnya/bezramne-sklinnya-altanky/'],
       ['Тепле чи холодне скління тераси', '/knowledge/teple-chy-kholodne-sklinnya-terasy/'],
       ['Скляний дах: що врахувати', '/knowledge/sklyanyi-dakh-shcho-vrakhuvaty/'],
       ['Скління для будинку', '/rishennya/dlya-budynku/']
@@ -1474,7 +1474,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Алюмінієві вікна', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/'],
       ['Алюмінієві розсувні двері', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
       ['Склопакет: як обрати', '/knowledge/sklopaket-yak-obraty/'],
-      ['Безрамне скління балкона', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-balkona/'],
+      ['Безрамне скління балкона', '/bezramne-sklinnya/sklinnya-balkoniv/'],
       ['Скління для будинку', '/rishennya/dlya-budynku/'],
       ['Скління для офісу', '/rishennya/dlya-ofisu/'],
       ['Оплата і доставка', '/oplata-dostavka/']
@@ -1915,7 +1915,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Розсувні двері', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
       ['Зимові сади', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
       ['Перголи', '/alyuminiyevi-konstrukcziyi/pergoly/'],
-      ['Безрамне скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
+      ['Безрамне скління тераси', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/'],
       ['Скління для будинку', '/rishennya/dlya-budynku/']
     ],
     ctaTitle: 'Потрібна сітка плісе?',
@@ -2128,8 +2128,8 @@ export const profileCategories: ProfileCategory[] = [
       ['Зимові сади', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
       ['Розсувні двері', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
       ['Сітки плісе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
-      ['Безрамне скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
-      ['Безрамне скління альтанки', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-altanky/'],
+      ['Безрамне скління тераси', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/'],
+      ['Безрамне скління альтанки', '/bezramne-sklinnya/bezramne-sklinnya-altanky/'],
       ['Скляні козирки', '/sklyani-kozyrky/'],
       ['Тепле чи холодне скління тераси', '/knowledge/teple-chy-kholodne-sklinnya-terasy/'],
       ['Скління для ресторану', '/rishennya/dlya-restoranu/']
@@ -2594,7 +2594,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Алюмінієві розсувні двері', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
       ['Сітки плісе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
       ['Перголи', '/alyuminiyevi-konstrukcziyi/pergoly/'],
-      ['Безрамне скління тераси', '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/'],
+      ['Безрамне скління тераси', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/'],
       ['Тепле чи холодне скління тераси', '/knowledge/teple-chy-kholodne-sklinnya-terasy/'],
       ['Скління для будинку', '/rishennya/dlya-budynku/']
     ],

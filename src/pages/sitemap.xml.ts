@@ -62,7 +62,7 @@ export const GET: APIRoute = async ({ site }) => {
   // static file glob above).
   const mirrorChildUrls = mirrorTypes.map(({ href }) => href);
 
-  // Frameless glazing child pages — src/pages/poslugy/bezramne-sklinnya/[slug].astro
+  // Frameless glazing child pages — src/pages/bezramne-sklinnya/[slug].astro
   // (the old programmatic pages of this silo are replaced by these).
   const framelessUrls = framelessCategories.map(({ path }) => path);
   const facadeUrls = facadeCategories.map(({ path }) => path);
