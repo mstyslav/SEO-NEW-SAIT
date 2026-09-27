@@ -12,8 +12,8 @@ export interface ServiceNavigationItem {
  */
 const showerServiceNavigationItems: Array<{ href: string; label: Record<Locale, string> }> = [
   { href: '/dushovi-kabiny/peregorodka-dlya-dusha/', label: { uk: 'Скляні перегородки для душу', ru: 'Стеклянные перегородки для душа' } },
-  { href: '/dushovi-kabiny/dushovi-dveri/', label: { uk: 'Скляні душові двері', ru: 'Стеклянные двери для душа' } },
-  { href: '/dushovi-kabiny/kutovi/', label: { uk: 'Скляні кутові душові кабіни', ru: 'Стеклянные угловые душевые кабины' } },
+  { href: '/dushovi-kabiny/dveri-dlya-dushu/', label: { uk: 'Скляні душові двері', ru: 'Стеклянные двери для душа' } },
+  { href: '/dushovi-kabiny/kytova-dushova-kabina/', label: { uk: 'Скляні кутові душові кабіни', ru: 'Стеклянные угловые душевые кабины' } },
   { href: '/dushovi-kabiny/rozsuvni/', label: { uk: 'Розсувні душові кабіни', ru: 'Раздвижные душевые кабины' } },
   { href: '/dushovi-kabiny/u-nishu/', label: { uk: 'Душові кабіни в нішу', ru: 'Душевые кабины в нишу' } },
   { href: '/dushovi-kabiny/skladni/', label: { uk: 'Двері гармошка у ванну кімнату', ru: 'Двери гармошка в ванную комнату' } },

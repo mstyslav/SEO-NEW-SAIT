@@ -23,11 +23,11 @@ const routes = [
   '/sklyani-perehorodky/teleskopichni/',
   '/sklyani-perehorodky/pivot/',
   '/dushovi-kabiny/walk-in/',
-  '/dushovi-kabiny/kutovi/',
+  '/dushovi-kabiny/kytova-dushova-kabina/',
   '/dushovi-kabiny/u-nishu/',
   '/dushovi-kabiny/rozsuvni/',
   '/dushovi-kabiny/shtorky-dlia-vanny/',
-  '/dushovi-kabiny/dushovi-dveri/'
+  '/dushovi-kabiny/dveri-dlya-dushu/'
 ];
 
 const generatedSeoRoutes = ['rishennia', 'mista', 'baza-znan', 'glass-partitions', 'glass-showers', 'glass-railings', 'glass-doors', 'custom-mirrors', 'glass-facades'];

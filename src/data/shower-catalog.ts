@@ -487,11 +487,11 @@ export const showerCategories: ProfileCategory[] = [
       ],
       [
         "Скляні душові двері",
-        "/dushovi-kabiny/dushovi-dveri/"
+        "/dushovi-kabiny/dveri-dlya-dushu/"
       ],
       [
         "Кутові душові кабіни",
-        "/dushovi-kabiny/kutovi/"
+        "/dushovi-kabiny/kytova-dushova-kabina/"
       ],
       [
         "Усі душові кабіни",
@@ -1058,7 +1058,7 @@ export const showerCategories: ProfileCategory[] = [
     "catalogNote": "Ціни готових моделей — орієнтовні, на вересень 2026 року для базового розміру, без монтажу; вони можуть змінюватися. Кожну модель виготовляємо за вашими розмірами — точну вартість розраховуємо після заміру.",
     "catalogButton": "Переглянути моделі",
     "optionsLabel": "Модель",
-    "path": "/dushovi-kabiny/dushovi-dveri/",
+    "path": "/dushovi-kabiny/dveri-dlya-dushu/",
     "heroImage": "hero-dushovi-dveri"
   },
   {
@@ -1573,7 +1573,7 @@ export const showerCategories: ProfileCategory[] = [
     "catalogNote": "Ціни готових моделей — орієнтовні, на вересень 2026 року для базового розміру, без монтажу; вони можуть змінюватися. Кожну модель виготовляємо за вашими розмірами — точну вартість розраховуємо після заміру.",
     "catalogButton": "Переглянути моделі",
     "optionsLabel": "Модель",
-    "path": "/dushovi-kabiny/kutovi/",
+    "path": "/dushovi-kabiny/kytova-dushova-kabina/",
     "heroImage": "hero-kutovi"
   },
   {
@@ -2050,11 +2050,11 @@ export const showerCategories: ProfileCategory[] = [
       ],
       [
         "Кутові душові кабіни",
-        "/dushovi-kabiny/kutovi/"
+        "/dushovi-kabiny/kytova-dushova-kabina/"
       ],
       [
         "Скляні душові двері",
-        "/dushovi-kabiny/dushovi-dveri/"
+        "/dushovi-kabiny/dveri-dlya-dushu/"
       ],
       [
         "Усі душові кабіни",
@@ -2565,7 +2565,7 @@ export const showerCategories: ProfileCategory[] = [
       ],
       [
         "Скляні душові двері",
-        "/dushovi-kabiny/dushovi-dveri/"
+        "/dushovi-kabiny/dveri-dlya-dushu/"
       ],
       [
         "Двері гармошка у ванну",
@@ -2949,7 +2949,7 @@ export const showerCategories: ProfileCategory[] = [
       ],
       [
         "Скляні душові двері",
-        "/dushovi-kabiny/dushovi-dveri/"
+        "/dushovi-kabiny/dveri-dlya-dushu/"
       ],
       [
         "Усі душові кабіни",
@@ -3338,7 +3338,7 @@ export const showerCategories: ProfileCategory[] = [
       ],
       [
         "Кутові душові кабіни",
-        "/dushovi-kabiny/kutovi/"
+        "/dushovi-kabiny/kytova-dushova-kabina/"
       ],
       [
         "Розсувні душові кабіни",

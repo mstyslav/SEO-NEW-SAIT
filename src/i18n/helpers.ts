@@ -33,7 +33,7 @@ const LOCALIZED_ROUTES: Record<'ru', ReadonlySet<string>> = {
     '/dushovi-kabiny/',
     '/dushovi-kabiny/dushovi-piddony/',
     '/knowledge/',
-    '/oplata-dostavka/',
+    '/delivery-payment/',
     '/privacy-policy/',
     '/poslugy/',
     '/project/',

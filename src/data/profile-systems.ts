@@ -1477,7 +1477,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Безрамне скління балкона', '/bezramne-sklinnya/sklinnya-balkoniv/'],
       ['Скління для будинку', '/pryvatnyj-sektor/'],
       ['Скління для офісу', '/rishennya/dlya-ofisu/'],
-      ['Оплата і доставка', '/oplata-dostavka/']
+      ['Оплата і доставка', '/delivery-payment/']
     ],
     ctaTitle: 'Розрахуємо вікна для вашої квартири чи будинку',
     ctaText: 'Надішліть кількість вікон і приблизні розміри — підберемо профіль, склопакет і підготуємо орієнтовну вартість.'
@@ -2364,7 +2364,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Скляні двері', '/sklyani-dveri/'],
       ['Скління для будинку', '/pryvatnyj-sektor/'],
       ['Склопакет: як обрати', '/knowledge/sklopaket-yak-obraty/'],
-      ['Оплата і доставка', '/oplata-dostavka/']
+      ['Оплата і доставка', '/delivery-payment/']
     ],
     ctaTitle: 'Підберемо двері під ваш проріз',
     ctaText: 'Вкажіть, які двері потрібні, та приблизні розміри — підберемо профіль, фурнітуру й заповнення та порахуємо вартість.'
@@ -2804,7 +2804,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Скління для офісу', '/rishennya/dlya-ofisu/'],
       ['Скління для магазину', '/rishennya/dlya-magazynu/'],
       ['Проєкти', '/project/'],
-      ['Оплата і доставка', '/oplata-dostavka/']
+      ['Оплата і доставка', '/delivery-payment/']
     ],
     ctaTitle: 'Розрахуємо перегородку для вашого приміщення',
     ctaText: 'Надішліть план або фото приміщення з розмірами — запропонуємо розбивку, заповнення та двері й підготуємо розрахунок.'
