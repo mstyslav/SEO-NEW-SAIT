@@ -35,7 +35,7 @@ const heroSizes = '(max-width: 900px) 100vw, 50vw';
 
 const hubItems = partitionCategories.map((category) => ({ title: category.name, note: category.cardNote, href: lp(category.path), icon: profileIcons[`partitions/${category.slug}`] }));
 
-const projectSlugs = ['office-partitions-morskyi-odesa', 'loft-kyiv', 'dental-clinic-partitions-odesa', 'kitchen-partition-fjord-kyiv', 'loft-partitions-kselena-odesa', 'wardrobe-partition-crystal-springs-kyiv'];
+const projectSlugs = ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'dzerkalni-dveri-v-garderob', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'sklyani-peregorodky-u-garderobnu-v-m-odesa'];
 const allProjects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk')).map(({ data }) => data);
 const projects = projectSlugs.map((slug) => allProjects.find((project) => project.slug === slug)).filter((project): project is NonNullable<typeof project> => Boolean(project));
 

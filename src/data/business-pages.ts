@@ -107,7 +107,7 @@ export const businessPages: BusinessPage[] = [
       { title: 'Тераси й ресторан', text: 'Безрамне скління терас і літніх майданчиків.', href: '/bezramne-sklinnya/sklinnya-teras-ta-altanok/', image: `${BZ}/cat-bezramne-sklinnya-terasy-480.webp` }
     ],
     benefits: [['Вид без перешкод', 'Панорамне скління та скляні огорожі відкривають краєвид із лобі й номерів.'], ['Багато світла', 'Скляні перегородки й двері пропускають денне світло в глибину приміщень.'], ['Естетика й статус', 'Скло робить інтер’єр сучасним і дорожчим на вигляд.'], ['Практичність', 'Скло легко мити між заїздами, воно не боїться вологи й не вигорає.']],
-    projectSlugs: ['hotel-dvoryanskyi-showers-odesa', 'shower-glass-to-ceiling-kyiv', 'glass-railing-primorski-sady-odesa', 'restaurant-glazing-artshat-odesa', 'osocor-residence-glazing-kyiv', 'shower-wall-to-wall-brass-kyiv'],
+    projectSlugs: ['gotel-dvoryanskyj-odesa-dushovi-ta-shtorky-na-vanu', 'shower-glass-to-ceiling-kyiv', 'dzerkalni-dveri-v-garderob-2', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat', 'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv', 'shower-wall-to-wall-brass-kyiv'],
     faq: [
       ['Чи можна однакові душові для всіх номерів?', 'Так, погоджуємо один типорозмір і комплектацію й виготовляємо серію — це швидше й дешевше за одиницю.'],
       ['Чи монтуєте без зупинки роботи готелю?', 'Так, поетапно — поверх за поверхом або блоками номерів за погодженим графіком.'],
@@ -152,7 +152,7 @@ export const businessPages: BusinessPage[] = [
       { title: 'Санвузол', text: 'Скляні перегородки, двері й дзеркала з підсвіткою.', href: '/dzerkala/led-dzerkala/', image: `${DZ}/cat-led-480.webp` }
     ],
     benefits: [['Затишна атмосфера', 'Скло наповнює зал світлом і відкриває вид.'], ['Більше посадкових місць', 'Засклена тераса працює навіть у прохолодну погоду.'], ['Елегантний дизайн', 'Тонкі профілі й безрамні системи підкреслюють інтер’єр.'], ['Унікальний досвід', 'Гості обідають «надворі», але в теплі й без вітру.']],
-    projectSlugs: ['restaurant-glazing-artshat-odesa', 'coffee-ocean-facade-odesa', 'osocor-residence-glazing-kyiv', 'loft-partitions-kselena-odesa', 'world-of-comics-entrance-odesa', 'led-mirror-private-house-odesa'],
+    projectSlugs: ['teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat', 'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya', 'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'dzerkalo-z-pidsvidkoyu-v-m-odesa-2'],
     faq: [
       ['Яке скління обрати для тераси ресторану?', 'Безрамне розсувне — влітку тераса відкрита повністю, у прохолодну погоду закрита від вітру.'],
       ['Чи можна засклити терасу, щоб працювати взимку?', 'Для зими потрібне тепле скління в алюмінієвому профілі з терморозривом.'],
@@ -197,7 +197,7 @@ export const businessPages: BusinessPage[] = [
       { title: 'Рецепція з потоком людей', text: 'Маятникові скляні двері з підлоговим доводчиком.', href: '/sklyani-dveri/mayatnykovi-sklyani-dveri/', image: `${DV}/hero4-mayatnykovi-sklyani-dveri-480.webp` }
     ],
     benefits: [['Денне світло', 'Скло пропускає світло до кожного робочого місця.'], ['Продуктивність', 'Відкритий простір допомагає команді співпрацювати.'], ['Приватність за потреби', 'Матові смуги, жалюзі в склопакеті, звукоізоляція.'], ['Швидка зміна планування', 'Перегородки монтуються й переносяться без будівельного бруду.']],
-    projectSlugs: ['office-partitions-morskyi-odesa', 'loft-partitions-kselena-odesa', 'dental-clinic-partitions-odesa', 'world-of-comics-entrance-odesa', 'loft-kyiv', 'coffee-ocean-facade-odesa'],
+    projectSlugs: ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya'],
     faq: [
       ['Чи чути розмови крізь скляну перегородку?', 'Одинарне скло ізолює слабше за стіну; для переговорних — подвійне скло чи триплекс до 50 дБ.'],
       ['Чи можна жалюзі в перегородці?', 'Так, у системах з подвійним склом жалюзі ставлять між склом.'],
@@ -242,7 +242,7 @@ export const businessPages: BusinessPage[] = [
       { title: 'Службові зони', text: 'Скляні перегородки для складу й офісу магазину.', href: '/sklyani-perehorodky/', image: P('loft-partitions-kselena-odesa') }
     ],
     benefits: [['Стиль і естетика', 'Скло підкреслює бренд і товар.'], ['Відкритість', 'Покупець бачить зал ще з вулиці.'], ['Природне світло', 'Товар виглядає привабливіше.'], ['Незабутній досвід', 'Світлий простір, у якому хочеться залишитися.']],
-    projectSlugs: ['world-of-comics-entrance-odesa', 'coffee-ocean-facade-odesa', 'loft-partitions-kselena-odesa', 'restaurant-glazing-artshat-odesa', 'office-partitions-morskyi-odesa', 'mirrored-wardrobe-doors-milos-odesa'],
+    projectSlugs: ['chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat', 'sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'mirrored-wardrobe-doors-milos-odesa'],
     faq: [
       ['Яке скло для вітрини магазину?', 'Загартоване скло або триплекс; для великих вітрин — триплекс, що тримає уламки.'],
       ['Чи можна вітрину без рам?', 'Так, структурне чи безрамне скління з мінімальними профілями.'],
@@ -287,7 +287,7 @@ export const businessPages: BusinessPage[] = [
       { title: 'Акцентна стіна', text: 'Дзеркальні панно для ресепшн і залу.', href: '/dzerkala/dzerkalne-panno/', image: `${DZ}/cat-panno-480.webp` }
     ],
     benefits: [['Відчуття простору', 'Дзеркала й скло візуально збільшують салон.'], ['Світло', 'Правильна підсвітка — точна робота майстра.'], ['Гармонія', 'Єдиний стиль від ресепшн до кабінетів.'], ['Гігієна', 'Скло легко дезінфікувати між клієнтами.']],
-    projectSlugs: ['led-mirror-private-house-kyiv', 'led-mirror-private-house-odesa', 'loft-partitions-kselena-odesa', 'dental-clinic-partitions-odesa', 'world-of-comics-entrance-odesa', 'shower-glass-to-ceiling-kyiv'],
+    projectSlugs: ['dzerkalo-z-pidsvidkoyu-v-m-odesa', 'dzerkalo-z-pidsvidkoyu-v-m-odesa-2', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'shower-glass-to-ceiling-kyiv'],
     faq: [
       ['Які дзеркала для перукарських місць?', 'Дзеркала на стіну або на стійці, з підсвіткою чи без, під висоту крісла.'],
       ['Яка підсвітка правильна для макіяжу?', 'Нейтральне світло близько 4000 K з високим CRI — кольори виглядають природно.'],
@@ -332,7 +332,7 @@ export const businessPages: BusinessPage[] = [
       { title: 'Душові персоналу', text: 'Душові кабіни й перегородки для персоналу.', href: '/dushovi-kabiny/', image: SHOWERS }
     ],
     benefits: [['Гігієна', 'Гладка поверхня без пор легко дезінфікується.'], ['Світло', 'Скло пропускає світло в коридори й кабінети.'], ['Спокій пацієнтів', 'Прозорий простір знімає тривогу.'], ['Приватність', 'Матування там, де потрібна лікарська таємниця.']],
-    projectSlugs: ['dental-clinic-partitions-odesa', 'office-partitions-morskyi-odesa', 'loft-partitions-kselena-odesa', 'world-of-comics-entrance-odesa', 'loft-kyiv', 'shower-door-fixed-glass-kyiv'],
+    projectSlugs: ['rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'shower-door-fixed-glass-kyiv'],
     faq: [
       ['Чи можна номери кабінетів на склі?', 'Так, номери й піктограми матуванням чи плівкою за макетом.'],
       ['Чи легко дезінфікувати скляні перегородки?', 'Так, скло не боїться дезінфекційних засобів і не вбирає бруд.'],
@@ -377,7 +377,7 @@ export const businessPages: BusinessPage[] = [
       { title: 'Квартири з ремонтом', text: 'Душові кабіни й перегородки від забудовника.', href: '/dushovi-kabiny/', image: SHOWERS }
     ],
     benefits: [['Сучасний фасад', 'Однакові скляні огорожі на всіх поверхах.'], ['Вид із квартир', 'Скло не закриває краєвид.'], ['Вища вартість м²', 'Скло підвищує клас будинку.'], ['Одна специфікація', 'Простіше закупівля, монтаж і сервіс.']],
-    projectSlugs: ['glass-railing-primorski-sady-odesa', 'bath-screen-akvarel-odesa', 'folding-shower-doors-varshavskyi-kyiv', 'wardrobe-partition-crystal-springs-kyiv', 'kitchen-partition-fjord-kyiv', 'loft-partition-teremky-kyiv'],
+    projectSlugs: ['dzerkalni-dveri-v-garderob-2', 'shtorka-dlya-vannoyi-zhk-akvarel-v-m-odesa', 'dushovi-garmoshka-zhk', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'dzerkalni-dveri-v-garderob', 'mizhkimnatni-peregorodky-v-dytyachu'],
     faq: [
       ['Чи працюєте із забудовниками?', 'Так, робимо серійні конструкції за проєктом будинку й графіком будівництва.'],
       ['Чи працюєте з ОСББ?', 'Так, для заміни огорож чи вхідних груп готуємо креслення для погодження мешканцями.'],
@@ -422,7 +422,7 @@ export const businessPages: BusinessPage[] = [
       { title: 'Котеджі й номери', text: 'Душові кабіни й дзеркала.', href: '/dushovi-kabiny/', image: SHOWERS }
     ],
     benefits: [['Панорами', 'Гості бачать природу з будь-якого місця.'], ['Довший сезон', 'Тераси й альтанки працюють у прохолоду.'], ['Більше місць', 'Засклені тераси додають простір для відпочинку.'], ['Витривалість', 'Системи для вулиці, вологи й вітру.']],
-    projectSlugs: ['osocor-residence-glazing-kyiv', 'restaurant-glazing-artshat-odesa', 'glass-railing-primorski-sady-odesa', 'hotel-dvoryanskyi-showers-odesa', 'coffee-ocean-facade-odesa', 'shower-sloped-ceiling-lviv'],
+    projectSlugs: ['sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat', 'dzerkalni-dveri-v-garderob-2', 'gotel-dvoryanskyj-odesa-dushovi-ta-shtorky-na-vanu', 'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya', 'shower-sloped-ceiling-lviv'],
     faq: [
       ['Яке скління для тераси бази відпочинку?', 'Безрамне розсувне — влітку відкривається повністю, у прохолоду закриває від вітру.'],
       ['Чи можна засклити альтанку?', 'Так, безрамними системами по периметру.'],

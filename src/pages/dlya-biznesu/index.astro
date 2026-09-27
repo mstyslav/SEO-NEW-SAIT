@@ -29,7 +29,7 @@ const hero = (w: number) => `${BUSINESS_IMG}/biz-goteli-${w}.webp`;
 const heroSrcset = `${hero(640)} 640w, ${hero(800)} 800w, ${hero(1280)} 1280w`;
 const heroSizes = '(max-width: 900px) 100vw, 50vw';
 
-const projectSlugs = ['hotel-dvoryanskyi-showers-odesa', 'restaurant-glazing-artshat-odesa', 'office-partitions-morskyi-odesa', 'dental-clinic-partitions-odesa', 'world-of-comics-entrance-odesa', 'coffee-ocean-facade-odesa'];
+const projectSlugs = ['gotel-dvoryanskyj-odesa-dushovi-ta-shtorky-na-vanu', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat', 'sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya'];
 const allProjects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk')).map(({ data }) => data);
 const projects = projectSlugs.map((slug) => allProjects.find((project) => project.slug === slug)).filter((project): project is NonNullable<typeof project> => Boolean(project));
 

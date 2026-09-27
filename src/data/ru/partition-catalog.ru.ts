@@ -59,13 +59,13 @@ const sys = (key: string, image?: string, blurb?: string): ProfileModel => {
 };
 
 const PROJ: Record<string, [string, string]> = {
-  'loft-kyiv': ['Раздвижная лофт-перегородка, Киев', 'Матовое стекло в чёрном профиле отделяет спальную зону.'],
-  'loft-partition-teremky-kyiv': ['Лофт для детской, Киев', 'Перегородка делит комнату и пропускает дневной свет.'],
-  'loft-partitions-kselena-odesa': ['Салон красоты, Одесса', 'Лофт-перегородки зонируют рабочие места мастеров.'],
-  'office-partitions-morskyi-odesa': ['Офис с дверями, Одесса', 'Стеклянные кабинеты с дверями в открытом пространстве.'],
-  'dental-clinic-partitions-odesa': ['Стоматология, Одесса', 'Прозрачные перегородки кабинетов и зоны ожидания.'],
-  'kitchen-partition-fjord-kyiv': ['Кухня и комната, Киев', 'Стекло отделяет кухню от гостиной без потери света.'],
-  'wardrobe-partition-crystal-springs-kyiv': ['Гардеробная, Киев', 'Стеклянная перегородка отделяет гардеробную от спальни.']
+  'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv': ['Раздвижная лофт-перегородка, Киев', 'Матовое стекло в чёрном профиле отделяет спальную зону.'],
+  'mizhkimnatni-peregorodky-v-dytyachu': ['Лофт для детской, Киев', 'Перегородка делит комнату и пропускает дневной свет.'],
+  'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2': ['Салон красоты, Одесса', 'Лофт-перегородки зонируют рабочие места мастеров.'],
+  'sklyani-peregorodky-dlya-ofisu-v-m-odesa': ['Офис с дверями, Одесса', 'Стеклянные кабинеты с дверями в открытом пространстве.'],
+  'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa': ['Стоматология, Одесса', 'Прозрачные перегородки кабинетов и зоны ожидания.'],
+  'dzerkalni-dveri-v-garderob': ['Кухня и комната, Киев', 'Стекло отделяет кухню от гостиной без потери света.'],
+  'sklyani-peregorodky-u-garderobnu-v-m-odesa': ['Гардеробная, Киев', 'Стеклянная перегородка отделяет гардеробную от спальни.']
 };
 const projects = (heading: string, intro: string, keys: string[]) => ({
   eyebrow: 'Наши работы',
@@ -168,7 +168,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Подходит ли для ванной?', 'Да, с матовым стеклом и влагостойкой фурнитурой.'],
       ['Сколько стоит лофт-перегородка?', 'Зависит от площади, количества шпросов и дверей; расчёт — по плану или фото с размерами.']
     ],
-    details: projects('Лофт-перегородки в наших проектах', 'Несколько реализованных лофт-перегородок в квартирах и салонах.', ['loft-kyiv', 'loft-partition-teremky-kyiv', 'loft-partitions-kselena-odesa', 'kitchen-partition-fjord-kyiv']),
+    details: projects('Лофт-перегородки в наших проектах', 'Несколько реализованных лофт-перегородок в квартирах и салонах.', ['mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'mizhkimnatni-peregorodky-v-dytyachu', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'dzerkalni-dveri-v-garderob']),
     related: [['Перегородки с дверьми', P('z-dveryma')], ['Подвесные перегородки', P('pidvisni-sklyani-peregorodky')], ['Стеклянные двери', '/sklyani-dveri/']],
     ctaTitle: 'Нужна лофт-перегородка?',
     ctaText: 'Пришлите фото помещения и размеры — предложим сетку шпросов и подготовим расчёт.'
@@ -219,7 +219,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Можно ли матирование для приватности?', 'Да, полосы, логотип или полностью матовое стекло.'],
       ['Подходит ли для клиники?', 'Да, стекло легко мыть и дезинфицировать.']
     ],
-    details: projects('Цельностеклянные перегородки в наших проектах', 'Офисы, клиники и квартиры в Одессе и Киеве.', ['office-partitions-morskyi-odesa', 'dental-clinic-partitions-odesa', 'wardrobe-partition-crystal-springs-kyiv', 'kitchen-partition-fjord-kyiv']),
+    details: projects('Цельностеклянные перегородки в наших проектах', 'Офисы, клиники и квартиры в Одессе и Киеве.', ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'dzerkalni-dveri-v-garderob']),
     related: [['Офисные перегородки', P('ofisni')], ['Перегородки с дверьми', P('z-dveryma')], ['Маятниковые двери', '/sklyani-dveri/']],
     ctaTitle: 'Нужна цельностеклянная перегородка?',
     ctaText: 'Пришлите план или фото с размерами — подберём систему и подготовим расчёт.'
@@ -271,7 +271,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Можно ли замок?', 'Да, на некоторых системах — замок или фиксатор.'],
       ['Подходит ли для гардеробной?', 'Да, стеклянные раздвижные двери — популярное решение.']
     ],
-    details: projects('Подвесные перегородки в наших проектах', 'Раздвижные стеклянные решения в квартирах Киева.', ['loft-kyiv', 'wardrobe-partition-crystal-springs-kyiv', 'kitchen-partition-fjord-kyiv', 'loft-partition-teremky-kyiv']),
+    details: projects('Подвесные перегородки в наших проектах', 'Раздвижные стеклянные решения в квартирах Киева.', ['mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'dzerkalni-dveri-v-garderob', 'mizhkimnatni-peregorodky-v-dytyachu']),
     related: [['Нижнеопорные перегородки', P('nyzhnooporni-sklyani-perehorodky')], ['Телескопические перегородки', P('teleskopichni-sklyani-perehorodky')], ['Раздвижные стеклянные двери', '/sklyani-dveri/']],
     ctaTitle: 'Нужна подвесная перегородка?',
     ctaText: 'Пришлите фото проёма и размеры — подберём шину и подготовим расчёт.'
@@ -325,7 +325,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Можно ли замок?', 'Да, в SLIDING NEXT — несколько вариантов замков.'],
       ['Как чистить направляющие?', 'Пылесосом или влажной салфеткой раз в несколько недель.']
     ],
-    details: projects('Раздвижные перегородки в наших проектах', 'Стеклянные решения, которые делят пространство без глухих стен.', ['kitchen-partition-fjord-kyiv', 'wardrobe-partition-crystal-springs-kyiv', 'loft-kyiv', 'office-partitions-morskyi-odesa']),
+    details: projects('Раздвижные перегородки в наших проектах', 'Стеклянные решения, которые делят пространство без глухих стен.', ['dzerkalni-dveri-v-garderob', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'sklyani-peregorodky-dlya-ofisu-v-m-odesa']),
     related: [['Телескопические перегородки', P('teleskopichni-sklyani-perehorodky')], ['Подвесные перегородки', P('pidvisni-sklyani-peregorodky')], ['Безрамное остекление', '/bezramne-sklinnya/']],
     ctaTitle: 'Нужна нижнеопорная перегородка?',
     ctaText: 'Пришлите фото проёма и размеры — подберём систему и подготовим расчёт.'
@@ -376,7 +376,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Можно ли центральное открытие?', 'Да, полотна паркуются в обе стороны.'],
       ['А если потолок не выдержит вес?', 'Тогда выбираем нижнеопорные слайдинговые системы.']
     ],
-    details: projects('Раздвижные решения в наших проектах', 'Стекло, которое открывает пространство, когда это нужно.', ['loft-kyiv', 'kitchen-partition-fjord-kyiv', 'wardrobe-partition-crystal-springs-kyiv', 'loft-partition-teremky-kyiv']),
+    details: projects('Раздвижные решения в наших проектах', 'Стекло, которое открывает пространство, когда это нужно.', ['mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'dzerkalni-dveri-v-garderob', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'mizhkimnatni-peregorodky-v-dytyachu']),
     related: [['Нижнеопорные перегородки', P('nyzhnooporni-sklyani-perehorodky')], ['Трансформирующиеся перегородки', P('transformuyuchi-sklyani-peregorodky')], ['Подвесные перегородки', P('pidvisni-sklyani-peregorodky')]],
     ctaTitle: 'Нужна телескопическая перегородка?',
     ctaText: 'Пришлите фото проёма и размеры — подберём систему и подготовим расчёт.'
@@ -426,7 +426,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Подходит ли для школы или фитнеса?', 'Да, с триплексом для безопасности.'],
       ['Сколько стоит?', 'Зависит от количества полотен и системы; расчёт — по размерам проёма.']
     ],
-    details: projects('Перегородки для бизнеса в наших проектах', 'Зонирование офисов, клиник и салонов.', ['office-partitions-morskyi-odesa', 'dental-clinic-partitions-odesa', 'loft-partitions-kselena-odesa', 'kitchen-partition-fjord-kyiv']),
+    details: projects('Перегородки для бизнеса в наших проектах', 'Зонирование офисов, клиник и салонов.', ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'dzerkalni-dveri-v-garderob']),
     related: [['Телескопические перегородки', P('teleskopichni-sklyani-perehorodky')], ['Офисные перегородки', P('ofisni')], ['Для бизнеса', '/dlya-biznesu/']],
     ctaTitle: 'Нужна трансформирующаяся перегородка?',
     ctaText: 'Пришлите фото проёма и размеры — подберём систему и подготовим расчёт.'
@@ -478,7 +478,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Согласовываете ли с бизнес-центром?', 'Да, предоставляем чертежи и спецификацию для согласования.'],
       ['Обслуживаете ли после монтажа?', 'Да, регулировка дверей и фурнитуры в рамках сервиса.']
     ],
-    details: projects('Офисные перегородки в наших проектах', 'Офисы, клиники и салоны в Одессе и Киеве.', ['office-partitions-morskyi-odesa', 'dental-clinic-partitions-odesa', 'loft-partitions-kselena-odesa', 'loft-kyiv']),
+    details: projects('Офисные перегородки в наших проектах', 'Офисы, клиники и салоны в Одессе и Киеве.', ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv']),
     related: [['Цельностеклянные перегородки', P('tsilnosklyani-perehorodky')], ['Трансформирующиеся перегородки', P('transformuyuchi-sklyani-peregorodky')], ['Стекло для офиса', '/dlya-biznesu/dlya-ofisu/']],
     ctaTitle: 'Планируете офис?',
     ctaText: 'Пришлите план офиса — предложим зонирование и подготовим расчёт.'
@@ -532,7 +532,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Подходит ли для ванной комнаты?', 'Да, с влагостойкой фурнитурой и матовым стеклом.'],
       ['Можно ли дверь с замком?', 'Да, замок или фиксатор для спальни и ванной.']
     ],
-    details: projects('Перегородки в квартирах наших клиентов', 'Кухни, спальни и гардеробные в Киеве.', ['kitchen-partition-fjord-kyiv', 'wardrobe-partition-crystal-springs-kyiv', 'loft-partition-teremky-kyiv', 'loft-kyiv']),
+    details: projects('Перегородки в квартирах наших клиентов', 'Кухни, спальни и гардеробные в Киеве.', ['dzerkalni-dveri-v-garderob', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'mizhkimnatni-peregorodky-v-dytyachu', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv']),
     related: [['Лофт-перегородки', P('loft-sklyani-peregorodku')], ['Стеклянные межкомнатные двери', '/sklyani-perehorodky/sklyani-mizhkimnatni-dveri/'], ['Решения для квартиры', '/rishennya/dlya-kvartyry/']],
     ctaTitle: 'Нужна перегородка в квартиру?',
     ctaText: 'Пришлите фото комнаты и размеры — предложим решение и подготовим расчёт.'
@@ -586,7 +586,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Можно ли дверь с матовым стеклом в прозрачной перегородке?', 'Да, комбинируем стекло по вашему макету.'],
       ['Можно ли добавить дверь в существующую перегородку?', 'В зависимости от системы; оцениваем на замере.']
     ],
-    details: projects('Перегородки с дверьми в наших проектах', 'Офисы, клиники и квартиры.', ['office-partitions-morskyi-odesa', 'dental-clinic-partitions-odesa', 'loft-kyiv', 'kitchen-partition-fjord-kyiv']),
+    details: projects('Перегородки с дверьми в наших проектах', 'Офисы, клиники и квартиры.', ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'dzerkalni-dveri-v-garderob']),
     related: [['Стеклянные двери', '/sklyani-dveri/'], ['Лофт-перегородки', P('loft-sklyani-peregorodku')], ['Офисные перегородки', P('ofisni')]],
     ctaTitle: 'Нужна перегородка с дверью?',
     ctaText: 'Пришлите фото и размеры — подберём дверь и подготовим расчёт.'

@@ -46,7 +46,7 @@ export const solutionExtras: Record<string, SolutionExtra> = {
       { label: 'Шторки на ванну', href: '/dushovi-kabiny/shtorky-dlya-vannoyi/', image: `${SH}/hero-shtorky-dlya-vannoyi-480.webp`, note: 'Замість текстильної шторки' },
       { label: 'Металопластикові вікна', href: '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/', image: `${PS}/cat-pvc-vikna-480.webp`, note: 'Теплі багатокамерні профілі' }
     ],
-    projectSlugs: ['loft-kyiv', 'kitchen-partition-fjord-kyiv', 'bath-screen-akvarel-odesa', 'mirrored-wardrobe-doors-milos-odesa', 'wardrobe-partition-crystal-springs-kyiv', 'folding-shower-doors-varshavskyi-kyiv'],
+    projectSlugs: ['mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'dzerkalni-dveri-v-garderob', 'shtorka-dlya-vannoyi-zhk-akvarel-v-m-odesa', 'mirrored-wardrobe-doors-milos-odesa', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'dushovi-garmoshka-zhk'],
     seoHeading: 'Скляні конструкції для квартири на замовлення',
     seo: [
       'Скляні конструкції для квартири на замовлення — це спосіб додати світла й простору без капітального ремонту. Найчастіше замовляють скляну душову кабіну або перегородку для душу Walk-In, Loft-перегородку між кухнею та вітальнею, міжкімнатні скляні двері, скляні двері в гардеробну та дзеркало з LED-підсвіткою для ванної кімнати.',
@@ -69,7 +69,7 @@ export const solutionExtras: Record<string, SolutionExtra> = {
       { label: 'Огорожі балконів і терас', href: '/sklyani-ohorozhi/sklyani-ohorozhi-teras/', image: P('glass-railing-primorski-sady-odesa'), note: 'Триплекс, безпечне скло' },
       { label: 'Дзеркала', href: '/dzerkala/', image: `${DZ}/cat-stina-480.webp`, note: 'LED, у рамі, на всю стіну' }
     ],
-    projectSlugs: ['glass-stair-railing-private-house-odesa', 'osocor-residence-glazing-kyiv', 'led-mirror-private-house-kyiv', 'led-mirror-private-house-odesa', 'glass-railing-primorski-sady-odesa', 'shower-glass-to-ceiling-kyiv'],
+    projectSlugs: ['ogorozha-shodiv-ta-drugogo-poverhu', 'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv', 'dzerkalo-z-pidsvidkoyu-v-m-odesa', 'dzerkalo-z-pidsvidkoyu-v-m-odesa-2', 'dzerkalni-dveri-v-garderob-2', 'shower-glass-to-ceiling-kyiv'],
     seoHeading: 'Скло та алюміній для приватного будинку',
     seo: [
       'Скляні та алюмінієві конструкції для приватного будинку на замовлення: панорамні вікна й розсувні двері на терасу, скляні огорожі сходів і балконів, безрамне скління тераси, зимовий сад, пергола над зоною відпочинку, душові кабіни та дзеркала для ванних кімнат.',
@@ -92,7 +92,7 @@ export const solutionExtras: Record<string, SolutionExtra> = {
       { label: 'Перегородки з ПВХ', href: '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/', image: `${PS}/cat-pvc-perehorodky-480.webp`, note: 'Економічне зонування' },
       { label: 'Фасадне скління', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/', image: `${PS}/cat-alu-fasady-480.webp`, note: 'Стійково-ригельні системи' }
     ],
-    projectSlugs: ['office-partitions-morskyi-odesa', 'dental-clinic-partitions-odesa', 'loft-partitions-kselena-odesa', 'world-of-comics-entrance-odesa', 'coffee-ocean-facade-odesa', 'restaurant-glazing-artshat-odesa'],
+    projectSlugs: ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat'],
     seoHeading: 'Скляні перегородки та скління для офісу',
     seo: [
       'Скляні перегородки для офісу на замовлення — стандарт сучасного робочого простору. Вони ділять офіс на кабінети й переговорні, зберігаючи денне світло на кожному робочому місці та відчуття відкритої команди.',
@@ -115,7 +115,7 @@ export const solutionExtras: Record<string, SolutionExtra> = {
       { label: 'Скляні двері', href: '/sklyani-dveri/', image: P('world-of-comics-entrance-odesa'), note: 'Лобі, ресторан, SPA' },
       { label: 'Безрамне скління тераси', href: '/bezramne-sklinnya/sklinnya-teras-ta-altanok/', image: P('osocor-residence-glazing-kyiv'), note: 'Ресторан і лаунж-зона' }
     ],
-    projectSlugs: ['hotel-dvoryanskyi-showers-odesa', 'shower-glass-to-ceiling-kyiv', 'shower-wall-to-wall-brass-kyiv', 'glass-railing-primorski-sady-odesa', 'restaurant-glazing-artshat-odesa', 'osocor-residence-glazing-kyiv'],
+    projectSlugs: ['gotel-dvoryanskyj-odesa-dushovi-ta-shtorky-na-vanu', 'shower-glass-to-ceiling-kyiv', 'shower-wall-to-wall-brass-kyiv', 'dzerkalni-dveri-v-garderob-2', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat', 'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
     seoHeading: 'Скляні конструкції для готелю',
     seo: [
       'Скляні конструкції для готелю на замовлення: душові кабіни й перегородки для душу в номерах, скляні шторки на ванну, дзеркала з LED-підсвіткою, огорожі балконів і сходів, скляні двері лобі, ресторану й SPA, вхідні групи та скління терас.',
@@ -138,7 +138,7 @@ export const solutionExtras: Record<string, SolutionExtra> = {
       { label: 'Скляні вхідні групи', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('world-of-comics-entrance-odesa'), note: 'Помітний вхід' },
       { label: 'Дзеркальні панно', href: '/dzerkala/dzerkalne-panno/', image: `${DZ}/cat-panno-480.webp`, note: 'Декор залу' }
     ],
-    projectSlugs: ['restaurant-glazing-artshat-odesa', 'coffee-ocean-facade-odesa', 'osocor-residence-glazing-kyiv', 'loft-partitions-kselena-odesa', 'world-of-comics-entrance-odesa', 'office-partitions-morskyi-odesa'],
+    projectSlugs: ['teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat', 'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya', 'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'sklyani-peregorodky-dlya-ofisu-v-m-odesa'],
     seoHeading: 'Скління ресторанів, кафе та терас',
     seo: [
       'Скління ресторанів, кафе та терас на замовлення: тепле алюмінієве скління залу, безрамне скління літнього майданчика, розсувні двері на терасу, перголи, вітринне скління кав’ярень, скляні вхідні групи та перегородки між залами.',
@@ -161,7 +161,7 @@ export const solutionExtras: Record<string, SolutionExtra> = {
       { label: 'Скляні козирки', href: '/sklyani-kozyrky/', image: '/images/catalog/sklyani-kozyrky/hero-hub-480.webp', note: 'Захист входу від опадів' },
       { label: 'Дзеркала для примірки', href: '/dzerkala/dzerkala-na-stinu/', image: `${DZ}/cat-stina-480.webp`, note: 'Ростові й на всю стіну' }
     ],
-    projectSlugs: ['world-of-comics-entrance-odesa', 'coffee-ocean-facade-odesa', 'loft-partitions-kselena-odesa', 'dental-clinic-partitions-odesa', 'restaurant-glazing-artshat-odesa', 'office-partitions-morskyi-odesa'],
+    projectSlugs: ['chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat', 'sklyani-peregorodky-dlya-ofisu-v-m-odesa'],
     seoHeading: 'Вітрини, вхідні групи та скло для магазину',
     seo: [
       'Скляні вітрини, вхідні групи та скло для магазину на замовлення: вітринне скління фасаду, скляні двері й алюмінієві вхідні двері з високим ресурсом відкривань, перегородки для службових зон і примірочних, скляні полиці, козирки над входом і ростові дзеркала.',
