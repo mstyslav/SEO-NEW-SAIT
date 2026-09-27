@@ -1,0 +1,10 @@
+---
+// Glass partitions subsections — shared catalog template; content in src/data/partition-catalog.ts.
+import ProfileCategoryPage from '../../components/profile/ProfileCategoryPage.astro';
+import { partitionCategories } from '../../data/partition-catalog';
+export function getStaticPaths() {
+  return partitionCategories.map((category) => ({ params: { slug: category.slug }, props: { category } }));
+}
+const { category } = Astro.props;
+---
+<ProfileCategoryPage category={category} />

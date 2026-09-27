@@ -9,6 +9,7 @@ import { DOORS_HUB, doorCategories } from './door-catalog';
 import { RAILINGS_HUB, railingCategories } from './railing-catalog';
 import { BUSINESS_HUB, businessPagesOrdered, businessPath } from './business-pages';
 import { CANOPY_HUB, canopyCategories } from './canopy-catalog';
+import { PARTITION_HUB, partitionCategories } from './partition-catalog';
 
 // RU menu labels for the aluminium / metal-plastic pages (the pages themselves are UK-only).
 const profileMenuRu: Record<string, string> = {
@@ -25,7 +26,7 @@ const profileMenuRu: Record<string, string> = {
   'pvc/rozsuvni-dveri': 'Раздвижные двери',
   'pvc/ofisni-perehorodky': 'Офисные стеклянные перегородки'
 };
-const profileMenu = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings' | 'canopies'>, locale: 'uk' | 'ru') =>
+const profileMenu = (group: Exclude<ProfileGroup, 'mirror' | 'shower' | 'frameless' | 'facade' | 'doors' | 'railings' | 'canopies' | 'partitions'>, locale: 'uk' | 'ru') =>
   profileCategoriesByGroup(group).map((category) => ({
     shortName: locale === 'ru' ? (profileMenuRu[`${group}/${category.slug}`] ?? category.name) : category.name,
     path: category.path
@@ -64,15 +65,15 @@ const categoryNameRu: Record<string, string> = {
 // Keyed by the service's own path (stable and unique) rather than by
 // uk shortName text, so a future uk wording tweak can't silently break ru.
 const serviceShortNameRu: Record<string, string> = {
-  '/poslugy/sklyani-perehorodky/ofisni-sklyani-perehorodky/': 'Офисные перегородки',
-  '/poslugy/sklyani-perehorodky/mizhkimnatni-sklyani-perehorodky/': 'Межкомнатные перегородки',
-  '/poslugy/sklyani-perehorodky/rozsuvni-sklyani-perehorodky/': 'Раздвижные перегородки',
-  '/poslugy/sklyani-perehorodky/sklyani-perehorodky-loft/': 'Перегородки Loft',
-  '/poslugy/sklyani-perehorodky/bezramni-sklyani-perehorodky/': 'Безрамные перегородки',
-  '/poslugy/sklyani-perehorodky/stacionarni-sklyani-perehorodky/': 'Стационарные перегородки',
-  '/poslugy/sklyani-perehorodky/mobilni-sklyani-perehorodky/': 'Мобильные перегородки',
-  '/poslugy/sklyani-perehorodky/akustychni-sklyani-perehorodky/': 'Акустические перегородки',
-  '/poslugy/sklyani-perehorodky/perehorodky-dlia-restoranu/': 'Перегородки для ресторана',
+  '/sklyani-perehorodky/loft-sklyani-peregorodku/': 'Лофт-перегородки',
+  '/sklyani-perehorodky/tsilnosklyani-perehorodky/': 'Цельностеклянные перегородки',
+  '/sklyani-perehorodky/pidvisni-sklyani-peregorodky/': 'Подвесные перегородки',
+  '/sklyani-perehorodky/nyzhnooporni-sklyani-perehorodky/': 'Нижнеопорные перегородки',
+  '/sklyani-perehorodky/teleskopichni-sklyani-perehorodky/': 'Телескопические перегородки',
+  '/sklyani-perehorodky/transformuyuchi-sklyani-peregorodky/': 'Трансформирующиеся перегородки',
+  '/sklyani-perehorodky/ofisni/': 'Офисные перегородки',
+  '/sklyani-perehorodky/mizhkimnatni/': 'Межкомнатные перегородки',
+  '/sklyani-perehorodky/z-dveryma/': 'Перегородки с дверьми',
 
   '/sklyani-dveri/rozpashni-sklyani-dveri/': 'Распашные двери',
   '/sklyani-dveri/rozsuvni-sklyani-dveri/': 'Раздвижные двери',
@@ -176,6 +177,17 @@ function buildServiceCategories(locale: Locale): CatalogNavigationCategory[] {
         services: businessPagesOrdered.map((item) => ({
           shortName: locale === 'uk' ? item.name : (serviceShortNameRu[businessPath(item.slug)] ?? item.name),
           path: businessPath(item.slug)
+        }))
+      };
+    }
+    if (category.slug === 'sklyani-perehorodky') {
+      return {
+        slug: category.slug,
+        name,
+        href: PARTITION_HUB,
+        services: partitionCategories.map((item) => ({
+          shortName: locale === 'uk' ? item.name : (serviceShortNameRu[item.path] ?? item.name),
+          path: item.path
         }))
       };
     }

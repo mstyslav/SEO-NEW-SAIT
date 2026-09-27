@@ -248,7 +248,7 @@ export const SOLUTIONS: Solution[] = [
     },
     productLinks: [
       { label: 'Офісні скляні перегородки', href: '/sklyani-perehorodky/ofisni/', text: 'Стаціонарні та мобільні перегородки для зонування опенспейсу й кабінетів.' },
-      { label: 'Loft-перегородки', href: '/sklyani-perehorodky/loft/', text: 'Перегородки в чорному металевому профілі для сучасного офісного інтер’єру.' },
+      { label: 'Loft-перегородки', href: '/sklyani-perehorodky/loft-sklyani-peregorodku/', text: 'Перегородки в чорному металевому профілі для сучасного офісного інтер’єру.' },
       { label: 'Скляні двері для офісу', href: '/sklyani-dveri/', text: 'Розпашні, розсувні та маятникові двері в комплекті з перегородками.' },
       { label: 'Алюмінієві конструкції', href: '/alyuminiyevi-konstrukcziyi/', text: 'Профільні системи для суцільноскляних перегородок і фасадів переговорних.' }
     ],

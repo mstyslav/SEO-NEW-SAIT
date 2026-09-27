@@ -146,7 +146,7 @@ export const businessPages: BusinessPage[] = [
     zones: [
       { title: 'Тераса й літній майданчик', text: 'Безрамне розсувне скління — тераса працює цілий рік.', href: '/poslugy/bezramne-sklinnya/bezramne-sklinnya-terasy/', image: `${BZ}/cat-bezramne-sklinnya-terasy-480.webp` },
       { title: 'Зони відпочинку й лаунж', text: 'Перголи та розсувні системи, що відкривають зал на терасу.', href: '/alyuminiyevi-konstrukcziyi/pergoly/', image: `${PS}/cat-alu-perholy-480.webp` },
-      { title: 'Розділення зон', text: 'Скляні й Loft-перегородки для VIP-залів і кухні.', href: '/sklyani-perehorodky/loft/', image: P('loft-partitions-kselena-odesa') },
+      { title: 'Розділення зон', text: 'Скляні й Loft-перегородки для VIP-залів і кухні.', href: '/sklyani-perehorodky/loft-sklyani-peregorodku/', image: P('loft-partitions-kselena-odesa') },
       { title: 'Вхідна група', text: 'Скляні двері й вітрини, помітні з вулиці.', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('world-of-comics-entrance-odesa') },
       { title: 'Декор залу', text: 'Дзеркальні панно й дзеркала, що візуально збільшують зал.', href: '/dzerkala/dzerkalne-panno/', image: `${DZ}/cat-panno-480.webp` },
       { title: 'Санвузол', text: 'Скляні перегородки, двері й дзеркала з підсвіткою.', href: '/dzerkala/led-dzerkala/', image: `${DZ}/cat-led-480.webp` }
@@ -191,7 +191,7 @@ export const businessPages: BusinessPage[] = [
     zones: [
       { title: 'Кабінети', text: 'Офісні скляні перегородки з дверима.', href: '/sklyani-perehorodky/ofisni/', image: P('office-partitions-morskyi-odesa') },
       { title: 'Переговорні', text: 'Алюмінієві системи з подвійним склом і звукоізоляцією.', href: '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/', image: `${PS}/cat-alu-ofis-480.webp` },
-      { title: 'Open space', text: 'Loft-перегородки для зонування без стін.', href: '/sklyani-perehorodky/loft/', image: P('loft-partitions-kselena-odesa') },
+      { title: 'Open space', text: 'Loft-перегородки для зонування без стін.', href: '/sklyani-perehorodky/loft-sklyani-peregorodku/', image: P('loft-partitions-kselena-odesa') },
       { title: 'Двері', text: 'Скляні двері для кабінетів і переговорних.', href: '/sklyani-dveri/sklyani-dveri-dlia-ofisu/', image: `${DV}/hero4-sklyani-dveri-dlia-ofisu-480.webp` },
       { title: 'Рецепція й вхід', text: 'Скляні вхідні групи та маятникові двері.', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('world-of-comics-entrance-odesa') },
       { title: 'Рецепція з потоком людей', text: 'Маятникові скляні двері з підлоговим доводчиком.', href: '/sklyani-dveri/mayatnykovi-sklyani-dveri/', image: `${DV}/hero4-mayatnykovi-sklyani-dveri-480.webp` }

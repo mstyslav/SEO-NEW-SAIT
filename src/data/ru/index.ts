@@ -6,8 +6,10 @@
 import type { ProfileCategory, ProfileGroup } from '../profile-systems';
 import { railingCategoriesRu } from './railing-catalog.ru';
 import { canopyCategoriesRu } from './canopy-catalog.ru';
+import { partitionCategoriesRu } from './partition-catalog.ru';
 
 export const ruCategoriesByGroup: Partial<Record<ProfileGroup, ProfileCategory[]>> = {
   railings: railingCategoriesRu,
-  canopies: canopyCategoriesRu
+  canopies: canopyCategoriesRu,
+  partitions: partitionCategoriesRu
 };

@@ -9,6 +9,7 @@ import TrustBar from '../TrustBar.astro';
 import Footer from '../Footer.astro';
 import FAQBlock from '../FAQBlock.astro';
 import { SOLUTIONS, CITY_LINKS } from '../../data/solutions';
+import { getCityHub } from '../../data/city-hubs';
 import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
 import { getCollection } from 'astro:content';
 import { localizedPath, type Locale } from '../../i18n/helpers';
@@ -76,17 +77,12 @@ const chooseIcons = [
   chooseIcon('<path d="M4 24h20M6 24V5h16v19"/><path d="M14 5v19M17 14h2"/>')
 ];
 
-// City cards: real published project photo + number of projects in that city.
+// City cards: the city page's own hero photo + number of projects in that city.
 const CITY_NAME_UK: Record<string, string> = { '/city/kyiv/': 'Київ', '/city/odesa/': 'Одеса', '/city/lviv/': 'Львів' };
-const CITY_COVER: Record<string, string> = {
-  '/city/kyiv/': '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp',
-  '/city/odesa/': '/images/projects/office-partitions-morskyi-odesa/office-partitions-morskyi-odesa-hero-720.webp',
-  '/city/lviv/': '/images/projects/trapezoid-shower-lviv/trapezoid-shower-lviv-hero-720.webp'
-};
 const cityCards = CITY_LINKS.map((city) => ({
   ...city,
   name: cityLabelByHref[city.href] ?? city.label,
-  cover: CITY_COVER[city.href],
+  cover: getCityHub(city.href.split('/')[2], locale).hero.image,
   count: featuredProjects.filter((project) => project.city === CITY_NAME_UK[city.href]).length
 }));
 const projectsWord = (n: number) => (isRu ? `${n} проектов на сайте` : `${n} проєктів на сайті`);
@@ -247,7 +243,7 @@ const choosePoints = t.choosePoints;
           <div class="rh-cities">
             {cityCards.map((city) => (
               <a class="rh-city" href={lp(city.href)}>
-                <img src={city.cover} alt="" width="720" height="960" loading="lazy" decoding="async" />
+                <img src={city.cover.src} srcset={city.cover.srcset} sizes="(max-width: 900px) 100vw, 33vw" alt="" width={city.cover.width} height={city.cover.height} loading="lazy" decoding="async" />
                 <span class="rh-city__body"><strong>{city.name}</strong>{city.count > 0 && <span>{projectsWord(city.count)}</span>}<b>{t.geographySection.cityCtaLabel}</b></span>
               </a>
             ))}

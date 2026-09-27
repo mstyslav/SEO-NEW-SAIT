@@ -134,7 +134,7 @@ export const doorCategories: ProfileCategory[] = [
       ['Чи можна розсувні міжкімнатні скляні двері?', 'Так, будь-яку модель можна зробити розсувною на відкритій чи прихованій напрямній.'],
       ['Скільки коштують міжкімнатні скляні двері?', 'Ціна залежить від моделі, розміру, скла, кольору профілю й фурнітури. Точну вартість рахуємо після заміру.']
     ],
-    related: [['Двері в алюмінієвому профілі', P('dveri-v-aliuminiievomu-profili')], ['Розпашні скляні двері', P('rozpashni-sklyani-dveri')], ['Розсувні скляні двері', P('rozsuvni-sklyani-dveri')], ['Матові скляні двері', P('matovi-sklyani-dveri')], ['Loft-перегородки', '/sklyani-perehorodky/loft/'], ['Міжкімнатні перегородки', '/sklyani-perehorodky/mizhkimnatni/'], ['Скляні перегородки', '/sklyani-perehorodky/'], REL_HUB],
+    related: [['Двері в алюмінієвому профілі', P('dveri-v-aliuminiievomu-profili')], ['Розпашні скляні двері', P('rozpashni-sklyani-dveri')], ['Розсувні скляні двері', P('rozsuvni-sklyani-dveri')], ['Матові скляні двері', P('matovi-sklyani-dveri')], ['Loft-перегородки', '/sklyani-perehorodky/loft-sklyani-peregorodku/'], ['Міжкімнатні перегородки', '/sklyani-perehorodky/mizhkimnatni/'], ['Скляні перегородки', '/sklyani-perehorodky/'], REL_HUB],
     ctaTitle: 'Сподобалась модель?',
     ctaText: 'Напишіть модель, скло й розміри прорізу — підготуємо розрахунок і креслення.',
     details: GLASS_DETAILS
@@ -196,7 +196,7 @@ export const doorCategories: ProfileCategory[] = [
       ['Чи можна двері з фрамугою до стелі?', 'Так, над дверима ставлять нерухому скляну фрамугу — проріз засклюється повністю.'],
       ['Які двері обрати для санвузла?', 'З матовим склом і фіксатором «вільно/зайнято»; для кращої приватності — повне сатинування.']
     ],
-    related: [['Розсувні скляні двері', P('rozsuvni-sklyani-dveri')], ['Маятникові скляні двері', P('mayatnykovi-sklyani-dveri')], ['Двері в алюмінієвому профілі', P('dveri-v-aliuminiievomu-profili')], ['Матові скляні двері', P('matovi-sklyani-dveri')], ['Скляні двері для офісу', P('sklyani-dveri-dlia-ofisu')], ['Скляні перегородки', '/sklyani-perehorodky/'], ['Loft-перегородки', '/sklyani-perehorodky/loft/'], REL_HUB],
+    related: [['Розсувні скляні двері', P('rozsuvni-sklyani-dveri')], ['Маятникові скляні двері', P('mayatnykovi-sklyani-dveri')], ['Двері в алюмінієвому профілі', P('dveri-v-aliuminiievomu-profili')], ['Матові скляні двері', P('matovi-sklyani-dveri')], ['Скляні двері для офісу', P('sklyani-dveri-dlia-ofisu')], ['Скляні перегородки', '/sklyani-perehorodky/'], ['Loft-перегородки', '/sklyani-perehorodky/loft-sklyani-peregorodku/'], REL_HUB],
     ctaTitle: 'Потрібні розпашні скляні двері?',
     ctaText: 'Надішліть фото та розміри прорізу — підберемо скло, фурнітуру й підготуємо розрахунок.'
   }),
@@ -258,7 +258,7 @@ export const doorCategories: ProfileCategory[] = [
       ['Чи можна дзеркальне полотно?', 'Так, розсувні двері можуть мати дзеркальне або тоноване полотно — популярно для гардеробних.'],
       ['Що краще: розсувні чи розпашні?', 'Розсувні — коли бракує місця перед прорізом; розпашні — коли важливіша ізоляція від звуку й запахів.']
     ],
-    related: [['Розпашні скляні двері', P('rozpashni-sklyani-dveri')], ['Двері в алюмінієвому профілі', P('dveri-v-aliuminiievomu-profili')], ['Матові скляні двері', P('matovi-sklyani-dveri')], ['Маятникові скляні двері', P('mayatnykovi-sklyani-dveri')], ['Скляні двері для офісу', P('sklyani-dveri-dlia-ofisu')], ['Розсувні перегородки', '/sklyani-perehorodky/rozsuvni/'], ['Дзеркала', '/dzerkala/'], REL_HUB],
+    related: [['Розпашні скляні двері', P('rozpashni-sklyani-dveri')], ['Двері в алюмінієвому профілі', P('dveri-v-aliuminiievomu-profili')], ['Матові скляні двері', P('matovi-sklyani-dveri')], ['Маятникові скляні двері', P('mayatnykovi-sklyani-dveri')], ['Скляні двері для офісу', P('sklyani-dveri-dlia-ofisu')], ['Розсувні перегородки', '/sklyani-perehorodky/pidvisni-sklyani-peregorodky/'], ['Дзеркала', '/dzerkala/'], REL_HUB],
     ctaTitle: 'Потрібні розсувні скляні двері?',
     ctaText: 'Надішліть фото прорізу й стіни поруч — підберемо напрямну, скло та підготуємо розрахунок.'
   }),
@@ -382,7 +382,7 @@ export const doorCategories: ProfileCategory[] = [
       ['Скільки важать двері в профілі?', 'Трохи більше за безрамні через раму, тому використовуємо петлі з запасом міцності.'],
       ['Чи бувають розсувні лофт-двері?', 'Так, розсувне полотно в профілі з розкладкою — на відкритій або прихованій напрямній.']
     ],
-    related: [['Розпашні скляні двері', P('rozpashni-sklyani-dveri')], ['Розсувні скляні двері', P('rozsuvni-sklyani-dveri')], ['Матові скляні двері', P('matovi-sklyani-dveri')], ['Loft-перегородки', '/sklyani-perehorodky/loft/'], ['Міжкімнатні перегородки', '/sklyani-perehorodky/mizhkimnatni/'], ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'], ['Скляні двері для офісу', P('sklyani-dveri-dlia-ofisu')], REL_HUB],
+    related: [['Розпашні скляні двері', P('rozpashni-sklyani-dveri')], ['Розсувні скляні двері', P('rozsuvni-sklyani-dveri')], ['Матові скляні двері', P('matovi-sklyani-dveri')], ['Loft-перегородки', '/sklyani-perehorodky/loft-sklyani-peregorodku/'], ['Міжкімнатні перегородки', '/sklyani-perehorodky/mizhkimnatni/'], ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'], ['Скляні двері для офісу', P('sklyani-dveri-dlia-ofisu')], REL_HUB],
     ctaTitle: 'Потрібні двері в профілі?',
     ctaText: 'Надішліть фото прорізу й ескіз розкладки — підберемо профіль, скло й підготуємо розрахунок.'
   }),

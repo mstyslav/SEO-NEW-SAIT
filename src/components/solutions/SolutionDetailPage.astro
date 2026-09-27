@@ -7,6 +7,7 @@
  * Page files keep their own texts and pass them in; per-page extras
  * (tiles, projects, SEO copy) live in src/data/solution-pages.ts.
  */
+import { getCityHub } from '../../data/city-hubs';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../Header.astro';
@@ -67,9 +68,9 @@ const scenarioIcons = [
 ];
 
 const CITIES = [
-  { href: '/city/kyiv/', name: 'Київ', key: 'Київ', cover: '/images/projects/osocor-residence-glazing-kyiv/osocor-residence-glazing-kyiv-hero-720.webp' },
-  { href: '/city/odesa/', name: 'Одеса', key: 'Одеса', cover: '/images/projects/office-partitions-morskyi-odesa/office-partitions-morskyi-odesa-hero-720.webp' },
-  { href: '/city/lviv/', name: 'Львів', key: 'Львів', cover: '/images/projects/trapezoid-shower-lviv/trapezoid-shower-lviv-hero-720.webp' }
+  { href: '/city/kyiv/', name: 'Київ', key: 'Київ', cover: getCityHub('kyiv').hero.image },
+  { href: '/city/odesa/', name: 'Одеса', key: 'Одеса', cover: getCityHub('odesa').hero.image },
+  { href: '/city/lviv/', name: 'Львів', key: 'Львів', cover: getCityHub('lviv').hero.image }
 ];
 const cities = CITIES.map((city) => ({ ...city, count: allProjects.filter((project) => project.city === city.key).length }));
 
@@ -198,7 +199,7 @@ const otherSolutions = Object.entries(solutionExtras)
       <div class="rh-cities">
         {cities.map((city) => (
           <a class="rh-city" href={city.href}>
-            <img src={city.cover} alt="" width="720" height="960" loading="lazy" decoding="async" />
+            <img src={city.cover.src} srcset={city.cover.srcset} sizes="(max-width: 900px) 100vw, 33vw" alt="" width={city.cover.width} height={city.cover.height} loading="lazy" decoding="async" />
             <span class="rh-city__body"><strong>{city.name}</strong>{city.count > 0 && <span>{city.count} проєктів на сайті</span>}<b>Скло {extra.forWhom} — {city.name} →</b></span>
           </a>
         ))}

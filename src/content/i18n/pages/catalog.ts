@@ -97,8 +97,8 @@ export const catalogContent: Record<Locale, CatalogContent> = {
     },
     popularDirections: [
       ['Душова Walk-in', '/poslugy/dushovi-konstruktsii/dushova-kabina-walk-in/'],
-      ['Перегородки Loft', '/poslugy/sklyani-perehorodky/sklyani-perehorodky-loft/'],
-      ['Офісні перегородки', '/poslugy/sklyani-perehorodky/ofisni-sklyani-perehorodky/'],
+      ['Перегородки Loft', '/sklyani-perehorodky/loft-sklyani-peregorodku/'],
+      ['Офісні перегородки', '/sklyani-perehorodky/ofisni/'],
       ['Розсувні скляні двері', '/sklyani-dveri/rozsuvni-sklyani-dveri/'],
       ['Безрамні огорожі', '/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/'],
       ['Панорамне скління', '/poslugy/bezramne-sklinnya/panoramne-sklinnya/'],
@@ -259,8 +259,8 @@ export const catalogContent: Record<Locale, CatalogContent> = {
     },
     popularDirections: [
       ['Душевая Walk-in', '/poslugy/dushovi-konstruktsii/dushova-kabina-walk-in/'],
-      ['Перегородки Loft', '/poslugy/sklyani-perehorodky/sklyani-perehorodky-loft/'],
-      ['Офисные перегородки', '/poslugy/sklyani-perehorodky/ofisni-sklyani-perehorodky/'],
+      ['Перегородки Loft', '/sklyani-perehorodky/loft-sklyani-peregorodku/'],
+      ['Офисные перегородки', '/sklyani-perehorodky/ofisni/'],
       ['Раздвижные стеклянные двери', '/sklyani-dveri/rozsuvni-sklyani-dveri/'],
       ['Безрамные ограждения', '/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/'],
       ['Панорамное остекление', '/poslugy/bezramne-sklinnya/panoramne-sklinnya/'],

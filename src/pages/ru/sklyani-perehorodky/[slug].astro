@@ -1,0 +1,10 @@
+---
+// RU glass partitions subsections — content in src/data/ru/partition-catalog.ru.ts.
+import ProfileCategoryPage from '../../../components/profile/ProfileCategoryPage.astro';
+import { partitionCategoriesRu } from '../../../data/ru/partition-catalog.ru';
+export function getStaticPaths() {
+  return partitionCategoriesRu.map((category) => ({ params: { slug: category.slug }, props: { category } }));
+}
+const { category } = Astro.props;
+---
+<ProfileCategoryPage category={category} locale="ru" />

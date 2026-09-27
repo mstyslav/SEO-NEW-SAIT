@@ -2144,7 +2144,7 @@ export const framelessCategories: ProfileCategory[] = [
       ],
       [
         "Мобільні скляні перегородки",
-        "/poslugy/sklyani-perehorodky/mobilni-sklyani-perehorodky/"
+        "/sklyani-perehorodky/transformuyuchi-sklyani-peregorodky/"
       ],
       [
         "Тепле чи холодне скління тераси",

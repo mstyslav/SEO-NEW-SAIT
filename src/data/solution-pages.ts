@@ -39,7 +39,7 @@ export const solutionExtras: Record<string, SolutionExtra> = {
     tiles: [
       { label: 'Душові кабіни', href: '/dushovi-kabiny/', image: '/images/catalog/dushovi-kabiny/dushovi-kabiny-768.webp', note: 'Кутові, у нішу, розсувні та Walk-In' },
       { label: 'Перегородки для душу', href: '/dushovi-kabiny/peregorodka-dlya-dusha/', image: `${SH}/hero-peregorodka-dlya-dusha-480.webp`, note: 'Walk-In без дверей від 10 526 грн' },
-      { label: 'Loft-перегородки', href: '/sklyani-perehorodky/loft/', image: P('loft-kyiv', 'loft-partition-atlant-kyiv-hero-480.webp'), note: 'Кухня, вітальня, спальня' },
+      { label: 'Loft-перегородки', href: '/sklyani-perehorodky/loft-sklyani-peregorodku/', image: P('loft-kyiv', 'loft-partition-atlant-kyiv-hero-480.webp'), note: 'Кухня, вітальня, спальня' },
       { label: 'Міжкімнатні перегородки', href: '/sklyani-perehorodky/mizhkimnatni/', image: P('kitchen-partition-fjord-kyiv'), note: 'Зонування без втрати світла' },
       { label: 'Скляні двері', href: '/sklyani-dveri/', image: P('wardrobe-partition-crystal-springs-kyiv'), note: 'Розпашні, розсувні, приховані' },
       { label: 'Дзеркала з підсвіткою', href: '/dzerkala/led-dzerkala/', image: `${DZ}/cat-led-480.webp`, note: 'Для ванної та передпокою' },
@@ -85,10 +85,10 @@ export const solutionExtras: Record<string, SolutionExtra> = {
     tiles: [
       { label: 'Офісні скляні перегородки', href: '/sklyani-perehorodky/ofisni/', image: P('office-partitions-morskyi-odesa'), note: 'Кабінети й переговорні' },
       { label: 'Алюмінієве офісне скління', href: '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/', image: `${PS}/mb-45-office-2-480.webp`, note: 'Звукоізоляція до 50 дБ' },
-      { label: 'Loft-перегородки', href: '/sklyani-perehorodky/loft/', image: P('loft-partitions-kselena-odesa'), note: 'Стильне зонування open space' },
+      { label: 'Loft-перегородки', href: '/sklyani-perehorodky/loft-sklyani-peregorodku/', image: P('loft-partitions-kselena-odesa'), note: 'Стильне зонування open space' },
       { label: 'Скляні двері для офісу', href: '/sklyani-dveri/sklyani-dveri-dlia-ofisu/', image: P('world-of-comics-entrance-odesa'), note: 'Розпашні, маятникові, розсувні' },
       { label: 'Скляні вхідні групи', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: P('coffee-ocean-facade-odesa'), note: 'Представницький вхід' },
-      { label: 'Pivot-перегородки', href: '/sklyani-perehorodky/pivot/', image: '/images/solutions-new/solution-office-meeting-room-640.webp', note: 'Ефектний вхід у кабінет' },
+      { label: 'Pivot-перегородки', href: '/sklyani-perehorodky/z-dveryma/', image: '/images/solutions-new/solution-office-meeting-room-640.webp', note: 'Ефектний вхід у кабінет' },
       { label: 'Перегородки з ПВХ', href: '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/', image: `${PS}/cat-pvc-perehorodky-480.webp`, note: 'Економічне зонування' },
       { label: 'Фасадне скління', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/', image: `${PS}/cat-alu-fasady-480.webp`, note: 'Стійково-ригельні системи' }
     ],

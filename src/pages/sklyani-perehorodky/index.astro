@@ -1,143 +1,256 @@
 ---
+// Glass partitions MASTER — hub for /sklyani-perehorodky/{slug}/ (content: src/data/partition-catalog.ts).
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import ProfileRequestForm from '../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { PARTITION_HUB, PARTITION_IMG, partitionCategories, partitionHubSystems } from '../../data/partition-catalog';
+import { profileIcons } from '../../data/profile-icons';
 import '../../styles/category-pages.css';
+import '../../styles/shower-master.css';
+import '../../styles/profile-systems.css';
+import '../../styles/projects-common.css';
 
-const title = "Скляні перегородки";
-const subtitle = "Loft, офісні, міжкімнатні, розсувні та цільноскляні системи";
-const items = [
-  { title: "Loft", href: "/sklyani-perehorodky/loft/" },
-  { title: "Офісні", href: "/sklyani-perehorodky/ofisni/" },
-  { title: "Міжкімнатні", href: "/sklyani-perehorodky/mizhkimnatni/" },
-  { title: "Розсувні", href: "/sklyani-perehorodky/rozsuvni/" },
-  { title: "Телескопічні", href: "/sklyani-perehorodky/teleskopichni/" },
-  { title: "Pivot", href: "/sklyani-perehorodky/pivot/" }
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(PARTITION_HUB, origin);
+
+const title = 'Скляні перегородки';
+const h1 = 'Скляні перегородки на замовлення';
+const metaTitle = 'Скляні перегородки на замовлення — Loft, цільноскляні, розсувні, офісні | Space Glass';
+const metaDescription =
+  'Скляні перегородки для квартир, офісів і комерційних приміщень: Loft, цільноскляні, підвісні, нижньоопорні, телескопічні, трансформуючі, з дверима. Загартоване скло й триплекс. Замір і монтаж у Києві, Одесі та Львові.';
+
+const heroSrc = (w: number) => `${PARTITION_IMG}/hero-hub-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const hubItems = partitionCategories.map((category) => ({ title: category.name, note: category.cardNote, href: category.path, icon: profileIcons[`partitions/${category.slug}`] }));
+
+const projectSlugs = ['office-partitions-morskyi-odesa', 'loft-kyiv', 'dental-clinic-partitions-odesa', 'kitchen-partition-fjord-kyiv', 'loft-partitions-kselena-odesa', 'wardrobe-partition-crystal-springs-kyiv'];
+const allProjects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk')).map(({ data }) => data);
+const projects = projectSlugs.map((slug) => allProjects.find((project) => project.slug === slug)).filter((project): project is NonNullable<typeof project> => Boolean(project));
+
+const benefits: [string, string][] = [
+  ['Світло', 'Скло ділить простір, але не забирає денне світло.'],
+  ['Швидко', 'Монтаж за 1 день, без мокрих робіт і пилу.'],
+  ['Безпека', 'Загартоване скло й триплекс без гострих уламків.'],
+  ['Тиша', 'Ущільнювачі й триплекс помітно зменшують шум.'],
+  ['Під інтер’єр', 'Прозоре, матове, рифлене скло; профіль будь-якого кольору.'],
+  ['Гарантія', '2 роки на фурнітуру й 1 рік на монтаж.']
 ];
-const faq = [
-  [
-    "Від чого залежить ціна?",
-    "Від габаритів, типу скла, профілю, фурнітури, складності та монтажу."
-  ],
-  [
-    "Чи є індивідуальні розміри?",
-    "Так, більшість конструкцій виготовляємо за погодженими розмірами."
-  ],
-  [
-    "Де доступний монтаж?",
-    "Основні міста монтажу — Київ, Львів та Одеса з областями."
-  ],
-  [
-    "Чи є доставка по Україні?",
-    "Готові товари та комплектуючі доставляємо по всій Україні."
-  ],
-  [
-    "Які матеріали використовуються?",
-    "Матеріали підбираються за призначенням конструкції, навантаженням і дизайном."
-  ],
-  [
-    "Чи можна обрати колір профілю?",
-    "Так, доступні стандартні та індивідуальні кольори залежно від системи."
-  ],
-  [
-    "Які строки виготовлення?",
-    "Термін визначається після погодження креслення, комплектації та завантаження виробництва."
-  ],
-  [
-    "Чи надається гарантія?",
-    "Так, гарантія залежить від типу конструкції, матеріалів та умов монтажу."
-  ],
-  [
-    "Чи потрібен професійний замір?",
-    "Для індивідуальних конструкцій професійний замір рекомендований або обов’язковий."
-  ],
-  [
-    "Чи можна замовити тільки виготовлення?",
-    "Так, у частині проєктів можливе виготовлення без монтажу з доставкою."
-  ],
-  [
-    "Чи робите технічні креслення?",
-    "Так, перед запуском складних конструкцій готуємо та погоджуємо креслення."
-  ],
-  [
-    "Чи можна інтегрувати двері?",
-    "Так, залежно від системи доступні розпашні, розсувні, маятникові та pivot-рішення."
-  ],
-  [
-    "Чи працюєте з дизайнерами й архітекторами?",
-    "Так, надаємо технічні матеріали, консультації та супровід проєкту."
-  ],
-  [
-    "Чи можна використати матове скло?",
-    "Так, доступні матове, тоноване, освітлене, рифлене та декоративне скло."
-  ],
-  [
-    "Чи працюєте з комерційними об’єктами?",
-    "Так, реалізуємо рішення для офісів, магазинів, ресторанів, готелів і клінік."
-  ],
-  [
-    "Чи можливий демонтаж старих конструкцій?",
-    "Так, демонтаж оцінюється окремо після огляду об’єкта."
-  ],
-  [
-    "Що потрібно для попередньої оцінки?",
-    "Фото, приблизні розміри, місто та короткий опис бажаного рішення."
-  ],
-  [
-    "Чи можна замовити поетапну реалізацію?",
-    "Так, великі проєкти можна поділяти на етапи за погодженим графіком."
-  ],
-  [
-    "Які способи оплати доступні?",
-    "Умови оплати залежать від типу товару, обсягу та формату робіт."
-  ],
-  [
-    "Чи є сервіс після монтажу?",
-    "Так, доступні гарантійні та післягарантійні консультації й обслуговування."
-  ]
-]
+
+const types: [string, string][] = [
+  ['Стаціонарні', 'Нерухомі полотна в профілі чи на затискачах — Loft і цільноскляні перегородки.'],
+  ['З дверима', 'Розпашні, розсувні чи маятникові двері в одній лінії з перегородкою.'],
+  ['Розсувні', 'Підвісні на верхній шині або нижньоопорні на напрямних, зокрема телескопічні.'],
+  ['Трансформуючі', '«Гармошка» чи поворотні полотна, що повністю відкривають проріз.']
+];
+
+const faq: [string, string][] = [
+  ['Які бувають скляні перегородки?', 'Стаціонарні (Loft і цільноскляні), з дверима, розсувні — підвісні, нижньоопорні й телескопічні, а також трансформуючі.'],
+  ['Яке скло використовують?', 'Загартоване скло 8–12 мм або триплекс — безпечні й міцні.'],
+  ['Скільки коштує скляна перегородка?', 'Залежить від системи, розмірів, скла, дверей і фурнітури. Надішліть план чи фото з розмірами — підготуємо розрахунок.'],
+  ['Яку перегородку обрати для квартири?', 'Лофт — SLIM BLACK, мінімалізм — SLIM чи PUR, без місця для дверей — розсувні PIANO чи SUSPENS.'],
+  ['Яку перегородку обрати для офісу?', 'Кабінети — SLIM з дверима, переговорні в open space — CAJA, потік людей — PENDULA.'],
+  ['Чи можна перегородку з дверима?', 'Так, розпашні, розсувні чи маятникові.'],
+  ['Чи ізолює скляна перегородка звук?', 'Так, частково; з триплексом і ущільнювачами — помітно краще.'],
+  ['Чи можна матове чи тоноване скло?', 'Так, а також рифлене й матування смугами чи логотипом.'],
+  ['Чим підвісна перегородка відрізняється від нижньоопорної?', 'У підвісної вага на стелі й немає порога; у нижньоопорної — на підлозі, тож можна більші полотна.'],
+  ['Що таке телескопічна перегородка?', 'Кілька розсувних полотен на паралельних шинах, що складаються одне за одним.'],
+  ['Що таке трансформуюча перегородка?', 'Перегородка, полотна якої складаються «гармошкою» чи відкочуються й повністю звільняють проріз.'],
+  ['Чи потрібен дозвіл на перегородку?', 'Зазвичай ні — перегородка не несуча.'],
+  ['Чи можна встановити в готовому ремонті?', 'Так, монтаж чистий, без мокрих робіт.'],
+  ['Скільки триває монтаж?', 'Зазвичай один день для квартири, 1–3 дні для офісу.'],
+  ['Скільки чекати виготовлення?', 'Зазвичай 2–4 тижні після погодження креслення.'],
+  ['Чи робите креслення?', 'Так, погоджуємо розміри, сітку шпросів і двері до виготовлення.'],
+  ['Чи працюєте з юридичними особами?', 'Так, за договором, з повним пакетом документів.'],
+  ['Як доглядати за склом?', 'Засобом для скла й м’якою ганчіркою; фурнітуру регулюємо в рамках сервісу.'],
+  ['Де виконуєте замір і монтаж?', 'У Києві, Одесі та Львові з областями.'],
+  ['Чи є гарантія?', 'Так, 2 роки на фурнітуру й 1 рік на монтаж.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Скляні двері', '/sklyani-dveri/'],
+  ['Скляні міжкімнатні двері', '/sklyani-perehorodky/sklyani-mizhkimnatni-dveri/'],
+  ['Душові кабіни', '/dushovi-kabiny/'],
+  ['Дзеркала', '/dzerkala/'],
+  ['Скло для офісу', '/dlya-biznesu/dlya-ofisu/'],
+  ['Для бізнесу', '/dlya-biznesu/'],
+  ['Безрамне скління', '/poslugy/bezramne-sklinnya/'],
+  ['Алюмінієві конструкції', '/alyuminiyevi-konstrukcziyi/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: partitionCategories.length,
+  itemListElement: partitionCategories.map((category, index) => ({ '@type': 'ListItem', position: index + 1, name: category.name, url: absoluteUrl(category.path, origin) }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
 ---
-<BaseLayout title={`${title} — Space Glass`} description={subtitle}>
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  alternateLocales={['uk', 'ru']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
 <div class="sg-page-shell">
   <Header />
   <main id="main">
-    <div class="category-breadcrumbs"><Breadcrumbs items={[{label:'Головна',href:'/'},{label:title}]} /></div>
-    <section class="category-hero">
-      <div class="category-hero__copy"><p class="eyebrow">{title}</p><h1>{title} на замовлення</h1><p class="lead">{subtitle}</p><div class="hero__actions"><a class="button button--mint" href="#category-request">Отримати розрахунок</a><a class="button button--outline" href="#types">Переглянути види</a></div></div>
-      <div class="category-hero__visual"><div class="category-hero__glass"></div><span>SPACE GLASS</span></div>
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Головна', href: '/' }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Перегородки зі скла для квартир, будинків, офісів, клінік і салонів: Loft, цільноскляні, розсувні, трансформуючі та з дверима. Зонування без втрати світла — замір, виготовлення й монтаж у Києві, Одесі та Львові.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#types">Обрати вид</a>
+          <a class="button button--outline" href="#request">Отримати розрахунок</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Скляна перегородка між спальнею та гардеробною" width="1080" height="772" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
     </section>
 
-    <section id="types" class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Оберіть відповідне рішення</h2></div><p>Після вибору типу уточнимо розміри, матеріали, колір, комплектацію та формат монтажу.</p></div>
-      <div class="category-type-grid">
-        {items.map((item,i)=><a class="category-type-card" href={item.href}><div class="category-type-card__visual"><span>{String(i+1).padStart(2,'0')}</span></div><div class="category-type-card__body"><small>{String(i+1).padStart(2,'0')}</small><h3>{item.title}</h3><p>Індивідуальна конфігурація під ваш простір.</p><b>Детальніше →</b></div></a>)}
+    <TrustBar locale="uk" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>Зонування без глухих стін</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Скляна перегородка ділить простір на зони, але залишає світло й відчуття простору. Вона тонша за стіну, монтується за день і не потребує мокрих робіт — тому її обирають і для квартир, і для офісів.</p>
+          <p>Ми виготовляємо стаціонарні перегородки в тонкому профілі й на точкових затискачах, лофт-перегородки в чорному профілі, перегородки з розпашними, розсувними й маятниковими дверима, підвісні, нижньоопорні, телескопічні й трансформуючі системи.</p>
+          <p>Нижче — види перегородок і системи, з якими ми працюємо.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>9 видів</b><span>від Loft до трансформуючих</span></li>
+          <li><b>Скло 8–12 мм</b><span>загартоване чи триплекс</span></li>
+          <li><b>Монтаж за 1 день</b><span>без мокрих робіт</span></li>
+          <li><b>Київ · Одеса · Львів</b><span>замір, монтаж і сервіс</span></li>
+        </ul>
       </div>
     </section>
 
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Види</p><h2>Які скляні перегородки ми робимо</h2></div><p>Оберіть вид — на кожній сторінці системи з фото, характеристиками й порадами.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section id="systems" class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Системи</p><h2>Системи скляних перегородок</h2></div><p>Ціна — за індивідуальним розрахунком. Більше систем — на сторінках видів.</p></div>
+      <div class="profile-grid">
+        {partitionHubSystems.map((system) => (
+          <article class="profile-card">
+            <div class="profile-card__media">
+              <img src={`${PARTITION_IMG}/${system.image}-480.webp`} srcset={`${PARTITION_IMG}/${system.image}-480.webp 480w, ${PARTITION_IMG}/${system.image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" alt={system.alt} width="480" height="480" loading="lazy" decoding="async" />
+              <span class="profile-card__kind">{system.kind}</span>
+            </div>
+            <div class="profile-card__body">
+              <h3>{system.name}</h3>
+              <p class="profile-card__blurb">{system.blurb}</p>
+              <p class="profile-card__price">Ціна — за індивідуальним розрахунком</p>
+              <a class="button button--mint profile-card__cta" href={system.href}>Детальніше про систему →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Конструкція</p><h2>Як працює перегородка</h2></div><p>Від типу конструкції залежать прохід, місце й вигляд.</p></div>
+      <dl class="material-thickness">
+        {types.map(([name, text]) => <div><dt>{name}</dt><dd>{text}</dd></div>)}
+      </dl>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Переваги</p><h2>Чому скляна перегородка</h2></div></div>
+      <div class="material-grid material-grid--parts">
+        {benefits.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    {projects.length > 0 && (
+      <section class="category-section">
+        <div class="category-heading category-heading--projects">
+          <div class="category-heading--projects__title"><p class="eyebrow">Портфоліо</p><h2>Наші скляні перегородки</h2></div>
+          <div class="category-heading--projects__aside"><a class="category-arrow-link" href="/projects/">Усі проєкти <span aria-hidden="true">→</span></a></div>
+        </div>
+        <div class="projects-index-v2__grid category-projects-grid">
+          {projects.map((project) => <ProjectCard project={project} hrefPrefix="/projects" />)}
+        </div>
+      </section>
+    )}
+
     <section class="category-process">
-      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від запиту до готової конструкції</h2></div></div>
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процес</p><h2>Від заміру до готової перегородки</h2></div></div>
       <div class="category-process__grid">
-        <div><span>01</span><b>Запит</b><small>Фото, розміри або креслення</small></div>
-        <div><span>02</span><b>Оцінка</b><small>Попередня комплектація</small></div>
-        <div><span>03</span><b>Замір</b><small>Перевірка геометрії</small></div>
-        <div><span>04</span><b>Креслення</b><small>Технічне узгодження</small></div>
-        <div><span>05</span><b>Виготовлення</b><small>Контроль якості</small></div>
-        <div><span>06</span><b>Монтаж</b><small>Здача та гарантія</small></div>
+        <div><span>01</span><b>Запит</b><small>План або фото з розмірами</small></div>
+        <div><span>02</span><b>Консультація</b><small>Система, скло, двері</small></div>
+        <div><span>03</span><b>Замір</b><small>Стіни, підлога, стеля</small></div>
+        <div><span>04</span><b>Креслення</b><small>Розміри, шпроси, двері</small></div>
+        <div><span>05</span><b>Виготовлення</b><small>Гартування скла під розмір</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Чистий монтаж за 1 день</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">Географія</p>
+          <h2>Скляні перегородки: замір і монтаж<br />у Києві, Одесі та Львові</h2>
+          <p>Виїжджаємо на замір, погоджуємо креслення, виготовляємо й монтуємо перегородки в квартирах, будинках, офісах, клініках і закладах.</p>
+          <p>Для об’єктів в інших регіонах умови узгоджуємо окремо.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Київ</b><span>замір і монтаж</span></li><li><b>Одеса</b><span>замір і монтаж</span></li><li><b>Львів</b><span>замір і монтаж</span></li></ul>
       </div>
     </section>
 
     <section class="category-section category-section--faq">
-      <FAQBlock
-        title={`FAQ про ${title.toLowerCase()}: ціни, монтаж, матеріали та замовлення`}
-        intro={`Відповідаємо на основні питання про ${title.toLowerCase()}, строки, гарантію, доставку й індивідуальне виготовлення.`}
-        items={faq}
-        visibleCount={6}
-      />
+      <FAQBlock title="FAQ про скляні перегородки" intro="Про види, скло, двері, звукоізоляцію, ціну й монтаж." items={faq} visibleCount={6} expandTo={faq.length} />
     </section>
 
-    <section id="category-request" class="inner-cta"><div><p class="eyebrow eyebrow--light">Заявка</p><h2>Потрібен попередній розрахунок?</h2><p>Надішліть фото, розміри або креслення.</p></div><a class="button button--white" href="mailto:info@space-glass.com.ua">Надіслати запит</a></section>
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Корисне</p><h2>Далі по темі</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={href}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={PARTITION_HUB}
+      product={title}
+      title={'Потрібен попередній розрахунок?'}
+      text={'Надішліть план чи фото приміщення з розмірами — підберемо систему й підготуємо орієнтовну вартість.'}
+      options={[...partitionCategories.map((c) => c.name), ...partitionHubSystems.map((s) => s.name)]}
+      optionsLabel="Вид або система"
+      commentPlaceholder="Приміщення (квартира, офіс), розміри, потрібні двері, скло, місто"
+    />
   </main>
   <Footer />
 </div>

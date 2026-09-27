@@ -54,5 +54,14 @@ export const profileIcons: Record<string, string> = {
   'canopies/kozyrky-na-kronshteinakh': iconWrap('<path d="M6 4v30"/><path d="M6 12h26"/><path d="M6 20l22-8"/><rect x="12" y="22" width="10" height="12"/>'),
   'canopies/kozyrky-v-rami': iconWrap('<path d="M6 4v30"/><rect x="6" y="10" width="26" height="5"/><path d="M10 12.5h18"/><rect x="12" y="19" width="10" height="15"/>'),
   'canopies/kozyrky-z-bokovym-zakhystom': iconWrap('<path d="M6 4v30"/><path d="M6 10h26"/><rect x="26" y="10" width="6" height="24"/><rect x="11" y="18" width="10" height="16"/>'),
-  'canopies/kozyrky-dlya-biznesu': iconWrap('<path d="M4 34h32"/><rect x="6" y="14" width="28" height="20"/><path d="M4 11h32l-2 3H6z"/><path d="M16 22h8v12h-8z"/>')
+  'canopies/kozyrky-dlya-biznesu': iconWrap('<path d="M4 34h32"/><rect x="6" y="14" width="28" height="20"/><path d="M4 11h32l-2 3H6z"/><path d="M16 22h8v12h-8z"/>'),
+  'partitions/loft-sklyani-peregorodku': iconWrap('<rect x="6" y="6" width="28" height="28"/><path d="M15.3 6v28M24.6 6v28M6 15.3h28M6 24.6h28"/>'),
+  'partitions/tsilnosklyani-perehorodky': iconWrap('<path d="M4 6h32M4 34h32"/><path d="M8 6v28M20 6v28M32 6v28"/><path d="M11 12l4-4M23 12l4-4"/>'),
+  'partitions/pidvisni-sklyani-peregorodky': iconWrap('<path d="M4 6h32"/><circle cx="12" cy="9" r="1.5"/><circle cx="24" cy="9" r="1.5"/><rect x="8" y="11" width="18" height="23"/><path d="M28 22h6"/><path d="M4 34h32"/>'),
+  'partitions/nyzhnooporni-sklyani-perehorodky': iconWrap('<path d="M4 6h32"/><rect x="7" y="8" width="13" height="24"/><rect x="17" y="8" width="13" height="24"/><path d="M4 34h32M4 32h32"/>'),
+  'partitions/teleskopichni-sklyani-perehorodky': iconWrap('<path d="M4 6h32"/><rect x="6" y="8" width="10" height="26"/><rect x="11" y="8" width="10" height="26"/><rect x="16" y="8" width="10" height="26"/><path d="M29 21h6M32 18l3 3-3 3"/>'),
+  'partitions/transformuyuchi-sklyani-peregorodky': iconWrap('<path d="M4 6h32M4 34h32"/><path d="M6 8l6 26 6-26 6 26 6-26"/>'),
+  'partitions/ofisni': iconWrap('<path d="M4 34h32"/><rect x="6" y="8" width="28" height="26"/><path d="M20 8v26"/><rect x="10" y="22" width="6" height="6"/><path d="M24 20h.01"/>'),
+  'partitions/mizhkimnatni': iconWrap('<path d="M4 34h32"/><path d="M6 34V14l14-8 14 8v20"/><path d="M20 12v22"/><path d="M11 20h5M24 20h5"/>'),
+  'partitions/z-dveryma': iconWrap('<path d="M4 34h32"/><rect x="6" y="6" width="28" height="28"/><path d="M14 6v28M26 6v28"/><path d="M23 20v4"/>')
 };
