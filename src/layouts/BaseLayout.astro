@@ -53,11 +53,15 @@ const schema = jsonLdGraph([
 const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
 const availableAlternateLocales = alternateLocales ?? supportedLocales;
 import ScrollProgress from '../components/ScrollProgress.astro';
+// The page language comes only from the URL (/ru/… = RU, everything else = UA). translate="no" +
+// notranslate stop browsers (Chrome/Yandex/Safari with a Russian UI) from auto-translating a UA page
+// into Russian on the same URL; the RU version is a separate /ru/ page.
 ---
 <!doctype html>
-<html lang={resolvedLocale}>
+<html lang={resolvedLocale} translate="no">
   <head>
     <meta charset="UTF-8" />
+    <meta name="google" content="notranslate" />
     <meta name="viewport" content="width=device-width" />
     {heroPreloadSrc && heroPreloadMobileSrcset && (
       <>
