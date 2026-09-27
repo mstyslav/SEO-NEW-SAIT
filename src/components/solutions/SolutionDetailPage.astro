@@ -18,7 +18,7 @@ import FAQBlock from '../FAQBlock.astro';
 import ProjectCard from '../projects/ProjectCard.astro';
 import ProfileRequestForm from '../profile/ProfileRequestForm.astro';
 import type { JsonLdObject } from '../../seo/schema';
-import { solutionExtras } from '../../data/solution-pages';
+import { solutionExtras, type SolutionExtra } from '../../data/solution-pages';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
@@ -44,10 +44,13 @@ interface Props {
   breadcrumbItems: { label: string; href: string }[];
   structuredData: JsonLdObject[];
   formExample: string;
+  /** Landing pages outside /rishennya/ (e.g. /pryvatnyj-sektor/) pass their own extras. */
+  extra?: SolutionExtra;
+  eyebrow?: string;
 }
 
 const p = Astro.props;
-const extra = solutionExtras[p.path];
+const extra = p.extra ?? solutionExtras[p.path];
 if (!extra) throw new Error(`No solution extras for ${p.path}`);
 
 const hero = (suffix: string) => `/images/solutions-new/${p.heroImage.base}${suffix}.webp`;
@@ -96,7 +99,7 @@ const otherSolutions = Object.entries(solutionExtras)
     <section class="category-hero category-hero--photo profile-hero">
       <div class="category-hero__copy">
         <Breadcrumbs items={p.breadcrumbItems.map((item, index) => index === p.breadcrumbItems.length - 1 ? { label: item.label } : item)} />
-        <p class="eyebrow">Рішення · {extra.navLabel}</p>
+        <p class="eyebrow">{p.eyebrow ?? `Рішення · ${extra.navLabel}`}</p>
         <h1>{p.h1}</h1>
         <p class="lead">{p.heroLead}</p>
         <div class="hero__actions">

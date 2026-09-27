@@ -171,3 +171,43 @@ export const solutionExtras: Record<string, SolutionExtra> = {
     ]
   }
 };
+
+/**
+ * /pryvatnyj-sektor/ — the private-house landing (old production URL with search history).
+ * Rendered by the same SolutionDetailPage template, but it is not one of the /rishennya/
+ * solutions, so it lives outside solutionExtras.
+ */
+export const privateSectorExtra: SolutionExtra = {
+  forWhom: 'для приватного будинку',
+  navLabel: 'Приватний сектор',
+  image: '/images/solutions-new/solution-house-640.webp',
+  tiles: [
+    { label: 'Скляні огорожі сходів', href: '/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/', image: P('glass-stair-railing-private-house-odesa'), note: 'Сходи та другий поверх' },
+    { label: 'Огорожі терас і балконів', href: '/sklyani-ohorozhi/sklyani-ohorozhi-teras/', image: '/images/catalog/sklyani-ohorozhi/gp-baldosa-budynok-480.webp', note: 'Триплекс, без стійок або на стійках' },
+    { label: 'Скління будинків і котеджів', href: '/bezramne-sklinnya/sklinnya-budynkiv/', image: '/images/catalog/bezramne/cat-teple-bezramne-sklinnya-480.webp', note: 'Панорамне безрамне скління' },
+    { label: 'Скління терас і альтанок', href: '/bezramne-sklinnya/sklinnya-teras-ta-altanok/', image: '/images/catalog/bezramne/cat-bezramne-sklinnya-terasy-480.webp', note: 'Стулки повністю відкриваються' },
+    { label: 'Вхідні групи', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: `${PS}/cat-fas2-sklyani-vkhidni-hrupy-480.webp`, note: 'Алюміній і скло для входу в будинок' },
+    { label: 'Скляні козирки й навіси', href: '/sklyani-kozyrky/', image: '/images/catalog/sklyani-kozyrky/gp-athena-480.webp', note: 'Над входом, терасою чи балконом' },
+    { label: 'Душові кабіни', href: '/dushovi-kabiny/', image: '/images/catalog/dushovi-kabiny/dushovi-kabiny-480.webp', note: 'Кутові, у нішу, Walk-In' },
+    { label: 'Скляні перегородки', href: '/sklyani-perehorodky/', image: P('loft-kyiv', 'loft-partition-atlant-kyiv-hero-480.webp'), note: 'Лофт, розсувні, міжкімнатні' },
+    { label: 'Скляні двері', href: '/sklyani-dveri/', image: '/images/catalog/sklyani-dveri/hero4-rozpashni-sklyani-dveri-480.webp', note: 'Розпашні, розсувні, маятникові' },
+    { label: 'Дзеркала', href: '/dzerkala/', image: `${DZ}/cat-stina-480.webp`, note: 'З підсвіткою, у рамі, на всю стіну' },
+    { label: 'Розсувні двері на терасу', href: '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/', image: `${PS}/cat-alu-rozsuvni-480.webp`, note: 'Панорамні, теплий профіль' },
+    { label: 'Зимові сади й перголи', href: '/alyuminiyevi-konstrukcziyi/zymovi-sady/', image: `${PS}/cat-alu-zymovi-sady-480.webp`, note: 'Продовження будинку в сад' }
+  ],
+  projectSlugs: [
+    'ogorozha-shodiv-ta-drugogo-poverhu',
+    'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv',
+    'dzerkalo-z-pidsvidkoyu-v-m-odesa-2',
+    'dzerkalo-z-pidsvidkoyu-v-m-odesa',
+    'dzerkalo-na-stinu-v-zhk-kontynent-m-odesa',
+    'mizhkimnatni-peregorodku-v-stuli-loft'
+  ],
+  seoHeading: 'Скло для приватного будинку, котеджу й таунхауса',
+  seo: [
+    'Space Glass проєктує, виготовляє та монтує скляні конструкції для приватних будинків, котеджів і таунхаусів: огорожі сходів, терас і балконів, безрамне та панорамне скління, вхідні групи, козирки, душові кабіни, перегородки, двері й дзеркала.',
+    'Для будинку всі конструкції мають працювати як одна система: однаковий колір профілю та фурнітури, безпечний триплекс для огорож і козирків, загартоване скло для душових і дверей, теплий алюмінієвий контур там, де простір використовують цілий рік.',
+    'Найкраще закладати скло на етапі проєкту — до стяжки й оздоблення: так правильно передбачаються закладні для огорож, пороги розсувних дверей, водовідведення тераси й кріплення козирка над входом.',
+    'Працюємо з приватним сектором у Києві, Одесі, Львові та по всій Україні: від однієї огорожі сходів чи душової до комплексного скління котеджу під ключ — із заміром, кресленням, виробництвом і монтажем.'
+  ]
+};
