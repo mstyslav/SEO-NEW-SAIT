@@ -6,8 +6,9 @@ import type { Locale } from '../../i18n/helpers';
 import '../../styles/projects-common.css';
 import '../../styles/projects-index-v2.css';
 
-// PSI (mobile + desktop) consistently reports this card's image as the actual LCP element
-// on /project/, not just the first card in sort order — give it fetchpriority=high too.
+// This card uses a lighter 720w cover. Since the page got its own hero image, the hero is the
+// LCP element (mobile + desktop) and every card sits below it: cards are lazy-loaded so they
+// no longer compete with the hero for bandwidth (Chrome still fetches them ahead of scrolling).
 const LCP_SLUG = 'shtorka-dlya-vannoyi-zhk-akvarel-v-m-odesa';
 const LCP_CARD_COVER = {
   src: '/images/projects/bath-screen-akvarel-odesa/bath-screen-akvarel-odesa-card-720.webp',
@@ -73,8 +74,6 @@ const t = isRu ? {
           project={project}
           hrefPrefix="/project"
           locale={locale}
-          priority={index === 0 || project.slug === LCP_SLUG}
-          eager={index === 1 || index === 2}
           cardCover={project.slug === LCP_SLUG ? { ...LCP_CARD_COVER, alt: project.cover.alt } : undefined}
         />
       ))}
