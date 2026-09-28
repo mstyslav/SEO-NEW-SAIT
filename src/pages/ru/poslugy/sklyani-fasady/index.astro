@@ -1,6 +1,5 @@
 ---
-// RU glass facades hub (mirrors src/pages/poslugy/sklyani-fasady/index.astro; card texts: src/data/ru/facade-catalog.ru.ts).
-// The six facade child pages have no RU version yet, so their cards link to the UA pages (lp() falls back).
+// RU glass facades hub (mirrors src/pages/poslugy/sklyani-fasady/index.astro; texts: src/data/ru/facade-catalog.ru.ts).
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import Header from '../../../../components/Header.astro';
 import Footer from '../../../../components/Footer.astro';
@@ -10,7 +9,7 @@ import TrustBar from '../../../../components/TrustBar.astro';
 import ProfileRequestForm from '../../../../components/profile/ProfileRequestForm.astro';
 import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../../seo/schema';
 import { FACADE_HUB } from '../../../../data/facade-catalog';
-import { facadeHubCardsRu as facadeCategories } from '../../../../data/ru/facade-catalog.ru';
+import { facadeCategoriesRu as facadeCategories } from '../../../../data/ru/facade-catalog.ru';
 import { IMG_BASE } from '../../../../data/profile-systems';
 import { profileIcons } from '../../../../data/profile-icons';
 import { localizedPath } from '../../../../i18n/helpers';

@@ -119,7 +119,29 @@ const LOCALIZED_ROUTES: Record<'ru', ReadonlySet<string>> = {
     '/pryvatnyj-sektor/',
     '/dlya-biznesu/',
     '/dlya-biznesu/restoranam/',
-    '/poslugy/sklyani-fasady/'
+    '/poslugy/sklyani-fasady/',
+    '/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/',
+    '/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/',
+    '/poslugy/sklyani-fasady/sklyani-fasady-budynkiv/',
+    '/poslugy/sklyani-fasady/enerhoefektyvni-fasady/',
+    '/poslugy/sklyani-fasady/vitrinne-sklinnya/',
+    '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/',
+    '/dlya-biznesu/goteli/',
+    '/dlya-biznesu/dlya-ofisu/',
+    '/dlya-biznesu/magazynam/',
+    '/dlya-biznesu/salonam-krasy/',
+    '/dlya-biznesu/stomatologiyi-ta-kliniky/',
+    '/dlya-biznesu/zhytlovym-kompleksam/',
+    '/dlya-biznesu/bazam-vidpochynku/',
+    '/kozyrky-configurator/',
+    '/rishennya/dlya-kvartyry/',
+    '/rishennya/dlya-ofisu/',
+    '/rishennya/dlya-hotelyu/',
+    '/rishennya/dlya-restoranu/',
+    '/rishennya/dlya-magazynu/',
+    '/arkhitekturni-systemy/',
+    '/terms/',
+    '/cookies-policy/'
   ])
 };
 

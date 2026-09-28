@@ -19,7 +19,7 @@ import ProjectCard from '../projects/ProjectCard.astro';
 import ProfileRequestForm from '../profile/ProfileRequestForm.astro';
 import type { JsonLdObject } from '../../seo/schema';
 import { solutionExtras, type SolutionExtra } from '../../data/solution-pages';
-import { solutionCardsRu } from '../../data/ru/solution-pages.ru';
+import { solutionExtrasRu } from '../../data/ru/solution-pages.ru';
 import { hasLocalizedRoute, localizedPath, type Locale } from '../../i18n/helpers';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
@@ -92,7 +92,7 @@ const tx = {
     cityNames: { kyiv: 'Киев', odesa: 'Одесса', lviv: 'Львов' }
   }
 }[locale];
-const extra = p.extra ?? solutionExtras[p.path];
+const extra = p.extra ?? (isRu ? solutionExtrasRu : solutionExtras)[p.path];
 if (!extra) throw new Error(`No solution extras for ${p.path}`);
 
 const hero = (suffix: string) => `/images/solutions-new/${p.heroImage.base}${suffix}.webp`;
@@ -119,9 +119,9 @@ const CITIES = [
 ];
 const cities = CITIES.map((city) => ({ ...city, count: allProjects.filter((project) => project.city === city.key).length }));
 
-const otherSolutions = Object.entries(solutionExtras)
+const otherSolutions = Object.entries(isRu ? solutionExtrasRu : solutionExtras)
   .filter(([path]) => path !== p.path)
-  .map(([path, item]) => ({ path: lp(path), label: isRu ? solutionCardsRu[path].navLabel : item.navLabel, image: item.image, note: isRu ? solutionCardsRu[path].note : item.tiles.slice(0, 3).map((tile) => tile.label).join(' · ') }));
+  .map(([path, item]) => ({ path: lp(path), label: item.navLabel, image: item.image, note: item.tiles.slice(0, 3).map((tile) => tile.label).join(' · ') }));
 ---
 <BaseLayout
   title={p.title}

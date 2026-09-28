@@ -12,6 +12,7 @@ import { aluCategoriesRu, pvcCategoriesRu } from './profile-systems.ru';
 import { mirrorCategoriesRu } from './mirror-catalog.ru';
 import { framelessCategoriesRu } from './frameless-catalog.ru';
 import { doorCategoriesRu } from './door-catalog.ru';
+import { facadeCategoriesRu } from './facade-catalog.ru';
 
 export const ruCategoriesByGroup: Partial<Record<ProfileGroup, ProfileCategory[]>> = {
   railings: railingCategoriesRu,
@@ -22,5 +23,6 @@ export const ruCategoriesByGroup: Partial<Record<ProfileGroup, ProfileCategory[]
   pvc: pvcCategoriesRu,
   mirror: mirrorCategoriesRu,
   frameless: framelessCategoriesRu,
-  doors: doorCategoriesRu
+  doors: doorCategoriesRu,
+  facade: facadeCategoriesRu
 };

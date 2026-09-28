@@ -1,0 +1,46 @@
+---
+// Glass canopy configurator (RU) — mirrors src/pages/kozyrky-configurator.astro on the same
+// CanopyConfigurator (locale="ru"). Price model: src/data/canopy-pricing.ts, RU labels: src/data/ru/canopy-pricing.ru.ts.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import CanopyConfigurator from '../../../components/canopies/CanopyConfigurator.astro';
+import { CANOPY_HUB } from '../../../data/canopy-catalog';
+import { localizedPath } from '../../../i18n/helpers';
+import '../../../styles/category-pages.css';
+
+const lp = (path: string) => localizedPath(path, 'ru');
+const faq: [string, string][] = [
+  ['Насколько точна цена в конфигураторе?', 'Это ориентировочная стоимость для типовых условий. Толщину стекла, количество кронштейнов и крепления определяем после замера — окончательная цена может отличаться.'],
+  ['Что входит в цену?', 'Стекло-триплекс, держатели или рама выбранной системы, выбранные опции (стекло, покрытие, крепления, желоб) и, если выбрано, замер, доставка и монтаж.'],
+  ['Какой козырёк выбрать?', 'Минимализм без тяг — консольный, классика — на тягах, мало места над дверью — на кронштейнах, большие входы — в раме или подвесной раме, защита от ветра — с боковой стенкой.'],
+  ['Что такое вынос козырька?', 'Расстояние от стены до переднего края козырька. Для входа в дом обычно достаточно 80–120 см.'],
+  ['Что делать с готовой конфигурацией?', 'На последнем шаге оставьте имя и телефон — мы получим все параметры и свяжемся, чтобы договориться о замере.'],
+  ['Где выполняете монтаж?', 'В Киеве, Одессе и Львове с областями. Другие регионы — по договорённости.']
+];
+---
+<BaseLayout
+  title="Конфигуратор стеклянного козырька — расчёт цены онлайн | Space Glass"
+  description="Конфигуратор стеклянного козырька: выберите тип, размеры, стекло, крепление и желоб — увидите схему и ориентировочную стоимость в гривнах и отправите заявку на замер."
+  locale="ru"
+  alternateLocales={['uk', 'ru']}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-section" style="padding-bottom:24px">
+      <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: 'Стеклянные козырьки', href: lp(CANOPY_HUB) }, { label: 'Конфигуратор' }]} />
+      <p class="eyebrow">Конфигуратор</p>
+      <h1>Конфигуратор стеклянного козырька</h1>
+      <p class="lead">Выберите тип козырька, размеры, стекло и крепление — схема и ориентировочная стоимость обновляются сразу. Готовую конфигурацию отправьте нам, и мы договоримся о замере.</p>
+    </section>
+    <CanopyConfigurator locale="ru" />
+    <section class="category-section category-section--faq">
+      <FAQBlock title="Вопросы о конфигураторе" intro="Как работает расчёт и что будет после заявки." items={faq} visibleCount={6} locale="ru" />
+    </section>
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

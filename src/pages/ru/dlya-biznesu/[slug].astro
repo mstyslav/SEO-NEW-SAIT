@@ -1,0 +1,10 @@
+---
+// RU business-type pages /ru/dlya-biznesu/{slug}/ (mirrors src/pages/dlya-biznesu/[slug].astro; content: src/data/ru/business-pages.ru.ts).
+import BusinessPage from '../../../components/business/BusinessPage.astro';
+import { businessPagesRu } from '../../../data/ru/business-pages.ru';
+export function getStaticPaths() {
+  return businessPagesRu.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+const { page } = Astro.props;
+---
+<BusinessPage page={page} locale="ru" />

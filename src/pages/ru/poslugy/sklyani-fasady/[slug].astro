@@ -1,0 +1,10 @@
+---
+// RU glass facades subsections /ru/poslugy/sklyani-fasady/{slug}/ — shared catalog template; content in src/data/ru/facade-catalog.ru.ts.
+import ProfileCategoryPage from '../../../../components/profile/ProfileCategoryPage.astro';
+import { facadeCategoriesRu } from '../../../../data/ru/facade-catalog.ru';
+export function getStaticPaths() {
+  return facadeCategoriesRu.map((category) => ({ params: { slug: category.slug }, props: { category } }));
+}
+const { category } = Astro.props;
+---
+<ProfileCategoryPage category={category} locale="ru" />

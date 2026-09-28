@@ -8,14 +8,74 @@
  */
 import { CANOPY_CONFIG_SYSTEMS, COEFFICIENT, EUR_RATE, FIXING_LABELS, GLASS_LABELS, INSTALL_UAH_BASE, INSTALL_UAH_PER_M2, OPTION_FACTOR } from '../../data/canopy-pricing';
 import { CANOPY_IMG } from '../../data/canopy-catalog';
+import { CANOPY_CONFIG_SYSTEMS_RU, FIXING_LABELS_RU, GLASS_LABELS_RU } from '../../data/ru/canopy-pricing.ru';
+import { localizedPath, type Locale } from '../../i18n/helpers';
 import '../../styles/configurator-rc.css';
 
-const data = { systems: CANOPY_CONFIG_SYSTEMS, glass: GLASS_LABELS, fixing: FIXING_LABELS, rate: EUR_RATE, coef: COEFFICIENT, opt: OPTION_FACTOR, installBase: INSTALL_UAH_BASE, installPerM2: INSTALL_UAH_PER_M2, img: CANOPY_IMG };
-const steps = ['Система', 'Розміри', 'Скло', 'Кріплення', 'Опції', 'Монтаж', 'Заявка'];
+interface Props { locale?: Locale }
+const locale: Locale = Astro.props.locale ?? 'uk';
+const isRu = locale === 'ru';
+const lp = (path: string) => localizedPath(path, locale);
+const systems = isRu ? CANOPY_CONFIG_SYSTEMS_RU : CANOPY_CONFIG_SYSTEMS;
+
+// Static UI texts (server) and the strings the client script builds (passed in the JSON data as `t`).
+const ui = {
+  uk: {
+    steps: ['Система', 'Розміри', 'Скло', 'Кріплення', 'Опції', 'Монтаж', 'Заявка'], stepsLabel: 'Кроки конфігуратора',
+    hint: 'Ліворуч — вигляд спереду, праворуч — збоку. Фото — приклад системи.', estimate: 'Орієнтовна вартість', breakdown: 'Склад ціни',
+    chooseSystem: 'Оберіть тип козирка', dimensions: 'Вкажіть розміри', width: 'Ширина козирка, см', depth: 'Виліт (глибина), см',
+    glass: 'Скло', glassNote: 'Лише ламіноване загартоване скло (триплекс) — уламки тримаються на плівці.', coating: 'Покриття від бруду та води',
+    wall: 'Стіна та кріплення', wallJoint: 'Герметичне примикання до стіни', wallNote: 'Кріплення підбираємо під стіну; для утепленого фасаду — спеціальні анкери через утеплювач.',
+    options: 'Водовідвід і опції', gutter: 'Жолоб', install: 'Монтаж', installYes: 'Монтаж Space Glass', installYesNote: 'Замір, доставка, встановлення',
+    installNo: 'Без монтажу', installNoNote: 'Тільки виготовлення', city: 'Місто', cities: ['Київ', 'Одеса', 'Львів'], otherCity: 'Інше місто', otherValue: 'Інше',
+    yourConfig: 'Ваша конфігурація', product: 'Скляні козирки — конфігуратор', name: 'Ім’я', namePh: 'Ваше ім’я', phone: 'Телефон', comment: 'Коментар',
+    commentPh: 'Тип стіни, висота над дверима, фото входу — можна надіслати після дзвінка', consent: 'Погоджуюсь із', policy: 'політикою конфіденційності',
+    send: 'Надіслати конфігурацію', back: '← Назад', next: 'Далі →',
+    disclaimer: 'Ціна орієнтовна: товщину скла, кількість кронштейнів і кріплення визначаємо після заміру.'
+  },
+  ru: {
+    steps: ['Система', 'Размеры', 'Стекло', 'Крепление', 'Опции', 'Монтаж', 'Заявка'], stepsLabel: 'Шаги конфигуратора',
+    hint: 'Слева — вид спереди, справа — сбоку. Фото — пример системы.', estimate: 'Ориентировочная стоимость', breakdown: 'Состав цены',
+    chooseSystem: 'Выберите тип козырька', dimensions: 'Укажите размеры', width: 'Ширина козырька, см', depth: 'Вынос (глубина), см',
+    glass: 'Стекло', glassNote: 'Только ламинированное закалённое стекло (триплекс) — осколки держатся на плёнке.', coating: 'Покрытие от грязи и воды',
+    wall: 'Стена и крепление', wallJoint: 'Герметичное примыкание к стене', wallNote: 'Крепление подбираем под стену; для утеплённого фасада — специальные анкеры через утеплитель.',
+    options: 'Водоотвод и опции', gutter: 'Желоб', install: 'Монтаж', installYes: 'Монтаж Space Glass', installYesNote: 'Замер, доставка, установка',
+    installNo: 'Без монтажа', installNoNote: 'Только изготовление', city: 'Город', cities: ['Киев', 'Одесса', 'Львов'], otherCity: 'Другой город', otherValue: 'Другой',
+    yourConfig: 'Ваша конфигурация', product: 'Стеклянные козырьки — конфигуратор', name: 'Имя', namePh: 'Ваше имя', phone: 'Телефон', comment: 'Комментарий',
+    commentPh: 'Тип стены, высота над дверью, фото входа — можно прислать после звонка', consent: 'Соглашаюсь с', policy: 'политикой конфиденциальности',
+    send: 'Отправить конфигурацию', back: '← Назад', next: 'Далее →',
+    disclaimer: 'Цена ориентировочная: толщину стекла, количество кронштейнов и крепления определяем после замера.'
+  }
+}[locale];
+const t = {
+  uk: {
+    numLocale: 'uk-UA', uah: 'грн', noGutter: 'Без жолоба', slimGutter: 'Тонкий жолоб', largeGutter: 'Великий жолоб',
+    noteFrame: 'ELLA має вбудований водовідвід у рамі — жолоб не потрібен.', noteArch: 'Арочний козирок відводить воду по краях; жолоб — за окремим проєктом.',
+    noteGutter: 'Жолоб збирає воду з краю козирка й відводить у бік або в водостік.', cm: 'см', m2: 'м²', glassLine: 'Скло', coating: 'Покриття від бруду та води',
+    fixingLine: 'Кріплення', wallJoint: 'Герметичне примикання до стіни', installLine: 'Замір, доставка й монтаж', widthWord: 'Ширина', depthWord: 'Виліт',
+    coatingShort: 'покриття від бруду', wallJointShort: 'герметичне примикання', slimShort: 'тонкий жолоб', largeShort: 'великий жолоб',
+    summary: ['Козирок', 'Розміри', 'Скло', 'Стіна', 'Опції', 'Монтаж'], triplex: 'триплекс', noOptions: 'без опцій', yes: 'так', no: 'ні',
+    total: 'Разом', approx: 'Орієнтовно', toRequest: 'До заявки →', next: 'Далі →',
+    dimNoteParts: [': ширина ', ' см, виліт ', ' см. Більші розміри — за окремим проєктом.']
+  },
+  ru: {
+    numLocale: 'ru-UA', uah: 'грн', noGutter: 'Без желоба', slimGutter: 'Тонкий желоб', largeGutter: 'Большой желоб',
+    noteFrame: 'У ELLA встроенный водоотвод в раме — желоб не нужен.', noteArch: 'Арочный козырёк отводит воду по краям; желоб — по отдельному проекту.',
+    noteGutter: 'Желоб собирает воду с края козырька и отводит в сторону или в водосток.', cm: 'см', m2: 'м²', glassLine: 'Стекло', coating: 'Покрытие от грязи и воды',
+    fixingLine: 'Крепление', wallJoint: 'Герметичное примыкание к стене', installLine: 'Замер, доставка и монтаж', widthWord: 'Ширина', depthWord: 'Вынос',
+    coatingShort: 'покрытие от грязи', wallJointShort: 'герметичное примыкание', slimShort: 'тонкий желоб', largeShort: 'большой желоб',
+    summary: ['Козырёк', 'Размеры', 'Стекло', 'Стена', 'Опции', 'Монтаж'], triplex: 'триплекс', noOptions: 'без опций', yes: 'да', no: 'нет',
+    total: 'Итого', approx: 'Ориентировочно', toRequest: 'К заявке →', next: 'Далее →',
+    dimNoteParts: [': ширина ', ' см, вынос ', ' см. Большие размеры — по отдельному проекту.']
+  }
+}[locale];
+const data = { systems, glass: isRu ? GLASS_LABELS_RU : GLASS_LABELS, fixing: isRu ? FIXING_LABELS_RU : FIXING_LABELS, rate: EUR_RATE, coef: COEFFICIENT, opt: OPTION_FACTOR, installBase: INSTALL_UAH_BASE, installPerM2: INSTALL_UAH_PER_M2, img: CANOPY_IMG, t };
+const steps = ui.steps;
+const page = lp('/kozyrky-configurator/');
 ---
 <section class="rc" data-cc>
   <script type="application/json" data-cc-data set:html={JSON.stringify(data)} />
-  <ol class="rc__steps" aria-label="Кроки конфігуратора">
+  <ol class="rc__steps" aria-label={ui.stepsLabel}>
     {steps.map((label, i) => <li><button type="button" data-cc-goto={i}><span>{i + 1}</span>{label}</button></li>)}
   </ol>
 
@@ -26,89 +86,89 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
         <img data-cc-photo alt="" width="96" height="96" />
         <div><b data-cc-sysname></b><span data-cc-sysnote></span></div>
       </div>
-      <p class="rc__hint">Ліворуч — вигляд спереду, праворуч — збоку. Фото — приклад системи.</p>
+      <p class="rc__hint">{ui.hint}</p>
     </div>
 
     <div class="rc__panel">
       <div class="rc__price">
-        <div><small>Орієнтовна вартість</small><strong data-cc-total>—</strong></div>
-        <button type="button" class="rc__toggle" data-cc-toggle aria-expanded="false">Склад ціни</button>
+        <div><small>{ui.estimate}</small><strong data-cc-total>—</strong></div>
+        <button type="button" class="rc__toggle" data-cc-toggle aria-expanded="false">{ui.breakdown}</button>
       </div>
       <dl class="rc__breakdown" data-cc-breakdown hidden></dl>
 
       <form class="rc__body" data-cc-form onsubmit="return false">
         <fieldset class="rc__step" data-cc-step="0">
-          <legend>Оберіть тип козирка</legend>
+          <legend>{ui.chooseSystem}</legend>
           <!-- Server-rendered (same markup the script re-renders; the 2nd system is preselected) so the panel has its final height before JS runs — no layout shift. -->
-          <div class="rc__systems" data-cc-systems>{CANOPY_CONFIG_SYSTEMS.map((s, i) => <label class="rc__sys"><input type="radio" name="system" value={s.id} checked={i === 1} /><span><img src={`${CANOPY_IMG}/gp-${s.id}-192.webp`} alt="" width="120" height="120" loading="lazy" /><b>{s.title}</b><small>{s.name} · {s.note}</small></span></label>)}</div>
+          <div class="rc__systems" data-cc-systems>{systems.map((s, i) => <label class="rc__sys"><input type="radio" name="system" value={s.id} checked={i === 1} /><span><img src={`${CANOPY_IMG}/gp-${s.id}-192.webp`} alt="" width="120" height="120" loading="lazy" /><b>{s.title}</b><small>{s.name} · {s.note}</small></span></label>)}</div>
         </fieldset>
         <fieldset class="rc__step" data-cc-step="1" hidden>
-          <legend>Вкажіть розміри</legend>
+          <legend>{ui.dimensions}</legend>
           <div class="rc__fields">
-            <label>Ширина козирка, см<input type="number" name="W" step="1" value="150" inputmode="numeric" /></label>
-            <label>Виліт (глибина), см<input type="number" name="D" step="1" value="90" inputmode="numeric" /></label>
+            <label>{ui.width}<input type="number" name="W" step="1" value="150" inputmode="numeric" /></label>
+            <label>{ui.depth}<input type="number" name="D" step="1" value="90" inputmode="numeric" /></label>
           </div>
           <p class="rc__note" data-cc-dim-note></p>
         </fieldset>
         <fieldset class="rc__step" data-cc-step="2" hidden>
-          <legend>Скло</legend>
-          <p class="rc__note" style="margin:0 0 12px">Лише ламіноване загартоване скло (триплекс) — уламки тримаються на плівці.</p>
+          <legend>{ui.glass}</legend>
+          <p class="rc__note" style="margin:0 0 12px">{ui.glassNote}</p>
           <div class="rc__options rc__options--swatches" data-cc-glass></div>
-          <label class="rc__check"><input type="checkbox" name="coating" /> Покриття від бруду та води</label>
+          <label class="rc__check"><input type="checkbox" name="coating" /> {ui.coating}</label>
         </fieldset>
         <fieldset class="rc__step" data-cc-step="3" hidden>
-          <legend>Стіна та кріплення</legend>
+          <legend>{ui.wall}</legend>
           <div class="rc__options" data-cc-fixing></div>
-          <label class="rc__check" data-cc-wall><input type="checkbox" name="wallJoint" /> Герметичне примикання до стіни</label>
-          <p class="rc__note">Кріплення підбираємо під стіну; для утепленого фасаду — спеціальні анкери через утеплювач.</p>
+          <label class="rc__check" data-cc-wall><input type="checkbox" name="wallJoint" /> {ui.wallJoint}</label>
+          <p class="rc__note">{ui.wallNote}</p>
         </fieldset>
         <fieldset class="rc__step" data-cc-step="4" hidden>
-          <legend>Водовідвід і опції</legend>
+          <legend>{ui.options}</legend>
           <div data-cc-gutter-wrap>
-            <p class="rc__label">Жолоб</p>
+            <p class="rc__label">{ui.gutter}</p>
             <div class="rc__options" data-cc-gutter></div>
           </div>
           <label class="rc__check" data-cc-extra-wrap><input type="checkbox" name="extra" /> <span data-cc-extra></span></label>
           <p class="rc__note" data-cc-options-note></p>
         </fieldset>
         <fieldset class="rc__step" data-cc-step="5" hidden>
-          <legend>Монтаж</legend>
+          <legend>{ui.install}</legend>
           <div class="rc__options">
-            <label><input type="radio" name="install" value="yes" checked /><span>Монтаж Space Glass<small>Замір, доставка, встановлення</small></span></label>
-            <label><input type="radio" name="install" value="no" /><span>Без монтажу<small>Тільки виготовлення</small></span></label>
+            <label><input type="radio" name="install" value="yes" checked /><span>{ui.installYes}<small>{ui.installYesNote}</small></span></label>
+            <label><input type="radio" name="install" value="no" /><span>{ui.installNo}<small>{ui.installNoNote}</small></span></label>
           </div>
-          <label class="rc__select">Місто
+          <label class="rc__select">{ui.city}
             <select name="city">
-              <option>Київ</option><option>Одеса</option><option>Львів</option><option value="Інше">Інше місто</option>
+              {ui.cities.map((city) => <option>{city}</option>)}<option value={ui.otherValue}>{ui.otherCity}</option>
             </select>
           </label>
         </fieldset>
       </form>
 
       <div class="rc__step" data-cc-step="6" hidden>
-        <h2 class="rc__legend">Ваша конфігурація</h2>
+        <h2 class="rc__legend">{ui.yourConfig}</h2>
         <dl class="rc__summary" data-cc-summary></dl>
-        <form class="quote-form contacts-v15-form rc__request" data-lead-form data-success-url="/thank-you/">
-          <input name="locale" type="hidden" value="uk" />
-          <input name="page" type="hidden" value="/kozyrky-configurator/" />
-          <input name="product" type="hidden" value="Скляні козирки — конфігуратор" />
+        <form class="quote-form contacts-v15-form rc__request" data-lead-form data-success-url={lp('/thank-you/')}>
+          <input name="locale" type="hidden" value={locale} />
+          <input name="page" type="hidden" value={page} />
+          <input name="product" type="hidden" value={ui.product} />
           <input name="configuration" type="hidden" data-cc-config />
           <div class="contacts-form-grid">
-            <label>Ім’я<input name="name" type="text" autocomplete="name" placeholder="Ваше ім’я" required /></label>
-            <label>Телефон<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
+            <label>{ui.name}<input name="name" type="text" autocomplete="name" placeholder={ui.namePh} required /></label>
+            <label>{ui.phone}<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
           </div>
-          <label>Коментар<textarea name="comment" rows="3" placeholder="Тип стіни, висота над дверима, фото входу — можна надіслати після дзвінка"></textarea></label>
-          <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>Погоджуюсь із <a href="/privacy-policy/">політикою конфіденційності</a>.</span></label>
-          <button class="button button--mint" type="submit">Надіслати конфігурацію</button>
+          <label>{ui.comment}<textarea name="comment" rows="3" placeholder={ui.commentPh}></textarea></label>
+          <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>{ui.consent} <a href={lp('/privacy-policy/')}>{ui.policy}</a>.</span></label>
+          <button class="button button--mint" type="submit">{ui.send}</button>
           <p data-form-status hidden role="status"></p>
         </form>
       </div>
 
       <div class="rc__nav">
-        <button type="button" class="button button--outline" data-cc-prev>← Назад</button>
-        <button type="button" class="button button--mint" data-cc-next>Далі →</button>
+        <button type="button" class="button button--outline" data-cc-prev>{ui.back}</button>
+        <button type="button" class="button button--mint" data-cc-next>{ui.next}</button>
       </div>
-      <p class="rc__disclaimer">Ціна орієнтовна: товщину скла, кількість кронштейнів і кріплення визначаємо після заміру.</p>
+      <p class="rc__disclaimer">{ui.disclaimer}</p>
     </div>
   </div>
 </section>
@@ -122,9 +182,10 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
     const $ = <T extends Element = HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
     const form = $<HTMLFormElement>('[data-cc-form]');
     const systems = D.systems as Sys[];
+    const T = D.t;
     const state = { step: 0, sys: systems[1], glass: 'clear', fixing: 'masonry', gutter: 'none' };
     const LAST = 6;
-    const uah = (n: number) => `${(Math.round(n / 10) * 10).toLocaleString('uk-UA')} грн`;
+    const uah = (n: number) => `${(Math.round(n / 10) * 10).toLocaleString(T.numLocale)} ${T.uah}`;
     const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
     const radio = (name: string, value: string, label: string, checked: boolean, extra = '') =>
       `<label><input type="radio" name="${name}" value="${value}"${checked ? ' checked' : ''} /><span>${extra}${esc(label)}</span></label>`;
@@ -140,13 +201,13 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
       const g = s.gutter;
       $('[data-cc-gutter-wrap]').hidden = !g;
       if (!g) state.gutter = 'none';
-      $('[data-cc-gutter]').innerHTML = g ? [radio('gutter', 'none', 'Без жолоба', state.gutter === 'none'), radio('gutter', 'slim', 'Тонкий жолоб', state.gutter === 'slim'), radio('gutter', 'large', 'Великий жолоб', state.gutter === 'large')].join('') : '';
+      $('[data-cc-gutter]').innerHTML = g ? [radio('gutter', 'none', T.noGutter, state.gutter === 'none'), radio('gutter', 'slim', T.slimGutter, state.gutter === 'slim'), radio('gutter', 'large', T.largeGutter, state.gutter === 'large')].join('') : '';
       $('[data-cc-extra-wrap]').hidden = !s.extra;
       $('[data-cc-extra]').textContent = s.extra ? s.extra[0] : '';
       if (!s.extra) (form.elements.namedItem('extra') as HTMLInputElement).checked = false;
       $('[data-cc-wall]').hidden = !s.wallJoint;
       if (!s.wallJoint) (form.elements.namedItem('wallJoint') as HTMLInputElement).checked = false;
-      $('[data-cc-options-note]').textContent = s.support === 'frame' ? 'ELLA має вбудований водовідвід у рамі — жолоб не потрібен.' : s.support === 'arch' ? 'Арочний козирок відводить воду по краях; жолоб — за окремим проєктом.' : 'Жолоб збирає воду з краю козирка й відводить у бік або в водостік.';
+      $('[data-cc-options-note]').textContent = s.support === 'frame' ? T.noteFrame : s.support === 'arch' ? T.noteArch : T.noteGutter;
     };
 
     const num = (name: string) => Number((form.elements.namedItem(name) as HTMLInputElement).value) || 0;
@@ -163,19 +224,19 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
       const Wm = W / 1000, A = (W * Dp) / 1e6;
       const o = D.opt;
       const k = D.rate * D.coef;
-      const lines: [string, number][] = [[`${s.title} (${s.name}), ${(W / 10).toFixed(0)}×${(Dp / 10).toFixed(0)} см`, s.a + s.b * Wm + s.c * A]];
-      if (state.glass !== 'clear') lines.push([`Скло: ${D.glass[state.glass].label.toLowerCase()}, ${A.toFixed(2).replace('.', ',')} м²`, (s.glass[state.glass] || 0) * A * o]);
-      if (checked('coating')) lines.push(['Покриття від бруду та води', s.coating * A * o]);
+      const lines: [string, number][] = [[`${s.title} (${s.name}), ${(W / 10).toFixed(0)}×${(Dp / 10).toFixed(0)} ${T.cm}`, s.a + s.b * Wm + s.c * A]];
+      if (state.glass !== 'clear') lines.push([`${T.glassLine}: ${D.glass[state.glass].label.toLowerCase()}, ${A.toFixed(2).replace('.', ',')} ${T.m2}`, (s.glass[state.glass] || 0) * A * o]);
+      if (checked('coating')) lines.push([T.coating, s.coating * A * o]);
       if (state.fixing !== 'none') {
         const unit = s.fixing[state.fixing as 'masonry' | 'wood' | 'insulation'];
-        lines.push([`Кріплення: ${D.fixing[state.fixing].toLowerCase()}`, (s.fixing.unit === 'm' ? unit * Wm : unit * Math.max(1, s.holders)) * o]);
+        lines.push([`${T.fixingLine}: ${D.fixing[state.fixing].toLowerCase()}`, (s.fixing.unit === 'm' ? unit * Wm : unit * Math.max(1, s.holders)) * o]);
       }
-      if (checked('wallJoint') && s.wallJoint) lines.push(['Герметичне примикання до стіни', s.wallJoint * Wm * o]);
-      if (state.gutter !== 'none' && s.gutter) lines.push([state.gutter === 'slim' ? 'Тонкий жолоб' : 'Великий жолоб', s.gutter[state.gutter as 'slim' | 'large'] * Wm * o]);
+      if (checked('wallJoint') && s.wallJoint) lines.push([T.wallJoint, s.wallJoint * Wm * o]);
+      if (state.gutter !== 'none' && s.gutter) lines.push([state.gutter === 'slim' ? T.slimGutter : T.largeGutter, s.gutter[state.gutter as 'slim' | 'large'] * Wm * o]);
       if (checked('extra') && s.extra) lines.push([s.extra[0], s.extra[1] * o]);
       const items = lines.filter(([, v]) => v > 0.01).map(([t, v]) => [t, v * k] as [string, number]);
       const install = (form.querySelector<HTMLInputElement>('input[name="install"]:checked')?.value || 'yes') === 'yes';
-      if (install) items.push(['Замір, доставка й монтаж', D.installBase + D.installPerM2 * A]);
+      if (install) items.push([T.installLine, D.installBase + D.installPerM2 * A]);
       return { items, total: items.reduce((a, [, v]) => a + v, 0), W, D: Dp, A };
     };
 
@@ -200,7 +261,7 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
       if (s.support === 'arch') g += `<path d="M${cx - cw / 2} ${cy} Q${cx} ${cy - 40} ${cx + cw / 2} ${cy}" fill="none" stroke="#8fb0b8" stroke-width="6"/>`;
       if (s.support === 'side') g += `<rect x="${cx + cw / 2 - 6}" y="${cy + 4}" width="6" height="${Math.min(1800 * sc, ground - cy - 10)}" fill="${tint}" stroke="#8fb0b8"/>`;
       g += `<g stroke="#347a66" stroke-width="1.4" fill="none"><path d="M${cx - cw / 2} ${ground + 44}h${cw}M${cx - cw / 2} ${ground + 36}v16M${cx + cw / 2} ${ground + 36}v16"/></g>`;
-      g += `<text x="${cx}" y="${ground + 68}" text-anchor="middle" font-size="17" font-weight="700" fill="#1c211e">Ширина ${(W / 10).toFixed(0)} см</text>`;
+      g += `<text x="${cx}" y="${ground + 68}" text-anchor="middle" font-size="17" font-weight="700" fill="#1c211e">${T.widthWord} ${(W / 10).toFixed(0)} ${T.cm}</text>`;
       // ---- side view (560..790)
       const wx = 590, sc2 = Math.min(170 / Math.max(Dp, 1000), 1), sy = 170, dd = Dp * sc2, drop = dd * 0.09;
       g += `<rect x="560" y="40" width="${wx - 560}" height="${ground - 40}" fill="#e3e1da"/><line x1="${wx}" y1="40" x2="${wx}" y2="${ground}" stroke="#bdbab2" stroke-width="2"/><rect x="560" y="${ground}" width="230" height="20" fill="#d8d6cf"/>`;
@@ -215,7 +276,7 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
       if (s.support === 'side') g += `<rect x="${wx + dd - 4}" y="${sy + drop}" width="${Math.max(10, dd * 0.9)}" height="4" fill="none"/><rect x="${wx}" y="${sy + 10}" width="${dd}" height="${Math.min(170, ground - sy - 20)}" fill="${tint}" fill-opacity=".55" stroke="#8fb0b8"/>`;
       if (state.gutter !== 'none' && s.gutter) g += `<path d="M${wx + dd - 2} ${sy + drop - 2} q0 12 10 12 q10 0 10 -12" fill="none" stroke="#6b7478" stroke-width="3"/>`;
       g += `<g stroke="#347a66" stroke-width="1.4" fill="none"><path d="M${wx} ${sy - 118}h${dd}M${wx} ${sy - 126}v16M${wx + dd} ${sy - 126}v16"/></g>`;
-      g += `<text x="${wx + dd / 2}" y="${sy - 132}" text-anchor="middle" font-size="17" font-weight="700" fill="#1c211e">Виліт ${(Dp / 10).toFixed(0)} см</text>`;
+      g += `<text x="${wx + dd / 2}" y="${sy - 132}" text-anchor="middle" font-size="17" font-weight="700" fill="#1c211e">${T.depthWord} ${(Dp / 10).toFixed(0)} ${T.cm}</text>`;
       $('[data-cc-svg]').innerHTML = `<svg viewBox="0 0 800 490" role="img">${g}</svg>`;
       $<HTMLImageElement>('[data-cc-photo]').src = `${D.img}/gp-${s.id}-192.webp`;
       $('[data-cc-sysname]').textContent = `${s.title}`;
@@ -224,14 +285,14 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
 
     const summaryRows = (p: ReturnType<typeof price>) => {
       const s = state.sys;
-      const opts = [checked('coating') && 'покриття від бруду', checked('wallJoint') && 'герметичне примикання', state.gutter !== 'none' && (state.gutter === 'slim' ? 'тонкий жолоб' : 'великий жолоб'), checked('extra') && s.extra?.[0].toLowerCase()].filter(Boolean).join(', ');
+      const opts = [checked('coating') && T.coatingShort, checked('wallJoint') && T.wallJointShort, state.gutter !== 'none' && (state.gutter === 'slim' ? T.slimShort : T.largeShort), checked('extra') && s.extra?.[0].toLowerCase()].filter(Boolean).join(', ');
       return [
-        ['Козирок', `${s.title} (${s.name})`],
-        ['Розміри', `${(p.W / 10).toFixed(0)} × ${(p.D / 10).toFixed(0)} см (${p.A.toFixed(2).replace('.', ',')} м²)`],
-        ['Скло', `триплекс, ${D.glass[state.glass].label.toLowerCase()}`],
-        ['Стіна', D.fixing[state.fixing]],
-        ['Опції', opts || 'без опцій'],
-        ['Монтаж', `${(form.querySelector<HTMLInputElement>('input[name="install"]:checked')?.value || 'yes') === 'yes' ? 'так' : 'ні'}, ${(form.elements.namedItem('city') as HTMLSelectElement).value}`]
+        [T.summary[0], `${s.title} (${s.name})`],
+        [T.summary[1], `${(p.W / 10).toFixed(0)} × ${(p.D / 10).toFixed(0)} ${T.cm} (${p.A.toFixed(2).replace('.', ',')} ${T.m2})`],
+        [T.summary[2], `${T.triplex}, ${D.glass[state.glass].label.toLowerCase()}`],
+        [T.summary[3], D.fixing[state.fixing]],
+        [T.summary[4], opts || T.noOptions],
+        [T.summary[5], `${(form.querySelector<HTMLInputElement>('input[name="install"]:checked')?.value || 'yes') === 'yes' ? T.yes : T.no}, ${(form.elements.namedItem('city') as HTMLSelectElement).value}`]
       ];
     };
 
@@ -239,13 +300,13 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
       const s = state.sys;
       const wIn = form.elements.namedItem('W') as HTMLInputElement, dIn = form.elements.namedItem('D') as HTMLInputElement;
       wIn.min = String(s.minW / 10); wIn.max = String(s.maxW / 10); dIn.min = String(s.minD / 10); dIn.max = String(s.maxD / 10);
-      $('[data-cc-dim-note]').textContent = `${s.name}: ширина ${s.minW / 10}–${s.maxW / 10} см, виліт ${s.minD / 10}–${s.maxD / 10} см. Більші розміри — за окремим проєктом.`;
+      $('[data-cc-dim-note]').textContent = `${s.name}${T.dimNoteParts[0]}${s.minW / 10}–${s.maxW / 10}${T.dimNoteParts[1]}${s.minD / 10}–${s.maxD / 10}${T.dimNoteParts[2]}`;
       const p = price();
       $('[data-cc-total]').textContent = uah(p.total);
-      $('[data-cc-breakdown]').innerHTML = p.items.map(([t, v]) => `<div><dt>${esc(t)}</dt><dd>${uah(v)}</dd></div>`).join('') + `<div class="rc__breakdown-total"><dt>Разом</dt><dd>${uah(p.total)}</dd></div>`;
+      $('[data-cc-breakdown]').innerHTML = p.items.map(([t, v]) => `<div><dt>${esc(t)}</dt><dd>${uah(v)}</dd></div>`).join('') + `<div class="rc__breakdown-total"><dt>${T.total}</dt><dd>${uah(p.total)}</dd></div>`;
       const rows = summaryRows(p);
-      $('[data-cc-summary]').innerHTML = rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(String(v))}</dd></div>`).join('') + `<div><dt>Орієнтовно</dt><dd><b>${uah(p.total)}</b></dd></div>`;
-      $<HTMLInputElement>('[data-cc-config]').value = rows.map(([k, v]) => `${k}: ${v}`).join('; ') + `; Орієнтовно: ${uah(p.total)}`;
+      $('[data-cc-summary]').innerHTML = rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(String(v))}</dd></div>`).join('') + `<div><dt>${T.approx}</dt><dd><b>${uah(p.total)}</b></dd></div>`;
+      $<HTMLInputElement>('[data-cc-config]').value = rows.map(([k, v]) => `${k}: ${v}`).join('; ') + `; ${T.approx}: ${uah(p.total)}`;
       draw();
     };
 
@@ -257,7 +318,7 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
       $<HTMLButtonElement>('[data-cc-prev]').disabled = state.step === 0;
       const next = $<HTMLButtonElement>('[data-cc-next]');
       next.hidden = state.step === LAST;
-      next.textContent = state.step === LAST - 1 ? 'До заявки →' : 'Далі →';
+      next.textContent = state.step === LAST - 1 ? T.toRequest : T.next;
       update();
       if (scroll && window.innerWidth < 900) root.querySelector('.rc__panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
