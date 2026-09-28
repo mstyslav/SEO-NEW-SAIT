@@ -33,7 +33,7 @@ const models = [
     sizes: ['900×900', '800×1200', '900×1200', '900×1600'],
     colors: ['Білий', 'Графіт'],
     mediaTone: 'light',
-    image: 'es-h-white',
+    image: 'piddon-1-white',
     imageAlt: 'Душовий піддон Weston ES-H зі штучного каменю, білий, прямокутної форми',
     specs: [
       ['Матеріал', 'Штучний мармур (кварцова сировина)'],
@@ -54,7 +54,7 @@ const models = [
     sizes: ['800×800', '800×1000', '900×900', '800×1200', '800×1400', '900×1200'],
     colors: ['Білий', 'Графіт'],
     mediaTone: 'light',
-    image: 'es-a-white',
+    image: 'piddon-2-white',
     imageAlt: 'Душовий піддон Weston ES-A зі штучного каменю, білий, квадратної форми',
     specs: [
       ['Матеріал', 'Штучний камінь (кварцова сировина)'],
@@ -75,7 +75,8 @@ const models = [
     sizes: ['900×900', '1200×900'],
     colors: ['Білий'],
     mediaTone: 'dark',
-    image: 'wpd-k-square',
+    image: 'piddon-4-white',
+    imageMax: 760,
     imageAlt: 'Душовий піддон Weston WPD-K зі штучного мармуру, білий, квадратний',
     specs: [
       ['Матеріал', 'Надміцний штучний мармур'],
@@ -96,7 +97,8 @@ const models = [
     sizes: ['900×900', '1000×1000'],
     colors: ['Білий'],
     mediaTone: 'dark',
-    image: 'wpd-p-pentagon',
+    image: 'piddon-3-white',
+    imageMax: 760,
     imageAlt: 'Душовий піддон Weston WPD-P зі штучного каменю, білий, п’ятикутної форми зі скошеною передньою гранню',
     specs: [
       ['Матеріал', 'Штучний камінь (кварцова сировина)'],
@@ -196,7 +198,7 @@ const itemList: JsonLdObject = {
     // Request-based models without a firm Offer → plain list items, not schema.org Product.
     position: index + 1,
     name: `Душовий піддон ${model.name}`,
-    image: absoluteUrl(`/images/catalog/piddony/${model.image}-900.webp`, origin)
+    image: absoluteUrl(`/images/catalog/piddony/${model.image}-${model.imageMax ?? 900}.webp`, origin)
   }))
 };
 const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
@@ -205,7 +207,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
 <BaseLayout
   title={metaTitle}
   description={metaDescription}
-  image="/images/catalog/piddony/es-h-white-900.webp"
+  image="/images/catalog/piddony/piddon-1-white-900.webp"
   schemaType="CollectionPage"
   structuredData={structuredData}
   heroPreloadSrc="/images/catalog/piddony/piddony-hero-1200.webp"
@@ -269,7 +271,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
             <div class="piddon-card__media">
               <img
                 src={`/images/catalog/piddony/${model.image}-480.webp`}
-                srcset={`/images/catalog/piddony/${model.image}-480.webp 480w, /images/catalog/piddony/${model.image}-900.webp 900w`}
+                srcset={`/images/catalog/piddony/${model.image}-480.webp 480w, /images/catalog/piddony/${model.image}-${model.imageMax ?? 900}.webp ${model.imageMax ?? 900}w`}
                 sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw"
                 alt={model.imageAlt}
                 width="480"
@@ -425,11 +427,11 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         </div>
         <div class="hardware-details">
           <figure class="hardware-details__item">
-            <img src="/images/catalog/piddony/surface-graphite-480.webp" srcset="/images/catalog/piddony/surface-graphite-480.webp 480w, /images/catalog/piddony/surface-graphite-900.webp 900w" sizes="(max-width: 900px) 90vw, 45vw" alt="Графітовий душовий піддон зі штучного каменю з лінійною декоративною кришкою зливу" width="900" height="1351" loading="lazy" decoding="async" />
+            <img src="/images/catalog/piddony/piddon-1-drain-480.webp" srcset="/images/catalog/piddony/piddon-1-drain-480.webp 480w, /images/catalog/piddony/piddon-1-drain-900.webp 900w" sizes="(max-width: 900px) 90vw, 45vw" alt="Графітовий душовий піддон зі штучного каменю з лінійною декоративною кришкою зливу" width="900" height="1351" loading="lazy" decoding="async" />
             <figcaption>Кам’яна поверхня та кришка зливу</figcaption>
           </figure>
           <figure class="hardware-details__item">
-            <img src="/images/catalog/piddony/drain-detail-480.webp" srcset="/images/catalog/piddony/drain-detail-480.webp 480w, /images/catalog/piddony/drain-detail-900.webp 900w" sizes="(max-width: 900px) 90vw, 45vw" alt="Сифон для душового піддона, що входить у комплект" width="900" height="1351" loading="lazy" decoding="async" />
+            <img src="/images/catalog/piddony/piddon-1-siphon-480.webp" srcset="/images/catalog/piddony/piddon-1-siphon-480.webp 480w, /images/catalog/piddony/piddon-1-siphon-900.webp 900w" sizes="(max-width: 900px) 90vw, 45vw" alt="Сифон для душового піддона, що входить у комплект" width="900" height="1351" loading="lazy" decoding="async" />
             <figcaption>Сифон у комплекті</figcaption>
           </figure>
         </div>
@@ -440,7 +442,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       <div class="category-heading"><div><p class="eyebrow">Комплект</p><h2>Піддон + скляна душова Space Glass</h2></div><p>Піддон і скло краще узгоджувати одночасно, щоб розміри, двері та точки кріплення не конфліктували.</p></div>
       <div class="piddon-bundle">
         <figure class="piddon-bundle__media">
-          <img src="/images/catalog/piddony/bundle-lifestyle-480.webp" srcset="/images/catalog/piddony/bundle-lifestyle-480.webp 480w, /images/catalog/piddony/bundle-lifestyle-900.webp 900w" sizes="(max-width: 900px) 90vw, 45vw" alt="Білий душовий піддон зі штучного каменю зі скляною душовою зоною" width="900" height="900" loading="lazy" decoding="async" />
+          <img src="/images/catalog/piddony/piddon-2-interior-480.webp" srcset="/images/catalog/piddony/piddon-2-interior-480.webp 480w, /images/catalog/piddony/piddon-2-interior-900.webp 900w" sizes="(max-width: 900px) 90vw, 45vw" alt="Білий душовий піддон зі штучного каменю зі скляною душовою зоною" width="900" height="900" loading="lazy" decoding="async" />
         </figure>
         <div class="piddon-bundle__copy">
           <p>Коли піддон обраний до заміру скла, скляну перегородку чи двері виготовляють точно під його контур: без зайвих зазорів, з правильним притвором і водовідведенням. Space Glass бере на себе підбір піддона, узгодження геометрії, замір, виготовлення скла та монтаж.</p>

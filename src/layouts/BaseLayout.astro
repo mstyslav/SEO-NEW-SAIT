@@ -24,7 +24,7 @@ interface Props {
 
 const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, robots } = Astro.props;
 
-import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales } from '../i18n/helpers';
+import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales, hasLocalizedRoute } from '../i18n/helpers';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
 
 const resolvedLocale = normalizeLocale(locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
@@ -51,7 +51,9 @@ const schema = jsonLdGraph([
   ...extraStructuredData
 ]);
 const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
-const availableAlternateLocales = alternateLocales ?? supportedLocales;
+// hreflang only for language versions that really exist: a UA-only page must not declare
+// hreflang="ru" pointing at its own UA URL (localizedPath falls back to the UA path).
+const availableAlternateLocales = (alternateLocales ?? supportedLocales).filter((item) => item === 'uk' || item === resolvedLocale || hasLocalizedRoute(basePath, item));
 import ScrollProgress from '../components/ScrollProgress.astro';
 // The page language comes only from the URL (/ru/… = RU, everything else = UA). translate="no" +
 // notranslate stop browsers (Chrome/Yandex/Safari with a Russian UI) from auto-translating a UA page
@@ -73,6 +75,8 @@ import ScrollProgress from '../components/ScrollProgress.astro';
     <meta name="description" content={description} />
     {robots && <meta name="robots" content={robots} />}
     <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png" />
     <title>{title}</title>
@@ -86,7 +90,7 @@ import ScrollProgress from '../components/ScrollProgress.astro';
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
     <meta property="og:locale" content={localeNames[resolvedLocale]} />
-    {supportedLocales.filter((item) => item !== resolvedLocale).map((item) => <meta property="og:locale:alternate" content={localeNames[item]} />)}
+    {availableAlternateLocales.filter((item) => item !== resolvedLocale).map((item) => <meta property="og:locale:alternate" content={localeNames[item]} />)}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />

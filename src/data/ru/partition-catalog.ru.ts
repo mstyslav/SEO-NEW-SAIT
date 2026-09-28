@@ -67,11 +67,22 @@ const PROJ: Record<string, [string, string]> = {
   'dzerkalni-dveri-v-garderob': ['Кухня и комната, Киев', 'Стекло отделяет кухню от гостиной без потери света.'],
   'sklyani-peregorodky-u-garderobnu-v-m-odesa': ['Гардеробная, Киев', 'Стеклянная перегородка отделяет гардеробную от спальни.']
 };
+/** Photo file for each project slug: the photos kept their original names (proj-{file}-480/900.webp)
+ *  when the project slugs were restored to the old production URLs. */
+const PROJ_IMG: Record<string, string> = {
+  'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv': 'loft-kyiv',
+  'mizhkimnatni-peregorodky-v-dytyachu': 'loft-partition-teremky-kyiv',
+  'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2': 'loft-partitions-kselena-odesa',
+  'sklyani-peregorodky-dlya-ofisu-v-m-odesa': 'office-partitions-morskyi-odesa',
+  'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa': 'dental-clinic-partitions-odesa',
+  'dzerkalni-dveri-v-garderob': 'kitchen-partition-fjord-kyiv',
+  'sklyani-peregorodky-u-garderobnu-v-m-odesa': 'wardrobe-partition-crystal-springs-kyiv'
+};
 const projects = (heading: string, intro: string, keys: string[]) => ({
   eyebrow: 'Наши работы',
   heading,
   intro,
-  items: keys.map((k) => [...PROJ[k], `proj-${k}`] as [string, string, string])
+  items: keys.map((k) => [...PROJ[k], `proj-${PROJ_IMG[k]}`] as [string, string, string])
 });
 
 const COMMON: [string, string][] = [
