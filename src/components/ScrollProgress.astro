@@ -1,11 +1,13 @@
 ---
+import { localeFromPath } from '../i18n/helpers';
+const isRu = localeFromPath(Astro.url.pathname) === 'ru';
 ---
 
 <button
   class="sg-scroll-progress"
   type="button"
-  aria-label="Повернутися на початок сторінки"
-  title="Вгору"
+  aria-label={isRu ? 'Вернуться в начало страницы' : 'Повернутися на початок сторінки'}
+  title={isRu ? 'Наверх' : 'Вгору'}
   data-scroll-progress
 >
   <svg

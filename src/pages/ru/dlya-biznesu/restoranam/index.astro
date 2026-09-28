@@ -1,0 +1,6 @@
+---
+// RU business page /ru/dlya-biznesu/restoranam/ — shared BusinessPage template; content in src/data/ru/business-pages.ru.ts.
+import BusinessPage from '../../../../components/business/BusinessPage.astro';
+import { getBusinessPageRu } from '../../../../data/ru/business-pages.ru';
+---
+<BusinessPage page={getBusinessPageRu('restoranam')} locale="ru" />

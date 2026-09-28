@@ -52,7 +52,7 @@ const structuredData: JsonLdObject[] = [
       '@type': 'ListItem',
       position: index + 1,
       name: t.solutions[solution.slug].navLabel,
-      url: absoluteUrl(solution.path, origin)
+      url: absoluteUrl(lp(solution.path), origin)
     }))
   },
   ...(faqStructuredData ? [faqStructuredData] : [])
@@ -141,7 +141,7 @@ const choosePoints = t.choosePoints;
           </div>
           <div class="rishennya-hub__grid">
             {SOLUTIONS.map((solution) => (
-              <a class="rishennya-hub__card" href={solution.path}>
+              <a class="rishennya-hub__card" href={lp(solution.path)}>
                 <div class="rishennya-hub__card-media">
                   <img
                     src={`/images/solutions-new/${solution.heroImage.base}-800.webp`}

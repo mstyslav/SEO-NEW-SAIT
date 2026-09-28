@@ -1,0 +1,287 @@
+---
+// RU frameless glazing hub (mirrors src/pages/bezramne-sklinnya/index.astro; content: src/data/ru/frameless-catalog.ru.ts).
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import TrustBar from '../../../components/TrustBar.astro';
+import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../seo/schema';
+import { FRAMELESS_HUB, FRAMELESS_IMG } from '../../../data/frameless-catalog';
+import { framelessCategoriesRu as framelessCategories } from '../../../data/ru/frameless-catalog.ru';
+import { profileIcons } from '../../../data/profile-icons';
+import { localizedPath } from '../../../i18n/helpers';
+import '../../../styles/category-pages.css';
+import '../../../styles/shower-master.css';
+import '../../../styles/profile-systems.css';
+
+const lp = (path: string) => localizedPath(path, 'ru');
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(lp(FRAMELESS_HUB), origin);
+
+const title = 'Безрамное остекление';
+const h1 = 'Безрамное остекление на заказ';
+const metaTitle = 'Безрамное остекление террас, балконов и беседок на заказ | Space Glass';
+const metaDescription =
+  'Безрамное остекление террас, веранд, балконов, беседок и ресторанов: поворотно-складные, раздвижные, гильотинные и беспороговые системы, тёплое остекление со стеклопакетом. Замер, изготовление и монтаж в Киеве, Одессе и Львове.';
+
+const heroSrc = (w: number) => `${FRAMELESS_IMG}/cat-hub-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const hubItems = framelessCategories.map((category) => ({
+  title: category.name,
+  note: category.cardNote,
+  href: lp(category.path),
+  icon: profileIcons[`frameless/${category.slug}`]
+}));
+
+// One row per system, linked to the first page that describes it.
+const seen = new Set<string>();
+const systemsTable = framelessCategories.flatMap((category) =>
+  category.models
+    .filter((model) => (seen.has(model.id) ? false : (seen.add(model.id), true)))
+    .map((model) => {
+      const specs = Object.fromEntries(model.specs);
+      return {
+        name: model.name,
+        href: `${lp(category.path)}#${model.id}`,
+        direction: category.name,
+        kind: model.title ?? model.kind,
+        height: specs['Высота конструкции'] ?? specs['Высота ограждения'] ?? '—',
+        glass: specs['Стекло'] ?? specs['Стеклопакет'] ?? specs['Стекло ограждения'] ?? '—',
+        threshold: specs['Порог'] ?? '—'
+      };
+    })
+);
+
+const details = framelessCategories[0].details!;
+
+const benefits: [string, string][] = [
+  ['Панорама без рам', 'Между створками нет вертикальных профилей — только стекло от пола до потолка.'],
+  ['Проём открывается полностью', 'Створки складываются, раздвигаются или поднимаются — терраса снова открыта за секунды.'],
+  ['Безопасное стекло', 'Только закалённое стекло 8–10 мм, стеклопакет или триплекс, которые не ранят при разрушении.'],
+  ['Защита от погоды', 'Уплотнители между створками и отвод воды защищают от ветра, дождя, снега и пыли.'],
+  ['Любая форма', 'Прямые, Г- и П-образные, радиусные проёмы и беседки со многими углами.'],
+  ['Более длинный сезон', 'Терраса или летняя площадка работает на несколько месяцев дольше, а со стеклопакетом — почти круглый год.']
+];
+
+const types: [string, string][] = [
+  ['Поворотно-складные («книжка»)', 'Створки складываются пачкой у стены и открывают проём полностью. Порог от 7 до 61 мм.'],
+  ['Раздвижные (слайдинг)', 'Широкие створки до 1,3 м скользят, как в шкафу-купе. Порог от 7,5 мм.'],
+  ['Гильотинные', 'Створки движутся вертикально от электропривода — пульт, кнопка, смартфон.'],
+  ['Беспороговые', 'Створки висят на верхней направляющей — пол остаётся ровным.']
+];
+
+const faq: [string, string][] = [
+  ['Что такое безрамное остекление?', 'Остекление, в котором створки из закалённого стекла не имеют вертикальных рам: стекло держится только в верхнем и нижнем профиле. Открытые створки складываются, раздвигаются или поднимаются, освобождая проём.'],
+  ['Какие виды безрамного остекления бывают?', 'Поворотно-складные системы («книжка»), раздвижные (слайдинг), гильотинные с электроприводом и беспороговые верхнеподвесные. Для более тёплого остекления — системы под стеклопакет.'],
+  ['Что лучше для террасы: «книжка», слайдинг или гильотина?', '«Книжка» открывает проём полностью, слайдинг имеет более широкие створки и меньше стыков, гильотина управляется с пульта и не занимает места внутри. Выбираем под сценарий и проём.'],
+  ['Какое стекло используется?', 'Закалённое стекло 8 или 10 мм, закалённый стеклопакет 20–28 мм или триплекс. Стекло бывает прозрачным, сатинированным и тонированным в массе под бронзу или графит.'],
+  ['Тёплое ли безрамное остекление?', 'Системы с одинарным стеклом — для сезонного использования. Системы под стеклопакет (TIARA TWIN, SLIDING MAX, GILIOTINA THERMO) заметно теплее и продлевают сезон.'],
+  ['Можно ли остеклить без порога?', 'Да: верхнеподвесные ATRIUM, CENTRUM, MOMENTUM не имеют порога, а TIARA MAX ZERO и TIARA TWIN ZERO выступают над полом всего на 7 мм.'],
+  ['От чего зависит стоимость?', 'От типа системы, высоты и длины проёма, количества створок, стекла или стеклопакета, цвета профиля, автоматики и условий монтажа. Точная цена — после замера.'],
+  ['Выдерживает ли остекление ветер?', 'Да. Поворотно-складные системы TIARA рассчитаны на ветровую нагрузку до 174–176 кг/м²; для ветреных мест выбираем более высокие пороги и усиленные профили.'],
+  ['Безопасно ли безрамное остекление для детей?', 'Да. Закалённое стекло при разрушении рассыпается на тупые фрагменты, а замки первой створки имеют блокировку от открытия детьми.'],
+  ['Можно ли остеклить радиусную беседку или балкон?', 'Да, поворотно-складные системы остекляют радиусные, Г- и П-образные проёмы и беседки со многими углами.'],
+  ['Нужна ли крыша для безрамного остекления?', 'Да, систему устанавливают между полом и крышей или балкой. Если крыши нет, предлагаем стеклянную крышу VERANDA TWIN или алюминиевую перголу.'],
+  ['Подходит ли безрамное остекление для ресторана?', 'Да, для летних площадок чаще всего ставим гильотины GILIOTINA и слайдинги SLIDING — они быстро открываются и продлевают сезон на несколько месяцев.'],
+  ['Можно ли покрасить профиль?', 'Да: анодированный алюминий, Anthracite Grey или любой цвет RAL, для части систем — покраска под дерево.'],
+  ['Как ухаживать за безрамным остеклением?', 'Мыть стекло обычными средствами без абразивов и раз в сезон очищать направляющие от песка и листьев.'],
+  ['Будет ли продувать?', 'Между створками и по периметру стоят уплотнители — фетровые, силиконовые или магнитные в зависимости от системы, поэтому остекление не продувает.'],
+  ['Можно ли остеклить балкон в многоэтажке?', 'Да, для балконов есть панорамные системы BALCONMAX INTEGRA, BALCONTWIN INTEGRA и гильотина GILIOTINA BALCON. Согласование фасада с ОСМД советуем уточнить заранее.'],
+  ['Сколько длится монтаж?', 'Монтаж одной террасы, балкона или беседки обычно занимает от одного до нескольких дней после изготовления стекла.'],
+  ['Где вы работаете?', 'Замер и монтаж — в Киеве, Одессе и Львове с областями. Другие регионы — по договорённости.'],
+  ['Что нужно для предварительного расчёта?', 'Фото проёма, примерные размеры (ширина и высота), город и пожелания по типу открывания, порогу и стеклу.'],
+  ['Есть ли гарантия и сервис?', 'Да, на систему и монтаж, а также сервис после сдачи: регулировка, замена уплотнителей и роликов.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Алюминиевые раздвижные двери', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
+  ['Зимние сады', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
+  ['Перголы', '/alyuminiyevi-konstrukcziyi/pergoly/'],
+  ['Сетки плиссе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
+  ['Стеклянные ограждения балконов', '/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/'],
+  ['Тёплое или холодное остекление террасы', '/knowledge/teple-chy-kholodne-sklinnya-terasy/'],
+  ['Стеклянная крыша: что учесть', '/knowledge/sklyanyi-dakh-shcho-vrakhuvaty/'],
+  ['Остекление для ресторана', '/rishennya/dlya-restoranu/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: framelessCategories.length,
+  itemListElement: framelessCategories.map((category, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: category.name,
+    url: absoluteUrl(lp(category.path), origin)
+  }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
+---
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  locale="ru"
+  alternateLocales={['uk', 'ru']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Безрамное остекление террас, веранд, балконов, беседок и ресторанов: поворотно-складные, раздвижные, гильотинные и беспороговые системы из закалённого стекла или стеклопакета. Проектируем, изготавливаем и монтируем в Киеве, Одессе и Львове.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#types">Смотреть {framelessCategories.length} направлений</a>
+          <a class="button button--outline" href="#request">Получить расчёт</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Безрамное остекление террасы с видом на море" width="1080" height="1080" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="ru" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>Стекло вместо стен — и открытое пространство в тёплый день</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Безрамное остекление защищает террасу, веранду, балкон или беседку от ветра, дождя и пыли, но не прячет вид за рамами. Между стеклянными створками нет вертикальных профилей, а в открытом состоянии створки складываются «книжкой», раздвигаются, поднимаются или паркуются сбоку — проём освобождается почти полностью.</p>
+          <p>Мы подбираем систему под сценарий: сезонная терраса или терраса-гостиная, частый проход или ветреный берег, ручное открывание или пульт. Для межсезонья предлагаем тёплое безрамное остекление под стеклопакет, для ресторанов — автоматические гильотины, для входов и витрин — системы без порога.</p>
+          <p>Полный цикл — в наших руках: замер и проверка перекрытия, проект схемы створок и парковки, изготовление из закалённого стекла, монтаж и сервис.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>29 систем</b><span>«книжка», слайдинг, гильотина, без порога</span></li>
+          <li><b>Стекло 8–10 мм</b><span>или стеклопакет 20–28 мм</span></li>
+          <li><b>До 4 м в высоту</b><span>порог от 0 мм</span></li>
+          <li><b>Киев · Одесса · Львов</b><span>замер, монтаж и сервис</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Направления</p><h2>Системы и решения безрамного остекления</h2></div><p>Выберите тип системы или место установки — на каждой странице есть системы с характеристиками, фото, чертежами и сравнением.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Системы</p><h2>Все системы безрамного остекления в одной таблице</h2></div><p>Показатели — для базовых конфигураций. Нажмите на систему, чтобы перейти к её описанию.</p></div>
+      <div class="profile-table-wrap">
+        <table class="profile-table">
+          <thead><tr><th scope="col">Система</th><th scope="col">Направление</th><th scope="col">Тип</th><th scope="col">Высота</th><th scope="col">Стекло</th><th scope="col">Порог</th></tr></thead>
+          <tbody>
+            {systemsTable.map((row) => (
+              <tr><th scope="row"><a href={row.href}>{row.name}</a></th><td>{row.direction}</td><td>{row.kind}</td><td>{row.height}</td><td>{row.glass}</td><td>{row.threshold}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Преимущества</p><h2>Почему безрамное остекление</h2></div><p>Лёгкий вид и функциональность, которых не дают классические рамы.</p></div>
+      <div class="material-grid material-grid--parts">
+        {benefits.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Типы</p><h2>Как открывается безрамное остекление</h2></div><p>Четыре принципа движения створок — под разные проёмы и сценарии.</p></div>
+      <dl class="material-thickness">
+        {types.map(([name, text]) => <div><dt>{name}</dt><dd>{text}</dd></div>)}
+      </dl>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Стекло</p><h2>{details.heading}</h2></div><p>{details.intro}</p></div>
+      <div class="profile-details">
+        {details.items.map(([name, text, image]) => (
+          <figure>
+            <img src={`${FRAMELESS_IMG}/${image}-480.webp`} srcset={`${FRAMELESS_IMG}/${image}-480.webp 480w, ${FRAMELESS_IMG}/${image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, 24vw" alt={`Стекло ${name.toLowerCase()} для безрамного остекления`} width="480" height="480" loading="lazy" decoding="async" />
+            <figcaption><b>{name}</b><span>{text}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процесс</p><h2>От запроса до остеклённой террасы</h2></div></div>
+      <div class="category-process__grid">
+        <div><span>01</span><b>Запрос</b><small>Фото и размеры проёма</small></div>
+        <div><span>02</span><b>Консультация</b><small>Подбор системы и стекла</small></div>
+        <div><span>03</span><b>Замер</b><small>Геометрия, порог, перекрытие</small></div>
+        <div><span>04</span><b>Проект</b><small>Схема створок и парковки</small></div>
+        <div><span>05</span><b>Изготовление</b><small>Закалка и сборка</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Регулировка и сдача</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">География</p>
+          <h2>Безрамное остекление: замер и монтаж<br />в Киеве, Одессе и Львове</h2>
+          <p>Выезжаем на замер, проверяем перекрытие и пол, готовим проект и монтируем безрамное остекление террас, балконов, беседок и ресторанов в городах и областях.</p>
+          <p>Для объектов в других регионах условия выезда, доставки и монтажа согласовываем отдельно.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Киев</b><span>замер и монтаж</span></li><li><b>Одесса</b><span>замер и монтаж</span></li><li><b>Львов</b><span>замер и монтаж</span></li></ul>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock
+        title="FAQ о безрамном остеклении"
+        intro="О типах систем, стекле, порогах, тепле, ветре, уходе, цене и монтаже."
+        items={faq}
+        visibleCount={6}
+        expandTo={faq.length}
+        locale="ru"
+      />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Полезное</p><h2>Дальше по теме</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={lp(href)}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={lp(FRAMELESS_HUB)}
+      product={title}
+      title={'Нужен предварительный расчёт?'}
+      text={'Пришлите фото и размеры проёма — подберём систему безрамного остекления и подготовим ориентировочную стоимость.'}
+      options={framelessCategories.map((c) => c.name)}
+      optionsLabel="Направление"
+      commentPlaceholder="Что остекляем: терраса, балкон, беседка; размеры проёма, город"
+      locale="ru"
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

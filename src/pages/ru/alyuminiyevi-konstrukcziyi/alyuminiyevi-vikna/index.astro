@@ -1,0 +1,6 @@
+---
+// RU version of /alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/ — shared catalog template; content in src/data/ru/profile-systems.ru.ts.
+import ProfileCategoryPage from '../../../../components/profile/ProfileCategoryPage.astro';
+import { getProfileCategoryRu } from '../../../../data/ru/profile-systems.ru';
+---
+<ProfileCategoryPage category={getProfileCategoryRu('alu', 'vikna')} locale="ru" />

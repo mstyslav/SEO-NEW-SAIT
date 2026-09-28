@@ -1,0 +1,246 @@
+---
+// RU metal-plastic hub (mirrors src/pages/metaloplastykovi-konstrukcziyi/index.astro; content: src/data/ru/profile-systems.ru.ts).
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import TrustBar from '../../../components/TrustBar.astro';
+import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../seo/schema';
+import { IMG_BASE, PVC_HUB } from '../../../data/profile-systems';
+import { aluCategoriesRu as alu, pvcCategoriesRu as categories, getProfileCategoryRu } from '../../../data/ru/profile-systems.ru';
+import { profileIcons } from '../../../data/profile-icons';
+import { localizedPath } from '../../../i18n/helpers';
+import '../../../styles/category-pages.css';
+import '../../../styles/shower-master.css';
+import '../../../styles/profile-systems.css';
+
+const lp = (path: string) => localizedPath(path, 'ru');
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(lp(PVC_HUB), origin);
+
+const title = 'Металлопластиковые конструкции';
+const h1 = 'Металлопластиковые окна, двери и перегородки';
+const metaTitle = 'Металлопластиковые окна, двери, раздвижные двери и перегородки | Space Glass';
+const metaDescription =
+  'Металлопластиковые окна Aluplast, WDS и Ultra, входные и балконные двери, раздвижные двери HST и Smart-Slide, офисные перегородки из ПВХ. Замер, изготовление и монтаж в Киеве, Одессе и Львове.';
+
+const windows = getProfileCategoryRu('pvc', 'vikna');
+
+const heroSrc = (w: number) => `${IMG_BASE}/cat-pvc-vikna-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const hubItems = [
+  ...categories.map((category) => ({ title: category.name, note: category.cardNote, href: lp(category.path), icon: profileIcons[`pvc/${category.slug}`] })),
+  { title: 'Сетки плиссе', note: 'Москитные сетки, которые складываются в сторону, — для ПВХ и алюминиевых окон и дверей.', href: lp('/alyuminiyevi-konstrukcziyi/sitky-plise/'), icon: profileIcons['alu/sitky-plise'] },
+  { title: 'Алюминиевые конструкции', note: 'Когда нужны большие створки, узкие рамы, раздвижные системы или фасад.', href: lp('/alyuminiyevi-konstrukcziyi/'), icon: profileIcons['hub/alu'] }
+];
+
+const compare: [string, string, string][] = [
+  ['Цена', 'Доступнее для стандартных окон', 'Дороже, но служат дольше'],
+  ['Размеры створок', 'Стандартные окна и балконные двери', 'Большие и тяжёлые створки, стеклянные стены'],
+  ['Ширина рамы', 'Шире', 'Узкая — больше стекла'],
+  ['Раздвижные системы', 'Ограниченно', 'Подъёмно-раздвижные до 4 м'],
+  ['Цвет', 'Белый или ламинирование плёнкой', 'Любой RAL, порошковая покраска'],
+  ['Где уместны', 'Квартиры, офисы, типовые дома', 'Частные дома, фасады, террасы']
+];
+
+const faq: [string, string][] = [
+  ['Какие профили металлопластиковых окон вы предлагаете?', 'Aluplast IDEAL 8000 (85 мм, 6 камер), WDS 76 MD (76 мм, 6 камер) и Ultra 70 (70 мм, 5 камер). Подбираем профиль под объект и бюджет.'],
+  ['Что лучше: металлопластик или алюминий?', 'Металлопластик доступнее для стандартных окон в квартире. Алюминий выбирают для больших створок, узких рам, раздвижных систем и фасадов.'],
+  ['Изготавливаете ли окна по индивидуальным размерам?', 'Да. Каждое окно изготавливаем под конкретный проём после замера.'],
+  ['Какие стеклопакеты можно установить?', 'Двух- и трёхкамерные, энергосберегающие, акустические, солнцезащитные. Толщина — до 48 мм для Aluplast IDEAL 8000 и WDS 76 MD, до 40 мм для Ultra 70.'],
+  ['Делаете ли балконные блоки?', 'Да, окно и балконная дверь в одном профиле и цвете.'],
+  ['Устанавливаете ли москитные сетки?', 'Да. Оконные рамочные и рулонные, дверные и плиссе, раздвижные сетки для больших проёмов.'],
+  ['Выполняете ли демонтаж старых окон?', 'Да. Демонтируем старые конструкции, готовим проём и монтируем новые окна с изоляцией шва.'],
+  ['От чего зависит стоимость?', 'От профиля, размеров, количества створок, стеклопакета, фурнитуры, ламинирования и монтажа.'],
+  ['Что такое металлопластик?', 'ПВХ-профиль с несколькими воздушными камерами, усиленный стальным армированием. Пластик держит тепло, металл — геометрию створки.'],
+  ['Сколько служат металлопластиковые окна?', 'При правильном монтаже и уходе — десятилетия. Уплотнители и фурнитуру можно регулировать и заменять.'],
+  ['Можно ли сделать цветные окна?', 'Да, профиль ламинируют плёнкой под дерево или в цвета; доступные варианты зависят от системы.'],
+  ['Какой профиль самый тёплый?', 'Aluplast IDEAL 8000: 85 мм, 6 камер, 3 контура уплотнения и Uf 1,0 W/(m²K).'],
+  ['Какой профиль самый экономичный?', 'Ultra 70 — 5-камерный профиль с двумя контурами уплотнения для квартир и коммерческих помещений.'],
+  ['Можно ли сделать металлопластиковые двери?', 'Да, балконные и террасные двери в одной системе с окнами. Для больших раздвижных дверей лучше алюминий.'],
+  ['Ставите ли подоконники и отливы?', 'Да, подоконники, отливы и отделку откосов выполняем вместе с монтажом по согласованию.'],
+  ['Можно ли заменить окна зимой?', 'Да. Меняем окна по одному, поэтому помещение не остывает.'],
+  ['Какие москитные сетки предлагаете?', 'Оконные рамочные, элит и рулонные, дверные плиссе и раздвижные сетки под большие проёмы.'],
+  ['Сколько времени занимает изготовление?', 'После замера и согласования спецификации называем точные сроки изготовления и монтажа.'],
+  ['Где выполняете замер и монтаж?', 'В Киеве, Одессе и Львове с областями; другие города — по договорённости.'],
+  ['Есть ли гарантия?', 'Да, на окна и монтаж, а также сервисное обслуживание после установки.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Алюминиевые окна', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/'],
+  ['Алюминиевые раздвижные двери', '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/'],
+  ['Алюминиевые двери', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
+  ['Зимние сады', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
+  ['Безрамное остекление балкона', '/bezramne-sklinnya/sklinnya-balkoniv/'],
+  ['Стеклопакет: как выбрать', '/knowledge/sklopaket-yak-obraty/'],
+  ['Остекление для дома', '/pryvatnyj-sektor/'],
+  ['Оплата и доставка', '/delivery-payment/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: categories.length,
+  itemListElement: categories.map((category, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: category.name,
+    url: absoluteUrl(lp(category.path), origin)
+  }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
+---
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  locale="ru"
+  alternateLocales={['uk', 'ru']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Тёплые металлопластиковые окна, входные и балконные двери, раздвижные двери на террасу и офисные перегородки на профилях Aluplast, WDS и Ultra. Замеряем, изготавливаем по размерам и монтируем с изоляцией шва в Киеве, Одессе и Львове.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#types">Смотреть направления</a>
+          <a class="button button--outline" href="#request">Получить расчёт</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Металлопластиковые окна в светлой квартире с видом на город" width="1080" height="1080" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="ru" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Металлопластик</p><h2>Прочность металла и теплота пластика</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Металлопластиковые окна сочетают многокамерный ПВХ-профиль со стальным армированием внутри. Они обеспечивают высокий уровень тепло- и звукоизоляции, устойчивы к атмосферным воздействиям, имеют долгий срок службы и просты в обслуживании.</p>
+          <p>Space Glass изготавливает из металлопластика окна, входные и балконные двери, раздвижные двери на террасу и офисные перегородки, подбирает стеклопакет и фурнитуру под объект и бюджет.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>Aluplast · WDS · Ultra</b><span>проверенные профильные системы</span></li>
+          <li><b>5–6 камер</b><span>монтажная ширина 70–85 мм</span></li>
+          <li><b>Стеклопакет до 48 мм</b><span>тепло- и звукоизоляция</span></li>
+          <li><b>Двери и перегородки</b><span>входные, балконные, раздвижные, офисные</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Направления</p><h2>Что мы предлагаем</h2></div><p>Подробные характеристики, сравнение и советы по выбору — на странице каждого направления.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Профили</p><h2>Профильные системы рядом</h2></div><p>Характеристики профилей — по данным производителей.</p></div>
+      <div class="profile-table-wrap">
+        <table class="profile-table">
+          <thead><tr>{windows.compareColumns.map((column) => <th scope="col">{column}</th>)}</tr></thead>
+          <tbody>
+            {windows.compareRows.map(([first, ...rest], i) => (
+              <tr><th scope="row"><a href={`${lp(windows.path)}#${windows.models[i].id}`}>{first}</a></th>{rest.map((cell) => <td>{cell}</td>)}</tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Выбор материала</p><h2>Металлопластик или алюминий</h2></div><p>Оба материала тёплые — разница в размерах, внешнем виде и сценариях.</p></div>
+      <div class="profile-table-wrap">
+        <table class="profile-table">
+          <thead><tr><th scope="col">Критерий</th><th scope="col">Металлопластик</th><th scope="col">Алюминий</th></tr></thead>
+          <tbody>
+            {compare.map(([name, pvcText, aluText]) => <tr><th scope="row">{name}</th><td>{pvcText}</td><td>{aluText}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="profile-note"><a class="category-arrow-link" href={lp('/alyuminiyevi-konstrukcziyi/')}>Алюминиевые конструкции Aluprof <span aria-hidden="true">→</span></a></p>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Алюминий</p><h2>Нужно больше стекла?</h2></div><p>Для больших проёмов, выхода на террасу и фасадов — алюминиевые системы.</p></div>
+      <div class="profile-siblings">
+        {alu.slice(0, 6).map((item) => (
+          <a class="profile-sibling" href={lp(item.path)}>
+            <img src={`${IMG_BASE}/${item.heroImage}-480.webp`} alt="" width="480" height="480" loading="lazy" decoding="async" />
+            <span><b>{item.name}</b><small>{item.cardNote}</small></span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процесс</p><h2>От замера до монтажа</h2></div></div>
+      <div class="category-process__grid">
+        <div><span>01</span><b>Запрос</b><small>Количество окон и размеры</small></div>
+        <div><span>02</span><b>Подбор</b><small>Профиль, стеклопакет, фурнитура</small></div>
+        <div><span>03</span><b>Замер</b><small>Точные размеры проёмов</small></div>
+        <div><span>04</span><b>Изготовление</b><small>По согласованной спецификации</small></div>
+        <div><span>05</span><b>Демонтаж</b><small>Старых окон — при необходимости</small></div>
+        <div><span>06</span><b>Монтаж</b><small>С изоляцией шва</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock
+        title="FAQ о металлопластиковых конструкциях"
+        intro="О профилях, стеклопакетах, москитных сетках, замере и монтаже."
+        items={faq}
+        visibleCount={6}
+        expandTo={faq.length}
+        locale="ru"
+      />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Полезное</p><h2>Дальше по теме</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={lp(href)}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={lp(PVC_HUB)}
+      product={title}
+      title={'Посчитаем окна для вашего объекта'}
+      text={'Укажите количество окон и примерные размеры — подберём профиль и стеклопакет и подготовим ориентировочную стоимость.'}
+      options={[...categories.map((c) => c.name), 'Сетки плиссе', 'Алюминиевые конструкции']}
+      optionsLabel="Направление"
+      commentPlaceholder="Что нужно: тип конструкции, размеры, количество, город объекта"
+      locale="ru"
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

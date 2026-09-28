@@ -1,0 +1,287 @@
+---
+// RU mirrors hub (mirrors src/pages/dzerkala/index.astro; content: src/data/ru/mirror-catalog.ru.ts).
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import TrustBar from '../../../components/TrustBar.astro';
+import ProjectCard from '../../../components/projects/ProjectCard.astro';
+import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
+import { faqSchema, type JsonLdObject } from '../../../seo/schema';
+import { mirrorTypes } from '../../../data/mirror-types';
+import { MIRROR_HUB, MIRROR_IMG } from '../../../data/mirror-catalog';
+import { mirrorCategoriesRu as mirrorCategories } from '../../../data/ru/mirror-catalog.ru';
+import { localizedPath } from '../../../i18n/helpers';
+import '../../../styles/category-pages.css';
+import '../../../styles/projects-common.css';
+import '../../../styles/shower-master.css';
+import '../../../styles/profile-systems.css';
+
+const lp = (path: string) => localizedPath(path, 'ru');
+const title = 'Зеркала';
+const h1 = 'Зеркала на заказ';
+const subtitle = 'Зеркала по индивидуальным размерам: с LED-подсветкой, в раме, на стену, зеркальные панно, для спортзалов и салонов красоты';
+
+// Same line-art icons as the UA hub (keyed by mirror.iconKey, see src/data/mirror-types.ts).
+const iconWrap = (p: string) =>
+  `<svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const icons: Record<string, string> = {
+  led: iconWrap('<rect x="11" y="8" width="18" height="24"/><path d="M6 12v-4h4M34 12v-4h-4M6 28v4h4M34 28v4h-4"/>'),
+  framed: iconWrap('<rect x="7" y="6" width="26" height="28"/><rect x="12" y="11" width="16" height="18"/>'),
+  wall: iconWrap('<path d="M5 7h30v26H5z"/><path d="M15 7v26M25 7v26"/>'),
+  panno: iconWrap('<path d="M6 6h12v12H6zM22 6h12v12H22zM6 22h12v12H6zM22 22h12v12H22z"/>'),
+  gym: iconWrap('<rect x="4" y="7" width="32" height="24"/><path d="M4 35h32M10 31v4M30 31v4"/>'),
+  salon: iconWrap('<rect x="12" y="7" width="16" height="26"/><path d="M8 12h.01M8 20h.01M8 28h.01M32 12h.01M32 20h.01M32 28h.01"/>')
+};
+
+const items = mirrorTypes.map((mirror) => ({
+  title: mirror.label.ru,
+  note: mirrorCategories.find((category) => category.slug === mirror.slug)?.cardNote ?? '',
+  href: lp(mirror.href),
+  icon: icons[mirror.iconKey]
+}));
+
+const popularIds = ['dzerkalo-como', 'dzerkalo-agnes', 'dzerkalo-moon', 'dzerkalo-elara', 'dzerkalo-black-water', 'dzerkalo-mega-crown'];
+const popularModels = popularIds.map((id) => {
+  const category = mirrorCategories.find((item) => item.models.some((model) => model.id === id))!;
+  return { model: category.models.find((model) => model.id === id)!, category };
+});
+const mirrorDetails = mirrorCategories.find((item) => item.details)!.details!;
+
+const relatedLinks: [string, string][] = [
+  ['Как выбрать размер и форму зеркала', '/knowledge/yak-obraty-dzerkalo-rozmir-forma/'],
+  ['Зеркало с подсветкой: что учесть', '/knowledge/dzerkalo-z-pidsvitkoyu-shcho-vrakhuvaty/'],
+  ['Зеркало в ванную: размер и монтаж', '/knowledge/dzerkalo-u-vannu/'],
+  ['Зеркальная стена: стыки и монтаж', '/knowledge/dzerkalna-stina/'],
+  ['Зеркало в раме: профиль и крепление', '/knowledge/dzerkalo-v-rami/'],
+  ['Зеркало с подогревом: антизапотевание', '/knowledge/dzerkalo-z-pidigrivom/'],
+  ['Фигурное зеркало по шаблону', '/knowledge/fasonne-dzerkalo-shablon/'],
+  ['Монтаж зеркала на стену', '/knowledge/montazh-dzerkala-na-stinu/']
+];
+
+const mirrorProjects = (await getCollection('projects', ({ data }) =>
+  data.status === 'published' && data.locale === 'uk' && data.category === 'mirrors'))
+  .map(({ data }) => data)
+  .sort((a, b) => a.sortOrder - b.sortOrder);
+
+const faq: [string, string][] = [
+  ['От чего зависит стоимость зеркала?', 'От габаритов и формы, типа зеркального полотна, обработки кромки (полировка или фацет), наличия подсветки и подогрева, рамы, вырезов и условий монтажа.'],
+  ['Можно ли изготовить зеркало по индивидуальным размерам?', 'Да. Большинство зеркал изготавливаем по согласованным размерам под конкретную стену, тумбу или нишу после проверки предоставленных размеров или замера.'],
+  ['Какие формы зеркал возможны?', 'Прямоугольные, квадратные, круглые и фигурные по шаблону. Сложный контур требует точного шаблона и продуманного расположения креплений.'],
+  ['Какая обработка кромки доступна?', 'Открытую кромку полируют. Фацет создаёт декоративное преломление света, но уменьшает полезную площадь отражения и влияет на габариты.'],
+  ['Что учесть для зеркала с LED-подсветкой?', 'Схему электрики и сценарий света согласовывают до изготовления: тип света (контурный или фронтальный), точку вывода кабеля, выключатель, при необходимости — подогрев и доступ к блоку питания для сервиса.'],
+  ['Зачем нужен подогрев зеркала?', 'Подогрев уменьшает запотевание центральной зоны зеркала после душа. Он не заменяет вентиляцию помещения.'],
+  ['Можно ли сделать вырезы под розетки, светильники или крепления?', 'Да. Точное положение вырезов и отверстий задают до изготовления — после закалки зеркальное полотно не сверлят и не подрезают.'],
+  ['Какое зеркало подходит для ванной комнаты?', 'Исполнение, рассчитанное на влажность: учитывают состояние и материал стены, вентиляцию, расположение электрики и способ крепления.'],
+  ['Как крепят большое или тяжёлое зеркало?', 'Способ крепления зависит от размера, веса, влажности и материала стены. Для клеевого монтажа применяют материалы, совместимые с амальгамой; для больших полотен могут понадобиться закладные или механический профиль.'],
+  ['Что такое зеркальная стена и как её монтируют?', 'Это сплошная зеркальная плоскость из нескольких модулей. Раскладку швов, размеры модулей и подготовку основания (ровность, сухость) согласовывают на чертеже до производства.'],
+  ['Делаете ли зеркала для спортзалов и студий танца?', 'Да. Для залов используют полотно 4–6 мм с травмозащитной плёнкой, сплошную плоскость с минимальными швами и точной плоскостностью. Подробнее — на странице «Зеркала для спортзалов».'],
+  ['Делаете ли зеркала для салонов красоты, парикмахерских и барбершопов?', 'Да. Для салонов важны равномерный фронтальный свет с корректной цветопередачей и надёжное настенное крепление. Подробнее — на странице «Зеркала для салонов красоты».'],
+  ['Работаете ли вы с ресторанами, гостиницами и офисами?', 'Да. Для коммерческих объектов согласовываем раскладку модулей, безопасное полотно и способ крепления под нагрузку и график работ.'],
+  ['Можно ли зеркало в раме?', 'Да, в металлическом, алюминиевом или декоративном профиле. Рама завершает контур и защищает кромку; тип профиля подбирают под интерьер и размер.'],
+  ['Когда нужен профессиональный замер?', 'Финальный замер делают после завершения чистовых поверхностей, на которые устанавливается зеркало, и когда известны точки электровывода для подсветки.'],
+  ['Что подготовить для предварительного расчёта?', 'Фото места, примерные размеры, город, пожелания по форме, подсветке, раме и обработке кромки.'],
+  ['В каких городах выполняете замер и монтаж?', 'Замер и монтаж — Киев, Львов и Одесса с областями. Готовые зеркала и комплектующие доставляем по всей Украине в зависимости от габаритов и доступа к объекту.'],
+  ['Можно ли заказать только изготовление зеркала, без монтажа?', 'Да, в части заказов возможно изготовление с доставкой без монтажа — при условии безопасной транспортировки габаритов.'],
+  ['Какие готовые модели зеркал вы предлагаете?', 'В каталоге Space Glass есть готовые модели: зеркала с LED-подсветкой (COMO, KING, AGNES, MOON), аморфные AMO, зеркала в металлической, алюминиевой и деревянной раме и большие MEGA MIRROR. Ориентировочные цены — на страницах видов зеркал.'],
+  ['Подходят ли зеркала с подсветкой для ванной комнаты?', 'Да. Готовые модели Space Glass имеют класс защиты IP44 и полотно Saint-Gobain MIRALITE PURE, устойчивое к коррозии и царапинам.']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] : [];
+---
+<BaseLayout
+  title={`${h1} — Space Glass`}
+  description="Изготовление зеркал на заказ по индивидуальным размерам: с LED-подсветкой, в ванную, в раме, на стену, зеркальные панно, для спортзалов, салонов красоты и бизнеса. Замер и монтаж в Киеве, Одессе и Львове."
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  locale="ru"
+  alternateLocales={['uk', 'ru']}
+  image={`${MIRROR_IMG}/sg-moon-900.webp`}
+  heroPreloadSrc={`${MIRROR_IMG}/sg-moon-900.webp`}
+  heroPreloadSrcset={`${MIRROR_IMG}/sg-moon-480.webp 480w, ${MIRROR_IMG}/sg-moon-900.webp 900w`}
+  heroPreloadSizes="(max-width: 900px) 100vw, 50vw"
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">{subtitle}. Подбираем тип зеркального полотна, обработку кромки, раму и подсветку, выполняем замер, изготовление и монтаж.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#types">Смотреть виды</a>
+          <a class="button button--outline" href="#request">Получить расчёт</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img
+            src={`${MIRROR_IMG}/sg-moon-900.webp`}
+            srcset={`${MIRROR_IMG}/sg-moon-480.webp 480w, ${MIRROR_IMG}/sg-moon-900.webp 900w`}
+            sizes="(max-width: 900px) 100vw, 50vw"
+            alt="Ростовое зеркало Space Glass MOON в форме полукруга с подсветкой в спальне"
+            width="900"
+            height="900"
+            style="object-position:50% 38%"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="ru" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Индивидуальное изготовление</p><h2>Зеркала по размерам вашего интерьера</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Готовое зеркало редко точно совпадает со стеной, тумбой или нишей: меняются ширина, высота монтажа, положение светильников и розеток. Поэтому мы изготавливаем зеркало под конкретное место — в квартире, доме или на коммерческом объекте.</p>
+          <p>Работа идёт полным циклом: замер или проверка размеров, согласование формы, кромки, рамы и схемы подсветки, изготовление и монтаж. Форму, вырезы и расположение креплений фиксируем до производства — после закалки зеркальное полотно не меняют.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>Индивидуальные размеры и форма</b><span>под фактическую стену, тумбу или нишу</span></li>
+          <li><b>Кромка на выбор</b><span>полировка или декоративный фацет</span></li>
+          <li><b>LED-подсветка и подогрев</b><span>по согласованной схеме электрики</span></li>
+          <li><b>Киев · Одесса · Львов</b><span>и доставка по Украине</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Виды</p><h2>Виды зеркал</h2></div><p>Выберите тип — дальше уточним размеры, форму, кромку, раму, подсветку и формат монтажа.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {items.map((item)=>(
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Каталог</p><h2>Популярные модели Space Glass</h2></div><p>Готовые зеркала с подсветкой и в раме. Цены ориентировочные, для минимального размера.</p></div>
+      <div class="profile-grid">
+        {popularModels.map(({ model, category }) => (
+          <article class="profile-card">
+            <div class="profile-card__media">
+              <img src={`${MIRROR_IMG}/${model.image}-480.webp`} srcset={`${MIRROR_IMG}/${model.image}-480.webp 480w, ${MIRROR_IMG}/${model.image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" alt={model.imageAlt ?? model.name} width="480" height="480" loading="lazy" decoding="async" />
+              <span class="profile-card__kind">{model.kind}</span>
+            </div>
+            <div class="profile-card__body">
+              <h3>{model.name}</h3>
+              <p class="profile-card__blurb">{model.blurb}</p>
+              <p class="profile-card__price"><strong>{model.priceFrom}</strong><span>{model.priceNote}</span></p>
+              <a class="button button--mint profile-card__cta" href={`${lp(category.path)}#${model.id}`}>{category.name} →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Качество</p><h2>{mirrorDetails.heading}</h2></div><p>{mirrorDetails.intro}</p></div>
+      <div class="profile-details">
+        {mirrorDetails.items.map(([name, text, image]) => (
+          <figure>
+            <img src={`${MIRROR_IMG}/${image}-480.webp`} srcset={`${MIRROR_IMG}/${image}-480.webp 480w, ${MIRROR_IMG}/${image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, 24vw" alt={name} width="480" height="480" loading="lazy" decoding="async" />
+            <figcaption><b>{name}</b><span>{text}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Для бизнеса</p><h2>Зеркала для коммерческих пространств</h2></div><p>Спортзалы и салоны красоты — отдельные направления выше. Здесь — решения для ресторанов, гостиниц, офисов и шоурумов.</p></div>
+      <div class="category-prose">
+        <p>Для ресторанов, баров и кафе зеркальные стены визуально расширяют зал и работают со сценическим освещением. Для гостиниц — зеркала в номера, санузлы и лифтовые холлы по единому стандарту объекта. Для офисов, шоурумов и магазинов — большие зеркальные плоскости, зеркала для примерочных и входных зон.</p>
+        <p>Для коммерческих объектов согласовываем раскладку модулей, способ крепления и безопасное полотно под фактическую нагрузку, график работ и доступ на объект.</p>
+      </div>
+      <a class="category-arrow-link" href="#request">Обсудить проект для бизнеса <span aria-hidden="true">→</span></a>
+    </section>
+
+    {mirrorProjects.length > 0 && (
+      <section class="category-section">
+        <div class="category-heading category-heading--projects">
+          <div class="category-heading--projects__title">
+            <p class="eyebrow">Портфолио</p>
+            <h2>Реализованные зеркала</h2>
+          </div>
+          <div class="category-heading--projects__aside">
+            <a class="category-arrow-link" href={lp('/project/')}>Смотреть все проекты <span aria-hidden="true">→</span></a>
+            <p>Подборка реализованных зеркал Space Glass — с LED-подсветкой, для жилых и коммерческих интерьеров.</p>
+          </div>
+        </div>
+        <div class="projects-index-v2__grid category-projects-grid">
+          {mirrorProjects.map((project) => <ProjectCard project={project} locale="ru" href={lp(`/project/${project.slug}/`)} />)}
+        </div>
+      </section>
+    )}
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процесс</p><h2>От запроса до готового зеркала</h2></div></div>
+      <div class="category-process__grid">
+        <div><span>01</span><b>Запрос</b><small>Фото, размеры, пожелания</small></div>
+        <div><span>02</span><b>Оценка</b><small>Форма, кромка, подсветка</small></div>
+        <div><span>03</span><b>Замер</b><small>Стена и точки электрики</small></div>
+        <div><span>04</span><b>Чертёж</b><small>Размеры, вырезы, крепления</small></div>
+        <div><span>05</span><b>Изготовление</b><small>Контроль качества</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Установка и подключение</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">География</p>
+          <h2>Замер и монтаж зеркал</h2>
+          <p>Замер и монтаж выполняем в Киеве, Львове и Одессе с областями. Готовые зеркала и комплектующие доставляем по всей Украине — условия зависят от города, габаритов и доступа к объекту.</p>
+        </div>
+        <ul class="category-geo__cities">
+          <li><b>Киев</b><span>замер и монтаж</span></li>
+          <li><b>Одесса</b><span>замер и монтаж</span></li>
+          <li><b>Львов</b><span>замер и монтаж</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock
+        title="FAQ о зеркалах: цена, размеры, подсветка, монтаж"
+        intro="Отвечаем на основные вопросы о зеркалах на заказ — стоимость, индивидуальные размеры и форма, обработка кромки, LED-подсветка, подогрев, крепление, замер, доставка и монтаж."
+        items={faq}
+        visibleCount={6}
+        expandTo={faq.length}
+        locale="ru"
+      />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Полезное</p><h2>Дальше по теме</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label,href])=>(<a href={lp(href)}>{label}</a>))}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={lp(MIRROR_HUB)}
+      product="Зеркала"
+      title="Нужен предварительный расчёт?"
+      text="Пришлите фото, примерные размеры и пожелания по форме, раме и подсветке — подготовим конфигурацию и ориентировочную стоимость."
+      options={mirrorTypes.map((mirror) => mirror.label.ru)}
+      optionsLabel="Вид зеркала"
+      commentPlaceholder="Размер, форма, рама, подсветка, место установки"
+      locale="ru"
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

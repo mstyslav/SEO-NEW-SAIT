@@ -8,10 +8,19 @@ import { railingCategoriesRu } from './railing-catalog.ru';
 import { canopyCategoriesRu } from './canopy-catalog.ru';
 import { partitionCategoriesRu } from './partition-catalog.ru';
 import { showerCategoriesRu } from './shower-catalog.ru';
+import { aluCategoriesRu, pvcCategoriesRu } from './profile-systems.ru';
+import { mirrorCategoriesRu } from './mirror-catalog.ru';
+import { framelessCategoriesRu } from './frameless-catalog.ru';
+import { doorCategoriesRu } from './door-catalog.ru';
 
 export const ruCategoriesByGroup: Partial<Record<ProfileGroup, ProfileCategory[]>> = {
   railings: railingCategoriesRu,
   canopies: canopyCategoriesRu,
   partitions: partitionCategoriesRu,
-  shower: showerCategoriesRu
+  shower: showerCategoriesRu,
+  alu: aluCategoriesRu,
+  pvc: pvcCategoriesRu,
+  mirror: mirrorCategoriesRu,
+  frameless: framelessCategoriesRu,
+  doors: doorCategoriesRu
 };

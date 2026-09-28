@@ -1,0 +1,270 @@
+---
+// RU glass facades hub (mirrors src/pages/poslugy/sklyani-fasady/index.astro; card texts: src/data/ru/facade-catalog.ru.ts).
+// The six facade child pages have no RU version yet, so their cards link to the UA pages (lp() falls back).
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Header from '../../../../components/Header.astro';
+import Footer from '../../../../components/Footer.astro';
+import FAQBlock from '../../../../components/FAQBlock.astro';
+import Breadcrumbs from '../../../../components/Breadcrumbs.astro';
+import TrustBar from '../../../../components/TrustBar.astro';
+import ProfileRequestForm from '../../../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../../seo/schema';
+import { FACADE_HUB } from '../../../../data/facade-catalog';
+import { facadeHubCardsRu as facadeCategories } from '../../../../data/ru/facade-catalog.ru';
+import { IMG_BASE } from '../../../../data/profile-systems';
+import { profileIcons } from '../../../../data/profile-icons';
+import { localizedPath } from '../../../../i18n/helpers';
+import '../../../../styles/category-pages.css';
+import '../../../../styles/shower-master.css';
+import '../../../../styles/profile-systems.css';
+
+const lp = (path: string) => localizedPath(path, 'ru');
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(lp(FACADE_HUB), origin);
+
+const title = 'Стеклянные фасады';
+const h1 = 'Стеклянные фасады зданий на заказ';
+const metaTitle = 'Стеклянные фасады зданий на заказ — стоечно-ригельные, структурные | Space Glass';
+const metaDescription =
+  'Стеклянные фасады зданий на системах Aluprof: стоечно-ригельные, структурные и элементные, энергоэффективные фасады, фасады частных домов, витрины и входные группы. Проект, изготовление и монтаж в Киеве, Одессе, Львове.';
+
+const heroSrc = (w: number) => `${IMG_BASE}/cat-fas2-hub-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const hubItems = facadeCategories.map((category) => ({
+  title: category.name,
+  note: category.cardNote,
+  href: lp(category.path),
+  icon: profileIcons[`facade/${category.slug}`]
+}));
+
+// One row per system, linked to the first page that describes it.
+const seen = new Set<string>();
+const systemsTable = facadeCategories.flatMap((category) =>
+  category.models
+    .filter((model) => (seen.has(model.id) ? false : (seen.add(model.id), true)))
+    .map((model) => ({
+      name: model.name.replace(/^Aluprof /, ''),
+      href: `${lp(category.path)}#${model.id}`,
+      direction: category.name,
+      kind: model.kind,
+      key: model.specs.slice(0, 2).map(([k, v]) => `${k.toLowerCase()}: ${v}`).join('; ')
+    }))
+);
+
+const benefits: [string, string][] = [
+  ['Свет и пространство', 'Стекло от перекрытия до перекрытия наполняет помещения дневным светом и открывает вид.'],
+  ['Энергоэффективность', 'Тёплые системы с Uf от 0,55 W/(m²K), энергосберегающие стеклопакеты и солнцезащита снижают расходы на климат.'],
+  ['Быстрый монтаж', 'Лёгкая конструкция, а элементные фасады монтируют модулями заводской сборки без лесов.'],
+  ['Безопасность', 'Ламинированное стекло, класс ударостойкости I5/E5, противопожарные решения EI30–EI60.'],
+  ['Долговечность', 'Алюминий не корродирует, не деформируется, уплотнения EPDM устойчивы к ультрафиолету.'],
+  ['Свобода архитектуры', 'Любые формы, криволинейные и гранёные фасады, цвет RAL, стеклянные крыши.']
+];
+
+const types: [string, string][] = [
+  ['Стоечно-ригельный', 'Каркас из стоек и ригелей собирают на здании, стекло фиксируют прижимными планками.'],
+  ['Полуструктурный', 'Без наружных планок: снаружи — сплошное стекло с тонкими швами 2 см.'],
+  ['Элементный', 'Модули собирают и остекляют на заводе, на здании их только навешивают.'],
+  ['Накладной', 'Алюминиевые прижимные профили на деревянном или стальном несущем каркасе.']
+];
+
+const faq: [string, string][] = [
+  ['Что такое стеклянный фасад?', 'Навесная стена здания из алюминиевого каркаса и стеклопакетов, закреплённая на перекрытиях. Она защищает от погоды, пропускает свет и может иметь встроенные окна и двери.'],
+  ['Какие бывают стеклянные фасады?', 'Стоечно-ригельные, полуструктурные (EFEKT), структурные и элементные, накладные на деревянный или стальной каркас. Отдельно — энергоэффективные фасады, витрины и входные группы.'],
+  ['Чем фасадное остекление отличается от окон?', 'Фасад — это несущая навесная стена, которая перекрывает несколько этажей и держит большое стекло. Окна устанавливают в отдельные проёмы стены.'],
+  ['Сколько стоит стеклянный фасад?', 'Стоимость зависит от системы, площади, высоты, стеклопакетов, открывающихся элементов и монтажа. Расчёт делаем по чертежам или после замера.'],
+  ['Какой фасад самый тёплый?', 'MB-MT50N с Uf от 0,55 W/(m²K) и MB-SR50N HI+ с сертификатом A+ Института пассивного дома.'],
+  ['Что такое структурное остекление?', 'Фасад без наружных прижимных планок: стеклопакеты держатся на держателях или клее, снаружи видно только стекло и тонкие швы.'],
+  ['Что такое элементный фасад?', 'Фасад из модулей заводской сборки, которые на здании только навешивают. Подходит для высоток и больших объектов.'],
+  ['Можно ли встроить окна в стеклянный фасад?', 'Да: откидные, поворотно-откидные, параллельно-отставные, скрытые окна MB-SR50N IW, а в крышу — окна MB-SR50N RW.'],
+  ['Как защитить стеклянный фасад от перегрева?', 'Солнцезащитные стеклопакеты, фасад с жалюзи MB-SR50N ZS или наружные ламели MB-SUNPROF.'],
+  ['Безопасно ли стекло в фасаде?', 'Да, используем закалённое и ламинированное стекло и системы с классом ударостойкости I5/E5.'],
+  ['Бывают ли противопожарные стеклянные фасады?', 'Да, MB-SR50N EI и EI EFEKT имеют классы огнестойкости EI30 и EI60.'],
+  ['Можно ли сделать стеклянный фасад частного дома?', 'Да: витражи гостиной, остекление лестниц и второго света, стеклянные крыши — на тёплых системах с энергосберегающими стеклопакетами.'],
+  ['Делаете ли витрины и входные группы?', 'Да, витрины магазинов и кафе и входные группы с дверями Pivot, MB-100GFT и панельными дверями.'],
+  ['Нужен ли проект фасада?', 'Да. Рассчитываем ветровую нагрузку, вес стекла, крепление к перекрытиям и узлы примыкания, готовим спецификацию.'],
+  ['Сколько длится монтаж фасада?', 'Зависит от площади и системы. График изготовления и монтажа согласовываем после утверждения чертежей.'],
+  ['Можно ли красить фасадный профиль?', 'Да, порошковая покраска в любой цвет RAL, анодирование или древесные покрытия.'],
+  ['С какими системами вы работаете?', 'Со стоечно-ригельными, структурными и элементными фасадными системами Aluprof, а также совместимыми с ними окнами и дверями.'],
+  ['Работаете ли вы с архитекторами и застройщиками?', 'Да, подбираем систему под проект, готовим технические решения и сопровождаем объект до сдачи.'],
+  ['Где выполняете работы?', 'Проект, замер и монтаж — в Киеве, Одессе и Львове с областями. Крупные объекты в других регионах — по договорённости.'],
+  ['Есть ли гарантия?', 'Да, на конструкции и монтаж, а также сервис после сдачи объекта.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Фасадное остекление — системы Aluprof', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
+  ['Алюминиевые окна', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/'],
+  ['Алюминиевые двери', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
+  ['Зимние сады', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
+  ['Безрамное остекление', '/bezramne-sklinnya/'],
+  ['Стеклопакет: как выбрать', '/knowledge/sklopaket-yak-obraty/'],
+  ['Остекление для офиса', '/rishennya/dlya-ofisu/'],
+  ['Остекление для магазина', '/rishennya/dlya-magazynu/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: facadeCategories.length,
+  itemListElement: facadeCategories.map((category, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: category.name,
+    url: absoluteUrl(lp(category.path), origin)
+  }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
+---
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  locale="ru"
+  alternateLocales={['uk', 'ru']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: 'Услуги', href: lp('/poslugy/') }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Стоечно-ригельные, структурные и элементные стеклянные фасады, энергоэффективные фасады, остекление частных домов, витрины и входные группы на системах Aluprof. Проектируем, изготавливаем и монтируем в Киеве, Одессе и Львове.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#types">Смотреть {facadeCategories.length} направлений</a>
+          <a class="button button--outline" href="#request">Получить расчёт</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Городской квартал со стеклянными фасадами офисных зданий" width="1080" height="771" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="ru" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>Стеклянный фасад под ваше здание</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Стеклянный фасад определяет облик здания, количество света внутри и расходы на отопление и кондиционирование. Поэтому мы начинаем не с профиля, а с задачи: частный дом или бизнес-центр, классические планки или сплошное стекло, пассивный стандарт или быстрый монтаж.</p>
+          <p>Работаем с фасадными системами Aluprof — стоечно-ригельными MB-SR50N, MB-MT50N, MB-SR60N, полуструктурными EFEKT, элементными MB-SE65 и MB-SE85 SG, энергоэффективными HI+ и PV. В фасад встраиваем окна, двери, кровельные окна и солнцезащиту.</p>
+          <p>Полный цикл: проект и расчёт, изготовление на собственном оборудовании, монтаж с гидро- и пароизоляцией и сервис после сдачи.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>Uf от 0,55 W/(m²K)</b><span>тёплые фасадные системы</span></li>
+          <li><b>До 3000 Pa</b><span>ветровая нагрузка</span></li>
+          <li><b>Модуль до 1100 кг</b><span>крупноформатное стекло</span></li>
+          <li><b>Киев · Одесса · Львов</b><span>проект, монтаж и сервис</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Направления</p><h2>Типы стеклянных фасадов и решения</h2></div><p>Выберите тип фасада или объект — на каждой странице есть системы с характеристиками, чертежи, сравнение и советы по выбору.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Системы</p><h2>Фасадные системы в одной таблице</h2></div><p>Показатели — по данным производителя для базовых конфигураций. Нажмите на систему, чтобы перейти к её описанию.</p></div>
+      <div class="profile-table-wrap">
+        <table class="profile-table">
+          <thead><tr><th scope="col">Система</th><th scope="col">Направление</th><th scope="col">Тип</th><th scope="col">Ключевые показатели</th></tr></thead>
+          <tbody>
+            {systemsTable.map((row) => (
+              <tr><th scope="row"><a href={row.href}>{row.name}</a></th><td>{row.direction}</td><td>{row.kind}</td><td>{row.key}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Преимущества</p><h2>Почему стеклянный фасад</h2></div><p>Современная архитектура, свет и энергоэффективность в одной конструкции.</p></div>
+      <div class="material-grid material-grid--parts">
+        {benefits.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Конструкция</p><h2>Как устроен стеклянный фасад</h2></div><p>Четыре конструктивных принципа — под разный облик, масштаб и бюджет.</p></div>
+      <dl class="material-thickness">
+        {types.map(([name, text]) => <div><dt>{name}</dt><dd>{text}</dd></div>)}
+      </dl>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процесс</p><h2>От чертежа до готового фасада</h2></div></div>
+      <div class="category-process__grid">
+        <div><span>01</span><b>Запрос</b><small>Чертежи или фото фасада</small></div>
+        <div><span>02</span><b>Консультация</b><small>Подбор системы и стекла</small></div>
+        <div><span>03</span><b>Замер</b><small>Перекрытия, оси, проёмы</small></div>
+        <div><span>04</span><b>Проект</b><small>Статика, узлы, спецификация</small></div>
+        <div><span>05</span><b>Изготовление</b><small>Собственное оборудование</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Гидро- и пароизоляция</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">География</p>
+          <h2>Стеклянные фасады: проект и монтаж<br />в Киеве, Одессе и Львове</h2>
+          <p>Выезжаем на объект, проверяем перекрытия и оси, готовим проект и монтируем стеклянные фасады частных домов, офисов, магазинов и общественных зданий.</p>
+          <p>Для крупных объектов в других регионах условия согласовываем отдельно.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Киев</b><span>проект и монтаж</span></li><li><b>Одесса</b><span>проект и монтаж</span></li><li><b>Львов</b><span>проект и монтаж</span></li></ul>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock
+        title="FAQ о стеклянных фасадах"
+        intro="О типах фасадов, системах, тепле, безопасности, встроенных окнах, проекте, цене и монтаже."
+        items={faq}
+        visibleCount={6}
+        expandTo={faq.length}
+        locale="ru"
+      />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Полезное</p><h2>Дальше по теме</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={lp(href)}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={lp(FACADE_HUB)}
+      product={title}
+      title={'Нужен предварительный расчёт?'}
+      text={'Пришлите чертежи, фото или размеры фасада — подберём систему и подготовим ориентировочную стоимость.'}
+      options={facadeCategories.map((c) => c.name)}
+      optionsLabel="Направление"
+      commentPlaceholder="Тип здания, площадь или размеры фасада, город"
+      locale="ru"
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

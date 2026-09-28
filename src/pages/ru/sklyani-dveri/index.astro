@@ -1,0 +1,262 @@
+---
+// RU glass doors hub (mirrors src/pages/sklyani-dveri/index.astro; content: src/data/ru/door-catalog.ru.ts).
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import TrustBar from '../../../components/TrustBar.astro';
+import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../seo/schema';
+import { DOORS_HUB, DOORS_IMG } from '../../../data/door-catalog';
+import { doorCategoriesRu as doorCategories } from '../../../data/ru/door-catalog.ru';
+import { profileIcons } from '../../../data/profile-icons';
+import { localizedPath } from '../../../i18n/helpers';
+import '../../../styles/category-pages.css';
+import '../../../styles/shower-master.css';
+import '../../../styles/profile-systems.css';
+
+const lp = (path: string) => localizedPath(path, 'ru');
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(lp(DOORS_HUB), origin);
+
+const title = 'Стеклянные двери';
+const h1 = 'Стеклянные двери на заказ';
+const metaTitle = 'Стеклянные двери на заказ — межкомнатные, раздвижные, маятниковые, лофт | Space Glass';
+const metaDescription =
+  'Стеклянные двери по размеру проёма: распашные, раздвижные, маятниковые, в лофт-профиле, матовые, для офиса. Закалённое стекло 8–12 мм, фурнитура, декор и логотип на стекле. Замер и монтаж в Киеве, Одессе и Львове.';
+
+const heroSrc = (w: number) => `${DOORS_IMG}/hero5-hub-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1000)} 1000w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const typeCategories = doorCategories.filter((category) => category.path.startsWith(DOORS_HUB));
+const modelRange = doorCategories.find((category) => category.slug === 'mizhkimnatni-sklyani-dveri')!;
+const hubItems = typeCategories.map((category) => ({
+  title: category.name,
+  note: category.cardNote,
+  href: lp(category.path),
+  icon: profileIcons[`doors/${category.slug}`]
+}));
+
+const benefits: [string, string][] = [
+  ['Свет во всех комнатах', 'Стеклянное полотно пропускает дневной свет в коридоры и помещения без окон.'],
+  ['Под ваш проём', 'Стекло режем по фактическому размеру — без доборов, наличников и расширителей.'],
+  ['Безопасность', 'Только закалённое стекло или триплекс: осколки тупые или держатся на плёнке.'],
+  ['Не боятся влаги', 'Стекло не рассыхается, не деформируется и не выгорает — для санузлов и кухонь.'],
+  ['Приватность на выбор', 'Прозрачное, матовое, тонированное стекло, рисунок или логотип.'],
+  ['Долговечность', 'Фурнитура из нержавеющей стали и анодированного алюминия служит годами.']
+];
+
+const glassTypes: [string, string][] = [
+  ['Закалённое стекло (ESG)', 'Основной материал дверей: 8–10 мм, в несколько раз прочнее обычного, рассыпается на тупые фрагменты.'],
+  ['Триплекс', 'Два листа стекла с плёнкой: осколки не осыпаются, лучше звукоизоляция — для детских, клиник и переговорных.'],
+  ['Матовое и тонированное', 'Сатин по всей площади или частично, тонировка в массе под бронзу и графит.'],
+  ['Декор', 'Пескоструйный рисунок, полосы, номер кабинета или логотип по векторному макету.']
+];
+
+const faq: [string, string][] = [
+  ['Какие бывают стеклянные двери?', 'Распашные, раздвижные, маятниковые, безрамные и в алюминиевом профиле (лофт). По стеклу — прозрачные, матовые, тонированные, с декором.'],
+  ['Какое стекло используют для дверей?', 'Безопасное закалённое стекло 8–10 мм или триплекс. Отверстия под фурнитуру делают до закалки.'],
+  ['Сколько весят стеклянные двери?', 'Примерно 20 кг/м² для стекла 8 мм и 25 кг/м² для 10 мм. Полотно 800×2200 мм из стекла 10 мм весит около 44 кг.'],
+  ['Безопасны ли стеклянные двери в квартире с детьми?', 'Да, закалённое стекло рассыпается на тупые фрагменты, а триплекс удерживает осколки на плёнке. На уровне глаз можно добавить матовую полосу.'],
+  ['Нужна ли дверная коробка?', 'Нет, безрамные двери крепятся петлями прямо к стене или стеклянной панели. Двери в профиле могут иметь коробку.'],
+  ['Какие двери выбрать для узкого коридора?', 'Раздвижные — они сдвигаются вдоль стены и не занимают места перед проёмом.'],
+  ['Какие двери для магазина или офиса?', 'Маятниковые с напольным доводчиком для входов с потоком людей и распашные в перегородках для кабинетов.'],
+  ['Можно ли матовое стекло или логотип?', 'Да: полная или частичная матировка, рисунок, номер кабинета или логотип пескоструйной обработкой.'],
+  ['Что такое лофт-двери?', 'Стеклянные двери в тонком алюминиевом профиле с раскладкой, обычно чёрном. Жёсткие, с полноценным замком.'],
+  ['Можно ли поставить замок?', 'Да: замки под ключ, фиксаторы «свободно/занято», магнитные и электромеханические замки.'],
+  ['Подходят ли стеклянные двери для санузла?', 'Да, стекло не боится влаги. Для приватности — матовое стекло и фиксатор.'],
+  ['От чего зависит цена?', 'От размера, стекла, декора, способа открывания, фурнитуры и монтажа. Точную цену считаем после замера.'],
+  ['Можно ли двери нестандартного размера?', 'Да, все двери изготавливаем под фактический проём после замера.'],
+  ['Шумоизолируют ли стеклянные двери?', 'Меньше, чем глухая стена. Для лучшей изоляции — триплекс и уплотнители по периметру.'],
+  ['Можно ли стеклянные двери на вход с улицы?', 'Одинарное стекло не держит тепло; для наружного входа выбирайте алюминиевые двери с терморазрывом.'],
+  ['Сколько времени занимает изготовление?', 'Зависит от стекла и декора. Сроки называем после согласования чертежа.'],
+  ['Как ухаживать за стеклянными дверями?', 'Мыть обычными средствами для стекла без абразивов, периодически проверять регулировку фурнитуры.'],
+  ['Можно ли двери вместе со стеклянной перегородкой?', 'Да, двери встраиваются в стеклянную или лофт-перегородку в одном стиле.'],
+  ['Где выполняете замер и монтаж?', 'В Киеве, Одессе и Львове с областями. Другие регионы — по договорённости.'],
+  ['Есть ли гарантия?', 'Да, на стекло, фурнитуру и монтаж, а также сервис: регулировка петель, роликов и доводчиков.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Стеклянные перегородки', '/sklyani-perehorodky/'],
+  ['Loft-перегородки', '/sklyani-perehorodky/loft-sklyani-peregorodku/'],
+  ['Офисные перегородки', '/sklyani-perehorodky/ofisni/'],
+  ['Алюминиевые двери', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
+  ['Стеклянные входные группы', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'],
+  ['Зеркала', '/dzerkala/'],
+  ['Остекление для офиса', '/rishennya/dlya-ofisu/'],
+  ['Остекление для квартиры', '/rishennya/dlya-kvartyry/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: doorCategories.length,
+  itemListElement: doorCategories.map((category, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: category.name,
+    url: absoluteUrl(lp(category.path), origin)
+  }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
+---
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1000)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  locale="ru"
+  alternateLocales={['uk', 'ru']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Распашные, раздвижные, маятниковые и лофт-двери из стекла под размер вашего проёма — для квартир, домов, офисов и клиник. Закалённое стекло, надёжная фурнитура, матировка и логотип на стекле. Замер, изготовление и монтаж в Киеве, Одессе и Львове.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#types">Смотреть {typeCategories.length} видов</a>
+          <a class="button button--outline" href="#request">Получить расчёт</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Раздвижные стеклянные двери в алюминиевом профиле между гостиной и спальней" width="1000" height="650" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="ru" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>Двери, которые пропускают свет</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Стеклянные двери делают пространство светлее и легче: дневной свет проходит в коридоры и комнаты без окон, а интерьер не дробится глухими полотнами. Стекло не боится влаги, не рассыхается и не выгорает, поэтому такие двери ставят и в квартирах, и в офисах, клиниках, салонах.</p>
+          <p>Мы изготавливаем двери под фактический проём: распашные безрамные и в лофт-профиле, раздвижные на роликах или в профиле, маятниковые для входов с потоком людей. Подбираем стекло, декор и фурнитуру — от петель и ручек до доводчиков и электрозамков.</p>
+          <p>В каталоге ниже — наши реальные работы в Киеве и Одессе.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>Стекло 8–12 мм</b><span>закалённое или триплекс</span></li>
+          <li><b>Под ваш проём</b><span>без доборов и наличников</span></li>
+          <li><b>Декор и логотип</b><span>матировка по макету</span></li>
+          <li><b>Киев · Одесса · Львов</b><span>замер, монтаж и сервис</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Виды</p><h2>Какие стеклянные двери мы делаем</h2></div><p>Выберите тип — на каждой странице есть варианты с фото, характеристики, сравнение и советы по выбору.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Модельный ряд</p><h2>Межкомнатные стеклянные двери Space Glass</h2></div><p>Шесть моделей в алюминиевом профиле — каждая в прозрачном, матовом, бронзовом, графитовом, рифлёном или рефлекторном стекле.</p></div>
+      <div class="profile-grid">
+        {modelRange.models.map((model) => (
+          <article class="profile-card">
+            <div class="profile-card__media">
+              <img src={`${DOORS_IMG}/${model.image}-480.webp`} srcset={`${DOORS_IMG}/${model.image}-480.webp 480w, ${DOORS_IMG}/${model.image}-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" alt={model.imageAlt ?? model.name} width="480" height="480" loading="lazy" decoding="async" />
+              <span class="profile-card__kind">{model.title ? `${model.name} · ${model.kind}` : model.kind}</span>
+            </div>
+            <div class="profile-card__body">
+              <h3>{model.title ?? model.name}</h3>
+              <p class="profile-card__blurb">{model.blurb}</p>
+              <a class="button button--mint profile-card__cta" href={`${lp(modelRange.path)}#${model.id}`}>Подробнее о модели →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+      <a class="category-arrow-link" href={lp(modelRange.path)}>Весь модельный ряд и виды стекла <span aria-hidden="true">→</span></a>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Преимущества</p><h2>Почему стеклянные двери</h2></div><p>Практичность и эстетика, которых не дают двери из МДФ или шпона.</p></div>
+      <div class="material-grid material-grid--parts">
+        {benefits.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Стекло</p><h2>Стекло и декор для дверей</h2></div><p>В дверях работает только безопасное стекло. Прозрачность и рисунок выбираете вы.</p></div>
+      <dl class="material-thickness">
+        {glassTypes.map(([name, text]) => <div><dt>{name}</dt><dd>{text}</dd></div>)}
+      </dl>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процесс</p><h2>От замера до установленных дверей</h2></div></div>
+      <div class="category-process__grid">
+        <div><span>01</span><b>Запрос</b><small>Фото и размеры проёма</small></div>
+        <div><span>02</span><b>Консультация</b><small>Тип дверей, стекло, фурнитура</small></div>
+        <div><span>03</span><b>Замер</b><small>Проём, стены, пол</small></div>
+        <div><span>04</span><b>Чертёж</b><small>Отверстия под фурнитуру</small></div>
+        <div><span>05</span><b>Изготовление</b><small>Резка, закалка, декор</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Установка и регулировка</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">География</p>
+          <h2>Стеклянные двери: замер и монтаж<br />в Киеве, Одессе и Львове</h2>
+          <p>Выезжаем на замер, проверяем проём и стены, согласовываем чертёж с расположением фурнитуры, изготавливаем и устанавливаем двери в квартирах, домах, офисах и заведениях.</p>
+          <p>Для объектов в других регионах условия согласовываем отдельно.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Киев</b><span>замер и монтаж</span></li><li><b>Одесса</b><span>замер и монтаж</span></li><li><b>Львов</b><span>замер и монтаж</span></li></ul>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock
+        title="FAQ о стеклянных дверях"
+        intro="О видах дверей, стекле, безопасности, фурнитуре, декоре, цене и монтаже."
+        items={faq}
+        visibleCount={6}
+        expandTo={faq.length}
+        locale="ru"
+      />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Полезное</p><h2>Дальше по теме</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={lp(href)}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={lp(DOORS_HUB)}
+      product={title}
+      title={'Нужен предварительный расчёт?'}
+      text={'Пришлите фото и размеры проёма — подберём тип дверей, стекло и фурнитуру и подготовим ориентировочную стоимость.'}
+      options={[...typeCategories.map((c) => c.name), modelRange.name]}
+      optionsLabel="Вид дверей"
+      commentPlaceholder="Где двери, размеры проёма, стекло (прозрачное/матовое), город"
+      locale="ru"
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

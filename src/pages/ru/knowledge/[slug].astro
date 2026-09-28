@@ -12,6 +12,7 @@ import {
 } from '../../../content/i18n/knowledge/articles-ru';
 import { breadcrumbSchema, faqSchema } from '../../../seo/schema';
 import { expandFaq } from '../../../data/expand-faq';
+import { getFullKnowledgeSectionsRu } from '../../../content/i18n/knowledge/expert-sections-ru';
 
 export function getStaticPaths() {
   return knowledgeArticles
@@ -35,7 +36,7 @@ const origin = Astro.site ?? Astro.url.origin;
 const url = new URL(`/ru/knowledge/${article.slug}/`, origin);
 const ukUrl = new URL(`/knowledge/${article.slug}/`, origin);
 
-const sections = article.sections;
+const sections = getFullKnowledgeSectionsRu(sourceArticle, article.sections);
 const readingTime = Math.max(
   sourceArticle.readingTime,
   Math.ceil(sections.length * 1.15)

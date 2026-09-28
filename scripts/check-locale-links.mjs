@@ -20,7 +20,10 @@ if (!fs.existsSync(ruRoot)) {
   process.exit(0);
 }
 
-const pages = walk(ruRoot).filter((p) => p.endsWith(`${path.sep}index.html`));
+// Redirect stubs (Astro.redirect → meta-refresh HTML, e.g. /ru/cart/ → /cart/) are not RU pages:
+// they neither count as an existing RU route nor get their own "Redirecting to" link audited.
+const isRedirectStub = (file) => /<meta http-equiv="refresh"/i.test(fs.readFileSync(file, 'utf8'));
+const pages = walk(ruRoot).filter((p) => p.endsWith(`${path.sep}index.html`) && !isRedirectStub(p));
 
 const routeFromFile = (file) => {
   const rel = path.relative(dist, file).split(path.sep).join('/');

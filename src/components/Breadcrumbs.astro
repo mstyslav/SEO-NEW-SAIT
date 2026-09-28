@@ -1,7 +1,8 @@
 ---
 interface Item { label: string; href?: string }
 interface Props { items: Item[]; schema?: boolean; contained?: boolean; ariaLabel?: string }
-const { items, schema: includeSchema = true, contained = false, ariaLabel = 'Хлібні крихти' } = Astro.props;
+import { localeFromPath } from '../i18n/helpers';
+const { items, schema: includeSchema = true, contained = false, ariaLabel = localeFromPath(Astro.url.pathname) === 'ru' ? 'Хлебные крошки' : 'Хлібні крихти' } = Astro.props;
 const site = Astro.site ?? Astro.url.origin;
 const schema = {
   '@context': 'https://schema.org', '@type': 'BreadcrumbList',

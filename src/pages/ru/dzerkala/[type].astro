@@ -1,0 +1,14 @@
+---
+// RU mirror child pages /ru/dzerkala/{slug}/ — shared catalog template; routes from mirror-types.ts,
+// content from src/data/ru/mirror-catalog.ru.ts (mirrors src/data/mirror-catalog.ts).
+import ProfileCategoryPage from '../../../components/profile/ProfileCategoryPage.astro';
+import { mirrorTypes } from '../../../data/mirror-types';
+import { getMirrorCategoryRu } from '../../../data/ru/mirror-catalog.ru';
+
+export function getStaticPaths() {
+  return mirrorTypes.map((mirror) => ({ params: { type: mirror.slug } }));
+}
+
+const { type } = Astro.params;
+---
+<ProfileCategoryPage category={getMirrorCategoryRu(type as string)} locale="ru" />

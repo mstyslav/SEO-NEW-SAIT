@@ -2,6 +2,7 @@
 import '../../styles/configurator.css';
 import uiAll from '../../i18n/configurator-ui.json';
 import labelsAll from '../../i18n/configurator-labels.json';
+import optionsAll from '../../i18n/configurator-options.json';
 import { localeFromPath, normalizeLocale, localizedPath } from '../../i18n/helpers';
 
 const { config, tariff, currency, productName } = Astro.props;
@@ -10,7 +11,10 @@ const ui = uiAll[locale] ?? uiAll.uk;
 const labels = labelsAll[locale] ?? labelsAll.uk;
 const resolvedName = config.titleKey ? labels[config.titleKey] : productName;
 const lp = (path: string) => localizedPath(path, locale);
-const labelFor = (field: any) => field.labelKey ? (labels[field.labelKey] ?? field.labelKey) : field.label;
+// Field/option labels in the pricing configs are UA; RU pages translate them via configurator-options.json.
+const optionText: Record<string, string> = (optionsAll as Record<string, Record<string, string>>)[locale] ?? {};
+const tr = (text: string) => optionText[text] ?? text;
+const labelFor = (field: any) => field.labelKey ? (labels[field.labelKey] ?? field.labelKey) : tr(field.label);
 ---
 <section class="dyn-config" data-dyn-config
  data-locale={locale}
@@ -28,10 +32,10 @@ const labelFor = (field: any) => field.labelKey ? (labels[field.labelKey] ?? fie
     <p class="eyebrow">{ui.smartConfigurator}</p>
     <h2>{resolvedName}</h2>
     <p>{ui.configureText}</p>
-    <div class="dyn-progress" role="progressbar" aria-label="Прогрес налаштування" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="dyn-progress" role="progressbar" aria-label={ui.progressLabel} aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
       <span data-progress-bar></span>
     </div>
-    <p class="dyn-progress__label" aria-live="polite"><span data-progress-value>0</span>% · {config.fields.length} кроків</p>
+    <p class="dyn-progress__label" aria-live="polite"><span data-progress-value>0</span>% · {config.fields.length} {ui.steps}</p>
   </div>
 
   <div class="dyn-config__grid">
@@ -46,7 +50,7 @@ const labelFor = (field: any) => field.labelKey ? (labels[field.labelKey] ?? fie
           {field.type === 'number' && (
             <label class="dyn-number">
               <input type="number" name={field.id} value={field.default} aria-labelledby={`dyn-title-${field.id}`} data-number />
-              {field.unit && <span>{field.unit}</span>}
+              {field.unit && <span>{tr(field.unit)}</span>}
             </label>
           )}
 
@@ -57,7 +61,7 @@ const labelFor = (field: any) => field.labelKey ? (labels[field.labelKey] ?? fie
                   data-choice data-value={option.value}
                   data-multiplier={option.multiplier ?? 1}
                   data-extra-usd={option.extraUsd ?? 0}>
-                  {option.label}
+                  {tr(option.label)}
                 </button>
               ))}
             </div>

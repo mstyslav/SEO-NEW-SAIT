@@ -1,0 +1,7 @@
+---
+// RU interior glass doors model range at the live site's URL (mirrors
+// src/pages/sklyani-perehorodky/sklyani-mizhkimnatni-dveri/index.astro); content: src/data/ru/door-catalog.ru.ts.
+import ProfileCategoryPage from '../../../../components/profile/ProfileCategoryPage.astro';
+import { getDoorCategoryRu } from '../../../../data/ru/door-catalog.ru';
+---
+<ProfileCategoryPage category={getDoorCategoryRu('mizhkimnatni-sklyani-dveri')} locale="ru" />

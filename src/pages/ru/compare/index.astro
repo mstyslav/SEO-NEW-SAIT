@@ -1,3 +1,6 @@
 ---
-return Astro.redirect('/ru/compare/');
+// /ru/compare/ has no RU page: comparison is one shared page (/compare/, noindex). This stub used to
+// redirect to itself (an endless refresh loop); it now sends visitors to the real page. Not in the sitemap;
+// public/_redirects serves the same target as a 301 on the edge.
+return Astro.redirect('/compare/', 301);
 ---

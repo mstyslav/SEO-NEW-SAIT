@@ -1,0 +1,11 @@
+---
+// RU glass doors subsections — shared catalog template; content in src/data/ru/door-catalog.ru.ts.
+import ProfileCategoryPage from '../../../components/profile/ProfileCategoryPage.astro';
+import { DOORS_HUB } from '../../../data/door-catalog';
+import { doorCategoriesRu } from '../../../data/ru/door-catalog.ru';
+export function getStaticPaths() {
+  return doorCategoriesRu.filter((category) => category.path.startsWith(DOORS_HUB)).map((category) => ({ params: { slug: category.slug }, props: { category } }));
+}
+const { category } = Astro.props;
+---
+<ProfileCategoryPage category={category} locale="ru" />

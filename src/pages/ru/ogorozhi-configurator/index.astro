@@ -1,5 +1,46 @@
 ---
-import ConfiguratorPage from '../../../components/configurator/ConfiguratorPage.astro';
-import config from '../../../pricing/configs/railing.json';
+// Glass railings configurator (RU) — mirrors src/pages/ogorozhi-configurator.astro on the same
+// RailingConfigurator (locale="ru"). Price model: src/data/railing-pricing.ts, RU labels: src/data/ru/railing-pricing.ru.ts.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import RailingConfigurator from '../../../components/railings/RailingConfigurator.astro';
+import { RAILINGS_HUB } from '../../../data/railing-catalog';
+import { localizedPath } from '../../../i18n/helpers';
+import '../../../styles/category-pages.css';
+
+const lp = (path: string) => localizedPath(path, 'ru');
+const faq: [string, string][] = [
+  ['Насколько точна цена в конфигураторе?', 'Это ориентировочная стоимость для типовых условий. Окончательную цену, толщину стекла и шаг креплений определяем после замера.'],
+  ['Что входит в цену?', 'Профиль или стойки, стекло, крепления, выбранные опции (цвет, матировка, поручень) и, если выбрано, замер, доставка и монтаж.'],
+  ['Какую систему выбрать?', 'Безрамные профили (DELGADO, FORMAL, CLIP, ANTE, VARIANTE, BALDOSA) — для минимализма, SOLO — точечное крепление, GARDO и DENSARO — стойки с поручнем, LINEO и CANTO — французские балконы.'],
+  ['Что делать с готовой конфигурацией?', 'На последнем шаге оставьте имя и телефон — мы получим все параметры и свяжемся, чтобы договориться о замере.'],
+  ['Можно ли нестандартную форму или угол?', 'Да. Выберите ближайшую форму и опишите углы и уклоны в комментарии — учтём после замера.'],
+  ['Где выполняете монтаж?', 'В Киеве, Одессе и Львове с областями. Другие регионы — по договорённости.']
+];
 ---
-<ConfiguratorPage locale="ru" config={config} productKey="railing" />
+<BaseLayout
+  title="Конфигуратор стеклянного ограждения — расчёт цены онлайн | Space Glass"
+  description="Конфигуратор стеклянного ограждения: выберите систему, форму, размеры, стекло и поручень — увидите схему и ориентировочную стоимость в гривнах и отправите заявку на замер."
+  locale="ru"
+  alternateLocales={['uk', 'ru']}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-section" style="padding-bottom:24px">
+      <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: 'Стеклянные ограждения', href: lp(RAILINGS_HUB) }, { label: 'Конфигуратор' }]} />
+      <p class="eyebrow">Конфигуратор</p>
+      <h1>Конфигуратор стеклянного ограждения</h1>
+      <p class="lead">Выберите систему, форму, размеры, стекло и поручень — схема и ориентировочная стоимость обновляются сразу. Готовую конфигурацию отправьте нам, и мы договоримся о замере.</p>
+    </section>
+    <RailingConfigurator locale="ru" />
+    <section class="category-section category-section--faq">
+      <FAQBlock title="Вопросы о конфигураторе" intro="Как работает расчёт и что будет после заявки." items={faq} visibleCount={6} locale="ru" />
+    </section>
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

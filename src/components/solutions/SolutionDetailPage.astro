@@ -19,6 +19,8 @@ import ProjectCard from '../projects/ProjectCard.astro';
 import ProfileRequestForm from '../profile/ProfileRequestForm.astro';
 import type { JsonLdObject } from '../../seo/schema';
 import { solutionExtras, type SolutionExtra } from '../../data/solution-pages';
+import { solutionCardsRu } from '../../data/ru/solution-pages.ru';
+import { hasLocalizedRoute, localizedPath, type Locale } from '../../i18n/helpers';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
@@ -47,9 +49,49 @@ interface Props {
   /** Landing pages outside /rishennya/ (e.g. /pryvatnyj-sektor/) pass their own extras. */
   extra?: SolutionExtra;
   eyebrow?: string;
+  /** RU landing pages pass 'ru' (texts in props, template UI below); default 'uk'. */
+  locale?: Locale;
 }
 
 const p = Astro.props;
+const locale = p.locale ?? 'uk';
+const isRu = locale === 'ru';
+const lp = (href: string) => localizedPath(href, locale);
+const hasRu = hasLocalizedRoute(p.path, 'ru');
+const tx = {
+  uk: {
+    solution: 'Рішення', products: 'Що можна зробити', request: 'Отримати розрахунок', measure: 'Замір і проєкт', measureNote: 'креслення під фактичні розміри',
+    production: 'Власне виробництво', productionNote: 'скло, профіль і фурнітура', similar: 'схожих об’єктів', similarNote: 'реалізовані проєкти нижче', cities: 'Київ · Одеса · Львів', citiesNote: 'замір, монтаж і сервіс',
+    productsEyebrow: 'Продукти', weDo: 'Що ми робимо', productsNote: 'Кожна плитка веде на сторінку з моделями, характеристиками та цінами.',
+    tasks: 'Задачі об’єкта', scenarios: 'Реальні сценарії', scenariosNote: 'Ситуації, з якими до нас звертаються найчастіше.',
+    choiceEyebrow: 'Вибір рішення', choice: 'Як обрати рішення', choiceNote: 'Формат конструкції залежить від приміщення, навантаження й потрібної приватності.',
+    materialsEyebrow: 'Матеріали й безпека', materials: 'Скло, профіль і безпека', materialsNote: 'З чого виготовляємо конструкції і чому вони безпечні.',
+    priceEyebrow: 'Вартість', price: 'Від чого залежить ціна', priceNote: 'Фіксованої ціни немає — кожен проєкт рахуємо під об’єкт. Орієнтовні ціни готових моделей — на сторінках продуктів.',
+    portfolio: 'Портфоліо', objects: 'Реалізовані об’єкти', allProjects: 'Усі проєкти', proofLabel: 'Досвід Space Glass', threeCities: '3 міста', about: 'Про Space Glass →',
+    process: 'Процес', howWeWork: 'Як ми працюємо', geo: 'Географія', geoIn: 'у Києві, Одесі та Львові',
+    geoText: (forWhom: string) => `Виїжджаємо на замір, виготовляємо та монтуємо конструкції ${forWhom} у трьох містах і областях; для інших міст України умови погоджуємо окремо.`,
+    projectsOnSite: 'проєктів на сайті', glass: 'Скло', faqTitle: 'FAQ: скляні конструкції', faqIntro: 'Відповіді на питання, які найчастіше ставлять перед замовленням.',
+    othersEyebrow: 'Інші рішення', others: 'Рішення для інших об’єктів', allSolutions: 'Усі рішення', formProduct: 'Рішення', formTitle: 'Розрахуємо рішення',
+    formText: 'Надішліть фото, приблизні розміри або креслення — підберемо конструкції й підготуємо попередній розрахунок.', formLabel: 'Що цікавить',
+    cityNames: { kyiv: 'Київ', odesa: 'Одеса', lviv: 'Львів' }
+  },
+  ru: {
+    solution: 'Решение', products: 'Что можно сделать', request: 'Получить расчёт', measure: 'Замер и проект', measureNote: 'чертёж под фактические размеры',
+    production: 'Собственное производство', productionNote: 'стекло, профиль и фурнитура', similar: 'похожих объектов', similarNote: 'реализованные проекты ниже', cities: 'Киев · Одесса · Львов', citiesNote: 'замер, монтаж и сервис',
+    productsEyebrow: 'Продукты', weDo: 'Что мы делаем', productsNote: 'Каждая плитка ведёт на страницу с моделями, характеристиками и ценами.',
+    tasks: 'Задачи объекта', scenarios: 'Реальные сценарии', scenariosNote: 'Ситуации, с которыми к нам обращаются чаще всего.',
+    choiceEyebrow: 'Выбор решения', choice: 'Как выбрать решение', choiceNote: 'Формат конструкции зависит от помещения, нагрузки и нужной приватности.',
+    materialsEyebrow: 'Материалы и безопасность', materials: 'Стекло, профиль и безопасность', materialsNote: 'Из чего изготавливаем конструкции и почему они безопасны.',
+    priceEyebrow: 'Стоимость', price: 'От чего зависит цена', priceNote: 'Фиксированной цены нет — каждый проект считаем под объект. Ориентировочные цены готовых моделей — на страницах продуктов.',
+    portfolio: 'Портфолио', objects: 'Реализованные объекты', allProjects: 'Все проекты', proofLabel: 'Опыт Space Glass', threeCities: '3 города', about: 'О Space Glass →',
+    process: 'Процесс', howWeWork: 'Как мы работаем', geo: 'География', geoIn: 'в Киеве, Одессе и Львове',
+    geoText: (forWhom: string) => `Выезжаем на замер, изготавливаем и монтируем конструкции ${forWhom} в трёх городах и областях; для других городов Украины условия согласовываем отдельно.`,
+    projectsOnSite: 'проектов на сайте', glass: 'Стекло', faqTitle: 'FAQ: стеклянные конструкции', faqIntro: 'Ответы на вопросы, которые чаще всего задают перед заказом.',
+    othersEyebrow: 'Другие решения', others: 'Решения для других объектов', allSolutions: 'Все решения', formProduct: 'Решение', formTitle: 'Рассчитаем решение',
+    formText: 'Пришлите фото, примерные размеры или чертёж — подберём конструкции и подготовим предварительный расчёт.', formLabel: 'Что интересует',
+    cityNames: { kyiv: 'Киев', odesa: 'Одесса', lviv: 'Львов' }
+  }
+}[locale];
 const extra = p.extra ?? solutionExtras[p.path];
 if (!extra) throw new Error(`No solution extras for ${p.path}`);
 
@@ -71,21 +113,21 @@ const scenarioIcons = [
 ];
 
 const CITIES = [
-  { href: '/city/kyiv/', name: 'Київ', key: 'Київ', cover: getCityHub('kyiv').hero.image },
-  { href: '/city/odesa/', name: 'Одеса', key: 'Одеса', cover: getCityHub('odesa').hero.image },
-  { href: '/city/lviv/', name: 'Львів', key: 'Львів', cover: getCityHub('lviv').hero.image }
+  { href: lp('/city/kyiv/'), name: tx.cityNames.kyiv, key: 'Київ', cover: getCityHub('kyiv').hero.image },
+  { href: lp('/city/odesa/'), name: tx.cityNames.odesa, key: 'Одеса', cover: getCityHub('odesa').hero.image },
+  { href: lp('/city/lviv/'), name: tx.cityNames.lviv, key: 'Львів', cover: getCityHub('lviv').hero.image }
 ];
 const cities = CITIES.map((city) => ({ ...city, count: allProjects.filter((project) => project.city === city.key).length }));
 
 const otherSolutions = Object.entries(solutionExtras)
   .filter(([path]) => path !== p.path)
-  .map(([path, item]) => ({ path, label: item.navLabel, image: item.image, note: item.tiles.slice(0, 3).map((tile) => tile.label).join(' · ') }));
+  .map(([path, item]) => ({ path: lp(path), label: isRu ? solutionCardsRu[path].navLabel : item.navLabel, image: item.image, note: isRu ? solutionCardsRu[path].note : item.tiles.slice(0, 3).map((tile) => tile.label).join(' · ') }));
 ---
 <BaseLayout
   title={p.title}
   description={p.description}
-  locale="uk"
-  alternateLocales={['uk']}
+  locale={locale}
+  alternateLocales={hasRu ? ['uk', 'ru'] : ['uk']}
   schemaType="Service"
   structuredData={p.structuredData}
   image={hero('')}
@@ -99,12 +141,12 @@ const otherSolutions = Object.entries(solutionExtras)
     <section class="category-hero category-hero--photo profile-hero">
       <div class="category-hero__copy">
         <Breadcrumbs items={p.breadcrumbItems.map((item, index) => index === p.breadcrumbItems.length - 1 ? { label: item.label } : item)} />
-        <p class="eyebrow">{p.eyebrow ?? `Рішення · ${extra.navLabel}`}</p>
+        <p class="eyebrow">{p.eyebrow ?? `${tx.solution} · ${extra.navLabel}`}</p>
         <h1>{p.h1}</h1>
         <p class="lead">{p.heroLead}</p>
         <div class="hero__actions">
-          <a class="button button--mint" href="#products">Що можна зробити</a>
-          <a class="button button--outline" href="#request">Отримати розрахунок</a>
+          <a class="button button--mint" href="#products">{tx.products}</a>
+          <a class="button button--outline" href="#request">{tx.request}</a>
         </div>
       </div>
       <figure class="category-hero__figure">
@@ -114,26 +156,26 @@ const otherSolutions = Object.entries(solutionExtras)
       </figure>
     </section>
 
-    <TrustBar locale="uk" />
+    <TrustBar locale={locale} />
 
     <section class="category-section category-section--mint">
       <div class="category-heading"><div><p class="eyebrow">Space Glass {extra.forWhom}</p><h2>{extra.seoHeading}</h2></div></div>
       <div class="category-intro-grid">
         <div class="category-prose">{extra.seo.map((paragraph) => <p>{paragraph}</p>)}</div>
         <ul class="category-intro__spec">
-          <li><b>Замір і проєкт</b><span>креслення під фактичні розміри</span></li>
-          <li><b>Власне виробництво</b><span>скло, профіль і фурнітура</span></li>
-          <li><b>{projects.length}+ схожих об’єктів</b><span>реалізовані проєкти нижче</span></li>
-          <li><b>Київ · Одеса · Львів</b><span>замір, монтаж і сервіс</span></li>
+          <li><b>{tx.measure}</b><span>{tx.measureNote}</span></li>
+          <li><b>{tx.production}</b><span>{tx.productionNote}</span></li>
+          <li><b>{projects.length}+ {tx.similar}</b><span>{tx.similarNote}</span></li>
+          <li><b>{tx.cities}</b><span>{tx.citiesNote}</span></li>
         </ul>
       </div>
     </section>
 
     <section id="products" class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Продукти</p><h2>Що ми робимо {extra.forWhom}</h2></div><p>Кожна плитка веде на сторінку з моделями, характеристиками та цінами.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.productsEyebrow}</p><h2>{tx.weDo} {extra.forWhom}</h2></div><p>{tx.productsNote}</p></div>
       <div class="rh-tiles">
         {extra.tiles.map((tile) => (
-          <a class="rh-tile" href={tile.href}>
+          <a class="rh-tile" href={lp(tile.href)}>
             <img src={tile.image} alt="" width="480" height="480" loading="lazy" decoding="async" />
             <span class="rh-tile__arrow" aria-hidden="true">→</span>
             <span class="rh-tile__body"><b>{tile.label}</b><span>{tile.note}</span></span>
@@ -143,28 +185,28 @@ const otherSolutions = Object.entries(solutionExtras)
     </section>
 
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Задачі об’єкта</p><h2>Реальні сценарії</h2></div><p>Ситуації, з якими до нас звертаються найчастіше.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.tasks}</p><h2>{tx.scenarios}</h2></div><p>{tx.scenariosNote}</p></div>
       <div class="rh-choose">
         {p.scenarios.map((item, index) => <article><span class="rh-choose__icon" set:html={scenarioIcons[index % scenarioIcons.length]} /><h3>{item.title}</h3><p>{item.text}</p></article>)}
       </div>
     </section>
 
     <section class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Вибір рішення</p><h2>Як обрати рішення</h2></div><p>Формат конструкції залежить від приміщення, навантаження й потрібної приватності.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.choiceEyebrow}</p><h2>{tx.choice}</h2></div><p>{tx.choiceNote}</p></div>
       <div class="material-grid material-grid--parts">
-        {p.choosePoints.map((item) => <article><b>{item.title}</b><p>{item.text}</p>{item.link && <a class="category-arrow-link" href={item.link.href}>{item.link.label} →</a>}</article>)}
+        {p.choosePoints.map((item) => <article><b>{item.title}</b><p>{item.text}</p>{item.link && <a class="category-arrow-link" href={lp(item.link.href)}>{item.link.label} →</a>}</article>)}
       </div>
     </section>
 
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Матеріали й безпека</p><h2>Скло, профіль і безпека</h2></div><p>З чого виготовляємо конструкції і чому вони безпечні.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.materialsEyebrow}</p><h2>{tx.materials}</h2></div><p>{tx.materialsNote}</p></div>
       <div class="material-grid material-grid--parts">
-        {[...p.materials, ...p.safetyPoints].map((item) => <article><b>{item.title}</b><p>{item.text}</p>{item.link && <a class="category-arrow-link" href={item.link.href}>{item.link.label} →</a>}</article>)}
+        {[...p.materials, ...p.safetyPoints].map((item) => <article><b>{item.title}</b><p>{item.text}</p>{item.link && <a class="category-arrow-link" href={lp(item.link.href)}>{item.link.label} →</a>}</article>)}
       </div>
     </section>
 
     <section class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Вартість</p><h2>Від чого залежить ціна</h2></div><p>Фіксованої ціни немає — кожен проєкт рахуємо під об’єкт. Орієнтовні ціни готових моделей — на сторінках продуктів.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.priceEyebrow}</p><h2>{tx.price}</h2></div><p>{tx.priceNote}</p></div>
       <div class="category-steps">
         {p.priceFactors.map((factor, index) => <div class="category-steps__item"><span>{String(index + 1).padStart(2, '0')}</span><b>{factor.charAt(0).toUpperCase() + factor.slice(1)}</b></div>)}
       </div>
@@ -173,37 +215,37 @@ const otherSolutions = Object.entries(solutionExtras)
     {projects.length > 0 && (
       <section class="category-section category-section--mint">
         <div class="category-heading category-heading--projects">
-          <div class="category-heading--projects__title"><p class="eyebrow">Портфоліо</p><h2>Реалізовані об’єкти</h2></div>
-          <div class="category-heading--projects__aside"><a class="category-arrow-link" href="/project/">Усі проєкти <span aria-hidden="true">→</span></a></div>
+          <div class="category-heading--projects__title"><p class="eyebrow">{tx.portfolio}</p><h2>{tx.objects}</h2></div>
+          <div class="category-heading--projects__aside"><a class="category-arrow-link" href={lp('/project/')}>{tx.allProjects} <span aria-hidden="true">→</span></a></div>
         </div>
         <div class="projects-index-v2__grid category-projects-grid">
-          {projects.map((project) => <ProjectCard project={project} hrefPrefix="/project" />)}
+          {projects.map((project) => <ProjectCard project={project} locale={locale} href={lp(`/project/${project.slug}/`)} />)}
         </div>
       </section>
     )}
 
     <section class="category-section">
-      <div class="rh-proof" aria-label="Досвід Space Glass">
+      <div class="rh-proof" aria-label={tx.proofLabel}>
         {p.experienceStats.map((stat) => <div><strong>{stat.value}</strong><span>{stat.label.split(' ').slice(0, 4).join(' ')}</span></div>)}
-        <div><strong>3 міста</strong><span>Київ · Одеса · Львів</span></div>
-        <a class="rh-proof__link" href="/about/">Про Space Glass →</a>
+        <div><strong>{tx.threeCities}</strong><span>{tx.cities}</span></div>
+        <a class="rh-proof__link" href={lp('/about/')}>{tx.about}</a>
       </div>
     </section>
 
     <section class="category-section rishennya-process">
-      <div class="category-heading"><div><p class="eyebrow">Процес</p><h2>Як ми працюємо</h2></div></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.process}</p><h2>{tx.howWeWork}</h2></div></div>
       <ol class={`rh-timeline${p.processSteps.length > 4 ? ' rh-timeline--6' : ''}`}>
         {p.processSteps.map((step, index) => <li><span class="rh-timeline__num">{String(index + 1).padStart(2, '0')}</span><b>{step.title}</b><p>{step.text}</p></li>)}
       </ol>
     </section>
 
     <section class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Географія</p><h2>{p.h1} у Києві, Одесі та Львові</h2></div><p>Виїжджаємо на замір, виготовляємо та монтуємо конструкції {extra.forWhom} у трьох містах і областях; для інших міст України умови погоджуємо окремо.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.geo}</p><h2>{p.h1} {tx.geoIn}</h2></div><p>{tx.geoText(extra.forWhom)}</p></div>
       <div class="rh-cities">
         {cities.map((city) => (
           <a class="rh-city" href={city.href}>
             <img src={city.cover.src} srcset={city.cover.srcset} sizes="(max-width: 900px) 100vw, 33vw" alt="" width={city.cover.width} height={city.cover.height} loading="lazy" decoding="async" />
-            <span class="rh-city__body"><strong>{city.name}</strong>{city.count > 0 && <span>{city.count} проєктів на сайті</span>}<b>Скло {extra.forWhom} — {city.name} →</b></span>
+            <span class="rh-city__body"><strong>{city.name}</strong>{city.count > 0 && <span>{city.count} {tx.projectsOnSite}</span>}<b>{tx.glass} {extra.forWhom} — {city.name} →</b></span>
           </a>
         ))}
       </div>
@@ -211,16 +253,17 @@ const otherSolutions = Object.entries(solutionExtras)
 
     <section class="category-section category-section--faq">
       <FAQBlock
-        title={`FAQ: скляні конструкції ${extra.forWhom}`}
-        intro="Відповіді на питання, які найчастіше ставлять перед замовленням."
+        title={`${tx.faqTitle} ${extra.forWhom}`}
+        intro={tx.faqIntro}
         items={p.faq}
         visibleCount={6}
         expandTo={p.faq.length}
+        locale={locale}
       />
     </section>
 
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Інші рішення</p><h2>Рішення для інших об’єктів</h2></div><p><a class="category-arrow-link" href="/rishennya/">Усі рішення <span aria-hidden="true">→</span></a></p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.othersEyebrow}</p><h2>{tx.others}</h2></div><p><a class="category-arrow-link" href={lp('/rishennya/')}>{tx.allSolutions} <span aria-hidden="true">→</span></a></p></div>
       <div class="rh-tiles rh-tiles--5">
         {otherSolutions.map((item) => (
           <a class="rh-tile" href={item.path}>
@@ -233,13 +276,14 @@ const otherSolutions = Object.entries(solutionExtras)
     </section>
 
     <ProfileRequestForm
-      page={p.path}
-      product={`Рішення ${extra.forWhom}`}
-      title={`Розрахуємо рішення ${extra.forWhom}`}
-      text="Надішліть фото, приблизні розміри або креслення — підберемо конструкції й підготуємо попередній розрахунок."
+      page={lp(p.path)}
+      product={`${tx.formProduct} ${extra.forWhom}`}
+      title={`${tx.formTitle} ${extra.forWhom}`}
+      text={tx.formText}
       options={extra.tiles.map((tile) => tile.label)}
-      optionsLabel="Що цікавить"
+      optionsLabel={tx.formLabel}
       commentPlaceholder={p.formExample}
+      locale={locale}
     />
   </main>
   <Footer />

@@ -1,0 +1,174 @@
+---
+// RU "Для бизнеса" hub (mirrors src/pages/dlya-biznesu/index.astro; content: src/data/ru/business-pages.ru.ts).
+// Only /ru/dlya-biznesu/restoranam/ exists in RU so far; the other business cards link to the UA pages (lp() falls back).
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import TrustBar from '../../../components/TrustBar.astro';
+import ProjectCard from '../../../components/projects/ProjectCard.astro';
+import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../seo/schema';
+import { BUSINESS_HUB, BUSINESS_IMG, businessPath } from '../../../data/business-pages';
+import { BUSINESS_GUARANTEES_RU as BUSINESS_GUARANTEES, BUSINESS_STEPS_RU as BUSINESS_STEPS, businessCardsOrderedRu as businessPagesOrdered } from '../../../data/ru/business-pages.ru';
+import { localizedPath } from '../../../i18n/helpers';
+import '../../../styles/category-pages.css';
+import '../../../styles/shower-master.css';
+import '../../../styles/profile-systems.css';
+import '../../../styles/rishennya-lower.css';
+import '../../../styles/projects-common.css';
+
+const lp = (path: string) => localizedPath(path, 'ru');
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(lp(BUSINESS_HUB), origin);
+const title = 'Для бизнеса';
+const h1 = 'Стекло для бизнеса';
+const metaTitle = 'Стекло для бизнеса — гостиницы, рестораны, офисы, магазины, клиники | Space Glass';
+const metaDescription = 'Стеклянные конструкции для бизнеса: гостиницы, рестораны, офисы, магазины, салоны красоты, клиники, жилые комплексы и базы отдыха. Перегородки, двери, витрины, ограждения, безрамное остекление. Киев, Одесса, Львов.';
+
+const hero = (w: number) => `${BUSINESS_IMG}/biz-goteli-${w}.webp`;
+const heroSrcset = `${hero(640)} 640w, ${hero(800)} 800w, ${hero(1280)} 1280w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const projectSlugs = ['gotel-dvoryanskyj-odesa-dushovi-ta-shtorky-na-vanu', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat', 'sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya'];
+const allProjects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk')).map(({ data }) => data);
+const projects = projectSlugs.map((slug) => allProjects.find((project) => project.slug === slug)).filter((project): project is NonNullable<typeof project> => Boolean(project));
+
+const faq: [string, string][] = [
+  ['Для каких видов бизнеса вы делаете стеклянные конструкции?', 'Для гостиниц, ресторанов и кафе, офисов, магазинов, салонов красоты, клиник и стоматологий, жилых комплексов и баз отдыха.'],
+  ['Что именно вы делаете для бизнеса?', 'Стеклянные перегородки и двери, входные группы, витрины, безрамное остекление террас, ограждения, душевые кабины, зеркала, козырьки, полки, столешницы и маркерные доски.'],
+  ['Работаете ли вы с юридическими лицами?', 'Да, по договору, с НДС или без, с полным пакетом закрывающих документов.'],
+  ['Можно ли заказать всё для заведения по одному проекту?', 'Да, делаем один замер и одну спецификацию на все зоны — от входа до санузлов.'],
+  ['Монтируете ли без остановки работы бизнеса?', 'Да, в нерабочие часы, выходные или поэтапно по согласованному графику.'],
+  ['Какие этапы работы?', 'Запрос и консультация, замер, договор, проектирование, контроль качества, монтаж и сдача проекта.'],
+  ['Платный ли выезд на замер?', 'Выезд специалиста оплачивается отдельно и учитывается в заказе.'],
+  ['Какая гарантия?', '2 года на фурнитуру и 1 год на монтаж, а также сервис после сдачи объекта.'],
+  ['Какое стекло вы используете?', 'Закалённое стекло и триплекс — безопасны для общественных помещений.'],
+  ['Можно ли логотип или брендинг на стекле?', 'Да, матировкой, плёнкой или печатью по вашему макету.'],
+  ['Работаете ли вы с сетями и сериями?', 'Да, разрабатываем типовое решение и тиражируем его на все точки или номера.'],
+  ['Работаете ли вы с дизайнерами и архитекторами?', 'Да, предоставляем чертежи, спецификации и консультации на этапе проекта.'],
+  ['Сколько времени занимает проект?', 'От нескольких дней для зеркал до нескольких недель для больших объёмов; сроки фиксируем в договоре.'],
+  ['Как получить предварительный расчёт?', 'Пришлите план помещения или фото с размерами — подготовим ориентировочную стоимость.'],
+  ['Работаете ли за пределами Киева, Одессы и Львова?', 'Да, по Украине — условия доставки и монтажа согласовываем отдельно.'],
+  ['Обслуживаете ли конструкции после монтажа?', 'Да, регулируем фурнитуру, меняем уплотнители, консультируем персонал.'],
+  ['Можно ли стекло для ТРЦ и бизнес-центров?', 'Да, с учётом технических требований арендодателя и графика работ.'],
+  ['Подходят ли стеклянные конструкции для большого потока людей?', 'Да, при условии усиленной фурнитуры: доводчиков, петель и направляющих для интенсивного использования.'],
+  ['Продаёте ли отдельные изделия без монтажа?', 'Да, полки, столешницы, зеркала и доски можем изготовить с доставкой.'],
+  ['Где посмотреть ваши работы?', 'В разделе «Проекты» — гостиницы, рестораны, офисы, клиники и магазины в Киеве, Одессе и Львове.']
+];
+
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: h1,
+  numberOfItems: businessPagesOrdered.length,
+  itemListElement: businessPagesOrdered.map((item, index) => ({ '@type': 'ListItem', position: index + 1, name: item.name, url: absoluteUrl(lp(businessPath(item.slug)), origin) }))
+};
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
+---
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={hero(1280)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  locale="ru"
+  alternateLocales={['uk', 'ru']}
+  heroPreloadSrc={hero(800)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Ваш комфорт — наш приоритет. Стеклянные решения для гостиниц, ресторанов, офисов, магазинов, салонов красоты, клиник, жилых комплексов и баз отдыха: от входной группы до санузлов — по одному проекту.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#business">Выберите свой бизнес</a>
+          <a class="button button--outline" href="#request">Оставить заявку</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={hero(800)} srcset={heroSrcset} sizes={heroSizes} alt="Лобби гостиницы со стеклянными конструкциями" width="1280" height="960" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="ru" />
+
+    <section id="business" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Что делаем?</p><h2>Решения для вашего бизнеса</h2></div><p>Выберите тип бизнеса — на странице зоны заведения, стекло для каждой из них, проекты и ответы на вопросы.</p></div>
+      <div class="rh-tiles">
+        {businessPagesOrdered.map((item) => (
+          <a class="rh-tile" href={lp(businessPath(item.slug))}>
+            <img src={`${BUSINESS_IMG}/biz-${item.slug}-480.webp`} srcset={`${BUSINESS_IMG}/biz-${item.slug}-480.webp 480w, ${BUSINESS_IMG}/biz-${item.slug}-800.webp 800w`} sizes="(max-width: 900px) 50vw, 25vw" alt="" width="480" height="360" loading="lazy" decoding="async" />
+            <span class="rh-tile__arrow" aria-hidden="true">→</span>
+            <span class="rh-tile__body"><b>{item.name}</b><span>{item.cardNote}</span></span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Этапы работы</p><h2>Как мы работаем с бизнесом</h2></div></div>
+      <div class="category-process__grid">
+        {BUSINESS_STEPS.map(([name, note], index) => <div><span>{String(index + 1).padStart(2, '0')}</span><b>{name}</b><small>{note}</small></div>)}
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Преимущества</p><h2>2 года гарантии на фурнитуру, 1 год — на монтаж</h2></div><p>Отвечаем за результат и после сдачи объекта.</p></div>
+      <div class="material-grid material-grid--parts">
+        {BUSINESS_GUARANTEES.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    {projects.length > 0 && (
+      <section class="category-section category-section--mint">
+        <div class="category-heading category-heading--projects">
+          <div class="category-heading--projects__title"><p class="eyebrow">Портфолио</p><h2>Реализованные проекты для бизнеса</h2></div>
+          <div class="category-heading--projects__aside"><a class="category-arrow-link" href={lp('/project/')}>Все проекты <span aria-hidden="true">→</span></a></div>
+        </div>
+        <div class="projects-index-v2__grid category-projects-grid">
+          {projects.map((project) => <ProjectCard project={project} locale="ru" href={lp(`/project/${project.slug}/`)} />)}
+        </div>
+      </section>
+    )}
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">География</p>
+          <h2>Стекло для бизнеса: замер и монтаж<br />в Киеве, Одессе и Львове</h2>
+          <p>Выезжаем на объект, делаем замеры и чертежи, изготавливаем и монтируем конструкции для заведений в трёх городах и областях. Для других регионов условия согласовываем отдельно.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Киев</b><span>замер и монтаж</span></li><li><b>Одесса</b><span>замер и монтаж</span></li><li><b>Львов</b><span>замер и монтаж</span></li></ul>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock title="FAQ: стекло для бизнеса" intro="О видах работ, договоре, сроках, гарантии и монтаже." items={faq} visibleCount={6} expandTo={faq.length} locale="ru" />
+    </section>
+
+    <ProfileRequestForm
+      page={lp(BUSINESS_HUB)}
+      product="Стекло для бизнеса"
+      title="Обсудим ваш проект?"
+      text="Расскажите, какой у вас бизнес и что нужно сделать, — подберём решения для каждой зоны и подготовим предварительный расчёт."
+      options={businessPagesOrdered.map((item) => item.name)}
+      optionsLabel="Ваш бизнес"
+      commentPlaceholder="Тип заведения, площадь, что нужно (перегородки, терраса, витрина…), город"
+      locale="ru"
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

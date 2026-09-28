@@ -16,15 +16,45 @@ import ProjectCard from '../projects/ProjectCard.astro';
 import ProfileRequestForm from '../profile/ProfileRequestForm.astro';
 import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
 import { BUSINESS_GUARANTEES, BUSINESS_HUB, BUSINESS_IMG, BUSINESS_STEPS, businessPagesOrdered, businessPath, type BusinessPage } from '../../data/business-pages';
+import { BUSINESS_GUARANTEES_RU, BUSINESS_STEPS_RU, businessCardsOrderedRu } from '../../data/ru/business-pages.ru';
+import { hasLocalizedRoute, localizedPath, type Locale } from '../../i18n/helpers';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
 import '../../styles/rishennya-lower.css';
 import '../../styles/projects-common.css';
 
-interface Props { page: BusinessPage }
-const { page: p } = Astro.props;
-const path = businessPath(p.slug);
+interface Props { page: BusinessPage; locale?: Locale }
+const { page: p, locale = 'uk' } = Astro.props;
+const isRu = locale === 'ru';
+const lp = (href: string) => localizedPath(href, locale);
+const path = lp(businessPath(p.slug));
+const hasRu = hasLocalizedRoute(businessPath(p.slug), 'ru');
+const tx = {
+  uk: {
+    home: 'Головна', hub: 'Для бізнесу', what: 'Що ми робимо', leave: 'Залишити заявку', whatIs: 'Що це?', weDo: 'Що робимо', benefits: 'Переваги', why: 'Чому скло',
+    portfolio: 'Портфоліо', projects: 'Реалізовані проєкти', allProjects: 'Усі проєкти', stagesEyebrow: 'Етапи роботи', stages: 'Як ми працюємо з бізнесом',
+    guarantees: 'Гарантії', guaranteesTitle: '2 роки гарантії на фурнітуру, 1 рік — на монтаж', guaranteesNote: 'Відповідаємо за результат і після здачі об’єкта.',
+    geo: 'Географія', geoTitle: 'замір і монтаж', geoCities: 'у Києві, Одесі та Львові',
+    geoText: (forWhom: string) => `Виїжджаємо на об’єкт, робимо заміри й креслення, виготовляємо та монтуємо конструкції ${forWhom} у трьох містах і областях; для інших регіонів умови погоджуємо окремо.`,
+    cities: ['Київ', 'Одеса', 'Львів'], cityNote: 'замір і монтаж', faqTitle: 'FAQ: скло', faqIntro: 'Відповіді на питання, які найчастіше ставлять власники й керівники закладів.',
+    others: 'Рішення для іншого бізнесу', allHub: 'Усі напрями для бізнесу', formTitle: 'Обговоримо ваш проєкт?',
+    formText: 'Надішліть план приміщення, фото або розміри — підберемо конструкції для кожної зони й підготуємо попередній розрахунок.', formLabel: 'Що цікавить'
+  },
+  ru: {
+    home: 'Главная', hub: 'Для бизнеса', what: 'Что мы делаем', leave: 'Оставить заявку', whatIs: 'Что это?', weDo: 'Что делаем', benefits: 'Преимущества', why: 'Почему стекло',
+    portfolio: 'Портфолио', projects: 'Реализованные проекты', allProjects: 'Все проекты', stagesEyebrow: 'Этапы работы', stages: 'Как мы работаем с бизнесом',
+    guarantees: 'Гарантии', guaranteesTitle: '2 года гарантии на фурнитуру, 1 год — на монтаж', guaranteesNote: 'Отвечаем за результат и после сдачи объекта.',
+    geo: 'География', geoTitle: 'замер и монтаж', geoCities: 'в Киеве, Одессе и Львове',
+    geoText: (forWhom: string) => `Выезжаем на объект, делаем замеры и чертежи, изготавливаем и монтируем конструкции ${forWhom} в трёх городах и областях; для других регионов условия согласовываем отдельно.`,
+    cities: ['Киев', 'Одесса', 'Львов'], cityNote: 'замер и монтаж', faqTitle: 'FAQ: стекло', faqIntro: 'Ответы на вопросы, которые чаще всего задают владельцы и руководители заведений.',
+    others: 'Решения для другого бизнеса', allHub: 'Все направления для бизнеса', formTitle: 'Обсудим ваш проект?',
+    formText: 'Пришлите план помещения, фото или размеры — подберём конструкции для каждой зоны и подготовим предварительный расчёт.', formLabel: 'Что интересует'
+  }
+}[locale];
+const steps = isRu ? BUSINESS_STEPS_RU : BUSINESS_STEPS;
+const guarantees = isRu ? BUSINESS_GUARANTEES_RU : BUSINESS_GUARANTEES;
+const cards = isRu ? businessCardsOrderedRu : businessPagesOrdered;
 const origin = Astro.site ?? Astro.url.origin;
 
 const hero = (w: number) => `${BUSINESS_IMG}/biz-${p.slug}-${w}.webp`;
@@ -36,12 +66,12 @@ const projects = p.projectSlugs
   .map((slug) => allProjects.find((project) => project.slug === slug))
   .filter((project): project is NonNullable<typeof project> => Boolean(project));
 
-const selfIndex = businessPagesOrdered.findIndex((item) => item.slug === p.slug);
-const others = [1, 2, 3, 4].map((step) => businessPagesOrdered[(selfIndex + step) % businessPagesOrdered.length]);
+const selfIndex = cards.findIndex((item) => item.slug === p.slug);
+const others = [1, 2, 3, 4].map((step) => cards[(selfIndex + step) % cards.length]);
 
 const breadcrumbItems = [
-  { label: 'Головна', href: '/' },
-  { label: 'Для бізнесу', href: BUSINESS_HUB },
+  { label: tx.home, href: lp('/') },
+  { label: tx.hub, href: lp(BUSINESS_HUB) },
   { label: p.name, href: path }
 ];
 const structuredData: JsonLdObject[] = [
@@ -52,8 +82,8 @@ const structuredData: JsonLdObject[] = [
 <BaseLayout
   title={p.metaTitle}
   description={p.metaDescription}
-  locale="uk"
-  alternateLocales={['uk']}
+  locale={locale}
+  alternateLocales={hasRu ? ['uk', 'ru'] : ['uk']}
   schemaType="Service"
   structuredData={structuredData}
   image={hero(1280)}
@@ -67,12 +97,12 @@ const structuredData: JsonLdObject[] = [
     <section class="category-hero category-hero--photo profile-hero">
       <div class="category-hero__copy">
         <Breadcrumbs items={breadcrumbItems.map((item, index) => index === breadcrumbItems.length - 1 ? { label: item.label } : item)} />
-        <p class="eyebrow">Для бізнесу · {p.name}</p>
+        <p class="eyebrow">{tx.hub} · {p.name}</p>
         <h1>{p.h1}</h1>
         <p class="lead">{p.lead}</p>
         <div class="hero__actions">
-          <a class="button button--mint" href="#zones">Що ми робимо</a>
-          <a class="button button--outline" href="#request">Залишити заявку</a>
+          <a class="button button--mint" href="#zones">{tx.what}</a>
+          <a class="button button--outline" href="#request">{tx.leave}</a>
         </div>
       </div>
       <figure class="category-hero__figure">
@@ -82,10 +112,10 @@ const structuredData: JsonLdObject[] = [
       </figure>
     </section>
 
-    <TrustBar locale="uk" />
+    <TrustBar locale={locale} />
 
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Що це?</p><h2>{p.introHeading}</h2></div></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.whatIs}</p><h2>{p.introHeading}</h2></div></div>
       <div class="category-intro-grid">
         <div class="category-prose">{p.intro.map((paragraph) => <p>{paragraph}</p>)}</div>
         <ul class="category-intro__spec">
@@ -95,10 +125,10 @@ const structuredData: JsonLdObject[] = [
     </section>
 
     <section id="zones" class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Що робимо</p><h2>{p.zonesHeading}</h2></div><p>{p.zonesIntro}</p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.weDo}</p><h2>{p.zonesHeading}</h2></div><p>{p.zonesIntro}</p></div>
       <div class="rh-tiles rh-tiles--3">
         {p.zones.map((zone) => (
-          <a class="rh-tile" href={zone.href}>
+          <a class="rh-tile" href={lp(zone.href)}>
             <img src={zone.image} alt="" width="480" height="480" loading="lazy" decoding="async" />
             <span class="rh-tile__arrow" aria-hidden="true">→</span>
             <span class="rh-tile__body"><b>{zone.title}</b><span>{zone.text}</span></span>
@@ -108,7 +138,7 @@ const structuredData: JsonLdObject[] = [
     </section>
 
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Переваги</p><h2>Чому скло {p.forWhom}</h2></div></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.benefits}</p><h2>{tx.why} {p.forWhom}</h2></div></div>
       <div class="material-grid material-grid--parts">
         {p.benefits.map(([title, text]) => <article><b>{title}</b><p>{text}</p></article>)}
       </div>
@@ -117,55 +147,56 @@ const structuredData: JsonLdObject[] = [
     {projects.length > 0 && (
       <section class="category-section">
         <div class="category-heading category-heading--projects">
-          <div class="category-heading--projects__title"><p class="eyebrow">Портфоліо</p><h2>Реалізовані проєкти</h2></div>
-          <div class="category-heading--projects__aside"><a class="category-arrow-link" href="/project/">Усі проєкти <span aria-hidden="true">→</span></a></div>
+          <div class="category-heading--projects__title"><p class="eyebrow">{tx.portfolio}</p><h2>{tx.projects}</h2></div>
+          <div class="category-heading--projects__aside"><a class="category-arrow-link" href={lp('/project/')}>{tx.allProjects} <span aria-hidden="true">→</span></a></div>
         </div>
         <div class="projects-index-v2__grid category-projects-grid">
-          {projects.map((project) => <ProjectCard project={project} hrefPrefix="/project" />)}
+          {projects.map((project) => <ProjectCard project={project} locale={locale} href={lp(`/project/${project.slug}/`)} />)}
         </div>
       </section>
     )}
 
     <section class="category-process">
-      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Етапи роботи</p><h2>Як ми працюємо з бізнесом</h2></div></div>
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">{tx.stagesEyebrow}</p><h2>{tx.stages}</h2></div></div>
       <div class="category-process__grid">
-        {BUSINESS_STEPS.map(([name, note], index) => <div><span>{String(index + 1).padStart(2, '0')}</span><b>{name}</b><small>{note}</small></div>)}
+        {steps.map(([name, note], index) => <div><span>{String(index + 1).padStart(2, '0')}</span><b>{name}</b><small>{note}</small></div>)}
       </div>
     </section>
 
     <section class="category-section">
-      <div class="category-heading"><div><p class="eyebrow">Гарантії</p><h2>2 роки гарантії на фурнітуру, 1 рік — на монтаж</h2></div><p>Відповідаємо за результат і після здачі об’єкта.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.guarantees}</p><h2>{tx.guaranteesTitle}</h2></div><p>{tx.guaranteesNote}</p></div>
       <div class="material-grid material-grid--parts">
-        {BUSINESS_GUARANTEES.map(([title, text]) => <article><b>{title}</b><p>{text}</p></article>)}
+        {guarantees.map(([title, text]) => <article><b>{title}</b><p>{text}</p></article>)}
       </div>
     </section>
 
     <section class="category-section category-geo">
       <div class="category-geo__grid">
         <div class="category-geo__copy">
-          <p class="eyebrow">Географія</p>
-          <h2>{p.h1}: замір і монтаж<br />у Києві, Одесі та Львові</h2>
-          <p>Виїжджаємо на об’єкт, робимо заміри й креслення, виготовляємо та монтуємо конструкції {p.forWhom} у трьох містах і областях; для інших регіонів умови погоджуємо окремо.</p>
+          <p class="eyebrow">{tx.geo}</p>
+          <h2>{p.h1}: {tx.geoTitle}<br />{tx.geoCities}</h2>
+          <p>{tx.geoText(p.forWhom)}</p>
         </div>
-        <ul class="category-geo__cities"><li><b>Київ</b><span>замір і монтаж</span></li><li><b>Одеса</b><span>замір і монтаж</span></li><li><b>Львів</b><span>замір і монтаж</span></li></ul>
+        <ul class="category-geo__cities">{tx.cities.map((city) => <li><b>{city}</b><span>{tx.cityNote}</span></li>)}</ul>
       </div>
     </section>
 
     <section class="category-section category-section--faq">
       <FAQBlock
-        title={`FAQ: скло ${p.forWhom}`}
-        intro="Відповіді на питання, які найчастіше ставлять власники й керівники закладів."
+        title={`${tx.faqTitle} ${p.forWhom}`}
+        intro={tx.faqIntro}
         items={p.faq}
         visibleCount={6}
         expandTo={p.faq.length}
+        locale={locale}
       />
     </section>
 
     <section class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Для бізнесу</p><h2>Рішення для іншого бізнесу</h2></div><p><a class="category-arrow-link" href={BUSINESS_HUB}>Усі напрями для бізнесу <span aria-hidden="true">→</span></a></p></div>
+      <div class="category-heading"><div><p class="eyebrow">{tx.hub}</p><h2>{tx.others}</h2></div><p><a class="category-arrow-link" href={lp(BUSINESS_HUB)}>{tx.allHub} <span aria-hidden="true">→</span></a></p></div>
       <div class="rh-tiles">
         {others.map((item) => (
-          <a class="rh-tile" href={businessPath(item.slug)}>
+          <a class="rh-tile" href={lp(businessPath(item.slug))}>
             <img src={`${BUSINESS_IMG}/biz-${item.slug}-480.webp`} alt="" width="480" height="360" loading="lazy" decoding="async" />
             <span class="rh-tile__arrow" aria-hidden="true">→</span>
             <span class="rh-tile__body"><b>{item.name}</b><span>{item.cardNote}</span></span>
@@ -176,12 +207,13 @@ const structuredData: JsonLdObject[] = [
 
     <ProfileRequestForm
       page={path}
-      product={`Для бізнесу: ${p.name}`}
-      title="Обговоримо ваш проєкт?"
-      text="Надішліть план приміщення, фото або розміри — підберемо конструкції для кожної зони й підготуємо попередній розрахунок."
+      product={`${tx.hub}: ${p.name}`}
+      title={tx.formTitle}
+      text={tx.formText}
       options={p.zones.map((zone) => zone.title)}
-      optionsLabel="Що цікавить"
+      optionsLabel={tx.formLabel}
       commentPlaceholder={p.formExample}
+      locale={locale}
     />
   </main>
   <Footer />

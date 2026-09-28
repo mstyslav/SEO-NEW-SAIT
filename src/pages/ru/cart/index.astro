@@ -1,3 +1,6 @@
 ---
-return Astro.redirect('/ru/cart/');
+// /ru/cart/ has no RU page: the project cart is one shared page (/cart/, noindex). This stub used to
+// redirect to itself (an endless refresh loop); it now sends visitors to the real cart. Not in the sitemap;
+// public/_redirects serves the same target as a 301 on the edge.
+return Astro.redirect('/cart/', 301);
 ---

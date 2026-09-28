@@ -1,0 +1,274 @@
+---
+// RU aluminium hub (mirrors src/pages/alyuminiyevi-konstrukcziyi/index.astro; content: src/data/ru/profile-systems.ru.ts).
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import TrustBar from '../../../components/TrustBar.astro';
+import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../seo/schema';
+import { ALU_HUB, IMG_BASE } from '../../../data/profile-systems';
+import { aluCategoriesRu as categories, pvcCategoriesRu as pvc } from '../../../data/ru/profile-systems.ru';
+import { profileIcons } from '../../../data/profile-icons';
+import { localizedPath } from '../../../i18n/helpers';
+import '../../../styles/category-pages.css';
+import '../../../styles/shower-master.css';
+import '../../../styles/profile-systems.css';
+
+const lp = (path: string) => localizedPath(path, 'ru');
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(lp(ALU_HUB), origin);
+
+const title = 'Алюминиевые конструкции';
+const h1 = 'Алюминиевые конструкции на заказ';
+const metaTitle = 'Алюминиевые конструкции Aluprof — окна, двери, раздвижные системы, фасады, перголы | Space Glass';
+const metaDescription =
+  'Алюминиевые окна, двери, раздвижные двери, офисные перегородки, фасадное остекление, зимние сады, сетки плиссе и перголы на системах Aluprof. Проектирование, собственное производство, монтаж и сервис в Киеве, Одессе и Львове.';
+
+const heroSrc = (w: number) => `${IMG_BASE}/cat-alu-rozsuvni-${w}.webp`;
+const heroSrcset = `${heroSrc(480)} 480w, ${heroSrc(900)} 900w, ${heroSrc(1080)} 1080w`;
+const heroSizes = '(max-width: 900px) 100vw, 50vw';
+
+const hubItems = [
+  ...categories.map((category) => ({ title: category.name, note: category.cardNote, href: lp(category.path), icon: profileIcons[`alu/${category.slug}`] })),
+  { title: 'Металлопластиковые окна', note: 'Когда нужны стандартные тёплые окна в квартиру по доступной цене.', href: lp(pvc[0].path), icon: profileIcons['pvc/vikna'] }
+];
+
+const systemsTable = categories.flatMap((category) =>
+  category.models.map((model) => ({
+    name: model.name.replace(/^Aluprof /, ''),
+    href: `${lp(category.path)}#${model.id}`,
+    direction: category.name,
+    kind: model.kind,
+    key: model.specs.slice(0, 2).map(([k, v]) => `${k.toLowerCase()}: ${v}`).join('; ')
+  }))
+);
+
+const benefits: [string, string][] = [
+  ['Безопасность', 'Жёсткий профиль, многоточечные замки и противовзломное остекление до класса RC4. Алюминий не горит и не выделяет токсичных веществ.'],
+  ['Энергоэффективность', 'Терморазрыв и двухкомпонентные уплотнители дают Uw от 0,62 W/(m²K) — расходы на отопление и кондиционирование заметно снижаются.'],
+  ['Экологичность', 'Алюминий, полиамид и EPDM полностью перерабатываются. Профили Aluprof соответствуют принципам Cradle to Cradle.'],
+  ['Долговечность', 'Профиль не гниёт, не деформируется от солнца и мороза, не желтеет и не требует покраски десятилетиями.'],
+  ['Дизайн', 'Узкие рамы, большие площади стекла, любой цвет RAL, скрытые петли и створки.'],
+  ['Цена / качество', 'Алюминий — инвестиция на десятилетия: без замены, с минимальным обслуживанием.']
+];
+
+const services: [string, string][] = [
+  ['Проектирование', 'Инженеры-конструкторы готовят карту проёмов с привязкой к горизонту, спецификацию изделий и узлы примыкания — риски учтены ещё до производства.'],
+  ['Изготовление', 'Собственное оборудование для обработки профиля и системное программное обеспечение. Сборщики цеха проходят обучение и регулярно повышают квалификацию.'],
+  ['Монтаж', 'Монтажники с опытом более 10 лет устанавливают конструкции с гидро- и пароизоляцией по техническим нормам и убирают за собой.'],
+  ['Гарантия и сервис', 'Гарантийное и послегарантийное обслуживание: регулировка фурнитуры, замена уплотнителей и ремонт при необходимости.']
+];
+
+const faq: [string, string][] = [
+  ['С какими профильными системами вы работаете?', 'Основная система — Aluprof: окна MB-79N и MB-86N, двери MB-86N Pivot, MB-100GFT и MB-86 Fold Line HD, раздвижные MB-82HS и MB-Skyline, фасады MB-MT50N, MB-SR50N ZS, MB-SE85 SG, зимние сады MB-59 Slide и MB-77HS.'],
+  ['Тёплые ли алюминиевые конструкции?', 'Да. Системы с терморазрывом имеют Uw от 0,62 W/(m²K) для окон и от 0,84 W/(m²K) для подъёмно-раздвижных дверей. Холодный алюминий без терморазрыва используют только для нежилых помещений.'],
+  ['Что лучше: алюминий или металлопластик?', 'Алюминий прочнее, долговечнее и позволяет большие створки, узкие рамы, раздвижные системы и фасады. Металлопластик доступнее для стандартных окон в квартире.'],
+  ['От чего зависит стоимость?', 'От системы и варианта профиля, размеров, стеклопакетов, фурнитуры, цвета, автоматики и условий монтажа. Расчёт делаем по чертежу или после замера.'],
+  ['Можно ли выбрать цвет профиля?', 'Да. Профили окрашиваются порошковыми красками по палитре RAL; доступны структурные и древесные покрытия.'],
+  ['Делаете ли вы проект?', 'Да. Готовим карту проёмов, спецификацию изделий и типовые узлы примыкания — это позволяет избежать непредвиденных расходов.'],
+  ['Где выполняете монтаж?', 'Замер и монтаж — в Киеве, Одессе и Львове с областями. Другие города — по договорённости.'],
+  ['Есть ли гарантия и сервис?', 'Да. Предоставляем гарантийное и послегарантийное обслуживание: регулировку, замену уплотнителей, ремонт фурнитуры.'],
+  ['Работаете ли вы с архитекторами и застройщиками?', 'Да. Предоставляем технические материалы, помогаем подобрать систему и сопровождаем проект от чертежей до монтажа.'],
+  ['Что нужно для предварительного расчёта?', 'План или чертёж, фото проёмов с размерами, город и краткое описание задачи.'],
+  ['Чем алюминиевые конструкции лучше деревянных?', 'Алюминий не гниёт, не рассыхается и не требует покраски. Для тёплого вида доступны древесные покрытия профиля.'],
+  ['Что такое терморазрыв?', 'Полиамидная вставка между наружной и внутренней частями профиля. Она не пропускает холод, поэтому алюминиевое окно становится тёплым.'],
+  ['Какие варианты теплоизоляции бывают?', 'E — базовый, ST — с двухкомпонентным уплотнителем, SI/HI — с дополнительными изоляционными вставками для энергосберегающих домов.'],
+  ['Можно ли заказать только изготовление без монтажа?', 'В части проектов возможно изготовление с доставкой без монтажа. Однако гарантия на работу конструкции наиболее полная при нашем монтаже.'],
+  ['Демонтируете ли старые конструкции?', 'Да. Демонтаж оцениваем отдельно после осмотра объекта.'],
+  ['Работаете ли вы с коммерческими объектами?', 'Да: офисы, магазины, рестораны, гостиницы и клиники — витрины, входные группы, фасады и раздвижные системы.'],
+  ['Можно ли реализовать проект поэтапно?', 'Да, большие объекты можно делить на этапы по согласованному графику изготовления и монтажа.'],
+  ['Сколько времени занимает изготовление?', 'Сроки зависят от системы, цвета профиля и стеклопакетов. Точные сроки называем после согласования чертежа.'],
+  ['Можно ли автоматизировать двери и раздвижные системы?', 'Да. Доступны приводы, электронные замки и контроль доступа, в том числе управление со смартфона.'],
+  ['Нужен ли профессиональный замер?', 'Да, для индивидуальных конструкций замер обязателен: он определяет точные размеры и узлы примыкания.']
+];
+
+const relatedLinks: [string, string][] = [
+  ['Металлопластиковые окна', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/'],
+  ['Сетки плиссе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
+  ['Стоечно-ригельное остекление', '/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/'],
+  ['Стеклянные входные группы', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'],
+  ['Безрамное остекление террасы', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/'],
+  ['Панорамное остекление', '/bezramne-sklinnya/sklinnya-budynkiv/'],
+  ['Стеклопакет: как выбрать', '/knowledge/sklopaket-yak-obraty/'],
+  ['Остекление для дома', '/pryvatnyj-sektor/']
+];
+
+const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${pageUrl}#directions`,
+  name: title,
+  numberOfItems: categories.length,
+  itemListElement: categories.map((category, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: category.name,
+    url: absoluteUrl(lp(category.path), origin)
+  }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
+---
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  image={heroSrc(1080)}
+  schemaType="CollectionPage"
+  structuredData={structuredData}
+  locale="ru"
+  alternateLocales={['uk', 'ru']}
+  heroPreloadSrc={heroSrc(900)}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
+>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: title }]} />
+        <p class="eyebrow">{title}</p>
+        <h1>{h1}</h1>
+        <p class="lead">Алюминиевые окна и двери, раздвижные системы, офисное и фасадное остекление, зимние сады, перголы и сетки плиссе на профильных системах Aluprof. Проектируем, изготавливаем на собственном оборудовании и монтируем конструкции в Киеве, Одессе и Львове — с гарантией и сервисом после установки.</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#types">Смотреть {categories.length} направлений</a>
+          <a class="button button--outline" href="#request">Получить расчёт</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={heroSrc(900)} srcset={heroSrcset} sizes={heroSizes} alt="Панорамные алюминиевые раздвижные двери на террасу частного дома" width="1080" height="1080" decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale="ru" />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>Алюминиевые конструкции под ваш объект</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          <p>Space Glass более 10 лет изготавливает и устанавливает алюминиевые окна и двери в Одессе и за её пределами. За последние три года мы остеклили более 10 000 м² объектов — от квартир и частных домов до ресторанов, офисов и коммерческих зданий. К нам возвращаются клиенты, с которыми мы работали несколько лет назад.</p>
+          <p>Мы работаем с профильными системами Aluprof — одного из крупнейших европейских производителей алюминиевых систем. Тёплые профили с терморазрывом, энергосберегающие стеклопакеты и правильный монтаж снижают расходы на отопление и кондиционирование до 30%.</p>
+          <p>Полный цикл — в наших руках: проектирование проёмов и узлов, изготовление на собственном оборудовании, монтаж с гидро- и пароизоляцией, гарантийный и послегарантийный сервис.</p>
+        </div>
+        <ul class="category-intro__spec">
+          <li><b>10+ лет</b><span>на рынке алюминиевых окон и дверей</span></li>
+          <li><b>10 000+ м²</b><span>остеклено за последние 3 года</span></li>
+          <li><b>Системы Aluprof</b><span>окна, двери, раздвижные системы, фасады</span></li>
+          <li><b>Киев · Одесса · Львов</b><span>замер, монтаж и сервис</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Направления</p><h2>Что мы изготавливаем из алюминия</h2></div><p>Выберите направление — на странице каждого есть системы с характеристиками, сравнение и советы по выбору.</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {hubItems.map((item) => (
+          <a class="category-icon-card" href={item.href}>
+            <span class="category-icon-card__icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <b aria-hidden="true">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Системы</p><h2>Профильные системы Aluprof в одной таблице</h2></div><p>Показатели — по данным производителя для базовых конфигураций. Нажмите на систему, чтобы перейти к её описанию.</p></div>
+      <div class="profile-table-wrap">
+        <table class="profile-table">
+          <thead><tr><th scope="col">Система</th><th scope="col">Направление</th><th scope="col">Тип</th><th scope="col">Ключевые показатели</th></tr></thead>
+          <tbody>
+            {systemsTable.map((row) => (
+              <tr><th scope="row"><a href={row.href}>{row.name}</a></th><td>{row.direction}</td><td>{row.kind}</td><td>{row.key}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Преимущества</p><h2>Почему алюминий</h2></div><p>Алюминиевые системы отвечают долгосрочному взгляду на строительство.</p></div>
+      <div class="material-grid material-grid--parts">
+        {benefits.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Профиль</p><h2>Варианты теплоизоляции и цвета</h2></div><p>Одна система — несколько уровней теплоизоляции. Выбираем под объект, а не «с запасом».</p></div>
+      <dl class="material-thickness">
+        <div><dt>E — базовый</dt><dd>Однокомпонентный центральный уплотнитель. Для нежилых и умеренно отапливаемых помещений.</dd></div>
+        <div><dt>ST — стандартный</dt><dd>Двухкомпонентный центральный уплотнитель. Оптимальный вариант для жилья.</dd></div>
+        <div><dt>SI / HI — повышенная изоляция</dt><dd>Дополнительные изоляционные вставки между терморазрывами. Для энергосберегающих домов.</dd></div>
+        <div><dt>Цвет</dt><dd>Порошковая покраска по палитре RAL, структурные и древесные покрытия — одинаково для окон, дверей и фасада.</dd></div>
+      </dl>
+    </section>
+
+    <section class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">Услуги</p><h2>Полный цикл от проекта до сервиса</h2></div></div>
+      <div class="category-steps">
+        {services.map(([name, text], i) => (
+          <div class="category-steps__item"><span>{String(i + 1).padStart(2, '0')}</span><b>{name}</b><p>{text}</p></div>
+        ))}
+      </div>
+    </section>
+
+    <section class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">Процесс</p><h2>От запроса до готовой конструкции</h2></div></div>
+      <div class="category-process__grid">
+        <div><span>01</span><b>Запрос</b><small>Фото, размеры или чертёж</small></div>
+        <div><span>02</span><b>Консультация</b><small>Подбор системы и стеклопакета</small></div>
+        <div><span>03</span><b>Замер</b><small>Проверка проёмов</small></div>
+        <div><span>04</span><b>Проект</b><small>Карта проёмов и узлы</small></div>
+        <div><span>05</span><b>Изготовление</b><small>Собственное оборудование</small></div>
+        <div><span>06</span><b>Монтаж</b><small>Гарантия и сервис</small></div>
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">География</p>
+          <h2>Алюминиевые конструкции: замер и монтаж<br />в Киеве, Одессе и Львове</h2>
+          <p>Офисы Space Glass работают в Одессе, Киеве и Львове. Выезжаем на замер, готовим проект и выполняем монтаж алюминиевых окон, дверей, раздвижных систем, фасадов и зимних садов в городах и областях.</p>
+          <p>Для объектов в других регионах условия выезда, доставки и монтажа согласовываем отдельно — в зависимости от объёма и типа конструкций.</p>
+        </div>
+        <ul class="category-geo__cities"><li><b>Киев</b><span>замер и монтаж</span></li><li><b>Одесса</b><span>замер и монтаж</span></li><li><b>Львов</b><span>замер и монтаж</span></li></ul>
+      </div>
+    </section>
+
+    <section class="category-section category-section--faq">
+      <FAQBlock
+        title="FAQ об алюминиевых конструкциях"
+        intro="О системах Aluprof, теплоизоляции, цвете, проекте, монтаже и гарантии."
+        items={faq}
+        visibleCount={6}
+        expandTo={faq.length}
+        locale="ru"
+      />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">Полезное</p><h2>Дальше по теме</h2></div></div>
+      <div class="category-links__grid category-links__grid--8">
+        {relatedLinks.map(([label, href]) => <a href={lp(href)}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={lp(ALU_HUB)}
+      product={title}
+      title={'Нужен предварительный расчёт?'}
+      text={'Пришлите размеры проёмов или опишите задачу — подберём систему Aluprof и подготовим ориентировочную стоимость.'}
+      options={[...categories.map((c) => c.name), 'Металлопластиковые окна']}
+      optionsLabel="Направление"
+      commentPlaceholder="Что нужно: тип конструкции, размеры, количество, город объекта"
+      locale="ru"
+    />
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

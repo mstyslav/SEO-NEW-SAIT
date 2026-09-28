@@ -8,14 +8,74 @@
  */
 import { COEFFICIENT, EUR, EUR_RATE, INSTALL_UAH_MIN, INSTALL_UAH_PER_M, REFERENCE, SYSTEMS } from '../../data/railing-pricing';
 import { RAILINGS_IMG } from '../../data/railing-catalog';
+import { EUR_RU, SYSTEMS_RU } from '../../data/ru/railing-pricing.ru';
+import { localizedPath, type Locale } from '../../i18n/helpers';
 import '../../styles/configurator-rc.css';
 
-const data = { systems: SYSTEMS, eur: EUR, rate: EUR_RATE, coef: COEFFICIENT, installPerM: INSTALL_UAH_PER_M, installMin: INSTALL_UAH_MIN, ref: REFERENCE, img: RAILINGS_IMG };
-const steps = ['Система', 'Форма', 'Розміри', 'Колір', 'Скло', 'Поручень', 'Монтаж', 'Заявка'];
+interface Props { locale?: Locale }
+const locale: Locale = Astro.props.locale ?? 'uk';
+const isRu = locale === 'ru';
+const lp = (path: string) => localizedPath(path, locale);
+const systems = isRu ? SYSTEMS_RU : SYSTEMS;
+
+// Static UI texts (server) and the strings the client script builds (passed in the JSON data as `t`).
+const ui = {
+  uk: {
+    steps: ['Система', 'Форма', 'Розміри', 'Колір', 'Скло', 'Поручень', 'Монтаж', 'Заявка'], stepsLabel: 'Кроки конфігуратора',
+    hint: 'Схема показує сторону A в масштабі. Фото — приклад системи.', estimate: 'Орієнтовна вартість', breakdown: 'Склад ціни',
+    chooseSystem: 'Оберіть систему огорожі', chooseShape: 'Оберіть форму огорожі', straight: 'Пряма (I)', corner: 'Кутова (L)', uShape: 'П-подібна (U)',
+    dimensions: 'Вкажіть розміри', side: 'Сторона', cm: 'см', height: 'Висота огорожі, см', colourTitle: 'Колір профілю та фурнітури', glass: 'Скло',
+    thickness: 'Товщина', glassColour: 'Колір скла', satin: 'Матування', coating: 'Покриття від бруду та води', handrail: 'Поручень', install: 'Монтаж',
+    installYes: 'Монтаж Space Glass', installYesNote: 'Замір, доставка, встановлення', installNo: 'Без монтажу', installNoNote: 'Тільки виготовлення',
+    city: 'Місто', cities: ['Київ', 'Одеса', 'Львів'], otherCity: 'Інше місто', otherValue: 'Інше', yourConfig: 'Ваша конфігурація', product: 'Скляні огорожі — конфігуратор',
+    name: 'Ім’я', namePh: 'Ваше ім’я', phone: 'Телефон', comment: 'Коментар', commentPh: 'Основа (бетон, дерево), поверх, побажання',
+    consent: 'Погоджуюсь із', policy: 'політикою конфіденційності', send: 'Надіслати конфігурацію', back: '← Назад', next: 'Далі →',
+    disclaimer: 'Ціна орієнтовна: остаточну вартість, товщину скла й кріплення визначаємо після заміру.'
+  },
+  ru: {
+    steps: ['Система', 'Форма', 'Размеры', 'Цвет', 'Стекло', 'Поручень', 'Монтаж', 'Заявка'], stepsLabel: 'Шаги конфигуратора',
+    hint: 'Схема показывает сторону A в масштабе. Фото — пример системы.', estimate: 'Ориентировочная стоимость', breakdown: 'Состав цены',
+    chooseSystem: 'Выберите систему ограждения', chooseShape: 'Выберите форму ограждения', straight: 'Прямая (I)', corner: 'Угловая (L)', uShape: 'П-образная (U)',
+    dimensions: 'Укажите размеры', side: 'Сторона', cm: 'см', height: 'Высота ограждения, см', colourTitle: 'Цвет профиля и фурнитуры', glass: 'Стекло',
+    thickness: 'Толщина', glassColour: 'Цвет стекла', satin: 'Матировка', coating: 'Покрытие от грязи и воды', handrail: 'Поручень', install: 'Монтаж',
+    installYes: 'Монтаж Space Glass', installYesNote: 'Замер, доставка, установка', installNo: 'Без монтажа', installNoNote: 'Только изготовление',
+    city: 'Город', cities: ['Киев', 'Одесса', 'Львов'], otherCity: 'Другой город', otherValue: 'Другой', yourConfig: 'Ваша конфигурация', product: 'Стеклянные ограждения — конфигуратор',
+    name: 'Имя', namePh: 'Ваше имя', phone: 'Телефон', comment: 'Комментарий', commentPh: 'Основание (бетон, дерево), этаж, пожелания',
+    consent: 'Соглашаюсь с', policy: 'политикой конфиденциальности', send: 'Отправить конфигурацию', back: '← Назад', next: 'Далее →',
+    disclaimer: 'Цена ориентировочная: окончательную стоимость, толщину стекла и крепления определяем после замера.'
+  }
+}[locale];
+const t = {
+  uk: {
+    numLocale: 'uk-UA', uah: 'грн', handrailIncluded: 'Поручень входить у систему', handrailIncludedNote: 'У системах на стійках поручень уже входить у комплект.',
+    handrailNote: 'Поручень захищає верхню кромку скла й дає опору — рекомендуємо для сходів і громадських місць.',
+    system: 'Система', m: 'м', shape: 'Форма', corners: 'кутів', glass: 'Скло', coating: 'Покриття від бруду', colour: 'Колір',
+    discount: 'Знижка за довжину', installLine: 'Замір, доставка й монтаж',
+    summary: ['Система', 'Форма', 'Розміри', 'Колір', 'Скло', 'Поручень', 'Монтаж'], shapes: { I: 'пряма', L: 'кутова (L)', U: 'П-подібна (U)' },
+    cm: 'см', heightWord: 'висота', coatingShort: 'покриття від бруду', inSystem: 'входить у систему', yes: 'так', no: 'ні',
+    total: 'Разом', approx: 'Орієнтовно', toRequest: 'До заявки →', next: 'Далі →',
+    frenchNote: 'Французький балкон встановлюється в один проріз — лише пряма форма.', cornersNote: 'Кути з’єднуємо під 90°; нестандартні кути й ухили враховуємо після заміру.',
+    dimNoteParts: [': висота скла до ', ' см, ширина однієї панелі до ', ' см — довгі сторони ділимо на панелі автоматично.']
+  },
+  ru: {
+    numLocale: 'ru-UA', uah: 'грн', handrailIncluded: 'Поручень входит в систему', handrailIncludedNote: 'В системах на стойках поручень уже входит в комплект.',
+    handrailNote: 'Поручень защищает верхнюю кромку стекла и даёт опору — рекомендуем для лестниц и общественных мест.',
+    system: 'Система', m: 'м', shape: 'Форма', corners: 'углов', glass: 'Стекло', coating: 'Покрытие от грязи', colour: 'Цвет',
+    discount: 'Скидка за длину', installLine: 'Замер, доставка и монтаж',
+    summary: ['Система', 'Форма', 'Размеры', 'Цвет', 'Стекло', 'Поручень', 'Монтаж'], shapes: { I: 'прямая', L: 'угловая (L)', U: 'П-образная (U)' },
+    cm: 'см', heightWord: 'высота', coatingShort: 'покрытие от грязи', inSystem: 'входит в систему', yes: 'да', no: 'нет',
+    total: 'Итого', approx: 'Ориентировочно', toRequest: 'К заявке →', next: 'Далее →',
+    frenchNote: 'Французский балкон устанавливается в один проём — только прямая форма.', cornersNote: 'Углы соединяем под 90°; нестандартные углы и уклоны учитываем после замера.',
+    dimNoteParts: [': высота стекла до ', ' см, ширина одной панели до ', ' см — длинные стороны делим на панели автоматически.']
+  }
+}[locale];
+const data = { systems, eur: isRu ? EUR_RU : EUR, rate: EUR_RATE, coef: COEFFICIENT, installPerM: INSTALL_UAH_PER_M, installMin: INSTALL_UAH_MIN, ref: REFERENCE, img: RAILINGS_IMG, t };
+const steps = ui.steps;
+const page = lp('/ogorozhi-configurator/');
 ---
 <section class="rc" data-rc>
   <script type="application/json" data-rc-data set:html={JSON.stringify(data)} />
-  <ol class="rc__steps" aria-label="Кроки конфігуратора">
+  <ol class="rc__steps" aria-label={ui.stepsLabel}>
     {steps.map((label, i) => <li><button type="button" data-rc-goto={i}><span>{i + 1}</span>{label}</button></li>)}
   </ol>
 
@@ -26,76 +86,76 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
         <img data-rc-photo alt="" width="96" height="96" />
         <div><b data-rc-sysname></b><span data-rc-sysnote></span></div>
       </div>
-      <p class="rc__hint">Схема показує сторону A в масштабі. Фото — приклад системи.</p>
+      <p class="rc__hint">{ui.hint}</p>
     </div>
 
     <div class="rc__panel">
       <div class="rc__price">
-        <div><small>Орієнтовна вартість</small><strong data-rc-total>—</strong></div>
-        <button type="button" class="rc__toggle" data-rc-toggle aria-expanded="false">Склад ціни</button>
+        <div><small>{ui.estimate}</small><strong data-rc-total>—</strong></div>
+        <button type="button" class="rc__toggle" data-rc-toggle aria-expanded="false">{ui.breakdown}</button>
       </div>
       <dl class="rc__breakdown" data-rc-breakdown hidden></dl>
 
       <form class="rc__body" data-rc-form onsubmit="return false">
         <!-- 1 system -->
         <fieldset class="rc__step" data-rc-step="0">
-          <legend>Оберіть систему огорожі</legend>
+          <legend>{ui.chooseSystem}</legend>
           <!-- Server-rendered (same markup the script re-renders) so the panel has its final height before JS runs — no layout shift. -->
-          <div class="rc__systems" data-rc-systems>{SYSTEMS.map((s, i) => <label class="rc__sys"><input type="radio" name="system" value={s.id} checked={i === 0} /><span><img src={`${RAILINGS_IMG}/${s.image}-192.webp`} alt="" width="120" height="120" loading="lazy" /><b>{s.name}</b><small>{s.note}</small></span></label>)}</div>
+          <div class="rc__systems" data-rc-systems>{systems.map((s, i) => <label class="rc__sys"><input type="radio" name="system" value={s.id} checked={i === 0} /><span><img src={`${RAILINGS_IMG}/${s.image}-192.webp`} alt="" width="120" height="120" loading="lazy" /><b>{s.name}</b><small>{s.note}</small></span></label>)}</div>
         </fieldset>
         <!-- 2 shape -->
         <fieldset class="rc__step" data-rc-step="1" hidden>
-          <legend>Оберіть форму огорожі</legend>
+          <legend>{ui.chooseShape}</legend>
           <div class="rc__options rc__options--shapes">
-            <label><input type="radio" name="shape" value="I" checked /><span><svg viewBox="0 0 60 40"><path d="M8 20h44"/></svg>Пряма (I)</span></label>
-            <label><input type="radio" name="shape" value="L" /><span><svg viewBox="0 0 60 40"><path d="M10 6v28h40"/></svg>Кутова (L)</span></label>
-            <label><input type="radio" name="shape" value="U" /><span><svg viewBox="0 0 60 40"><path d="M10 6v28h40V6"/></svg>П-подібна (U)</span></label>
+            <label><input type="radio" name="shape" value="I" checked /><span><svg viewBox="0 0 60 40"><path d="M8 20h44"/></svg>{ui.straight}</span></label>
+            <label><input type="radio" name="shape" value="L" /><span><svg viewBox="0 0 60 40"><path d="M10 6v28h40"/></svg>{ui.corner}</span></label>
+            <label><input type="radio" name="shape" value="U" /><span><svg viewBox="0 0 60 40"><path d="M10 6v28h40V6"/></svg>{ui.uShape}</span></label>
           </div>
           <p class="rc__note" data-rc-shape-note></p>
         </fieldset>
         <!-- 3 dimensions -->
         <fieldset class="rc__step" data-rc-step="2" hidden>
-          <legend>Вкажіть розміри</legend>
+          <legend>{ui.dimensions}</legend>
           <div class="rc__fields">
-            <label data-side="A">Сторона A, см<input type="number" name="A" min="30" max="3000" step="1" value="400" inputmode="numeric" /></label>
-            <label data-side="B">Сторона B, см<input type="number" name="B" min="30" max="3000" step="1" value="200" inputmode="numeric" /></label>
-            <label data-side="C">Сторона C, см<input type="number" name="C" min="30" max="3000" step="1" value="200" inputmode="numeric" /></label>
-            <label>Висота огорожі, см<input type="number" name="H" min="60" max="130" step="1" value="100" inputmode="numeric" /></label>
+            <label data-side="A">{ui.side} A, {ui.cm}<input type="number" name="A" min="30" max="3000" step="1" value="400" inputmode="numeric" /></label>
+            <label data-side="B">{ui.side} B, {ui.cm}<input type="number" name="B" min="30" max="3000" step="1" value="200" inputmode="numeric" /></label>
+            <label data-side="C">{ui.side} C, {ui.cm}<input type="number" name="C" min="30" max="3000" step="1" value="200" inputmode="numeric" /></label>
+            <label>{ui.height}<input type="number" name="H" min="60" max="130" step="1" value="100" inputmode="numeric" /></label>
           </div>
           <p class="rc__note" data-rc-dim-note></p>
         </fieldset>
         <!-- 4 colour -->
         <fieldset class="rc__step" data-rc-step="3" hidden>
-          <legend>Колір профілю та фурнітури</legend>
+          <legend>{ui.colourTitle}</legend>
           <div class="rc__options rc__options--swatches" data-rc-colours></div>
         </fieldset>
         <!-- 5 glass -->
         <fieldset class="rc__step" data-rc-step="4" hidden>
-          <legend>Скло</legend>
-          <p class="rc__label">Товщина</p>
+          <legend>{ui.glass}</legend>
+          <p class="rc__label">{ui.thickness}</p>
           <div class="rc__options" data-rc-thickness></div>
-          <p class="rc__label">Колір скла</p>
+          <p class="rc__label">{ui.glassColour}</p>
           <div class="rc__options rc__options--swatches" data-rc-glass></div>
-          <p class="rc__label">Матування</p>
+          <p class="rc__label">{ui.satin}</p>
           <div class="rc__options" data-rc-satin></div>
-          <label class="rc__check"><input type="checkbox" name="coating" /> Покриття від бруду та води</label>
+          <label class="rc__check"><input type="checkbox" name="coating" /> {ui.coating}</label>
         </fieldset>
         <!-- 6 handrail -->
         <fieldset class="rc__step" data-rc-step="5" hidden>
-          <legend>Поручень</legend>
+          <legend>{ui.handrail}</legend>
           <div class="rc__options" data-rc-handrail></div>
           <p class="rc__note" data-rc-handrail-note></p>
         </fieldset>
         <!-- 7 installation -->
         <fieldset class="rc__step" data-rc-step="6" hidden>
-          <legend>Монтаж</legend>
+          <legend>{ui.install}</legend>
           <div class="rc__options">
-            <label><input type="radio" name="install" value="yes" checked /><span>Монтаж Space Glass<small>Замір, доставка, встановлення</small></span></label>
-            <label><input type="radio" name="install" value="no" /><span>Без монтажу<small>Тільки виготовлення</small></span></label>
+            <label><input type="radio" name="install" value="yes" checked /><span>{ui.installYes}<small>{ui.installYesNote}</small></span></label>
+            <label><input type="radio" name="install" value="no" /><span>{ui.installNo}<small>{ui.installNoNote}</small></span></label>
           </div>
-          <label class="rc__select">Місто
+          <label class="rc__select">{ui.city}
             <select name="city">
-              <option>Київ</option><option>Одеса</option><option>Львів</option><option value="Інше">Інше місто</option>
+              {ui.cities.map((city) => <option>{city}</option>)}<option value={ui.otherValue}>{ui.otherCity}</option>
             </select>
           </label>
         </fieldset>
@@ -103,29 +163,29 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
 
       <!-- 8 request -->
       <div class="rc__step" data-rc-step="7" hidden>
-        <h2 class="rc__legend">Ваша конфігурація</h2>
+        <h2 class="rc__legend">{ui.yourConfig}</h2>
         <dl class="rc__summary" data-rc-summary></dl>
         <form class="quote-form contacts-v15-form rc__request" data-lead-form data-success-url="/thank-you/">
-          <input name="locale" type="hidden" value="uk" />
-          <input name="page" type="hidden" value="/ogorozhi-configurator/" />
-          <input name="product" type="hidden" value="Скляні огорожі — конфігуратор" />
+          <input name="locale" type="hidden" value={locale} />
+          <input name="page" type="hidden" value={page} />
+          <input name="product" type="hidden" value={ui.product} />
           <input name="configuration" type="hidden" data-rc-config />
           <div class="contacts-form-grid">
-            <label>Ім’я<input name="name" type="text" autocomplete="name" placeholder="Ваше ім’я" required /></label>
-            <label>Телефон<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
+            <label>{ui.name}<input name="name" type="text" autocomplete="name" placeholder={ui.namePh} required /></label>
+            <label>{ui.phone}<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
           </div>
-          <label>Коментар<textarea name="comment" rows="3" placeholder="Основа (бетон, дерево), поверх, побажання" data-rc-comment></textarea></label>
-          <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>Погоджуюсь із <a href="/privacy-policy/">політикою конфіденційності</a>.</span></label>
-          <button class="button button--mint" type="submit">Надіслати конфігурацію</button>
+          <label>{ui.comment}<textarea name="comment" rows="3" placeholder={ui.commentPh} data-rc-comment></textarea></label>
+          <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>{ui.consent} <a href={lp('/privacy-policy/')}>{ui.policy}</a>.</span></label>
+          <button class="button button--mint" type="submit">{ui.send}</button>
           <p data-form-status hidden role="status"></p>
         </form>
       </div>
 
       <div class="rc__nav">
-        <button type="button" class="button button--outline" data-rc-prev>← Назад</button>
-        <button type="button" class="button button--mint" data-rc-next>Далі →</button>
+        <button type="button" class="button button--outline" data-rc-prev>{ui.back}</button>
+        <button type="button" class="button button--mint" data-rc-next>{ui.next}</button>
       </div>
-      <p class="rc__disclaimer">Ціна орієнтовна: остаточну вартість, товщину скла й кріплення визначаємо після заміру.</p>
+      <p class="rc__disclaimer">{ui.disclaimer}</p>
     </div>
   </div>
 </section>
@@ -137,10 +197,11 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
   if (root) {
     const D = JSON.parse(root.querySelector('[data-rc-data]')!.textContent || '{}');
     const E = D.eur;
+    const T = D.t;
     const $ = <T extends Element = HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
     const form = $<HTMLFormElement>('[data-rc-form]');
     const state = { step: 0, sys: D.systems[0] as Sys, glass: 'clear', satin: 'none', colour: 'steel', handrail: 'none', thickness: 'g17' };
-    const uah = (n: number) => `${(Math.round(n / 10) * 10).toLocaleString('uk-UA')} грн`;
+    const uah = (n: number) => `${(Math.round(n / 10) * 10).toLocaleString(T.numLocale)} ${T.uah}`;
     const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
 
     // ---- option builders
@@ -160,8 +221,8 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
       const incl = !!state.sys.handrailIncluded;
       const entries = Object.entries(E.handrail).filter(([k]) => !incl || k === 'none');
       if (incl) state.handrail = 'none';
-      $('[data-rc-handrail]').innerHTML = entries.map(([k, v]: [string, any]) => radio('handrail', k, incl ? 'Поручень входить у систему' : v.label, k === state.handrail)).join('');
-      $('[data-rc-handrail-note]').textContent = incl ? 'У системах на стійках поручень уже входить у комплект.' : 'Поручень захищає верхню кромку скла й дає опору — рекомендуємо для сходів і громадських місць.';
+      $('[data-rc-handrail]').innerHTML = entries.map(([k, v]: [string, any]) => radio('handrail', k, incl ? T.handrailIncluded : v.label, k === state.handrail)).join('');
+      $('[data-rc-handrail-note]').textContent = incl ? T.handrailIncludedNote : T.handrailNote;
     };
 
     const num = (name: string) => Number((form.elements.namedItem(name) as HTMLInputElement).value) || 0;
@@ -189,20 +250,20 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
       const area = L * H;
       const col = E.colour[state.colour];
       const lines: [string, number][] = [
-        [`Система ${s.name}, ${L.toFixed(2).replace('.', ',')} м`, basePerM * L + (french ? 0 : E.materialPerM * L)],
-        [`Форма ${sh}${corners ? `, кутів: ${corners}` : ''}`, (french ? 0 : E.shape[sh]) + corners * E.corner],
-        [`Скло ${E.glass[state.glass].label.toLowerCase()}, ${area.toFixed(2).replace('.', ',')} м²`, E.glass[state.glass].perM2[heavy] * area],
+        [`${T.system} ${s.name}, ${L.toFixed(2).replace('.', ',')} ${T.m}`, basePerM * L + (french ? 0 : E.materialPerM * L)],
+        [`${T.shape} ${sh}${corners ? `, ${T.corners}: ${corners}` : ''}`, (french ? 0 : E.shape[sh]) + corners * E.corner],
+        [`${T.glass} ${E.glass[state.glass].label.toLowerCase()}, ${area.toFixed(2).replace('.', ',')} ${T.m}²`, E.glass[state.glass].perM2[heavy] * area],
         [E.satin[state.satin].label, E.satin[state.satin].perM2 * area],
-        ['Покриття від бруду', (form.elements.namedItem('coating') as HTMLInputElement).checked ? E.coatingPerM2 * area : 0],
-        [`Колір: ${col.label}`, col.perM * L + col.once],
+        [T.coating, (form.elements.namedItem('coating') as HTMLInputElement).checked ? E.coatingPerM2 * area : 0],
+        [`${T.colour}: ${col.label}`, col.perM * L + col.once],
         [E.handrail[state.handrail].label, E.handrail[state.handrail].perM * L]
       ];
       const factor = (E.volume as [number | null, number][]).find(([max]) => max === null || L <= (max as number))?.[1] ?? 1;
       const k = D.rate * D.coef;
       const items = lines.filter(([, v]) => v > 0.01).map(([t, v]) => [t, v * factor * k] as [string, number]);
-      if (factor < 1) items.push([`Знижка за довжину ${Math.round((1 - factor) * 100)}%`, 0]);
+      if (factor < 1) items.push([`${T.discount} ${Math.round((1 - factor) * 100)}%`, 0]);
       const install = (form.querySelector<HTMLInputElement>('input[name="install"]:checked')?.value || 'yes') === 'yes';
-      if (install) items.push(['Замір, доставка й монтаж', Math.max(D.installMin, D.installPerM * L)]);
+      if (install) items.push([T.installLine, Math.max(D.installMin, D.installPerM * L)]);
       return { items, total: items.reduce((a, [, v]) => a + v, 0), L, H };
     };
 
@@ -268,13 +329,13 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
     const summaryRows = () => {
       const s = state.sys;
       return [
-        ['Система', `${s.name} — ${s.note}`],
-        ['Форма', { I: 'пряма', L: 'кутова (L)', U: 'П-подібна (U)' }[shape()]],
-        ['Розміри', `${sides().map(([k, v]) => `${k} ${v} см`).join(', ')}, висота ${Math.min(num('H'), s.maxHeight / 10)} см`],
-        ['Колір', E.colour[state.colour].label],
-        ['Скло', `${s.glass.find((g) => g.id === state.thickness)?.label}, ${E.glass[state.glass].label.toLowerCase()}, ${E.satin[state.satin].label.toLowerCase()}${(form.elements.namedItem('coating') as HTMLInputElement).checked ? ', покриття від бруду' : ''}`],
-        ['Поручень', s.handrailIncluded ? 'входить у систему' : E.handrail[state.handrail].label],
-        ['Монтаж', `${(form.querySelector<HTMLInputElement>('input[name="install"]:checked')?.value || 'yes') === 'yes' ? 'так' : 'ні'}, ${(form.elements.namedItem('city') as HTMLSelectElement).value}`]
+        [T.summary[0], `${s.name} — ${s.note}`],
+        [T.summary[1], T.shapes[shape()]],
+        [T.summary[2], `${sides().map(([k, v]) => `${k} ${v} ${T.cm}`).join(', ')}, ${T.heightWord} ${Math.min(num('H'), s.maxHeight / 10)} ${T.cm}`],
+        [T.summary[3], E.colour[state.colour].label],
+        [T.summary[4], `${s.glass.find((g) => g.id === state.thickness)?.label}, ${E.glass[state.glass].label.toLowerCase()}, ${E.satin[state.satin].label.toLowerCase()}${(form.elements.namedItem('coating') as HTMLInputElement).checked ? `, ${T.coatingShort}` : ''}`],
+        [T.summary[5], s.handrailIncluded ? T.inSystem : E.handrail[state.handrail].label],
+        [T.summary[6], `${(form.querySelector<HTMLInputElement>('input[name="install"]:checked')?.value || 'yes') === 'yes' ? T.yes : T.no}, ${(form.elements.namedItem('city') as HTMLSelectElement).value}`]
       ];
     };
 
@@ -283,17 +344,17 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
       // limits per system
       const hIn = form.elements.namedItem('H') as HTMLInputElement;
       hIn.max = String(s.maxHeight / 10);
-      $('[data-rc-dim-note]').textContent = `${s.name}: висота скла до ${s.maxHeight / 10} см, ширина однієї панелі до ${s.maxPanel / 10} см — довгі сторони ділимо на панелі автоматично.`;
+      $('[data-rc-dim-note]').textContent = `${s.name}${T.dimNoteParts[0]}${s.maxHeight / 10}${T.dimNoteParts[1]}${s.maxPanel / 10}${T.dimNoteParts[2]}`;
       root.querySelectorAll<HTMLInputElement>('input[name="shape"]').forEach((inp) => { inp.disabled = !s.shapes.includes(inp.value); if (inp.disabled && inp.checked) (root.querySelector('input[name="shape"][value="I"]') as HTMLInputElement).checked = true; });
-      $('[data-rc-shape-note]').textContent = s.type === 'french' ? 'Французький балкон встановлюється в один проріз — лише пряма форма.' : 'Кути з’єднуємо під 90°; нестандартні кути й ухили враховуємо після заміру.';
+      $('[data-rc-shape-note]').textContent = s.type === 'french' ? T.frenchNote : T.cornersNote;
       const sh = shape();
       root.querySelectorAll<HTMLElement>('[data-side]').forEach((el) => { el.hidden = (el.dataset.side === 'B' && sh === 'I') || (el.dataset.side === 'C' && sh !== 'U'); });
       const p = price();
       $('[data-rc-total]').textContent = uah(p.total);
-      $('[data-rc-breakdown]').innerHTML = p.items.map(([t, v]) => `<div><dt>${esc(t)}</dt><dd>${v ? uah(v) : '✓'}</dd></div>`).join('') + `<div class="rc__breakdown-total"><dt>Разом</dt><dd>${uah(p.total)}</dd></div>`;
+      $('[data-rc-breakdown]').innerHTML = p.items.map(([t, v]) => `<div><dt>${esc(t)}</dt><dd>${v ? uah(v) : '✓'}</dd></div>`).join('') + `<div class="rc__breakdown-total"><dt>${T.total}</dt><dd>${uah(p.total)}</dd></div>`;
       const rows = summaryRows();
-      $('[data-rc-summary]').innerHTML = rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(String(v))}</dd></div>`).join('') + `<div><dt>Орієнтовно</dt><dd><b>${uah(p.total)}</b></dd></div>`;
-      $<HTMLInputElement>('[data-rc-config]').value = rows.map(([k, v]) => `${k}: ${v}`).join('; ') + `; Орієнтовно: ${uah(p.total)}`;
+      $('[data-rc-summary]').innerHTML = rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(String(v))}</dd></div>`).join('') + `<div><dt>${T.approx}</dt><dd><b>${uah(p.total)}</b></dd></div>`;
+      $<HTMLInputElement>('[data-rc-config]').value = rows.map(([k, v]) => `${k}: ${v}`).join('; ') + `; ${T.approx}: ${uah(p.total)}`;
       draw();
     };
 
@@ -305,7 +366,7 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
       $<HTMLButtonElement>('[data-rc-prev]').disabled = state.step === 0;
       const next = $<HTMLButtonElement>('[data-rc-next]');
       next.hidden = state.step === 7;
-      next.textContent = state.step === 6 ? 'До заявки →' : 'Далі →';
+      next.textContent = state.step === 6 ? T.toRequest : T.next;
       update();
       if (scroll && window.innerWidth < 900) root.querySelector('.rc__panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };

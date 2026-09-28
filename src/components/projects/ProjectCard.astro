@@ -20,6 +20,8 @@ const shortDescription = isRu && project.shortDescriptionRu ? project.shortDescr
 const categoryLabel = isRu ? category.labelRu : category.label;
 const viewProjectLabel = isRu ? 'Смотреть проект' : 'Переглянути проєкт';
 const resolvedCover = cardCover ?? project.cover;
+// Project cover alt texts exist only in UA; on RU pages the alt is built from the RU card title.
+const coverAlt = isRu && project.cardTitleRu ? `${project.cardTitleRu} — реализованный проект Space Glass` : resolvedCover.alt;
 
 // Generated variants live next to the original as `-{width}.webp` (see /rishennya/ for the
 // same convention). Never include a width >= the native size — that would upscale.
@@ -48,7 +50,7 @@ const fetchpriority = priority ? 'high' : eager ? 'auto' : undefined;
         sizes={sizes}
         width={resolvedCover.width}
         height={resolvedCover.height}
-        alt={resolvedCover.alt}
+        alt={coverAlt}
         loading={loading}
         decoding="async"
         fetchpriority={fetchpriority}

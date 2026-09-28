@@ -131,33 +131,38 @@
 /ru/product/kopiyakopiyakopiyakopiyanovыj-proba/ /ru/sklyani-perehorodky/loft-sklyani-peregorodku/ 301
 /ru/product/55/ /ru/sklyani-perehorodky/mizhkimnatni/ 301
 
-# RU HIGH group (2026-09-27): the old /ru/ URLs below served UNTRANSLATED Ukrainian content on the WP site
-# (checked on production), there is no RU landing on the new site → 301 to the same UA content they ranked with.
-/ru/alyumini%D1%94vi-konstrukczi%D1%97/ /alyuminiyevi-konstrukcziyi/ 301
-/ru/alyumini%d1%94vi-konstrukczi%d1%97/ /alyuminiyevi-konstrukcziyi/ 301
-/ru/alyuminiєvi-konstrukcziї/ /alyuminiyevi-konstrukcziyi/ 301
-/ru/alyumini%D1%94vi-konstrukczi%D1%97/moskitnye-setki-plisse/ /alyuminiyevi-konstrukcziyi/sitky-plise/ 301
-/ru/alyumini%d1%94vi-konstrukczi%d1%97/moskitnye-setki-plisse/ /alyuminiyevi-konstrukcziyi/sitky-plise/ 301
-/ru/alyuminiєvi-konstrukcziї/moskitnye-setki-plisse/ /alyuminiyevi-konstrukcziyi/sitky-plise/ 301
-/ru/alyumini%D1%94vi-konstrukczi%D1%97/fasadnoe-osteklenie/ /alyuminiyevi-konstrukcziyi/fasadne-sklinnya/ 301
-/ru/alyumini%d1%94vi-konstrukczi%d1%97/fasadnoe-osteklenie/ /alyuminiyevi-konstrukcziyi/fasadne-sklinnya/ 301
-/ru/alyuminiєvi-konstrukcziї/fasadnoe-osteklenie/ /alyuminiyevi-konstrukcziyi/fasadne-sklinnya/ 301
-/ru/alyumini%D1%94vi-konstrukczi%D1%97/zimnie-sady/ /alyuminiyevi-konstrukcziyi/zymovi-sady/ 301
-/ru/alyumini%d1%94vi-konstrukczi%d1%97/zimnie-sady/ /alyuminiyevi-konstrukcziyi/zymovi-sady/ 301
-/ru/alyuminiєvi-konstrukcziї/zimnie-sady/ /alyuminiyevi-konstrukcziyi/zymovi-sady/ 301
-/ru/alyumini%D1%94vi-konstrukczi%D1%97/alyuminievye-dveri/ /alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/ 301
-/ru/alyumini%d1%94vi-konstrukczi%d1%97/alyuminievye-dveri/ /alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/ 301
-/ru/alyuminiєvi-konstrukcziї/alyuminievye-dveri/ /alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/ 301
-/ru/alyumini%D1%94vi-konstrukczi%D1%97/bioklimaticheskie-pergoly/ /alyuminiyevi-konstrukcziyi/pergoly/ 301
-/ru/alyumini%d1%94vi-konstrukczi%d1%97/bioklimaticheskie-pergoly/ /alyuminiyevi-konstrukcziyi/pergoly/ 301
-/ru/alyuminiєvi-konstrukcziї/bioklimaticheskie-pergoly/ /alyuminiyevi-konstrukcziyi/pergoly/ 301
-/ru/alyumini%D1%94vi-konstrukczi%D1%97/ofisnye-peregorodki/ /alyuminiyevi-konstrukcziyi/ofisne-sklinnya/ 301
-/ru/alyumini%d1%94vi-konstrukczi%d1%97/ofisnye-peregorodki/ /alyuminiyevi-konstrukcziyi/ofisne-sklinnya/ 301
-/ru/alyuminiєvi-konstrukcziї/ofisnye-peregorodki/ /alyuminiyevi-konstrukcziyi/ofisne-sklinnya/ 301
-/ru/metalloplastikovye-konstrukczii/ofisnye-peregorodki/ /metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/ 301
-/ru/zerkala/zerkala-na-stenu/ /dzerkala/dzerkala-na-stinu/ 301
-/ru/dlya-biznesu/restoranam/ /dlya-biznesu/restoranam/ 301
-/ru/pryvatnyj-sektor/budynkam/ /bezramne-sklinnya/sklinnya-budynkiv/ 301
-/ru/pryvatnyj-sektor/taun-hausy/ /bezramne-sklinnya/sklinnya-budynkiv/ 301
+# RU HIGH group (2026-09-27): these old /ru/ URLs served untranslated Ukrainian content on the WP site and
+# pointed at the UA pages while no RU landing existed. Retargeted 2026-09-28 (stage 2A) to the new RU pages
+# of the same intent. /ru/dlya-biznesu/restoranam/ is now a real RU page (same URL), so its 301 was removed.
+/ru/alyumini%D1%94vi-konstrukczi%D1%97/ /ru/alyuminiyevi-konstrukcziyi/ 301
+/ru/alyumini%d1%94vi-konstrukczi%d1%97/ /ru/alyuminiyevi-konstrukcziyi/ 301
+/ru/alyuminiєvi-konstrukcziї/ /ru/alyuminiyevi-konstrukcziyi/ 301
+/ru/alyumini%D1%94vi-konstrukczi%D1%97/moskitnye-setki-plisse/ /ru/alyuminiyevi-konstrukcziyi/sitky-plise/ 301
+/ru/alyumini%d1%94vi-konstrukczi%d1%97/moskitnye-setki-plisse/ /ru/alyuminiyevi-konstrukcziyi/sitky-plise/ 301
+/ru/alyuminiєvi-konstrukcziї/moskitnye-setki-plisse/ /ru/alyuminiyevi-konstrukcziyi/sitky-plise/ 301
+/ru/alyumini%D1%94vi-konstrukczi%D1%97/fasadnoe-osteklenie/ /ru/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/ 301
+/ru/alyumini%d1%94vi-konstrukczi%d1%97/fasadnoe-osteklenie/ /ru/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/ 301
+/ru/alyuminiєvi-konstrukcziї/fasadnoe-osteklenie/ /ru/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/ 301
+/ru/alyumini%D1%94vi-konstrukczi%D1%97/zimnie-sady/ /ru/alyuminiyevi-konstrukcziyi/zymovi-sady/ 301
+/ru/alyumini%d1%94vi-konstrukczi%d1%97/zimnie-sady/ /ru/alyuminiyevi-konstrukcziyi/zymovi-sady/ 301
+/ru/alyuminiєvi-konstrukcziї/zimnie-sady/ /ru/alyuminiyevi-konstrukcziyi/zymovi-sady/ 301
+/ru/alyumini%D1%94vi-konstrukczi%D1%97/alyuminievye-dveri/ /ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/ 301
+/ru/alyumini%d1%94vi-konstrukczi%d1%97/alyuminievye-dveri/ /ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/ 301
+/ru/alyuminiєvi-konstrukcziї/alyuminievye-dveri/ /ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/ 301
+/ru/alyumini%D1%94vi-konstrukczi%D1%97/bioklimaticheskie-pergoly/ /ru/alyuminiyevi-konstrukcziyi/pergoly/ 301
+/ru/alyumini%d1%94vi-konstrukczi%d1%97/bioklimaticheskie-pergoly/ /ru/alyuminiyevi-konstrukcziyi/pergoly/ 301
+/ru/alyuminiєvi-konstrukcziї/bioklimaticheskie-pergoly/ /ru/alyuminiyevi-konstrukcziyi/pergoly/ 301
+/ru/alyumini%D1%94vi-konstrukczi%D1%97/ofisnye-peregorodki/ /ru/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/ 301
+/ru/alyumini%d1%94vi-konstrukczi%d1%97/ofisnye-peregorodki/ /ru/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/ 301
+/ru/alyuminiєvi-konstrukcziї/ofisnye-peregorodki/ /ru/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/ 301
+/ru/metalloplastikovye-konstrukczii/ofisnye-peregorodki/ /ru/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/ 301
+/ru/zerkala/zerkala-na-stenu/ /ru/dzerkala/dzerkala-na-stinu/ 301
+/ru/pryvatnyj-sektor/budynkam/ /ru/bezramne-sklinnya/sklinnya-budynkiv/ 301
+/ru/pryvatnyj-sektor/taun-hausy/ /ru/bezramne-sklinnya/sklinnya-budynkiv/ 301
 # Approved 2026-09-27: old «Безрамне скління для квартир» → frameless balcony/loggia glazing (exact path only; /pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/ stays 200)
 /pryvatnyj-sektor/pryvatnyj-sektor/ /bezramne-sklinnya/sklinnya-balkoniv/ 301
+# Stage 2A (2026-09-28): RU service stubs used to redirect to themselves (refresh loop). Same targets as the
+# Astro.redirect() fallbacks in src/pages/ru/{cart,compare,catalog/piddon}/.
+/ru/cart/ /cart/ 301
+/ru/compare/ /compare/ 301
+/ru/catalog/piddon/ /ru/dushovi-kabiny/dushovi-piddony/ 301
