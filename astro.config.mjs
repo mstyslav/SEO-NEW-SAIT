@@ -8,11 +8,12 @@ import rishennyaCriticalCss from './astro-integrations/rishennya-critical-css.mj
 import catalogCriticalCss from './astro-integrations/catalog-critical-css.mjs';
 import knowledgeCriticalCss from './astro-integrations/knowledge-critical-css.mjs';
 import heroMidWidth from './astro-integrations/hero-mid-width.mjs';
+import categoryCriticalCss from './astro-integrations/category-critical-css.mjs';
 
 export default defineConfig({
   site: 'https://space-glass.com.ua',
   output: 'static',
   trailingSlash: 'always',
   compressHTML: true,
-  integrations: [homepageCriticalCss(), aboutCriticalCss(), poslugyCriticalCss(), contactsCriticalCss(), projectsCriticalCss(), rishennyaCriticalCss(), catalogCriticalCss(), knowledgeCriticalCss(), heroMidWidth()]
+  integrations: [homepageCriticalCss(), aboutCriticalCss(), poslugyCriticalCss(), contactsCriticalCss(), projectsCriticalCss(), rishennyaCriticalCss(), catalogCriticalCss(), knowledgeCriticalCss(), heroMidWidth(), categoryCriticalCss()]
 });
