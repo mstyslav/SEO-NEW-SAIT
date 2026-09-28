@@ -40,7 +40,8 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
         <!-- 1 system -->
         <fieldset class="rc__step" data-rc-step="0">
           <legend>Оберіть систему огорожі</legend>
-          <div class="rc__systems" data-rc-systems></div>
+          <!-- Server-rendered (same markup the script re-renders) so the panel has its final height before JS runs — no layout shift. -->
+          <div class="rc__systems" data-rc-systems>{SYSTEMS.map((s, i) => <label class="rc__sys"><input type="radio" name="system" value={s.id} checked={i === 0} /><span><img src={`${RAILINGS_IMG}/${s.image}-192.webp`} alt="" width="120" height="120" loading="lazy" /><b>{s.name}</b><small>{s.note}</small></span></label>)}</div>
         </fieldset>
         <!-- 2 shape -->
         <fieldset class="rc__step" data-rc-step="1" hidden>
@@ -146,7 +147,7 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
     const radio = (name: string, value: string, label: string, checked: boolean, extra = '') =>
       `<label><input type="radio" name="${name}" value="${value}"${checked ? ' checked' : ''} /><span>${extra}${esc(label)}</span></label>`;
     $('[data-rc-systems]').innerHTML = (D.systems as Sys[]).map((s, i) =>
-      `<label class="rc__sys"><input type="radio" name="system" value="${s.id}"${i === 0 ? ' checked' : ''} /><span><img src="${D.img}/${s.image}-480.webp" alt="" width="120" height="120" loading="lazy" /><b>${s.name}</b><small>${esc(s.note)}</small></span></label>`).join('');
+      `<label class="rc__sys"><input type="radio" name="system" value="${s.id}"${i === 0 ? ' checked' : ''} /><span><img src="${D.img}/${s.image}-192.webp" alt="" width="120" height="120" loading="lazy" /><b>${s.name}</b><small>${esc(s.note)}</small></span></label>`).join('');
     $('[data-rc-colours]').innerHTML = Object.entries(E.colour).map(([k, v]: [string, any]) => radio('colour', k, v.label, k === 'steel', `<i style="background:${v.swatch}"></i>`)).join('');
     $('[data-rc-glass]').innerHTML = Object.entries(E.glass).map(([k, v]: [string, any]) => radio('glass', k, v.label, k === 'clear', `<i style="background:${v.tint}"></i>`)).join('');
     $('[data-rc-satin]').innerHTML = Object.entries(E.satin).map(([k, v]: [string, any]) => radio('satin', k, v.label, k === 'none')).join('');
@@ -259,7 +260,7 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
       g += `</g>`;
       $('[data-rc-svg]').innerHTML = `<svg viewBox="0 0 ${W} ${Hh}" role="img">${g}</svg>`;
       const photo = $<HTMLImageElement>('[data-rc-photo]');
-      photo.src = `${D.img}/${s.image}-480.webp`;
+      photo.src = `${D.img}/${s.image}-192.webp`;
       $('[data-rc-sysname]').textContent = s.name;
       $('[data-rc-sysnote]').textContent = s.note;
     };

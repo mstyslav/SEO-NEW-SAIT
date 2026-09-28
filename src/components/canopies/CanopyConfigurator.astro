@@ -130,7 +130,7 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
     const checked = (name: string) => (form.elements.namedItem(name) as HTMLInputElement).checked;
 
     $('[data-cc-systems]').innerHTML = systems.map((s) =>
-      `<label class="rc__sys"><input type="radio" name="system" value="${s.id}"${s === state.sys ? ' checked' : ''} /><span><img src="${D.img}/gp-${s.id}-480.webp" alt="" width="120" height="120" loading="lazy" /><b>${esc(s.title)}</b><small>${s.name} · ${esc(s.note)}</small></span></label>`).join('');
+      `<label class="rc__sys"><input type="radio" name="system" value="${s.id}"${s === state.sys ? ' checked' : ''} /><span><img src="${D.img}/gp-${s.id}-192.webp" alt="" width="120" height="120" loading="lazy" /><b>${esc(s.title)}</b><small>${s.name} · ${esc(s.note)}</small></span></label>`).join('');
     $('[data-cc-glass]').innerHTML = Object.entries(D.glass).map(([k, v]: [string, any]) => radio('glass', k, v.label, k === 'clear', `<i style="background:${v.tint}"></i>`)).join('');
     $('[data-cc-fixing]').innerHTML = Object.entries(D.fixing).map(([k, v]: [string, any]) => radio('fixing', k, v as string, k === 'masonry')).join('');
 
@@ -216,7 +216,7 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
       g += `<g stroke="#347a66" stroke-width="1.4" fill="none"><path d="M${wx} ${sy - 118}h${dd}M${wx} ${sy - 126}v16M${wx + dd} ${sy - 126}v16"/></g>`;
       g += `<text x="${wx + dd / 2}" y="${sy - 132}" text-anchor="middle" font-size="17" font-weight="700" fill="#1c211e">Виліт ${(Dp / 10).toFixed(0)} см</text>`;
       $('[data-cc-svg]').innerHTML = `<svg viewBox="0 0 800 490" role="img">${g}</svg>`;
-      $<HTMLImageElement>('[data-cc-photo]').src = `${D.img}/gp-${s.id}-480.webp`;
+      $<HTMLImageElement>('[data-cc-photo]').src = `${D.img}/gp-${s.id}-192.webp`;
       $('[data-cc-sysname]').textContent = `${s.title}`;
       $('[data-cc-sysnote]').textContent = `${s.name} · ${s.note}`;
     };
