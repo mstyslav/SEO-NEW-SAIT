@@ -12,6 +12,15 @@ const categoryLabels = categoryLabelsByLocale[locale] ?? categoryLabelsByLocale.
 const categoryHrefs = ['/dushovi-kabiny/','/dzerkala/','/sklyani-perehorodky/','/sklyani-dveri/','/sklyani-ohorozhi/','/sklyani-kozyrky/','/bezramne-sklinnya/','/alyuminiyevi-konstrukcziyi/','/poslugy/sklyani-fasady/','/metaloplastykovi-konstrukcziyi/','/dlya-biznesu/'];
 const categoryTypes = ['shower','mirror','partition','door','railing','canopy','frameless','aluminium','facade','pvc','business-glass'];
 const categories = categoryLabels.map((label, i) => [label, categoryHrefs[i]]);
+// Desktop (≥1281px) shows the categories as two independent columns (CSS multi-column,
+// see the <style> below) so a two-line label in one column no longer pushes the other
+// column down. The DOM lists the left column (items 1,3,5,…) then the right one (2,4,6,…),
+// which keeps the visual arrangement and gives a natural column-by-column tab order;
+// `order` restores the original sequence where the list is a single-column grid.
+const categoryColumns = [0, 1].flatMap((col) => categories
+  .map(([label, href], index) => [label, href, index] as const)
+  .filter(([, , index]) => index % 2 === col)
+  .map(([label, href, index], k) => [label, href, index, col === 1 && k === 0] as const));
 const productStrip = categoryLabels.map((label, i) => [label, categoryHrefs[i], categoryTypes[i]]);
 // Soft hyphens (invisible unless the word has to break) so the longest word fits the narrow
 // columns of the one-row desktop product strip (901–1199px) instead of overlapping.
@@ -143,7 +152,7 @@ const currentYear = new Date().getFullYear();
     </div>
     <div class="footer-refined__col footer-refined__categories">
       <strong>{ft.categoriesTitle}</strong>
-      {categories.map(([label,href]) => <a href={lp(href)}>{label}</a>)}
+      {categoryColumns.map(([label, href, index, colStart]) => <a href={lp(href)} class:list={[colStart && 'footer-refined__cat-col2']} style={`order:${index}`}>{label}</a>)}
     </div>
     <div class="footer-refined__col"><strong>{ft.servicesTitle}</strong>{services.map(([label,href]) => <a href={href}>{label}</a>)}</div>
     <div class="footer-refined__col"><strong>{ft.companyTitle}</strong>{company.map(([label,href]) => <a href={href}>{label}</a>)}</div>
@@ -210,6 +219,29 @@ const currentYear = new Date().getFullYear();
   @media (min-width: 641px) and (max-width: 900px) {
     .footer-refined__product-grid a:last-child {
       display: none;
+    }
+  }
+</style>
+
+<style>
+  @media (min-width: 1281px) {
+    .footer-refined__categories {
+      display: block !important;
+      column-count: 2;
+      column-gap: 22px;
+    }
+    .footer-refined__categories > strong {
+      display: block;
+      column-span: all;
+      margin-bottom: 18px;
+    }
+    .footer-refined__categories > a {
+      display: block;
+      break-inside: avoid;
+      margin-bottom: 10px;
+    }
+    .footer-refined__categories > a.footer-refined__cat-col2 {
+      break-before: column;
     }
   }
 </style>
