@@ -85,11 +85,15 @@ export default function templateCriticalCss() {
           e.isDirectory() ? walk(path.join(d, e.name)) : e.name === 'index.html' ? [path.join(d, e.name)] : []);
 
         const counts = {};
+        const unknown = {};
         for (const file of walk(outDir)) {
           let html = fs.readFileSync(file, 'utf8');
           if (/data-[a-z-]*critical/.test(html)) continue;
           const tpl = templateOf(html);
-          if (!wanted[tpl]) continue;
+          if (!wanted[tpl]) {
+            if (tpl && !/http-equiv="refresh"/i.test(html)) unknown[tpl] = (unknown[tpl] ?? 0) + 1;
+            continue;
+          }
           const links = [...html.matchAll(LINK_RE)];
           const critical = links.map((m) => criticalFor(tpl, m[1])).join('');
           html = html.replace(links[0][0], `<style ${MARKER}>${critical}</style>${links[0][0]}`);
@@ -98,6 +102,10 @@ export default function templateCriticalCss() {
           counts[tpl] = (counts[tpl] ?? 0) + 1;
         }
         const total = Object.values(counts).reduce((a, b) => a + b, 0);
+        // A changed stylesheet set (e.g. a component's styles split into their own chunk) makes
+        // pages fall back to render-blocking CSS silently — say so loudly.
+        const unknownTotal = Object.values(unknown).reduce((a, b) => a + b, 0);
+        if (unknownTotal) console.warn(`[template-critical-css] WARNING: ${unknownTotal} pages have NO critical CSS (unknown stylesheet set) — re-run scripts/audit/extract-critical.mjs:\n  ${Object.entries(unknown).map(([t, n]) => `${t} ×${n}`).join('\n  ')}`);
         console.log(`[template-critical-css] ${total} pages: ${Object.entries(counts).map(([t, n]) => `${t} ×${n}`).join(', ')}`);
         // A sheet name can map to several files (e.g. UA and RU scoped styles of one page) —
         // a selector is only "missing" when no file of that name contains it.

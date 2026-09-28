@@ -97,6 +97,7 @@ for (const url of urls) {
     }
   }
   if (!/<meta name="viewport"[^>]*width=device-width/.test(head)) add('P1', 'missing responsive viewport', p);
+  if (/<link rel="stylesheet"/.test(head) && !/data-[a-z-]*critical/.test(html)) add('P1', 'no inline critical CSS (render-blocking stylesheets) — re-run scripts/audit/extract-critical.mjs', p);
 
   // ---- headings
   const h1s = [...body.matchAll(/<h1[\s>][\s\S]*?<\/h1>/g)];
