@@ -31,7 +31,7 @@ const tariff = tariffs.categories[config.category];
   locale={locale}
 >
   <Header locale={locale} />
-  <main>
+  <main id="main">
     <section class="config-demo-hero">
       <div class="container">
         <p class="eyebrow">Space Glass Configurator</p>
@@ -39,7 +39,7 @@ const tariff = tariffs.categories[config.category];
         <p>{ui.configureText}</p>
       </div>
     </section>
-    <section class="section">
+    <section class="section config-body">
       <div class="container">
         <DynamicConfigurator
           config={config}
@@ -53,3 +53,10 @@ const tariff = tariffs.categories[config.category];
   </main>
   <Footer locale={locale} />
 </BaseLayout>
+<style>
+  /* body is the dark #202020 page frame; the configurator's cards, headings and hints are
+     designed for a light surface, so the section needs its own white background. */
+  .config-body{background:#fff}
+  /* global.css forces .eyebrow to dark green (!important) — unreadable on the dark hero. */
+  .config-demo-hero .eyebrow{color:#97d9b4!important}
+</style>

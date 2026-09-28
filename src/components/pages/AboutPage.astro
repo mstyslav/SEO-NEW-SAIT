@@ -32,15 +32,15 @@ const clients = [
   ['CHERRY TWINS ODESSA', '/images/partners/cherry-twins.svg']
 ];
 
-const systems = [
-  ['SCHÜCO', '/images/brands/schueco-300.webp'],
-  ['ALUPROF', '/images/brands/aluprof-300.webp'],
-  ['REYNAERS', '/images/brands/reynaers-300.webp'],
-  ['AGC', '/images/brands/agc-300.webp'],
-  ['DORMA', '/images/brands/dorma-300.webp'],
-  ['SIEGENIA', '/images/brands/siegenia-300.webp'],
-  ['GU', '/images/brands/gu-300.webp'],
-  ['BTS', '/images/brands/bts-300.webp']
+const systems: [string, string, number][] = [
+  ['SCHÜCO', '/images/brands/schueco-300.webp', 152],
+  ['ALUPROF', '/images/brands/aluprof-300.webp', 322],
+  ['REYNAERS', '/images/brands/reynaers-300.webp', 294],
+  ['AGC', '/images/brands/agc-300.webp', 168],
+  ['DORMA', '/images/brands/dorma-300.webp', 123],
+  ['SIEGENIA', '/images/brands/siegenia-300.webp', 163],
+  ['GU', '/images/brands/gu-300.webp', 212],
+  ['BTS', '/images/brands/bts-300.webp', 184]
 ];
 ---
 <BaseLayout title={t.meta.title} description={t.meta.description} locale={locale} schemaType="AboutPage">
@@ -121,7 +121,7 @@ const systems = [
       <section class="team section-pad">
         <div class="section-head"><div><p class="eyebrow">{t.team.eyebrow}</p><h2>{t.team.title}</h2></div><p>{t.team.intro}</p></div>
         <div class="team-grid">
-          {t.team.members.map(({ name, role, img }) => <article class="team-card"><div class="team-photo"><img src={img} alt={`${name} — ${role}`} loading="lazy" decoding="async" /></div><div class="team-caption"><h3>{name}</h3><p>{role}</p></div></article>)}
+          {t.team.members.map(({ name, role, img }) => <article class="team-card"><div class="team-photo"><img src={img} alt={`${name} — ${role}`} width="450" height="600" loading="lazy" decoding="async" /></div><div class="team-caption"><h3>{name}</h3><p>{role}</p></div></article>)}
         </div>
         <a class="outline-link" href="#career">{t.team.careerLinkLabel}</a>
       </section>
@@ -159,7 +159,7 @@ const systems = [
       <section class="systems section-pad">
         <div class="section-head section-head--compact"><div><p class="eyebrow">{t.systems.eyebrow}</p><h2>{t.systems.title}</h2></div><a href={lp('/catalog/')}>{t.systems.linkLabel}</a></div>
         <div class="logo-strip logo-strip--systems">
-          {systems.map(([name,img]) => <div class="logo-item logo-item--system"><img src={img} alt={name} loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /><span>{name}</span></div>)}
+          {systems.map(([name,img,height]) => <div class="logo-item logo-item--system"><img src={img} alt={name} width="300" height={height} loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /><span>{name}</span></div>)}
         </div>
       </section>
 

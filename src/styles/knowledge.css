@@ -320,6 +320,9 @@
 
 .article-service-card h3{margin:4px 0 9px;color:#fff;font-size:24px}
 
+/* global.css forces .eyebrow to dark green (!important) — unreadable on this dark card. */
+.article-service-card .eyebrow{color:#97d9b4!important}
+
 .article-service-card a{color:var(--mint);font-size:14px;font-weight:800}
 
 .article-toc{border-radius:14px;background:#f6fbf8}

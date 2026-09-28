@@ -10,11 +10,13 @@
   .rc__layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(360px,1fr);gap:24px;align-items:start}
   .rc__visual{position:sticky;top:96px;padding:20px;border:1px solid var(--rc-line);border-radius:24px;background:#fbfcfb}
   .rc__canvas svg{display:block;width:100%;height:auto}
+  /* The drawing is injected by JS — reserve its box (viewBox ratio) so the layout does not shift. */
+  [data-cc-svg]{aspect-ratio:800/490}[data-rc-svg]{aspect-ratio:800/470}
   .rc__visual-meta{display:flex;gap:14px;align-items:center;margin-top:12px;padding-top:14px;border-top:1px solid var(--rc-line)}
   .rc__visual-meta img{width:72px;height:72px;border-radius:12px;object-fit:cover}
   .rc__visual-meta b{display:block;font-size:18px}
   .rc__visual-meta span{color:#5e6864;font-size:14px}
-  .rc__hint{margin:10px 0 0;color:#7b8580;font-size:12px}
+  .rc__hint{margin:10px 0 0;color:#646d69;font-size:12px}
   .rc__panel{padding:22px;border:1px solid var(--rc-line);border-radius:24px;background:#fff}
   .rc__price{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:var(--rc-soft)}
   .rc__price small{display:block;color:#5e6864;font-size:13px}
@@ -59,7 +61,7 @@
   .rc__nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
   .rc__nav .button[disabled]{opacity:.4;pointer-events:none}
   .rc__nav .button[hidden]{display:none}
-  .rc__disclaimer{margin:14px 0 0;color:#7b8580;font-size:12.5px}
+  .rc__disclaimer{margin:14px 0 0;color:#646d69;font-size:12.5px}
   @media (max-width:900px){
     .rc{width:auto;margin:0 16px 48px}
     .rc__layout{grid-template-columns:1fr}

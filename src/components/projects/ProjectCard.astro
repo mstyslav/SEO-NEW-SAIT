@@ -19,7 +19,6 @@ const constructionType = isRu && project.constructionTypeRu ? project.constructi
 const shortDescription = isRu && project.shortDescriptionRu ? project.shortDescriptionRu : project.shortDescription;
 const categoryLabel = isRu ? category.labelRu : category.label;
 const viewProjectLabel = isRu ? 'Смотреть проект' : 'Переглянути проєкт';
-const viewProjectAriaPrefix = isRu ? 'Смотреть проект:' : 'Переглянути проєкт:';
 const resolvedCover = cardCover ?? project.cover;
 
 // Generated variants live next to the original as `-{width}.webp` (see /rishennya/ for the
@@ -41,7 +40,7 @@ const loading = priority || eager ? 'eager' : 'lazy';
 const fetchpriority = priority ? 'high' : eager ? 'auto' : undefined;
 ---
 <article class="project-card-v2" data-project-card data-category={project.category} data-city={project.city ?? ''}>
-  <a href={href} aria-label={`${viewProjectAriaPrefix} ${cardTitle}`}>
+  <a href={href}>
     <div class="project-card-v2__media">
       <img
         src={resolvedCover.src}
