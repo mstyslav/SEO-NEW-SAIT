@@ -13,6 +13,13 @@ const categoryHrefs = ['/dushovi-kabiny/','/dzerkala/','/sklyani-perehorodky/','
 const categoryTypes = ['shower','mirror','partition','door','railing','canopy','frameless','aluminium','facade','pvc','business-glass'];
 const categories = categoryLabels.map((label, i) => [label, categoryHrefs[i]]);
 const productStrip = categoryLabels.map((label, i) => [label, categoryHrefs[i], categoryTypes[i]]);
+// Soft hyphens (invisible unless the word has to break) so the longest word fits the narrow
+// columns of the one-row desktop product strip (901–1199px) instead of overlapping.
+const SOFT_HYPHENS: Record<string, string> = {
+  'Металопластикові': 'Мета\u00adло\u00adплас\u00adти\u00adкові',
+  'Металлопластиковые': 'Метал\u00adло\u00adплас\u00adти\u00adко\u00adвые'
+};
+const softHyphenate = (text: string) => text.replace(/[\p{L}]+/gu, (w) => SOFT_HYPHENS[w] ?? w);
 
 const serviceHrefs = [`${lp('/poslugy/')}#full-cycle`, `${lp('/poslugy/')}#process`, `${lp('/poslugy/')}#process`, `${lp('/poslugy/')}#process`, `${lp('/poslugy/')}#process`];
 const serviceLabelsByLocale = {
@@ -177,7 +184,7 @@ const currentYear = new Date().getFullYear();
             {type === 'frameless' && <svg viewBox="0 0 72 72"><path d="M10 58h52"/><path d="M16 58V14h40v44"/><path d="M29 14v44M43 14v44"/><path d="M20 20h5M33 20h5M47 20h5"/></svg>}
             {type === 'business-glass' && <svg viewBox="0 0 72 72"><path d="M12 58V20h48v38"/><path d="M18 20v-6h36v6"/><path d="M24 26v26M36 26v26M48 26v26"/><path d="M12 38h48"/><path d="M18 58h36"/></svg>}
           </span>
-          <b>{label}</b>
+          <b>{softHyphenate(label)}</b>
         </a>
       ))}
     </div>
@@ -197,12 +204,9 @@ const currentYear = new Date().getFullYear();
 </style>
 
 <style>
-  /* "Скло для бізнесу" is the last item in the 10-item product grid. At the
-     641-900px tier the grid is 3 columns (global.css), so 10 items leave a
-     trailing row of 1 (two empty cells). Hiding just this last item there
-     gives 9 items = exactly 3 clean rows. Left visible at ≤640px (2 cols,
-     10/2 already clean) and at 901px+ (5 or 10 cols, both already clean —
-     hiding it there would instead create a gap). */
+  /* "Скло для бізнесу" is the last item of the product grid; it is hidden only
+     at the 641-900px tier (3-column grid in global.css). Visible at ≤640px and
+     at 901px+ (all 11 products in one row). */
   @media (min-width: 641px) and (max-width: 900px) {
     .footer-refined__product-grid a:last-child {
       display: none;
@@ -227,11 +231,11 @@ const currentYear = new Date().getFullYear();
 </style>
 
 <style>
-  /* Footer product grid — stable desktop geometry */
+  /* Footer product grid — stable desktop geometry: all 11 products in one row */
   @media (min-width: 901px) {
     .footer-refined__product-grid {
       display: grid !important;
-      grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
+      grid-template-columns: repeat(11, minmax(0, 1fr)) !important;
       width: 100% !important;
     }
 
@@ -244,6 +248,20 @@ const currentYear = new Date().getFullYear();
 
     .footer-refined__product-grid > a:last-child {
       display: grid !important;
+    }
+  }
+
+  /* Narrow desktops: 11 columns are ~74–100px wide — less side padding for the labels,
+     and 1px smaller labels below 1024px so the longest words still fit their column. */
+  @media (min-width: 901px) and (max-width: 1199px) {
+    .footer-refined__product-grid > a {
+      padding-left: 4px !important;
+      padding-right: 4px !important;
+    }
+  }
+  @media (min-width: 901px) and (max-width: 1023px) {
+    .footer-refined__product-grid b {
+      font-size: 10px !important;
     }
   }
 </style>
