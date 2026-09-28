@@ -1,17 +1,19 @@
-// Generates src/styles/critical/category-selectors.json — the CSS selectors needed to render
-// the first screen of every category-template page (pages that load the category-pages +
-// profile-systems stylesheets and have no hand-made critical CSS). Used at build time by
-// astro-integrations/category-critical-css.mjs, which filters the CURRENT generated CSS by
-// these selectors, so declarations never go stale; re-run this after adding new markup to
-// the top of those pages (header, breadcrumbs, hero, trust bar).
+// Generates src/styles/critical/selectors.json — per page template, the CSS selectors needed
+// to render the first 1.5 screens. Used at build time by astro-integrations/template-critical-css.mjs,
+// which filters the CURRENT generated CSS by these selectors, so declarations never go stale.
+// Re-run after changing markup/classes near the top of pages (header, breadcrumbs, hero, …);
+// the build warns when listed selectors disappear from the CSS.
 //
-//   CATEGORY_CRITICAL=off npm run build && node scripts/audit/serve-dist.mjs &
-//   node scripts/audit/extract-critical.mjs          (needs puppeteer-core, see crawl.mjs)
-//   npm run build                                     (normal build applies the new list)
+//   CRITICAL_CSS=off npm run build && node scripts/audit/serve-dist.mjs &
+//   node scripts/audit/extract-critical.mjs            (needs puppeteer-core, see crawl.mjs)
+//   npm run build                                       (normal build applies the new list)
 //
+// Pages are grouped by template = stylesheet set in document order ("BaseLayout+knowledge").
+// Pages with hand-made critical CSS (data-*-critical markers) are skipped.
 // A rule is critical when its selector (minus :hover/:focus/… and pseudo-elements) matches an
-// element within the first 1.5 viewports, or an element that is not rendered at all
-// (so things hidden by CSS — menus, drawers — stay hidden before the full CSS arrives).
+// element within the first 1.5 viewports, or an element that is not rendered at all (so things
+// hidden by CSS — menus, drawers, modals — stay hidden before the full CSS arrives) or one of
+// its ancestors (so positioned descendants keep their containing block).
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -22,29 +24,31 @@ catch { console.error('puppeteer-core is not installed: npm i --no-save puppetee
 const base = process.env.BASE || 'http://localhost:4499';
 const widths = [375, 390, 430, 768, 1024, 1280, 1440, 1920];
 const chromePath = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-const out = path.join('src', 'styles', 'critical', 'category-selectors.json');
+const out = path.join('src', 'styles', 'critical', 'selectors.json');
 
-// Same page selection as the build integration.
-const REQUIRED = ['BaseLayout', 'category-pages', 'profile-systems'];
+const LINK_RE = /<link rel="stylesheet" href="([^"]+)">/g;
 const sheetName = (href) => href.match(/\/_astro\/([A-Za-z0-9_-]+?)\.[A-Za-z0-9_-]+\.css$/)?.[1];
 const xml = fs.readFileSync(path.join('dist', 'sitemap.xml'), 'utf8');
-const pages = [...xml.matchAll(/<loc>https?:\/\/[^/]+([^<]*)<\/loc>/g)].map((m) => m[1]).filter((p) => {
+const templates = {};
+for (const p of [...xml.matchAll(/<loc>https?:\/\/[^/]+([^<]*)<\/loc>/g)].map((m) => m[1])) {
   const html = fs.readFileSync(path.join('dist', p, 'index.html'), 'utf8');
-  if (/data-[a-z-]*critical/.test(html)) return false;
-  const names = [...html.matchAll(/<link rel="stylesheet" href="([^"]+)">/g)].map((m) => sheetName(m[1]));
-  return REQUIRED.every((n) => names.includes(n)) && names.every((n) => [...REQUIRED, 'rishennya-lower'].includes(n));
-});
-console.error(`${pages.length} category-template pages × ${widths.length} widths`);
-if (!pages.length) { console.error('No pages found — build with CATEGORY_CRITICAL=off first.'); process.exit(1); }
+  if (/data-[a-z-]*critical/.test(html)) continue;
+  const names = [...html.matchAll(LINK_RE)].map((m) => sheetName(m[1]));
+  if (!names.length || names.includes(undefined)) continue;
+  (templates[names.join('+')] ??= []).push(p);
+}
+const total = Object.values(templates).flat().length;
+if (!total) { console.error('No pages found — build with CRITICAL_CSS=off first.'); process.exit(1); }
+console.error(`${total} pages in ${Object.keys(templates).length} templates × ${widths.length} widths`);
 
 const browser = await puppeteer.launch({ executablePath: chromePath, headless: true, args: ['--no-sandbox'] });
 const found = {};
-const queue = pages.flatMap((p) => widths.map((w) => [p, w]));
+const queue = Object.entries(templates).flatMap(([tpl, pages]) => pages.flatMap((p) => widths.map((w) => [tpl, p, w])));
 let done = 0;
 
 await Promise.all(Array.from({ length: 6 }, async () => {
   while (queue.length) {
-    const [p, width] = queue.shift();
+    const [tpl, p, width] = queue.shift();
     const page = await browser.newPage();
     await page.setViewport({ width, height: width < 768 ? 812 : 900, isMobile: width < 768, hasTouch: width < 768 });
     await page.goto(base + p, { waitUntil: 'load' });
@@ -54,7 +58,12 @@ await Promise.all(Array.from({ length: 6 }, async () => {
       const critical = new Set();
       for (const el of document.querySelectorAll('*')) {
         const rects = el.getClientRects();
-        if (!rects.length) { critical.add(el); continue; }
+        if (!rects.length) {
+          // Not rendered: keep its rules so it stays hidden, and its ancestors' rules so that
+          // positioned children (badges, overlays) keep their containing block at any width.
+          for (let a = el; a && !critical.has(a); a = a.parentElement) critical.add(a);
+          continue;
+        }
         const r = el.getBoundingClientRect();
         if (r.top < vh && r.bottom > 0) critical.add(el);
       }
@@ -81,14 +90,22 @@ await Promise.all(Array.from({ length: 6 }, async () => {
       }
       return hit;
     });
-    for (const [name, list] of Object.entries(result)) for (const s of list) (found[name] ??= new Set()).add(s);
+    for (const [name, list] of Object.entries(result)) for (const s of list) ((found[tpl] ??= {})[name] ??= new Set()).add(s);
     await page.close();
-    if (++done % 100 === 0) console.error(`… ${done}`);
+    if (++done % 200 === 0) console.error(`… ${done}`);
   }
 }));
 await browser.close();
 
 fs.mkdirSync(path.dirname(out), { recursive: true });
-const json = Object.fromEntries(Object.entries(found).sort().map(([k, v]) => [k, [...v].sort()]));
-fs.writeFileSync(out, JSON.stringify({ generated: new Date().toISOString().slice(0, 10), pages: pages.length, widths, selectors: json }, null, 1) + '\n');
-console.log(`Wrote ${out}: ${Object.entries(json).map(([k, v]) => `${k} ${v.length}`).join(', ')}`);
+const json = {
+  generated: new Date().toISOString().slice(0, 10),
+  widths,
+  templates: Object.fromEntries(Object.keys(found).sort().map((tpl) => [tpl, {
+    pages: templates[tpl].length,
+    selectors: Object.fromEntries(Object.entries(found[tpl]).sort().map(([k, v]) => [k, [...v].sort()]))
+  }]))
+};
+fs.writeFileSync(out, JSON.stringify(json, null, 1) + '\n');
+console.log(`Wrote ${out}:`);
+for (const [tpl, t] of Object.entries(json.templates)) console.log(`  ${tpl} (${t.pages} pages): ${Object.entries(t.selectors).map(([k, v]) => `${k} ${v.length}`).join(', ')}`);
