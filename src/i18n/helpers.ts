@@ -1,3 +1,4 @@
+import { hasProjectRu } from '../data/ru/projects.ru';
 export const supportedLocales = ['uk', 'ru'] as const;
 export type Locale = typeof supportedLocales[number];
 
@@ -153,6 +154,10 @@ export function hasLocalizedRoute(pathname: string, locale: Locale): boolean {
   // All RU Knowledge article routes are generated from the localized
   // knowledge dataset under /ru/knowledge/[slug]/.
   if (locale === 'ru' && /^\/knowledge\/[^/]+\/$/.test(base)) return true;
+
+  // RU project pages /ru/project/{slug}/ exist for every project with RU texts.
+  const project = base.match(/^\/project\/([a-z0-9-]+)\/$/);
+  if (locale === 'ru' && project) return hasProjectRu(project[1]);
 
   return LOCALIZED_ROUTES[locale].has(base);
 }

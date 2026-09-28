@@ -12,25 +12,52 @@ import { buildProjectFaq } from '../../data/project-faq';
 import { buildProjectFacts } from '../../data/project-facts';
 import { projectRequestExample } from '../../data/project-request-examples';
 import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { localizeProjectRu } from '../../data/ru/projects.ru';
+import { buildProjectFactsRu, buildProjectFaqRu, projectRequestExampleRu } from '../../data/ru/project-helpers.ru';
+import { hasLocalizedRoute, localizedPath, type Locale } from '../../i18n/helpers';
 import '../../styles/projects-common.css';
 import '../../styles/project-detail-v2.css';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const { project, relatedProjects = [], locale = 'uk' } = Astro.props;
+const { project: sourceProject, relatedProjects = [], locale = 'uk' as Locale } = Astro.props;
+const isRu = locale === 'ru';
+const lp = (path: string) => localizedPath(path, locale);
+// RU pages render the same UA entity with its RU texts merged in (src/data/ru/projects.ru.ts).
+const project = isRu ? localizeProjectRu(sourceProject) : sourceProject;
 const origin = Astro.site ?? Astro.url.origin;
-// Unprefixed path: this is the canonical (uk) URL regardless of which route
+// Unprefixed path for UA: the canonical URL regardless of which route
 // (/project/ or the /uk/project/ duplicate) actually rendered the page —
 // matches BaseLayout's own stripLocale()/localizedPath() canonical logic and
 // what sitemap.xml.ts lists, so structured data always describes the real
-// canonical URL instead of the redundant /uk/-prefixed one.
-const projectPath = `/project/${project.slug}/`;
+// canonical URL instead of the redundant /uk/-prefixed one. RU: /ru/project/{slug}/.
+const projectPath = lp(`/project/${project.slug}/`);
 const canonical = absoluteUrl(projectPath, origin);
+const hasRu = hasLocalizedRoute(`/project/${project.slug}/`, 'ru');
 const category = projectCategoryMap[project.category];
-const projectFaq = buildProjectFaq(project);
+const categoryLabel = isRu ? category.labelRu : category.label;
+const projectFaq = isRu ? buildProjectFaqRu(project) : buildProjectFaq(project);
 const faqItems = projectFaq.map(({ question, answer }) => [question, answer] as [string, string]);
-const requestExample = projectRequestExample(project);
-const projectFacts = buildProjectFacts(project);
+const requestExample = isRu ? projectRequestExampleRu(project) : projectRequestExample(project);
+const projectFacts = isRu ? buildProjectFactsRu(project) : buildProjectFacts(project);
+const tx = {
+  uk: {
+    home: 'Головна', projects: 'Наші проєкти', breadcrumbs: 'Хлібні крихти', cta: 'Розрахувати подібний проєкт', factsLabel: 'Характеристики проєкту',
+    task: 'Задача клієнта', solution: 'Рішення Space Glass', gallery: 'Фото в інтер’єрі', materials: 'Матеріали', installation: 'Монтаж', result: 'Результат',
+    data: 'Дані реалізованого проєкту', priceEyebrow: 'Вартість', priceTitle: 'Вартість подібного рішення', from: 'Від', perM2: 'грн/м²', numLocale: 'uk-UA',
+    priceText: 'Вартість розраховується індивідуально та залежить від розмірів конструкції, типу скла, профілю, фурнітури та складності монтажу.',
+    priceCta: 'Розрахувати вартість за моїми розмірами', serviceEyebrow: 'Від рішення до замовлення', serviceTitle: 'Потрібне схоже рішення?',
+    faqPrefix: 'Питання', faqIntro: 'Відповіді про розрахунок, індивідуальні розміри, матеріали, монтаж і догляд.', relatedEyebrow: 'Схожі проєкти', relatedTitle: 'Інші реалізовані рішення'
+  },
+  ru: {
+    home: 'Главная', projects: 'Наши проекты', breadcrumbs: 'Хлебные крошки', cta: 'Рассчитать похожий проект', factsLabel: 'Характеристики проекта',
+    task: 'Задача клиента', solution: 'Решение Space Glass', gallery: 'Фото в интерьере', materials: 'Материалы', installation: 'Монтаж', result: 'Результат',
+    data: 'Данные реализованного проекта', priceEyebrow: 'Стоимость', priceTitle: 'Стоимость похожего решения', from: 'От', perM2: 'грн/м²', numLocale: 'ru-UA',
+    priceText: 'Стоимость рассчитывается индивидуально и зависит от размеров конструкции, типа стекла, профиля, фурнитуры и сложности монтажа.',
+    priceCta: 'Рассчитать стоимость по моим размерам', serviceEyebrow: 'От решения к заказу', serviceTitle: 'Нужно похожее решение?',
+    faqPrefix: 'Вопросы', faqIntro: 'Ответы о расчёте, индивидуальных размерах, материалах, монтаже и уходе.', relatedEyebrow: 'Похожие проекты', relatedTitle: 'Другие реализованные решения'
+  }
+}[isRu ? 'ru' : 'uk'];
 
 const projectSchema: JsonLdObject = {
   '@type': 'CreativeWork',
@@ -49,12 +76,12 @@ const projectSchema: JsonLdObject = {
   })),
   creator: { '@id': `${new URL('/', origin).href}#organization` },
   ...(project.city ? { locationCreated: { '@type': 'Place', name: project.city } } : {}),
-  about: [project.constructionType, category.label]
+  about: [project.constructionType, categoryLabel]
 };
 
 const breadcrumbItems = [
-  { label: 'Головна', href: '/' },
-  { label: 'Наші проєкти', href: '/project/' },
+  { label: tx.home, href: lp('/') },
+  { label: tx.projects, href: lp('/project/') },
   { label: project.h1, href: projectPath }
 ];
 
@@ -81,7 +108,7 @@ const heroSizes = '(max-width: 700px) calc(100vw - 32px), (max-width: 1050px) ca
   locale={locale}
   image={project.cover.src}
   structuredData={structuredData}
-  alternateLocales={['uk']}
+  alternateLocales={hasRu ? ['uk', 'ru'] : ['uk']}
   heroPreloadSrc={project.cover.src}
   heroPreloadSrcset={heroSrcset}
   heroPreloadSizes={heroSizes}
@@ -89,7 +116,7 @@ const heroSizes = '(max-width: 700px) calc(100vw - 32px), (max-width: 1050px) ca
   <div class="sg-page-shell">
     <Header locale={locale} />
     <main id="main" class="project-detail-v2">
-      <nav class="project-detail-v2__breadcrumbs" aria-label="Хлібні крихти">
+      <nav class="project-detail-v2__breadcrumbs" aria-label={tx.breadcrumbs}>
         {breadcrumbItems.map((item, index) => (
           <>
             {index > 0 && <span aria-hidden="true">/</span>}
@@ -105,34 +132,34 @@ const heroSizes = '(max-width: 700px) calc(100vw - 32px), (max-width: 1050px) ca
           <p class="eyebrow">{[project.city, project.objectType].filter(Boolean).join(' / ')}</p>
           <h1>{project.h1}</h1>
           <p class="lead">{project.shortDescription}</p>
-          <a class="button button--mint" href="#project-request">Розрахувати подібний проєкт</a>
+          <a class="button button--mint" href="#project-request">{tx.cta}</a>
         </div>
         <div class="project-detail-v2__hero-media">
           <img src={project.cover.src} srcset={heroSrcset} sizes={heroSizes} width={project.cover.width} height={project.cover.height} alt={project.cover.alt} loading="eager" decoding="async" fetchpriority="high" />
         </div>
       </section>
 
-      <section class="project-detail-v2__facts" aria-label="Характеристики проєкту">
+      <section class="project-detail-v2__facts" aria-label={tx.factsLabel}>
         {project.characteristics.map(({ label, value }) => <div><b>{label}</b><span>{value}</span></div>)}
       </section>
 
       <div class="project-detail-v2__wrap">
         <section class="project-detail-v2__story">
-          <article><p class="eyebrow">Задача клієнта</p><h2>{project.clientTask.title}</h2><p>{project.clientTask.text}</p></article>
-          <article><p class="eyebrow">Рішення Space Glass</p><h2>{project.solution.title}</h2><p>{project.solution.text}</p></article>
+          <article><p class="eyebrow">{tx.task}</p><h2>{project.clientTask.title}</h2><p>{project.clientTask.text}</p></article>
+          <article><p class="eyebrow">{tx.solution}</p><h2>{project.solution.title}</h2><p>{project.solution.text}</p></article>
         </section>
 
-        <ProjectGallery images={project.gallery} cover={project.cover} title={`Фото в інтер’єрі: ${project.constructionType}`} />
+        <ProjectGallery images={project.gallery} cover={project.cover} title={`${tx.gallery}: ${project.constructionType}`} locale={locale} />
 
         <section class="project-detail-v2__technical">
-          <article><p class="eyebrow">Матеріали</p><h2>Матеріали: {project.constructionType}</h2><ul>{project.materials.map((material) => <li>{material}</li>)}</ul></article>
-          <article><p class="eyebrow">Монтаж</p><h2>{project.installation.title}</h2><p>{project.installation.text}</p></article>
-          <article><p class="eyebrow">Результат</p><h2>{project.result.title}</h2><p>{project.result.text}</p></article>
+          <article><p class="eyebrow">{tx.materials}</p><h2>{tx.materials}: {project.constructionType}</h2><ul>{project.materials.map((material) => <li>{material}</li>)}</ul></article>
+          <article><p class="eyebrow">{tx.installation}</p><h2>{project.installation.title}</h2><p>{project.installation.text}</p></article>
+          <article><p class="eyebrow">{tx.result}</p><h2>{project.result.title}</h2><p>{project.result.text}</p></article>
         </section>
 
         {projectFacts.length > 0 && (
-          <section class="project-detail-v2__data" aria-label="Дані реалізованого проєкту">
-            <p class="eyebrow">Дані реалізованого проєкту</p>
+          <section class="project-detail-v2__data" aria-label={tx.data}>
+            <p class="eyebrow">{tx.data}</p>
             <dl>
               {projectFacts.map(({ label, value }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
             </dl>
@@ -140,36 +167,36 @@ const heroSizes = '(max-width: 700px) calc(100vw - 32px), (max-width: 1050px) ca
         )}
 
         <section class="project-detail-v2__price">
-          <p class="eyebrow">Вартість</p>
-          <h2>Вартість подібного рішення</h2>
+          <p class="eyebrow">{tx.priceEyebrow}</p>
+          <h2>{tx.priceTitle}</h2>
           {project.priceFromPerM2 && (
-            <p class="project-detail-v2__price-value">Від {project.priceFromPerM2.toLocaleString('uk-UA')} грн/м²</p>
+            <p class="project-detail-v2__price-value">{tx.from} {project.priceFromPerM2.toLocaleString(tx.numLocale)} {tx.perM2}</p>
           )}
           <p>
-            Вартість розраховується індивідуально та залежить від розмірів конструкції, типу скла, профілю, фурнітури та складності монтажу.
+            {tx.priceText}
             {project.priceNote && ` ${project.priceNote}`}
           </p>
-          <a class="button button--mint" href="#project-request">Розрахувати вартість за моїми розмірами</a>
+          <a class="button button--mint" href="#project-request">{tx.priceCta}</a>
         </section>
 
         <aside class="project-detail-v2__service-link">
-          <div><p class="eyebrow">Від рішення до замовлення</p><h2>Потрібне схоже рішення?</h2></div>
-          <a href={project.serviceLink.href}>{project.serviceLink.label} <span aria-hidden="true">→</span></a>
+          <div><p class="eyebrow">{tx.serviceEyebrow}</p><h2>{tx.serviceTitle}</h2></div>
+          <a href={lp(project.serviceLink.href)}>{project.serviceLink.label} <span aria-hidden="true">→</span></a>
         </aside>
 
         <section class="project-detail-v2__faq">
-          <FAQBlock title={`Питання: ${project.constructionType}`} intro="Відповіді про розрахунок, індивідуальні розміри, матеріали, монтаж і догляд." items={faqItems} visibleCount={6} locale={locale} />
+          <FAQBlock title={`${tx.faqPrefix}: ${project.constructionType}`} intro={tx.faqIntro} items={faqItems} visibleCount={6} locale={locale} />
         </section>
 
         {relatedProjects.length > 0 && (
           <section class="project-detail-v2__related">
-            <div class="project-section-head-v2"><p class="eyebrow">Схожі проєкти</p><h2>Інші реалізовані рішення</h2></div>
-            <div class="projects-index-v2__grid">{relatedProjects.map((item) => <ProjectCard project={item} hrefPrefix="/project" />)}</div>
+            <div class="project-section-head-v2"><p class="eyebrow">{tx.relatedEyebrow}</p><h2>{tx.relatedTitle}</h2></div>
+            <div class="projects-index-v2__grid">{relatedProjects.map((item) => <ProjectCard project={item} locale={locale} href={lp(`/project/${item.slug}/`)} />)}</div>
           </section>
         )}
       </div>
 
-      <GoogleReviews />
+      <GoogleReviews locale={locale} />
 
       <ProjectRequestForm projectTitle={project.cardTitle} city={project.city ?? ''} requestExample={requestExample} locale={locale} />
     </main>

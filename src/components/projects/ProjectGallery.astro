@@ -1,5 +1,8 @@
 ---
-const { images, cover, title = 'Галерея проєкту' } = Astro.props;
+const { images, cover, locale = 'uk' } = Astro.props;
+const isRu = locale === 'ru';
+// "Галерея" is the same word in UA and RU; only the default title differs.
+const title = Astro.props.title ?? (isRu ? 'Галерея проекта' : 'Галерея проєкту');
 const remainder = images.length % 3;
 const shouldAddCover = Boolean(cover) && remainder !== 0;
 const galleryItems = [

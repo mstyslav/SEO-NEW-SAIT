@@ -1,0 +1,18 @@
+---
+// RU project pages /ru/project/{slug}/ — same UA project entity (src/content/projects) rendered by ProjectDetail
+// with locale="ru"; RU texts in src/data/ru/projects.ru.ts.
+import { getCollection } from 'astro:content';
+import ProjectDetail from '../../../components/projects/ProjectDetail.astro';
+import { selectRelatedProjects } from '../../../data/select-related-projects';
+import { hasProjectRu } from '../../../data/ru/projects.ru';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => data.status === 'published' && hasProjectRu(data.slug));
+  return projects.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const allProjects = await getCollection('projects', ({ data }) => data.status === 'published');
+const relatedProjects = selectRelatedProjects(entry.data, allProjects, 5);
+---
+<ProjectDetail project={entry.data} relatedProjects={relatedProjects} locale="ru" />

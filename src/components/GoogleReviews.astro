@@ -17,6 +17,8 @@ const reviews = [
   { name: 'kolychevahelen', rating: 5, text: 'Дякую команді Space Glass за якісно виконану роботу. Ціна відповідає якості, а роботи виконали у погоджений строк.' },
   { name: 'Клієнт Space Glass', rating: 5, text: 'Задоволені комунікацією, підходом до деталей та результатом. Конструкція виглядає саме так, як планували.' },
 ];
+// The anonymous author label is site text, not part of the quote — localized on RU pages.
+const authorName = (name: string) => (ru && name === 'Клієнт Space Glass' ? 'Клиент Space Glass' : name);
 const googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=Space%20Glass%20Odesa&query_place_id=ChIJZ-tkEoszxkARAgMhHIePeAg';
 const googleReviewUrl = 'https://search.google.com/local/writereview?placeid=ChIJZ-tkEoszxkARAgMhHIePeAg';
 
@@ -42,7 +44,7 @@ const copy = ru
 ---
 <section class="sg-google-reviews" data-google-reviews aria-labelledby="google-reviews-title">
   <div class="sg-google-reviews__head"><div><p class="eyebrow">{copy.eyebrow}</p><h2 id="google-reviews-title">{copy.title}</h2></div><p>{copy.intro}</p></div>
-  <div class="sg-google-reviews__grid">{reviews.map((review) => (<article class="sg-google-review-card"><div class="sg-google-review-card__top"><span class="sg-google-review-card__avatar" aria-hidden="true">{review.name.slice(0,1).toUpperCase()}</span><div><strong>{review.name}</strong><span class="sg-google-review-card__source">{copy.source}</span></div></div><div class="sg-google-review-card__stars" aria-label={copy.ratingLabel(review.rating)}>{'★★★★★'}</div><p>{review.text}</p></article>))}</div>
+  <div class="sg-google-reviews__grid">{reviews.map((review) => (<article class="sg-google-review-card"><div class="sg-google-review-card__top"><span class="sg-google-review-card__avatar" aria-hidden="true">{review.name.slice(0,1).toUpperCase()}</span><div><strong>{authorName(review.name)}</strong><span class="sg-google-review-card__source">{copy.source}</span></div></div><div class="sg-google-review-card__stars" aria-label={copy.ratingLabel(review.rating)}>{'★★★★★'}</div><p>{review.text}</p></article>))}</div>
   <div class="sg-google-reviews__actions"><a class="sg-google-reviews__button" href={googleMapsUrl} target="_blank" rel="noopener noreferrer">{copy.allReviews}</a><a class="sg-google-reviews__button sg-google-reviews__button--mint" href={googleReviewUrl} target="_blank" rel="noopener noreferrer">{copy.leaveReview}</a></div>
 </section>
 <style>
