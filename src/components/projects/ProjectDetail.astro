@@ -14,6 +14,8 @@ import { projectRequestExample } from '../../data/project-request-examples';
 import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
 import '../../styles/projects-common.css';
 import '../../styles/project-detail-v2.css';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const { project, relatedProjects = [], locale = 'uk' } = Astro.props;
 const origin = Astro.site ?? Astro.url.origin;
@@ -61,6 +63,17 @@ const structuredData = [
   breadcrumbSchema(breadcrumbItems.map((item) => ({ label: item.label, href: absoluteUrl(item.href, origin) }))),
   faqSchema(projectFaq)
 ].filter(Boolean) as JsonLdObject[];
+
+// Hero (LCP) image: responsive variants live next to the cover as `-{width}.webp` (same
+// convention as the project cards); only widths whose file exists are offered.
+const coverVariant = (w: number) => project.cover.src.replace(/\.webp$/, `-${w}.webp`);
+const heroSrcset = [480, 720, 960]
+  .filter((w) => w < project.cover.width && fs.existsSync(path.join(process.cwd(), 'public', coverVariant(w))))
+  .map((w) => `${coverVariant(w)} ${w}w`)
+  .concat(`${project.cover.src} ${project.cover.width}w`)
+  .join(', ');
+// Mirrors project-detail-v2.css: full width under 1050px (16px / 58px gutters), 1.05fr column above.
+const heroSizes = '(max-width: 700px) calc(100vw - 32px), (max-width: 1050px) calc(100vw - 116px), calc((min(1380px, 100vw - 116px) - 28px) * 0.525)';
 ---
 <BaseLayout
   title={project.seo.title}
@@ -69,6 +82,9 @@ const structuredData = [
   image={project.cover.src}
   structuredData={structuredData}
   alternateLocales={['uk']}
+  heroPreloadSrc={project.cover.src}
+  heroPreloadSrcset={heroSrcset}
+  heroPreloadSizes={heroSizes}
 >
   <div class="sg-page-shell">
     <Header locale={locale} />
@@ -92,7 +108,7 @@ const structuredData = [
           <a class="button button--mint" href="#project-request">Розрахувати подібний проєкт</a>
         </div>
         <div class="project-detail-v2__hero-media">
-          <img src={project.cover.src} width={project.cover.width} height={project.cover.height} alt={project.cover.alt} loading="eager" decoding="async" fetchpriority="high" />
+          <img src={project.cover.src} srcset={heroSrcset} sizes={heroSizes} width={project.cover.width} height={project.cover.height} alt={project.cover.alt} loading="eager" decoding="async" fetchpriority="high" />
         </div>
       </section>
 

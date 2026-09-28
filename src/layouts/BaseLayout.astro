@@ -19,10 +19,12 @@ interface Props {
   heroPreloadSizes?: string;
   heroPreloadMobileSrc?: string;
   heroPreloadMobileSrcset?: string;
+  /** Must match the page's <source media="(max-width: …)"> breakpoint. */
+  heroPreloadMobileMaxWidth?: number;
   robots?: string;
 }
 
-const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, robots } = Astro.props;
+const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, heroPreloadMobileMaxWidth = 900, robots } = Astro.props;
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales, hasLocalizedRoute } from '../i18n/helpers';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
@@ -65,13 +67,13 @@ import ScrollProgress from '../components/ScrollProgress.astro';
     <meta charset="UTF-8" />
     <meta name="google" content="notranslate" />
     <meta name="viewport" content="width=device-width" />
-    {heroPreloadSrc && heroPreloadMobileSrcset && (
+    {heroPreloadSrc && (heroPreloadMobileSrc || heroPreloadMobileSrcset) && (
       <>
-        <link rel="preload" as="image" media="(max-width: 900px)" href={heroPreloadMobileSrc} imagesrcset={heroPreloadMobileSrcset} imagesizes="100vw" fetchpriority="high" />
-        <link rel="preload" as="image" media="(min-width: 901px)" href={heroPreloadSrc} imagesrcset={heroPreloadSrcset} imagesizes={heroPreloadSizes} fetchpriority="high" />
+        <link rel="preload" as="image" media={`(max-width: ${heroPreloadMobileMaxWidth}px)`} href={heroPreloadMobileSrc} imagesrcset={heroPreloadMobileSrcset} imagesizes={heroPreloadMobileSrcset ? '100vw' : undefined} fetchpriority="high" />
+        <link rel="preload" as="image" media={`(min-width: ${heroPreloadMobileMaxWidth + 1}px)`} href={heroPreloadSrc} imagesrcset={heroPreloadSrcset} imagesizes={heroPreloadSizes} fetchpriority="high" />
       </>
     )}
-    {heroPreloadSrc && !heroPreloadMobileSrcset && <link rel="preload" as="image" href={heroPreloadSrc} imagesrcset={heroPreloadSrcset} imagesizes={heroPreloadSizes} fetchpriority="high" />}
+    {heroPreloadSrc && !heroPreloadMobileSrc && !heroPreloadMobileSrcset && <link rel="preload" as="image" href={heroPreloadSrc} imagesrcset={heroPreloadSrcset} imagesizes={heroPreloadSizes} fetchpriority="high" />}
     <meta name="description" content={description} />
     {robots && <meta name="robots" content={robots} />}
     <meta name="theme-color" content="#ffffff" />

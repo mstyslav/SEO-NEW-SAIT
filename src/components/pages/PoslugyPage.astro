@@ -51,7 +51,7 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
 ---
 <BaseLayout title={t.meta.title} description={t.meta.description} schemaType="Service" structuredData={structuredData} locale={locale}
   heroPreloadSrc="/images/services/services-hero-desktop.webp"
-  heroPreloadMobileSrc="/images/services/services-hero-mobile.webp" image="/images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero.webp">
+  heroPreloadMobileSrc="/images/services/services-hero-mobile.webp" heroPreloadMobileMaxWidth={700} image="/images/projects/dental-clinic-partitions-odesa/dental-clinic-partitions-odesa-hero.webp">
   <div class="sg-page-shell"><Header locale={locale} />
     <main id="main" class="services-cycle">
       <div class="services-cycle__breadcrumbs"><Breadcrumbs items={[{label:t.breadcrumbs.home,href:lp('/')},{label:t.breadcrumbs.current}]} ariaLabel={t.breadcrumbs.ariaLabel} /></div>
