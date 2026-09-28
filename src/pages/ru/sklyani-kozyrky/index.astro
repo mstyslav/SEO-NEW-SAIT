@@ -8,7 +8,7 @@ import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import TrustBar from '../../../components/TrustBar.astro';
 import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
 import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../seo/schema';
-import { CANOPY_HUB, CANOPY_IMG } from '../../../data/canopy-catalog';
+import { CANOPY_CONFIGURATOR, CANOPY_HUB, CANOPY_IMG } from '../../../data/canopy-catalog';
 import { canopyCategoriesRu, canopyHubSystemsRu } from '../../../data/ru/canopy-catalog.ru';
 import { profileIcons } from '../../../data/profile-icons';
 import { localizedPath } from '../../../i18n/helpers';
@@ -72,6 +72,7 @@ const faq: [string, string][] = [
 ];
 
 const relatedLinks: [string, string][] = [
+  ['Конфигуратор козырька', CANOPY_CONFIGURATOR],
   ['Стеклянные входные группы', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'],
   ['Стеклянные двери', '/sklyani-dveri/'],
   ['Стеклянные ограждения', '/sklyani-ohorozhi/'],
@@ -116,6 +117,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <div class="hero__actions">
           <a class="button button--mint" href="#types">Смотреть виды</a>
           <a class="button button--outline" href="#request">Получить расчёт</a>
+          <a class="button button--outline" href={lp(CANOPY_CONFIGURATOR)}>Рассчитать в конфигураторе</a>
         </div>
       </div>
       <figure class="category-hero__figure">
@@ -175,6 +177,17 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
             </div>
           </article>
         ))}
+      </div>
+    </section>
+
+    <section class="category-section">
+      <div class="inner-cta">
+        <div>
+          <p class="eyebrow eyebrow--light">Конфигуратор</p>
+          <h2>Рассчитайте козырёк за 2 минуты</h2>
+          <p>Выберите тип, размеры, стекло, крепление и желоб — увидите схему козырька и ориентировочную стоимость. Готовую конфигурацию отправите нам одним кликом.</p>
+        </div>
+        <a class="button button--white" href={lp(CANOPY_CONFIGURATOR)}>Открыть конфигуратор</a>
       </div>
     </section>
 

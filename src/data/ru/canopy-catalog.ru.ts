@@ -3,7 +3,7 @@
  * Pages: src/pages/ru/sklyani-kozyrky/**.
  */
 import type { ProfileCategory, ProfileModel } from '../profile-systems';
-import { CANOPY_HUB, CANOPY_IMG } from '../canopy-catalog';
+import { CANOPY_CONFIGURATOR, CANOPY_HUB, CANOPY_IMG } from '../canopy-catalog';
 
 const P = (slug: string) => `${CANOPY_HUB}${slug}/`;
 
@@ -83,6 +83,7 @@ const page = (p: CanopyPage): ProfileCategory => {
     compareColumns: ['Система', 'Крепление', 'Стекло', 'Особенность', 'Для чего'],
     faq: [...p.faq, ...COMMON],
     catalogButton: 'Смотреть системы',
+    heroExtra: ['Рассчитать в конфигураторе', CANOPY_CONFIGURATOR],
     optionsLabel: 'Система',
     catalogNote: 'Технические параметры приведены для типовых конфигураций. Стоимость, толщину стекла и крепление определяем после замера — пришлите фото и размеры для расчёта.'
   };
