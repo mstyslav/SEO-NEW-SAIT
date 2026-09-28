@@ -39,7 +39,8 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
       <form class="rc__body" data-cc-form onsubmit="return false">
         <fieldset class="rc__step" data-cc-step="0">
           <legend>Оберіть тип козирка</legend>
-          <div class="rc__systems" data-cc-systems></div>
+          <!-- Server-rendered (same markup the script re-renders; the 2nd system is preselected) so the panel has its final height before JS runs — no layout shift. -->
+          <div class="rc__systems" data-cc-systems>{CANOPY_CONFIG_SYSTEMS.map((s, i) => <label class="rc__sys"><input type="radio" name="system" value={s.id} checked={i === 1} /><span><img src={`${CANOPY_IMG}/gp-${s.id}-192.webp`} alt="" width="120" height="120" loading="lazy" /><b>{s.title}</b><small>{s.name} · {s.note}</small></span></label>)}</div>
         </fieldset>
         <fieldset class="rc__step" data-cc-step="1" hidden>
           <legend>Вкажіть розміри</legend>
