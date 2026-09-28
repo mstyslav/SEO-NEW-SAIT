@@ -296,7 +296,8 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
       draw();
     };
 
-    const go = (i: number) => {
+    // scroll = false for the initial render: the page must not jump to the panel on load.
+    const go = (i: number, scroll = true) => {
       state.step = Math.max(0, Math.min(7, i));
       root.querySelectorAll<HTMLElement>('[data-rc-step]').forEach((el) => { el.hidden = Number(el.dataset.rcStep) !== state.step; });
       root.querySelectorAll<HTMLButtonElement>('[data-rc-goto]').forEach((b) => { const k = Number(b.dataset.rcGoto); b.classList.toggle('is-active', k === state.step); b.classList.toggle('is-done', k < state.step); });
@@ -305,7 +306,7 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
       next.hidden = state.step === 7;
       next.textContent = state.step === 6 ? 'До заявки →' : 'Далі →';
       update();
-      if (window.innerWidth < 900) root.querySelector('.rc__panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (scroll && window.innerWidth < 900) root.querySelector('.rc__panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
     root.addEventListener('change', (e) => {
@@ -331,6 +332,6 @@ const steps = ['Система', 'Форма', 'Розміри', 'Колір', '
     if (preSys) { state.sys = preSys; (root.querySelector(`input[name="system"][value="${preSys.id}"]`) as HTMLInputElement).checked = true; }
     renderThickness();
     renderHandrail();
-    go(0);
+    go(0, false);
   }
 </script>

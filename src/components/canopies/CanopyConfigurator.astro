@@ -248,7 +248,8 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
       draw();
     };
 
-    const go = (i: number) => {
+    // scroll = false for the initial render: the page must not jump to the panel on load.
+    const go = (i: number, scroll = true) => {
       state.step = Math.max(0, Math.min(LAST, i));
       root.querySelectorAll<HTMLElement>('[data-cc-step]').forEach((el) => { el.hidden = Number(el.dataset.ccStep) !== state.step; });
       root.querySelectorAll<HTMLButtonElement>('[data-cc-goto]').forEach((b) => { const k = Number(b.dataset.ccGoto); b.classList.toggle('is-active', k === state.step); b.classList.toggle('is-done', k < state.step); });
@@ -257,7 +258,7 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
       next.hidden = state.step === LAST;
       next.textContent = state.step === LAST - 1 ? 'До заявки →' : 'Далі →';
       update();
-      if (window.innerWidth < 900) root.querySelector('.rc__panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (scroll && window.innerWidth < 900) root.querySelector('.rc__panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
     root.addEventListener('change', (e) => {
@@ -279,6 +280,6 @@ const steps = ['Система', 'Розміри', 'Скло', 'Кріпленн
     const pre = systems.find((s) => s.id === new URLSearchParams(location.search).get('system'));
     if (pre) { state.sys = pre; (root.querySelector(`input[name="system"][value="${pre.id}"]`) as HTMLInputElement).checked = true; }
     renderSystemOptions();
-    go(0);
+    go(0, false);
   }
 </script>
