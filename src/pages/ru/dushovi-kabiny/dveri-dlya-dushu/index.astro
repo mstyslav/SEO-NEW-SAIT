@@ -1,0 +1,7 @@
+---
+// RU shower subsection — shared catalog template; content in src/data/ru/shower-catalog.ru.ts
+// (mirrors src/data/shower-catalog.ts used by /dushovi-kabiny/dveri-dlya-dushu/).
+import ProfileCategoryPage from '../../../../components/profile/ProfileCategoryPage.astro';
+import { getShowerCategoryRu } from '../../../../data/ru/shower-catalog.ru';
+---
+<ProfileCategoryPage category={getShowerCategoryRu('dushovi-dveri')} locale="ru" />

@@ -7,9 +7,11 @@ import type { ProfileCategory, ProfileGroup } from '../profile-systems';
 import { railingCategoriesRu } from './railing-catalog.ru';
 import { canopyCategoriesRu } from './canopy-catalog.ru';
 import { partitionCategoriesRu } from './partition-catalog.ru';
+import { showerCategoriesRu } from './shower-catalog.ru';
 
 export const ruCategoriesByGroup: Partial<Record<ProfileGroup, ProfileCategory[]>> = {
   railings: railingCategoriesRu,
   canopies: canopyCategoriesRu,
-  partitions: partitionCategoriesRu
+  partitions: partitionCategoriesRu,
+  shower: showerCategoriesRu
 };
