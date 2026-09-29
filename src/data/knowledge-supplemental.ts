@@ -98,7 +98,7 @@ const seeds: Seed[] = [
   {slug:'yak-myty-sklo-bez-rozvodiv',category:'Експлуатація та догляд',title:'Як мити скло без розводів і пошкоджень',focus:'Даємо безпечну послідовність очищення скла та крайок.',serviceHref:'/poslugy/#process',serviceLabel:'Сервіс конструкцій'},
   {slug:'doglyad-za-chornoyu-furnituroyu',category:'Експлуатація та догляд',title:'Догляд за чорною, хромованою та латунною фурнітурою',focus:'Пояснюємо, які засоби не пошкоджують декоративні покриття.',serviceHref:'/poslugy/#process',serviceLabel:'Замовити сервіс'},
   {slug:'vapnyanyi-nalit-na-skli',category:'Експлуатація та догляд',title:'Як прибрати вапняний наліт із душового скла',focus:'Розбираємо регулярне очищення та безпечні засоби проти відкладень.',serviceHref:'/dushovi-kabiny/',serviceLabel:'Скляні душові кабіни'},
-  {slug:'regulyuvannya-sklyanyh-dverey',category:'Експлуатація та догляд',title:'Коли потрібне регулювання скляних дверей',focus:'Описуємо ознаки просідання, люфту й неправильного притвору.',serviceHref:'/poslugy/#process',serviceLabel:'Регулювання дверей'},
+  {slug:'regulyuvannya-sklyanyh-dverey',category:'Експлуатація та догляд',title:'Коли потрібне регулювання скляних дверей',focus:'Описуємо ознаки просідання, люфту й неправильного притвору.',serviceHref:'/poslugy/#full-cycle',serviceLabel:'Регулювання дверей'},
   {slug:'zaminy-ushchilnyuvachiv-dushovoyi',category:'Експлуатація та догляд',title:'Коли міняти ущільнювачі у скляній душовій',focus:'Пояснюємо зношення магнітів, нижніх планок і водовідбійників.',serviceHref:'/dushovi-kabiny/',serviceLabel:'Скляні душові кабіни'},
   {slug:'doglyad-za-rozsuvnymy-systemamy',category:'Експлуатація та догляд',title:'Догляд за роликами та напрямними розсувних систем',focus:'Даємо регламент очищення треків і перевірки стопорів.',serviceHref:'/poslugy/#process',serviceLabel:'Сервіс розсувних систем'},
   {slug:'zakhysne-pokryttya-dlya-skla',category:'Експлуатація та догляд',title:'Захисне покриття для скла: можливості та догляд',focus:'Пояснюємо, як гідрофобне покриття спрощує очищення.',serviceHref:'/poslugy/',serviceLabel:'Підібрати скло'},
@@ -134,6 +134,10 @@ const RELATED_OVERRIDES: Record<string, string[]> = {
   'sklyani-shody': ['sklyana-pidloga', 'sklyani-ogorozhi-skhodiv', 'yake-sklo-krashche'],
   'sklyanyi-kozyrok': ['yake-sklo-krashche', 'heat-soak-test-zagartovanogo-skla', 'sklyanyi-dakh-shcho-vrakhuvaty'],
   'oglyad-sklyanoyi-ogorozhi': ['sklyani-ohorozhi-vymohy-bezpeka', 'poruchni-dlya-sklyanyh-ogorozh', 'doglyad-za-chornoyu-furnituroyu'],
+  // Knowledge rewrite batch 4 «Скляні двері» (2026-09-29).
+  'mayatnykovi-sklyani-dveri': ['sklyani-dveri-furnitura', 'regulyuvannya-sklyanyh-dverey', 'rozpashni-chy-rozsuvni-sklyani-dveri'],
+  'sklyani-dveri-furnitura': ['regulyuvannya-sklyanyh-dverey', 'mayatnykovi-sklyani-dveri', 'rozpashni-chy-rozsuvni-sklyani-dveri'],
+  'regulyuvannya-sklyanyh-dverey': ['sklyani-dveri-furnitura', 'mayatnykovi-sklyani-dveri', 'doglyad-za-rozsuvnymy-systemamy'],
 };
 
 // Reading time of a hand-written article: all visible text (intro, sections, links, FAQ) at ≈180 words/min.
