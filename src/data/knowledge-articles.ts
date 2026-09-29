@@ -3,6 +3,8 @@ export type KnowledgeSection = {
   title: string;
   paragraphs: string[];
   bullets?: string[];
+  /** Contextual link rendered after the section text: [text before, anchor, UA href, text after]. */
+  link?: [string, string, string, string];
 };
 
 export type KnowledgeArticle = {
@@ -21,6 +23,9 @@ export type KnowledgeArticle = {
   sections: KnowledgeSection[];
   faq: Array<[string, string]>;
   related: string[];
+  /** Hand-written body (supplemental article recovered from the generated template): no expert
+   *  blocks, no generated FAQ padding, reading time from the real text. */
+  customContent?: boolean;
 };
 
 const article = (item: KnowledgeArticle) => item;

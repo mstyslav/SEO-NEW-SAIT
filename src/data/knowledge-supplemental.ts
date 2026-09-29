@@ -1,4 +1,5 @@
 import type { KnowledgeArticle, KnowledgeSection } from './knowledge-articles';
+import { KNOWLEDGE_REWRITES } from './knowledge-rewrites';
 
 type Seed = {
   slug: string;
@@ -118,18 +119,34 @@ const RELATED_OVERRIDES: Record<string, string[]> = {
   'pryymannya-sklyanoyi-konstruktsiyi': ['garantiya-na-montazh-skla', 'yak-zberegty-sklo-pid-chas-remontu', 'vymogy-do-osnovy-pid-sklo'],
   'koly-robyty-finalny-zamir': ['yak-zberegty-sklo-pid-chas-remontu', 'garantiya-na-montazh-skla', 'vymogy-do-osnovy-pid-sklo'],
   'sklyani-ogorozhi-skhodiv': ['sklyani-shody', 'poruchni-dlya-sklyanyh-ogorozh', 'ogorozhi-na-stiykah'],
+  // Knowledge Recovery, batch 1 «Душові» (2026-09-29): related by topic instead of the category window.
+  'dushovi-dveri-zi-skla': ['rozpashni-chy-rozsuvni-sklyani-dveri', 'germetychnist-dushovoyi', 'furnitura-dlya-dushovoyi'],
+  'germetychnist-dushovoyi': ['walk-in-perevahy-nedoliky', 'zaminy-ushchilnyuvachiv-dushovoyi', 'dushovi-dveri-zi-skla'],
+  'kutova-dushova-kabina-vybir': ['yak-obraty-dushovu-kabinu', 'dushovi-dveri-zi-skla', 'germetychnist-dushovoyi'],
+  'rozsuvna-dushova-systema': ['rozpashni-chy-rozsuvni-sklyani-dveri', 'furnitura-dlya-dushovoyi', 'germetychnist-dushovoyi'],
+  'shtorka-na-vannu-zi-skla': ['vapnyanyi-nalit-na-skli', 'germetychnist-dushovoyi', 'rozsuvna-dushova-systema'],
+  'vapnyanyi-nalit-na-skli': ['zakhysne-pokryttya-dlya-skla', 'shtorka-na-vannu-zi-skla', 'doglyad-za-dushovym-sklom'],
 };
 
-export const supplementalKnowledgeArticles: KnowledgeArticle[] = seeds.map((seed, index) => ({
-  ...seed,
-  description: seed.description ?? `${seed.title}. Практичний експертний матеріал Space Glass: вибір, замір, проєктування, монтаж, типові помилки та догляд.`,
-  intro: seed.focus,
-  readingTime: 9,
-  sections: sections(seed),
-  faq: [
-    [`Коли варто замовляти консультацію щодо теми «${seed.title}»?`, 'До завершення оздоблення та придбання суміжних матеріалів, щоб завчасно погодити конструктив, основи й комунікації.'],
-    ['Чи достатньо приблизних розмірів?', 'Для попереднього бюджету — так. Для виробництва потрібен професійний замір готових чистових поверхонь.'],
-    ['Що найбільше впливає на вартість?', 'Габарити, склад і обробка скла, фурнітура, складність проєктування, доставка, доступ до місця монтажу та роботи на об’єкті.'],
-  ],
-  related: RELATED_OVERRIDES[seed.slug] ?? seeds.filter((item) => item.category === seed.category && item.slug !== seed.slug).slice(index % 4, index % 4 + 3).map((item) => item.slug),
-}));
+// Reading time of a hand-written article: all visible text (intro, sections, links, FAQ) at ≈180 words/min.
+const countWords = (text: string) => text.split(/\s+/).filter(Boolean).length;
+const readingMinutes = ({ intro, sections: items, faq }: (typeof KNOWLEDGE_REWRITES)[string]) =>
+  Math.max(1, Math.round([intro, ...items.flatMap((item) => [item.title, ...item.paragraphs, ...(item.bullets ?? []), ...(item.link ? [item.link[0], item.link[1], item.link[3]] : [])]), ...faq.flat()].reduce((sum, text) => sum + countWords(text), 0) / 180));
+
+export const supplementalKnowledgeArticles: KnowledgeArticle[] = seeds.map((seed, index) => {
+  const rewrite = KNOWLEDGE_REWRITES[seed.slug];
+  return {
+    ...seed,
+    description: rewrite?.description ?? seed.description ?? `${seed.title}. Практичний експертний матеріал Space Glass: вибір, замір, проєктування, монтаж, типові помилки та догляд.`,
+    intro: rewrite?.intro ?? seed.focus,
+    readingTime: rewrite ? readingMinutes(rewrite) : 9,
+    sections: rewrite?.sections ?? sections(seed),
+    faq: rewrite?.faq ?? [
+      [`Коли варто замовляти консультацію щодо теми «${seed.title}»?`, 'До завершення оздоблення та придбання суміжних матеріалів, щоб завчасно погодити конструктив, основи й комунікації.'],
+      ['Чи достатньо приблизних розмірів?', 'Для попереднього бюджету — так. Для виробництва потрібен професійний замір готових чистових поверхонь.'],
+      ['Що найбільше впливає на вартість?', 'Габарити, склад і обробка скла, фурнітура, складність проєктування, доставка, доступ до місця монтажу та роботи на об’єкті.'],
+    ],
+    related: RELATED_OVERRIDES[seed.slug] ?? seeds.filter((item) => item.category === seed.category && item.slug !== seed.slug).slice(index % 4, index % 4 + 3).map((item) => item.slug),
+    ...(rewrite ? { customContent: true } : {}),
+  };
+});

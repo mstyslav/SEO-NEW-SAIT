@@ -362,6 +362,9 @@
   margin:0 0 18px;
 }
 
+/* Contextual links inside the article text (hand-written articles, section.link). */
+.article-content section > p > a{color:var(--mint-dark);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+
 .article-content li+li{
   margin-top:8px;
 }

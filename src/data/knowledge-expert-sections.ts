@@ -173,7 +173,7 @@ const facts: Record<string, string[]> = {
 };
 
 export function getExpertSections(article: KnowledgeArticle): KnowledgeSection[] {
-  if (article.sections.length >= 10) return [];
+  if (article.customContent || article.sections.length >= 10) return [];
   const values = facts[article.slug];
   if (!values || values.length !== headings.length) {
     throw new Error(`Knowledge article "${article.slug}" needs ${headings.length} expert sections`);

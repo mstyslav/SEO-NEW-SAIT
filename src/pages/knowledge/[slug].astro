@@ -20,8 +20,9 @@ const origin = Astro.site ?? Astro.url.origin;
 const url = new URL(`/knowledge/${article.slug}/`, origin);
 const related = article.related.map(getKnowledgeArticle).filter(Boolean);
 const sections = getFullKnowledgeSections(article);
-const readingTime = Math.max(article.readingTime, Math.ceil(sections.length * 1.15));
-const expandedFaq = expandFaq(article.faq, article.faqTopic ?? article.title, 'uk', 20);
+// Hand-written articles carry their real reading time and only their own FAQ (no generated padding).
+const readingTime = article.customContent ? article.readingTime : Math.max(article.readingTime, Math.ceil(sections.length * 1.15));
+const expandedFaq = article.customContent ? article.faq : expandFaq(article.faq, article.faqTopic ?? article.title, 'uk', 20);
 const structuredData = [
   {
     '@type': 'Article',
@@ -81,7 +82,7 @@ const structuredData = [
               <section>
                 <h2 id={section.id}>{section.title}</h2>
                 {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-                {section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}
+                {section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}{section.link && <p>{section.link[0]}<a href={section.link[2]}>{section.link[1]}</a>{section.link[3]}</p>}
                 {index === 0 && <div class="article-callout"><strong>Порада Space Glass</strong><p>Фінальне рішення приймайте після перевірки розмірів, основи та сценарію користування. Однаковий вигляд не означає однаковий конструктив.</p></div>}
                 {index === 4 && <div class="article-service-card"><p class="eyebrow">Пов’язане рішення Space Glass</p><h3>{article.serviceLabel}</h3><p>Перегляньте варіанти конструкцій, вимоги до заміру та можливості індивідуального виготовлення.</p><a href={article.serviceHref}>Перейти на сторінку послуги →</a></div>}
               </section>
@@ -104,7 +105,7 @@ const structuredData = [
         </section>
 
         <section class="article-related article-faq-section">
-          <FAQBlock title={`Поширені запитання: ${article.title}`} intro="20 практичних відповідей перед замовленням. Перші 6 відкриті для швидкого перегляду, решту можна розгорнути кнопкою." items={expandedFaq} visibleCount={6} />
+          <FAQBlock title={`Поширені запитання: ${article.title}`} intro={article.customContent ? 'Короткі відповіді на питання з цієї теми.' : '20 практичних відповідей перед замовленням. Перші 6 відкриті для швидкого перегляду, решту можна розгорнути кнопкою.'} items={expandedFaq} visibleCount={6} expandTo={article.customContent ? expandedFaq.length : 20} />
         </section>
 
         <section class="inner-cta">
