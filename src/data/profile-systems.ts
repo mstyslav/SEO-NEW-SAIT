@@ -550,7 +550,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Вітринне скління', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
       ['Скляні двері в алюмінієвому профілі', '/sklyani-dveri/dveri-v-aliuminiievomu-profili/'],
       ['Зимові сади', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
-      ['Скління для ресторану', '/rishennya/dlya-restoranu/']
+      ['Скло для ресторанів', '/dlya-biznesu/restoranam/']
     ],
     ctaTitle: 'Підберемо двері під ваш вхід',
     ctaText: 'Надішліть фото прорізу та приблизні розміри — запропонуємо систему, фурнітуру та орієнтовну вартість.'
@@ -1476,7 +1476,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Склопакет: як обрати', '/knowledge/sklopaket-yak-obraty/'],
       ['Безрамне скління балкона', '/bezramne-sklinnya/sklinnya-balkoniv/'],
       ['Скління для будинку', '/pryvatnyj-sektor/'],
-      ['Скління для офісу', '/rishennya/dlya-ofisu/'],
+      ['Скло для офісу', '/dlya-biznesu/dlya-ofisu/'],
       ['Оплата і доставка', '/delivery-payment/']
     ],
     ctaTitle: 'Розрахуємо вікна для вашої квартири чи будинку',
@@ -1702,7 +1702,6 @@ export const profileCategories: ProfileCategory[] = [
     ],
     related: [
       ['Скляні перегородки', '/sklyani-perehorodky/'],
-      ['Скління для офісу', '/rishennya/dlya-ofisu/'],
       ['Офісні перегородки з ПВХ', '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/'],
       ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
       ['Фасадне скління', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/'],
@@ -2132,7 +2131,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Безрамне скління альтанки', '/bezramne-sklinnya/bezramne-sklinnya-altanky/'],
       ['Скляні козирки', '/sklyani-kozyrky/'],
       ['Тепле чи холодне скління тераси', '/knowledge/teple-chy-kholodne-sklinnya-terasy/'],
-      ['Скління для ресторану', '/rishennya/dlya-restoranu/']
+      ['Скло для ресторанів', '/dlya-biznesu/restoranam/']
     ],
     ctaTitle: 'Плануєте перголу на терасі?',
     ctaText: 'Надішліть фото тераси та приблизні розміри — запропонуємо тип даху, бокові рішення та підготуємо попередню оцінку.'
@@ -2801,8 +2800,8 @@ export const profileCategories: ProfileCategory[] = [
       ['Скляні перегородки', '/sklyani-perehorodky/'],
       ['Металопластикові двері', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-dveri/'],
       ['Металопластикові вікна', '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/'],
-      ['Скління для офісу', '/rishennya/dlya-ofisu/'],
-      ['Скління для магазину', '/rishennya/dlya-magazynu/'],
+      ['Скло для офісу', '/dlya-biznesu/dlya-ofisu/'],
+      ['Скло для магазинів', '/dlya-biznesu/magazynam/'],
       ['Проєкти', '/project/'],
       ['Оплата і доставка', '/delivery-payment/']
     ],

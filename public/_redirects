@@ -92,6 +92,15 @@
 /pryvatnyj-sektor/pryvatnyj-sektor/garderobna/ /sklyani-perehorodky/mizhkimnatni/ 301
 # Approved 2026-09-27: solution page merged into the private-sector landing (same intent, no history)
 /rishennya/dlya-budynku/ /pryvatnyj-sektor/ 301
+# Approved 2026-09-29: commercial solution pages merged into the /dlya-biznesu/ pages of the same intent (cannibalization fix)
+/rishennya/dlya-ofisu/ /dlya-biznesu/dlya-ofisu/ 301
+/rishennya/dlya-hotelyu/ /dlya-biznesu/goteli/ 301
+/rishennya/dlya-restoranu/ /dlya-biznesu/restoranam/ 301
+/rishennya/dlya-magazynu/ /dlya-biznesu/magazynam/ 301
+/ru/rishennya/dlya-ofisu/ /ru/dlya-biznesu/dlya-ofisu/ 301
+/ru/rishennya/dlya-hotelyu/ /ru/dlya-biznesu/goteli/ 301
+/ru/rishennya/dlya-restoranu/ /ru/dlya-biznesu/restoranam/ 301
+/ru/rishennya/dlya-magazynu/ /ru/dlya-biznesu/magazynam/ 301
 # Approved 2026-09-27 after intent analysis: old «Безрамне скління будинків / таунхаусів» pages → the same-intent frameless page
 /pryvatnyj-sektor/budynkam/ /bezramne-sklinnya/sklinnya-budynkiv/ 301
 /pryvatnyj-sektor/taun-hausy/ /bezramne-sklinnya/sklinnya-budynkiv/ 301

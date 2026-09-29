@@ -1603,8 +1603,8 @@ export const framelessCategoriesRu: ProfileCategory[] = [
         "/bezramne-sklinnya/sklinnya-budynkiv/"
       ],
       [
-        "Остекление для ресторана",
-        "/rishennya/dlya-restoranu/"
+        "Стекло для ресторанов",
+        "/dlya-biznesu/restoranam/"
       ],
       [
         "Тёплое или холодное остекление террасы",

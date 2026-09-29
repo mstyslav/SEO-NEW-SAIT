@@ -523,7 +523,7 @@ export const mirrorCategories: ProfileCategory[] = [
       ['Дзеркала на стіну', '/dzerkala/dzerkala-na-stinu/'],
       ['Дзеркала в рамі', '/dzerkala/dzerkala-v-rami/'],
       ['LED-дзеркала', '/dzerkala/led-dzerkala/'],
-      ['Скління для ресторану', '/rishennya/dlya-restoranu/'],
+      ['Скло для ресторанів', '/dlya-biznesu/restoranam/'],
       ['Проєкти', '/project/']
     ],
     ctaTitle: 'Розробимо панно для вашої стіни',
@@ -732,7 +732,7 @@ export const mirrorCategories: ProfileCategory[] = [
       ['Дзеркала в рамі', '/dzerkala/dzerkala-v-rami/'],
       ['Дзеркала для спортзалів', '/dzerkala/dzerkala-dlya-sportzalu/'],
       ['Дзеркала на стіну', '/dzerkala/dzerkala-na-stinu/'],
-      ['Скління для магазину', '/rishennya/dlya-magazynu/'],
+      ['Скло для магазинів', '/dlya-biznesu/magazynam/'],
       ['Скло для бізнесу', '/dlya-biznesu/'],
       ['Проєкти', '/project/']
     ],

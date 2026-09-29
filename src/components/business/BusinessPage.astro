@@ -39,7 +39,10 @@ const tx = {
     geoText: (forWhom: string) => `Виїжджаємо на об’єкт, робимо заміри й креслення, виготовляємо та монтуємо конструкції ${forWhom} у трьох містах і областях; для інших регіонів умови погоджуємо окремо.`,
     cities: ['Київ', 'Одеса', 'Львів'], cityNote: 'замір і монтаж', faqTitle: 'FAQ: скло', faqIntro: 'Відповіді на питання, які найчастіше ставлять власники й керівники закладів.',
     others: 'Рішення для іншого бізнесу', allHub: 'Усі напрями для бізнесу', formTitle: 'Обговоримо ваш проєкт?',
-    formText: 'Надішліть план приміщення, фото або розміри — підберемо конструкції для кожної зони й підготуємо попередній розрахунок.', formLabel: 'Що цікавить'
+    formText: 'Надішліть план приміщення, фото або розміри — підберемо конструкції для кожної зони й підготуємо попередній розрахунок.', formLabel: 'Що цікавить',
+    also: 'Також', chooseEyebrow: 'Вибір рішення', choose: 'Як обрати скло', chooseNote: 'Формат конструкції залежить від приміщення, навантаження й потрібної приватності.',
+    safetyEyebrow: 'Матеріали й безпека', safety: 'Скло та безпека', safetyNote: 'З чого виготовляємо конструкції і чому вони безпечні.',
+    priceEyebrow: 'Вартість', price: 'Від чого залежить ціна', priceNote: 'Фіксованої ціни немає — кожен проєкт рахуємо під об’єкт. Орієнтовні ціни готових моделей — на сторінках продуктів.'
   },
   ru: {
     home: 'Главная', hub: 'Для бизнеса', what: 'Что мы делаем', leave: 'Оставить заявку', whatIs: 'Что это?', weDo: 'Что делаем', benefits: 'Преимущества', why: 'Почему стекло',
@@ -49,7 +52,10 @@ const tx = {
     geoText: (forWhom: string) => `Выезжаем на объект, делаем замеры и чертежи, изготавливаем и монтируем конструкции ${forWhom} в трёх городах и областях; для других регионов условия согласовываем отдельно.`,
     cities: ['Киев', 'Одесса', 'Львов'], cityNote: 'замер и монтаж', faqTitle: 'FAQ: стекло', faqIntro: 'Ответы на вопросы, которые чаще всего задают владельцы и руководители заведений.',
     others: 'Решения для другого бизнеса', allHub: 'Все направления для бизнеса', formTitle: 'Обсудим ваш проект?',
-    formText: 'Пришлите план помещения, фото или размеры — подберём конструкции для каждой зоны и подготовим предварительный расчёт.', formLabel: 'Что интересует'
+    formText: 'Пришлите план помещения, фото или размеры — подберём конструкции для каждой зоны и подготовим предварительный расчёт.', formLabel: 'Что интересует',
+    also: 'Также', chooseEyebrow: 'Выбор решения', choose: 'Как выбрать стекло', chooseNote: 'Формат конструкции зависит от помещения, нагрузки и нужной приватности.',
+    safetyEyebrow: 'Материалы и безопасность', safety: 'Стекло и безопасность', safetyNote: 'Из чего изготавливаем конструкции и почему они безопасны.',
+    priceEyebrow: 'Стоимость', price: 'От чего зависит цена', priceNote: 'Фиксированной цены нет — каждый проект считаем под объект. Ориентировочные цены готовых моделей — на страницах продуктов.'
   }
 }[locale];
 const steps = isRu ? BUSINESS_STEPS_RU : BUSINESS_STEPS;
@@ -135,6 +141,12 @@ const structuredData: JsonLdObject[] = [
           </a>
         ))}
       </div>
+      {p.alsoLinks && p.alsoLinks.length > 0 && (
+        <div class="business-also">
+          <p class="eyebrow">{tx.also}</p>
+          <div class="category-links__grid">{p.alsoLinks.map((link) => <a href={lp(link.href)}>{link.label}</a>)}</div>
+        </div>
+      )}
     </section>
 
     <section class="category-section category-section--mint">
@@ -143,6 +155,33 @@ const structuredData: JsonLdObject[] = [
         {p.benefits.map(([title, text]) => <article><b>{title}</b><p>{text}</p></article>)}
       </div>
     </section>
+
+    {p.choose && p.choose.length > 0 && (
+      <section class="category-section">
+        <div class="category-heading"><div><p class="eyebrow">{tx.chooseEyebrow}</p><h2>{tx.choose} {p.forWhom}</h2></div><p>{tx.chooseNote}</p></div>
+        <div class="material-grid material-grid--parts">
+          {p.choose.map((item) => <article><b>{item.title}</b><p>{item.text}</p>{item.link && <a class="category-arrow-link" href={lp(item.link.href)}>{item.link.label} →</a>}</article>)}
+        </div>
+      </section>
+    )}
+
+    {p.safety && p.safety.length > 0 && (
+      <section class="category-section category-section--mint">
+        <div class="category-heading"><div><p class="eyebrow">{tx.safetyEyebrow}</p><h2>{tx.safety}</h2></div><p>{tx.safetyNote}</p></div>
+        <div class="material-grid material-grid--parts">
+          {p.safety.map((item) => <article><b>{item.title}</b><p>{item.text}</p></article>)}
+        </div>
+      </section>
+    )}
+
+    {p.priceFactors && p.priceFactors.length > 0 && (
+      <section class="category-section">
+        <div class="category-heading"><div><p class="eyebrow">{tx.priceEyebrow}</p><h2>{tx.price}</h2></div><p>{tx.priceNote}</p></div>
+        <div class="category-steps">
+          {p.priceFactors.map((factor, index) => <div class="category-steps__item"><span>{String(index + 1).padStart(2, '0')}</span><b>{factor.charAt(0).toUpperCase() + factor.slice(1)}</b></div>)}
+        </div>
+      </section>
+    )}
 
     {projects.length > 0 && (
       <section class="category-section">

@@ -71,7 +71,7 @@ const tx = {
     process: 'Процес', howWeWork: 'Як ми працюємо', geo: 'Географія', geoIn: 'у Києві, Одесі та Львові',
     geoText: (forWhom: string) => `Виїжджаємо на замір, виготовляємо та монтуємо конструкції ${forWhom} у трьох містах і областях; для інших міст України умови погоджуємо окремо.`,
     projectsOnSite: 'проєктів на сайті', glass: 'Скло', faqTitle: 'FAQ: скляні конструкції', faqIntro: 'Відповіді на питання, які найчастіше ставлять перед замовленням.',
-    othersEyebrow: 'Інші рішення', others: 'Рішення для інших об’єктів', allSolutions: 'Усі рішення', formProduct: 'Рішення', formTitle: 'Розрахуємо рішення',
+    othersEyebrow: 'Інші рішення', businessLabel: 'Для бізнесу', businessNote: 'Готелі · Ресторани · Офіси · Магазини', others: 'Рішення для інших об’єктів', allSolutions: 'Усі рішення', formProduct: 'Рішення', formTitle: 'Розрахуємо рішення',
     formText: 'Надішліть фото, приблизні розміри або креслення — підберемо конструкції й підготуємо попередній розрахунок.', formLabel: 'Що цікавить',
     cityNames: { kyiv: 'Київ', odesa: 'Одеса', lviv: 'Львів' }
   },
@@ -87,7 +87,7 @@ const tx = {
     process: 'Процесс', howWeWork: 'Как мы работаем', geo: 'География', geoIn: 'в Киеве, Одессе и Львове',
     geoText: (forWhom: string) => `Выезжаем на замер, изготавливаем и монтируем конструкции ${forWhom} в трёх городах и областях; для других городов Украины условия согласовываем отдельно.`,
     projectsOnSite: 'проектов на сайте', glass: 'Стекло', faqTitle: 'FAQ: стеклянные конструкции', faqIntro: 'Ответы на вопросы, которые чаще всего задают перед заказом.',
-    othersEyebrow: 'Другие решения', others: 'Решения для других объектов', allSolutions: 'Все решения', formProduct: 'Решение', formTitle: 'Рассчитаем решение',
+    othersEyebrow: 'Другие решения', businessLabel: 'Для бизнеса', businessNote: 'Отели · Рестораны · Офисы · Магазины', others: 'Решения для других объектов', allSolutions: 'Все решения', formProduct: 'Решение', formTitle: 'Рассчитаем решение',
     formText: 'Пришлите фото, примерные размеры или чертёж — подберём конструкции и подготовим предварительный расчёт.', formLabel: 'Что интересует',
     cityNames: { kyiv: 'Киев', odesa: 'Одесса', lviv: 'Львов' }
   }
@@ -121,7 +121,9 @@ const cities = CITIES.map((city) => ({ ...city, count: allProjects.filter((proje
 
 const otherSolutions = Object.entries(isRu ? solutionExtrasRu : solutionExtras)
   .filter(([path]) => path !== p.path)
-  .map(([path, item]) => ({ path: lp(path), label: item.navLabel, image: item.image, note: item.tiles.slice(0, 3).map((tile) => tile.label).join(' · ') }));
+  .map(([path, item]) => ({ path: lp(path), label: item.navLabel, image: item.image, note: item.tiles.slice(0, 3).map((tile) => tile.label).join(' · ') }))
+  // Commercial object types live on the /dlya-biznesu/ hub, not on /rishennya/dlya-*/ pages.
+  .concat({ path: lp('/dlya-biznesu/'), label: tx.businessLabel, image: '/images/solutions-new/solution-hotel-640.webp', note: tx.businessNote });
 ---
 <BaseLayout
   title={p.title}
@@ -264,7 +266,7 @@ const otherSolutions = Object.entries(isRu ? solutionExtrasRu : solutionExtras)
 
     <section class="category-section category-section--mint">
       <div class="category-heading"><div><p class="eyebrow">{tx.othersEyebrow}</p><h2>{tx.others}</h2></div><p><a class="category-arrow-link" href={lp('/rishennya/')}>{tx.allSolutions} <span aria-hidden="true">→</span></a></p></div>
-      <div class="rh-tiles rh-tiles--5">
+      <div class={`rh-tiles ${otherSolutions.length === 2 ? 'rh-tiles--2' : 'rh-tiles--5'}`}>
         {otherSolutions.map((item) => (
           <a class="rh-tile" href={item.path}>
             <img src={item.image} alt="" width="640" height="500" loading="lazy" decoding="async" />

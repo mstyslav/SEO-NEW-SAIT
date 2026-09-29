@@ -4,6 +4,8 @@
  * /ru/dlya-biznesu/{slug}/ pages. Links stay the UA paths: BusinessPage localizes them with lp().
  */
 import { BUSINESS_ORDER, type BusinessPage } from '../business-pages';
+import { mergeBusinessExtras } from '../business-extras';
+import { businessExtrasRu } from './business-extras.ru';
 
 export interface BusinessCardRu { slug: string; name: string; forWhom: string; cardNote: string }
 
@@ -106,7 +108,7 @@ export const businessCardsRu: BusinessCardRu[] = [
 
 export const businessCardsOrderedRu = BUSINESS_ORDER.map((slug) => businessCardsRu.find((card) => card.slug === slug)!);
 
-export const businessPagesRu: BusinessPage[] = [
+export const businessPagesRu: BusinessPage[] = ([
   {
     "slug": "restoranam",
     "name": "Ресторанам",
@@ -1579,7 +1581,7 @@ export const businessPagesRu: BusinessPage[] = [
     ],
     "formExample": "Остекление террасы ресторана 25 м и 3 беседок, база отдыха под Киевом"
   }
-] as BusinessPage[];
+] as BusinessPage[]).map((p) => mergeBusinessExtras(p, businessExtrasRu[p.slug]));
 
 export const getBusinessPageRu = (slug: string) => {
   const page = businessPagesRu.find((p) => p.slug === slug);

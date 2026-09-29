@@ -8,7 +8,7 @@ import Header from '../Header.astro';
 import TrustBar from '../TrustBar.astro';
 import Footer from '../Footer.astro';
 import FAQBlock from '../FAQBlock.astro';
-import { SOLUTIONS, CITY_LINKS } from '../../data/solutions';
+import { SOLUTION_HUB_CARDS, CITY_LINKS } from '../../data/solutions';
 import { getCityHub } from '../../data/city-hubs';
 import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
 import { getCollection } from 'astro:content';
@@ -47,8 +47,8 @@ const structuredData: JsonLdObject[] = [
   {
     '@type': 'ItemList',
     name: t.schemaListName,
-    numberOfItems: SOLUTIONS.length,
-    itemListElement: SOLUTIONS.map((solution, index) => ({
+    numberOfItems: SOLUTION_HUB_CARDS.length,
+    itemListElement: SOLUTION_HUB_CARDS.map((solution, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: t.solutions[solution.slug].navLabel,
@@ -140,7 +140,7 @@ const choosePoints = t.choosePoints;
             <p>{t.solutionsSection.intro}</p>
           </div>
           <div class="rishennya-hub__grid">
-            {SOLUTIONS.map((solution) => (
+            {SOLUTION_HUB_CARDS.map((solution) => (
               <a class="rishennya-hub__card" href={lp(solution.path)}>
                 <div class="rishennya-hub__card-media">
                   <img

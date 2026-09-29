@@ -979,8 +979,8 @@ export const aluCategoriesRu: ProfileCategory[] = [
         "/alyuminiyevi-konstrukcziyi/zymovi-sady/"
       ],
       [
-        "Остекление для ресторана",
-        "/rishennya/dlya-restoranu/"
+        "Стекло для ресторанов",
+        "/dlya-biznesu/restoranam/"
       ]
     ],
     "ctaTitle": "Подберём двери под ваш вход",
@@ -1925,10 +1925,6 @@ export const aluCategoriesRu: ProfileCategory[] = [
       [
         "Стеклянные перегородки",
         "/sklyani-perehorodky/"
-      ],
-      [
-        "Остекление для офиса",
-        "/rishennya/dlya-ofisu/"
       ],
       [
         "Офисные перегородки из ПВХ",
@@ -3811,8 +3807,8 @@ export const aluCategoriesRu: ProfileCategory[] = [
         "/knowledge/teple-chy-kholodne-sklinnya-terasy/"
       ],
       [
-        "Остекление для ресторана",
-        "/rishennya/dlya-restoranu/"
+        "Стекло для ресторанов",
+        "/dlya-biznesu/restoranam/"
       ]
     ],
     "ctaTitle": "Планируете перголу на террасе?",
@@ -4302,8 +4298,8 @@ export const pvcCategoriesRu: ProfileCategory[] = [
         "/pryvatnyj-sektor/"
       ],
       [
-        "Остекление для офиса",
-        "/rishennya/dlya-ofisu/"
+        "Стекло для офиса",
+        "/dlya-biznesu/dlya-ofisu/"
       ],
       [
         "Оплата и доставка",
@@ -5710,12 +5706,12 @@ export const pvcCategoriesRu: ProfileCategory[] = [
         "/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/"
       ],
       [
-        "Остекление для офиса",
-        "/rishennya/dlya-ofisu/"
+        "Стекло для офиса",
+        "/dlya-biznesu/dlya-ofisu/"
       ],
       [
-        "Остекление для магазина",
-        "/rishennya/dlya-magazynu/"
+        "Стекло для магазинов",
+        "/dlya-biznesu/magazynam/"
       ],
       [
         "Проекты",

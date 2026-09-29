@@ -2038,12 +2038,12 @@ export const doorCategoriesRu: ProfileCategory[] = [
         "/poslugy/sklyani-fasady/vitrinne-sklinnya/"
       ],
       [
-        "Остекление для магазина",
-        "/rishennya/dlya-magazynu/"
+        "Стекло для магазинов",
+        "/dlya-biznesu/magazynam/"
       ],
       [
-        "Остекление для ресторана",
-        "/rishennya/dlya-restoranu/"
+        "Стекло для ресторанов",
+        "/dlya-biznesu/restoranam/"
       ],
       [
         "Все стеклянные двери",
@@ -3571,8 +3571,8 @@ export const doorCategoriesRu: ProfileCategory[] = [
         "/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/"
       ],
       [
-        "Остекление для офиса",
-        "/rishennya/dlya-ofisu/"
+        "Стекло для офиса",
+        "/dlya-biznesu/dlya-ofisu/"
       ],
       [
         "Стеклянные входные группы",
