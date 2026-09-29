@@ -166,3 +166,29 @@
 /ru/cart/ /cart/ 301
 /ru/compare/ /compare/ 301
 /ru/catalog/piddon/ /ru/dushovi-kabiny/dushovi-piddony/ 301
+
+# RU parity follow-up (2026-09-29): old WP /ru/ URLs that were «301 REQUIRED / NEEDS REVIEW — target 404» in
+# seo-audit/OLD_URL_COVERAGE_PRODUCTION.csv because no RU page existed; the RU pages now exist (stages 2A–2C).
+# RU → RU with the same intent as the matching UA rules above. Raw and percent-encoded (upper/lower case) forms of «є/ї».
+/ru/project/steklyannaya-shtorka-dlya-vannoj-komnaty-zhk-akvarel-odessa/ /ru/project/shtorka-dlya-vannoyi-zhk-akvarel-v-m-odesa/ 301
+/ru/metalloplastikovye-konstrukczii/ /ru/metaloplastykovi-konstrukcziyi/ 301
+/ru/metalloplastikovye-konstrukczii/razdvizhnye-dveri/ /ru/metaloplastykovi-konstrukcziyi/rozsuvni-dveri/ 301
+/ru/metalloplastikovye-konstrukczii/metalloplastikovye-okna/ /ru/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/ 301
+/ru/metalloplastikovye-konstrukczii/metalloplastikovye-dveri/ /ru/metaloplastykovi-konstrukcziyi/metaloplastykovi-dveri/ 301
+/ru/pryvatnyj-sektor/pryvatnyj-sektor/ /ru/bezramne-sklinnya/sklinnya-balkoniv/ 301
+/ru/zerkala/ /ru/dzerkala/ 301
+/ru/peregorodki/mezhkomnatnye-steklyannye-dveri/ /ru/sklyani-perehorodky/sklyani-mizhkimnatni-dveri/ 301
+/ru/peregorodki/dveri-dlya-dushu/ /ru/dushovi-kabiny/dveri-dlya-dushu/ 301
+/ru/product/dushova-kabina-apusblack/ /ru/dushovi-kabiny/kytova-dushova-kabina/ 301
+/ru/product/kutova-dushova-kabina-libra/ /ru/dushovi-kabiny/kytova-dushova-kabina/ 301
+/ru/product/kopiyakutova-dushova-kabina-librablack/ /ru/dushovi-kabiny/kytova-dushova-kabina/ 301
+/ru/dushovi-kabiny/kutovi-kabiny/ /ru/dushovi-kabiny/kytova-dushova-kabina/ 301
+/ru/dushovi-kabiny/peregorodky-dlya-dusha/ /ru/dushovi-kabiny/peregorodka-dlya-dusha/ 301
+/ru/product/dushova-kabina-pyatykutna-pictor/ /ru/dushovi-kabiny/piatykutni/ 301
+/ru/label/byznes/ /ru/project/ 301
+/ru/alyumini%D1%94vi-konstrukczi%D1%97/razdvizhnye-dveri/ /ru/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/ 301
+/ru/alyumini%d1%94vi-konstrukczi%d1%97/razdvizhnye-dveri/ /ru/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/ 301
+/ru/alyuminiєvi-konstrukcziї/razdvizhnye-dveri/ /ru/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/ 301
+/ru/alyumini%D1%94vi-konstrukczi%D1%97/alyuminievye-okna/ /ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/ 301
+/ru/alyumini%d1%94vi-konstrukczi%d1%97/alyuminievye-okna/ /ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/ 301
+/ru/alyuminiєvi-konstrukcziї/alyuminievye-okna/ /ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/ 301

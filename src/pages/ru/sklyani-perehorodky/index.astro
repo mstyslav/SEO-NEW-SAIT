@@ -18,6 +18,7 @@ import '../../../styles/category-pages.css';
 import '../../../styles/shower-master.css';
 import '../../../styles/profile-systems.css';
 import '../../../styles/projects-common.css';
+import { HUB_CONFIGURATORS } from '../../../data/configurator-links';
 
 const lp = (path: string) => localizedPath(path, 'ru');
 const origin = Astro.site ?? Astro.url.origin;
@@ -123,6 +124,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <div class="hero__actions">
           <a class="button button--mint" href="#types">Выбрать вид</a>
           <a class="button button--outline" href="#request">Получить расчёт</a>
+          <a class="button button--outline" href={lp(HUB_CONFIGURATORS['/sklyani-perehorodky/'])}>Рассчитать в конфигураторе</a>
         </div>
       </div>
       <figure class="category-hero__figure">

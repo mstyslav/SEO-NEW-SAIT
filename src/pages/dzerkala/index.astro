@@ -15,6 +15,7 @@ import '../../styles/category-pages.css';
 import '../../styles/projects-common.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
+import { HUB_CONFIGURATORS } from '../../data/configurator-links';
 
 const title = "Дзеркала";
 const h1 = "Дзеркала на замовлення";
@@ -128,6 +129,7 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
         <div class="hero__actions">
           <a class="button button--mint" href="#types">Переглянути види</a>
           <a class="button button--outline" href="#request">Отримати розрахунок</a>
+          <a class="button button--outline" href={HUB_CONFIGURATORS['/dzerkala/']}>Розрахувати в конфігураторі</a>
         </div>
       </div>
       <figure class="category-hero__figure">

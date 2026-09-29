@@ -15,6 +15,7 @@ import { localizedPath } from '../../../i18n/helpers';
 import '../../../styles/category-pages.css';
 import '../../../styles/shower-master.css';
 import '../../../styles/profile-systems.css';
+import { HUB_CONFIGURATORS } from '../../../data/configurator-links';
 
 const lp = (path: string) => localizedPath(path, 'ru');
 const origin = Astro.site ?? Astro.url.origin;
@@ -147,6 +148,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <div class="hero__actions">
           <a class="button button--mint" href="#types">Смотреть {framelessCategories.length} направлений</a>
           <a class="button button--outline" href="#request">Получить расчёт</a>
+          <a class="button button--outline" href={lp(HUB_CONFIGURATORS['/bezramne-sklinnya/'])}>Рассчитать в конфигураторе</a>
         </div>
       </div>
       <figure class="category-hero__figure">

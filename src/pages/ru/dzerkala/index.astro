@@ -18,6 +18,7 @@ import '../../../styles/category-pages.css';
 import '../../../styles/projects-common.css';
 import '../../../styles/shower-master.css';
 import '../../../styles/profile-systems.css';
+import { HUB_CONFIGURATORS } from '../../../data/configurator-links';
 
 const lp = (path: string) => localizedPath(path, 'ru');
 const title = 'Зеркала';
@@ -116,6 +117,7 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
         <div class="hero__actions">
           <a class="button button--mint" href="#types">Смотреть виды</a>
           <a class="button button--outline" href="#request">Получить расчёт</a>
+          <a class="button button--outline" href={lp(HUB_CONFIGURATORS['/dzerkala/'])}>Рассчитать в конфигураторе</a>
         </div>
       </div>
       <figure class="category-hero__figure">

@@ -33,8 +33,9 @@ if (!article || !sourceArticle) {
 }
 
 const origin = Astro.site ?? Astro.url.origin;
-const url = new URL(`/ru/knowledge/${article.slug}/`, origin);
-const ukUrl = new URL(`/knowledge/${article.slug}/`, origin);
+// RU article objects carry no slug of their own; the route slug comes from the source (UA) article.
+const url = new URL(`/ru/knowledge/${sourceArticle.slug}/`, origin);
+const ukUrl = new URL(`/knowledge/${sourceArticle.slug}/`, origin);
 
 const sections = getFullKnowledgeSectionsRu(sourceArticle, article.sections);
 const readingTime = Math.max(
