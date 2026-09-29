@@ -137,7 +137,7 @@ const RELATED_OVERRIDES: Record<string, string[]> = {
   // Knowledge rewrite batch 4 «Скляні двері» (2026-09-29).
   'mayatnykovi-sklyani-dveri': ['sklyani-dveri-furnitura', 'regulyuvannya-sklyanyh-dverey', 'rozpashni-chy-rozsuvni-sklyani-dveri'],
   'sklyani-dveri-furnitura': ['regulyuvannya-sklyanyh-dverey', 'mayatnykovi-sklyani-dveri', 'rozpashni-chy-rozsuvni-sklyani-dveri'],
-  'regulyuvannya-sklyanyh-dverey': ['sklyani-dveri-furnitura', 'mayatnykovi-sklyani-dveri', 'doglyad-za-rozsuvnymy-systemamy'],
+  'regulyuvannya-sklyanyh-dverey': ['sklyani-dveri-furnitura', 'mayatnykovi-sklyani-dveri'],
 };
 
 // Reading time of a hand-written article: all visible text (intro, sections, links, FAQ) at ≈180 words/min.
