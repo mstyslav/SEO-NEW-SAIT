@@ -84,7 +84,7 @@ const seeds: Seed[] = [
   {slug:'sklyanyi-kozyrok',category:'Скляні огорожі',title:'Скляний козирок: склад скла, тяги та водовідведення',focus:'Розбираємо верхнє скління, навантаження й безпечні вузли.',serviceHref:'/sklyani-kozyrky/',serviceLabel:'Скляні козирки'},
   {slug:'sklyana-pidloga',category:'Скляні огорожі',title:'Скляна підлога: конструкція, протиковзання та контроль',focus:'Пояснюємо ламінований склад, опирання та захист поверхні.',serviceHref:'/arkhitekturni-systemy/',serviceLabel:'Технічна консультація'},
   {slug:'sklyani-shody',category:'Скляні огорожі',title:'Скляні сходи: проєктування відповідальної конструкції',focus:'Розбираємо несучу схему, прогин, крайки та сервісний доступ.',serviceHref:'/arkhitekturni-systemy/',serviceLabel:'Проєктування конструкцій'},
-  {slug:'poruchni-dlya-sklyanyh-ogorozh',category:'Скляні огорожі',title:'Поручні для скляних огорож: коли вони потрібні',focus:'Пояснюємо функцію поручня, матеріали та способи встановлення.',serviceHref:'/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/',serviceLabel:'Огорожі та перила для сходів'},
+  {slug:'poruchni-dlya-sklyanyh-ogorozh',category:'Скляні огорожі',title:'Поручні для скляних огорож: коли вони потрібні',focus:'Пояснюємо функцію поручня, матеріали та способи встановлення.',serviceHref:'/sklyani-ohorozhi/',serviceLabel:'Підібрати огорожу'},
 
   {slug:'koly-robyty-finalny-zamir',category:'Замір і монтаж',title:'Коли робити фінальний замір скляної конструкції',focus:'Пояснюємо, які чистові роботи мають бути завершені.',serviceHref:'/poslugy/#process',serviceLabel:'Замовити замір'},
   {slug:'yak-chytaty-kreslennya-skla',category:'Замір і монтаж',title:'Як читати креслення скляної конструкції перед погодженням',focus:'Розбираємо розміри, осі отворів, крайки, зазори та примітки.',serviceHref:'/poslugy/#process',serviceLabel:'Проєктування'},
@@ -129,7 +129,7 @@ const RELATED_OVERRIDES: Record<string, string[]> = {
   // Knowledge rewrite batch 2 «Скляні огорожі та козирки» (2026-09-29).
   'ogorozhi-na-stiykah': ['bezramni-ogorozhi-profil', 'poruchni-dlya-sklyanyh-ogorozh', 'oglyad-sklyanoyi-ogorozhi'],
   'poruchni-dlya-sklyanyh-ogorozh': ['sklyani-ohorozhi-vymohy-bezpeka', 'ogorozhi-na-stiykah', 'sklyani-ogorozhi-skhodiv'],
-  'sklyani-ogorozhi-balkona': ['oglyad-sklyanoyi-ogorozhi', 'sklyani-ohorozhi-vymohy-bezpeka', 'sklyanyi-kozyrok'],
+  'sklyani-ogorozhi-balkona': ['oglyad-sklyanoyi-ogorozhi', 'sklyani-ohorozhi-vymohy-bezpeka'],
   'sklyani-ogorozhi-terasy': ['teple-chy-kholodne-sklinnya-terasy', 'bezramni-ogorozhi-profil', 'ogorozhi-na-stiykah'],
   'sklyani-shody': ['sklyana-pidloga', 'sklyani-ogorozhi-skhodiv', 'yake-sklo-krashche'],
   'sklyanyi-kozyrok': ['yake-sklo-krashche', 'heat-soak-test-zagartovanogo-skla', 'sklyanyi-dakh-shcho-vrakhuvaty'],
