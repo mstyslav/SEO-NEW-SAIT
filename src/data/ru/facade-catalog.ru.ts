@@ -2494,12 +2494,12 @@ export const facadeCategoriesRu: ProfileCategory[] = [
         "/sklyani-kozyrky/"
       ],
       [
-        "Остекление для магазина",
-        "/rishennya/dlya-magazynu/"
+        "Стекло для магазинов",
+        "/dlya-biznesu/magazynam/"
       ],
       [
-        "Остекление для ресторана",
-        "/rishennya/dlya-restoranu/"
+        "Стекло для ресторанов",
+        "/dlya-biznesu/restoranam/"
       ],
       [
         "Фасадное остекление — системы Aluprof",
@@ -3007,8 +3007,8 @@ export const facadeCategoriesRu: ProfileCategory[] = [
         "/sklyani-kozyrky/"
       ],
       [
-        "Остекление для офиса",
-        "/rishennya/dlya-ofisu/"
+        "Стекло для офиса",
+        "/dlya-biznesu/dlya-ofisu/"
       ],
       [
         "Фасадное остекление — системы Aluprof",

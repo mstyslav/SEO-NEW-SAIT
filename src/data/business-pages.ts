@@ -7,10 +7,13 @@
  * Hero photos: Unsplash License (see IMAGE_CREDITS_biznes.md), /images/business/.
  */
 
+import { businessExtras, mergeBusinessExtras } from './business-extras';
+
 export const BUSINESS_HUB = '/dlya-biznesu/';
 export const BUSINESS_IMG = '/images/business';
 
 export interface BusinessZone { title: string; text: string; href: string; image: string }
+export interface BusinessPoint { title: string; text: string; link?: { label: string; href: string } }
 export interface BusinessPage {
   slug: string;
   /** Short label as on the old site: «Готелям», «Ресторанам»… */
@@ -33,6 +36,11 @@ export interface BusinessPage {
   projectSlugs: string[];
   faq: [string, string][];
   formExample: string;
+  /** Optional blocks merged from retired solution pages (src/data/business-extras.ts). */
+  choose?: BusinessPoint[];
+  safety?: BusinessPoint[];
+  priceFactors?: string[];
+  alsoLinks?: { label: string; href: string }[];
 }
 
 const P = (slug: string) => `/images/projects/${slug}/${slug}-hero-480.webp`;
@@ -439,7 +447,7 @@ export const businessPages: BusinessPage[] = [
     ],
     formExample: 'Скління тераси ресторану 25 м і 3 альтанок, база відпочинку під Києвом'
   })
-];
+].map((p) => mergeBusinessExtras(p, businessExtras[p.slug]));
 
 /** Old-site hub order. */
 export const BUSINESS_ORDER = ['bazam-vidpochynku', 'zhytlovym-kompleksam', 'salonam-krasy', 'stomatologiyi-ta-kliniky', 'magazynam', 'restoranam', 'dlya-ofisu', 'goteli'];

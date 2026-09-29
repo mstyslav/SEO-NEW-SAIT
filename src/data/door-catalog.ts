@@ -329,7 +329,7 @@ export const doorCategories: ProfileCategory[] = [
       ['Чи підходять маятникові двері для квартири?', 'Так, наприклад, між кухнею та їдальнею, але частіше їх ставлять у комерційних приміщеннях.'],
       ['Скільки служить підлоговий доводчик?', 'Якісні доводчики розраховані на сотні тисяч циклів; сервіс — регулювання швидкості й заміна масла за потреби.']
     ],
-    related: [['Розпашні скляні двері', P('rozpashni-sklyani-dveri')], ['Скляні двері для офісу', P('sklyani-dveri-dlia-ofisu')], ['Розсувні скляні двері', P('rozsuvni-sklyani-dveri')], ['Скляні вхідні групи', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'], ['Вітринне скління', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'], ['Скління для магазину', '/rishennya/dlya-magazynu/'], ['Скління для ресторану', '/rishennya/dlya-restoranu/'], REL_HUB],
+    related: [['Розпашні скляні двері', P('rozpashni-sklyani-dveri')], ['Скляні двері для офісу', P('sklyani-dveri-dlia-ofisu')], ['Розсувні скляні двері', P('rozsuvni-sklyani-dveri')], ['Скляні вхідні групи', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'], ['Вітринне скління', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'], ['Скло для магазинів', '/dlya-biznesu/magazynam/'], ['Скло для ресторанів', '/dlya-biznesu/restoranam/'], REL_HUB],
     ctaTitle: 'Потрібні маятникові двері?',
     ctaText: 'Надішліть фото входу й розміри — підберемо доводчик, скло й фурнітуру та підготуємо розрахунок.'
   }),
@@ -515,7 +515,7 @@ export const doorCategories: ProfileCategory[] = [
       ['Чи безпечні скляні двері в офісі?', 'Так, використовуємо загартоване скло чи триплекс і маркування на рівні очей.'],
       ['Скільки часу займає монтаж?', 'Зазвичай один день на кілька дверей після виготовлення скла.']
     ],
-    related: [['Маятникові скляні двері', P('mayatnykovi-sklyani-dveri')], ['Матові скляні двері', P('matovi-sklyani-dveri')], ['Розпашні скляні двері', P('rozpashni-sklyani-dveri')], ['Офісні перегородки', '/sklyani-perehorodky/ofisni/'], ['Офісне скління', '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/'], ['Скління для офісу', '/rishennya/dlya-ofisu/'], ['Скляні вхідні групи', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'], REL_HUB],
+    related: [['Маятникові скляні двері', P('mayatnykovi-sklyani-dveri')], ['Матові скляні двері', P('matovi-sklyani-dveri')], ['Розпашні скляні двері', P('rozpashni-sklyani-dveri')], ['Офісні перегородки', '/sklyani-perehorodky/ofisni/'], ['Офісне скління', '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/'], ['Скло для офісу', '/dlya-biznesu/dlya-ofisu/'], ['Скляні вхідні групи', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'], REL_HUB],
     ctaTitle: 'Потрібні скляні двері для офісу?',
     ctaText: 'Надішліть план офісу або фото — підберемо двері, фурнітуру та підготуємо розрахунок.'
   })

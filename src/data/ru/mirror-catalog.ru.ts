@@ -1673,8 +1673,8 @@ export const mirrorCategoriesRu: ProfileCategory[] = [
         "/dzerkala/led-dzerkala/"
       ],
       [
-        "Остекление для ресторана",
-        "/rishennya/dlya-restoranu/"
+        "Стекло для ресторанов",
+        "/dlya-biznesu/restoranam/"
       ],
       [
         "Проекты",
@@ -2406,8 +2406,8 @@ export const mirrorCategoriesRu: ProfileCategory[] = [
         "/dzerkala/dzerkala-na-stinu/"
       ],
       [
-        "Остекление для магазина",
-        "/rishennya/dlya-magazynu/"
+        "Стекло для магазинов",
+        "/dlya-biznesu/magazynam/"
       ],
       [
         "Стекло для бизнеса",

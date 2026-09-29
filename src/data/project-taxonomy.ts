@@ -8,7 +8,7 @@ export const projectCategories = [
   { id: 'aluminium', label: 'Алюмінієві конструкції', labelRu: 'Алюминиевые конструкции', serviceHref: '/alyuminiyevi-konstrukcziyi/' },
   { id: 'glass-facades', label: 'Скляні фасади', labelRu: 'Стеклянные фасады', serviceHref: '/arkhitekturni-systemy/' },
   { id: 'pvc', label: 'Металопластикові конструкції', labelRu: 'Металлопластиковые конструкции', serviceHref: '/metaloplastykovi-konstrukcziyi/' },
-  { id: 'business-glass', label: 'Скло для бізнесу', labelRu: 'Стекло для бизнеса', serviceHref: '/rishennya/dlya-ofisu/' }
+  { id: 'business-glass', label: 'Скло для бізнесу', labelRu: 'Стекло для бизнеса', serviceHref: '/dlya-biznesu/' }
 ] as const;
 
 export const projectCategoryIds = projectCategories.map(({ id }) => id) as [
