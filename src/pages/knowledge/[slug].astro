@@ -107,7 +107,7 @@ const structuredData = [
         </section>
 
         <section class="article-related article-faq-section">
-          <FAQBlock title={`Поширені запитання: ${article.title}`} intro={article.customContent ? 'Короткі відповіді на питання з цієї теми.' : '20 практичних відповідей перед замовленням. Перші 6 відкриті для швидкого перегляду, решту можна розгорнути кнопкою.'} items={expandedFaq} visibleCount={6} expandTo={article.customContent ? expandedFaq.length : 20} />
+          <FAQBlock title={`Поширені запитання: ${article.title}`} intro={article.customContent ? 'Короткі відповіді на питання з цієї теми.' : '20 практичних відповідей перед замовленням. Перші 6 відкриті для швидкого перегляду, решту можна розгорнути кнопкою.'} items={expandedFaq} visibleCount={article.customContent ? expandedFaq.length : 6} expandTo={article.customContent ? expandedFaq.length : 20} />
         </section>
 
         <section class="inner-cta">

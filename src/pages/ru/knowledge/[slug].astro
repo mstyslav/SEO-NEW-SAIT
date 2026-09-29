@@ -262,7 +262,7 @@ import { localizedPath } from '../../../i18n/helpers';
             title={`Частые вопросы: ${article.title}`}
             intro={sourceArticle.customContent ? 'Короткие ответы на вопросы по этой теме.' : '20 практических ответов перед заказом. Первые 6 открыты для быстрого просмотра, остальные можно развернуть кнопкой.'}
             items={expandedFaq}
-            visibleCount={6}
+            visibleCount={sourceArticle.customContent ? expandedFaq.length : 6}
             expandTo={sourceArticle.customContent ? expandedFaq.length : 20}
           />
         </section>
