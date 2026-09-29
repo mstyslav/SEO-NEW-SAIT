@@ -100,7 +100,7 @@ const seeds: Seed[] = [
   {slug:'vapnyanyi-nalit-na-skli',category:'Експлуатація та догляд',title:'Як прибрати вапняний наліт із душового скла',focus:'Розбираємо регулярне очищення та безпечні засоби проти відкладень.',serviceHref:'/dushovi-kabiny/',serviceLabel:'Скляні душові кабіни'},
   {slug:'regulyuvannya-sklyanyh-dverey',category:'Експлуатація та догляд',title:'Коли потрібне регулювання скляних дверей',focus:'Описуємо ознаки просідання, люфту й неправильного притвору.',serviceHref:'/poslugy/#full-cycle',serviceLabel:'Регулювання дверей'},
   {slug:'zaminy-ushchilnyuvachiv-dushovoyi',category:'Експлуатація та догляд',title:'Коли міняти ущільнювачі у скляній душовій',focus:'Пояснюємо зношення магнітів, нижніх планок і водовідбійників.',serviceHref:'/dushovi-kabiny/',serviceLabel:'Скляні душові кабіни'},
-  {slug:'doglyad-za-rozsuvnymy-systemamy',category:'Експлуатація та догляд',title:'Догляд за роликами та напрямними розсувних систем',focus:'Даємо регламент очищення треків і перевірки стопорів.',serviceHref:'/poslugy/#process',serviceLabel:'Сервіс розсувних систем'},
+  {slug:'doglyad-za-rozsuvnymy-systemamy',category:'Експлуатація та догляд',title:'Догляд за роликами та напрямними розсувних систем',focus:'Даємо регламент очищення треків і перевірки стопорів.',serviceHref:'/poslugy/#full-cycle',serviceLabel:'Сервіс розсувних систем'},
   {slug:'zakhysne-pokryttya-dlya-skla',category:'Експлуатація та догляд',title:'Захисне покриття для скла: можливості та догляд',focus:'Пояснюємо, як гідрофобне покриття спрощує очищення.',serviceHref:'/poslugy/',serviceLabel:'Підібрати скло'},
   {slug:'oglyad-sklyanoyi-ogorozhi',category:'Експлуатація та догляд',title:'Періодичний огляд скляної огорожі: чекліст безпеки',focus:'Описуємо контроль кріплень, крайок, поручня і герметизації.',serviceHref:'/sklyani-ohorozhi/',serviceLabel:'Скляні огорожі'},
   {slug:'yak-zberegty-sklo-pid-chas-remontu',category:'Експлуатація та догляд',title:'Як захистити скляні конструкції під час ремонту',focus:'Пояснюємо безпечне укриття скла, фурнітури та напрямних.',serviceHref:'/poslugy/#process',serviceLabel:'Консультація сервісу'},
@@ -138,6 +138,11 @@ const RELATED_OVERRIDES: Record<string, string[]> = {
   'mayatnykovi-sklyani-dveri': ['sklyani-dveri-furnitura', 'regulyuvannya-sklyanyh-dverey', 'rozpashni-chy-rozsuvni-sklyani-dveri'],
   'sklyani-dveri-furnitura': ['regulyuvannya-sklyanyh-dverey', 'mayatnykovi-sklyani-dveri', 'rozpashni-chy-rozsuvni-sklyani-dveri'],
   'regulyuvannya-sklyanyh-dverey': ['sklyani-dveri-furnitura', 'mayatnykovi-sklyani-dveri'],
+  // Knowledge rewrite batch 3A «Скляні перегородки» (2026-09-29).
+  'pryvatnist-sklyanyh-perehorodok': ['mizhkimnatni-sklyani-perehorodky', 'yak-obraty-sklyanu-perehorodku', 'loft-perehorodky-vydy-sklo-profili'],
+  'mizhkimnatni-sklyani-perehorodky': ['pryvatnist-sklyanyh-perehorodok', 'yak-obraty-sklyanu-perehorodku'],
+  'vymogy-do-osnovy-pid-sklo': ['yak-pidhotuvaty-prostir-do-zamiru'],
+  'doglyad-za-rozsuvnymy-systemamy': ['slaydingova-chy-skladana-systema', 'regulyuvannya-sklyanyh-dverey'],
 };
 
 // Reading time of a hand-written article: all visible text (intro, sections, links, FAQ) at ≈180 words/min.
