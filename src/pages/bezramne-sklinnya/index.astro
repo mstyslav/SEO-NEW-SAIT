@@ -14,6 +14,8 @@ import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
 import { HUB_CONFIGURATORS } from '../../data/configurator-links';
+import ProjectLinks from '../../components/profile/ProjectLinks.astro';
+import UsefulArticles from '../../components/profile/UsefulArticles.astro';
 
 const origin = Astro.site ?? Astro.url.origin;
 const pageUrl = absoluteUrl(FRAMELESS_HUB, origin);
@@ -101,8 +103,6 @@ const relatedLinks: [string, string][] = [
   ['Перголи', '/alyuminiyevi-konstrukcziyi/pergoly/'],
   ['Сітки плісе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
   ['Скляні огорожі балконів', '/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/'],
-  ['Тепле чи холодне скління тераси', '/knowledge/teple-chy-kholodne-sklinnya-terasy/'],
-  ['Скляний дах: що врахувати', '/knowledge/sklyanyi-dakh-shcho-vrakhuvaty/'],
   ['Скло для ресторанів', '/dlya-biznesu/restoranam/']
 ];
 
@@ -250,6 +250,10 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <ul class="category-geo__cities"><li><b>Київ</b><span>замір і монтаж</span></li><li><b>Одеса</b><span>замір і монтаж</span></li><li><b>Львів</b><span>замір і монтаж</span></li></ul>
       </div>
     </section>
+
+    <ProjectLinks path="/bezramne-sklinnya/" />
+
+    <UsefulArticles path="/bezramne-sklinnya/" />
 
     <section class="category-section category-section--faq">
       <FAQBlock

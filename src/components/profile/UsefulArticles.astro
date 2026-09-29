@@ -1,0 +1,31 @@
+---
+// «Корисно знати» — up to 3 Knowledge articles for a commercial page (src/data/knowledge-links.ts).
+// `path` is the UA page path (RU pages pass the same key). The anchor is the article's own title.
+// The build fails on an unknown slug, a missing RU article, duplicates or more than 3 articles,
+// so the block can never link a 404 or break UA/RU parity.
+import { getKnowledgeArticle } from '../../data/knowledge-articles';
+import { KNOWLEDGE_ARTICLES_RU } from '../../content/i18n/knowledge/articles-ru';
+import { KNOWLEDGE_LINKS } from '../../data/knowledge-links';
+import { localizedPath, type Locale } from '../../i18n/helpers';
+
+interface Props { path: string; locale?: Locale }
+const { path, locale = 'uk' } = Astro.props;
+const isRu = locale === 'ru';
+const slugs = KNOWLEDGE_LINKS[path] ?? [];
+if (slugs.length > 3 || new Set(slugs).size !== slugs.length) throw new Error(`knowledge-links ${path}: at most 3 distinct articles`);
+
+const items = slugs.map((slug) => {
+  const article = getKnowledgeArticle(slug);
+  const articleRu = KNOWLEDGE_ARTICLES_RU[slug];
+  if (!article || !articleRu) throw new Error(`knowledge-links ${path}: article «${slug}» is missing in UA or RU`);
+  return { href: localizedPath(`/knowledge/${slug}/`, locale), title: isRu ? articleRu.title : article.title };
+});
+---
+{items.length > 0 && (
+  <section class="category-section category-links">
+    <div class="category-heading"><div><p class="eyebrow">{isRu ? 'База знаний' : 'База знань'}</p><h2>{isRu ? 'Полезно знать' : 'Корисно знати'}</h2></div></div>
+    <div class="category-links__grid">
+      {items.map((item) => <a href={item.href}>{item.title}</a>)}
+    </div>
+  </section>
+)}

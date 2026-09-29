@@ -13,6 +13,8 @@ import { profileIcons } from '../../data/profile-icons';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
+import ProjectLinks from '../../components/profile/ProjectLinks.astro';
+import UsefulArticles from '../../components/profile/UsefulArticles.astro';
 
 const origin = Astro.site ?? Astro.url.origin;
 const pageUrl = absoluteUrl(DOORS_HUB, origin);
@@ -223,6 +225,10 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <ul class="category-geo__cities"><li><b>Київ</b><span>замір і монтаж</span></li><li><b>Одеса</b><span>замір і монтаж</span></li><li><b>Львів</b><span>замір і монтаж</span></li></ul>
       </div>
     </section>
+
+    <ProjectLinks path="/sklyani-dveri/" />
+
+    <UsefulArticles path="/sklyani-dveri/" />
 
     <section class="category-section category-section--faq">
       <FAQBlock

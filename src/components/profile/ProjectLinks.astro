@@ -1,0 +1,44 @@
+---
+// «Реалізовані проєкти» — up to 4 real projects for a commercial page (src/data/project-links.ts).
+// `path` is the UA page path (RU pages pass the same key); cards link /project/{slug}/ or its RU page.
+// Uses the .profile-sibling card styles every catalog page already loads, so the page's stylesheet
+// set (and its critical CSS) stays the same. The build fails on an unknown or unpublished slug,
+// a project without an RU page, duplicates or more than 4 projects.
+import { getCollection } from 'astro:content';
+import { PROJECT_LINKS } from '../../data/project-links';
+import { hasLocalizedRoute, localizedPath, type Locale } from '../../i18n/helpers';
+
+interface Props { path: string; locale?: Locale }
+const { path, locale = 'uk' } = Astro.props;
+const isRu = locale === 'ru';
+const slugs = PROJECT_LINKS[path] ?? [];
+if (slugs.length > 4 || new Set(slugs).size !== slugs.length) throw new Error(`project-links ${path}: at most 4 distinct projects`);
+
+const published = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk')).map(({ data }) => data);
+const items = slugs.map((slug) => {
+  const project = published.find((item) => item.slug === slug);
+  if (!project || !hasLocalizedRoute(`/project/${slug}/`, 'ru')) throw new Error(`project-links ${path}: project «${slug}» is missing in UA or RU`);
+  const city = isRu && project.cityRu ? project.cityRu : project.city;
+  const type = isRu && project.constructionTypeRu ? project.constructionTypeRu : project.constructionType;
+  return {
+    href: localizedPath(`/project/${slug}/`, locale),
+    title: isRu && project.cardTitleRu ? project.cardTitleRu : project.cardTitle,
+    note: [city, type].filter(Boolean).join(' · '),
+    image: project.cover.src.replace('.webp', '-480.webp'),
+    height: Math.round((480 * project.cover.height) / project.cover.width)
+  };
+});
+---
+{items.length > 0 && (
+  <section class="category-section">
+    <div class="category-heading"><div><p class="eyebrow">{isRu ? 'Портфолио' : 'Портфоліо'}</p><h2>{isRu ? 'Реализованные проекты' : 'Реалізовані проєкти'}</h2></div><p><a class="category-arrow-link" href={localizedPath('/project/', locale)}>{isRu ? 'Все проекты' : 'Усі проєкти'} <span aria-hidden="true">→</span></a></p></div>
+    <div class={`profile-siblings${items.length % 2 === 0 ? ' profile-siblings--2' : ''}`}>
+      {items.map((item) => (
+        <a class="profile-sibling" href={item.href}>
+          <img src={item.image} alt="" width="480" height={item.height} loading="lazy" decoding="async" />
+          <span><b>{item.title}</b><small>{item.note}</small></span>
+        </a>
+      ))}
+    </div>
+  </section>
+)}

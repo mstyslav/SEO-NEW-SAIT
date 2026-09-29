@@ -13,6 +13,8 @@ import { profileIcons } from '../../data/profile-icons';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
+import ProjectLinks from '../../components/profile/ProjectLinks.astro';
+import UsefulArticles from '../../components/profile/UsefulArticles.astro';
 
 const origin = Astro.site ?? Astro.url.origin;
 const pageUrl = absoluteUrl(RAILINGS_HUB, origin);
@@ -83,8 +85,7 @@ const relatedLinks: [string, string][] = [
   ['Безрамне скління терас', '/bezramne-sklinnya/'],
   ['Скляні двері', '/sklyani-dveri/'],
   ['Скляні перегородки', '/sklyani-perehorodky/'],
-  ['Рішення для будинку', '/pryvatnyj-sektor/'],
-  ['Вимоги до скляних огорож', '/knowledge/sklyani-ohorozhi-vymohy-bezpeka/']
+  ['Рішення для будинку', '/pryvatnyj-sektor/']
 ];
 
 const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
@@ -236,6 +237,10 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <ul class="category-geo__cities"><li><b>Київ</b><span>замір і монтаж</span></li><li><b>Одеса</b><span>замір і монтаж</span></li><li><b>Львів</b><span>замір і монтаж</span></li></ul>
       </div>
     </section>
+
+    <ProjectLinks path="/sklyani-ohorozhi/" />
+
+    <UsefulArticles path="/sklyani-ohorozhi/" />
 
     <section class="category-section category-section--faq">
       <FAQBlock

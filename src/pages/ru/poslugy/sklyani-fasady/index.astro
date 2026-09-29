@@ -17,6 +17,7 @@ import '../../../../styles/category-pages.css';
 import '../../../../styles/shower-master.css';
 import '../../../../styles/profile-systems.css';
 import { HUB_CONFIGURATORS } from '../../../../data/configurator-links';
+import ProjectLinks from '../../../../components/profile/ProjectLinks.astro';
 
 const lp = (path: string) => localizedPath(path, 'ru');
 const origin = Astro.site ?? Astro.url.origin;
@@ -236,6 +237,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <ul class="category-geo__cities"><li><b>Киев</b><span>проект и монтаж</span></li><li><b>Одесса</b><span>проект и монтаж</span></li><li><b>Львов</b><span>проект и монтаж</span></li></ul>
       </div>
     </section>
+
+    <ProjectLinks path="/poslugy/sklyani-fasady/" locale="ru" />
 
     <section class="category-section category-section--faq">
       <FAQBlock

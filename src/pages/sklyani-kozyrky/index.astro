@@ -13,6 +13,7 @@ import { profileIcons } from '../../data/profile-icons';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
+import UsefulArticles from '../../components/profile/UsefulArticles.astro';
 
 const origin = Astro.site ?? Astro.url.origin;
 const pageUrl = absoluteUrl(CANOPY_HUB, origin);
@@ -223,6 +224,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <ul class="category-geo__cities"><li><b>Київ</b><span>замір і монтаж</span></li><li><b>Одеса</b><span>замір і монтаж</span></li><li><b>Львів</b><span>замір і монтаж</span></li></ul>
       </div>
     </section>
+
+    <UsefulArticles path="/sklyani-kozyrky/" />
 
     <section class="category-section category-section--faq">
       <FAQBlock title="FAQ про скляні козирки" intro="Про види, скло, сніг, воду, ціну й монтаж." items={faq} visibleCount={6} expandTo={faq.length} />

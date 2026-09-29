@@ -15,6 +15,8 @@ import { localizedPath } from '../../../i18n/helpers';
 import '../../../styles/category-pages.css';
 import '../../../styles/shower-master.css';
 import '../../../styles/profile-systems.css';
+import ProjectLinks from '../../../components/profile/ProjectLinks.astro';
+import UsefulArticles from '../../../components/profile/UsefulArticles.astro';
 
 const lp = (path: string) => localizedPath(path, 'ru');
 const origin = Astro.site ?? Astro.url.origin;
@@ -86,8 +88,7 @@ const relatedLinks: [string, string][] = [
   ['Безрамное остекление террас', '/bezramne-sklinnya/'],
   ['Стеклянные двери', '/sklyani-dveri/'],
   ['Стеклянные перегородки', '/sklyani-perehorodky/'],
-  ['Решения для дома', '/pryvatnyj-sektor/'],
-  ['Требования к стеклянным ограждениям', '/knowledge/sklyani-ohorozhi-vymohy-bezpeka/']
+  ['Решения для дома', '/pryvatnyj-sektor/']
 ];
 
 const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
@@ -240,6 +241,10 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <ul class="category-geo__cities"><li><b>Киев</b><span>замер и монтаж</span></li><li><b>Одесса</b><span>замер и монтаж</span></li><li><b>Львов</b><span>замер и монтаж</span></li></ul>
       </div>
     </section>
+
+    <ProjectLinks path="/sklyani-ohorozhi/" locale="ru" />
+
+    <UsefulArticles path="/sklyani-ohorozhi/" locale="ru" />
 
     <section class="category-section category-section--faq">
       <FAQBlock

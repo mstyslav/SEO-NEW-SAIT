@@ -36,6 +36,10 @@ import { CANOPY_HUB, canopyCategories } from '../../data/canopy-catalog';
 import { PARTITION_HUB, partitionCategories } from '../../data/partition-catalog';
 import { ruCategoriesByGroup } from '../../data/ru';
 import { CATEGORY_CONFIGURATORS } from '../../data/configurator-links';
+import { KNOWLEDGE_LINKS } from '../../data/knowledge-links';
+import { PROJECT_LINKS } from '../../data/project-links';
+import UsefulArticles from './UsefulArticles.astro';
+import ProjectLinks from './ProjectLinks.astro';
 import { hasLocalizedRoute, localeFromPath, localizedPath, normalizeLocale, type Locale } from '../../i18n/helpers';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
@@ -115,6 +119,12 @@ const processSteps = category.process ?? tx.steps;
 const catalogNote = category.catalogNote ?? tx.note;
 const configuratorHref = CATEGORY_CONFIGURATORS[category.path];
 const heroExtra = category.heroExtra ?? (configuratorHref ? [tx.configurator, configuratorHref] as [string, string] : undefined);
+// Pages in knowledge-links.ts get one «Корисно знати» block, so Knowledge links leave «Далі по темі».
+const hasUsefulArticles = Boolean(KNOWLEDGE_LINKS[category.path]);
+const nextLinks = hasUsefulArticles ? category.related.filter(([, href]) => !href.startsWith('/knowledge/')) : category.related;
+// Pages in project-links.ts show «Реалізовані проєкти»; on partitions it replaces the unlinked «Наші роботи» cards.
+const hasProjectLinks = Boolean(PROJECT_LINKS[category.path]);
+const showDetails = Boolean(category.details) && !(hasProjectLinks && category.group === 'partitions');
 
 // Showers use interior renders. Desktop: a landscape wide2-/wide-{slug} file when it
 // exists (extended scene, 1.4:1), otherwise the square sq-{slug} render with a per-page
@@ -289,7 +299,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       </div>
     </section>
 
-    {category.details && (
+    {showDetails && category.details && (
       <section class="category-section">
         <div class="category-heading"><div><p class="eyebrow">{category.details.eyebrow ?? tx.quality}</p><h2>{category.details.heading}</h2></div><p>{category.details.intro}</p></div>
         <div class="profile-details">
@@ -302,6 +312,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         </div>
       </section>
     )}
+
+    {hasProjectLinks && <ProjectLinks path={category.path} locale={locale} />}
 
     {gallery.length > 0 && (
       <section class="category-section category-section--mint">
@@ -354,6 +366,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       </div>
     </section>
 
+    {hasUsefulArticles && <UsefulArticles path={category.path} locale={locale} />}
+
     <section class="category-section category-section--faq">
       <FAQBlock
         title={`FAQ: ${category.name.toLowerCase()}`}
@@ -365,12 +379,14 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       />
     </section>
 
-    <section class="category-section category-links">
-      <div class="category-heading"><div><p class="eyebrow">{tx.useful}</p><h2>{tx.next}</h2></div></div>
-      <div class="category-links__grid category-links__grid--8">
-        {category.related.map(([label, href]) => <a href={lp(href)}>{label}</a>)}
-      </div>
-    </section>
+    {nextLinks.length > 0 && (
+      <section class="category-section category-links">
+        <div class="category-heading"><div><p class="eyebrow">{tx.useful}</p><h2>{tx.next}</h2></div></div>
+        <div class="category-links__grid category-links__grid--8">
+          {nextLinks.map(([label, href]) => <a href={lp(href)}>{label}</a>)}
+        </div>
+      </section>
+    )}
 
     <ProfileRequestForm
       page={lp(category.path)}

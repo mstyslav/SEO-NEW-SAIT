@@ -53,31 +53,31 @@ const seeds: Seed[] = [
   {slug:'shtorka-na-vannu-zi-skla',category:'Душові конструкції',title:'Скляна шторка на ванну: як уникнути бризок',focus:'Розглядаємо нерухомі, рухомі та складні екрани для ванни.',serviceHref:'/dushovi-kabiny/shtorky-dlya-vannoyi/',serviceLabel:'Шторки для ванни'},
   {slug:'furnitura-dlya-dushovoyi',category:'Душові конструкції',title:'Фурнітура для душової: петлі, профілі та ущільнювачі',focus:'Пояснюємо, від чого залежить ресурс фурнітури у вологому середовищі.',serviceHref:'/dushovi-kabiny/',serviceLabel:'Підібрати душову'},
   {slug:'germetychnist-dushovoyi',category:'Душові конструкції',title:'Герметичність скляної душової: реальні можливості',focus:'Розбираємо роль ухилу, ущільнень, порога і напрямку струменя.',serviceHref:'/dushovi-kabiny/',serviceLabel:'Замовити душову'},
-  {slug:'doglyad-za-dushovym-sklom',category:'Душові конструкції',title:'Як доглядати за склом і фурнітурою душової',focus:'Даємо практичний регламент очищення скла, силікону та механізмів.',serviceHref:'/poslugy/#process',serviceLabel:'Замовити сервіс'},
+  {slug:'doglyad-za-dushovym-sklom',category:'Душові конструкції',title:'Як доглядати за склом і фурнітурою душової',focus:'Даємо практичний регламент очищення скла, силікону та механізмів.',serviceHref:'/dushovi-kabiny/',serviceLabel:'Скляні душові кабіни'},
 
   {slug:'stacionarni-sklyani-perehorodky',category:'Перегородки та двері',title:'Стаціонарні скляні перегородки: конструкція та кріплення',focus:'Розбираємо профільні й безрамні способи зонування.',serviceHref:'/sklyani-perehorodky/',serviceLabel:'Скляні перегородки'},
   {slug:'ofisni-perehorodky-akustyka',category:'Перегородки та двері',title:'Офісні скляні перегородки та звукоізоляція',focus:'Пояснюємо вплив скла, профілю, дверей і примикань на акустику.',serviceHref:'/sklyani-perehorodky/ofisni/',serviceLabel:'Офісні перегородки'},
   {slug:'mizhkimnatni-sklyani-perehorodky',category:'Перегородки та двері',title:'Міжкімнатні скляні перегородки: світло й приватність',focus:'Показуємо способи зберегти світло та контролювати оглядовість.',serviceHref:'/sklyani-perehorodky/mizhkimnatni/',serviceLabel:'Міжкімнатні перегородки'},
   {slug:'rozsuvni-perehorodky-napryamni',category:'Перегородки та двері',title:'Розсувні скляні перегородки: напрямні та паркування',focus:'Розглядаємо підвісні й опорні системи, зони відкату та стопори.',serviceHref:'/sklyani-perehorodky/pidvisni-sklyani-peregorodky/',serviceLabel:'Розсувні перегородки'},
   {slug:'sklyani-dveri-furnitura',category:'Перегородки та двері',title:'Фурнітура для скляних дверей: як підібрати',focus:'Пояснюємо вибір петель, доводчиків, замків і ручок за вагою полотна.',serviceHref:'/sklyani-dveri/',serviceLabel:'Скляні двері'},
-  {slug:'mayatnykovi-sklyani-dveri',category:'Перегородки та двері',title:'Маятникові скляні двері: де вони зручні',focus:'Розбираємо двостороннє відкривання, осі, доводчики та безпечні зазори.',serviceHref:'/sklyani-dveri/',serviceLabel:'Замовити двері'},
+  {slug:'mayatnykovi-sklyani-dveri',category:'Перегородки та двері',title:'Маятникові скляні двері: де вони зручні',focus:'Розбираємо двостороннє відкривання, осі, доводчики та безпечні зазори.',serviceHref:'/sklyani-dveri/mayatnykovi-sklyani-dveri/',serviceLabel:'Маятникові скляні двері'},
   {slug:'pryvatnist-sklyanyh-perehorodok',category:'Перегородки та двері',title:'Як додати приватність скляній перегородці',focus:'Порівнюємо матування, рифлене скло, плівки та смарт-скло.',serviceHref:'/sklyani-perehorodky/',serviceLabel:'Підібрати перегородку'},
 
   {slug:'dzerkalo-u-vannu',category:'Дзеркала',title:'Дзеркало у ванну: розмір, захист і монтаж',focus:'Пояснюємо вимоги до основи, вологості, електрики та розташування.',serviceHref:'/dzerkala/',serviceLabel:'Дзеркала на замовлення'},
   {slug:'dzerkalna-stina',category:'Дзеркала',title:'Дзеркальна стіна: стики, модулі та безпечний монтаж',focus:'Розбираємо великі дзеркальні площини, шви та підготовку стіни.',serviceHref:'/dzerkala/',serviceLabel:'Замовити дзеркальну стіну'},
-  {slug:'dzerkalo-v-rami',category:'Дзеркала',title:'Дзеркало в рамі: профіль, колір і кріплення',focus:'Порівнюємо металеві, алюмінієві та декоративні рами.',serviceHref:'/dzerkala/',serviceLabel:'Дзеркала в рамі'},
+  {slug:'dzerkalo-v-rami',category:'Дзеркала',title:'Дзеркало в рамі: профіль, колір і кріплення',focus:'Порівнюємо металеві, алюмінієві та декоративні рами.',serviceHref:'/dzerkala/dzerkala-v-rami/',serviceLabel:'Дзеркала в рамі'},
   {slug:'dzerkalo-z-pidigrivom',category:'Дзеркала',title:'Дзеркало з підігрівом: як працює антизапотівання',focus:'Пояснюємо розміщення мата, електробезпеку та керування.',serviceHref:'/dzerkala/',serviceLabel:'Замовити дзеркало'},
-  {slug:'dzerkalo-dlya-sportzalu',category:'Дзеркала',title:'Дзеркала для спортзалу: площинність і безпека',focus:'Розбираємо модульність, відображення, захист і монтаж великих площ.',serviceHref:'/dzerkala/',serviceLabel:'Дзеркала для бізнесу'},
+  {slug:'dzerkalo-dlya-sportzalu',category:'Дзеркала',title:'Дзеркала для спортзалу: площинність і безпека',focus:'Розбираємо модульність, відображення, захист і монтаж великих площ.',serviceHref:'/dzerkala/dzerkala-dlya-sportzalu/',serviceLabel:'Дзеркала для спортзалу'},
   {slug:'fasonne-dzerkalo-shablon',category:'Дзеркала',title:'Фігурне дзеркало за шаблоном: як замовити точно',focus:'Пояснюємо створення шаблону, вирізи та допуски.',serviceHref:'/dzerkala/',serviceLabel:'Фігурні дзеркала'},
   {slug:'faczet-na-dzerkali',category:'Дзеркала',title:'Фацет на дзеркалі: ширина, вигляд і обмеження',focus:'Розбираємо декоративну крайку та її вплив на габарити.',serviceHref:'/dzerkala/',serviceLabel:'Дзеркала з фацетом'},
-  {slug:'montazh-dzerkala-na-stinu',category:'Дзеркала',title:'Монтаж дзеркала на стіну: клей чи кріплення',focus:'Порівнюємо способи фіксації та вимоги до рівної сухої основи.',serviceHref:'/poslugy/#process',serviceLabel:'Професійний монтаж'},
+  {slug:'montazh-dzerkala-na-stinu',category:'Дзеркала',title:'Монтаж дзеркала на стіну: клей чи кріплення',focus:'Порівнюємо способи фіксації та вимоги до рівної сухої основи.',serviceHref:'/dzerkala/dzerkala-na-stinu/',serviceLabel:'Дзеркала на стіну'},
 
-  {slug:'sklyani-ogorozhi-skhodiv',category:'Скляні огорожі',title:'Скляні огорожі сходів: проєктування та замір',focus:'Пояснюємо геометрію маршів, склад скла та вузли кріплення.',serviceHref:'/sklyani-ohorozhi/',serviceLabel:'Скляні огорожі'},
-  {slug:'bezramni-ogorozhi-profil',category:'Скляні огорожі',title:'Безрамні скляні огорожі в затискному профілі',focus:'Розбираємо основу, анкерування, дренаж і заміну скла.',serviceHref:'/sklyani-ohorozhi/',serviceLabel:'Безрамні огорожі'},
-  {slug:'ogorozhi-na-stiykah',category:'Скляні огорожі',title:'Скляні огорожі на стійках: переваги та вузли',focus:'Порівнюємо стійки, точкові тримачі, поручні та заповнення.',serviceHref:'/sklyani-ohorozhi/',serviceLabel:'Огорожі на стійках'},
-  {slug:'sklyani-ogorozhi-balkona',category:'Скляні огорожі',title:'Скляні огорожі балкона: вітер і гідроізоляція',focus:'Пояснюємо зовнішні навантаження, край плити та герметизацію.',serviceHref:'/sklyani-ohorozhi/',serviceLabel:'Балконні огорожі'},
-  {slug:'sklyani-ogorozhi-terasy',category:'Скляні огорожі',title:'Скляні огорожі тераси: прозорість і безпека',focus:'Розглядаємо висоту, поручень, кріплення й умови просто неба.',serviceHref:'/sklyani-ohorozhi/',serviceLabel:'Огорожі терас'},
-  {slug:'sklyanyi-kozyrok',category:'Скляні огорожі',title:'Скляний козирок: склад скла, тяги та водовідведення',focus:'Розбираємо верхнє скління, навантаження й безпечні вузли.',serviceHref:'/arkhitekturni-systemy/',serviceLabel:'Архітектурне скло'},
+  {slug:'sklyani-ogorozhi-skhodiv',category:'Скляні огорожі',title:'Скляні огорожі сходів: проєктування та замір',focus:'Пояснюємо геометрію маршів, склад скла та вузли кріплення.',serviceHref:'/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/',serviceLabel:'Огорожі для сходів'},
+  {slug:'bezramni-ogorozhi-profil',category:'Скляні огорожі',title:'Безрамні скляні огорожі в затискному профілі',focus:'Розбираємо основу, анкерування, дренаж і заміну скла.',serviceHref:'/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/',serviceLabel:'Безрамні огорожі'},
+  {slug:'ogorozhi-na-stiykah',category:'Скляні огорожі',title:'Скляні огорожі на стійках: переваги та вузли',focus:'Порівнюємо стійки, точкові тримачі, поручні та заповнення.',serviceHref:'/sklyani-ohorozhi/sklyani-ohorozhi-na-stiykakh/',serviceLabel:'Огорожі на стійках'},
+  {slug:'sklyani-ogorozhi-balkona',category:'Скляні огорожі',title:'Скляні огорожі балкона: вітер і гідроізоляція',focus:'Пояснюємо зовнішні навантаження, край плити та герметизацію.',serviceHref:'/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/',serviceLabel:'Балконні огорожі'},
+  {slug:'sklyani-ogorozhi-terasy',category:'Скляні огорожі',title:'Скляні огорожі тераси: прозорість і безпека',focus:'Розглядаємо висоту, поручень, кріплення й умови просто неба.',serviceHref:'/sklyani-ohorozhi/sklyani-ohorozhi-teras/',serviceLabel:'Огорожі терас'},
+  {slug:'sklyanyi-kozyrok',category:'Скляні огорожі',title:'Скляний козирок: склад скла, тяги та водовідведення',focus:'Розбираємо верхнє скління, навантаження й безпечні вузли.',serviceHref:'/sklyani-kozyrky/',serviceLabel:'Скляні козирки'},
   {slug:'sklyana-pidloga',category:'Скляні огорожі',title:'Скляна підлога: конструкція, протиковзання та контроль',focus:'Пояснюємо ламінований склад, опирання та захист поверхні.',serviceHref:'/arkhitekturni-systemy/',serviceLabel:'Технічна консультація'},
   {slug:'sklyani-shody',category:'Скляні огорожі',title:'Скляні сходи: проєктування відповідальної конструкції',focus:'Розбираємо несучу схему, прогин, крайки та сервісний доступ.',serviceHref:'/arkhitekturni-systemy/',serviceLabel:'Проєктування конструкцій'},
   {slug:'poruchni-dlya-sklyanyh-ogorozh',category:'Скляні огорожі',title:'Поручні для скляних огорож: коли вони потрібні',focus:'Пояснюємо функцію поручня, матеріали та способи встановлення.',serviceHref:'/sklyani-ohorozhi/',serviceLabel:'Підібрати огорожу'},
@@ -93,12 +93,12 @@ const seeds: Seed[] = [
 
   {slug:'yak-myty-sklo-bez-rozvodiv',category:'Експлуатація та догляд',title:'Як мити скло без розводів і пошкоджень',focus:'Даємо безпечну послідовність очищення скла та крайок.',serviceHref:'/poslugy/#process',serviceLabel:'Сервіс конструкцій'},
   {slug:'doglyad-za-chornoyu-furnituroyu',category:'Експлуатація та догляд',title:'Догляд за чорною, хромованою та латунною фурнітурою',focus:'Пояснюємо, які засоби не пошкоджують декоративні покриття.',serviceHref:'/poslugy/#process',serviceLabel:'Замовити сервіс'},
-  {slug:'vapnyanyi-nalit-na-skli',category:'Експлуатація та догляд',title:'Як прибрати вапняний наліт із душового скла',focus:'Розбираємо регулярне очищення та безпечні засоби проти відкладень.',serviceHref:'/poslugy/#process',serviceLabel:'Догляд за душовою'},
+  {slug:'vapnyanyi-nalit-na-skli',category:'Експлуатація та догляд',title:'Як прибрати вапняний наліт із душового скла',focus:'Розбираємо регулярне очищення та безпечні засоби проти відкладень.',serviceHref:'/dushovi-kabiny/',serviceLabel:'Скляні душові кабіни'},
   {slug:'regulyuvannya-sklyanyh-dverey',category:'Експлуатація та догляд',title:'Коли потрібне регулювання скляних дверей',focus:'Описуємо ознаки просідання, люфту й неправильного притвору.',serviceHref:'/poslugy/#process',serviceLabel:'Регулювання дверей'},
-  {slug:'zaminy-ushchilnyuvachiv-dushovoyi',category:'Експлуатація та догляд',title:'Коли міняти ущільнювачі у скляній душовій',focus:'Пояснюємо зношення магнітів, нижніх планок і водовідбійників.',serviceHref:'/poslugy/#process',serviceLabel:'Сервіс душової'},
+  {slug:'zaminy-ushchilnyuvachiv-dushovoyi',category:'Експлуатація та догляд',title:'Коли міняти ущільнювачі у скляній душовій',focus:'Пояснюємо зношення магнітів, нижніх планок і водовідбійників.',serviceHref:'/dushovi-kabiny/',serviceLabel:'Скляні душові кабіни'},
   {slug:'doglyad-za-rozsuvnymy-systemamy',category:'Експлуатація та догляд',title:'Догляд за роликами та напрямними розсувних систем',focus:'Даємо регламент очищення треків і перевірки стопорів.',serviceHref:'/poslugy/#process',serviceLabel:'Сервіс розсувних систем'},
   {slug:'zakhysne-pokryttya-dlya-skla',category:'Експлуатація та догляд',title:'Захисне покриття для скла: можливості та догляд',focus:'Пояснюємо, як гідрофобне покриття спрощує очищення.',serviceHref:'/poslugy/',serviceLabel:'Підібрати скло'},
-  {slug:'oglyad-sklyanoyi-ogorozhi',category:'Експлуатація та догляд',title:'Періодичний огляд скляної огорожі: чекліст безпеки',focus:'Описуємо контроль кріплень, крайок, поручня і герметизації.',serviceHref:'/poslugy/#process',serviceLabel:'Огляд огорожі'},
+  {slug:'oglyad-sklyanoyi-ogorozhi',category:'Експлуатація та догляд',title:'Періодичний огляд скляної огорожі: чекліст безпеки',focus:'Описуємо контроль кріплень, крайок, поручня і герметизації.',serviceHref:'/sklyani-ohorozhi/',serviceLabel:'Скляні огорожі'},
   {slug:'yak-zberegty-sklo-pid-chas-remontu',category:'Експлуатація та догляд',title:'Як захистити скляні конструкції під час ремонту',focus:'Пояснюємо безпечне укриття скла, фурнітури та напрямних.',serviceHref:'/poslugy/#process',serviceLabel:'Консультація сервісу'},
 
   {slug:'stiykovo-rygelne-sklinnya',category:'Безрамне та фасадне скління',title:'Стійково-ригельне фасадне скління: як працює система',focus:'Розбираємо каркас, притискні планки, склопакети та дренаж.',serviceHref:'/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/',serviceLabel:'Фасадні системи'},
@@ -108,6 +108,14 @@ const seeds: Seed[] = [
   {slug:'vitrinne-sklinnya-magazynu',category:'Безрамне та фасадне скління',title:'Вітринне скління магазину: безпека та доступ',focus:'Розбираємо великі формати, двері, захист і заміну склопакетів.',serviceHref:'/poslugy/sklyani-fasady/vitrinne-sklinnya/',serviceLabel:'Вітринне скління'},
   {slug:'kondensat-na-panoramnomu-skli',category:'Безрамне та фасадне скління',title:'Конденсат на панорамному склінні: причини та рішення',focus:'Пояснюємо роль температури поверхні, вологості й вентиляції.',serviceHref:'/poslugy/sklyani-fasady/',serviceLabel:'Консультація зі скління'},
 ];
+
+// Explicit related lists for a few articles whose category window never reached useful
+// near-orphan articles (knowledge linking wave 1, 2026-09-29). All other articles keep the window.
+const RELATED_OVERRIDES: Record<string, string[]> = {
+  'pryymannya-sklyanoyi-konstruktsiyi': ['garantiya-na-montazh-skla', 'yak-zberegty-sklo-pid-chas-remontu', 'vymogy-do-osnovy-pid-sklo'],
+  'koly-robyty-finalny-zamir': ['yak-zberegty-sklo-pid-chas-remontu', 'garantiya-na-montazh-skla', 'vymogy-do-osnovy-pid-sklo'],
+  'sklyani-ogorozhi-skhodiv': ['sklyani-shody', 'poruchni-dlya-sklyanyh-ogorozh', 'ogorozhi-na-stiykah'],
+};
 
 export const supplementalKnowledgeArticles: KnowledgeArticle[] = seeds.map((seed, index) => ({
   ...seed,
@@ -120,5 +128,5 @@ export const supplementalKnowledgeArticles: KnowledgeArticle[] = seeds.map((seed
     ['Чи достатньо приблизних розмірів?', 'Для попереднього бюджету — так. Для виробництва потрібен професійний замір готових чистових поверхонь.'],
     ['Що найбільше впливає на вартість?', 'Габарити, склад і обробка скла, фурнітура, складність проєктування, доставка, доступ до місця монтажу та роботи на об’єкті.'],
   ],
-  related: seeds.filter((item) => item.category === seed.category && item.slug !== seed.slug).slice(index % 4, index % 4 + 3).map((item) => item.slug),
+  related: RELATED_OVERRIDES[seed.slug] ?? seeds.filter((item) => item.category === seed.category && item.slug !== seed.slug).slice(index % 4, index % 4 + 3).map((item) => item.slug),
 }));

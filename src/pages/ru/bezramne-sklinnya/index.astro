@@ -16,6 +16,8 @@ import '../../../styles/category-pages.css';
 import '../../../styles/shower-master.css';
 import '../../../styles/profile-systems.css';
 import { HUB_CONFIGURATORS } from '../../../data/configurator-links';
+import ProjectLinks from '../../../components/profile/ProjectLinks.astro';
+import UsefulArticles from '../../../components/profile/UsefulArticles.astro';
 
 const lp = (path: string) => localizedPath(path, 'ru');
 const origin = Astro.site ?? Astro.url.origin;
@@ -104,8 +106,6 @@ const relatedLinks: [string, string][] = [
   ['Перголы', '/alyuminiyevi-konstrukcziyi/pergoly/'],
   ['Сетки плиссе', '/alyuminiyevi-konstrukcziyi/sitky-plise/'],
   ['Стеклянные ограждения балконов', '/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/'],
-  ['Тёплое или холодное остекление террасы', '/knowledge/teple-chy-kholodne-sklinnya-terasy/'],
-  ['Стеклянная крыша: что учесть', '/knowledge/sklyanyi-dakh-shcho-vrakhuvaty/'],
   ['Стекло для ресторанов', '/dlya-biznesu/restoranam/']
 ];
 
@@ -254,6 +254,10 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <ul class="category-geo__cities"><li><b>Киев</b><span>замер и монтаж</span></li><li><b>Одесса</b><span>замер и монтаж</span></li><li><b>Львов</b><span>замер и монтаж</span></li></ul>
       </div>
     </section>
+
+    <ProjectLinks path="/bezramne-sklinnya/" locale="ru" />
+
+    <UsefulArticles path="/bezramne-sklinnya/" locale="ru" />
 
     <section class="category-section category-section--faq">
       <FAQBlock

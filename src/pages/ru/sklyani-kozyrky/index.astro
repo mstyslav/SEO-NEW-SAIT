@@ -15,6 +15,7 @@ import { localizedPath } from '../../../i18n/helpers';
 import '../../../styles/category-pages.css';
 import '../../../styles/shower-master.css';
 import '../../../styles/profile-systems.css';
+import UsefulArticles from '../../../components/profile/UsefulArticles.astro';
 
 const lp = (path: string) => localizedPath(path, 'ru');
 const origin = Astro.site ?? Astro.url.origin;
@@ -228,6 +229,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <ul class="category-geo__cities"><li><b>Киев</b><span>замер и монтаж</span></li><li><b>Одесса</b><span>замер и монтаж</span></li><li><b>Львов</b><span>замер и монтаж</span></li></ul>
       </div>
     </section>
+
+    <UsefulArticles path="/sklyani-kozyrky/" locale="ru" />
 
     <section class="category-section category-section--faq">
       <FAQBlock title="FAQ о стеклянных козырьках" intro="О видах, стекле, снеге, воде, цене и монтаже." items={faq} visibleCount={6} expandTo={faq.length} locale="ru" />
