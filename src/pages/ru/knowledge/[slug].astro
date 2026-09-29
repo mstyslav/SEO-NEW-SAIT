@@ -43,7 +43,7 @@ const readingTime = Math.max(
   Math.ceil(sections.length * 1.15)
 );
 
-const expandedFaq = expandFaq(article.faq, article.title, 'ru', 20);
+const expandedFaq = expandFaq(article.faq, article.faqTopic ?? article.title, 'ru', 20);
 
 const related = sourceArticle.related
   .map((relatedSlug) => {
@@ -104,7 +104,7 @@ import { localizedPath } from '../../../i18n/helpers';
 
 <BaseLayout
   locale="ru"
-  title={`${article.title} | Space Glass`}
+  title={`${article.metaTitle ?? article.title} | Space Glass`}
   description={article.description}
   schemaType="Article"
   structuredData={structuredData}

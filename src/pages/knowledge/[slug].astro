@@ -21,7 +21,7 @@ const url = new URL(`/knowledge/${article.slug}/`, origin);
 const related = article.related.map(getKnowledgeArticle).filter(Boolean);
 const sections = getFullKnowledgeSections(article);
 const readingTime = Math.max(article.readingTime, Math.ceil(sections.length * 1.15));
-const expandedFaq = expandFaq(article.faq, article.title, 'uk', 20);
+const expandedFaq = expandFaq(article.faq, article.faqTopic ?? article.title, 'uk', 20);
 const structuredData = [
   {
     '@type': 'Article',
@@ -44,7 +44,7 @@ const structuredData = [
 ].filter(Boolean);
 ---
 <BaseLayout
-  title={`${article.title} | Space Glass`}
+  title={`${article.metaTitle ?? article.title} | Space Glass`}
   description={article.description}
   schemaType="Article"
   structuredData={structuredData}

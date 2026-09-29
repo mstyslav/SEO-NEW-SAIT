@@ -7,6 +7,9 @@ type Seed = {
   focus: string;
   serviceHref: string;
   serviceLabel: string;
+  metaTitle?: string;
+  faqTopic?: string;
+  description?: string;
 };
 
 const sectionPlan: Array<[string, string]> = [
@@ -73,7 +76,7 @@ const seeds: Seed[] = [
   {slug:'montazh-dzerkala-na-stinu',category:'Дзеркала',title:'Монтаж дзеркала на стіну: клей чи кріплення',focus:'Порівнюємо способи фіксації та вимоги до рівної сухої основи.',serviceHref:'/dzerkala/dzerkala-na-stinu/',serviceLabel:'Дзеркала на стіну'},
 
   {slug:'sklyani-ogorozhi-skhodiv',category:'Скляні огорожі',title:'Скляні огорожі сходів: проєктування та замір',focus:'Пояснюємо геометрію маршів, склад скла та вузли кріплення.',serviceHref:'/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/',serviceLabel:'Огорожі для сходів'},
-  {slug:'bezramni-ogorozhi-profil',category:'Скляні огорожі',title:'Безрамні скляні огорожі в затискному профілі',focus:'Розбираємо основу, анкерування, дренаж і заміну скла.',serviceHref:'/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/',serviceLabel:'Безрамні огорожі'},
+  {slug:'bezramni-ogorozhi-profil',category:'Скляні огорожі',title:'Як влаштована безрамна огорожа в затискному профілі: основа, анкерування та дренаж',metaTitle:'Затискний профіль скляної огорожі: як працює',description:'Як влаштована безрамна скляна огорожа в затискному профілі: основа, анкерування, дренаж, типові помилки монтажу та заміна скла.',faqTopic:'Безрамні скляні огорожі в затискному профілі',focus:'Розбираємо основу, анкерування, дренаж і заміну скла.',serviceHref:'/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/',serviceLabel:'Безрамні огорожі'},
   {slug:'ogorozhi-na-stiykah',category:'Скляні огорожі',title:'Скляні огорожі на стійках: переваги та вузли',focus:'Порівнюємо стійки, точкові тримачі, поручні та заповнення.',serviceHref:'/sklyani-ohorozhi/sklyani-ohorozhi-na-stiykakh/',serviceLabel:'Огорожі на стійках'},
   {slug:'sklyani-ogorozhi-balkona',category:'Скляні огорожі',title:'Скляні огорожі балкона: вітер і гідроізоляція',focus:'Пояснюємо зовнішні навантаження, край плити та герметизацію.',serviceHref:'/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/',serviceLabel:'Балконні огорожі'},
   {slug:'sklyani-ogorozhi-terasy',category:'Скляні огорожі',title:'Скляні огорожі тераси: прозорість і безпека',focus:'Розглядаємо висоту, поручень, кріплення й умови просто неба.',serviceHref:'/sklyani-ohorozhi/sklyani-ohorozhi-teras/',serviceLabel:'Огорожі терас'},
@@ -119,7 +122,7 @@ const RELATED_OVERRIDES: Record<string, string[]> = {
 
 export const supplementalKnowledgeArticles: KnowledgeArticle[] = seeds.map((seed, index) => ({
   ...seed,
-  description: `${seed.title}. Практичний експертний матеріал Space Glass: вибір, замір, проєктування, монтаж, типові помилки та догляд.`,
+  description: seed.description ?? `${seed.title}. Практичний експертний матеріал Space Glass: вибір, замір, проєктування, монтаж, типові помилки та догляд.`,
   intro: seed.focus,
   readingTime: 9,
   sections: sections(seed),

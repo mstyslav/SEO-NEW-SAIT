@@ -225,6 +225,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       <div class="category-intro-grid">
         <div class="category-prose">
           {category.intro.map((paragraph) => <p>{paragraph}</p>)}
+          {category.introLink && <p>{category.introLink[0]}<a href={lp(category.introLink[2])}>{category.introLink[1]}</a>{category.introLink[3]}</p>}
         </div>
         <ul class="category-intro__spec">
           {category.introSpec.map(([name, note]) => <li><b>{name}</b><span>{note}</span></li>)}
