@@ -23,6 +23,8 @@ const sections = getFullKnowledgeSections(article);
 // Hand-written articles carry their real reading time and only their own FAQ (no generated padding).
 const readingTime = article.customContent ? article.readingTime : Math.max(article.readingTime, Math.ceil(sections.length * 1.15));
 const expandedFaq = article.customContent ? article.faq : expandFaq(article.faq, article.faqTopic ?? article.title, 'uk', 20);
+const dateModified = article.dateModified ?? '2026-08-12';
+const updatedLabel = `${['січень', 'лютий', 'березень', 'квітень', 'травень', 'червень', 'липень', 'серпень', 'вересень', 'жовтень', 'листопад', 'грудень'][Number(dateModified.slice(5, 7)) - 1]} ${dateModified.slice(0, 4)}`;
 const structuredData = [
   {
     '@type': 'Article',
@@ -30,7 +32,7 @@ const structuredData = [
     headline: article.title,
     description: article.description,
     datePublished: '2026-08-12',
-    dateModified: '2026-08-12',
+    dateModified,
     inLanguage: 'uk',
     mainEntityOfPage: { '@id': `${url.href}#webpage` },
     author: { '@type': 'Organization', name: 'Space Glass', url: new URL('/', origin).href },
@@ -61,7 +63,7 @@ const structuredData = [
             <p class="eyebrow">База знань · {article.category}</p>
             <h1>{article.title}</h1>
             <p class="lead">{article.intro}</p>
-            <div class="article-meta"><span>Оновлено: серпень 2026</span><span>{readingTime} хв читання</span><span>{sections.length} експертних блоків</span></div>
+            <div class="article-meta"><span>Оновлено: {updatedLabel}</span><span>{readingTime} хв читання</span><span>{sections.length} експертних блоків</span></div>
           </div>
           <div class="knowledge-article-hero__visual" aria-hidden="true"><span>SPACE GLASS GUIDE</span></div>
         </header>

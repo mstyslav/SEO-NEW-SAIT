@@ -44,6 +44,9 @@ const readingTime = sourceArticle.customContent ? sourceArticle.readingTime : Ma
   Math.ceil(sections.length * 1.15)
 );
 
+const dateModified = sourceArticle.dateModified ?? '2026-08-26';
+const updatedLabel = `${['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'][Number(dateModified.slice(5, 7)) - 1]} ${dateModified.slice(0, 4)}`;
+
 const expandedFaq = sourceArticle.customContent ? article.faq : expandFaq(article.faq, article.faqTopic ?? article.title, 'ru', 20);
 
 const related = sourceArticle.related
@@ -78,7 +81,7 @@ const structuredData = [
     headline: article.title,
     description: article.description,
     datePublished: '2026-08-12',
-    dateModified: '2026-08-26',
+    dateModified,
     inLanguage: 'ru',
     mainEntityOfPage: { '@id': `${url.href}#webpage` },
     author: {
@@ -133,7 +136,7 @@ import { localizedPath } from '../../../i18n/helpers';
             <p class="lead">{article.intro}</p>
 
             <div class="article-meta">
-              <span>Обновлено: август 2026</span>
+              <span>Обновлено: {updatedLabel}</span>
               <span>{readingTime} мин чтения</span>
               <span>{sections.length} экспертных блоков</span>
             </div>

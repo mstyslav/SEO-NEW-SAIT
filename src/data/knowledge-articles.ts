@@ -26,6 +26,8 @@ export type KnowledgeArticle = {
   /** Hand-written body (supplemental article recovered from the generated template): no expert
    *  blocks, no generated FAQ padding, reading time from the real text. */
   customContent?: boolean;
+  /** ISO date of the last substantial rewrite; drives the visible «Оновлено» date and schema dateModified. */
+  dateModified?: string;
 };
 
 const article = (item: KnowledgeArticle) => item;

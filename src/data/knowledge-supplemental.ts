@@ -147,6 +147,6 @@ export const supplementalKnowledgeArticles: KnowledgeArticle[] = seeds.map((seed
       ['Що найбільше впливає на вартість?', 'Габарити, склад і обробка скла, фурнітура, складність проєктування, доставка, доступ до місця монтажу та роботи на об’єкті.'],
     ],
     related: RELATED_OVERRIDES[seed.slug] ?? seeds.filter((item) => item.category === seed.category && item.slug !== seed.slug).slice(index % 4, index % 4 + 3).map((item) => item.slug),
-    ...(rewrite ? { customContent: true } : {}),
+    ...(rewrite ? { customContent: true, dateModified: rewrite.dateModified } : {}),
   };
 });
