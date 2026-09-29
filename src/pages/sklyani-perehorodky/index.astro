@@ -16,6 +16,7 @@ import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
 import '../../styles/projects-common.css';
+import { HUB_CONFIGURATORS } from '../../data/configurator-links';
 
 const origin = Astro.site ?? Astro.url.origin;
 const pageUrl = absoluteUrl(PARTITION_HUB, origin);
@@ -119,6 +120,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <div class="hero__actions">
           <a class="button button--mint" href="#types">Обрати вид</a>
           <a class="button button--outline" href="#request">Отримати розрахунок</a>
+          <a class="button button--outline" href={HUB_CONFIGURATORS['/sklyani-perehorodky/']}>Розрахувати в конфігураторі</a>
         </div>
       </div>
       <figure class="category-hero__figure">

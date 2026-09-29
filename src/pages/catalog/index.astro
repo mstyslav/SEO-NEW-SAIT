@@ -72,8 +72,8 @@ const catalogProjects = (await getCollection('projects', ({ data }) => data.stat
     const categoryDifference = projectCategoryOrder.indexOf(a.category) - projectCategoryOrder.indexOf(b.category);
     return categoryDifference || a.sortOrder - b.sortOrder;
   });
-const catalogUrl = absoluteUrl('/catalog/', origin);
-const itemList: JsonLdObject = { '@type': 'ItemList', '@id': `${catalogUrl}#categories`, name: t.categoriesSection.title, numberOfItems: 10, mainEntityOfPage: { '@id': `${catalogUrl}#webpage` }, itemListElement: categories.map((category, index) => ({ '@type': 'ListItem', position: index + 1, name: category.name, url: absoluteUrl(category.href, origin) })) };
+const catalogUrl = absoluteUrl(lp('/catalog/'), origin);
+const itemList: JsonLdObject = { '@type': 'ItemList', '@id': `${catalogUrl}#categories`, name: t.categoriesSection.title, numberOfItems: 10, mainEntityOfPage: { '@id': `${catalogUrl}#webpage` }, itemListElement: categories.map((category, index) => ({ '@type': 'ListItem', position: index + 1, name: category.name, url: absoluteUrl(lp(category.href), origin) })) };
 const faqStructuredData = faqSchema(t.faqSection.items.map(([question, answer]) => ({ question, answer })));
 const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
 ---

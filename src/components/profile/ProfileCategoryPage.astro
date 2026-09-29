@@ -35,6 +35,7 @@ import { RAILINGS_HUB, railingCategories } from '../../data/railing-catalog';
 import { CANOPY_HUB, canopyCategories } from '../../data/canopy-catalog';
 import { PARTITION_HUB, partitionCategories } from '../../data/partition-catalog';
 import { ruCategoriesByGroup } from '../../data/ru';
+import { CATEGORY_CONFIGURATORS } from '../../data/configurator-links';
 import { hasLocalizedRoute, localeFromPath, localizedPath, normalizeLocale, type Locale } from '../../i18n/helpers';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
@@ -61,7 +62,7 @@ const tx = {
     closeModelsIntro: 'Деталі готових моделей, з якими ми працюємо.', closeProfilesIntro: 'Перерізи профілів і приклади конструкцій на системах, з якими ми працюємо.',
     choose: 'Підбір', chooseIntro: 'Чотири питання, які визначають систему та комплектацію.', other: 'Інші напрями', all: 'Усі', process: 'Процес', processTitle: 'Від запиту до монтажу',
     expert: 'Експертно', faqIntro: 'Відповіді на питання, які найчастіше ставлять перед замовленням.', useful: 'Корисне', next: 'Далі по темі',
-    price: 'Ціна — за індивідуальним розрахунком', calc: 'Розрахувати', photo: 'фото конструкції',
+    price: 'Ціна — за індивідуальним розрахунком', calc: 'Розрахувати', configurator: 'Розрахувати в конфігураторі', photo: 'фото конструкції',
     note: 'Технічні показники наведені за даними виробників профільних систем для базових конфігурацій і залежать від розмірів, склопакета та фурнітури. Остаточну комплектацію та вартість визначаємо за кресленням або після заміру.',
     steps: [['Запит', 'Фото, розміри або креслення'], ['Консультація', 'Підбір системи та склопакета'], ['Замір', 'Перевірка прорізів і вузлів'], ['Проєкт', 'Креслення та специфікація'], ['Виготовлення', 'Власне обладнання, контроль якості'], ['Монтаж', 'З ізоляцією шва та гарантією']] as [string, string][],
     hubs: { alu: 'Алюмінієві конструкції', pvc: 'Металопластикові конструкції', mirror: 'Дзеркала', shower: 'Душові кабіни', frameless: 'Безрамне скління', facade: 'Скляні фасади', doors: 'Скляні двері', railings: 'Скляні огорожі', canopies: 'Скляні козирки', partitions: 'Скляні перегородки' }
@@ -73,7 +74,7 @@ const tx = {
     closeModelsIntro: 'Детали готовых моделей, с которыми мы работаем.', closeProfilesIntro: 'Сечения профилей и примеры конструкций на системах, с которыми мы работаем.',
     choose: 'Подбор', chooseIntro: 'Четыре вопроса, которые определяют систему и комплектацию.', other: 'Другие направления', all: 'Все', process: 'Процесс', processTitle: 'От запроса до монтажа',
     expert: 'Экспертно', faqIntro: 'Ответы на вопросы, которые чаще всего задают перед заказом.', useful: 'Полезное', next: 'Дальше по теме',
-    price: 'Цена — по индивидуальному расчёту', calc: 'Рассчитать', photo: 'фото конструкции',
+    price: 'Цена — по индивидуальному расчёту', calc: 'Рассчитать', configurator: 'Рассчитать в конфигураторе', photo: 'фото конструкции',
     note: 'Технические показатели приведены по данным производителей профильных систем для базовых конфигураций и зависят от размеров, стеклопакета и фурнитуры. Окончательную комплектацию и стоимость определяем по чертежу или после замера.',
     steps: [['Запрос', 'Фото, размеры или чертёж'], ['Консультация', 'Подбор системы и стеклопакета'], ['Замер', 'Проверка проёмов и узлов'], ['Проект', 'Чертежи и спецификация'], ['Изготовление', 'Собственное оборудование, контроль качества'], ['Монтаж', 'С изоляцией шва и гарантией']] as [string, string][],
     hubs: { alu: 'Алюминиевые конструкции', pvc: 'Металлопластиковые конструкции', mirror: 'Зеркала', shower: 'Душевые кабины', frameless: 'Безрамное остекление', facade: 'Стеклянные фасады', doors: 'Стеклянные двери', railings: 'Стеклянные ограждения', canopies: 'Стеклянные козырьки', partitions: 'Стеклянные перегородки' }
@@ -112,6 +113,8 @@ const relatedAll = [...siblings, ...crossGroup];
 const related3 = relatedAll.length < 3 ? relatedAll : relatedAll.slice(0, Math.min(9, relatedAll.length - (relatedAll.length % 3)));
 const processSteps = category.process ?? tx.steps;
 const catalogNote = category.catalogNote ?? tx.note;
+const configuratorHref = CATEGORY_CONFIGURATORS[category.path];
+const heroExtra = category.heroExtra ?? (configuratorHref ? [tx.configurator, configuratorHref] as [string, string] : undefined);
 
 // Showers use interior renders. Desktop: a landscape wide2-/wide-{slug} file when it
 // exists (extended scene, 1.4:1), otherwise the square sq-{slug} render with a per-page
@@ -169,7 +172,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
 <BaseLayout
   title={category.metaTitle}
   description={category.metaDescription}
-  image={heroSrc(1080)}
+  image={heroSrc(heroMax)}
   schemaType="CollectionPage"
   structuredData={structuredData}
   locale={locale}
@@ -192,7 +195,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         <div class="hero__actions">
           <a class="button button--mint" href="#catalog">{catalogButton}</a>
           <a class="button button--outline" href="#request">{tx.request}</a>
-          {category.heroExtra && <a class="button button--outline" href={lp(category.heroExtra[1])}>{category.heroExtra[0]}</a>}
+          {heroExtra && <a class="button button--outline" href={lp(heroExtra[1])}>{heroExtra[0]}</a>}
         </div>
       </div>
       <figure class="category-hero__figure">
