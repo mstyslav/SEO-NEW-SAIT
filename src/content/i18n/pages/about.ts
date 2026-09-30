@@ -80,9 +80,9 @@ export const aboutContent: Record<Locale, AboutContent> = {
         { label: 'Скляні двері', href: '/sklyani-dveri/' },
         { label: 'Душові кабіни', href: '/dushovi-kabiny/' },
         { label: 'Скляні огорожі', href: '/sklyani-ohorozhi/' },
-        { label: 'Скляні навіси', href: '/arkhitekturni-systemy/' },
-        { label: 'Безрамне скління', href: '/arkhitekturni-systemy/' },
-        { label: 'Фасадне скління', href: '/fasadne-configurator/' },
+        { label: 'Скляні навіси', href: '/sklyani-kozyrky/' },
+        { label: 'Безрамне скління', href: '/bezramne-sklinnya/' },
+        { label: 'Фасадне скління', href: '/poslugy/sklyani-fasady/' },
         { label: 'Алюмінієві вікна та двері', href: '/alyuminiyevi-konstrukcziyi/' }
       ]
     },
@@ -196,9 +196,9 @@ export const aboutContent: Record<Locale, AboutContent> = {
         { label: 'Стеклянные двери', href: '/sklyani-dveri/' },
         { label: 'Душевые кабины', href: '/dushovi-kabiny/' },
         { label: 'Стеклянные ограждения', href: '/sklyani-ohorozhi/' },
-        { label: 'Стеклянные навесы', href: '/arkhitekturni-systemy/' },
-        { label: 'Безрамное остекление', href: '/arkhitekturni-systemy/' },
-        { label: 'Фасадное остекление', href: '/fasadne-configurator/' },
+        { label: 'Стеклянные навесы', href: '/sklyani-kozyrky/' },
+        { label: 'Безрамное остекление', href: '/bezramne-sklinnya/' },
+        { label: 'Фасадное остекление', href: '/poslugy/sklyani-fasady/' },
         { label: 'Алюминиевые окна и двери', href: '/alyuminiyevi-konstrukcziyi/' }
       ]
     },

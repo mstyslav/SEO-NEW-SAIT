@@ -4,9 +4,9 @@ export const projectCategories = [
   { id: 'glass-partitions', label: 'Скляні перегородки', labelRu: 'Стеклянные перегородки', serviceHref: '/sklyani-perehorodky/' },
   { id: 'glass-doors', label: 'Скляні двері', labelRu: 'Стеклянные двери', serviceHref: '/sklyani-dveri/' },
   { id: 'railings', label: 'Скляні огорожі', labelRu: 'Стеклянные ограждения', serviceHref: '/sklyani-ohorozhi/' },
-  { id: 'frameless-glazing', label: 'Безрамне скління', labelRu: 'Безрамное остекление', serviceHref: '/bezramne-configurator/' },
+  { id: 'frameless-glazing', label: 'Безрамне скління', labelRu: 'Безрамное остекление', serviceHref: '/bezramne-sklinnya/' },
   { id: 'aluminium', label: 'Алюмінієві конструкції', labelRu: 'Алюминиевые конструкции', serviceHref: '/alyuminiyevi-konstrukcziyi/' },
-  { id: 'glass-facades', label: 'Скляні фасади', labelRu: 'Стеклянные фасады', serviceHref: '/arkhitekturni-systemy/' },
+  { id: 'glass-facades', label: 'Скляні фасади', labelRu: 'Стеклянные фасады', serviceHref: '/poslugy/sklyani-fasady/' },
   { id: 'pvc', label: 'Металопластикові конструкції', labelRu: 'Металлопластиковые конструкции', serviceHref: '/metaloplastykovi-konstrukcziyi/' },
   { id: 'business-glass', label: 'Скло для бізнесу', labelRu: 'Стекло для бизнеса', serviceHref: '/dlya-biznesu/' }
 ] as const;

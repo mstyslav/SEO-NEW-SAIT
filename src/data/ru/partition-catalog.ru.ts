@@ -231,7 +231,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Подходит ли для клиники?', 'Да, стекло легко мыть и дезинфицировать.']
     ],
     details: projects('Цельностеклянные перегородки в наших проектах', 'Офисы, клиники и квартиры в Одессе и Киеве.', ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'dzerkalni-dveri-v-garderob']),
-    related: [['Офисные перегородки', P('ofisni')], ['Перегородки с дверьми', P('z-dveryma')], ['Маятниковые двери', '/sklyani-dveri/']],
+    related: [['Офисные перегородки', P('ofisni')], ['Перегородки с дверьми', P('z-dveryma')], ['Маятниковые двери', '/sklyani-dveri/mayatnykovi-sklyani-dveri/']],
     ctaTitle: 'Нужна цельностеклянная перегородка?',
     ctaText: 'Пришлите план или фото с размерами — подберём систему и подготовим расчёт.'
   }),
@@ -283,7 +283,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Подходит ли для гардеробной?', 'Да, стеклянные раздвижные двери — популярное решение.']
     ],
     details: projects('Подвесные перегородки в наших проектах', 'Раздвижные стеклянные решения в квартирах Киева.', ['mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'dzerkalni-dveri-v-garderob', 'mizhkimnatni-peregorodky-v-dytyachu']),
-    related: [['Нижнеопорные перегородки', P('nyzhnooporni-sklyani-perehorodky')], ['Телескопические перегородки', P('teleskopichni-sklyani-perehorodky')], ['Раздвижные стеклянные двери', '/sklyani-dveri/']],
+    related: [['Нижнеопорные перегородки', P('nyzhnooporni-sklyani-perehorodky')], ['Телескопические перегородки', P('teleskopichni-sklyani-perehorodky')], ['Раздвижные стеклянные двери', '/sklyani-dveri/rozsuvni-sklyani-dveri/']],
     ctaTitle: 'Нужна подвесная перегородка?',
     ctaText: 'Пришлите фото проёма и размеры — подберём шину и подготовим расчёт.'
   }),
@@ -337,7 +337,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Как чистить направляющие?', 'Пылесосом или влажной салфеткой раз в несколько недель.']
     ],
     details: projects('Раздвижные перегородки в наших проектах', 'Стеклянные решения, которые делят пространство без глухих стен.', ['dzerkalni-dveri-v-garderob', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'sklyani-peregorodky-dlya-ofisu-v-m-odesa']),
-    related: [['Телескопические перегородки', P('teleskopichni-sklyani-perehorodky')], ['Подвесные перегородки', P('pidvisni-sklyani-peregorodky')], ['Безрамное остекление', '/bezramne-sklinnya/']],
+    related: [['Телескопические перегородки', P('teleskopichni-sklyani-perehorodky')], ['Подвесные перегородки', P('pidvisni-sklyani-peregorodky')], ['Раздвижное остекление террас и веранд', '/bezramne-sklinnya/sklyani-rozsuvni-systemy/']],
     ctaTitle: 'Нужна нижнеопорная перегородка?',
     ctaText: 'Пришлите фото проёма и размеры — подберём систему и подготовим расчёт.'
   }),

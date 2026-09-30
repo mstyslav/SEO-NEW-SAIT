@@ -237,7 +237,7 @@ export const partitionCategories: ProfileCategory[] = [
       ['Чи підходить для клініки?', 'Так, скло легко мити й дезінфікувати.']
     ],
     details: projects('Цільноскляні перегородки в наших проєктах', 'Офіси, клініки й квартири в Одесі та Києві.', ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'dzerkalni-dveri-v-garderob']),
-    related: [['Офісні перегородки', P('ofisni')], ['Перегородки з дверима', P('z-dveryma')], ['Маятникові двері', '/sklyani-dveri/']],
+    related: [['Офісні перегородки', P('ofisni')], ['Перегородки з дверима', P('z-dveryma')], ['Маятникові двері', '/sklyani-dveri/mayatnykovi-sklyani-dveri/']],
     ctaTitle: 'Потрібна цільноскляна перегородка?',
     ctaText: 'Надішліть план чи фото з розмірами — підберемо систему й підготуємо розрахунок.'
   }),
@@ -289,7 +289,7 @@ export const partitionCategories: ProfileCategory[] = [
       ['Чи підходить для гардеробної?', 'Так, скляні розсувні двері — популярне рішення.']
     ],
     details: projects('Підвісні перегородки в наших проєктах', 'Розсувні скляні рішення в квартирах Києва.', ['mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'dzerkalni-dveri-v-garderob', 'mizhkimnatni-peregorodky-v-dytyachu']),
-    related: [['Нижньоопорні перегородки', P('nyzhnooporni-sklyani-perehorodky')], ['Телескопічні перегородки', P('teleskopichni-sklyani-perehorodky')], ['Розсувні скляні двері', '/sklyani-dveri/']],
+    related: [['Нижньоопорні перегородки', P('nyzhnooporni-sklyani-perehorodky')], ['Телескопічні перегородки', P('teleskopichni-sklyani-perehorodky')], ['Розсувні скляні двері', '/sklyani-dveri/rozsuvni-sklyani-dveri/']],
     ctaTitle: 'Потрібна підвісна перегородка?',
     ctaText: 'Надішліть фото прорізу й розміри — підберемо шину й підготуємо розрахунок.'
   }),
@@ -343,7 +343,7 @@ export const partitionCategories: ProfileCategory[] = [
       ['Як чистити напрямні?', 'Пилососом або вологою серветкою раз на кілька тижнів.']
     ],
     details: projects('Розсувні перегородки в наших проєктах', 'Скляні рішення, що ділять простір без глухих стін.', ['dzerkalni-dveri-v-garderob', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'sklyani-peregorodky-dlya-ofisu-v-m-odesa']),
-    related: [['Телескопічні перегородки', P('teleskopichni-sklyani-perehorodky')], ['Підвісні перегородки', P('pidvisni-sklyani-peregorodky')], ['Безрамне скління', '/bezramne-sklinnya/']],
+    related: [['Телескопічні перегородки', P('teleskopichni-sklyani-perehorodky')], ['Підвісні перегородки', P('pidvisni-sklyani-peregorodky')], ['Розсувне скління терас і веранд', '/bezramne-sklinnya/sklyani-rozsuvni-systemy/']],
     ctaTitle: 'Потрібна нижньоопорна перегородка?',
     ctaText: 'Надішліть фото прорізу й розміри — підберемо систему й підготуємо розрахунок.'
   }),

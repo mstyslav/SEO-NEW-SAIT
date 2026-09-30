@@ -1484,6 +1484,10 @@ export const facadeCategoriesRu: ProfileCategory[] = [
         "/pryvatnyj-sektor/"
       ],
       [
+        "Панорамное безрамное остекление",
+        "/bezramne-sklinnya/sklinnya-budynkiv/"
+      ],
+      [
         "Фасадное остекление — системы Aluprof",
         "/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/"
       ],
