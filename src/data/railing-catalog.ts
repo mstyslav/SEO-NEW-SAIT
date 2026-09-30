@@ -477,6 +477,7 @@ export const railingCategories: ProfileCategory[] = [
   page({
     slug: 'ohorozhi-dlia-pryvatnoho-budynku',
     path: '/pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/',
+    breadcrumbParent: ['Приватний сектор', '/pryvatnyj-sektor/'],
     name: 'Огорожі для приватного будинку',
     h1: 'Скляні огорожі для приватного будинку',
     metaTitle: 'Скляні огорожі для приватного будинку — сходи, балкон, тераса, басейн | Space Glass',

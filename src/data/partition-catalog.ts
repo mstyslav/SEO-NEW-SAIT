@@ -245,7 +245,7 @@ export const partitionCategories: ProfileCategory[] = [
     slug: 'pidvisni-sklyani-peregorodky',
     name: 'Підвісні перегородки',
     h1: 'Підвісні розсувні скляні перегородки',
-    metaTitle: 'Підвісні скляні перегородки — розсувні двері без порога | Space Glass',
+    metaTitle: 'Підвісні скляні перегородки — на верхній шині, без порога | Space Glass',
     metaDescription: 'Підвісні розсувні скляні перегородки й двері: прихована каретка з softclose, відкрита шина з нержавійки, чорна лофт-шина. Без напрямної на підлозі. Київ, Одеса, Львів.',
     eyebrow: 'Підвісні',
     lead: 'Скляні полотна їдуть по верхній шині — на підлозі немає порога й напрямної. Економія місця там, де розпашні двері не поміщаються.',
@@ -496,7 +496,7 @@ export const partitionCategories: ProfileCategory[] = [
       ['Чи обслуговуєте після монтажу?', 'Так, регулювання дверей і фурнітури в рамках сервісу.']
     ],
     details: projects('Офісні перегородки в наших проєктах', 'Офіси, клініки й салони в Одесі та Києві.', ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv']),
-    related: [['Цільноскляні перегородки', P('tsilnosklyani-perehorodky')], ['Трансформуючі перегородки', P('transformuyuchi-sklyani-peregorodky')], ['Скло для офісу', '/dlya-biznesu/dlya-ofisu/']],
+    related: [['Цільноскляні перегородки', P('tsilnosklyani-perehorodky')], ['Трансформуючі перегородки', P('transformuyuchi-sklyani-peregorodky')], ['Скло для офісу', '/dlya-biznesu/dlya-ofisu/'], ['Алюмінієві офісні перегородки', '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/']],
     ctaTitle: 'Плануєте офіс?',
     ctaText: 'Надішліть план офісу — запропонуємо зонування й підготуємо розрахунок.'
   }),

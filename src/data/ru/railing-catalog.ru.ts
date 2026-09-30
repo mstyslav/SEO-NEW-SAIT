@@ -463,6 +463,7 @@ export const railingCategoriesRu: ProfileCategory[] = [
   }),
   page({
     slug: 'ohorozhi-dlia-pryvatnoho-budynku',
+    breadcrumbParent: ['Частный сектор', '/pryvatnyj-sektor/'],
     path: '/pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/',
     name: 'Ограждения для частного дома',
     h1: 'Стеклянные ограждения для частного дома',

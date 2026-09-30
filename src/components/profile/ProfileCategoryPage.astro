@@ -198,7 +198,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
   <main id="main">
     <section class={`category-hero category-hero--photo profile-hero${heroContain ? ` profile-hero--contain profile-hero--${category.slug}` : ''}`}>
       <div class="category-hero__copy">
-        <Breadcrumbs items={[{ label: tx.home, href: lp('/') }, { label: hubLabel, href: hubHref }, { label: category.name }]} />
+        <Breadcrumbs items={[{ label: tx.home, href: lp('/') }, category.breadcrumbParent ? { label: category.breadcrumbParent[0], href: lp(category.breadcrumbParent[1]) } : { label: hubLabel, href: hubHref }, { label: category.name }]} />
         <p class="eyebrow">{category.eyebrow}</p>
         <h1>{category.h1}</h1>
         <p class="lead">{category.lead}</p>

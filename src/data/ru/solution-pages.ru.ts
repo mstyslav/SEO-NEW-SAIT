@@ -7,9 +7,9 @@ import { privateSectorExtra, solutionExtras, type SolutionExtra } from '../solut
 
 const TILES_RU: Record<string, [string, string]> = {
   '/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/': ['Стеклянные ограждения лестниц', 'Лестница и второй этаж'],
-  '/sklyani-ohorozhi/sklyani-ohorozhi-teras/': ['Ограждения террас и балконов', 'Триплекс, без стоек или на стойках'],
+  '/pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/': ['Ограждения для всего дома', 'Лестница, балкон, терраса и бассейн'],
   '/bezramne-sklinnya/sklinnya-budynkiv/': ['Остекление домов и коттеджей', 'Панорамное безрамное остекление'],
-  '/bezramne-sklinnya/sklinnya-teras-ta-altanok/': ['Остекление террас и беседок', 'Створки полностью открываются'],
+  '/bezramne-sklinnya/sklinnya-teras-ta-altanok/': ['Остекление террас и веранд', 'Створки полностью открываются'],
   '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/': ['Входные группы', 'Алюминий и стекло для входа в дом'],
   '/sklyani-kozyrky/': ['Стеклянные козырьки и навесы', 'Над входом, террасой или балконом'],
   '/dushovi-kabiny/': ['Душевые кабины', 'Угловые, в нишу, Walk-In'],

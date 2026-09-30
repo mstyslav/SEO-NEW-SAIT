@@ -19,9 +19,9 @@ const site = 'https://space-glass.com.ua';
 const dist = 'dist';
 
 // UA pages that deliberately have no RU version (decided in the 2026-09-28 audit).
+// The two UA-only pages (/catalog/piddon/, /catalog/dushova-perehorodka-walk-in-black/) were merged into
+// their category pages with a 301 on 2026-09-30, so none are left.
 const INTENTIONAL = {
-  '/catalog/piddon/': 'Дубль-интент /dushovi-kabiny/dushovi-piddony/ (тот же H1 «Душові піддони»); RU-интент уже закрыт /ru/dushovi-kabiny/dushovi-piddony/. RU-копия = искусственный дубль.',
-  '/catalog/dushova-perehorodka-walk-in-black/': 'Одиночная товарная карточка, интент покрыт /dushovi-kabiny/peregorodka-dlya-dusha/ (RU есть там). RU-копия не нужна.'
 };
 // Thresholds for CONTENT_MISMATCH (see the report for the rationale).
 const UKR_WORDS_MAX = 0;        // any Ukrainian-only word left in RU <main> text (review quotes excluded)

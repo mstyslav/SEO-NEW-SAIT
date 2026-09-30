@@ -196,7 +196,8 @@ function buildServiceCategories(locale: Locale): CatalogNavigationCategory[] {
         slug: category.slug,
         name,
         href: RAILINGS_HUB,
-        services: railingCategories.map((item) => ({
+        // The private-house page is a use-case page positioned under /pryvatnyj-sektor/, not a railing type.
+        services: railingCategories.filter((item) => item.path.startsWith(RAILINGS_HUB)).map((item) => ({
           shortName: locale === 'uk' ? item.name : (serviceShortNameRu[item.path] ?? item.name),
           path: item.path
         }))

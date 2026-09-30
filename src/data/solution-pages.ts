@@ -68,9 +68,9 @@ export const privateSectorExtra: SolutionExtra = {
   image: '/images/solutions-new/solution-house-640.webp',
   tiles: [
     { label: 'Скляні огорожі сходів', href: '/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/', image: P('glass-stair-railing-private-house-odesa'), note: 'Сходи та другий поверх' },
-    { label: 'Огорожі терас і балконів', href: '/sklyani-ohorozhi/sklyani-ohorozhi-teras/', image: '/images/catalog/sklyani-ohorozhi/gp-baldosa-budynok-480.webp', note: 'Триплекс, без стійок або на стійках' },
+    { label: 'Огорожі для всього будинку', href: '/pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/', image: '/images/catalog/sklyani-ohorozhi/gp-baldosa-budynok-480.webp', note: 'Сходи, балкон, тераса й басейн' },
     { label: 'Скління будинків і котеджів', href: '/bezramne-sklinnya/sklinnya-budynkiv/', image: '/images/catalog/bezramne/cat-teple-bezramne-sklinnya-480.webp', note: 'Панорамне безрамне скління' },
-    { label: 'Скління терас і альтанок', href: '/bezramne-sklinnya/sklinnya-teras-ta-altanok/', image: '/images/catalog/bezramne/cat-bezramne-sklinnya-terasy-480.webp', note: 'Стулки повністю відкриваються' },
+    { label: 'Скління терас і веранд', href: '/bezramne-sklinnya/sklinnya-teras-ta-altanok/', image: '/images/catalog/bezramne/cat-bezramne-sklinnya-terasy-480.webp', note: 'Стулки повністю відкриваються' },
     { label: 'Вхідні групи', href: '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/', image: `${PS}/cat-fas2-sklyani-vkhidni-hrupy-480.webp`, note: 'Алюміній і скло для входу в будинок' },
     { label: 'Скляні козирки й навіси', href: '/sklyani-kozyrky/', image: '/images/catalog/sklyani-kozyrky/gp-athena-480.webp', note: 'Над входом, терасою чи балконом' },
     { label: 'Душові кабіни', href: '/dushovi-kabiny/', image: '/images/catalog/dushovi-kabiny/dushovi-kabiny-480.webp', note: 'Кутові, у нішу, Walk-In' },

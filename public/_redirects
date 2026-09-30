@@ -176,6 +176,10 @@
 /ru/compare/ /compare/ 301
 /ru/catalog/piddon/ /ru/dushovi-kabiny/dushovi-piddony/ 301
 
+# Commercial architecture D1/D2 (2026-09-30): UA-only duplicates merged into their category pages.
+/catalog/piddon/ /dushovi-kabiny/dushovi-piddony/ 301
+/catalog/dushova-perehorodka-walk-in-black/ /dushovi-kabiny/peregorodka-dlya-dusha/ 301
+
 # RU parity follow-up (2026-09-29): old WP /ru/ URLs that were «301 REQUIRED / NEEDS REVIEW — target 404» in
 # seo-audit/OLD_URL_COVERAGE_PRODUCTION.csv because no RU page existed; the RU pages now exist (stages 2A–2C).
 # RU → RU with the same intent as the matching UA rules above. Raw and percent-encoded (upper/lower case) forms of «є/ї».

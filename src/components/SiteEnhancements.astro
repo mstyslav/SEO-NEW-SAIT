@@ -60,32 +60,6 @@
   // is now rendered server-side directly in src/pages/index.astro — no client rebuild needed.
   const basePath = location.pathname.replace(/^\/(uk|ru|en|de)(?=\/|$)/,'') || '/';
 
-  if (basePath === '/catalog/dushova-perehorodka-walk-in-black/') {
-    const mainImg = document.querySelector('.main-photo img'); const lightbox = document.getElementById('product-lightbox'); const lightboxImg = lightbox?.querySelector('img');
-    document.querySelectorAll('.thumbs button[data-src]').forEach((thumb) => thumb.addEventListener('click', (event) => {
-      event.stopPropagation(); document.querySelectorAll('.thumbs button').forEach((el) => el.classList.remove('active')); thumb.classList.add('active');
-      if (mainImg) { mainImg.src = thumb.dataset.src; mainImg.alt = thumb.dataset.alt || ''; }
-    }));
-    document.querySelector('[data-gallery-open]')?.addEventListener('click', () => { if (lightbox && lightboxImg && mainImg) { lightboxImg.src = mainImg.src; lightboxImg.alt = mainImg.alt; lightbox.showModal(); } });
-    lightbox?.querySelector('button')?.addEventListener('click', () => lightbox.close());
-    lightbox?.addEventListener('click',(event)=>{if(event.target===lightbox) lightbox.close();});
-
-    document.getElementById('cfg-calc')?.addEventListener('click', () => {
-      const val = (id) => document.getElementById(id)?.value;
-      const width = Number(val('cfg-width') || 900); const height = Number(val('cfg-height') || 2000); let price = 12900 * (width / 900) * (height / 2000);
-      if (val('cfg-thickness') === '10') price *= 1.13;
-      if (val('cfg-glass') === 'satin') price *= 1.10;
-      if (val('cfg-glass') === 'gray') price *= 1.12;
-      if (val('cfg-glass') === 'bronze') price *= 1.12;
-      if (val('cfg-hardware') === 'chrome') price *= 1.04;
-      if (val('cfg-hardware') === 'brushed') price *= 1.06;
-      if (val('cfg-hardware') === 'gold') price *= 1.10;
-      if (val('cfg-hardware') === 'custom') price *= 1.12;
-      if (val('cfg-tray') === 'stone') price += 8900; if (val('cfg-tray') === 'acrylic') price += 4200; if (val('cfg-install') === 'yes') price += 2500;
-      const rounded = Math.round(price / 100) * 100; const result = document.getElementById('cfg-result'); if (result) result.textContent = `від ${rounded.toLocaleString('uk-UA')} ₴`;
-    });
-  }
-
   bindWishlistButtons(); updateWishlistCount();
   addEventListener('storage',()=>{updateWishlistCount();bindWishlistButtons();});
   addEventListener('sg-wishlist-change',()=>{updateWishlistCount();bindWishlistButtons();});

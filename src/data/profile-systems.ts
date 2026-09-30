@@ -84,6 +84,8 @@ export interface ProfileCategory {
   heroExtra?: [string, string];
   /** One contextual sentence with a link after the intro: [before, anchor, href, after]. */
   introLink?: [string, string, string, string];
+  /** Breadcrumb parent [label, UA path] when the page belongs to a use-case hub, not its product hub. */
+  breadcrumbParent?: [string, string];
 }
 
 export const IMG_BASE = '/images/catalog/profile-systems';
