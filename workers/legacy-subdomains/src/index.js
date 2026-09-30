@@ -9,6 +9,8 @@
 import mapping from './mapping.json';
 
 const HOSTS = new Set(['dyshovi.space-glass.com.ua', 'ua.space-glass.com.ua', 'vikna.space-glass.com.ua']);
+// www.dyshovi / www.ua (Worker Custom Domains) share the mapping of their non-www host: one 301, no Tilda hop.
+const WWW_HOSTS = new Set(['www.dyshovi.space-glass.com.ua', 'www.ua.space-glass.com.ua']);
 const REDIRECTS = new Map(Object.entries(mapping.redirects));
 const GONE = new Set(mapping.gone);
 const SITEMAP = /^\/(?:sitemap(?:_index)?\.xml|wp-sitemap\.xml|[a-z0-9_-]+-sitemap\d*\.xml)$/;
@@ -28,7 +30,8 @@ const text = (status, body, extra = {}) =>
 export default {
   async fetch(request) {
     const url = new URL(request.url);
-    const host = url.hostname.toLowerCase();
+    const rawHost = url.hostname.toLowerCase();
+    const host = WWW_HOSTS.has(rawHost) ? rawHost.slice(4) : rawHost;
     if (!HOSTS.has(host)) return fetch(request); // never touch any other host
     const path = normalizePath(url.pathname);
 

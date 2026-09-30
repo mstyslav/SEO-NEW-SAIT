@@ -11,12 +11,13 @@ for (const [legacy, , , , , target, cls] of csv) {
   const u = new URL(legacy);
   const decoded = decodeURIComponent(u.pathname);
   const variants = new Set([u.pathname, u.pathname.endsWith('/') ? u.pathname.slice(0, -1) || '/' : u.pathname + '/', encodeURI(decoded), decoded]);
-  for (const v of variants) {
+  const hostsToTest = ['dyshovi.space-glass.com.ua', 'ua.space-glass.com.ua'].includes(u.hostname) ? [u.hostname, 'www.' + u.hostname] : [u.hostname];
+  for (const hostName of hostsToTest) for (const v of variants) {
     for (const q of ['', '?utm_source=x&a=1']) {
       n++;
-      const r = await call(`https://${u.hostname}${v}${q}`);
+      const r = await call(`https://${hostName}${v}${q}`);
       const ok = cls === 'A' ? r.status === 301 && r.headers.get('location') === target : r.status === 410;
-      if (!ok) { fail++; console.log('FAIL', cls, u.hostname + v + q, r.status, r.headers.get('location'), 'want', target || 410); }
+      if (!ok) { fail++; console.log('FAIL', cls, hostName + v + q, r.status, r.headers.get('location'), 'want', target || 410); }
     }
   }
 }
