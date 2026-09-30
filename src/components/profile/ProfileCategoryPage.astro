@@ -122,9 +122,10 @@ const heroExtra = category.heroExtra ?? (configuratorHref ? [tx.configurator, co
 // Pages in knowledge-links.ts get one «Корисно знати» block, so Knowledge links leave «Далі по темі».
 const hasUsefulArticles = Boolean(KNOWLEDGE_LINKS[category.path]);
 const nextLinks = hasUsefulArticles ? category.related.filter(([, href]) => !href.startsWith('/knowledge/')) : category.related;
-// Pages in project-links.ts show «Реалізовані проєкти»; on partitions it replaces the unlinked «Наші роботи» cards.
+// Pages in project-links.ts show «Реалізовані проєкти». Partition pages never show the unlinked «Наші роботи»
+// cards: they were not matched to the page's system, so only project-links.ts decides which projects appear.
 const hasProjectLinks = Boolean(PROJECT_LINKS[category.path]);
-const showDetails = Boolean(category.details) && !(hasProjectLinks && category.group === 'partitions');
+const showDetails = Boolean(category.details) && category.group !== 'partitions';
 
 // Showers use interior renders. Desktop: a landscape wide2-/wide-{slug} file when it
 // exists (extended scene, 1.4:1), otherwise the square sq-{slug} render with a per-page

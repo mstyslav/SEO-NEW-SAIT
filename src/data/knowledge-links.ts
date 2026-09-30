@@ -5,40 +5,76 @@
  * languages. A page listed here shows only this article block: Knowledge links are dropped from its
  * «Далі по темі» list. Knowledge linking wave 1 (P1), 2026-09-29.
  *
- * Not listed on purpose: /sklyani-ohorozhi/bezramni-sklyani-ohorozhi/ ↔ /knowledge/bezramni-ogorozhi-profil/
- * share one H1 — only the article links to the page until the pair is reviewed for cannibalization.
+ * Wave 2 (P2/P3, 2026-09-30): every catalog page with an exact healthy article. Never listed: the 10
+ * Knowledge merge candidates and the 10 articles that still need facts (they keep their old template).
  */
 export const KNOWLEDGE_LINKS: Record<string, string[]> = {
-  // Partitions
   '/sklyani-perehorodky/': ['yak-obraty-sklyanu-perehorodku', 'pryvatnist-sklyanyh-perehorodok', 'matove-ryflene-tonovane-sklo'],
-  '/sklyani-perehorodky/loft-sklyani-peregorodku/': ['loft-perehorodky-vydy-sklo-profili', 'matove-ryflene-tonovane-sklo'],
-  '/sklyani-perehorodky/ofisni/': ['ofisni-perehorodky-akustyka', 'pryvatnist-sklyanyh-perehorodok', 'vidy-bezpechnogo-skla'],
-  '/sklyani-perehorodky/mizhkimnatni/': ['mizhkimnatni-sklyani-perehorodky', 'pryvatnist-sklyanyh-perehorodok'],
+  '/sklyani-perehorodky/loft-sklyani-peregorodku/': ['loft-perehorodky-vydy-sklo-profili', 'matove-ryflene-tonovane-sklo', 'pryvatnist-sklyanyh-perehorodok'],
+  '/sklyani-perehorodky/ofisni/': ['ofisni-perehorodky-akustyka', 'pryvatnist-sklyanyh-perehorodok', 'yak-obraty-sklyanu-perehorodku'],
+  '/sklyani-perehorodky/mizhkimnatni/': ['mizhkimnatni-sklyani-perehorodky', 'pryvatnist-sklyanyh-perehorodok', 'yak-obraty-sklyanu-perehorodku'],
   '/sklyani-perehorodky/tsilnosklyani-perehorodky/': ['stacionarni-sklyani-perehorodky', 'vymogy-do-osnovy-pid-sklo'],
   '/sklyani-perehorodky/pidvisni-sklyani-peregorodky/': ['rozsuvni-perehorodky-napryamni', 'doglyad-za-rozsuvnymy-systemamy'],
-  // Glass doors
+  '/sklyani-perehorodky/nyzhnooporni-sklyani-perehorodky/': ['rozsuvni-perehorodky-napryamni', 'doglyad-za-rozsuvnymy-systemamy'],
+  '/sklyani-perehorodky/teleskopichni-sklyani-perehorodky/': ['rozsuvni-perehorodky-napryamni', 'doglyad-za-rozsuvnymy-systemamy'],
+  '/sklyani-perehorodky/transformuyuchi-sklyani-peregorodky/': ['rozsuvni-perehorodky-napryamni'],
+  '/sklyani-perehorodky/z-dveryma/': ['stacionarni-sklyani-perehorodky', 'rozpashni-chy-rozsuvni-sklyani-dveri', 'yak-obraty-sklyanu-perehorodku'],
   '/sklyani-dveri/': ['rozpashni-chy-rozsuvni-sklyani-dveri', 'sklyani-dveri-furnitura', 'regulyuvannya-sklyanyh-dverey'],
-  '/sklyani-dveri/mayatnykovi-sklyani-dveri/': ['mayatnykovi-sklyani-dveri', 'regulyuvannya-sklyanyh-dverey'],
-  // Canopies (hub only)
+  '/sklyani-dveri/rozpashni-sklyani-dveri/': ['rozpashni-chy-rozsuvni-sklyani-dveri', 'sklyani-dveri-furnitura', 'regulyuvannya-sklyanyh-dverey'],
+  '/sklyani-dveri/rozsuvni-sklyani-dveri/': ['rozpashni-chy-rozsuvni-sklyani-dveri', 'doglyad-za-rozsuvnymy-systemamy', 'sklyani-dveri-furnitura'],
+  '/sklyani-dveri/mayatnykovi-sklyani-dveri/': ['mayatnykovi-sklyani-dveri', 'sklyani-dveri-furnitura', 'regulyuvannya-sklyanyh-dverey'],
+  '/sklyani-dveri/dveri-v-aliuminiievomu-profili/': ['rozpashni-chy-rozsuvni-sklyani-dveri', 'regulyuvannya-sklyanyh-dverey'],
+  '/sklyani-dveri/matovi-sklyani-dveri/': ['matove-ryflene-tonovane-sklo', 'pryvatnist-sklyanyh-perehorodok'],
+  '/sklyani-dveri/sklyani-dveri-dlia-ofisu/': ['ofisni-perehorodky-akustyka', 'rozpashni-chy-rozsuvni-sklyani-dveri', 'sklyani-dveri-furnitura'],
+  '/sklyani-perehorodky/sklyani-mizhkimnatni-dveri/': ['rozpashni-chy-rozsuvni-sklyani-dveri', 'sklyani-dveri-furnitura', 'matove-ryflene-tonovane-sklo'],
   '/sklyani-kozyrky/': ['sklyanyi-kozyrok', 'yake-sklo-krashche', 'heat-soak-test-zagartovanogo-skla'],
-  // Railings
+  '/sklyani-kozyrky/konsolni-kozyrky/': ['sklyanyi-kozyrok', 'yake-sklo-krashche'],
+  '/sklyani-kozyrky/kozyrky-na-tyahakh/': ['sklyanyi-kozyrok', 'yake-sklo-krashche'],
+  '/sklyani-kozyrky/kozyrky-na-kronshteinakh/': ['sklyanyi-kozyrok', 'yake-sklo-krashche'],
+  '/sklyani-kozyrky/kozyrky-v-rami/': ['sklyanyi-kozyrok', 'yake-sklo-krashche'],
+  '/sklyani-kozyrky/kozyrky-z-bokovym-zakhystom/': ['sklyanyi-kozyrok', 'yake-sklo-krashche'],
+  '/sklyani-kozyrky/kozyrky-dlya-biznesu/': ['sklyanyi-kozyrok', 'heat-soak-test-zagartovanogo-skla'],
   '/sklyani-ohorozhi/': ['sklyani-ohorozhi-vymohy-bezpeka', 'yake-sklo-krashche', 'poruchni-dlya-sklyanyh-ogorozh'],
+  '/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/': ['bezramni-ogorozhi-profil', 'sklyani-ohorozhi-vymohy-bezpeka', 'oglyad-sklyanoyi-ogorozhi'],
   '/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/': ['sklyani-ogorozhi-balkona', 'oglyad-sklyanoyi-ogorozhi'],
   '/sklyani-ohorozhi/sklyani-ohorozhi-teras/': ['sklyani-ogorozhi-terasy', 'poruchni-dlya-sklyanyh-ogorozh'],
   '/sklyani-ohorozhi/sklyani-ohorozhi-na-stiykakh/': ['ogorozhi-na-stiykah', 'poruchni-dlya-sklyanyh-ogorozh'],
+  '/sklyani-ohorozhi/sklyani-ohorozhi-baseiniv/': ['sklyani-ohorozhi-vymohy-bezpeka', 'oglyad-sklyanoyi-ogorozhi'],
   '/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/': ['sklyani-ogorozhi-skhodiv', 'poruchni-dlya-sklyanyh-ogorozh', 'sklyani-shody'],
-  // Facades
-  '/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/': ['stiykovo-rygelne-sklinnya', 'heat-soak-test-zagartovanogo-skla'],
-  '/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/': ['strukturne-sklinnya-fasadu', 'heat-soak-test-zagartovanogo-skla'],
-  '/poslugy/sklyani-fasady/vitrinne-sklinnya/': ['vitrinne-sklinnya-magazynu', 'vidy-bezpechnogo-skla'],
-  '/poslugy/sklyani-fasady/sklyani-fasady-budynkiv/': ['panoramne-sklinnya-budynku', 'kondensat-na-panoramnomu-skli'],
-  // Frameless glazing
+  '/pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/': ['sklyani-ohorozhi-vymohy-bezpeka', 'sklyani-ogorozhi-skhodiv', 'sklyani-ogorozhi-terasy'],
+  '/poslugy/sklyani-fasady/': ['sklopaket-yak-obraty', 'heat-soak-test-zagartovanogo-skla', 'kondensat-na-panoramnomu-skli'],
+  '/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/': ['sklopaket-yak-obraty', 'heat-soak-test-zagartovanogo-skla', 'kondensat-na-panoramnomu-skli'],
+  '/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/': ['heat-soak-test-zagartovanogo-skla', 'sklopaket-yak-obraty'],
+  '/poslugy/sklyani-fasady/vitrinne-sklinnya/': ['yake-sklo-krashche', 'kondensat-na-panoramnomu-skli'],
+  '/poslugy/sklyani-fasady/sklyani-fasady-budynkiv/': ['kondensat-na-panoramnomu-skli', 'sklopaket-yak-obraty'],
+  '/poslugy/sklyani-fasady/enerhoefektyvni-fasady/': ['sklopaket-yak-obraty', 'kondensat-na-panoramnomu-skli'],
   '/bezramne-sklinnya/': ['bezramne-sklinnya-systemy-yak-obraty', 'slaydingova-chy-skladana-systema', 'teple-chy-kholodne-sklinnya-terasy'],
-  '/bezramne-sklinnya/sklinnya-balkoniv/': ['bezramne-sklinnya-balkona', 'teple-chy-kholodne-sklinnya-terasy'],
+  '/bezramne-sklinnya/sklinnya-balkoniv/': ['teple-chy-kholodne-sklinnya-terasy', 'bezramne-sklinnya-systemy-yak-obraty', 'kondensat-na-panoramnomu-skli'],
   '/bezramne-sklinnya/sklyani-rozsuvni-systemy/': ['slaydingova-chy-skladana-systema', 'doglyad-za-rozsuvnymy-systemamy'],
-  // Showers
+  '/bezramne-sklinnya/povorotno-skladni-systemy/': ['slaydingova-chy-skladana-systema', 'bezramne-sklinnya-systemy-yak-obraty'],
+  '/bezramne-sklinnya/bezporogovi-systemy/': ['bezramne-sklinnya-systemy-yak-obraty'],
+  '/bezramne-sklinnya/teple-bezramne-sklinnya/': ['teple-chy-kholodne-sklinnya-terasy', 'kondensat-na-panoramnomu-skli', 'sklopaket-yak-obraty'],
+  '/bezramne-sklinnya/sklinnya-teras-ta-altanok/': ['teple-chy-kholodne-sklinnya-terasy', 'bezramne-sklinnya-systemy-yak-obraty', 'sklyanyi-dakh-shcho-vrakhuvaty'],
+  '/bezramne-sklinnya/bezramne-sklinnya-altanky/': ['bezramne-sklinnya-systemy-yak-obraty', 'teple-chy-kholodne-sklinnya-terasy'],
+  '/bezramne-sklinnya/sklinnya-budynkiv/': ['kondensat-na-panoramnomu-skli', 'sklopaket-yak-obraty'],
+  '/dushovi-kabiny/peregorodka-dlya-dusha/': ['walk-in-perevahy-nedoliky', 'germetychnist-dushovoyi', 'furnitura-dlya-dushovoyi'],
   '/dushovi-kabiny/shtorky-dlya-vannoyi/': ['shtorka-na-vannu-zi-skla', 'vapnyanyi-nalit-na-skli', 'tovshchyna-skla-8-10-12-mm'],
   '/dushovi-kabiny/kytova-dushova-kabina/': ['kutova-dushova-kabina-vybir', 'yak-obraty-dushovu-kabinu', 'tovshchyna-skla-8-10-12-mm'],
   '/dushovi-kabiny/rozsuvni/': ['rozsuvna-dushova-systema', 'rozpashni-chy-rozsuvni-sklyani-dveri', 'yak-obraty-dushovu-kabinu'],
-  '/dushovi-kabiny/dveri-dlya-dushu/': ['dushovi-dveri-zi-skla', 'rozpashni-chy-rozsuvni-sklyani-dveri', 'germetychnist-dushovoyi']
+  '/dushovi-kabiny/dveri-dlya-dushu/': ['dushovi-dveri-zi-skla', 'rozpashni-chy-rozsuvni-sklyani-dveri', 'germetychnist-dushovoyi'],
+  '/dushovi-kabiny/u-nishu/': ['dushova-v-nishu-zamir', 'dushovi-dveri-zi-skla', 'germetychnist-dushovoyi'],
+  '/dushovi-kabiny/skladni/': ['dushovi-dveri-zi-skla', 'furnitura-dlya-dushovoyi'],
+  '/dushovi-kabiny/piatykutni/': ['kutova-dushova-kabina-vybir', 'yak-obraty-dushovu-kabinu'],
+  '/dzerkala/led-dzerkala/': ['dzerkalo-z-pidsvitkoyu-shcho-vrakhuvaty', 'dzerkalo-u-vannu', 'yak-obraty-dzerkalo-rozmir-forma'],
+  '/dzerkala/dzerkala-v-rami/': ['dzerkalo-v-rami', 'montazh-dzerkala-na-stinu', 'yak-obraty-dzerkalo-rozmir-forma'],
+  '/dzerkala/dzerkala-na-stinu/': ['montazh-dzerkala-na-stinu', 'dzerkalna-stina', 'yak-obraty-dzerkalo-rozmir-forma'],
+  '/dzerkala/dzerkalne-panno/': ['fasonne-dzerkalo-shablon', 'dzerkalna-stina', 'montazh-dzerkala-na-stinu'],
+  '/dzerkala/dzerkala-dlya-sportzalu/': ['dzerkalna-stina', 'montazh-dzerkala-na-stinu'],
+  '/dzerkala/dzerkala-dlya-salonu-krasy/': ['dzerkalo-z-pidsvitkoyu-shcho-vrakhuvaty'],
+  '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/': ['sklopaket-yak-obraty', 'kondensat-na-panoramnomu-skli'],
+  '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/': ['sklopaket-yak-obraty', 'heat-soak-test-zagartovanogo-skla', 'kondensat-na-panoramnomu-skli'],
+  '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/': ['ofisni-perehorodky-akustyka'],
+  '/alyuminiyevi-konstrukcziyi/zymovi-sady/': ['sklyanyi-dakh-shcho-vrakhuvaty', 'teple-chy-kholodne-sklinnya-terasy', 'kondensat-na-panoramnomu-skli'],
+  '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/': ['sklopaket-yak-obraty', 'kondensat-na-panoramnomu-skli'],
+  '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/': ['ofisni-perehorodky-akustyka']
 };

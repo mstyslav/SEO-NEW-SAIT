@@ -18,6 +18,7 @@ import '../../../../styles/shower-master.css';
 import '../../../../styles/profile-systems.css';
 import { HUB_CONFIGURATORS } from '../../../../data/configurator-links';
 import ProjectLinks from '../../../../components/profile/ProjectLinks.astro';
+import UsefulArticles from '../../../../components/profile/UsefulArticles.astro';
 
 const lp = (path: string) => localizedPath(path, 'ru');
 const origin = Astro.site ?? Astro.url.origin;
@@ -99,7 +100,6 @@ const relatedLinks: [string, string][] = [
   ['Алюминиевые двери', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
   ['Зимние сады', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
   ['Безрамное остекление', '/bezramne-sklinnya/'],
-  ['Стеклопакет: как выбрать', '/knowledge/sklopaket-yak-obraty/'],
   ['Стекло для офиса', '/dlya-biznesu/dlya-ofisu/'],
   ['Стекло для магазинов', '/dlya-biznesu/magazynam/']
 ];
@@ -239,6 +239,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <ProjectLinks path="/poslugy/sklyani-fasady/" locale="ru" />
+
+    <UsefulArticles path="/poslugy/sklyani-fasady/" locale="ru" />
 
     <section class="category-section category-section--faq">
       <FAQBlock
