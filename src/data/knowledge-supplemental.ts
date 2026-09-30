@@ -62,7 +62,7 @@ const seeds: Seed[] = [
   {slug:'stacionarni-sklyani-perehorodky',category:'Перегородки та двері',title:'Стаціонарні скляні перегородки: конструкція та кріплення',focus:'Розбираємо профільні й безрамні способи зонування.',serviceHref:'/sklyani-perehorodky/tsilnosklyani-perehorodky/',serviceLabel:'Цільноскляні перегородки'},
   {slug:'ofisni-perehorodky-akustyka',category:'Перегородки та двері',title:'Офісні скляні перегородки та звукоізоляція',focus:'Пояснюємо вплив скла, профілю, дверей і примикань на акустику.',serviceHref:'/sklyani-perehorodky/ofisni/',serviceLabel:'Офісні перегородки'},
   {slug:'mizhkimnatni-sklyani-perehorodky',category:'Перегородки та двері',title:'Міжкімнатні скляні перегородки: світло й приватність',focus:'Показуємо способи зберегти світло та контролювати оглядовість.',serviceHref:'/sklyani-perehorodky/mizhkimnatni/',serviceLabel:'Міжкімнатні перегородки'},
-  {slug:'rozsuvni-perehorodky-napryamni',category:'Перегородки та двері',title:'Розсувні скляні перегородки: напрямні та паркування',focus:'Розглядаємо підвісні й опорні системи, зони відкату та стопори.',serviceHref:'/sklyani-perehorodky/pidvisni-sklyani-peregorodky/',serviceLabel:'Розсувні перегородки'},
+  {slug:'rozsuvni-perehorodky-napryamni',category:'Перегородки та двері',title:'Розсувні скляні перегородки: напрямні та паркування',focus:'Розглядаємо підвісні й опорні системи, зони відкату та стопори.',serviceHref:'/sklyani-perehorodky/',serviceLabel:'Скляні перегородки'},
   {slug:'sklyani-dveri-furnitura',category:'Перегородки та двері',title:'Фурнітура для скляних дверей: як підібрати',focus:'Пояснюємо вибір петель, доводчиків, замків і ручок за вагою полотна.',serviceHref:'/sklyani-dveri/',serviceLabel:'Скляні двері'},
   {slug:'mayatnykovi-sklyani-dveri',category:'Перегородки та двері',title:'Маятникові скляні двері: де вони зручні',focus:'Розбираємо двостороннє відкривання, осі, доводчики та безпечні зазори.',serviceHref:'/sklyani-dveri/mayatnykovi-sklyani-dveri/',serviceLabel:'Маятникові скляні двері'},
   {slug:'pryvatnist-sklyanyh-perehorodok',category:'Перегородки та двері',title:'Як додати приватність скляній перегородці',focus:'Порівнюємо матування, рифлене скло, плівки та смарт-скло.',serviceHref:'/sklyani-perehorodky/',serviceLabel:'Підібрати перегородку'},
@@ -93,7 +93,7 @@ const seeds: Seed[] = [
   {slug:'dostavka-velykoformatnogo-skla',category:'Замір і монтаж',title:'Доставка й занесення великоформатного скла',focus:'Пояснюємо перевірку проходів, ліфтів, сходів і зони розвантаження.',serviceHref:'/poslugy/#full-cycle',serviceLabel:'Доставка конструкцій'},
   {slug:'pryymannya-sklyanoyi-konstruktsiyi',category:'Замір і монтаж',title:'Як прийняти скляну конструкцію після монтажу',focus:'Даємо чекліст геометрії, крайок, зазорів і роботи фурнітури.',serviceHref:'/poslugy/#process',serviceLabel:'Професійний монтаж'},
   {slug:'sylikon-ta-germetyky-dlya-skla',category:'Замір і монтаж',title:'Силікон і герметики для скляних конструкцій',focus:'Розбираємо сумісність, підготовку шва та час полімеризації.',serviceHref:'/poslugy/#process',serviceLabel:'Замовити монтаж'},
-  {slug:'garantiya-na-montazh-skla',category:'Замір і монтаж',title:'Гарантія на скло, фурнітуру та монтаж: що уточнити',focus:'Пояснюємо розподіл гарантій і правила звернення до сервісу.',serviceHref:'/poslugy/#process',serviceLabel:'Сервіс Space Glass'},
+  {slug:'garantiya-na-montazh-skla',category:'Замір і монтаж',title:'Гарантія на скло, фурнітуру та монтаж: що уточнити',focus:'Пояснюємо розподіл гарантій і правила звернення до сервісу.',serviceHref:'/poslugy/#full-cycle',serviceLabel:'Сервіс Space Glass'},
 
   {slug:'yak-myty-sklo-bez-rozvodiv',category:'Експлуатація та догляд',title:'Як мити скло без розводів і пошкоджень',focus:'Даємо безпечну послідовність очищення скла та крайок.',serviceHref:'/poslugy/#process',serviceLabel:'Сервіс конструкцій'},
   {slug:'doglyad-za-chornoyu-furnituroyu',category:'Експлуатація та догляд',title:'Догляд за чорною, хромованою та латунною фурнітурою',focus:'Пояснюємо, які засоби не пошкоджують декоративні покриття.',serviceHref:'/poslugy/#process',serviceLabel:'Замовити сервіс'},
@@ -116,7 +116,6 @@ const seeds: Seed[] = [
 // Explicit related lists for a few articles whose category window never reached useful
 // near-orphan articles (knowledge linking wave 1, 2026-09-29). All other articles keep the window.
 const RELATED_OVERRIDES: Record<string, string[]> = {
-  'pryymannya-sklyanoyi-konstruktsiyi': ['garantiya-na-montazh-skla', 'yak-zberegty-sklo-pid-chas-remontu', 'vymogy-do-osnovy-pid-sklo'],
   'koly-robyty-finalny-zamir': ['yak-zberegty-sklo-pid-chas-remontu', 'garantiya-na-montazh-skla', 'vymogy-do-osnovy-pid-sklo'],
   'sklyani-ogorozhi-skhodiv': ['sklyani-shody', 'poruchni-dlya-sklyanyh-ogorozh', 'ogorozhi-na-stiykah'],
   // Knowledge Recovery, batch 1 «Душові» (2026-09-29): related by topic instead of the category window.
@@ -154,6 +153,16 @@ const RELATED_OVERRIDES: Record<string, string[]> = {
   'montazh-dzerkala-na-stinu': ['dzerkalna-stina', 'dzerkalo-u-vannu', 'vymogy-do-osnovy-pid-sklo'],
   'furnitura-dlya-dushovoyi': ['germetychnist-dushovoyi', 'dushovi-dveri-zi-skla', 'rozsuvna-dushova-systema'],
   'bezramni-ogorozhi-profil': ['ogorozhi-na-stiykah', 'sklyani-ohorozhi-vymohy-bezpeka', 'oglyad-sklyanoyi-ogorozhi'],
+  // Final Knowledge cleanup (2026-09-30).
+  'rozsuvni-perehorodky-napryamni': ['rozpashni-chy-rozsuvni-sklyani-dveri', 'doglyad-za-rozsuvnymy-systemamy', 'yak-obraty-sklyanu-perehorodku'],
+  'otvory-vyrizy-u-skli': ['yake-sklo-krashche', 'sklyani-dveri-furnitura', 'yak-chytaty-kreslennya-skla'],
+  'prosvidlene-sklo-extra-clear': ['tovshchyna-skla-8-10-12-mm', 'matove-ryflene-tonovane-sklo'],
+  'kondensat-na-panoramnomu-skli': ['teple-chy-kholodne-sklinnya-terasy', 'sklopaket-yak-obraty'],
+  'yak-chytaty-kreslennya-skla': ['otvory-vyrizy-u-skli', 'yak-pidhotuvaty-prostir-do-zamiru', 'vid-choho-zalezhyt-tsina-sklyanoyi-konstruktsiyi'],
+  'pryhovani-komunikaciyi-montazh': ['yak-pidhotuvaty-prostir-do-zamiru', 'vymogy-do-osnovy-pid-sklo'],
+  'dostavka-velykoformatnogo-skla': ['yak-pidhotuvaty-prostir-do-zamiru', 'pryymannya-sklyanoyi-konstruktsiyi', 'dzerkalna-stina'],
+  'pryymannya-sklyanoyi-konstruktsiyi': ['garantiya-na-montazh-skla', 'regulyuvannya-sklyanyh-dverey', 'doglyad-za-sklyanymy-konstruktsiyamy'],
+  'garantiya-na-montazh-skla': ['pryymannya-sklyanoyi-konstruktsiyi', 'regulyuvannya-sklyanyh-dverey', 'doglyad-za-sklyanymy-konstruktsiyamy'],
 };
 
 // Reading time of a hand-written article: all visible text (intro, sections, links, FAQ) at ≈180 words/min.
