@@ -1053,6 +1053,10 @@ export const framelessCategories: ProfileCategory[] = [
       [
         "Скляний дах: що врахувати",
         "/knowledge/sklyanyi-dakh-shcho-vrakhuvaty/"
+      ],
+      [
+        "Розсувні перегородки для інтер’єру",
+        "/sklyani-perehorodky/nyzhnooporni-sklyani-perehorodky/"
       ]
     ],
     "ctaTitle": "Потрібне розсувне скління?",
@@ -4889,8 +4893,8 @@ export const framelessCategories: ProfileCategory[] = [
         "/bezramne-sklinnya/sklinnya-balkoniv/"
       ],
       [
-        "Фасадне скління",
-        "/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/"
+        "Скляні фасади будинків",
+        "/poslugy/sklyani-fasady/sklyani-fasady-budynkiv/"
       ],
       [
         "Алюмінієві розсувні двері",

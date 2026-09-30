@@ -40,17 +40,23 @@ const icons = {
   niche: iconWrap('<path d="M6 6v30M34 6v30"/><path d="M6 34h28"/><rect x="12" y="9" width="16" height="25"/><path d="M20 9v25"/><path d="M17.5 21h.01"/>'),
   sliding: iconWrap('<path d="M5 9h30"/><path d="M6 34h28"/><rect x="8" y="11" width="15" height="23"/><rect x="18" y="11" width="15" height="23"/><path d="M25 22h4"/>'),
   door: iconWrap('<path d="M8 34h24"/><path d="M12 34V8h16v26"/><path d="M12 8v26"/><path d="M24.5 21h.01"/>'),
-  bath: iconWrap('<path d="M5 22h30v4a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5z"/><path d="M8 22v-4a3 3 0 0 1 3-3h2"/><rect x="20" y="7" width="12" height="15"/>')
+  bath: iconWrap('<path d="M5 22h30v4a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5z"/><path d="M8 22v-4a3 3 0 0 1 3-3h2"/><rect x="20" y="7" width="12" height="15"/>'),
+  fold: iconWrap('<path d="M5 34h30M7 8h26"/><path d="M9 10l7 24 7-24 8 24"/><circle cx="16" cy="34" r="1"/><circle cx="31" cy="34" r="1"/>'),
+  tray: iconWrap('<path d="M6 24h28l-3 9H9z"/><path d="M10 20h20"/><path d="M14 16h12"/><path d="M19 28h2"/>'),
+  pentagon: iconWrap('<path d="M8 34h24"/><path d="M8 34V15l7-7h10l7 7v19"/><path d="M15 8v26"/><path d="M25 8v26"/>')
 };
 
-// 6 real subcategories — URLs unchanged (no RU sub-pages → lp() falls back to UA).
+// 9 subcategories, same set as the UA hub.
 const items = [
   { title: "Душевые перегородки", note: "Walk-in и стационарные стеклянные решения без дверей — для просторных ванных и открытого входа в зону душа.", href: lp("/dushovi-kabiny/peregorodka-dlya-dusha/"), icon: icons.screen },
   { title: "Угловые душевые кабины", note: "Занимают угол комнаты, вход по диагонали или с двух сторон. Компактная и самая распространённая схема.", href: lp("/dushovi-kabiny/kytova-dushova-kabina/"), icon: icons.corner },
   { title: "Душевые в нишу", note: "Одна стеклянная плоскость с дверью между трёх стен — когда под душ уже выделена готовая ниша.", href: lp("/dushovi-kabiny/u-nishu/"), icon: icons.niche },
   { title: "Раздвижные душевые кабины", note: "Створки ездят по направляющей и не требуют места на открывание. Для узких помещений.", href: lp("/dushovi-kabiny/rozsuvni/"), icon: icons.sliding },
   { title: "Душевые двери", note: "Только дверной блок в готовый проём или между стеной и стационарным стеклом, в том числе на замену старых.", href: lp("/dushovi-kabiny/dveri-dlya-dushu/"), icon: icons.door },
-  { title: "Шторки на ванну", note: "Стеклянная перегородка на борт ванны вместо тканевой шторки — когда душ совмещён с ванной.", href: lp("/dushovi-kabiny/shtorky-dlya-vannoyi/"), icon: icons.bath }
+  { title: "Двери гармошка в ванную комнату", note: "Складные стеклянные двери гармошка для компактных душевых, ниш и ванн — когда распашной двери не хватает места.", href: lp("/dushovi-kabiny/skladni/"), icon: icons.fold },
+  { title: "Душевые поддоны", note: "Подбор поддона по размеру и форме с учётом будущей стеклянной конструкции и водоотвода.", href: lp("/dushovi-kabiny/dushovi-piddony/"), icon: icons.tray },
+  { title: "Шторки на ванну", note: "Стеклянная перегородка на борт ванны вместо тканевой шторки — когда душ совмещён с ванной.", href: lp("/dushovi-kabiny/shtorky-dlya-vannoyi/"), icon: icons.bath },
+  { title: "Пятиугольные душевые кабины", note: "Стеклянные пятиугольные душевые кабины со скошенной передней частью — для углового размещения.", href: lp("/dushovi-kabiny/piatykutni/"), icon: icons.pentagon }
 ];
 
 const priceFactors: [string, string][] = [
@@ -117,13 +123,13 @@ const prepSteps = [
 
 const relatedLinks = [
   ["Душевые поддоны", lp("/dushovi-kabiny/dushovi-piddony/")],
-  ["Душевая перегородка walk-in", lp("/catalog/dushova-perehorodka-walk-in-black/")],
+  ["Двери гармошка в ванную комнату", lp("/dushovi-kabiny/skladni/")],
   ["Как выбрать душевую кабину", lp("/knowledge/yak-obraty-dushovu-kabinu/")],
   ["Walk-in: плюсы и минусы", lp("/knowledge/walk-in-perevahy-nedoliky/")],
   ["Душевая в нишу: замер", lp("/knowledge/dushova-v-nishu-zamir/")],
   ["Распашные или раздвижные двери", lp("/knowledge/rozpashni-chy-rozsuvni-sklyani-dveri/")],
   ["Толщина стекла: 8, 10, 12 мм", lp("/knowledge/tovshchyna-skla-8-10-12-mm/")],
-  ["Уход за стеклом и фурнитурой", lp("/knowledge/doglyad-za-sklyanymy-konstruktsiyamy/")]
+  ["Фурнитура для душевой", lp("/knowledge/furnitura-dlya-dushovoyi/")]
 ];
 
 // Same shared collection query as the UA page (project entities are uk-only;

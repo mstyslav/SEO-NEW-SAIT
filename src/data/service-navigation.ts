@@ -18,6 +18,7 @@ const showerServiceNavigationItems: Array<{ href: string; label: Record<Locale, 
   { href: '/dushovi-kabiny/u-nishu/', label: { uk: 'Душові кабіни в нішу', ru: 'Душевые кабины в нишу' } },
   { href: '/dushovi-kabiny/skladni/', label: { uk: 'Двері гармошка у ванну кімнату', ru: 'Двери гармошка в ванную комнату' } },
   { href: '/dushovi-kabiny/dushovi-piddony/', label: { uk: 'Душові піддони', ru: 'Душевые поддоны' } },
+  { href: '/dushovi-kabiny/piatykutni/', label: { uk: 'П’ятикутні душові кабіни', ru: 'Пятиугольные душевые кабины' } },
   { href: '/dushovi-kabiny/shtorky-dlya-vannoyi/', label: { uk: 'Скляні шторки на ванну', ru: 'Стеклянные шторки для ванны' } }
 ];
 

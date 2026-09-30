@@ -1057,6 +1057,10 @@ export const framelessCategoriesRu: ProfileCategory[] = [
       [
         "Стеклянная крыша: что учесть",
         "/knowledge/sklyanyi-dakh-shcho-vrakhuvaty/"
+      ],
+      [
+        "Раздвижные перегородки для интерьера",
+        "/sklyani-perehorodky/nyzhnooporni-sklyani-perehorodky/"
       ]
     ],
     "ctaTitle": "Нужно раздвижное остекление?",
@@ -4935,8 +4939,8 @@ export const framelessCategoriesRu: ProfileCategory[] = [
         "/bezramne-sklinnya/sklinnya-balkoniv/"
       ],
       [
-        "Фасадное остекление",
-        "/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/"
+        "Стеклянные фасады домов",
+        "/poslugy/sklyani-fasady/sklyani-fasady-budynkiv/"
       ],
       [
         "Алюминиевые раздвижные двери",
