@@ -59,7 +59,7 @@ const seeds: Seed[] = [
   {slug:'germetychnist-dushovoyi',category:'Душові конструкції',title:'Герметичність скляної душової: реальні можливості',focus:'Розбираємо роль ухилу, ущільнень, порога і напрямку струменя.',serviceHref:'/dushovi-kabiny/',serviceLabel:'Замовити душову'},
   {slug:'doglyad-za-dushovym-sklom',category:'Душові конструкції',title:'Як доглядати за склом і фурнітурою душової',focus:'Даємо практичний регламент очищення скла, силікону та механізмів.',serviceHref:'/dushovi-kabiny/',serviceLabel:'Скляні душові кабіни'},
 
-  {slug:'stacionarni-sklyani-perehorodky',category:'Перегородки та двері',title:'Стаціонарні скляні перегородки: конструкція та кріплення',focus:'Розбираємо профільні й безрамні способи зонування.',serviceHref:'/sklyani-perehorodky/',serviceLabel:'Скляні перегородки'},
+  {slug:'stacionarni-sklyani-perehorodky',category:'Перегородки та двері',title:'Стаціонарні скляні перегородки: конструкція та кріплення',focus:'Розбираємо профільні й безрамні способи зонування.',serviceHref:'/sklyani-perehorodky/tsilnosklyani-perehorodky/',serviceLabel:'Цільноскляні перегородки'},
   {slug:'ofisni-perehorodky-akustyka',category:'Перегородки та двері',title:'Офісні скляні перегородки та звукоізоляція',focus:'Пояснюємо вплив скла, профілю, дверей і примикань на акустику.',serviceHref:'/sklyani-perehorodky/ofisni/',serviceLabel:'Офісні перегородки'},
   {slug:'mizhkimnatni-sklyani-perehorodky',category:'Перегородки та двері',title:'Міжкімнатні скляні перегородки: світло й приватність',focus:'Показуємо способи зберегти світло та контролювати оглядовість.',serviceHref:'/sklyani-perehorodky/mizhkimnatni/',serviceLabel:'Міжкімнатні перегородки'},
   {slug:'rozsuvni-perehorodky-napryamni',category:'Перегородки та двері',title:'Розсувні скляні перегородки: напрямні та паркування',focus:'Розглядаємо підвісні й опорні системи, зони відкату та стопори.',serviceHref:'/sklyani-perehorodky/pidvisni-sklyani-peregorodky/',serviceLabel:'Розсувні перегородки'},
@@ -68,7 +68,7 @@ const seeds: Seed[] = [
   {slug:'pryvatnist-sklyanyh-perehorodok',category:'Перегородки та двері',title:'Як додати приватність скляній перегородці',focus:'Порівнюємо матування, рифлене скло, плівки та смарт-скло.',serviceHref:'/sklyani-perehorodky/',serviceLabel:'Підібрати перегородку'},
 
   {slug:'dzerkalo-u-vannu',category:'Дзеркала',title:'Дзеркало у ванну: розмір, захист і монтаж',focus:'Пояснюємо вимоги до основи, вологості, електрики та розташування.',serviceHref:'/dzerkala/',serviceLabel:'Дзеркала на замовлення'},
-  {slug:'dzerkalna-stina',category:'Дзеркала',title:'Дзеркальна стіна: стики, модулі та безпечний монтаж',focus:'Розбираємо великі дзеркальні площини, шви та підготовку стіни.',serviceHref:'/dzerkala/',serviceLabel:'Замовити дзеркальну стіну'},
+  {slug:'dzerkalna-stina',category:'Дзеркала',title:'Дзеркальна стіна: стики, модулі та безпечний монтаж',focus:'Розбираємо великі дзеркальні площини, шви та підготовку стіни.',serviceHref:'/dzerkala/dzerkala-na-stinu/',serviceLabel:'Замовити дзеркальну стіну'},
   {slug:'dzerkalo-v-rami',category:'Дзеркала',title:'Дзеркало в рамі: профіль, колір і кріплення',focus:'Порівнюємо металеві, алюмінієві та декоративні рами.',serviceHref:'/dzerkala/dzerkala-v-rami/',serviceLabel:'Дзеркала в рамі'},
   {slug:'dzerkalo-z-pidigrivom',category:'Дзеркала',title:'Дзеркало з підігрівом: як працює антизапотівання',focus:'Пояснюємо розміщення мата, електробезпеку та керування.',serviceHref:'/dzerkala/',serviceLabel:'Замовити дзеркало'},
   {slug:'dzerkalo-dlya-sportzalu',category:'Дзеркала',title:'Дзеркала для спортзалу: площинність і безпека',focus:'Розбираємо модульність, відображення, захист і монтаж великих площ.',serviceHref:'/dzerkala/dzerkala-dlya-sportzalu/',serviceLabel:'Дзеркала для спортзалу'},
@@ -143,6 +143,17 @@ const RELATED_OVERRIDES: Record<string, string[]> = {
   'mizhkimnatni-sklyani-perehorodky': ['pryvatnist-sklyanyh-perehorodok', 'yak-obraty-sklyanu-perehorodku'],
   'vymogy-do-osnovy-pid-sklo': ['yak-pidhotuvaty-prostir-do-zamiru'],
   'doglyad-za-rozsuvnymy-systemamy': ['slaydingova-chy-skladana-systema', 'regulyuvannya-sklyanyh-dverey'],
+  // Accelerated Knowledge Recovery batch (2026-09-30).
+  'stacionarni-sklyani-perehorodky': ['vymogy-do-osnovy-pid-sklo', 'yak-obraty-sklyanu-perehorodku', 'loft-perehorodky-vydy-sklo-profili'],
+  'ofisni-perehorodky-akustyka': ['yak-obraty-sklyanu-perehorodku', 'stacionarni-sklyani-perehorodky', 'pryvatnist-sklyanyh-perehorodok'],
+  'matove-ryflene-tonovane-sklo': ['pryvatnist-sklyanyh-perehorodok', 'yake-sklo-krashche'],
+  'dzerkalo-u-vannu': ['dzerkalo-z-pidsvitkoyu-shcho-vrakhuvaty', 'yak-obraty-dzerkalo-rozmir-forma', 'montazh-dzerkala-na-stinu'],
+  'dzerkalna-stina': ['montazh-dzerkala-na-stinu', 'yak-obraty-dzerkalo-rozmir-forma'],
+  'dzerkalo-v-rami': ['yak-obraty-dzerkalo-rozmir-forma', 'montazh-dzerkala-na-stinu', 'dzerkalo-u-vannu'],
+  'fasonne-dzerkalo-shablon': ['yak-obraty-dzerkalo-rozmir-forma', 'dzerkalna-stina', 'montazh-dzerkala-na-stinu'],
+  'montazh-dzerkala-na-stinu': ['dzerkalna-stina', 'dzerkalo-u-vannu', 'vymogy-do-osnovy-pid-sklo'],
+  'furnitura-dlya-dushovoyi': ['germetychnist-dushovoyi', 'dushovi-dveri-zi-skla', 'rozsuvna-dushova-systema'],
+  'bezramni-ogorozhi-profil': ['ogorozhi-na-stiykah', 'sklyani-ohorozhi-vymohy-bezpeka', 'oglyad-sklyanoyi-ogorozhi'],
 };
 
 // Reading time of a hand-written article: all visible text (intro, sections, links, FAQ) at ≈180 words/min.
