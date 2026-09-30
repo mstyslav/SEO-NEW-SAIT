@@ -1,0 +1,11 @@
+name = "legacy-subdomains"
+main = "src/index.js"
+compatibility_date = "2026-09-30"
+workers_dev = false
+
+# Page-level 301s for the old subdomains. Routes only fire for proxied (orange-cloud) DNS records.
+routes = [
+  { pattern = "dyshovi.space-glass.com.ua/*", zone_name = "space-glass.com.ua" },
+  { pattern = "ua.space-glass.com.ua/*", zone_name = "space-glass.com.ua" },
+  { pattern = "vikna.space-glass.com.ua/*", zone_name = "space-glass.com.ua" }
+]
