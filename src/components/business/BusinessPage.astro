@@ -102,7 +102,7 @@ const structuredData: JsonLdObject[] = [
   <main id="main">
     <section class="category-hero category-hero--photo profile-hero">
       <div class="category-hero__copy">
-        <Breadcrumbs items={breadcrumbItems.map((item, index) => index === breadcrumbItems.length - 1 ? { label: item.label } : item)} />
+        <Breadcrumbs items={breadcrumbItems.map((item, index) => index === breadcrumbItems.length - 1 ? { label: item.label } : item)} schema={false} />
         <p class="eyebrow">{tx.hub} · {p.name}</p>
         <h1>{p.h1}</h1>
         <p class="lead">{p.lead}</p>
