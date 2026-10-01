@@ -46,7 +46,8 @@ export function webPageSchema({
   description,
   image,
   language,
-  type = 'WebPage'
+  type = 'WebPage',
+  mainEntityId
 }: {
   canonical: string | URL;
   title: string;
@@ -54,6 +55,8 @@ export function webPageSchema({
   image: string | URL;
   language: string;
   type?: string;
+  /** @id of the page's main entity (e.g. the Article of a knowledge page). */
+  mainEntityId?: string;
 }): JsonLdObject {
   const url = canonical.toString();
   const siteUrl = new URL('/', url).href;
@@ -70,7 +73,8 @@ export function webPageSchema({
     primaryImageOfPage: {
       '@type': 'ImageObject',
       url: image.toString()
-    }
+    },
+    ...(mainEntityId ? { mainEntity: { '@id': mainEntityId } } : {})
   };
 }
 

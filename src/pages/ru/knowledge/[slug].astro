@@ -110,7 +110,8 @@ import { localizedPath } from '../../../i18n/helpers';
   locale="ru"
   title={`${article.metaTitle ?? article.title} | Space Glass`}
   description={article.description}
-  schemaType="Article"
+  schemaType="WebPage"
+  mainEntityId={`${url.href}#article`}
   structuredData={structuredData}
   alternateLocales={['uk', 'ru']}
 >

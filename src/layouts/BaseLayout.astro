@@ -22,9 +22,11 @@ interface Props {
   /** Must match the page's <source media="(max-width: …)"> breakpoint. */
   heroPreloadMobileMaxWidth?: number;
   robots?: string;
+  /** @id of the page's main entity, linked from the #webpage node as mainEntity. */
+  mainEntityId?: string;
 }
 
-const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, heroPreloadMobileMaxWidth = 900, robots } = Astro.props;
+const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, heroPreloadMobileMaxWidth = 900, robots, mainEntityId } = Astro.props;
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales, hasLocalizedRoute } from '../i18n/helpers';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
@@ -43,7 +45,8 @@ const pageSchema = webPageSchema({
   description,
   image: socialImage.href,
   language: resolvedLocale,
-  type: schemaType
+  type: schemaType,
+  mainEntityId
 });
 const extraStructuredData = Array.isArray(structuredData) ? structuredData : [structuredData];
 const schema = jsonLdGraph([
