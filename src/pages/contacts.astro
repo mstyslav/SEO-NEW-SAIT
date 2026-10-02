@@ -67,11 +67,14 @@ document.querySelectorAll('[data-file-input]').forEach((input) => {
   const field = input.closest('.contacts-file-field');
   const name = field?.querySelector('[data-file-name]');
 
-  input.addEventListener('change', () => {
+  const update = () => {
     if (!name) return;
     name.textContent = input.files?.[0]?.name || name.dataset.emptyLabel || '';
     name.classList.toggle('has-file', Boolean(input.files?.length));
-  });
+  };
+  input.addEventListener('change', update);
+  // forms.js resets the form after a successful send; the reset event fires before inputs are cleared.
+  input.form?.addEventListener('reset', () => setTimeout(update));
 });
 
 const loadOfficeMap = (panel) => {

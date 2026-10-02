@@ -5,6 +5,10 @@ import '../styles/header-cta-desktop.css';
 import SiteEnhancements from '../components/SiteEnhancements.astro';
 import GoogleReviews from '../components/GoogleReviews.astro';
 import HeaderFixes from '../components/HeaderFixes.astro';
+import CookieConsent from '../components/CookieConsent.astro';
+
+/** GA4 property of space-glass.com.ua — the only analytics tag on the site (no GTM / Zaraz). */
+const GA_ID = 'G-6XC74F42CW';
 
 interface Props {
   title: string;
@@ -69,6 +73,18 @@ import ScrollProgress from '../components/ScrollProgress.astro';
   <head>
     <meta charset="UTF-8" />
     <meta name="google" content="notranslate" />
+    <script is:inline define:vars={{ gaId: GA_ID }}>
+      // GA4 with Consent Mode: analytics_storage is denied (no cookies) until the visitor
+      // accepts in the cookie banner (components/CookieConsent.astro); the choice is remembered.
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      let consent = null;
+      try { consent = localStorage.getItem('sg-cookie-consent'); } catch {}
+      window.gtag('consent', 'default', { analytics_storage: consent === 'all' ? 'granted' : 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+      window.gtag('js', new Date());
+      window.gtag('config', gaId);
+    </script>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
     <meta name="viewport" content="width=device-width" />
     {heroPreloadSrc && (heroPreloadMobileSrc || heroPreloadMobileSrcset) && (
       <>
@@ -125,6 +141,7 @@ import ScrollProgress from '../components/ScrollProgress.astro';
         if (reviews && footer) footer.before(reviews);
       }
     </script>
+    <CookieConsent locale={resolvedLocale} />
     <script src="/js/i18n-client.js" defer></script>
     <script src="/js/forms.js" defer></script>
       <ScrollProgress />

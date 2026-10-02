@@ -1,14 +1,59 @@
-<aside class="cookie-consent" data-cookie-consent hidden aria-label="Налаштування cookies" aria-live="polite">
-  <div><strong>Ваші налаштування приватності</strong><p>Ми використовуємо необхідні cookies та, лише за вашою згодою, аналітику для покращення сайту. <a href="/cookies-policy/">Докладніше</a></p></div>
-  <div class="cookie-consent__actions"><button type="button" class="button button--outline" data-cookie-reject>Лише необхідні</button><button type="button" class="button button--mint" data-cookie-accept>Прийняти</button></div>
+---
+// Cookie banner for GA4 Consent Mode (gtag + defaults are set in BaseLayout <head>).
+// The choice is stored in localStorage 'sg-cookie-consent' ('all' | 'necessary');
+// analytics_storage stays 'denied' until the visitor accepts.
+import type { Locale } from '../i18n/helpers';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = {
+  uk: {
+    aria: 'Налаштування cookies',
+    title: 'Ваші налаштування приватності',
+    text: 'Ми використовуємо необхідні cookies та, лише за вашою згодою, аналітику для покращення сайту.',
+    more: 'Докладніше',
+    policy: '/cookies-policy/',
+    reject: 'Лише необхідні',
+    accept: 'Прийняти'
+  },
+  ru: {
+    aria: 'Настройки cookies',
+    title: 'Ваши настройки приватности',
+    text: 'Мы используем необходимые cookies и, только с вашего согласия, аналитику для улучшения сайта.',
+    more: 'Подробнее',
+    policy: '/ru/cookies-policy/',
+    reject: 'Только необходимые',
+    accept: 'Принять'
+  }
+}[locale];
+---
+<aside class="cookie-consent" data-cookie-consent hidden aria-label={t.aria}>
+  <div class="cookie-consent__text"><strong>{t.title}</strong><p>{t.text} <a href={t.policy}>{t.more}</a></p></div>
+  <div class="cookie-consent__actions"><button type="button" class="button button--outline" data-cookie-reject>{t.reject}</button><button type="button" class="button button--mint" data-cookie-accept>{t.accept}</button></div>
 </aside>
 <script is:inline>
-  const box=document.querySelector('[data-cookie-consent]');
-  const saved=localStorage.getItem('sg-cookie-consent');
-  const loadAnalytics=()=>{const {gaId,pixelId}=window.spaceGlassAnalytics||{};if(gaId&&!gaId.includes('XXXX')){const s=document.createElement('script');s.async=true;s.src=`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaId)}`;document.head.append(s);gtag('js',new Date());gtag('config',gaId,{anonymize_ip:true});}if(pixelId&&!/^0+$/.test(pixelId)){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};n.queue=[];t=b.createElement(e);t.async=true;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',pixelId);fbq('track','PageView');}};
-  const apply=(choice)=>{localStorage.setItem('sg-cookie-consent',choice);box.hidden=true;if(choice==='all')loadAnalytics();window.dispatchEvent(new CustomEvent('sg:consent',{detail:{analytics:choice==='all'}}));};
-  if(!saved) box.hidden=false;
-  if(saved==='all') loadAnalytics();
-  box.querySelector('[data-cookie-accept]')?.addEventListener('click',()=>apply('all'));
-  box.querySelector('[data-cookie-reject]')?.addEventListener('click',()=>apply('necessary'));
+  (() => {
+    const box = document.querySelector('[data-cookie-consent]');
+    if (!box) return;
+    let saved = null;
+    try { saved = localStorage.getItem('sg-cookie-consent'); } catch {}
+    if (saved !== 'all' && saved !== 'necessary') box.hidden = false;
+    const apply = (choice) => {
+      try { localStorage.setItem('sg-cookie-consent', choice); } catch {}
+      if (typeof window.gtag === 'function') window.gtag('consent', 'update', { analytics_storage: choice === 'all' ? 'granted' : 'denied' });
+      box.hidden = true;
+    };
+    box.querySelector('[data-cookie-accept]')?.addEventListener('click', () => apply('all'));
+    box.querySelector('[data-cookie-reject]')?.addEventListener('click', () => apply('necessary'));
+  })();
 </script>
+<style>
+  .cookie-consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:4000;display:flex;align-items:center;justify-content:space-between;gap:18px;max-width:960px;margin:0 auto;padding:16px 18px;border:1px solid #d7e5df;border-radius:16px;background:#fff;color:#16201b;box-shadow:0 18px 50px rgba(0,0,0,.18);font-size:14px;line-height:1.45}
+  .cookie-consent[hidden]{display:none}
+  .cookie-consent strong{display:block;margin-bottom:2px;font-size:15px}
+  .cookie-consent p{margin:0;color:#56625c}
+  .cookie-consent a{color:#176b55}
+  .cookie-consent__actions{display:flex;flex:0 0 auto;gap:10px}
+  .cookie-consent__actions .button{min-height:42px;padding:0 16px;white-space:nowrap}
+  @media(max-width:700px){.cookie-consent{left:10px;right:10px;bottom:10px;flex-direction:column;align-items:stretch;gap:12px;padding:14px}.cookie-consent__actions .button{flex:1}}
+</style>
