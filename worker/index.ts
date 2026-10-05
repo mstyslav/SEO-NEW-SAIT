@@ -18,7 +18,7 @@
  * lead message ({ file_sent } tells the page whether that worked).
  *
  * Anti-spam (silently dropped with a fake "ok"): hidden honeypot field, JS-only marker +
- * header, < 3 s on the page, no real interaction, links / junk names, foreign Origin;
+ * header, < 3 s on the page, links / junk submissions, foreign Origin;
  * phone must be a valid Ukrainian (or explicit +international) number; 3 leads/min per IP.
  *
  * Secrets are set with `npx wrangler secret put NAME` — never commit them.
@@ -80,9 +80,8 @@ function spamReasons(input: Record<string, unknown>, lead: Lead): string[] {
   if (typeof input._js !== 'string' || !input._js.startsWith('sg-')) reasons.push('no_js');
   const elapsed = Number(input._elapsed);
   if (!Number.isFinite(elapsed) || elapsed < 3000) reasons.push('too_fast');
-  if (input._h !== '1') reasons.push('no_interaction');
   if (URL_RE.test(lead.name) || URL_RE.test(lead.comment ?? '')) reasons.push('link');
-  if (!/[a-zа-яіїєґ]/i.test(lead.name) || /\d{3,}/.test(lead.name) || lead.name.length < 2) reasons.push('bad_name');
+  if (lead.name.length < 2) reasons.push('bad_name');
   if (/[\u4e00-\u9fff]/.test(lead.name + (lead.comment ?? ''))) reasons.push('cjk');
   return reasons;
 }
