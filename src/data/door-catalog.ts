@@ -392,8 +392,8 @@ export const doorCategories: ProfileCategory[] = [
       ['Чи бувають розсувні лофт-двері?', 'Так, розсувне полотно в профілі з розкладкою — на відкритій або прихованій напрямній.']
     ],
     related: [['Розпашні скляні двері', P('rozpashni-sklyani-dveri')], ['Розсувні скляні двері', P('rozsuvni-sklyani-dveri')], ['Матові скляні двері', P('matovi-sklyani-dveri')], ['Loft-перегородки', '/sklyani-perehorodky/loft-sklyani-peregorodku/'], ['Міжкімнатні перегородки', '/sklyani-perehorodky/mizhkimnatni/'], ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'], ['Скляні двері для офісу', P('sklyani-dveri-dlia-ofisu')], REL_HUB],
-    ctaTitle: 'Потрібні двері в профілі?',
-    ctaText: 'Надішліть фото прорізу й ескіз розкладки — підберемо профіль, скло й підготуємо розрахунок.'
+    ctaTitle: 'Потрібні скляні двері в алюмінієвому профілі?',
+    ctaText: 'Вартість залежить від розміру прорізу, кількості стулок, розкладки, кольору профілю, скла, замка та монтажу. Надішліть фото прорізу й ескіз розкладки — підберемо профіль, скло й підготуємо попередній розрахунок.'
   }),
 
   page({
@@ -517,7 +517,7 @@ export const doorCategories: ProfileCategory[] = [
     ],
     related: [['Маятникові скляні двері', P('mayatnykovi-sklyani-dveri')], ['Матові скляні двері', P('matovi-sklyani-dveri')], ['Розпашні скляні двері', P('rozpashni-sklyani-dveri')], ['Офісні перегородки', '/sklyani-perehorodky/ofisni/'], ['Офісне скління', '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/'], ['Скло для офісу', '/dlya-biznesu/dlya-ofisu/'], ['Скляні вхідні групи', '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/'], REL_HUB],
     ctaTitle: 'Потрібні скляні двері для офісу?',
-    ctaText: 'Надішліть план офісу або фото — підберемо двері, фурнітуру та підготуємо розрахунок.'
+    ctaText: 'Вартість залежить від кількості й розмірів дверей, типу відкривання, скла, матування чи логотипа, доводчиків, замків і монтажу. Надішліть план офісу або фото прорізів — підберемо двері, фурнітуру та підготуємо попередній розрахунок.'
   })
 ];
 
