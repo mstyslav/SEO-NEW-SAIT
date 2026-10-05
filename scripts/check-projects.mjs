@@ -10,7 +10,7 @@ const allowedCategories = new Set([
 const serviceRoutePrefixes = [
   '/dushovi-kabiny/', '/dzerkala/', '/sklyani-perehorodky/', '/sklyani-dveri/',
   '/sklyani-ohorozhi/', '/alyuminiyevi-konstrukcziyi/', '/metaloplastykovi-konstrukcziyi/',
-  '/arkhitekturni-systemy/', '/poslugy/'
+  '/arkhitekturni-systemy/', '/poslugy/', '/bezramne-sklinnya/', '/sklyani-kozyrky/', '/dlya-biznesu/'
 ];
 const files = fs.readdirSync(contentDir).filter((file) => file.endsWith('.json'));
 const projects = files.map((file) => ({ file, data: JSON.parse(fs.readFileSync(path.join(contentDir, file), 'utf8')) }));
@@ -21,7 +21,9 @@ for (const { file, data } of projects) {
   if (slugs.has(data.slug)) errors.push(`${file}: duplicate slug "${data.slug}"`);
   slugs.add(data.slug);
   if (!allowedCategories.has(data.category)) errors.push(`${file}: unknown category "${data.category}"`);
-  if (path.basename(file, '.json') !== data.slug) errors.push(`${file}: filename and slug must match`);
+  // The slug is the public URL — many projects keep the address indexed on the old site, so it
+  // no longer has to repeat the (internal) file name. It must still be a clean URL segment.
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(data.slug ?? '')) errors.push(`${file}: slug "${data.slug}" is not a clean URL segment`);
   if (!data.serviceLink?.label?.trim()) errors.push(`${file}: service link needs a visible label`);
   if (!serviceRoutePrefixes.some((prefix) => data.serviceLink?.href?.startsWith(prefix))) {
     errors.push(`${file}: serviceLink.href must point to a service page, got "${data.serviceLink?.href ?? ''}"`);

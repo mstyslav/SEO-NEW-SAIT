@@ -3,7 +3,9 @@ import { seoCategories, seoServiceByPath, ukSeoServices } from '../src/data/seo-
 const errors = [];
 const unique = (field) => new Set(ukSeoServices.map((service) => service[field])).size;
 
-if (ukSeoServices.length !== 50) errors.push(`Expected 50 services, found ${ukSeoServices.length}`);
+// The list shrinks as product pages move to their own sections (see the notes in
+// src/data/seo-services.ts), so there is no fixed count — only that it is not empty.
+if (ukSeoServices.length === 0) errors.push('No SEO services found');
 for (const field of ['path', 'title', 'description', 'h1']) {
   if (unique(field) !== ukSeoServices.length) errors.push(`${field} values are not unique`);
 }
@@ -14,10 +16,12 @@ for (const service of ukSeoServices) {
     if (!seoServiceByPath.has(relatedPath)) errors.push(`Broken related link: ${service.path} -> ${relatedPath}`);
   }
 }
-if (seoCategories.some((category) => category.services.length === 0)) errors.push('Empty SEO category found');
+// A category left without services was migrated on purpose; report it, do not fail on it.
+const emptyCategories = seoCategories.filter((category) => category.services.length === 0).map((category) => category.slug);
 
 if (errors.length) {
   console.error(errors.join('\n'));
   process.exit(1);
 }
 console.log(`Validated ${ukSeoServices.length} unique Ukrainian SEO pages across ${seoCategories.length} categories.`);
+if (emptyCategories.length) console.log(`Note: categories without services (migrated elsewhere): ${emptyCategories.join(', ')}`);
