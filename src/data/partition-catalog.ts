@@ -498,7 +498,7 @@ export const partitionCategories: ProfileCategory[] = [
     details: projects('Офісні перегородки в наших проєктах', 'Офіси, клініки й салони в Одесі та Києві.', ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv']),
     related: [['Цільноскляні перегородки', P('tsilnosklyani-perehorodky')], ['Трансформуючі перегородки', P('transformuyuchi-sklyani-peregorodky')], ['Скло для офісу', '/dlya-biznesu/dlya-ofisu/'], ['Алюмінієві офісні перегородки', '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/']],
     ctaTitle: 'Плануєте офіс?',
-    ctaText: 'Надішліть план офісу — запропонуємо зонування й підготуємо розрахунок.'
+    ctaText: 'Надішліть план офісу, розміри або фото приміщення — запропонуємо тип скляних перегородок, зонування та підготуємо попередній розрахунок.'
   }),
   page({
     slug: 'mizhkimnatni',
