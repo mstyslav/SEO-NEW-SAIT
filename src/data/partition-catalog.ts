@@ -550,7 +550,7 @@ export const partitionCategories: ProfileCategory[] = [
       ['Чи можна двері з замком?', 'Так, замок чи фіксатор для спальні й ванної.']
     ],
     details: projects('Перегородки в квартирах наших клієнтів', 'Кухні, спальні й гардеробні в Києві.', ['dzerkalni-dveri-v-garderob', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'mizhkimnatni-peregorodky-v-dytyachu', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv']),
-    related: [['Loft-перегородки', P('loft-sklyani-peregorodku')], ['Скляні міжкімнатні двері', '/sklyani-perehorodky/sklyani-mizhkimnatni-dveri/'], ['Рішення для квартири', '/rishennya/dlya-kvartyry/']],
+    related: [['Усі скляні перегородки', PARTITION_HUB], ['Loft-перегородки', P('loft-sklyani-peregorodku')], ['Скляні міжкімнатні двері', '/sklyani-perehorodky/sklyani-mizhkimnatni-dveri/'], ['Рішення для квартири', '/rishennya/dlya-kvartyry/']],
     ctaTitle: 'Потрібна перегородка в квартиру?',
     ctaText: 'Надішліть фото кімнати й розміри — запропонуємо рішення й підготуємо розрахунок.'
   }),
