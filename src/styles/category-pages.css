@@ -7,8 +7,8 @@
 /* V8 category template: glass partitions */
 .category-breadcrumbs{padding-inline:60px}
 .category-hero{display:grid;grid-template-columns:.95fr 1.05fr;min-height:500px;background:#fff;border-bottom:1px solid var(--line);align-items:stretch}
-.category-hero__copy{padding:52px 60px;display:flex;flex-direction:column;justify-content:center;min-height:0}
-.category-hero__copy h1{font-size:clamp(4rem,6vw,7rem);max-width:700px}
+.category-hero__copy{padding:52px 60px;display:flex;flex-direction:column;justify-content:center;min-height:0;min-width:0}
+.category-hero__copy h1{font-size:clamp(4rem,6vw,7rem);max-width:700px;overflow-wrap:break-word}
 .category-hero__visual{position:relative;display:grid;place-items:center;background:linear-gradient(135deg,#fff,#ecf8f3);overflow:hidden}
 .category-hero__glass{width:55%;height:68%;border:2px solid var(--mint);background:linear-gradient(135deg,rgba(255,255,255,.8),rgba(147,209,186,.18));transform:skewY(-6deg);box-shadow:42px 28px 0 rgba(147,209,186,.16)}
 .category-hero__visual>span{position:absolute;right:38px;bottom:28px;font-weight:800;color:var(--mint-dark);letter-spacing:.12em}
@@ -200,6 +200,8 @@
   .material-grid--parts{grid-template-columns:1fr}
   .hardware-details{grid-template-columns:1fr}
   .category-links__grid,.category-links__grid--8{grid-template-columns:1fr}
+  .category-steps{grid-template-columns:1fr}
+  .category-arrow-link{white-space:normal}
 }
 
 /* ============================================================

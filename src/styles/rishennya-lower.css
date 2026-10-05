@@ -118,3 +118,9 @@
 }
 .rh-timeline li{align-content:start}
 .material-grid .category-arrow-link{display:inline-block;max-width:100%;margin-top:10px;white-space:normal}
+
+/* Phones: a long one-word tile title ("Металопластикові…") was cut off by the tile edge. */
+@media(max-width:620px){
+  .rh-tile__body{padding:16px}
+  .rh-tile__body b{font-size:1.02rem;overflow-wrap:anywhere;hyphens:auto}
+}

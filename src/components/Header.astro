@@ -313,6 +313,13 @@ const links = [
 
   window.addEventListener('resize',syncMobileMenu);
   window.addEventListener('orientationchange',syncMobileMenu);
+  document.addEventListener('keydown',(event)=>{
+    if(event.key!=='Escape') return;
+    const openButton=mobileButtons.find((button)=>button.getAttribute('aria-expanded')==='true');
+    if(!openButton) return;
+    closeMobileMenu();
+    openButton.focus();
+  });
   const uaCatalogMenuButton=document.querySelector('[data-ua-catalog-menu-button]');
   const uaCatalogMenu=document.querySelector('[data-ua-catalog-menu]');
   if(uaCatalogMenuButton && uaCatalogMenu && uaCatalogMenuButton.dataset.menuBound!=='true'){

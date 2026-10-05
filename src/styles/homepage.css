@@ -715,3 +715,19 @@ html[lang="de"] .quote-form--home-final__submit{
     display:block;
   }
 }
+
+/* Narrow phones: the long RU "all projects" link widened the column past the screen, and a
+   one-word category title ("Металлопластиковые…") was cut off by the card edge.
+   The element selectors outrank the base rules in the layout stylesheet, which loads later. */
+@media (max-width:620px){
+  section.sg-projects{
+    grid-template-columns:minmax(0,1fr);
+  }
+  a.sg-projects__all-link{
+    white-space:normal;
+  }
+  a.sg-category-card h2{
+    overflow-wrap:break-word;
+    hyphens:auto;
+  }
+}

@@ -207,12 +207,14 @@ const items = trustBarItems[locale];
 </style>
 
 <style>
-  /* Same edge-to-edge TrustBar on all four hub pages */
+  /* Same edge-to-edge TrustBar on all four hub pages.
+     Capped at the page shell width (1480px): on wider screens a 100vw bar ran past the
+     shell, which clipped the first and last item. */
   .sg-trustbar{
-    width:100vw;
+    width:min(100vw,1480px);
     max-width:none;
-    margin-left:calc(50% - 50vw);
-    margin-right:calc(50% - 50vw);
+    margin-left:calc(50% - min(50vw,740px));
+    margin-right:calc(50% - min(50vw,740px));
   }
 </style>
 
