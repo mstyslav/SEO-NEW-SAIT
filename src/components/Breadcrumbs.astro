@@ -31,5 +31,5 @@ const schema = {
   .sg-breadcrumbs a:hover,.sg-breadcrumbs a:focus-visible{color:var(--mint-dark,#176b55)}
   .sg-breadcrumbs__separator{flex:0 0 auto;color:var(--line,#cfd9d5)}
   .sg-breadcrumbs__current{min-width:0;overflow:hidden;color:var(--ink,#15201c);font-weight:600;text-overflow:ellipsis}
-  @media(max-width:700px){.sg-breadcrumbs{gap:6px;padding-top:12px;font-size:11px}.sg-breadcrumbs--contained{width:calc(100% - 36px)}}
+  @media(max-width:700px){.sg-breadcrumbs{flex-wrap:wrap;gap:6px;padding-top:12px;font-size:11px}.sg-breadcrumbs__current{white-space:normal}.sg-breadcrumbs--contained{width:calc(100% - 36px)}}
 </style>
