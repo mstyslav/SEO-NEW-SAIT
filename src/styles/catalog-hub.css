@@ -148,6 +148,14 @@ body .sg-page-shell main .catalog-hub__hero h1 {
   }
 }
 
+/* 320px phones: at 42px the RU word "алюминиевых" is wider than the hero column, and headings
+   never break inside a word. */
+@media (max-width: 340px) {
+  body .sg-page-shell main .catalog-hub__hero h1 {
+    font-size: 38px !important;
+  }
+}
+
 /* Catalog CTA — keep action labels on one line */
 @media (min-width:641px){
   .catalog-cta{
