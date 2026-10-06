@@ -31,6 +31,53 @@ const FORM_TYPES=[['contacts-form','contacts','contacts_page'],['profile-request
 const formInfo=form=>{const hit=FORM_TYPES.find(([cls])=>form.classList.contains(cls));return{form_id:form.dataset.formId||(hit?hit[1]:'lead_form'),form_location:form.dataset.formLocation||(hit?hit[2]:'content')};};
 const productCategory=form=>{const field=form.querySelector('input[type="hidden"][name="product"], select[name="product"]');const v=field&&String(field.value||'').trim();return v?v.slice(0,100):undefined;};
 
+// One Ukrainian phone mask for every lead form: +380 XX XXX XX XX.
+// The Worker validates the number again, so this improves input quality without
+// replacing the server-side check.
+const PHONE_ERROR=isRu?'Введите полный номер: +380 XX XXX XX XX.':'Введіть повний номер: +380 XX XXX XX XX.';
+const phoneLocalDigits=value=>{
+  let digits=String(value||'').replace(/\D/g,'');
+  if(digits.startsWith('380')) digits=digits.slice(3);
+  else if(digits.startsWith('80')) digits=digits.slice(2);
+  else if(digits.startsWith('0')) digits=digits.slice(1);
+  return digits.slice(0,9);
+};
+const formatPhone=value=>{
+  const digits=phoneLocalDigits(value);
+  if(!digits) return '+380';
+  const parts=[digits.slice(0,2),digits.slice(2,5),digits.slice(5,7),digits.slice(7,9)].filter(Boolean);
+  return `+380 ${parts.join(' ')}`;
+};
+const validatePhone=input=>{
+  const count=phoneLocalDigits(input.value).length;
+  input.setCustomValidity(count===9?'':PHONE_ERROR);
+};
+document.querySelectorAll('[data-lead-form] input[type="tel"][name="phone"]').forEach(input=>{
+  input.inputMode='numeric';
+  input.autocomplete='tel';
+  input.maxLength=17;
+  input.placeholder='+380 XX XXX XX XX';
+  input.addEventListener('focus',()=>{
+    if(!phoneLocalDigits(input.value).length){
+      input.value='+380';
+      input.setSelectionRange(input.value.length,input.value.length);
+    }
+  });
+  input.addEventListener('beforeinput',event=>{
+    if(event.inputType==='insertText'&&event.data&&/\D/.test(event.data)) event.preventDefault();
+  });
+  input.addEventListener('input',()=>{
+    input.value=formatPhone(input.value);
+    validatePhone(input);
+    input.setSelectionRange(input.value.length,input.value.length);
+  });
+  input.addEventListener('blur',()=>{
+    if(!phoneLocalDigits(input.value).length) input.value='';
+    validatePhone(input);
+  });
+  validatePhone(input);
+});
+
 // Contact clicks (no phone number / address is sent, only where the link was).
 const linkLocation=a=>a.closest('.sg-success')?'success_popup':a.closest('footer')?'footer':a.closest('header, .language-switcher, [data-mobile-menu], .simple-catalog')?'header':a.closest('[class*="hero"]')?'hero':'content';
 document.addEventListener('click',event=>{
