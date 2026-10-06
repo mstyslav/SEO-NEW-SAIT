@@ -8,7 +8,7 @@
 .category-breadcrumbs{padding-inline:60px}
 .category-hero{display:grid;grid-template-columns:.95fr 1.05fr;min-height:500px;background:#fff;border-bottom:1px solid var(--line);align-items:stretch}
 .category-hero__copy{padding:52px 60px;display:flex;flex-direction:column;justify-content:center;min-height:0;min-width:0}
-.category-hero__copy h1{font-size:clamp(4rem,6vw,7rem);max-width:700px;overflow-wrap:break-word}
+.category-hero__copy h1{font-size:clamp(4rem,6vw,7rem);max-width:700px}
 .category-hero__visual{position:relative;display:grid;place-items:center;background:linear-gradient(135deg,#fff,#ecf8f3);overflow:hidden}
 .category-hero__glass{width:55%;height:68%;border:2px solid var(--mint);background:linear-gradient(135deg,rgba(255,255,255,.8),rgba(147,209,186,.18));transform:skewY(-6deg);box-shadow:42px 28px 0 rgba(147,209,186,.16)}
 .category-hero__visual>span{position:absolute;right:38px;bottom:28px;font-weight:800;color:var(--mint-dark);letter-spacing:.12em}
@@ -329,4 +329,10 @@
   .category-heading > p, .category-heading > div > p:last-child { margin-bottom: 0; }
   .category-heading .eyebrow { margin-bottom: 10px; }
   .category-seo__grid { gap: 14px; }
+}
+
+/* Smallest phones (320px): headings never break inside a word (global rule), so a long first
+   word ("Металлопластиковые") ran into the right padding. A slightly smaller size lets it fit. */
+@media(max-width:340px){
+  body .sg-page-shell main .category-hero__copy h1{font-size:1.56rem!important}
 }

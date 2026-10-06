@@ -18,8 +18,13 @@ interface Props {
   optionsLabel?: string;
   commentPlaceholder?: string;
   locale?: 'uk' | 'ru';
-  /** Profile systems with insulating glass units (aluminium, PVC, facades, frameless). */
-  glazing?: boolean;
+  /**
+   * Which product family the page sells — picks the middle promise in the intro list:
+   * 'glazing' — profile systems with insulating glass units (aluminium, PVC, facades, frameless);
+   * 'glass'   — all-glass products (showers, doors, partitions, railings, canopies, mirrors);
+   * 'generic' — products without glass (insect screens).
+   */
+  family?: 'glazing' | 'glass' | 'generic';
 }
 
 const {
@@ -32,13 +37,13 @@ const {
   optionsLabel,
   commentPlaceholder,
   locale = 'uk',
-  glazing = false
+  family = 'glass'
 } = Astro.props;
 
 const L = {
   uk: {
     eyebrow: 'Заявка з цієї сторінки',
-    points: ['Відповімо протягом робочого дня', glazing ? 'Підберемо систему та склопакет' : 'Підберемо конструкцію, скло та фурнітуру', 'Попередній розрахунок — безкоштовно'],
+    points: ['Відповімо протягом робочого дня', { glazing: 'Підберемо систему та склопакет', glass: 'Підберемо конструкцію, скло та фурнітуру', generic: 'Підберемо рішення під ваш проріз' }[family], 'Попередній розрахунок — безкоштовно'],
     call: 'Або телефонуйте:',
     name: 'Ім’я', namePh: 'Ваше ім’я', phone: 'Телефон', city: 'Місто', cityPh: 'Київ, Одеса, Львів...',
     comment: 'Коментар', undecided: 'Ще не визначились — допоможіть обрати', option: 'Система',
@@ -47,7 +52,7 @@ const L = {
   },
   ru: {
     eyebrow: 'Заявка с этой страницы',
-    points: ['Ответим в течение рабочего дня', glazing ? 'Подберём систему и стеклопакет' : 'Подберём конструкцию, стекло и фурнитуру', 'Предварительный расчёт — бесплатно'],
+    points: ['Ответим в течение рабочего дня', { glazing: 'Подберём систему и стеклопакет', glass: 'Подберём конструкцию, стекло и фурнитуру', generic: 'Подберём решение под ваш проём' }[family], 'Предварительный расчёт — бесплатно'],
     call: 'Или звоните:',
     name: 'Имя', namePh: 'Ваше имя', phone: 'Телефон', city: 'Город', cityPh: 'Киев, Одесса, Львов...',
     comment: 'Комментарий', undecided: 'Ещё не определились — помогите выбрать', option: 'Система',

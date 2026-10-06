@@ -397,7 +397,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       text={category.ctaText}
       options={category.models.map((model) => model.title ?? model.name)}
       optionsLabel={optionsLabel}
-      glazing={['alu', 'pvc', 'facade', 'frameless'].includes(category.group)}
+      family={category.slug === 'sitky-plise' ? 'generic' : ['alu', 'pvc', 'facade', 'frameless'].includes(category.group) ? 'glazing' : 'glass'}
     />
   </main>
   <Footer />
