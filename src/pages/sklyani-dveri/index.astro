@@ -7,6 +7,7 @@ import FAQBlock from '../../components/FAQBlock.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TrustBar from '../../components/TrustBar.astro';
 import ProfileRequestForm from '../../components/profile/ProfileRequestForm.astro';
+import CalculatedPriceBlock from '../../components/pricing/CalculatedPriceBlock.astro';
 import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
 import { DOORS_HUB, DOORS_IMG, doorCategories } from '../../data/door-catalog';
 import { profileIcons } from '../../data/profile-icons';
@@ -187,6 +188,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       </div>
       <a class="category-arrow-link" href={modelRange.path}>Увесь модельний ряд і види скла <span aria-hidden="true">→</span></a>
     </section>
+
+    <CalculatedPriceBlock variant="door-hub" />
 
     <section class="category-section">
       <div class="category-heading"><div><p class="eyebrow">Переваги</p><h2>Чому скляні двері</h2></div><p>Практичність і естетика, яких не дають двері з МДФ чи шпону.</p></div>

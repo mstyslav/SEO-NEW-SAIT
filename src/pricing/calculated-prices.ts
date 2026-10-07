@@ -20,6 +20,7 @@ import { USD_UAH } from './currency';
 import { DEFAULT_CHOICE, SYSTEMS as RAILING_SYSTEMS, railingPrice } from '../data/railing-pricing';
 import { CANOPY_CONFIG_SYSTEMS, DEFAULT_CANOPY_CHOICE, canopyPrice } from '../data/canopy-pricing';
 import { WINDOW_MARKET, type WindowClass } from './window-pricing';
+import type { DoorType } from './door-pricing';
 
 type ConfigOption = { value: string; multiplier?: number; extraUsd?: number };
 type Config = { fields: { id: string; default?: number; options?: ConfigOption[] }[] };
@@ -89,7 +90,7 @@ export const examplePrice = (key: SystemKey, door: DoorKind | null = null, doorS
 export type PriceVariant =
   | 'partition-hub' | 'partition-loft' | 'partition-frameless' | 'partition-office' | 'partition-interior' | 'partition-doors'
   | 'glazing-hub' | 'glazing-folding' | 'glazing-sliding' | 'glazing-terrace' | 'glazing-gazebo' | 'glazing-balcony'
-  | RailingVariant | CanopyVariant | WindowVariant;
+  | RailingVariant | CanopyVariant | WindowVariant | DoorVariant;
 
 /**
  * Card systems whose price the calculator really models, per catalog (card/model ids differ
@@ -109,7 +110,7 @@ const CARD_SYSTEM_PRICE: Record<'partition' | 'glazing', Record<string, SystemKe
 
 /** Card «від» price per m² for a system on a page with the given price block, or undefined. */
 export const cardPricePerM2 = (variant: PriceVariant, systemId: string) => {
-  if (isRailingVariant(variant) || isCanopyVariant(variant) || isWindowVariant(variant)) return undefined;
+  if (isRailingVariant(variant) || isCanopyVariant(variant) || isWindowVariant(variant) || isDoorVariant(variant)) return undefined;
   const key = CARD_SYSTEM_PRICE[variant.startsWith('glazing') ? 'glazing' : 'partition'][systemId];
   return key ? systemPricePerM2(key) : undefined;
 };
@@ -235,3 +236,23 @@ export type WindowVariant = 'window-pvc' | 'window-alu';
 export const isWindowVariant = (variant: PriceVariant): variant is WindowVariant => variant.startsWith('window-');
 export const windowClassOf = (variant: WindowVariant): WindowClass => (variant === 'window-pvc' ? 'pvc' : 'alu');
 export const windowMarket = (variant: WindowVariant) => WINDOW_MARKET[windowClassOf(variant)];
+
+/* ---------------------------------------------------------------- glass doors ------------- */
+/*
+ * Glass doors have no calculator: their blocks show market-orientation ranges for typical
+ * configurations from src/pricing/door-pricing.ts (product without installation and delivery).
+ */
+export type DoorVariant = 'door-hub' | 'door-swing' | 'door-pendulum' | 'door-sliding';
+export const isDoorVariant = (variant: PriceVariant): variant is DoorVariant => variant.startsWith('door-');
+
+/** Which typical configurations each door page shows, and its catalog slug (null = hub page). */
+export const DOOR_PAGES: Record<DoorVariant, { slug: string | null; types: DoorType[] }> = {
+  'door-hub': { slug: null, types: ['swing', 'pendulum', 'sliding'] },
+  'door-swing': { slug: 'rozpashni-sklyani-dveri', types: ['swing', 'pendulum'] },
+  'door-pendulum': { slug: 'mayatnykovi-sklyani-dveri', types: ['pendulum'] },
+  'door-sliding': { slug: 'rozsuvni-sklyani-dveri', types: ['sliding'] }
+};
+
+/** Price block variant of a door catalog page, by slug (undefined = no price block). */
+export const doorPriceBlock = (slug: string) =>
+  (Object.entries(DOOR_PAGES) as [DoorVariant, { slug: string | null }][]).find(([, page]) => page.slug === slug)?.[0];

@@ -78,6 +78,8 @@ export interface ProfileCategory {
   optionsLabel?: string;
   /** Replaces the default "manufacturer specs" note under the catalog. */
   catalogNote?: string;
+  /** Link after the catalog note (label, href), e.g. to the hub price block. */
+  catalogNoteLink?: [string, string];
   /** Six process steps [title, note]; defaults to the profile-system flow. */
   process?: [string, string][];
   /** Optional "materials & quality" cards: [title, text, image base in imageBase]. */

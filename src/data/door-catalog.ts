@@ -11,6 +11,7 @@
  * Cards describe door configurations, not branded systems, so no prices are shown.
  */
 import type { ProfileCategory, ProfileModel } from './profile-systems';
+import { doorPriceBlock } from '../pricing/calculated-prices';
 
 export const DOORS_HUB = '/sklyani-dveri/';
 export const DOORS_IMG = '/images/catalog/sklyani-dveri';
@@ -50,6 +51,9 @@ const PROCESS: [string, string][] = [['Запит', 'Фото та розмір�
 
 type DoorPage = Omit<ProfileCategory, 'group' | 'path' | 'heroImage' | 'imageBase' | 'process' | 'compareColumns' | 'eyebrow'> & { eyebrow: string; path?: string };
 
+/** Door pages without their own price block that point to the hub's price block instead. */
+const HUB_PRICE_LINK_PAGES = ['mizhkimnatni-sklyani-dveri', 'matovi-sklyani-dveri', 'sklyani-dveri-dlia-ofisu'];
+
 const page = (p: DoorPage): ProfileCategory => {
   if (p.models.length !== 6 || p.faq.length !== 8) throw new Error(`door page ${p.slug}: expected 6 models and 8 own FAQs`);
   return {
@@ -64,7 +68,9 @@ const page = (p: DoorPage): ProfileCategory => {
     faq: [...p.faq, ...COMMON],
     catalogButton: 'Переглянути варіанти',
     optionsLabel: 'Варіант',
-    catalogNote: 'Параметри наведені для типових конфігурацій. Максимальні розміри та вага полотна залежать від обраної фурнітури й стін — остаточно визначаємо після заміру. Вартість — за індивідуальним розрахунком.'
+    catalogNote: 'Параметри наведені для типових конфігурацій. Максимальні розміри та вага полотна залежать від обраної фурнітури й стін — остаточно визначаємо після заміру. Вартість — за індивідуальним розрахунком.',
+    priceBlock: doorPriceBlock(p.slug),
+    catalogNoteLink: HUB_PRICE_LINK_PAGES.includes(p.slug) ? ['Дивіться орієнтовні ціни на скляні двері', `${DOORS_HUB}#price`] : undefined
   };
 };
 

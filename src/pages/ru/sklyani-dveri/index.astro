@@ -7,6 +7,7 @@ import FAQBlock from '../../../components/FAQBlock.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import TrustBar from '../../../components/TrustBar.astro';
 import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
+import CalculatedPriceBlock from '../../../components/pricing/CalculatedPriceBlock.astro';
 import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../seo/schema';
 import { DOORS_HUB, DOORS_IMG } from '../../../data/door-catalog';
 import { doorCategoriesRu as doorCategories } from '../../../data/ru/door-catalog.ru';
@@ -191,6 +192,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       </div>
       <a class="category-arrow-link" href={lp(modelRange.path)}>Весь модельный ряд и виды стекла <span aria-hidden="true">→</span></a>
     </section>
+
+    <CalculatedPriceBlock variant="door-hub" locale="ru" />
 
     <section class="category-section">
       <div class="category-heading"><div><p class="eyebrow">Преимущества</p><h2>Почему стеклянные двери</h2></div><p>Практичность и эстетика, которых не дают двери из МДФ или шпона.</p></div>

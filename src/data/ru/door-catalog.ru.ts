@@ -5,8 +5,12 @@
  * text). Paths stay the UA ones: templates localize every link with lp(). Keep in sync with src/data/door-catalog.ts.
  */
 import type { ProfileCategory } from '../profile-systems';
+import { doorPriceBlock } from '../../pricing/calculated-prices';
 
-export const doorCategoriesRu: ProfileCategory[] = [
+/** Door pages without their own price block that point to the hub's price block instead (as in UA). */
+const HUB_PRICE_LINK_PAGES = ['mizhkimnatni-sklyani-dveri', 'matovi-sklyani-dveri', 'sklyani-dveri-dlia-ofisu'];
+
+export const doorCategoriesRu: ProfileCategory[] = ([
   {
     "slug": "mizhkimnatni-sklyani-dveri",
     "path": "/sklyani-perehorodky/sklyani-mizhkimnatni-dveri/",
@@ -3626,7 +3630,11 @@ export const doorCategoriesRu: ProfileCategory[] = [
     "optionsLabel": "Вариант",
     "catalogNote": "Параметры приведены для типовых конфигураций. Максимальные размеры и вес полотна зависят от выбранной фурнитуры и стен — окончательно определяем после замера. Стоимость — по индивидуальному расчёту."
   }
-] as ProfileCategory[];
+] as ProfileCategory[]).map((category) => ({
+  ...category,
+  priceBlock: doorPriceBlock(category.slug),
+  catalogNoteLink: HUB_PRICE_LINK_PAGES.includes(category.slug) ? ['Смотрите ориентировочные цены на стеклянные двери', '/sklyani-dveri/#price'] : undefined
+}));
 
 export const getDoorCategoryRu = (slug: string) => {
   const category = doorCategoriesRu.find((item) => item.slug === slug);
