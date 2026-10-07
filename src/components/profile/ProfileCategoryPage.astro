@@ -36,6 +36,8 @@ import { CANOPY_HUB, canopyCategories } from '../../data/canopy-catalog';
 import { PARTITION_HUB, partitionCategories } from '../../data/partition-catalog';
 import { ruCategoriesByGroup } from '../../data/ru';
 import { CATEGORY_CONFIGURATORS } from '../../data/configurator-links';
+import PartitionPriceBlock from '../pricing/PartitionPriceBlock.astro';
+import { CARD_SYSTEM_PRICE, systemPricePerM2 } from '../../pricing/partition-prices';
 import { KNOWLEDGE_LINKS } from '../../data/knowledge-links';
 import { PROJECT_LINKS } from '../../data/project-links';
 import UsefulArticles from './UsefulArticles.astro';
@@ -264,7 +266,11 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
               <ul class="profile-card__features">
                 {model.features.map((feature) => <li>{feature}</li>)}
               </ul>
-              <p class="profile-card__price">{model.priceFrom ? <><strong>{model.priceFrom}</strong>{model.priceNote && <span>{model.priceNote}</span>}</> : tx.price}</p>
+              {category.priceBlock ? (
+                CARD_SYSTEM_PRICE[model.id] && <p class="profile-card__price"><strong>{locale === 'ru' ? 'Ориентировочная стоимость от' : 'Орієнтовна вартість від'} {systemPricePerM2(CARD_SYSTEM_PRICE[model.id]).toLocaleString('uk-UA')} грн/м²</strong><span>{locale === 'ru' ? 'с монтажом' : 'з монтажем'}</span></p>
+              ) : (
+                <p class="profile-card__price">{model.priceFrom ? <><strong>{model.priceFrom}</strong>{model.priceNote && <span>{model.priceNote}</span>}</> : tx.price}</p>
+              )}
               <a class="button button--mint profile-card__cta" href="#request" data-request-model={model.title ?? model.name}>{model.image ? `${tx.calc} ${model.name.replace(/^Aluprof /, '')}` : tx.request}</a>
             </div>
           </article>
@@ -272,6 +278,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       </div>
       <p class="profile-note">{catalogNote}</p>
     </section>
+
+    {category.priceBlock && <PartitionPriceBlock variant={category.priceBlock} locale={locale} />}
 
     <section class="category-section category-section--mint">
       <div class="category-heading"><div><p class="eyebrow">{tx.compare}</p><h2>{tx.compareTitle}</h2></div><p>{tx.compareIntro}</p></div>

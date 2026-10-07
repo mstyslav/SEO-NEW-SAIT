@@ -18,6 +18,8 @@ import '../../styles/profile-systems.css';
 import '../../styles/projects-common.css';
 import { HUB_CONFIGURATORS } from '../../data/configurator-links';
 import UsefulArticles from '../../components/profile/UsefulArticles.astro';
+import PartitionPriceBlock from '../../components/pricing/PartitionPriceBlock.astro';
+import { CARD_SYSTEM_PRICE, systemPricePerM2 } from '../../pricing/partition-prices';
 
 const origin = Astro.site ?? Astro.url.origin;
 const pageUrl = absoluteUrl(PARTITION_HUB, origin);
@@ -166,7 +168,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <section id="systems" class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Системи</p><h2>Системи скляних перегородок</h2></div><p>Ціна — за індивідуальним розрахунком. Більше систем — на сторінках видів.</p></div>
+      <div class="category-heading"><div><p class="eyebrow">Системи</p><h2>Системи скляних перегородок</h2></div><p>Більше систем — на сторінках видів.</p></div>
       <div class="profile-grid">
         {partitionHubSystems.map((system) => (
           <article class="profile-card">
@@ -177,13 +179,15 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
             <div class="profile-card__body">
               <h3>{system.title ?? system.name}</h3>
               <p class="profile-card__blurb">{system.blurb}</p>
-              <p class="profile-card__price">Ціна — за індивідуальним розрахунком</p>
+              {CARD_SYSTEM_PRICE[system.key] && <p class="profile-card__price"><strong>Орієнтовна вартість від {systemPricePerM2(CARD_SYSTEM_PRICE[system.key]).toLocaleString('uk-UA')} грн/м²</strong><span>з монтажем</span></p>}
               <a class="button button--mint profile-card__cta" href={system.href}>Детальніше про систему →</a>
             </div>
           </article>
         ))}
       </div>
     </section>
+
+    <PartitionPriceBlock variant="hub" />
 
     <section class="category-section">
       <div class="category-heading"><div><p class="eyebrow">Конструкція</p><h2>Як працює перегородка</h2></div><p>Від типу конструкції залежать прохід, місце й вигляд.</p></div>

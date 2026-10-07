@@ -69,6 +69,8 @@ export interface ProfileCategory {
   related: [string, string][];
   ctaTitle: string;
   ctaText: string;
+  /** Calculated price block (glass partitions pilot), see src/pricing/partition-prices.ts. */
+  priceBlock?: import('../pricing/partition-prices').PartitionPriceVariant;
   /** Image folder for hero/model images; defaults to IMG_BASE. */
   imageBase?: string;
   /** Hero button / form select wording (defaults: систем / Система). */
