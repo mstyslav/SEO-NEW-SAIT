@@ -10,6 +10,7 @@
  * Photos: Unsplash License (free commercial use, no competitor photos) — see
  * IMAGE_CREDITS_ohorozhi.md. Mounting drawings are Space Glass schematics.
  */
+import { railingPriceBlock } from '../pricing/calculated-prices';
 import type { ProfileCategory, ProfileModel } from './profile-systems';
 
 export const RAILINGS_HUB = '/sklyani-ohorozhi/';
@@ -103,6 +104,7 @@ const page = (p: RailingPage): ProfileCategory => {
     catalogButton: 'Переглянути варіанти',
     optionsLabel: 'Варіант',
     catalogNote: 'Параметри наведені для типових конфігурацій. Товщину скла, крок кріплень і висоту визначаємо після заміру з урахуванням основи та навантаження. Орієнтовну вартість можна порахувати в конфігураторі.',
+    priceBlock: railingPriceBlock(p.slug),
     heroExtra: ['Розрахувати в конфігураторі', RAILINGS_CONFIGURATOR]
   };
 };

@@ -10,11 +10,13 @@
  * partner's list prices and are multiplied by OPTION_FACTOR (the same discount).
  * Final price in UAH = EUR × EUR_RATE × COEFFICIENT (+ Space Glass installation).
  *
- * ▶ Change EUR_RATE, COEFFICIENT and the installation rates to set your own prices.
+ * The EUR rate is the site's working rate — change it in src/pricing/currency.ts.
+ * ▶ Change COEFFICIENT and the installation rates to set your own prices.
  */
+import { EUR_UAH } from '../pricing/currency';
 
-/** UAH per 1 EUR. */
-export const EUR_RATE = 48;
+/** UAH per 1 EUR (working rate from src/pricing/currency.ts). */
+export const EUR_RATE = EUR_UAH;
 /** Your multiplier on top of the partner price (delivery, customs, margin). 1 = partner price. */
 export const COEFFICIENT = 1;
 /** Partner discount applied to option list prices (1 − 45 %). */

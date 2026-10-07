@@ -2,6 +2,7 @@
  * RU version of src/data/railing-catalog.ts — same slugs, paths and images, Russian text.
  * Pages: src/pages/ru/sklyani-ohorozhi/**, src/pages/ru/pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/.
  */
+import { railingPriceBlock } from '../../pricing/calculated-prices';
 import type { ProfileCategory, ProfileModel } from '../profile-systems';
 import { RAILINGS_CONFIGURATOR, RAILINGS_HUB, RAILINGS_IMG } from '../railing-catalog';
 
@@ -90,6 +91,7 @@ const page = (p: RailingPage): ProfileCategory => {
     catalogButton: 'Смотреть варианты',
     optionsLabel: 'Вариант',
     catalogNote: 'Параметры приведены для типовых конфигураций. Толщину стекла, шаг креплений и высоту определяем после замера с учётом основания и нагрузки. Ориентировочную стоимость можно посчитать в конфигураторе.',
+    priceBlock: railingPriceBlock(p.slug),
     heroExtra: ['Рассчитать в конфигураторе', RAILINGS_CONFIGURATOR]
   };
 };

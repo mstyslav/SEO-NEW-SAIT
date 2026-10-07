@@ -9,6 +9,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import DynamicConfigurator from './DynamicConfigurator.astro';
 import tariffs from '../../pricing/tariffs.json';
+import { USD_UAH } from '../../pricing/currency';
 import labelsAll from '../../i18n/configurator-labels.json';
 import uiAll from '../../i18n/configurator-ui.json';
 // <title> / meta description only (H1 and on-page text keep the shared labels): each calculator
@@ -50,7 +51,7 @@ if (!seo) throw new Error(`configurator-seo.json: missing ${locale} entry for pr
         <DynamicConfigurator
           config={config}
           tariff={tariff}
-          currency={tariffs.currency}
+          usdRateUah={USD_UAH}
           productName={title}
           locale={locale}
         />

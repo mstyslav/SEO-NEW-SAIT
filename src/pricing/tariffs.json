@@ -2,14 +2,7 @@
   "version": 1,
   "currency": {
     "base": "USD",
-    "display": "UAH",
-    "source": "NBU",
-    "nbuEndpoint": "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json",
-    "markupUah": 0.8,
-    "markupMinUah": 0.5,
-    "markupMaxUah": 1.0,
-    "fallbackRateUah": 43.5,
-    "cacheHours": 24
+    "display": "UAH"
   },
   "defaults": {
     "installationUsdM2": 60,

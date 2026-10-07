@@ -5,18 +5,21 @@
  * configurator's component list (profile per metre, glass per m², shape, corners,
  * colour, handrail, volume discount) and calibrated so each system's reference
  * price for 1.0 m × 0.9 m (I-shape, clear glass, no extras) matches the partner's
- * published price (2026-09). Final price in UAH = EUR × EUR_RATE × COEFFICIENT.
+ * published price (2026-09). Final price in UAH = EUR × EUR_RATE × COEFFICIENT + installation.
  *
- * ▶ Change EUR_RATE and COEFFICIENT below to set your own prices.
+ * The EUR prices are the dealer's prices to the customer; Space Glass buys with its own dealer
+ * discount, so no extra markup is added on top (COEFFICIENT = 1).
+ * The EUR rate is the site's working rate — change it in src/pricing/currency.ts.
  */
+import { EUR_UAH } from '../pricing/currency';
 
-/** UAH per 1 EUR. */
-export const EUR_RATE = 48;
-/** Your multiplier on top of the partner price (delivery, customs, margin). 1 = partner retail price. */
+/** UAH per 1 EUR (working rate from src/pricing/currency.ts). */
+export const EUR_RATE = EUR_UAH;
+/** Multiplier on top of the dealer price to the customer. 1 = no extra markup. */
 export const COEFFICIENT = 1;
-/** Space Glass installation, UAH per running metre, and the minimum per order. */
-export const INSTALL_UAH_PER_M = 1500;
-export const INSTALL_UAH_MIN = 7500;
+/** Space Glass measuring, delivery and installation: UAH per running metre, and the minimum per order. */
+export const INSTALL_UAH_PER_M = 2000;
+export const INSTALL_UAH_MIN = 10000;
 
 export type ShapeId = 'I' | 'L' | 'U';
 export type SystemType = 'profile' | 'points' | 'posts' | 'french';
@@ -90,3 +93,65 @@ export const EUR = {
 
 /** Partner reference conditions used for calibration. */
 export const REFERENCE = { length: 1, height: 0.9 };
+
+export type GlassColourId = keyof typeof EUR.glass;
+export type SatinId = keyof typeof EUR.satin;
+export type ColourId = keyof typeof EUR.colour;
+export type HandrailId = keyof typeof EUR.handrail;
+
+/** One configuration as chosen in the calculator. */
+export interface RailingChoice {
+  system: RailingSystem;
+  shape: ShapeId;
+  /** Total length of all sides, m. */
+  lengthM: number;
+  /** Height, cm (capped at the system's maximum). */
+  heightCm: number;
+  thickness: string;
+  glass: GlassColourId;
+  satin: SatinId;
+  coating: boolean;
+  colour: ColourId;
+  handrail: HandrailId;
+  install: boolean;
+}
+
+/**
+ * The calculator's price formula — used by /ogorozhi-configurator/ and by the indexed price
+ * blocks (src/pricing/calculated-prices.ts), so both always show the same number.
+ * Each system's per-metre part is calibrated so that 1.0 × 0.9 m (I-shape, clear glass, no
+ * extras) equals the system's reference price. `eur` may be the RU-labelled copy of EUR, or the
+ * JSON copy passed to the browser (where the last volume tier's Infinity becomes null).
+ */
+export const railingPrice = (c: RailingChoice, eur: typeof EUR = EUR) => {
+  const s = c.system;
+  const french = s.type === 'french';
+  const L = c.lengthM;
+  const H = Math.min(c.heightCm, s.maxHeight / 10) / 100;
+  const heavy = s.glass.find((g) => g.id === c.thickness)?.heavy ? 1 : 0;
+  const glassRef = eur.glass.clear.perM2[0] * REFERENCE.length * REFERENCE.height;
+  const fixedRef = french ? glassRef : eur.shape.I + eur.materialPerM * REFERENCE.length + glassRef;
+  const basePerM = s.referenceEur - fixedRef;
+  const corners = french ? 0 : c.shape === 'L' ? 1 : c.shape === 'U' ? 2 : 0;
+  const area = L * H;
+  const colour = eur.colour[c.colour];
+  /** Component prices before the volume discount, EUR. */
+  const partsEur = {
+    system: basePerM * L + (french ? 0 : eur.materialPerM * L),
+    shape: (french ? 0 : eur.shape[c.shape]) + corners * eur.corner,
+    glass: eur.glass[c.glass].perM2[heavy] * area,
+    satin: eur.satin[c.satin].perM2 * area,
+    coating: c.coating ? eur.coatingPerM2 * area : 0,
+    colour: colour.perM * L + colour.once,
+    handrail: eur.handrail[c.handrail].perM * L
+  };
+  const factor = (eur.volume as [number | null, number][]).find(([max]) => max === null || L <= max)?.[1] ?? 1;
+  const k = factor * EUR_RATE * COEFFICIENT;
+  const partsUah = Object.fromEntries(Object.entries(partsEur).map(([key, value]) => [key, value * k])) as Record<keyof typeof partsEur, number>;
+  const installUah = c.install ? Math.max(INSTALL_UAH_MIN, INSTALL_UAH_PER_M * L) : 0;
+  const totalUah = Object.values(partsUah).reduce((a, b) => a + b, 0) + installUah;
+  return { lengthM: L, heightM: H, areaM2: area, corners, factor, partsEur, partsUah, installUah, totalUah };
+};
+
+/** The calculator's starting configuration (clear glass, steel colour, no handrail, installation). */
+export const DEFAULT_CHOICE = { shape: 'I', thickness: 'g17', glass: 'clear', satin: 'none', coating: false, colour: 'steel', handrail: 'none', install: true } as const;

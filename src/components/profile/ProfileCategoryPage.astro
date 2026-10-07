@@ -37,7 +37,7 @@ import { PARTITION_HUB, partitionCategories } from '../../data/partition-catalog
 import { ruCategoriesByGroup } from '../../data/ru';
 import { CATEGORY_CONFIGURATORS } from '../../data/configurator-links';
 import CalculatedPriceBlock from '../pricing/CalculatedPriceBlock.astro';
-import { cardPricePerM2 } from '../../pricing/calculated-prices';
+import { cardPricePerM2, railingCardGuide, RAILING_REFERENCE } from '../../pricing/calculated-prices';
 import { KNOWLEDGE_LINKS } from '../../data/knowledge-links';
 import { PROJECT_LINKS } from '../../data/project-links';
 import UsefulArticles from './UsefulArticles.astro';
@@ -266,7 +266,9 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
               <ul class="profile-card__features">
                 {model.features.map((feature) => <li>{feature}</li>)}
               </ul>
-              {category.priceBlock ? (
+              {category.priceBlock && railingCardGuide(category.priceBlock, model.id) ? (
+                <p class="profile-card__price"><strong>{locale === 'ru' ? 'Ориентир для' : 'Орієнтир для'} {RAILING_REFERENCE.lengthM}&nbsp;м — ≈&nbsp;{railingCardGuide(category.priceBlock, model.id)!.perMetreUah.toLocaleString('uk-UA')}&nbsp;грн/м.п.</strong><span>{locale === 'ru' ? 'с монтажом' : 'з монтажем'}</span></p>
+              ) : category.priceBlock && !category.priceBlock.startsWith('railing-') ? (
                 cardPricePerM2(category.priceBlock, model.id) && <p class="profile-card__price"><strong>{locale === 'ru' ? 'Ориентировочная стоимость от' : 'Орієнтовна вартість від'} {cardPricePerM2(category.priceBlock, model.id)!.toLocaleString('uk-UA')} грн/м²</strong><span>{locale === 'ru' ? 'с монтажом' : 'з монтажем'}</span></p>
               ) : (
                 <p class="profile-card__price">{model.priceFrom ? <><strong>{model.priceFrom}</strong>{model.priceNote && <span>{model.priceNote}</span>}</> : tx.price}</p>

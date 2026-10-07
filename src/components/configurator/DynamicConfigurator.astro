@@ -5,7 +5,7 @@ import labelsAll from '../../i18n/configurator-labels.json';
 import optionsAll from '../../i18n/configurator-options.json';
 import { localeFromPath, normalizeLocale, localizedPath } from '../../i18n/helpers';
 
-const { config, tariff, currency, productName } = Astro.props;
+const { config, tariff, usdRateUah, productName } = Astro.props;
 const locale = normalizeLocale(Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
 const ui = uiAll[locale] ?? uiAll.uk;
 const labels = labelsAll[locale] ?? labelsAll.uk;
@@ -23,8 +23,7 @@ const labelFor = (field: any) => field.labelKey ? (labels[field.labelKey] ?? fie
  data-product-rate={tariff.productUsdM2}
  data-install-rate={tariff.installationUsdM2 ?? 60}
  data-install-enabled={String(tariff.installationEnabled)}
- data-markup={currency.markupUah}
- data-fallback={currency.fallbackRateUah}
+ data-usd-rate={usdRateUah}
  data-t-not-selected={ui.notSelected}
  data-t-added={ui.added}
  data-t-open={ui.open}>
@@ -87,12 +86,10 @@ const labelFor = (field: any) => field.labelKey ? (labels[field.labelKey] ?? fie
         <div><dt>{ui.product}</dt><dd data-product-price>—</dd></div>
         <div><dt>{ui.options}</dt><dd data-extras>—</dd></div>
         <div><dt>{ui.installation}</dt><dd data-installation>—</dd></div>
-        <div><dt>{ui.rate}</dt><dd data-rate>—</dd></div>
       </dl>
       <div class="dyn-total">
         <span>{ui.total}</span>
         <strong data-total>—</strong>
-        <small data-total-usd></small>
       </div>
       <p class="dyn-disclaimer">{ui.disclaimer}</p>
       <div class="dyn-actions">
@@ -105,26 +102,9 @@ const labelFor = (field: any) => field.labelKey ? (labels[field.labelKey] ?? fie
 </section>
 
 <script type="module">
-import { getUsdRate } from '../../pricing/client/exchange-rate.js';
-
-document.querySelectorAll('[data-dyn-config]').forEach(async root => {
-  const markup = Number(root.dataset.markup || .8);
-  const fallbackRate = Number(root.dataset.fallback || 43.5);
-  let exchange = {
-    nbuRate: fallbackRate,
-    markup,
-    workingRate: fallbackRate + markup,
-    source: 'fallback'
-  };
-
-  try {
-    const loaded = await getUsdRate({ markup, fallbackRate });
-    if (Number.isFinite(Number(loaded?.workingRate))) {
-      exchange = loaded;
-    }
-  } catch (error) {
-    console.warn('Exchange rate fallback is used.', error);
-  }
+// Supplier tariffs are in USD; the working rate comes from src/pricing/currency.ts. Customers see UAH only.
+document.querySelectorAll('[data-dyn-config]').forEach(root => {
+  const usdRate = Number(root.dataset.usdRate);
 
   const locale = root.dataset.locale || 'uk';
   const notSelected = root.dataset.tNotSelected || '—';
@@ -168,8 +148,10 @@ document.querySelectorAll('[data-dyn-config]').forEach(async root => {
     const installation = root.dataset.installEnabled === 'true' && s.values.installation
       ? area*Number(root.dataset.installRate||60) : 0;
 
-    const totalUsd = product+optionCost+installation;
-    const totalUah = totalUsd*exchange.workingRate;
+    const uah = usd => Math.round(usd*usdRate);
+    const money = value => value.toLocaleString(locale === 'uk' ? 'uk-UA' : 'ru-UA')+' грн';
+    const productUah = uah(product), extrasUah = uah(optionCost), installationUah = uah(installation);
+    const totalUah = productUah+extrasUah+installationUah;
 
     last = {
       locale,
@@ -177,21 +159,17 @@ document.querySelectorAll('[data-dyn-config]').forEach(async root => {
       productName:root.dataset.product,
       parameters:s.values,
       areaM2:area,
-      productUsd:product,
-      extrasUsd:optionCost,
-      installationUsd:installation,
-      totalUsd,
-      workingRate:exchange.workingRate,
+      productUah,
+      extrasUah,
+      installationUah,
       totalUah
     };
 
     root.querySelector('[data-area]').textContent = area.toFixed(2)+' m²';
-    root.querySelector('[data-product-price]').textContent = product.toFixed(2)+' $';
-    root.querySelector('[data-extras]').textContent = optionCost ? optionCost.toFixed(2)+' $' : notSelected;
-    root.querySelector('[data-installation]').textContent = installation ? installation.toFixed(2)+' $' : notSelected;
-    root.querySelector('[data-rate]').textContent = exchange.workingRate.toFixed(2)+' UAH/$';
-    root.querySelector('[data-total]').textContent = Math.round(totalUah).toLocaleString(locale === 'uk' ? 'uk-UA' : locale)+' UAH';
-    root.querySelector('[data-total-usd]').textContent = '≈ '+totalUsd.toFixed(2)+' $';
+    root.querySelector('[data-product-price]').textContent = money(productUah);
+    root.querySelector('[data-extras]').textContent = optionCost ? money(extrasUah) : notSelected;
+    root.querySelector('[data-installation]').textContent = installation ? money(installationUah) : notSelected;
+    root.querySelector('[data-total]').textContent = money(totalUah);
 
     const quote = root.querySelector('[data-quote]');
     const url = new URL(quote.href, location.origin);

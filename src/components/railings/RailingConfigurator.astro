@@ -4,9 +4,10 @@
  * dimensions → colour → glass → handrail → installation → request. Live SVG drawing,
  * instant price with a breakdown; the request goes through the global
  * `[data-lead-form]` handler with the full configuration in hidden fields.
- * Prices: src/data/railing-pricing.ts (EUR × EUR_RATE × COEFFICIENT).
+ * Prices: railingPrice() in src/data/railing-pricing.ts (EUR tariffs × working rate from
+ * src/pricing/currency.ts + installation); customers see UAH only.
  */
-import { COEFFICIENT, EUR, EUR_RATE, INSTALL_UAH_MIN, INSTALL_UAH_PER_M, REFERENCE, SYSTEMS } from '../../data/railing-pricing';
+import { EUR, SYSTEMS } from '../../data/railing-pricing';
 import { RAILINGS_IMG } from '../../data/railing-catalog';
 import { EUR_RU, SYSTEMS_RU } from '../../data/ru/railing-pricing.ru';
 import { localizedPath, type Locale } from '../../i18n/helpers';
@@ -69,7 +70,7 @@ const t = {
     dimNoteParts: [': высота стекла до ', ' см, ширина одной панели до ', ' см — длинные стороны делим на панели автоматически.']
   }
 }[locale];
-const data = { systems, eur: isRu ? EUR_RU : EUR, rate: EUR_RATE, coef: COEFFICIENT, installPerM: INSTALL_UAH_PER_M, installMin: INSTALL_UAH_MIN, ref: REFERENCE, img: RAILINGS_IMG, t };
+const data = { systems, eur: isRu ? EUR_RU : EUR, img: RAILINGS_IMG, t };
 const steps = ui.steps;
 const page = lp('/ogorozhi-configurator/');
 ---
@@ -191,6 +192,7 @@ const page = lp('/ogorozhi-configurator/');
 </section>
 
 <script>
+  import { railingPrice, type RailingSystem, type GlassColourId, type SatinId, type ColourId, type HandrailId } from '../../data/railing-pricing';
   type Sys = { id: string; name: string; type: 'profile' | 'points' | 'posts' | 'french'; note: string; image: string; referenceEur: number; maxHeight: number; maxPanel: number; glass: { id: string; label: string; heavy: boolean }[]; handrailIncluded?: boolean; shapes: string[] };
 
   const root = document.querySelector<HTMLElement>('[data-rc]');
@@ -240,31 +242,24 @@ const page = lp('/ogorozhi-configurator/');
       const s = state.sys;
       const sh = shape();
       const L = sides().reduce((a, [, v]) => a + v, 0) / 100;
-      const H = Math.min(num('H'), s.maxHeight / 10) / 100;
-      const heavy = s.glass.find((g) => g.id === state.thickness)?.heavy ? 1 : 0;
-      const french = s.type === 'french';
-      const glassRef = E.glass.clear.perM2[0] * D.ref.length * D.ref.height;
-      const fixedRef = french ? glassRef : E.shape.I + E.materialPerM * D.ref.length + glassRef;
-      const basePerM = s.referenceEur - fixedRef;
-      const corners = french ? 0 : sh === 'L' ? 1 : sh === 'U' ? 2 : 0;
-      const area = L * H;
+      const install = (form.querySelector<HTMLInputElement>('input[name="install"]:checked')?.value || 'yes') === 'yes';
+      const coating = (form.elements.namedItem('coating') as HTMLInputElement).checked;
+      // Same formula as the indexed price blocks: railingPrice() in src/data/railing-pricing.ts.
+      const p = railingPrice({ system: s as RailingSystem, shape: sh, lengthM: L, heightCm: num('H'), thickness: state.thickness, glass: state.glass as GlassColourId, satin: state.satin as SatinId, coating, colour: state.colour as ColourId, handrail: state.handrail as HandrailId, install }, E);
       const col = E.colour[state.colour];
       const lines: [string, number][] = [
-        [`${T.system} ${s.name}, ${L.toFixed(2).replace('.', ',')} ${T.m}`, basePerM * L + (french ? 0 : E.materialPerM * L)],
-        [`${T.shape} ${sh}${corners ? `, ${T.corners}: ${corners}` : ''}`, (french ? 0 : E.shape[sh]) + corners * E.corner],
-        [`${T.glass} ${E.glass[state.glass].label.toLowerCase()}, ${area.toFixed(2).replace('.', ',')} ${T.m}²`, E.glass[state.glass].perM2[heavy] * area],
-        [E.satin[state.satin].label, E.satin[state.satin].perM2 * area],
-        [T.coating, (form.elements.namedItem('coating') as HTMLInputElement).checked ? E.coatingPerM2 * area : 0],
-        [`${T.colour}: ${col.label}`, col.perM * L + col.once],
-        [E.handrail[state.handrail].label, E.handrail[state.handrail].perM * L]
+        [`${T.system} ${s.name}, ${L.toFixed(2).replace('.', ',')} ${T.m}`, p.partsUah.system],
+        [`${T.shape} ${sh}${p.corners ? `, ${T.corners}: ${p.corners}` : ''}`, p.partsUah.shape],
+        [`${T.glass} ${E.glass[state.glass].label.toLowerCase()}, ${p.areaM2.toFixed(2).replace('.', ',')} ${T.m}²`, p.partsUah.glass],
+        [E.satin[state.satin].label, p.partsUah.satin],
+        [T.coating, p.partsUah.coating],
+        [`${T.colour}: ${col.label}`, p.partsUah.colour],
+        [E.handrail[state.handrail].label, p.partsUah.handrail]
       ];
-      const factor = (E.volume as [number | null, number][]).find(([max]) => max === null || L <= (max as number))?.[1] ?? 1;
-      const k = D.rate * D.coef;
-      const items = lines.filter(([, v]) => v > 0.01).map(([t, v]) => [t, v * factor * k] as [string, number]);
-      if (factor < 1) items.push([`${T.discount} ${Math.round((1 - factor) * 100)}%`, 0]);
-      const install = (form.querySelector<HTMLInputElement>('input[name="install"]:checked')?.value || 'yes') === 'yes';
-      if (install) items.push([T.installLine, Math.max(D.installMin, D.installPerM * L)]);
-      return { items, total: items.reduce((a, [, v]) => a + v, 0), L, H };
+      const items = lines.filter(([, v]) => v > 0.5);
+      if (p.factor < 1) items.push([`${T.discount} ${Math.round((1 - p.factor) * 100)}%`, 0]);
+      if (install) items.push([T.installLine, p.installUah]);
+      return { items, total: p.totalUah, L, H: p.heightM };
     };
 
     // ---- drawing

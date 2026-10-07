@@ -3,6 +3,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import CalculatedPriceBlock from '../../components/pricing/CalculatedPriceBlock.astro';
 import FAQBlock from '../../components/FAQBlock.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TrustBar from '../../components/TrustBar.astro';
@@ -188,6 +189,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         ))}
       </div>
     </section>
+
+    <CalculatedPriceBlock variant="railing-hub" />
 
     <section class="category-section">
       <div class="inner-cta">
