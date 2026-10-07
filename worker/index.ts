@@ -19,10 +19,12 @@
  *
  * Anti-spam (silently dropped with a fake "ok"): hidden honeypot field, JS-only marker +
  * header, < 3 s on the page, links / junk submissions, foreign Origin;
- * phone must be a valid Ukrainian (or explicit +international) number; 3 leads/min per IP.
+ * phone must be a valid number for its country (libphonenumber); 3 leads/min per IP.
  *
  * Secrets are set with `npx wrangler secret put NAME` — never commit them.
  */
+
+import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 
 export interface Env {
   ASSETS: Fetcher;
@@ -60,15 +62,24 @@ const json = (body: unknown, status = 200) =>
 
 const str = (value: unknown, max = 500) => (typeof value === 'string' ? value.trim().slice(0, max) : undefined) || undefined;
 
-/** Ukrainian numbers (0XXXXXXXXX / 380XXXXXXXXX) or an explicit international +number. */
+/**
+ * Any country's number, validated per country with libphonenumber, returned in E.164
+ * (+380671234567). The forms send E.164; older Ukrainian formats still work:
+ * 0671234567, 380671234567, 80671234567, +380 67 123 45 67, and 00<code>… for abroad.
+ */
 function normalisePhone(raw: string): string | null {
-  if (/[a-zа-яіїєґ]/i.test(raw)) return null;
-  const digits = raw.replace(/\D/g, '');
-  if (/^0\d{9}$/.test(digits)) return `+38${digits}`;
-  if (/^380\d{9}$/.test(digits)) return `+${digits}`;
-  if (/^80\d{9}$/.test(digits)) return `+3${digits}`;
-  if (raw.trim().startsWith('+') && /^\d{10,15}$/.test(digits) && !/^(\d)\1+$/.test(digits)) return `+${digits}`;
-  return null;
+  const value = String(raw ?? '').trim();
+  if (!value || value.length > 40 || /[a-zа-яіїєґ]/i.test(value)) return null;
+  const digits = value.replace(/\D/g, '');
+  let candidate: string;
+  if (value.startsWith('+')) candidate = `+${digits}`;
+  else if (digits.startsWith('00')) candidate = `+${digits.slice(2)}`;
+  else if (/^0\d{9}$/.test(digits)) candidate = `+38${digits}`;
+  else if (/^380\d{9}$/.test(digits)) candidate = `+${digits}`;
+  else if (/^80\d{9}$/.test(digits)) candidate = `+3${digits}`;
+  else return null;
+  const phone = parsePhoneNumberFromString(candidate);
+  return phone && phone.isValid() ? phone.number : null;
 }
 
 const URL_RE = /(https?:\/\/|www\.|\.(ru|com|net|org|xyz|top|io|biz|info|site|online|click|link)\b|\[url|<a\s)/i;

@@ -8,13 +8,13 @@ let humanSignal=false;
 const isRu=location.pathname==='/ru/'||location.pathname.startsWith('/ru/');
 const T=isRu?{title:'Спасибо',title2:'Заявка отправлена',text:'Менеджер свяжется с вами в ближайшее рабочее время, уточнит детали и подготовит расчёт.',product:'Запрос',ok:'Хорошо',call:'Позвонить нам',close:'Закрыть',
     jobText:'Мы получили вашу заявку и свяжемся с вами, чтобы обсудить детали.',
-    sending:'Отправляем…',status:'Безопасно передаём ваш запрос…',phone:'Проверьте номер телефона — укажите украинский номер, например +380 67 123 45 67.',
+    sending:'Отправляем…',status:'Безопасно передаём ваш запрос…',phone:'Проверьте номер телефона и код страны.',
     error:'Не удалось отправить онлайн. Позвоните +38 (073) 425 14 00 или попробуйте ещё раз.',tooMany:'Слишком много заявок подряд. Подождите минуту и попробуйте снова.',
     fileSize:'Файл слишком большой — максимум 10 МБ.',fileType:'Этот тип файла не поддерживается. Прикрепите JPG, PNG, WEBP, PDF или DWG.',
     fileNotSent:'Заявка отправлена, но файл не удалось передать — менеджер попросит его при звонке.'}
   :{title:'Дякуємо',title2:'Заявку надіслано',text:'Менеджер зв’яжеться з вами найближчим робочим часом, уточнить деталі та підготує розрахунок.',product:'Запит',ok:'Добре',call:'Зателефонувати нам',close:'Закрити',
     jobText:'Ми отримали вашу заявку та зв’яжемося з вами, щоб обговорити деталі.',
-    sending:'Надсилаємо…',status:'Безпечно передаємо ваш запит…',phone:'Перевірте номер телефону — вкажіть український номер, наприклад +380 67 123 45 67.',
+    sending:'Надсилаємо…',status:'Безпечно передаємо ваш запит…',phone:'Перевірте номер телефону та код країни.',
     error:'Не вдалося надіслати онлайн. Зателефонуйте +38 (073) 425 14 00 або спробуйте ще раз.',tooMany:'Забагато заявок поспіль. Зачекайте хвилину та спробуйте знову.',
     fileSize:'Файл завеликий — максимум 10 МБ.',fileType:'Цей тип файлу не підтримується. Додайте JPG, PNG, WEBP, PDF або DWG.',
     fileNotSent:'Заявку надіслано, але файл не вдалося передати — менеджер попросить його під час дзвінка.'};
@@ -31,52 +31,117 @@ const FORM_TYPES=[['contacts-form','contacts','contacts_page'],['profile-request
 const formInfo=form=>{const hit=FORM_TYPES.find(([cls])=>form.classList.contains(cls));return{form_id:form.dataset.formId||(hit?hit[1]:'lead_form'),form_location:form.dataset.formLocation||(hit?hit[2]:'content')};};
 const productCategory=form=>{const field=form.querySelector('input[type="hidden"][name="product"], select[name="product"]');const v=field&&String(field.value||'').trim();return v?v.slice(0,100):undefined;};
 
-// One Ukrainian phone mask for every lead form: +380 XX XXX XX XX.
-// The Worker validates the number again, so this improves input quality without
-// replacing the server-side check.
-const PHONE_ERROR=isRu?'Введите полный номер: +380 XX XXX XX XX.':'Введіть повний номер: +380 XX XXX XX XX.';
-const phoneLocalDigits=value=>{
-  let digits=String(value||'').replace(/\D/g,'');
-  if(digits.startsWith('380')) digits=digits.slice(3);
-  else if(digits.startsWith('80')) digits=digits.slice(2);
-  else if(digits.startsWith('0')) digits=digits.slice(1);
-  return digits.slice(0,9);
+// International phone field for every lead form: country selector (flag + dial code) with
+// per-country formatting and validation. intl-tel-input + Google libphonenumber are served
+// from /vendor/ (no CDN); the core loads only on pages with a phone field, the validation
+// utils (~60 KB gz) on the first interaction with it. The number is sent in E.164
+// (+380671234567); the Worker validates it again (worker/index.ts → normalisePhone).
+const PHONE_ERROR=isRu?'Проверьте номер телефона и код страны.':'Перевірте номер телефону та код країни.';
+const ITI_BASE='/vendor/intl-tel-input-29.5.3/';
+const PHONE_COUNTRIES=['ua','at','it','de','pl','es','cz','sk','fr','ch','md','ro'];
+const phoneInputs=[...document.querySelectorAll('[data-lead-form] input[type="tel"][name="phone"]')];
+const phoneWidgets=new Map();
+let phoneUtils=null;
+const loadAsset=(tag,attrs)=>new Promise((resolve,reject)=>{const el=Object.assign(document.createElement(tag),attrs);el.onload=resolve;el.onerror=reject;document.head.appendChild(el);});
+const loadPhoneUtils=()=>{
+  if(!window.intlTelInput) return Promise.resolve(false);
+  if(!phoneUtils) phoneUtils=window.intlTelInput.utils?Promise.resolve(true):window.intlTelInput.attachUtils(()=>import(ITI_BASE+'js/utils.js')).then(()=>!!window.intlTelInput.utils,()=>false);
+  return phoneUtils;
 };
-const formatPhone=value=>{
-  const digits=phoneLocalDigits(value);
-  if(!digits) return '+380';
-  const parts=[digits.slice(0,2),digits.slice(2,5),digits.slice(5,7),digits.slice(7,9)].filter(Boolean);
-  return `+380 ${parts.join(' ')}`;
+const phoneCss=`.iti{display:block;width:100%}
+.iti,.iti--detached-country-selector{--iti-border-color:#dfe9e5;--iti-hover-color:#eef7f3;--iti-icon-color:#56625c}
+.iti button.iti__selected-country.iti__selected-country{all:unset!important;box-sizing:border-box!important;position:relative!important;z-index:1!important;display:flex!important;align-items:center!important;height:100%!important;border-radius:8px 0 0 8px!important;color:#16201b!important;font:inherit!important;cursor:pointer!important}
+.iti button.iti__selected-country.iti__selected-country:focus-visible{outline:2px solid var(--mint-dark,#3c9c7c)!important;outline-offset:-3px!important}
+.iti__selected-dial-code{color:#16201b}
+.iti--detached-country-selector{z-index:4500}
+.iti__country-selector{border-radius:12px;overflow:hidden}
+.iti--inline-country-selector .iti__country-selector{border-color:var(--mint-dark,#3c9c7c);box-shadow:0 18px 40px rgba(5,9,7,.16)}
+.iti .iti__search-input{min-height:44px;margin:0;border:0;border-radius:0;background:#fff;box-shadow:none;font-size:16px}
+.iti .iti__search-input:focus{outline:none;box-shadow:none}
+.iti__search-input-wrapper:focus-within{border-bottom-color:var(--mint-dark,#3c9c7c)}
+.iti__country{color:#16201b}
+.iti__country.iti__highlight{background:#e8f6f0}
+.iti__dial-code{color:#56625c}`;
+// Basic check used only if the validation library could not be loaded (the Worker still checks precisely).
+const fallbackPhone=widget=>{
+  const country=widget.getSelectedCountry();
+  let digits=widget.telInputEl.value.replace(/\D/g,'');
+  if(!country||!digits) return '';
+  if(widget.telInputEl.value.trim().startsWith('+')) return '+'+digits;
+  digits=digits.replace(/^0+/,'');
+  return '+'+country.dialCode+digits;
 };
-const validatePhone=input=>{
-  const count=phoneLocalDigits(input.value).length;
-  input.setCustomValidity(count===9?'':PHONE_ERROR);
+const phoneValue=input=>{
+  const widget=phoneWidgets.get(input);
+  if(!widget) return input.value.trim();
+  if(window.intlTelInput.utils) return widget.isValidNumberPrecise()?widget.getNumber(window.intlTelInput.NUMBER_FORMAT.E164):'';
+  const number=fallbackPhone(widget);
+  return /^\+\d{8,15}$/.test(number)&&!(number.startsWith('+380')&&number.length!==13)?number:'';
 };
-document.querySelectorAll('[data-lead-form] input[type="tel"][name="phone"]').forEach(input=>{
-  input.inputMode='numeric';
-  input.autocomplete='tel';
-  input.maxLength=17;
-  input.placeholder='+380 XX XXX XX XX';
-  input.addEventListener('focus',()=>{
-    if(!phoneLocalDigits(input.value).length){
-      input.value='+380';
-      input.setSelectionRange(input.value.length,input.value.length);
-    }
+const validatePhone=(input,mark)=>{
+  const filled=input.value.replace(/\D/g,'').length>0;
+  const ok=!filled||!!phoneValue(input);
+  input.setCustomValidity(ok?'':PHONE_ERROR);
+  if(ok) input.removeAttribute('aria-invalid');
+  else if(mark) input.setAttribute('aria-invalid','true');
+  return ok;
+};
+// Called by the submit handler: makes sure the precise validation is ready, then checks every phone field.
+const preparePhones=async form=>{
+  const inputs=phoneInputs.filter(input=>form.contains(input)&&phoneWidgets.has(input));
+  if(!inputs.length) return;
+  await Promise.race([loadPhoneUtils(),new Promise(resolve=>setTimeout(resolve,5000))]);
+  inputs.forEach(input=>validatePhone(input,true));
+};
+if(phoneInputs.length){
+  const lang=isRu?'ru':'uk';
+  Promise.all([
+    loadAsset('link',{rel:'stylesheet',href:ITI_BASE+'css/intlTelInput.min.css'}),
+    window.intlTelInput?Promise.resolve():loadAsset('script',{src:ITI_BASE+'js/intlTelInput.min.js'}),
+    import(ITI_BASE+'js/locale/'+lang+'.js')
+  ]).then(([,,locale])=>{
+    if(!document.getElementById('sg-phone-css')){const css=document.createElement('style');css.id='sg-phone-css';css.textContent=phoneCss;document.head.appendChild(css);}
+    phoneInputs.forEach((input,index)=>{
+      // The country button lands inside the <label>; keep the label's text bound to the input.
+      if(!input.id) input.id='sg-phone-'+(index+1);
+      const label=input.closest('label');
+      if(label) label.htmlFor=input.id;
+      input.inputMode='tel';
+      input.autocomplete='tel';
+      input.removeAttribute('maxlength');
+      input.placeholder='50 123 4567';
+      const widget=window.intlTelInput(input,{
+        initialCountry:'ua',
+        countryOrder:PHONE_COUNTRIES,
+        countryNameLocale:lang,
+        uiTranslations:locale.default,
+        countrySearch:true,
+        countrySelectorMode:'AUTO',
+        dropdownParent:document.body,
+        separateDialCode:true,
+        strictMode:true,
+        formatAsYouType:true,
+        placeholderNumberPolicy:'AGGRESSIVE',
+        placeholderNumberType:'MOBILE'
+      });
+      phoneWidgets.set(input,widget);
+      // Some form styles set the input padding with !important; keep the library's inline
+      // padding (room for the flag and dial code) in force.
+      const keepPadding=()=>{const value=input.style.paddingLeft;if(value&&input.style.getPropertyPriority('padding-left')!=='important') input.style.setProperty('padding-left',value,'important');};
+      keepPadding();
+      new MutationObserver(keepPadding).observe(input,{attributes:true,attributeFilter:['style']});
+      const wrapper=input.closest('.iti')||input.parentElement;
+      ['pointerdown','touchstart','focusin'].forEach(type=>wrapper.addEventListener(type,loadPhoneUtils,{once:true,passive:true}));
+      input.addEventListener('input',()=>{loadPhoneUtils();validatePhone(input,false);});
+      input.addEventListener('countrychange',()=>validatePhone(input,input.hasAttribute('aria-invalid')));
+      input.addEventListener('blur',()=>validatePhone(input,true));
+      if(input.value) loadPhoneUtils().then(()=>validatePhone(input,false));
+    });
+  }).catch(()=>{
+    // Library unavailable: plain field, the Worker still validates and normalises the number.
+    phoneInputs.forEach(input=>{input.placeholder='+380 50 123 4567';});
   });
-  input.addEventListener('beforeinput',event=>{
-    if(event.inputType==='insertText'&&event.data&&/\D/.test(event.data)) event.preventDefault();
-  });
-  input.addEventListener('input',()=>{
-    input.value=formatPhone(input.value);
-    validatePhone(input);
-    input.setSelectionRange(input.value.length,input.value.length);
-  });
-  input.addEventListener('blur',()=>{
-    if(!phoneLocalDigits(input.value).length) input.value='';
-    validatePhone(input);
-  });
-  validatePhone(input);
-});
+}
 
 // Contact clicks (no phone number / address is sent, only where the link was).
 const linkLocation=a=>a.closest('.sg-success')?'success_popup':a.closest('footer')?'footer':a.closest('header, .language-switcher, [data-mobile-menu], .simple-catalog')?'header':a.closest('[class*="hero"]')?'hero':'content';
@@ -137,7 +202,8 @@ document.querySelectorAll('[data-lead-form]').forEach(form=>{
   const showError=text=>{if(!status) return; status.hidden=false; status.textContent=text; status.classList.add('is-error');};
   form.addEventListener('submit',async event=>{
     event.preventDefault();
-    if(!form.reportValidity()) return;
+    await preparePhones(form);
+    if(!form.reportValidity()){ if(form.querySelector('input[name="phone"][aria-invalid="true"]')) showError(T.phone); return; }
     const fileInput=form.querySelector('input[type="file"]');
     const file=fileInput&&fileInput.files&&fileInput.files[0];
     if(file&&file.size>ATTACH_MAX_BYTES){ showError(T.fileSize); return; }
@@ -149,6 +215,7 @@ document.querySelectorAll('[data-lead-form]').forEach(form=>{
     if(status){ status.hidden=false; status.textContent=T.status; status.classList.remove('is-error'); }
     const data=new FormData(form);
     const payload=Object.fromEntries([...data.entries()].filter(([,v])=>typeof v==='string'));
+    form.querySelectorAll('input[type="tel"][name="phone"]').forEach(input=>{const number=phoneValue(input); if(number) payload.phone=number;});
     payload.source=location.pathname; payload.createdAt=new Date().toISOString();
     payload._elapsed=String(Date.now()-openedAt); payload._h=humanSignal?'1':'0'; payload._js='sg-'+(openedAt%9973);
     // Analytics context is read before form.reset() — it never includes what the visitor typed.

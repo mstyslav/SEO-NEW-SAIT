@@ -20,6 +20,10 @@
     "audit:crawl": "node scripts/audit/crawl.mjs"
   },
   "dependencies": {
-    "astro": "^7.1.0"
+    "astro": "^7.1.0",
+    "libphonenumber-js": "1.13.14"
+  },
+  "devDependencies": {
+    "intl-tel-input": "29.5.3"
   }
 }
