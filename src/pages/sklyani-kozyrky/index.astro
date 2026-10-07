@@ -3,6 +3,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import CalculatedPriceBlock from '../../components/pricing/CalculatedPriceBlock.astro';
+import { canopyGuide, isCanopyPublished } from '../../pricing/calculated-prices';
 import FAQBlock from '../../components/FAQBlock.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TrustBar from '../../components/TrustBar.astro';
@@ -157,7 +159,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <section id="systems" class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Системи</p><h2>Системи скляних козирків</h2></div><p>Ціна — за індивідуальним розрахунком. SEMPLICE і бічний вітрозахист — на сторінках «У рамі» та «З бічним захистом».</p></div>
+      <div class="category-heading"><div><p class="eyebrow">Системи</p><h2>Системи скляних козирків</h2></div><p>Ціна ATHENA і TRAVE — за індивідуальним розрахунком. SEMPLICE і бічний вітрозахист — на сторінках «У рамі» та «З бічним захистом».</p></div>
       <div class="profile-grid">
         {canopyHubSystems.map((system) => (
           <article class="profile-card">
@@ -168,13 +170,15 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
             <div class="profile-card__body">
               <h3>{system.title ?? system.name}</h3>
               <p class="profile-card__blurb">{system.blurb}</p>
-              <p class="profile-card__price">Ціна — за індивідуальним розрахунком</p>
+              {isCanopyPublished(system.key) ? <p class="profile-card__price"><strong>Орієнтир для козирка {canopyGuide(system.key).widthMm}&nbsp;×&nbsp;{canopyGuide(system.key).depthMm}&nbsp;мм — ≈&nbsp;{canopyGuide(system.key).totalUah.toLocaleString('uk-UA')}&nbsp;грн</strong><span>з монтажем</span></p> : <p class="profile-card__price">Ціна — за індивідуальним розрахунком</p>}
               <a class="button button--mint profile-card__cta" href={system.href}>Детальніше про систему →</a>
             </div>
           </article>
         ))}
       </div>
     </section>
+
+    <CalculatedPriceBlock variant="canopy-hub" />
 
     <section class="category-section">
       <div class="inner-cta">

@@ -4,7 +4,7 @@
  * glass railings). Numbers come from src/pricing/calculated-prices.ts (the calculators' own
  * tariffs and formulas, working rate from src/pricing/currency.ts); only wording lives here. Uses the PriceBlock layout/styles (card + factors column).
  */
-import { systemPricePerM2, doorPrice, examplePrice, railingGuide, isRailingVariant, RAILING_PAGES, type PriceVariant, type RailingVariant, type SystemKey, type DoorKind, type DoorSet } from '../../pricing/calculated-prices';
+import { systemPricePerM2, doorPrice, examplePrice, railingGuide, isRailingVariant, RAILING_PAGES, canopyGuide, isCanopyVariant, CANOPY_PAGES, type PriceVariant, type RailingVariant, type CanopyVariant, type SystemKey, type DoorKind, type DoorSet } from '../../pricing/calculated-prices';
 import { SYSTEMS as RAILING_SYSTEMS } from '../../data/railing-pricing';
 import { localizedPath, type Locale } from '../../i18n/helpers';
 // Styles: .price-block* in category-pages.css, which every page using this block already loads.
@@ -40,7 +40,7 @@ const glazingFactors: [string, string][] = ru
   : [['Розміри прорізу', 'Ціна рахується за м² скління.'], ['Тип відкривання', 'Поворотно-складне чи розсувне.'], ['Скло', 'Загартоване 8–10 мм, прозоре чи тоноване.'], ['Профіль і поріг', 'Колір профілю, висота порога, кутові з’єднання.'], ['Монтаж', 'Основа, висота й доступ до прорізу.']];
 
 const P = (ua: string, r: string) => (ru ? r : ua);
-const V: Record<Exclude<PriceVariant, RailingVariant>, V> = {
+const V: Record<Exclude<PriceVariant, RailingVariant | CanopyVariant>, V> = {
   'partition-hub': { heading: P('Скільки коштує скляна перегородка', 'Сколько стоит стеклянная перегородка'), rows: [[L.frameless, 'frameless'], [L.profile, 'profile'], [L.loft, 'loft']], doors: 'partition', example: { key: 'frameless', door: 'swing', ua: 'Перегородка {d}, безрамна, з розпашними дверима', ru: 'Перегородка {d}, безрамная, с распашными дверьми' }, cta: '/peregorodky-configurator/', factors: partitionFactors(P('Система|Безрамна, у профілі або Loft.', 'Система|Безрамная, в профиле или лофт.').split('|') as [string, string]) },
   'partition-loft': { heading: P('Скільки коштує Loft-перегородка', 'Сколько стоит лофт-перегородка'), rows: [[L.loftStd, 'loft'], [L.loftSlim, 'loftSlim'], [L.loftPremium, 'loftPremium']], doors: 'loft', example: { key: 'loft', door: 'swing', ua: 'Перегородка {d}, Loft, стандартний профіль, з розпашними дверима', ru: 'Перегородка {d}, лофт, стандартный профиль, с распашными дверьми' }, cta: '/loft-configurator/', factors: partitionFactors(P('Профіль|Стандартний, тонкий або Premium, кількість шпросів.', 'Профиль|Стандартный, тонкий или Premium, количество шпросов.').split('|') as [string, string]) },
   'partition-frameless': { heading: P('Скільки коштує цільноскляна перегородка', 'Сколько стоит цельностеклянная перегородка'), rows: [[L.frameless, 'frameless'], [L.premium, 'premium']], doors: 'partition', example: { key: 'frameless', ua: 'Перегородка {d}, безрамна, без дверей', ru: 'Перегородка {d}, безрамная, без дверей' }, cta: '/peregorodky-configurator/', factors: partitionFactors(P('Система|Безрамна або Premium, спосіб кріплення.', 'Система|Безрамная или Premium, способ крепления.').split('|') as [string, string]) },
@@ -92,6 +92,40 @@ if (isRailingVariant(variant)) {
     factors: ru
       ? [['Длина', 'Чем длиннее ограждение, тем ниже цена метра: минимальный монтаж и фиксированные детали распределяются, действует скидка за длину.'], ['Система крепления', 'Профиль, точечные держатели, стойки или французский балкон.'], ['Стекло', 'Толщина триплекса, прозрачное, экстрапрозрачное или тонированное, матировка.'], ['Высота и форма', 'Высота стекла, прямое, угловое или П-образное ограждение.'], ['Поручень и цвет', 'Поручень из нержавейки, покраска профиля в RAL.']]
       : [['Довжина', 'Що довша огорожа, то нижча ціна метра: мінімальний монтаж і фіксовані деталі розподіляються, діє знижка за довжину.'], ['Система кріплення', 'Профіль, точкові тримачі, стійки чи французький балкон.'], ['Скло', 'Товщина триплексу, прозоре, екстрапрозоре чи тоноване, матування.'], ['Висота й форма', 'Висота скла, пряма, кутова чи П-подібна огорожа.'], ['Поручень і колір', 'Поручень із нержавійки, фарбування профілю в RAL.']]
+  };
+} else if (isCanopyVariant(variant)) {
+  // Glass canopies: full price of a typical finished construction per system, installation included.
+  const page = CANOPY_PAGES[variant];
+  const headings: Record<CanopyVariant, [string, string]> = {
+    'canopy-hub': ['Скільки коштує скляний козирок', 'Сколько стоит стеклянный козырёк'],
+    'canopy-console': ['Скільки коштує консольний скляний козирок', 'Сколько стоит консольный стеклянный козырёк'],
+    'canopy-rods': ['Скільки коштує скляний козирок на тягах', 'Сколько стоит стеклянный козырёк на тягах'],
+    'canopy-brackets': ['Скільки коштує козирок на кронштейнах', 'Сколько стоит козырёк на кронштейнах'],
+    'canopy-frame': ['Скільки коштує козирок у рамі', 'Сколько стоит козырёк в раме'],
+    'canopy-side': ['Скільки коштує козирок з бічним захистом', 'Сколько стоит козырёк с боковой защитой'],
+    'canopy-business': ['Скільки коштує скляний козирок для бізнесу', 'Сколько стоит стеклянный козырёк для бизнеса']
+  };
+  const size = (g: { widthMm: number; depthMm: number }) => `${g.widthMm}\u00a0×\u00a0${g.depthMm}\u00a0мм`;
+  const sideWall = (id: string) => (id === 'duravento' ? P(' + бічна стінка 1,8 м', ' + боковая стенка 1,8 м') : '');
+  const ex = canopyGuide(page.example);
+  block = {
+    heading: P(...headings[variant]),
+    kicker: P('Орієнтир для типового козирка · повна вартість з монтажем', 'Ориентир для типового козырька · полная стоимость с монтажом'),
+    rows: [...page.systems].sort((a, b) => canopyGuide(a).totalUah - canopyGuide(b).totalUah).map((id) => {
+      const g = canopyGuide(id);
+      return [`${g.name}, ${size(g)}${sideWall(id)}`, `≈\u00a0${fmt(g.totalUah)}\u00a0грн`] as const;
+    }),
+    doorsLine: null,
+    exampleText: P(
+      `Козирок ${ex.name} ${size(ex)} (${ex.areaM2.toFixed(2).replace('.', ',')} м²)${sideWall(page.example)}, прозоре скло, кріплення до бетону чи цегли: конструкція ≈\u00a0${fmt(ex.productUah)}\u00a0грн + замір, доставка й монтаж ${fmt(ex.installUah)}\u00a0грн`,
+      `Козырёк ${ex.name} ${size(ex)} (${ex.areaM2.toFixed(2).replace('.', ',')} м²)${sideWall(page.example)}, прозрачное стекло, крепление к бетону или кирпичу: конструкция ≈\u00a0${fmt(ex.productUah)}\u00a0грн + замер, доставка и монтаж ${fmt(ex.installUah)}\u00a0грн`
+    ),
+    examplePrice: `≈\u00a0${fmt(ex.totalUah)}\u00a0${P('грн з монтажем', 'грн с монтажом')}`,
+    cta: '/kozyrky-configurator/',
+    note: P('*Орієнтовна вартість типової конструкції. Точна ціна залежить від розміру, системи, скла, комплектації та умов монтажу. Розрахуйте свій розмір у калькуляторі.', '*Ориентировочная стоимость типовой конструкции. Точная цена зависит от размера, системы, стекла, комплектации и условий монтажа. Рассчитайте свой размер в калькуляторе.'),
+    factors: ru
+      ? [['Размер', 'Ширина и вылет козырька: от них зависят площадь стекла и монтаж.'], ['Система', 'Тяги, кронштейны, консольный профиль или рама.'], ['Стекло', 'Прозрачное, экстрапрозрачное, матовое или серое, покрытие от грязи.'], ['Крепление к стене', 'Бетон и кирпич, дерево или утеплённый фасад.'], ['Опции и монтаж', 'Водосток, герметичное примыкание, высота и доступ к входу.']]
+      : [['Розмір', 'Ширина й виліт козирка: від них залежать площа скла й монтаж.'], ['Система', 'Тяги, кронштейни, консольний профіль або рама.'], ['Скло', 'Прозоре, екстрапрозоре, матове чи сіре, покриття від бруду.'], ['Кріплення до стіни', 'Бетон і цегла, дерево чи утеплений фасад.'], ['Опції та монтаж', 'Водостік, герметичне примикання, висота й доступ до входу.']]
   };
 } else {
   const v = V[variant];

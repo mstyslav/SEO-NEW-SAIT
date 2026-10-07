@@ -6,24 +6,26 @@
  * as  base = a + b·W + c·A  (W = width, m; A = width × depth, m²) — exact for PUNTO,
  * SPADA and ARCATA, within ~2–5 % for DURA PLUS, DURAVENTO, ELLA and TUBO, ~15 % for TRAVE
  * (the partner switches glass thickness and adds brackets automatically).
- * The partner's prices already include its current discount; option prices below are the
- * partner's list prices and are multiplied by OPTION_FACTOR (the same discount).
- * Final price in UAH = EUR × EUR_RATE × COEFFICIENT (+ Space Glass installation).
+ * Ukrainian price level: about 45 % below the partner's price. The sampled base prices (a, b, c)
+ * already carry that reduction — the partner configurator showed them with it — so the base is
+ * used as is; option prices below are the partner's list prices and get OPTION_FACTOR (0.55)
+ * exactly once. Nothing is discounted twice. Space Glass's own dealer discount is its margin and
+ * is not part of the customer price (COEFFICIENT = 1).
+ * Final price in UAH = EUR × EUR_RATE × COEFFICIENT + Space Glass installation.
  *
  * The EUR rate is the site's working rate — change it in src/pricing/currency.ts.
- * ▶ Change COEFFICIENT and the installation rates to set your own prices.
  */
 import { EUR_UAH } from '../pricing/currency';
 
 /** UAH per 1 EUR (working rate from src/pricing/currency.ts). */
 export const EUR_RATE = EUR_UAH;
-/** Your multiplier on top of the partner price (delivery, customs, margin). 1 = partner price. */
+/** Multiplier on top of the Ukrainian price level. 1 = no extra markup. */
 export const COEFFICIENT = 1;
-/** Partner discount applied to option list prices (1 − 45 %). */
+/** Ukrainian price level for option list prices (1 − 45 %); the base prices already include it. */
 export const OPTION_FACTOR = 0.55;
-/** Space Glass measuring, delivery and installation, UAH: fixed part + per m² of canopy. */
-export const INSTALL_UAH_BASE = 6000;
-export const INSTALL_UAH_PER_M2 = 1500;
+/** Space Glass measuring, delivery and installation: UAH per m² of canopy, and the minimum per order. */
+export const INSTALL_UAH_PER_M2 = 2500;
+export const INSTALL_UAH_MIN = 10000;
 
 export type GlassId = 'clear' | 'extra' | 'satin' | 'satinExtra' | 'grey' | 'solar';
 export type FixingId = 'none' | 'masonry' | 'wood' | 'insulation';
@@ -88,3 +90,53 @@ export const CANOPY_CONFIG_SYSTEMS: CanopySystem[] = [
   { id: 'tubo', name: 'TUBO', title: 'Великий козирок у підвісній рамі', note: 'Рама з труб нержавійки на тягах', support: 'tube', a: 2234.36, b: 109.29, c: 945.72, minW: 800, maxW: 4000, minD: 500, maxD: 2000, glass: G_LARGE, coating: 173.73, fixing: { unit: 'holder', masonry: 110.31, wood: 110.31, insulation: 275.77 }, holders: 2, wallJoint: 55.15, gutter: { slim: 110.31, large: 165.46 } },
   { id: 'arcata', name: 'ARCATA', title: 'Арочний скляний козирок', note: 'Гнуте скло на тягах', support: 'arch', a: 2206.82, b: 0, c: 887.28, minW: 800, maxW: 4000, minD: 700, maxD: 2000, glass: G_LARGE, coating: 173.73, fixing: { unit: 'holder', masonry: 55.15, wood: 55.15, insulation: 137.88 }, holders: 2, wallJoint: 55.15, extra: ['Квадратні точкові тримачі', 551.54] }
 ];
+
+export type GutterId = 'none' | 'slim' | 'large';
+
+/** One configuration as chosen in the calculator. Sizes in mm (clamped to the system's limits). */
+export interface CanopyChoice {
+  system: CanopySystem;
+  widthMm: number;
+  depthMm: number;
+  glass: GlassId;
+  coating: boolean;
+  fixing: FixingId;
+  wallJoint: boolean;
+  gutter: GutterId;
+  extra: boolean;
+  install: boolean;
+}
+
+/**
+ * The calculator's price formula — used by /kozyrky-configurator/ and by the indexed price blocks
+ * (src/pricing/calculated-prices.ts), so both always show the same number.
+ * Base (already at the Ukrainian price level) + options (list × OPTION_FACTOR), × EUR rate,
+ * + installation max(INSTALL_UAH_MIN, INSTALL_UAH_PER_M2 × area).
+ */
+export const canopyPrice = (c: CanopyChoice) => {
+  const s = c.system;
+  const W = Math.max(s.minW, Math.min(s.maxW, c.widthMm));
+  const D = Math.max(s.minD, Math.min(s.maxD, c.depthMm));
+  const Wm = W / 1000;
+  const A = (W * D) / 1e6;
+  const o = OPTION_FACTOR;
+  const fixingUnit = c.fixing === 'none' ? 0 : s.fixing[c.fixing];
+  /** EUR: the base is used as is, every option gets OPTION_FACTOR once. */
+  const partsEur = {
+    base: s.a + s.b * Wm + s.c * A,
+    glass: c.glass === 'clear' ? 0 : (s.glass[c.glass] || 0) * A * o,
+    coating: c.coating ? s.coating * A * o : 0,
+    fixing: (s.fixing.unit === 'm' ? fixingUnit * Wm : fixingUnit * Math.max(1, s.holders)) * o,
+    wallJoint: c.wallJoint && s.wallJoint ? s.wallJoint * Wm * o : 0,
+    gutter: c.gutter !== 'none' && s.gutter ? s.gutter[c.gutter] * Wm * o : 0,
+    extra: c.extra && s.extra ? s.extra[1] * o : 0
+  };
+  const k = EUR_RATE * COEFFICIENT;
+  const partsUah = Object.fromEntries(Object.entries(partsEur).map(([key, value]) => [key, value * k])) as Record<keyof typeof partsEur, number>;
+  const installUah = c.install ? Math.max(INSTALL_UAH_MIN, INSTALL_UAH_PER_M2 * A) : 0;
+  const totalUah = Object.values(partsUah).reduce((a, b) => a + b, 0) + installUah;
+  return { widthMm: W, depthMm: D, areaM2: A, partsEur, partsUah, installUah, totalUah };
+};
+
+/** The calculator's starting configuration (clear glass, masonry fixing, no options, installation). */
+export const DEFAULT_CANOPY_CHOICE = { glass: 'clear', coating: false, fixing: 'masonry', wallJoint: false, gutter: 'none', extra: false, install: true } as const;

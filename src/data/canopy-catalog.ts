@@ -2,9 +2,11 @@
  * Glass canopies section /sklyani-kozyrky/{slug}/ in the shared catalog format
  * (ProfileCategoryPage). Hub: src/pages/sklyani-kozyrky/index.astro.
  * Cards are the partner's canopy systems (Space Glass is a dealer; supplier never named).
- * Prices are not shown ("за індивідуальним розрахунком"); `eur`/`size` keep the partner's
- * reference price for a future configurator (EUR × EUR_RATE × COEFFICIENT, railing-pricing.ts).
+ * Card prices and the price block come from the calculator formula (src/pricing/calculated-prices.ts);
+ * systems the calculator does not model (or not closely enough, e.g. TRAVE) stay
+ * "за індивідуальним розрахунком". `eur`/`size` keep the partner's control price for each system.
  */
+import { canopyPriceBlock } from '../pricing/calculated-prices';
 import type { ProfileCategory, ProfileModel } from './profile-systems';
 
 export const CANOPY_HUB = '/sklyani-kozyrky/';
@@ -88,6 +90,7 @@ const page = (p: CanopyPage): ProfileCategory => {
     compareColumns: ['Система', 'Кріплення', 'Скло', 'Особливість', 'Для чого'],
     faq: [...p.faq, ...COMMON],
     catalogButton: 'Переглянути системи',
+    priceBlock: canopyPriceBlock(p.slug),
     heroExtra: ['Розрахувати в конфігураторі', CANOPY_CONFIGURATOR],
     optionsLabel: 'Система',
     catalogNote: 'Технічні параметри наведені для типових конфігурацій. Вартість, товщину скла й кріплення визначаємо після заміру — надішліть фото й розміри для розрахунку.'

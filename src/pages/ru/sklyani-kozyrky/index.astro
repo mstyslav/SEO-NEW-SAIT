@@ -3,6 +3,8 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
+import CalculatedPriceBlock from '../../../components/pricing/CalculatedPriceBlock.astro';
+import { canopyGuide, isCanopyPublished } from '../../../pricing/calculated-prices';
 import FAQBlock from '../../../components/FAQBlock.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import TrustBar from '../../../components/TrustBar.astro';
@@ -161,7 +163,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
     </section>
 
     <section id="systems" class="category-section category-section--mint">
-      <div class="category-heading"><div><p class="eyebrow">Системы</p><h2>Системы стеклянных козырьков</h2></div><p>Цена — по индивидуальному расчёту. SEMPLICE и боковая ветрозащита — на страницах «В раме» и «С боковой защитой».</p></div>
+      <div class="category-heading"><div><p class="eyebrow">Системы</p><h2>Системы стеклянных козырьков</h2></div><p>Цена ATHENA и TRAVE — по индивидуальному расчёту. SEMPLICE и боковая ветрозащита — на страницах «В раме» и «С боковой защитой».</p></div>
       <div class="profile-grid">
         {canopyHubSystemsRu.map((system) => (
           <article class="profile-card">
@@ -172,13 +174,15 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
             <div class="profile-card__body">
               <h3>{system.title ?? system.name}</h3>
               <p class="profile-card__blurb">{system.blurb}</p>
-              <p class="profile-card__price">Цена — по индивидуальному расчёту</p>
+              {isCanopyPublished(system.key) ? <p class="profile-card__price"><strong>Ориентир для козырька {canopyGuide(system.key).widthMm}&nbsp;×&nbsp;{canopyGuide(system.key).depthMm}&nbsp;мм — ≈&nbsp;{canopyGuide(system.key).totalUah.toLocaleString('uk-UA')}&nbsp;грн</strong><span>с монтажом</span></p> : <p class="profile-card__price">Цена — по индивидуальному расчёту</p>}
               <a class="button button--mint profile-card__cta" href={lp(system.href)}>Подробнее о системе →</a>
             </div>
           </article>
         ))}
       </div>
     </section>
+
+    <CalculatedPriceBlock variant="canopy-hub" locale="ru" />
 
     <section class="category-section">
       <div class="inner-cta">

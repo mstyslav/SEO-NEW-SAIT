@@ -1,6 +1,6 @@
 /**
  * Indexed "орієнтовна вартість від" prices for catalog pages (glass partitions, frameless glazing)
- * and per-metre guide prices for glass railings.
+ * per-metre guide prices for glass railings and typical-size guide prices for glass canopies.
  *
  * Every number is derived from the calculators' own sources — tariffs.json and the
  * /peregorodky-configurator/, /loft-configurator/ and /bezramne-configurator/ configs — through
@@ -17,6 +17,7 @@ import framelessConfig from './configs/frameless-glazing.json';
 import { calculatePrice, type CategoryKey } from './engine';
 import { USD_UAH } from './currency';
 import { DEFAULT_CHOICE, SYSTEMS as RAILING_SYSTEMS, railingPrice } from '../data/railing-pricing';
+import { CANOPY_CONFIG_SYSTEMS, DEFAULT_CANOPY_CHOICE, canopyPrice } from '../data/canopy-pricing';
 
 type ConfigOption = { value: string; multiplier?: number; extraUsd?: number };
 type Config = { fields: { id: string; default?: number; options?: ConfigOption[] }[] };
@@ -86,7 +87,7 @@ export const examplePrice = (key: SystemKey, door: DoorKind | null = null, doorS
 export type PriceVariant =
   | 'partition-hub' | 'partition-loft' | 'partition-frameless' | 'partition-office' | 'partition-interior' | 'partition-doors'
   | 'glazing-hub' | 'glazing-folding' | 'glazing-sliding' | 'glazing-terrace' | 'glazing-gazebo' | 'glazing-balcony'
-  | RailingVariant;
+  | RailingVariant | CanopyVariant;
 
 /**
  * Card systems whose price the calculator really models, per catalog (card/model ids differ
@@ -106,7 +107,7 @@ const CARD_SYSTEM_PRICE: Record<'partition' | 'glazing', Record<string, SystemKe
 
 /** Card «від» price per m² for a system on a page with the given price block, or undefined. */
 export const cardPricePerM2 = (variant: PriceVariant, systemId: string) => {
-  if (isRailingVariant(variant)) return undefined;
+  if (isRailingVariant(variant) || isCanopyVariant(variant)) return undefined;
   const key = CARD_SYSTEM_PRICE[variant.startsWith('glazing') ? 'glazing' : 'partition'][systemId];
   return key ? systemPricePerM2(key) : undefined;
 };
@@ -162,3 +163,63 @@ export const railingPriceBlock = (slug: string) =>
 /** Card guide for a system on a railing page, or undefined when the page does not list it. */
 export const railingCardGuide = (variant: PriceVariant, systemId: string) =>
   isRailingVariant(variant) && RAILING_PAGES[variant].systems.includes(systemId) ? railingGuide(systemId) : undefined;
+
+/* ---------------------------------------------------------------- glass canopies ---------- */
+/*
+ * Canopies are priced as a finished typical construction, not per m²: each system's guide is the
+ * calculator's starting configuration (clear glass, masonry wall fixing, no options, installation)
+ * at a stated size — 1500 × 900 mm, or the system's minimum where it is larger (ELLA: 1600 mm wide)
+ * — through the calculator's own formula, canopyPrice() in src/data/canopy-pricing.ts.
+ * TRAVE is left out: its fitted model is ~14 % below the partner's control price.
+ */
+export type CanopyVariant =
+  | 'canopy-hub' | 'canopy-console' | 'canopy-rods' | 'canopy-brackets' | 'canopy-frame' | 'canopy-side' | 'canopy-business';
+export const isCanopyVariant = (variant: PriceVariant): variant is CanopyVariant => variant.startsWith('canopy-');
+
+/** Typical canopy for the guide prices, mm (raised to a system's minimum size where needed). */
+export const CANOPY_REFERENCE = { widthMm: 1500, depthMm: 900 };
+/** Systems the calculator models closely enough to publish a guide price for. */
+const CANOPY_PUBLISHED = ['punto', 'spada', 'dura-plus', 'duravento', 'arcata', 'ella', 'tubo'];
+
+/** Whether a canopy system gets a published guide price. */
+export const isCanopyPublished = (systemId: string) => CANOPY_PUBLISHED.includes(systemId);
+
+/** Guide price for one system at its typical size, UAH, installation included (rounded down to 100). */
+export const canopyGuide = (systemId: string) => {
+  const system = CANOPY_CONFIG_SYSTEMS.find((item) => item.id === systemId);
+  if (!system || !CANOPY_PUBLISHED.includes(systemId)) throw new Error(`calculated-prices: no canopy guide for "${systemId}"`);
+  const price = canopyPrice({
+    ...DEFAULT_CANOPY_CHOICE,
+    system,
+    widthMm: Math.max(system.minW, CANOPY_REFERENCE.widthMm),
+    depthMm: Math.max(system.minD, CANOPY_REFERENCE.depthMm)
+  });
+  return {
+    name: system.name,
+    widthMm: price.widthMm,
+    depthMm: price.depthMm,
+    areaM2: price.areaM2,
+    productUah: floor100(price.totalUah - price.installUah),
+    installUah: price.installUah,
+    totalUah: floor100(price.totalUah)
+  };
+};
+
+/** Canopy pages with a price block → systems shown (calculator-modelled only) and the worked example. */
+export const CANOPY_PAGES: Record<CanopyVariant, { slug: string | null; systems: string[]; example: string }> = {
+  'canopy-hub': { slug: null, systems: ['punto', 'spada', 'dura-plus', 'ella', 'tubo'], example: 'punto' },
+  'canopy-console': { slug: 'konsolni-kozyrky', systems: ['dura-plus', 'duravento'], example: 'dura-plus' },
+  'canopy-rods': { slug: 'kozyrky-na-tyahakh', systems: ['punto', 'arcata', 'tubo'], example: 'punto' },
+  'canopy-brackets': { slug: 'kozyrky-na-kronshteinakh', systems: ['spada'], example: 'spada' },
+  'canopy-frame': { slug: 'kozyrky-v-rami', systems: ['ella'], example: 'ella' },
+  'canopy-side': { slug: 'kozyrky-z-bokovym-zakhystom', systems: ['duravento'], example: 'duravento' },
+  'canopy-business': { slug: 'kozyrky-dlya-biznesu', systems: ['spada', 'dura-plus', 'ella', 'tubo', 'arcata'], example: 'spada' }
+};
+
+/** Price block variant of a canopy catalog page, by slug (undefined = no price block). */
+export const canopyPriceBlock = (slug: string) =>
+  (Object.entries(CANOPY_PAGES) as [CanopyVariant, { slug: string | null }][]).find(([, page]) => page.slug === slug)?.[0];
+
+/** Card guide for a system on a canopy page, or undefined (not on the page or not published, e.g. TRAVE). */
+export const canopyCardGuide = (variant: PriceVariant, systemId: string) =>
+  isCanopyVariant(variant) && CANOPY_PAGES[variant].systems.includes(systemId) ? canopyGuide(systemId) : undefined;

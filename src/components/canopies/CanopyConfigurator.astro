@@ -4,9 +4,10 @@
  * wall fixing → options → installation → request. Live SVG (front + side view), instant
  * price with a breakdown; the request goes through the global `[data-lead-form]` handler
  * with the full configuration in a hidden field.
- * Prices: src/data/canopy-pricing.ts (EUR × EUR_RATE × COEFFICIENT).
+ * Prices: canopyPrice() in src/data/canopy-pricing.ts (EUR tariffs × working rate from
+ * src/pricing/currency.ts + installation); customers see UAH only.
  */
-import { CANOPY_CONFIG_SYSTEMS, COEFFICIENT, EUR_RATE, FIXING_LABELS, GLASS_LABELS, INSTALL_UAH_BASE, INSTALL_UAH_PER_M2, OPTION_FACTOR } from '../../data/canopy-pricing';
+import { CANOPY_CONFIG_SYSTEMS, FIXING_LABELS, GLASS_LABELS } from '../../data/canopy-pricing';
 import { CANOPY_IMG } from '../../data/canopy-catalog';
 import { CANOPY_CONFIG_SYSTEMS_RU, FIXING_LABELS_RU, GLASS_LABELS_RU } from '../../data/ru/canopy-pricing.ru';
 import { localizedPath, type Locale } from '../../i18n/helpers';
@@ -69,7 +70,7 @@ const t = {
     dimNoteParts: [': ширина ', ' см, вынос ', ' см. Большие размеры — по отдельному проекту.']
   }
 }[locale];
-const data = { systems, glass: isRu ? GLASS_LABELS_RU : GLASS_LABELS, fixing: isRu ? FIXING_LABELS_RU : FIXING_LABELS, rate: EUR_RATE, coef: COEFFICIENT, opt: OPTION_FACTOR, installBase: INSTALL_UAH_BASE, installPerM2: INSTALL_UAH_PER_M2, img: CANOPY_IMG, t };
+const data = { systems, glass: isRu ? GLASS_LABELS_RU : GLASS_LABELS, fixing: isRu ? FIXING_LABELS_RU : FIXING_LABELS, img: CANOPY_IMG, t };
 const steps = ui.steps;
 const page = lp('/kozyrky-configurator/');
 ---
@@ -174,6 +175,7 @@ const page = lp('/kozyrky-configurator/');
 </section>
 
 <script>
+  import { canopyPrice, type CanopySystem, type FixingId, type GlassId, type GutterId } from '../../data/canopy-pricing';
   type Sys = { id: string; name: string; title: string; note: string; support: string; a: number; b: number; c: number; minW: number; maxW: number; minD: number; maxD: number; glass: Record<string, number>; coating: number; fixing: { unit: 'm' | 'holder'; masonry: number; wood: number; insulation: number }; holders: number; wallJoint?: number; gutter?: { slim: number; large: number }; extra?: [string, number] };
 
   const root = document.querySelector<HTMLElement>('[data-cc]');
@@ -220,25 +222,21 @@ const page = lp('/kozyrky-configurator/');
 
     const price = () => {
       const s = state.sys;
-      const { W, D: Dp } = dims();
-      const Wm = W / 1000, A = (W * Dp) / 1e6;
-      const o = D.opt;
-      const k = D.rate * D.coef;
-      const lines: [string, number][] = [[`${s.title} (${s.name}), ${(W / 10).toFixed(0)}×${(Dp / 10).toFixed(0)} ${T.cm}`, s.a + s.b * Wm + s.c * A]];
-      if (state.glass !== 'clear') lines.push([`${T.glassLine}: ${D.glass[state.glass].label.toLowerCase()}, ${A.toFixed(2).replace('.', ',')} ${T.m2}`, (s.glass[state.glass] || 0) * A * o]);
-      if (checked('coating')) lines.push([T.coating, s.coating * A * o]);
-      if (state.fixing !== 'none') {
-        const unit = s.fixing[state.fixing as 'masonry' | 'wood' | 'insulation'];
-        lines.push([`${T.fixingLine}: ${D.fixing[state.fixing].toLowerCase()}`, (s.fixing.unit === 'm' ? unit * Wm : unit * Math.max(1, s.holders)) * o]);
-      }
-      if (checked('wallJoint') && s.wallJoint) lines.push([T.wallJoint, s.wallJoint * Wm * o]);
-      if (state.gutter !== 'none' && s.gutter) lines.push([state.gutter === 'slim' ? T.slimGutter : T.largeGutter, s.gutter[state.gutter as 'slim' | 'large'] * Wm * o]);
-      if (checked('extra') && s.extra) lines.push([s.extra[0], s.extra[1] * o]);
-      const items = lines.filter(([, v]) => v > 0.01).map(([t, v]) => [t, v * k] as [string, number]);
-      const install = (form.querySelector<HTMLInputElement>('input[name="install"]:checked')?.value || 'yes') === 'yes';
-      if (install) items.push([T.installLine, D.installBase + D.installPerM2 * A]);
-      return { items, total: items.reduce((a, [, v]) => a + v, 0), W, D: Dp, A };
+      // Same formula as the indexed price blocks: canopyPrice() in src/data/canopy-pricing.ts.
+      const p = canopyPrice({ system: s as unknown as CanopySystem, widthMm: num('W') * 10, depthMm: num('D') * 10, glass: state.glass as GlassId, coating: checked('coating'), fixing: state.fixing as FixingId, wallJoint: checked('wallJoint'), gutter: state.gutter as GutterId, extra: checked('extra'), install: (form.querySelector<HTMLInputElement>('input[name="install"]:checked')?.value || 'yes') === 'yes' });
+      const { widthMm: W, depthMm: Dp, areaM2: A } = p;
+      const lines: [string, number][] = [[`${s.title} (${s.name}), ${(W / 10).toFixed(0)}×${(Dp / 10).toFixed(0)} ${T.cm}`, p.partsUah.base]];
+      if (state.glass !== 'clear') lines.push([`${T.glassLine}: ${D.glass[state.glass].label.toLowerCase()}, ${A.toFixed(2).replace('.', ',')} ${T.m2}`, p.partsUah.glass]);
+      if (checked('coating')) lines.push([T.coating, p.partsUah.coating]);
+      if (state.fixing !== 'none') lines.push([`${T.fixingLine}: ${D.fixing[state.fixing].toLowerCase()}`, p.partsUah.fixing]);
+      if (checked('wallJoint') && s.wallJoint) lines.push([T.wallJoint, p.partsUah.wallJoint]);
+      if (state.gutter !== 'none' && s.gutter) lines.push([state.gutter === 'slim' ? T.slimGutter : T.largeGutter, p.partsUah.gutter]);
+      if (checked('extra') && s.extra) lines.push([s.extra[0], p.partsUah.extra]);
+      const items = lines.filter(([, v]) => v > 0.5);
+      if (p.installUah) items.push([T.installLine, p.installUah]);
+      return { items, total: p.totalUah, W, D: Dp, A };
     };
+
 
     const draw = () => {
       const s = state.sys;

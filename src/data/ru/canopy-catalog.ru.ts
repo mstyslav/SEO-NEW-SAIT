@@ -2,6 +2,7 @@
  * RU version of src/data/canopy-catalog.ts — same slugs, paths and images, Russian text.
  * Pages: src/pages/ru/sklyani-kozyrky/**.
  */
+import { canopyPriceBlock } from '../../pricing/calculated-prices';
 import type { ProfileCategory, ProfileModel } from '../profile-systems';
 import { CANOPY_CONFIGURATOR, CANOPY_HUB, CANOPY_IMG } from '../canopy-catalog';
 
@@ -83,6 +84,7 @@ const page = (p: CanopyPage): ProfileCategory => {
     compareColumns: ['Система', 'Крепление', 'Стекло', 'Особенность', 'Для чего'],
     faq: [...p.faq, ...COMMON],
     catalogButton: 'Смотреть системы',
+    priceBlock: canopyPriceBlock(p.slug),
     heroExtra: ['Рассчитать в конфигураторе', CANOPY_CONFIGURATOR],
     optionsLabel: 'Система',
     catalogNote: 'Технические параметры приведены для типовых конфигураций. Стоимость, толщину стекла и крепление определяем после замера — пришлите фото и размеры для расчёта.'
