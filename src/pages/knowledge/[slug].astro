@@ -10,6 +10,7 @@ import { getFullKnowledgeSections } from '../../data/knowledge-expert-sections';
 import { breadcrumbSchema, faqSchema } from '../../seo/schema';
 import { expandFaq } from '../../data/expand-faq';
 import { KNOWLEDGE_ARTICLES_RU } from '../../content/i18n/knowledge/articles-ru';
+import { knowledgeSeo } from '../../data/knowledge-seo';
 
 export function getStaticPaths() {
   return knowledgeArticles.map((article) => ({ params: { slug: article.slug }, props: { article } }));
@@ -47,8 +48,8 @@ const structuredData = [
 ].filter(Boolean);
 ---
 <BaseLayout
-  title={`${article.metaTitle ?? article.title} | Space Glass`}
-  description={article.description}
+  title={knowledgeSeo.uk[article.slug]?.title ?? `${article.metaTitle ?? article.title} | Space Glass`}
+  description={knowledgeSeo.uk[article.slug]?.description ?? article.description}
   schemaType="WebPage"
   mainEntityId={`${url.href}#article`}
   structuredData={structuredData}

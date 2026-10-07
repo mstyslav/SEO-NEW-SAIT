@@ -104,12 +104,13 @@ const structuredData = [
 ].filter(Boolean);
 import { KNOWLEDGE_CARDS_RU } from '../../../content/i18n/pages/knowledge-cards-ru';
 import { localizedPath } from '../../../i18n/helpers';
+import { knowledgeSeo } from '../../../data/knowledge-seo';
 ---
 
 <BaseLayout
   locale="ru"
-  title={`${article.metaTitle ?? article.title} | Space Glass`}
-  description={article.description}
+  title={knowledgeSeo.ru[sourceArticle.slug]?.title ?? `${article.metaTitle ?? article.title} | Space Glass`}
+  description={knowledgeSeo.ru[sourceArticle.slug]?.description ?? article.description}
   schemaType="WebPage"
   mainEntityId={`${url.href}#article`}
   structuredData={structuredData}

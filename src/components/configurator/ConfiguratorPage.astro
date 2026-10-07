@@ -11,6 +11,9 @@ import DynamicConfigurator from './DynamicConfigurator.astro';
 import tariffs from '../../pricing/tariffs.json';
 import labelsAll from '../../i18n/configurator-labels.json';
 import uiAll from '../../i18n/configurator-ui.json';
+// <title> / meta description only (H1 and on-page text keep the shared labels): each calculator
+// targets "калькулятор / ціна онлайн", the product hubs keep "на замовлення".
+import seoAll from '../../i18n/configurator-seo.json';
 import type { Locale } from '../../i18n/helpers';
 
 interface Props {
@@ -24,10 +27,11 @@ const labels = labelsAll[locale];
 const ui = uiAll[locale];
 const title = labels[productKey];
 const tariff = tariffs.categories[config.category];
+const seo = (seoAll as Record<string, Record<string, { title: string; description: string }>>)[locale]?.[productKey];
 ---
 <BaseLayout
-  title={`${title} — Space Glass`}
-  description={ui.configureText}
+  title={seo?.title ?? `${title} — Space Glass`}
+  description={seo?.description ?? ui.configureText}
   locale={locale}
 >
   <Header locale={locale} />

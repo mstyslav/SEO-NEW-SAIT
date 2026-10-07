@@ -27,7 +27,7 @@ type ProjectTextsRu = {
 export const projectTextsRu: Record<string, ProjectTextsRu> = {
   "shtorka-dlya-vannoyi-zhk-akvarel-v-m-odesa": {
     "seo": {
-      "title": "Стеклянная шторка для ванны в Одессе | Space Glass",
+      "title": "Стеклянная шторка для ванны в ЖК Акварель, Одесса | Space Glass",
       "description": "Реализованный проект Space Glass: стеклянная шторка для ванны в квартире в ЖК Акварель в городе Одесса. Фото конструкции, решение и детали монтажа."
     },
     "h1": "Стеклянная шторка для ванны в ЖК Акварель в Одессе",
