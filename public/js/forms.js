@@ -33,7 +33,8 @@ const productCategory=form=>{const field=form.querySelector('input[type="hidden"
 
 // International phone field for every lead form: country selector (flag + dial code) with
 // per-country formatting and validation. intl-tel-input + Google libphonenumber are served
-// from /vendor/ (no CDN); the core loads only on pages with a phone field, the validation
+// from /vendor/ (no CDN); the core loads only when a phone field comes near the viewport (or is
+// touched / a form is submitted) so it never competes with the hero image, the validation
 // utils (~60 KB gz) on the first interaction with it. The number is sent in E.164
 // (+380671234567); the Worker validates it again (worker/index.ts → normalisePhone).
 const PHONE_ERROR=isRu?'Проверьте номер телефона и код страны.':'Перевірте номер телефону та код країни.';
@@ -61,7 +62,8 @@ const phoneCss=`.iti{display:block;width:100%}
 .iti__search-input-wrapper:focus-within{border-bottom-color:var(--mint-dark,#3c9c7c)}
 .iti__country{color:#16201b}
 .iti__country.iti__highlight{background:#e8f6f0}
-.iti__dial-code{color:#56625c}`;
+.iti__dial-code{color:#56625c}
+.iti .iti__flag{background-image:image-set(url(${ITI_BASE}img/flags.avif) type("image/avif") 1x,url(${ITI_BASE}img/flags@2x.avif) type("image/avif") 2x,url(${ITI_BASE}img/flags.webp) type("image/webp") 1x,url(${ITI_BASE}img/flags@2x.webp) type("image/webp") 2x)}`;
 // Basic check used only if the validation library could not be loaded (the Worker still checks precisely).
 const fallbackPhone=(widget,input)=>{
   const country=widget.getSelectedCountry();
@@ -88,19 +90,24 @@ const validatePhone=(input,mark)=>{
 };
 // Called by the submit handler: makes sure the precise validation is ready, then checks every phone field.
 const preparePhones=async form=>{
+  if(phoneInputs.some(input=>form.contains(input))) await Promise.race([initPhones(),new Promise(resolve=>setTimeout(resolve,5000))]);
   const inputs=phoneInputs.filter(input=>form.contains(input)&&phoneWidgets.has(input));
   if(!inputs.length) return;
   await Promise.race([loadPhoneUtils(),new Promise(resolve=>setTimeout(resolve,5000))]);
   inputs.forEach(input=>validatePhone(input,true));
 };
-if(phoneInputs.length){
+let phoneInit=null;
+const initPhones=()=>{
+  if(phoneInit||!phoneInputs.length) return phoneInit||Promise.resolve();
   const lang=isRu?'ru':'uk';
-  Promise.all([
+  phoneInit=Promise.all([
     loadAsset('link',{rel:'stylesheet',href:ITI_BASE+'css/intlTelInput.min.css'}),
     window.intlTelInput?Promise.resolve():loadAsset('script',{src:ITI_BASE+'js/intlTelInput.min.js'}),
     import(ITI_BASE+'js/locale/'+lang+'.js')
   ]).then(([,,locale])=>{
     if(!document.getElementById('sg-phone-css')){const css=document.createElement('style');css.id='sg-phone-css';css.textContent=phoneCss;document.head.appendChild(css);}
+    // Wrapping the field moves it in the DOM, which drops focus — give it back if the visitor was already in it.
+    const active=document.activeElement;
     phoneInputs.forEach((input,index)=>{
       // The country button lands inside the <label>; keep the label's text bound to the input.
       if(!input.id) input.id='sg-phone-'+(index+1);
@@ -137,10 +144,20 @@ if(phoneInputs.length){
       input.addEventListener('blur',()=>validatePhone(input,true));
       if(input.value) loadPhoneUtils().then(()=>validatePhone(input,false));
     });
+    if(phoneInputs.includes(active)&&document.activeElement!==active){active.focus();loadPhoneUtils();}
   }).catch(()=>{
     // Library unavailable: plain field, the Worker still validates and normalises the number.
     phoneInputs.forEach(input=>{input.placeholder='+380 50 123 4567';});
   });
+  return phoneInit;
+};
+if(phoneInputs.length){
+  // Start when a phone field is within ~600px of the viewport, or on the first touch/focus of it.
+  phoneInputs.forEach(input=>['focusin','pointerdown','touchstart'].forEach(type=>input.addEventListener(type,initPhones,{once:true,passive:true})));
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting)){io.disconnect();initPhones();}},{rootMargin:'600px 0px'});
+    phoneInputs.forEach(input=>io.observe(input));
+  }else initPhones();
 }
 
 // Contact clicks (no phone number / address is sent, only where the link was).

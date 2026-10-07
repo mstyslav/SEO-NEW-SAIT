@@ -4,6 +4,7 @@
 // lazily on first interaction with the field; UI translations for UA/RU.
 import fs from 'node:fs';
 import path from 'node:path';
+import sharp from 'sharp';
 
 const src = path.resolve('node_modules/intl-tel-input');
 const out = path.resolve(`public/vendor/intl-tel-input-${JSON.parse(fs.readFileSync('node_modules/intl-tel-input/package.json', 'utf8')).version}`);
@@ -22,6 +23,11 @@ fs.rmSync(out, { recursive: true, force: true });
 for (const [from, to] of files) {
   fs.mkdirSync(path.dirname(path.join(out, to)), { recursive: true });
   fs.copyFileSync(path.join(src, from), path.join(out, to));
+}
+// AVIF copies of the flag sprites (~45 % smaller, visually equal at q65); forms.js offers them
+// first through image-set(type()) and keeps the WebP originals as the fallback.
+for (const name of ['flags', 'flags@2x']) {
+  await sharp(path.join(out, 'img', `${name}.webp`)).avif({ quality: 65, effort: 6 }).toFile(path.join(out, 'img', `${name}.avif`));
 }
 fs.writeFileSync(path.join(out, 'VERSION'), `intl-tel-input ${version}\n`);
 console.log(`intl-tel-input ${version} → ${path.relative(process.cwd(), out)} (${files.length} files)`);
