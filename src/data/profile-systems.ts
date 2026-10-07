@@ -103,7 +103,7 @@ export const profileCategories: ProfileCategory[] = [
     path: '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/',
     name: 'Алюмінієві вікна',
     h1: 'Алюмінієві вікна на замовлення',
-    metaTitle: 'Вікна з алюмінієвого профілю на замовлення — Aluprof | Space Glass',
+    metaTitle: 'Алюмінієві вікна Aluprof на замовлення | Space Glass',
     metaDescription:
       'Вікна з алюмінієвого профілю з терморозривом на системах Aluprof MB-79N і MB-86N: Uw від 0,62 W/(m²K), великі стулки, захист від злому до RC4. Монтаж у Києві, Одесі, Львові.',
     eyebrow: 'Алюмінієві конструкції / Вікна',
@@ -1264,7 +1264,7 @@ export const profileCategories: ProfileCategory[] = [
     path: '/metaloplastykovi-konstrukcziyi/metaloplastykovi-vikna/',
     name: 'Металопластикові вікна',
     h1: 'Металопластикові вікна на замовлення',
-    metaTitle: 'Металопластикові вікна Aluplast, WDS — ціна та монтаж | Space Glass',
+    metaTitle: 'Металопластикові вікна Aluplast і WDS на замовлення | Space Glass',
     metaDescription:
       'Металопластикові вікна Aluplast IDEAL 8000, WDS 76 MD та Ultra 70: 5–6 камер, склопакет до 48 мм. Замір, виготовлення й монтаж у Києві, Одесі, Львові.',
     eyebrow: 'Металопластикові конструкції / Вікна',

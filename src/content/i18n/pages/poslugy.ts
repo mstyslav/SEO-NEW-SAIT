@@ -30,7 +30,7 @@ export interface PoslugyContent {
 export const poslugyContent: Record<Locale, PoslugyContent> = {
   uk: {
     meta: {
-      title: 'Скляні та алюмінієві конструкції на замовлення | Space Glass',
+      title: 'Послуги зі скла й алюмінію — виготовлення та монтаж | Space Glass',
       description: 'Повний цикл робіт зі склом і алюмінієм: замір, проєктування, власне виробництво, доставка, монтаж і сервіс. Київ, Одеса, Львів і вся Україна.'
     },
     breadcrumbs: { home: 'Головна', current: 'Послуги', ariaLabel: 'Хлібні крихти' },

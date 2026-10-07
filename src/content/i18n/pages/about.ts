@@ -51,7 +51,7 @@ export interface AboutContent {
 export const aboutContent: Record<Locale, AboutContent> = {
   uk: {
     meta: {
-      title: 'Про Space Glass — скляні та алюмінієві конструкції в Україні',
+      title: 'Про компанію Space Glass — історія, команда, 5000+ проєктів',
       description:
         'Space Glass — власне виробництво скляних і алюмінієвих конструкцій: команда, досвід, гарантії та реалізовані проєкти в Києві, Одесі, Львові.'
     },
@@ -167,7 +167,7 @@ export const aboutContent: Record<Locale, AboutContent> = {
   },
   ru: {
     meta: {
-      title: 'О Space Glass — стеклянные и алюминиевые конструкции в Украине',
+      title: 'О компании Space Glass — история, команда, 5000+ проектов',
       description:
         'Space Glass — собственное производство стеклянных и алюминиевых конструкций: команда, опыт, гарантии и реализованные проекты в Киеве, Одессе, Львове.'
     },
