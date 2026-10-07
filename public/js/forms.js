@@ -63,11 +63,11 @@ const phoneCss=`.iti{display:block;width:100%}
 .iti__country.iti__highlight{background:#e8f6f0}
 .iti__dial-code{color:#56625c}`;
 // Basic check used only if the validation library could not be loaded (the Worker still checks precisely).
-const fallbackPhone=widget=>{
+const fallbackPhone=(widget,input)=>{
   const country=widget.getSelectedCountry();
-  let digits=widget.telInputEl.value.replace(/\D/g,'');
+  let digits=input.value.replace(/\D/g,'');
   if(!country||!digits) return '';
-  if(widget.telInputEl.value.trim().startsWith('+')) return '+'+digits;
+  if(input.value.trim().startsWith('+')) return '+'+digits;
   digits=digits.replace(/^0+/,'');
   return '+'+country.dialCode+digits;
 };
@@ -75,7 +75,7 @@ const phoneValue=input=>{
   const widget=phoneWidgets.get(input);
   if(!widget) return input.value.trim();
   if(window.intlTelInput.utils) return widget.isValidNumberPrecise()?widget.getNumber(window.intlTelInput.NUMBER_FORMAT.E164):'';
-  const number=fallbackPhone(widget);
+  const number=fallbackPhone(widget,input);
   return /^\+\d{8,15}$/.test(number)&&!(number.startsWith('+380')&&number.length!==13)?number:'';
 };
 const validatePhone=(input,mark)=>{
