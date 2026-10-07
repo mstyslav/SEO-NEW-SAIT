@@ -1,6 +1,7 @@
 /**
  * Indexed "орієнтовна вартість від" prices for catalog pages (glass partitions, frameless glazing)
- * per-metre guide prices for glass railings and typical-size guide prices for glass canopies.
+ * per-metre guide prices for glass railings, typical-size guide prices for glass canopies and
+ * market-orientation ranges for typical PVC and aluminium windows.
  *
  * Every number is derived from the calculators' own sources — tariffs.json and the
  * /peregorodky-configurator/, /loft-configurator/ and /bezramne-configurator/ configs — through
@@ -18,6 +19,7 @@ import { calculatePrice, type CategoryKey } from './engine';
 import { USD_UAH } from './currency';
 import { DEFAULT_CHOICE, SYSTEMS as RAILING_SYSTEMS, railingPrice } from '../data/railing-pricing';
 import { CANOPY_CONFIG_SYSTEMS, DEFAULT_CANOPY_CHOICE, canopyPrice } from '../data/canopy-pricing';
+import { WINDOW_MARKET, type WindowClass } from './window-pricing';
 
 type ConfigOption = { value: string; multiplier?: number; extraUsd?: number };
 type Config = { fields: { id: string; default?: number; options?: ConfigOption[] }[] };
@@ -87,7 +89,7 @@ export const examplePrice = (key: SystemKey, door: DoorKind | null = null, doorS
 export type PriceVariant =
   | 'partition-hub' | 'partition-loft' | 'partition-frameless' | 'partition-office' | 'partition-interior' | 'partition-doors'
   | 'glazing-hub' | 'glazing-folding' | 'glazing-sliding' | 'glazing-terrace' | 'glazing-gazebo' | 'glazing-balcony'
-  | RailingVariant | CanopyVariant;
+  | RailingVariant | CanopyVariant | WindowVariant;
 
 /**
  * Card systems whose price the calculator really models, per catalog (card/model ids differ
@@ -107,7 +109,7 @@ const CARD_SYSTEM_PRICE: Record<'partition' | 'glazing', Record<string, SystemKe
 
 /** Card «від» price per m² for a system on a page with the given price block, or undefined. */
 export const cardPricePerM2 = (variant: PriceVariant, systemId: string) => {
-  if (isRailingVariant(variant) || isCanopyVariant(variant)) return undefined;
+  if (isRailingVariant(variant) || isCanopyVariant(variant) || isWindowVariant(variant)) return undefined;
   const key = CARD_SYSTEM_PRICE[variant.startsWith('glazing') ? 'glazing' : 'partition'][systemId];
   return key ? systemPricePerM2(key) : undefined;
 };
@@ -223,3 +225,13 @@ export const canopyPriceBlock = (slug: string) =>
 /** Card guide for a system on a canopy page, or undefined (not on the page or not published, e.g. TRAVE). */
 export const canopyCardGuide = (variant: PriceVariant, systemId: string) =>
   isCanopyVariant(variant) && CANOPY_PAGES[variant].systems.includes(systemId) ? canopyGuide(systemId) : undefined;
+
+/* ---------------------------------------------------------------- windows ---------------- */
+/*
+ * Windows have no calculator yet: their blocks show market-orientation ranges from
+ * src/pricing/window-pricing.ts (typical constructions, product without installation).
+ */
+export type WindowVariant = 'window-pvc' | 'window-alu';
+export const isWindowVariant = (variant: PriceVariant): variant is WindowVariant => variant.startsWith('window-');
+export const windowClassOf = (variant: WindowVariant): WindowClass => (variant === 'window-pvc' ? 'pvc' : 'alu');
+export const windowMarket = (variant: WindowVariant) => WINDOW_MARKET[windowClassOf(variant)];

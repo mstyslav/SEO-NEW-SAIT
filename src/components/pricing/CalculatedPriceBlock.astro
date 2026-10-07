@@ -4,8 +4,9 @@
  * glass railings). Numbers come from src/pricing/calculated-prices.ts (the calculators' own
  * tariffs and formulas, working rate from src/pricing/currency.ts); only wording lives here. Uses the PriceBlock layout/styles (card + factors column).
  */
-import { systemPricePerM2, doorPrice, examplePrice, railingGuide, isRailingVariant, RAILING_PAGES, canopyGuide, isCanopyVariant, CANOPY_PAGES, type PriceVariant, type RailingVariant, type CanopyVariant, type SystemKey, type DoorKind, type DoorSet } from '../../pricing/calculated-prices';
+import { systemPricePerM2, doorPrice, examplePrice, railingGuide, isRailingVariant, RAILING_PAGES, canopyGuide, isCanopyVariant, CANOPY_PAGES, windowMarket, isWindowVariant, type PriceVariant, type RailingVariant, type CanopyVariant, type WindowVariant, type SystemKey, type DoorKind, type DoorSet } from '../../pricing/calculated-prices';
 import { SYSTEMS as RAILING_SYSTEMS } from '../../data/railing-pricing';
+import { WINDOW_INSTALL_FROM_UAH_PER_M2, type Sash } from '../../pricing/window-pricing';
 import { localizedPath, type Locale } from '../../i18n/helpers';
 // Styles: .price-block* in category-pages.css, which every page using this block already loads.
 
@@ -40,7 +41,7 @@ const glazingFactors: [string, string][] = ru
   : [['Розміри прорізу', 'Ціна рахується за м² скління.'], ['Тип відкривання', 'Поворотно-складне чи розсувне.'], ['Скло', 'Загартоване 8–10 мм, прозоре чи тоноване.'], ['Профіль і поріг', 'Колір профілю, висота порога, кутові з’єднання.'], ['Монтаж', 'Основа, висота й доступ до прорізу.']];
 
 const P = (ua: string, r: string) => (ru ? r : ua);
-const V: Record<Exclude<PriceVariant, RailingVariant | CanopyVariant>, V> = {
+const V: Record<Exclude<PriceVariant, RailingVariant | CanopyVariant | WindowVariant>, V> = {
   'partition-hub': { heading: P('Скільки коштує скляна перегородка', 'Сколько стоит стеклянная перегородка'), rows: [[L.frameless, 'frameless'], [L.profile, 'profile'], [L.loft, 'loft']], doors: 'partition', example: { key: 'frameless', door: 'swing', ua: 'Перегородка {d}, безрамна, з розпашними дверима', ru: 'Перегородка {d}, безрамная, с распашными дверьми' }, cta: '/peregorodky-configurator/', factors: partitionFactors(P('Система|Безрамна, у профілі або Loft.', 'Система|Безрамная, в профиле или лофт.').split('|') as [string, string]) },
   'partition-loft': { heading: P('Скільки коштує Loft-перегородка', 'Сколько стоит лофт-перегородка'), rows: [[L.loftStd, 'loft'], [L.loftSlim, 'loftSlim'], [L.loftPremium, 'loftPremium']], doors: 'loft', example: { key: 'loft', door: 'swing', ua: 'Перегородка {d}, Loft, стандартний профіль, з розпашними дверима', ru: 'Перегородка {d}, лофт, стандартный профиль, с распашными дверьми' }, cta: '/loft-configurator/', factors: partitionFactors(P('Профіль|Стандартний, тонкий або Premium, кількість шпросів.', 'Профиль|Стандартный, тонкий или Premium, количество шпросов.').split('|') as [string, string]) },
   'partition-frameless': { heading: P('Скільки коштує цільноскляна перегородка', 'Сколько стоит цельностеклянная перегородка'), rows: [[L.frameless, 'frameless'], [L.premium, 'premium']], doors: 'partition', example: { key: 'frameless', ua: 'Перегородка {d}, безрамна, без дверей', ru: 'Перегородка {d}, безрамная, без дверей' }, cta: '/peregorodky-configurator/', factors: partitionFactors(P('Система|Безрамна або Premium, спосіб кріплення.', 'Система|Безрамная или Premium, способ крепления.').split('|') as [string, string]) },
@@ -60,7 +61,7 @@ const t = ru
   ? { eyebrow: 'Стоимость', kicker: 'Ориентировочная стоимость от · за 1 м² с монтажом', example: 'Пример расчёта', cta: 'Рассчитать свой размер', note: '*Ориентировочная стоимость. Точная цена зависит от комплектации и актуального курса. Рассчитайте свой размер в калькуляторе.', factorsTitle: 'От чего зависит цена' }
   : { eyebrow: 'Вартість', kicker: 'Орієнтовна вартість від · за 1 м² з монтажем', example: 'Приклад розрахунку', cta: 'Розрахувати свій розмір', note: '*Орієнтовна вартість. Точна ціна залежить від комплектації та актуального курсу. Розрахуйте свій розмір у калькуляторі.', factorsTitle: 'Від чого залежить ціна' };
 
-type Block = { heading: string; kicker: string; rows: (readonly [string, string])[]; doorsLine: string | null; exampleText: string; examplePrice: string; cta: string; note: string; factors: [string, string][] };
+type Block = { heading: string; kicker: string; rows: (readonly [string, string] | readonly [string, string, string])[]; doorsLine: string | null; notes?: string[]; noteLink?: [string, string, string]; ctaLabel?: string; exampleText: string; examplePrice: string; cta: string; note: string; factors: [string, string][] };
 let block: Block;
 
 if (isRailingVariant(variant)) {
@@ -127,6 +128,55 @@ if (isRailingVariant(variant)) {
       ? [['Размер', 'Ширина и вылет козырька: от них зависят площадь стекла и монтаж.'], ['Система', 'Тяги, кронштейны, консольный профиль или рама.'], ['Стекло', 'Прозрачное, экстрапрозрачное, матовое или серое, покрытие от грязи.'], ['Крепление к стене', 'Бетон и кирпич, дерево или утеплённый фасад.'], ['Опции и монтаж', 'Водосток, герметичное примыкание, высота и доступ к входу.']]
       : [['Розмір', 'Ширина й виліт козирка: від них залежать площа скла й монтаж.'], ['Система', 'Тяги, кронштейни, консольний профіль або рама.'], ['Скло', 'Прозоре, екстрапрозоре, матове чи сіре, покриття від бруду.'], ['Кріплення до стіни', 'Бетон і цегла, дерево чи утеплений фасад.'], ['Опції та монтаж', 'Водостік, герметичне примикання, висота й доступ до входу.']]
   };
+} else if (isWindowVariant(variant)) {
+  // Windows: market-orientation ranges for typical constructions (no calculator), product without installation.
+  const pvc = variant === 'window-pvc';
+  const market = windowMarket(variant);
+  const range = ([lo, hi]: readonly [number, number], unit = 'грн') => `≈\u00a0${fmt(lo)}–${fmt(hi)}\u00a0${unit}`;
+  const count = (n: number) => (ru ? ['Одностворчатое', 'Двухстворчатое', 'Трёхстворчатое'] : ['Одностулкове', 'Двостулкове', 'Тристулкове'])[n - 1] ?? '';
+  const sashText = (sashes: Sash[]) => {
+    const tt = sashes.filter((x) => x === 'tiltTurn').length;
+    const ttText = ru ? (tt === 1 ? '1 поворотно-откидная створка' : `${tt} поворотно-откидные створки`) : (tt === 1 ? '1 поворотно-відкидна стулка' : `${tt} поворотно-відкидні стулки`);
+    if (!sashes.includes('fixed')) return ttText;
+    if (sashes.length === 3 && sashes[1] === 'fixed') return ru ? `глухая середина + ${tt} поворотно-откидные` : `глуха середина + ${tt} поворотно-відкидні`;
+    return ru ? `1 глухая + ${ttText}` : `1 глуха + ${ttText}`;
+  };
+  const label = (w: (typeof market.typical)[number]) => `${count(w.sashes.length)} ${P('вікно', 'окно')}, ${w.widthMm}\u00a0×\u00a0${w.heightMm}\u00a0мм`;
+  const ex = market.typical[0];
+  const area = ((ex.widthMm / 1000) * (ex.heightMm / 1000)).toFixed(2).replace('.', ',');
+  block = {
+    heading: pvc ? P('Скільки коштують металопластикові вікна', 'Сколько стоят металлопластиковые окна') : P('Скільки коштують алюмінієві вікна', 'Сколько стоят алюминиевые окна'),
+    kicker: P('Ринковий орієнтир · виріб без монтажу', 'Рыночный ориентир · изделие без монтажа'),
+    rows: market.typical.map((w) => [label(w), range(w.rangeUah), sashText(w.sashes)] as const),
+    doorsLine: null,
+    notes: [
+      pvc
+        ? P(`Орієнтовна вартість ПВХ-вікон — близько ${fmt(market.perM2Uah[0])}–${fmt(market.perM2Uah[1])} грн/м² для базових конфігурацій.`, `Ориентировочная стоимость ПВХ-окон — около ${fmt(market.perM2Uah[0])}–${fmt(market.perM2Uah[1])} грн/м² для базовых конфигураций.`)
+        : P(`Орієнтовна вартість теплих алюмінієвих вікон — близько ${fmt(market.perM2Uah[0])}–${fmt(market.perM2Uah[1])} грн/м² для базових конфігурацій.`, `Ориентировочная стоимость тёплых алюминиевых окон — около ${fmt(market.perM2Uah[0])}–${fmt(market.perM2Uah[1])} грн/м² для базовых конфигураций.`),
+      P('Вартість квадратного метра змінюється залежно від розміру конструкції, кількості відкривних стулок, профільної системи, склопакета та фурнітури. Це ринковий орієнтир, а не тариф і не формула калькулятора.', 'Стоимость квадратного метра меняется в зависимости от размера конструкции, количества открывающихся створок, профильной системы, стеклопакета и фурнитуры. Это рыночный ориентир, а не тариф и не формула калькулятора.')
+    ].concat(pvc
+      ? [P('Базова комплектація: професійна PVC-профільна система, двокамерний енергоощадний склопакет, фурнітура, армування, ущільнення, теплий підставочний профіль.', 'Базовая комплектация: профессиональная PVC-профильная система, двухкамерный энергосберегающий стеклопакет, фурнитура, армирование, уплотнители, тёплый подставочный профиль.')]
+      : [P('Базова комплектація: тепла алюмінієва система з терморозривом (клас Aluprof MB-79N, Framex FT 72, KMD 70 або аналог), двокамерний енергоощадний склопакет, фурнітура, стандартне фарбування RAL, підставочний профіль. Великі панорамні, нестандартні та важкі конструкції — індивідуальний розрахунок.', 'Базовая комплектация: тёплая алюминиевая система с терморазрывом (класс Aluprof MB-79N, Framex FT 72, KMD 70 или аналог), двухкамерный энергосберегающий стеклопакет, фурнитура, стандартная покраска RAL, подставочный профиль. Большие панорамные, нестандартные и тяжёлые конструкции — индивидуальный расчёт.')]),
+    noteLink: [
+      P(`Окремо: монтаж — від ${fmt(WINDOW_INSTALL_FROM_UAH_PER_M2)} грн/м², демонтаж, доставка, підвіконня, зовнішній відлив, укоси, москітна сітка, нестандартний колір, спеціальні склопакети й посилена фурнітура. `, `Отдельно: монтаж — от ${fmt(WINDOW_INSTALL_FROM_UAH_PER_M2)} грн/м², демонтаж, доставка, подоконник, внешний отлив, откосы, москитная сетка, нестандартный цвет, специальные стеклопакеты и усиленная фурнитура. `),
+      P('Як ми монтуємо вікна', 'Как мы монтируем окна'),
+      '/montazh-vikon/'
+    ],
+    exampleText: pvc
+      ? P(`${label(ex)} (${area} м²), ${sashText(ex.sashes)}, профіль 70–76 мм, двокамерний енергоощадний склопакет, теплий підставочний профіль`, `${label(ex)} (${area} м²), ${sashText(ex.sashes)}, профиль 70–76 мм, двухкамерный энергосберегающий стеклопакет, тёплый подставочный профиль`)
+      : P(`${label(ex)} (${area} м²), ${sashText(ex.sashes)}, тепла система класу MB-79N / FT 72 / KMD 70, двокамерний енергоощадний склопакет, стандартний RAL`, `${label(ex)} (${area} м²), ${sashText(ex.sashes)}, тёплая система класса MB-79N / FT 72 / KMD 70, двухкамерный энергосберегающий стеклопакет, стандартный RAL`),
+    examplePrice: `${range(ex.rangeUah)} ${P('без монтажу', 'без монтажа')}`,
+    cta: '#request',
+    ctaLabel: P('Розрахувати моє вікно', 'Рассчитать моё окно'),
+    note: P('*Ринковий орієнтир для типової конструкції без монтажу, а не розрахунок калькулятора. Точна ціна залежить від розмірів, кількості стулок, типу відкривання, профільної системи, склопакета, фурнітури й кольору та підтверджується після заміру.', '*Рыночный ориентир для типовой конструкции без монтажа, а не расчёт калькулятора. Точная цена зависит от размеров, количества створок, типа открывания, профильной системы, стеклопакета, фурнитуры и цвета и подтверждается после замера.'),
+    factors: pvc
+      ? (ru
+        ? [['Размер', 'Маленькие окна дороже за м²: рама и фурнитура есть в каждом изделии.'], ['Створки и открывание', 'Глухая часть дешевле, поворотно-откидная створка добавляет профиль и фурнитуру.'], ['Профильная система', 'Монтажная ширина, количество камер и контуров уплотнения.'], ['Стеклопакет', 'Трёхкамерный, акустический, солнцезащитный или противовзломный — дороже базового.'], ['Фурнитура и цвет', 'Усиленная или скрытая фурнитура, ламинация.']]
+        : [['Розмір', 'Малі вікна дорожчі за м²: рама й фурнітура є в кожному виробі.'], ['Стулки й відкривання', 'Глуха частина дешевша, поворотно-відкидна стулка додає профіль і фурнітуру.'], ['Профільна система', 'Монтажна ширина, кількість камер і контурів ущільнення.'], ['Склопакет', 'Трикамерний, акустичний, сонцезахисний чи протизламний — дорожчий за базовий.'], ['Фурнітура й колір', 'Посилена чи прихована фурнітура, ламінація.']])
+      : (ru
+        ? [['Система', 'Класс тёплой системы, глубина профиля, теплоизоляция и взломостойкость.'], ['Габариты', 'Большие глухие поля дешевле за м², маленькие окна — дороже.'], ['Створки, вес и фурнитура', 'Большие и тяжёлые створки могут потребовать усиленной фурнитуры — это меняет цену.'], ['Стеклопакет', 'Трёхкамерный, акустический, солнцезащитный или противовзломный.'], ['Цвет', 'Двухцветная, структурная или «под дерево» покраска профиля.']]
+        : [['Система', 'Клас теплої системи, глибина профілю, теплоізоляція й протизламність.'], ['Габарити', 'Великі глухі поля дешевші за м², малі вікна — дорожчі.'], ['Стулки, вага й фурнітура', 'Великі та важкі стулки можуть потребувати посиленої фурнітури — це змінює ціну.'], ['Склопакет', 'Трикамерний, акустичний, сонцезахисний чи протизламний.'], ['Колір', 'Двоколірне, структурне чи «під дерево» фарбування профілю.']])
+  };
 } else {
   const v = V[variant];
   const ex = examplePrice(v.example.key, v.example.door ?? null, v.doors ?? 'partition');
@@ -152,14 +202,16 @@ if (isRailingVariant(variant)) {
     <h2>{block.heading}</h2>
     <p class="price-block__kicker">{block.kicker}</p>
     <ul class="price-block__rows">
-      {block.rows.map(([label, price]) => <li><span>{label}</span><b>{price}</b></li>)}
+      {block.rows.map(([label, price, note]) => <li><span>{label}{note && <small>{note}</small>}</span><b>{price}</b></li>)}
     </ul>
     {block.doorsLine && <p class="price-block__doors">{block.doorsLine}</p>}
+    {block.notes?.map((text) => <p class="price-block__doors">{text}</p>)}
+    {block.noteLink && <p class="price-block__doors">{block.noteLink[0]}<a href={localizedPath(block.noteLink[2], locale)}>{block.noteLink[1]} →</a></p>}
     <div class="price-block__example">
       <p class="price-block__example-title">{t.example}</p>
       <p>{block.exampleText} — <b>{block.examplePrice}</b></p>
     </div>
-    <a class="button button--mint" href={localizedPath(block.cta, locale)}>{t.cta}</a>
+    <a class="button button--mint" href={localizedPath(block.cta, locale)}>{block.ctaLabel ?? t.cta}</a>
     <p class="price-block__footnote">{block.note}</p>
   </div>
   <div class="price-block__factors-wrap">

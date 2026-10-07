@@ -273,6 +273,8 @@
 .price-block__rows li{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--green-line)}
 .price-block__rows li span{color:var(--text);line-height:1.35}
 .price-block__rows li b{flex:0 0 auto;font-size:1.12rem;font-weight:800;white-space:nowrap}
+.price-block__rows li span small{display:block;margin-top:3px;color:var(--muted);font-size:.86rem;line-height:1.4}
+.price-block__doors a{color:var(--mint-dark);font-weight:700;white-space:nowrap}
 .price-block__doors{margin:0 0 16px;color:var(--muted);font-size:.92rem;line-height:1.5}
 .price-block__example{margin:0 0 22px;padding:14px 16px;border-radius:14px;background:#f7fbf9}
 .price-block__example p{margin:0;line-height:1.5}
