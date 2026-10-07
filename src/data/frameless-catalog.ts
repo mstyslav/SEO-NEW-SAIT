@@ -16,6 +16,7 @@ export const FRAMELESS_IMG = '/images/catalog/bezramne';
 export const framelessCategories: ProfileCategory[] = [
   {
     "slug": "povorotno-skladni-systemy",
+    "priceBlock": "glazing-folding",
     "group": "frameless",
     "path": "/bezramne-sklinnya/povorotno-skladni-systemy/",
     "name": "Поворотно-складні системи",
@@ -510,7 +511,7 @@ export const framelessCategories: ProfileCategory[] = [
     "imageBase": "/images/catalog/bezramne",
     "catalogButton": "Переглянути системи",
     "optionsLabel": "Система",
-    "catalogNote": "Характеристики наведені для базових конфігурацій. Остаточні розміри стулок, скло й комплектацію визначаємо після заміру прорізу; вартість — за індивідуальним розрахунком.",
+    "catalogNote": "Характеристики наведені для базових конфігурацій. Остаточні розміри стулок, скло й комплектацію визначаємо після заміру прорізу.",
     "process": [
       [
         "Запит",
@@ -566,6 +567,7 @@ export const framelessCategories: ProfileCategory[] = [
   },
   {
     "slug": "sklyani-rozsuvni-systemy",
+    "priceBlock": "glazing-sliding",
     "group": "frameless",
     "path": "/bezramne-sklinnya/sklyani-rozsuvni-systemy/",
     "name": "Розсувні безрамні системи",
@@ -1064,7 +1066,7 @@ export const framelessCategories: ProfileCategory[] = [
     "imageBase": "/images/catalog/bezramne",
     "catalogButton": "Переглянути системи",
     "optionsLabel": "Система",
-    "catalogNote": "Характеристики наведені для базових конфігурацій. Остаточні розміри стулок, скло й комплектацію визначаємо після заміру прорізу; вартість — за індивідуальним розрахунком.",
+    "catalogNote": "Характеристики наведені для базових конфігурацій. Остаточні розміри стулок, скло й комплектацію визначаємо після заміру прорізу.",
     "process": [
       [
         "Запит",
@@ -2770,6 +2772,7 @@ export const framelessCategories: ProfileCategory[] = [
   },
   {
     "slug": "sklinnya-balkoniv",
+    "priceBlock": "glazing-balcony",
     "group": "frameless",
     "path": "/bezramne-sklinnya/sklinnya-balkoniv/",
     "name": "Безрамне скління балкона",
@@ -3264,7 +3267,7 @@ export const framelessCategories: ProfileCategory[] = [
     "imageBase": "/images/catalog/bezramne",
     "catalogButton": "Переглянути системи",
     "optionsLabel": "Система",
-    "catalogNote": "Характеристики наведені для базових конфігурацій. Остаточні розміри стулок, скло й комплектацію визначаємо після заміру прорізу; вартість — за індивідуальним розрахунком.",
+    "catalogNote": "Характеристики наведені для базових конфігурацій. Остаточні розміри стулок, скло й комплектацію визначаємо після заміру прорізу.",
     "process": [
       [
         "Запит",
@@ -3320,6 +3323,7 @@ export const framelessCategories: ProfileCategory[] = [
   },
   {
     "slug": "sklinnya-teras-ta-altanok",
+    "priceBlock": "glazing-terrace",
     "group": "frameless",
     "path": "/bezramne-sklinnya/sklinnya-teras-ta-altanok/",
     "name": "Безрамне скління тераси",
@@ -3814,7 +3818,7 @@ export const framelessCategories: ProfileCategory[] = [
     "imageBase": "/images/catalog/bezramne",
     "catalogButton": "Переглянути системи",
     "optionsLabel": "Система",
-    "catalogNote": "Характеристики наведені для базових конфігурацій. Остаточні розміри стулок, скло й комплектацію визначаємо після заміру прорізу; вартість — за індивідуальним розрахунком.",
+    "catalogNote": "Характеристики наведені для базових конфігурацій. Остаточні розміри стулок, скло й комплектацію визначаємо після заміру прорізу.",
     "process": [
       [
         "Запит",
@@ -3870,6 +3874,7 @@ export const framelessCategories: ProfileCategory[] = [
   },
   {
     "slug": "bezramne-sklinnya-altanky",
+    "priceBlock": "glazing-gazebo",
     "group": "frameless",
     "path": "/bezramne-sklinnya/bezramne-sklinnya-altanky/",
     "name": "Безрамне скління альтанки",
@@ -4364,7 +4369,7 @@ export const framelessCategories: ProfileCategory[] = [
     "imageBase": "/images/catalog/bezramne",
     "catalogButton": "Переглянути системи",
     "optionsLabel": "Система",
-    "catalogNote": "Характеристики наведені для базових конфігурацій. Остаточні розміри стулок, скло й комплектацію визначаємо після заміру прорізу; вартість — за індивідуальним розрахунком.",
+    "catalogNote": "Характеристики наведені для базових конфігурацій. Остаточні розміри стулок, скло й комплектацію визначаємо після заміру прорізу.",
     "process": [
       [
         "Запит",

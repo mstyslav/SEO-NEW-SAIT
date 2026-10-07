@@ -18,6 +18,7 @@ import '../../../styles/profile-systems.css';
 import { HUB_CONFIGURATORS } from '../../../data/configurator-links';
 import ProjectLinks from '../../../components/profile/ProjectLinks.astro';
 import UsefulArticles from '../../../components/profile/UsefulArticles.astro';
+import CalculatedPriceBlock from '../../../components/pricing/CalculatedPriceBlock.astro';
 
 const lp = (path: string) => localizedPath(path, 'ru');
 const origin = Astro.site ?? Astro.url.origin;
@@ -204,6 +205,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         </table>
       </div>
     </section>
+
+    <CalculatedPriceBlock variant="glazing-hub" locale="ru" />
 
     <section class="category-section">
       <div class="category-heading"><div><p class="eyebrow">Преимущества</p><h2>Почему безрамное остекление</h2></div><p>Лёгкий вид и функциональность, которых не дают классические рамы.</p></div>

@@ -16,6 +16,7 @@ import '../../styles/profile-systems.css';
 import { HUB_CONFIGURATORS } from '../../data/configurator-links';
 import ProjectLinks from '../../components/profile/ProjectLinks.astro';
 import UsefulArticles from '../../components/profile/UsefulArticles.astro';
+import CalculatedPriceBlock from '../../components/pricing/CalculatedPriceBlock.astro';
 
 const origin = Astro.site ?? Astro.url.origin;
 const pageUrl = absoluteUrl(FRAMELESS_HUB, origin);
@@ -200,6 +201,8 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
         </table>
       </div>
     </section>
+
+    <CalculatedPriceBlock variant="glazing-hub" />
 
     <section class="category-section">
       <div class="category-heading"><div><p class="eyebrow">Переваги</p><h2>Чому безрамне скління</h2></div><p>Легкий вигляд і функціональність, яких не дають класичні рами.</p></div>

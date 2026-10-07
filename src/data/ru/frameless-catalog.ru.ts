@@ -8,6 +8,7 @@ import type { ProfileCategory } from '../profile-systems';
 export const framelessCategoriesRu: ProfileCategory[] = [
   {
     "slug": "povorotno-skladni-systemy",
+    "priceBlock": "glazing-folding",
     "group": "frameless",
     "path": "/bezramne-sklinnya/povorotno-skladni-systemy/",
     "name": "Поворотно-складные системы",
@@ -508,7 +509,7 @@ export const framelessCategoriesRu: ProfileCategory[] = [
     "imageBase": "/images/catalog/bezramne",
     "catalogButton": "Смотреть системы",
     "optionsLabel": "Система",
-    "catalogNote": "Характеристики приведены для базовых конфигураций. Окончательные размеры створок, стекло и комплектацию определяем после замера проёма; стоимость — по индивидуальному расчёту.",
+    "catalogNote": "Характеристики приведены для базовых конфигураций. Окончательные размеры створок, стекло и комплектацию определяем после замера проёма.",
     "process": [
       [
         "Запрос",
@@ -564,6 +565,7 @@ export const framelessCategoriesRu: ProfileCategory[] = [
   },
   {
     "slug": "sklyani-rozsuvni-systemy",
+    "priceBlock": "glazing-sliding",
     "group": "frameless",
     "path": "/bezramne-sklinnya/sklyani-rozsuvni-systemy/",
     "name": "Раздвижные безрамные системы",
@@ -1068,7 +1070,7 @@ export const framelessCategoriesRu: ProfileCategory[] = [
     "imageBase": "/images/catalog/bezramne",
     "catalogButton": "Смотреть системы",
     "optionsLabel": "Система",
-    "catalogNote": "Характеристики приведены для базовых конфигураций. Окончательные размеры створок, стекло и комплектацию определяем после замера проёма; стоимость — по индивидуальному расчёту.",
+    "catalogNote": "Характеристики приведены для базовых конфигураций. Окончательные размеры створок, стекло и комплектацию определяем после замера проёма.",
     "process": [
       [
         "Запрос",
@@ -2792,6 +2794,7 @@ export const framelessCategoriesRu: ProfileCategory[] = [
   },
   {
     "slug": "sklinnya-balkoniv",
+    "priceBlock": "glazing-balcony",
     "group": "frameless",
     "path": "/bezramne-sklinnya/sklinnya-balkoniv/",
     "name": "Безрамное остекление балкона",
@@ -3292,7 +3295,7 @@ export const framelessCategoriesRu: ProfileCategory[] = [
     "imageBase": "/images/catalog/bezramne",
     "catalogButton": "Смотреть системы",
     "optionsLabel": "Система",
-    "catalogNote": "Характеристики приведены для базовых конфигураций. Окончательные размеры створок, стекло и комплектацию определяем после замера проёма; стоимость — по индивидуальному расчёту.",
+    "catalogNote": "Характеристики приведены для базовых конфигураций. Окончательные размеры створок, стекло и комплектацию определяем после замера проёма.",
     "process": [
       [
         "Запрос",
@@ -3348,6 +3351,7 @@ export const framelessCategoriesRu: ProfileCategory[] = [
   },
   {
     "slug": "sklinnya-teras-ta-altanok",
+    "priceBlock": "glazing-terrace",
     "group": "frameless",
     "path": "/bezramne-sklinnya/sklinnya-teras-ta-altanok/",
     "name": "Безрамное остекление террасы",
@@ -3848,7 +3852,7 @@ export const framelessCategoriesRu: ProfileCategory[] = [
     "imageBase": "/images/catalog/bezramne",
     "catalogButton": "Смотреть системы",
     "optionsLabel": "Система",
-    "catalogNote": "Характеристики приведены для базовых конфигураций. Окончательные размеры створок, стекло и комплектацию определяем после замера проёма; стоимость — по индивидуальному расчёту.",
+    "catalogNote": "Характеристики приведены для базовых конфигураций. Окончательные размеры створок, стекло и комплектацию определяем после замера проёма.",
     "process": [
       [
         "Запрос",
@@ -3904,6 +3908,7 @@ export const framelessCategoriesRu: ProfileCategory[] = [
   },
   {
     "slug": "bezramne-sklinnya-altanky",
+    "priceBlock": "glazing-gazebo",
     "group": "frameless",
     "path": "/bezramne-sklinnya/bezramne-sklinnya-altanky/",
     "name": "Безрамное остекление беседки",
@@ -4404,7 +4409,7 @@ export const framelessCategoriesRu: ProfileCategory[] = [
     "imageBase": "/images/catalog/bezramne",
     "catalogButton": "Смотреть системы",
     "optionsLabel": "Система",
-    "catalogNote": "Характеристики приведены для базовых конфигураций. Окончательные размеры створок, стекло и комплектацию определяем после замера проёма; стоимость — по индивидуальному расчёту.",
+    "catalogNote": "Характеристики приведены для базовых конфигураций. Окончательные размеры створок, стекло и комплектацию определяем после замера проёма.",
     "process": [
       [
         "Запрос",

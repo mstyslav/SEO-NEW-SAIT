@@ -1,0 +1,93 @@
+---
+/**
+ * Compact «орієнтовна вартість від» block for catalog pages (glass partitions, frameless glazing).
+ * Numbers come from src/pricing/calculated-prices.ts (calculator tariffs + configs, stable rate);
+ * only wording lives here. Uses the PriceBlock layout/styles (card + factors column).
+ */
+import { systemPricePerM2, doorPrice, examplePrice, type PriceVariant, type SystemKey, type DoorKind, type DoorSet } from '../../pricing/calculated-prices';
+import { localizedPath, type Locale } from '../../i18n/helpers';
+// Styles: .price-block* in category-pages.css, which every page using this block already loads.
+
+interface Props { variant: PriceVariant; locale?: Locale }
+const { variant, locale = 'uk' } = Astro.props;
+const ru = locale === 'ru';
+
+const fmt = (n: number) => n.toLocaleString('uk-UA').replace(/\s/g, ' ');
+const from = (n: number, perM2 = false) => `${ru ? 'от' : 'від'} ${fmt(n)} грн${perM2 ? '/м²' : ''}`;
+
+const L = {
+  frameless: ru ? 'Безрамная (цельностеклянная)' : 'Безрамна (цільноскляна)',
+  profile: ru ? 'Перегородка в профиле' : 'Перегородка в профілі',
+  premium: 'Premium-система',
+  loft: ru ? 'Лофт-перегородка' : 'Loft-перегородка',
+  loftStd: ru ? 'Стандартный профиль' : 'Стандартний профіль',
+  loftSlim: ru ? 'Тонкий профиль' : 'Тонкий профіль',
+  loftPremium: ru ? 'Premium-профиль' : 'Premium-профіль',
+  folding: ru ? 'Поворотно-складное («книжка»)' : 'Поворотно-складне («книжка»)',
+  sliding: ru ? 'Раздвижное (слайдинг)' : 'Розсувне (слайдинг)'
+};
+
+type Example = { key: SystemKey; door?: DoorKind; ua: string; ru: string };
+type V = { heading: string; rows: [string, SystemKey][]; doors?: DoorSet; example: Example; cta: string; factors: [string, string][] };
+
+// Price factors: partitions vs frameless glazing (system factor varies per page).
+const partitionFactors = (system: [string, string]): [string, string][] => ru
+  ? [['Размеры', 'Цена считается за м² полотна.'], system, ['Двери', 'Без дверей, распашные или раздвижные.'], ['Стекло', 'Прозрачное, матовое, тонированное или триплекс.'], ['Монтаж', 'Условия объекта, этаж и доступ.']]
+  : [['Розміри', 'Ціна рахується за м² полотна.'], system, ['Двері', 'Без дверей, розпашні чи розсувні.'], ['Скло', 'Прозоре, матове, тоноване чи триплекс.'], ['Монтаж', 'Умови об’єкта, поверх і доступ.']];
+const glazingFactors: [string, string][] = ru
+  ? [['Размеры проёма', 'Цена считается за м² остекления.'], ['Тип открывания', 'Поворотно-складное или раздвижное.'], ['Стекло', 'Закалённое 8–10 мм, прозрачное или тонированное.'], ['Профиль и порог', 'Цвет профиля, высота порога, угловые соединения.'], ['Монтаж', 'Основание, высота и доступ к проёму.']]
+  : [['Розміри прорізу', 'Ціна рахується за м² скління.'], ['Тип відкривання', 'Поворотно-складне чи розсувне.'], ['Скло', 'Загартоване 8–10 мм, прозоре чи тоноване.'], ['Профіль і поріг', 'Колір профілю, висота порога, кутові з’єднання.'], ['Монтаж', 'Основа, висота й доступ до прорізу.']];
+
+const P = (ua: string, r: string) => (ru ? r : ua);
+const V: Record<PriceVariant, V> = {
+  'partition-hub': { heading: P('Скільки коштує скляна перегородка', 'Сколько стоит стеклянная перегородка'), rows: [[L.frameless, 'frameless'], [L.profile, 'profile'], [L.loft, 'loft']], doors: 'partition', example: { key: 'frameless', door: 'swing', ua: 'Перегородка {d}, безрамна, з розпашними дверима', ru: 'Перегородка {d}, безрамная, с распашными дверьми' }, cta: '/peregorodky-configurator/', factors: partitionFactors(P('Система|Безрамна, у профілі або Loft.', 'Система|Безрамная, в профиле или лофт.').split('|') as [string, string]) },
+  'partition-loft': { heading: P('Скільки коштує Loft-перегородка', 'Сколько стоит лофт-перегородка'), rows: [[L.loftStd, 'loft'], [L.loftSlim, 'loftSlim'], [L.loftPremium, 'loftPremium']], doors: 'loft', example: { key: 'loft', door: 'swing', ua: 'Перегородка {d}, Loft, стандартний профіль, з розпашними дверима', ru: 'Перегородка {d}, лофт, стандартный профиль, с распашными дверьми' }, cta: '/loft-configurator/', factors: partitionFactors(P('Профіль|Стандартний, тонкий або Premium, кількість шпросів.', 'Профиль|Стандартный, тонкий или Premium, количество шпросов.').split('|') as [string, string]) },
+  'partition-frameless': { heading: P('Скільки коштує цільноскляна перегородка', 'Сколько стоит цельностеклянная перегородка'), rows: [[L.frameless, 'frameless'], [L.premium, 'premium']], doors: 'partition', example: { key: 'frameless', ua: 'Перегородка {d}, безрамна, без дверей', ru: 'Перегородка {d}, безрамная, без дверей' }, cta: '/peregorodky-configurator/', factors: partitionFactors(P('Система|Безрамна або Premium, спосіб кріплення.', 'Система|Безрамная или Premium, способ крепления.').split('|') as [string, string]) },
+  'partition-office': { heading: P('Скільки коштує офісна перегородка', 'Сколько стоит офисная перегородка'), rows: [[L.frameless, 'frameless'], [L.profile, 'profile'], [L.premium, 'premium']], doors: 'partition', example: { key: 'profile', door: 'swing', ua: 'Перегородка {d}, у профілі, з розпашними дверима', ru: 'Перегородка {d}, в профиле, с распашными дверьми' }, cta: '/peregorodky-configurator/', factors: partitionFactors(P('Система|Безрамна, у профілі або Premium.', 'Система|Безрамная, в профиле или Premium.').split('|') as [string, string]) },
+  'partition-interior': { heading: P('Скільки коштує міжкімнатна перегородка', 'Сколько стоит межкомнатная перегородка'), rows: [[L.frameless, 'frameless'], [L.profile, 'profile'], [L.premium, 'premium']], doors: 'partition', example: { key: 'profile', door: 'swing', ua: 'Перегородка {d}, у профілі, з розпашними дверима', ru: 'Перегородка {d}, в профиле, с распашными дверьми' }, cta: '/peregorodky-configurator/', factors: partitionFactors(P('Система|Безрамна, у профілі або Premium.', 'Система|Безрамная, в профиле или Premium.').split('|') as [string, string]) },
+  'partition-doors': { heading: P('Скільки коштує перегородка з дверима', 'Сколько стоит перегородка с дверьми'), rows: [[L.frameless, 'frameless'], [L.profile, 'profile']], doors: 'partition', example: { key: 'frameless', door: 'sliding', ua: 'Перегородка {d}, безрамна, з розсувними дверима', ru: 'Перегородка {d}, безрамная, с раздвижными дверьми' }, cta: '/peregorodky-configurator/', factors: partitionFactors(P('Система|Безрамна або у профілі.', 'Система|Безрамная или в профиле.').split('|') as [string, string]) },
+  'glazing-hub': { heading: P('Скільки коштує безрамне скління', 'Сколько стоит безрамное остекление'), rows: [[L.folding, 'glazingFolding'], [L.sliding, 'glazingSliding']], example: { key: 'glazingFolding', ua: 'Скління {d}, поворотно-складне', ru: 'Остекление {d}, поворотно-складное' }, cta: '/bezramne-configurator/', factors: glazingFactors },
+  'glazing-folding': { heading: P('Скільки коштує поворотно-складне скління', 'Сколько стоит поворотно-складное остекление'), rows: [[L.folding, 'glazingFolding']], example: { key: 'glazingFolding', ua: 'Скління {d}, поворотно-складне', ru: 'Остекление {d}, поворотно-складное' }, cta: '/bezramne-configurator/', factors: glazingFactors },
+  'glazing-sliding': { heading: P('Скільки коштує розсувне безрамне скління', 'Сколько стоит раздвижное безрамное остекление'), rows: [[L.sliding, 'glazingSliding']], example: { key: 'glazingSliding', ua: 'Скління {d}, розсувне', ru: 'Остекление {d}, раздвижное' }, cta: '/bezramne-configurator/', factors: glazingFactors },
+  'glazing-terrace': { heading: P('Скільки коштує безрамне скління тераси', 'Сколько стоит безрамное остекление террасы'), rows: [[L.folding, 'glazingFolding'], [L.sliding, 'glazingSliding']], example: { key: 'glazingFolding', ua: 'Скління тераси {d}, поворотно-складне', ru: 'Остекление террасы {d}, поворотно-складное' }, cta: '/bezramne-configurator/', factors: glazingFactors },
+  'glazing-gazebo': { heading: P('Скільки коштує безрамне скління альтанки', 'Сколько стоит безрамное остекление беседки'), rows: [[L.folding, 'glazingFolding'], [L.sliding, 'glazingSliding']], example: { key: 'glazingFolding', ua: 'Скління альтанки {d}, поворотно-складне', ru: 'Остекление беседки {d}, поворотно-складное' }, cta: '/bezramne-configurator/', factors: glazingFactors },
+  'glazing-balcony': { heading: P('Скільки коштує безрамне скління балкона', 'Сколько стоит безрамное остекление балкона'), rows: [[L.folding, 'glazingFolding'], [L.sliding, 'glazingSliding']], example: { key: 'glazingFolding', ua: 'Скління балкона {d}, поворотно-складне', ru: 'Остекление балкона {d}, поворотно-складное' }, cta: '/bezramne-configurator/', factors: glazingFactors }
+};
+
+const v = V[variant];
+const rows = v.rows.map(([label, key]) => [label, from(systemPricePerM2(key), true)] as const);
+const doorsLine = v.doors
+  ? P(`Двері: розпашні — ${from(doorPrice('swing', v.doors))}, розсувні — ${from(doorPrice('sliding', v.doors))}`, `Двери: распашные — ${from(doorPrice('swing', v.doors))}, раздвижные — ${from(doorPrice('sliding', v.doors))}`)
+  : null;
+const ex = examplePrice(v.example.key, v.example.door ?? null, v.doors ?? 'partition');
+const dim = (mm: number) => (mm / 1000).toFixed(1).replace('.', ',');
+const size = `${dim(ex.widthMm)} × ${dim(ex.heightMm)} м (${(Math.round(ex.areaM2 * 10) / 10).toFixed(1).replace('.', ',')} м²)`;
+const exampleText = `${(ru ? v.example.ru : v.example.ua).replace('{d}', size)}, ${P('з монтажем', 'с монтажом')}`;
+
+const t = ru
+  ? { eyebrow: 'Стоимость', kicker: 'Ориентировочная стоимость от · за 1 м² с монтажом', example: 'Пример расчёта', cta: 'Рассчитать свой размер', note: '*Ориентировочная стоимость. Точная цена зависит от комплектации и актуального курса. Рассчитайте свой размер в калькуляторе.', factorsTitle: 'От чего зависит цена' }
+  : { eyebrow: 'Вартість', kicker: 'Орієнтовна вартість від · за 1 м² з монтажем', example: 'Приклад розрахунку', cta: 'Розрахувати свій розмір', note: '*Орієнтовна вартість. Точна ціна залежить від комплектації та актуального курсу. Розрахуйте свій розмір у калькуляторі.', factorsTitle: 'Від чого залежить ціна' };
+---
+<section id="price" class="price-block price-block--calc">
+  <div class="price-block__card">
+    <p class="eyebrow">{t.eyebrow}</p>
+    <h2>{v.heading}</h2>
+    <p class="price-block__kicker">{t.kicker}</p>
+    <ul class="price-block__rows">
+      {rows.map(([label, price]) => <li><span>{label}</span><b>{price}</b></li>)}
+    </ul>
+    {doorsLine && <p class="price-block__doors">{doorsLine}</p>}
+    <div class="price-block__example">
+      <p class="price-block__example-title">{t.example}</p>
+      <p>{exampleText} — <b>≈&nbsp;{fmt(ex.uah)}&nbsp;грн</b></p>
+    </div>
+    <a class="button button--mint" href={localizedPath(v.cta, locale)}>{t.cta}</a>
+    <p class="price-block__footnote">{t.note}</p>
+  </div>
+  <div class="price-block__factors-wrap">
+    <p class="price-block__factors-title">{t.factorsTitle}</p>
+    <ul class="price-block__factors">
+      {v.factors.map(([label, text]) => <li><b>{label}</b><span>{text}</span></li>)}
+    </ul>
+  </div>
+</section>

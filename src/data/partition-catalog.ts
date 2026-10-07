@@ -141,7 +141,7 @@ const page = (p: PartitionPage): ProfileCategory => {
 export const partitionCategories: ProfileCategory[] = [
   page({
     slug: 'loft-sklyani-peregorodku',
-    priceBlock: 'loft',
+    priceBlock: 'partition-loft',
     name: 'Loft-перегородки',
     h1: 'Скляні перегородки в стилі Loft',
     metaTitle: 'Скляні перегородки Loft на замовлення | Space Glass',
@@ -193,7 +193,7 @@ export const partitionCategories: ProfileCategory[] = [
   }),
   page({
     slug: 'tsilnosklyani-perehorodky',
-    priceBlock: 'frameless',
+    priceBlock: 'partition-frameless',
     name: 'Цільноскляні перегородки',
     h1: 'Цільноскляні перегородки',
     metaTitle: 'Цільноскляні перегородки без рами — офіси та квартири | Space Glass',
@@ -452,7 +452,7 @@ export const partitionCategories: ProfileCategory[] = [
   }),
   page({
     slug: 'ofisni',
-    priceBlock: 'office',
+    priceBlock: 'partition-office',
     name: 'Офісні перегородки',
     h1: 'Офісні скляні перегородки',
     metaTitle: 'Офісні скляні перегородки — кабінети, open space | Space Glass',
@@ -505,7 +505,7 @@ export const partitionCategories: ProfileCategory[] = [
   }),
   page({
     slug: 'mizhkimnatni',
-    priceBlock: 'interior',
+    priceBlock: 'partition-interior',
     name: 'Міжкімнатні перегородки',
     h1: 'Міжкімнатні скляні перегородки',
     metaTitle: 'Міжкімнатні скляні перегородки для квартири й будинку | Space Glass',
@@ -560,7 +560,7 @@ export const partitionCategories: ProfileCategory[] = [
   }),
   page({
     slug: 'z-dveryma',
-    priceBlock: 'doors',
+    priceBlock: 'partition-doors',
     name: 'Перегородки з дверима',
     h1: 'Скляні перегородки з дверима',
     metaTitle: 'Скляні перегородки з дверима — розпашні, розсувні | Space Glass',

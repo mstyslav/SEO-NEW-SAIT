@@ -20,8 +20,8 @@ import '../../../styles/profile-systems.css';
 import '../../../styles/projects-common.css';
 import { HUB_CONFIGURATORS } from '../../../data/configurator-links';
 import UsefulArticles from '../../../components/profile/UsefulArticles.astro';
-import PartitionPriceBlock from '../../../components/pricing/PartitionPriceBlock.astro';
-import { CARD_SYSTEM_PRICE, systemPricePerM2 } from '../../../pricing/partition-prices';
+import CalculatedPriceBlock from '../../../components/pricing/CalculatedPriceBlock.astro';
+import { cardPricePerM2 } from '../../../pricing/calculated-prices';
 
 const lp = (path: string) => localizedPath(path, 'ru');
 const origin = Astro.site ?? Astro.url.origin;
@@ -183,7 +183,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
             <div class="profile-card__body">
               <h3>{system.title ?? system.name}</h3>
               <p class="profile-card__blurb">{system.blurb}</p>
-              {CARD_SYSTEM_PRICE[system.key] && <p class="profile-card__price"><strong>Ориентировочная стоимость от {systemPricePerM2(CARD_SYSTEM_PRICE[system.key]).toLocaleString('uk-UA')} грн/м²</strong><span>с монтажом</span></p>}
+              {cardPricePerM2('partition-hub', system.key) && <p class="profile-card__price"><strong>Ориентировочная стоимость от {cardPricePerM2('partition-hub', system.key)!.toLocaleString('uk-UA')} грн/м²</strong><span>с монтажом</span></p>}
               <a class="button button--mint profile-card__cta" href={lp(system.href)}>Подробнее о системе →</a>
             </div>
           </article>
@@ -191,7 +191,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       </div>
     </section>
 
-    <PartitionPriceBlock variant="hub" locale="ru" />
+    <CalculatedPriceBlock variant="partition-hub" locale="ru" />
 
     <section class="category-section">
       <div class="category-heading"><div><p class="eyebrow">Конструкция</p><h2>Как работает перегородка</h2></div><p>От типа конструкции зависят проход, место и внешний вид.</p></div>
