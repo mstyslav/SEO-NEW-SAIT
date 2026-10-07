@@ -7,10 +7,10 @@
 У 20 статтях бази знань (UA + RU, 40 URL) тіло тонке: короткий текст плюс спільний шаблонний абзац, однаковий для всіх статей.
 Їхні meta description були шаблонними («… — практичний матеріал Space Glass …»).
 
-У Package 1 змінено **лише meta** (title/description) через оверрайди в `src/data/knowledge-seo.ts`.
+У Package 1 змінено **лише meta**: поля `metaDescription` / `metaTitle` статті (UA — `src/data/knowledge-supplemental.ts`, RU — `src/content/i18n/knowledge/articles-ru.ts`).
 Body, H1, картки статей, Article JSON-LD і `article.description` у даних **не змінювались**.
 
-Після оновлення контенту статті оверрайд для неї слід прибрати з `knowledge-seo.ts` і перенести нові тексти в дані статті.
+Після оновлення контенту статті варто переписати її `description` (картки, Article JSON-LD) і, якщо meta вже не відрізняється, прибрати `metaDescription`.
 
 ## Що аналізувати по кожній статті
 

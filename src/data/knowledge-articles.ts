@@ -18,6 +18,8 @@ export type KnowledgeArticle = {
   serviceLabel: string;
   /** <title> text (without « | Space Glass») when it should differ from the H1 `title`. */
   metaTitle?: string;
+  /** <meta name="description"> when it should differ from `description` (cards, Article JSON-LD). */
+  metaDescription?: string;
   /** Topic for the generated FAQ questions when `title` is a full sentence (see expand-faq.ts). */
   faqTopic?: string;
   sections: KnowledgeSection[];
