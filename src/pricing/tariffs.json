@@ -27,7 +27,7 @@
     },
     "mirrors": {
       "label": "Дзеркала",
-      "productUsdM2": 150,
+      "productUsdM2": 120,
       "installationUsdM2": 60,
       "installationEnabled": false,
       "config": "mirror"
@@ -63,17 +63,17 @@
   },
   "modifiers": {
     "type": {
-      "Walk-in": 1.0,
+      "Walk-in": 1,
       "Кутова": 1.22,
       "У нішу": 1.14
     },
     "color": {
-      "Black": 1.0,
+      "Black": 1,
       "Chrome": 1.05,
       "Graphite": 1.08
     },
     "glass": {
-      "Прозоре": 1.0,
+      "Прозоре": 1,
       "Матове": 1.12,
       "Тоноване": 1.18,
       "Ultra Clear": 1.15,
@@ -81,12 +81,12 @@
       "Grey": 1.12
     },
     "thickness": {
-      "8 мм": 1.0,
+      "8 мм": 1,
       "10 мм": 1.16,
       "12 мм": 1.18
     },
     "handle": {
-      "Стандартна": 1.0,
+      "Стандартна": 1,
       "Преміум": 1.07,
       "Прихована": 1.12
     }
