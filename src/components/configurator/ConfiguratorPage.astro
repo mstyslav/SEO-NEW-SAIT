@@ -28,7 +28,7 @@ const labels = labelsAll[locale];
 const ui = uiAll[locale];
 const title = labels[productKey];
 const tariff = tariffs.categories[config.category];
-const seo = (seoAll as Record<string, Record<string, { title: string; description: string }>>)[locale]?.[productKey];
+const seo = (seoAll as Record<string, Record<string, { title: string; description: string; robots?: string }>>)[locale]?.[productKey];
 // No generic fallback: a calculator without its own SEO entry must fail the build, not ship a shared title/description.
 if (!seo) throw new Error(`configurator-seo.json: missing ${locale} entry for productKey "${productKey}"`);
 ---
@@ -36,6 +36,7 @@ if (!seo) throw new Error(`configurator-seo.json: missing ${locale} entry for pr
   title={seo.title}
   description={seo.description}
   locale={locale}
+  robots={seo.robots}
 >
   <Header locale={locale} />
   <main id="main">
