@@ -27,7 +27,7 @@
     },
     "mirrors": {
       "label": "Дзеркала",
-      "productUsdM2": 120,
+      "productUsdM2": 100,
       "installationUsdM2": 60,
       "installationEnabled": false,
       "config": "mirror"
