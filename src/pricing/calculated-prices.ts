@@ -90,7 +90,7 @@ export const examplePrice = (key: SystemKey, door: DoorKind | null = null, doorS
 export type PriceVariant =
   | 'partition-hub' | 'partition-loft' | 'partition-frameless' | 'partition-office' | 'partition-interior' | 'partition-doors'
   | 'glazing-hub' | 'glazing-folding' | 'glazing-sliding' | 'glazing-terrace' | 'glazing-gazebo' | 'glazing-balcony'
-  | RailingVariant | CanopyVariant | WindowVariant | DoorVariant;
+  | RailingVariant | CanopyVariant | WindowVariant | DoorVariant | ShowerVariant;
 
 /**
  * Card systems whose price the calculator really models, per catalog (card/model ids differ
@@ -110,7 +110,7 @@ const CARD_SYSTEM_PRICE: Record<'partition' | 'glazing', Record<string, SystemKe
 
 /** Card «від» price per m² for a system on a page with the given price block, or undefined. */
 export const cardPricePerM2 = (variant: PriceVariant, systemId: string) => {
-  if (isRailingVariant(variant) || isCanopyVariant(variant) || isWindowVariant(variant) || isDoorVariant(variant)) return undefined;
+  if (isRailingVariant(variant) || isCanopyVariant(variant) || isWindowVariant(variant) || isDoorVariant(variant) || isShowerVariant(variant)) return undefined;
   const key = CARD_SYSTEM_PRICE[variant.startsWith('glazing') ? 'glazing' : 'partition'][systemId];
   return key ? systemPricePerM2(key) : undefined;
 };
@@ -256,3 +256,11 @@ export const DOOR_PAGES: Record<DoorVariant, { slug: string | null; types: DoorT
 /** Price block variant of a door catalog page, by slug (undefined = no price block). */
 export const doorPriceBlock = (slug: string) =>
   (Object.entries(DOOR_PAGES) as [DoorVariant, { slug: string | null }][]).find(([, page]) => page.slug === slug)?.[0];
+
+/* ---------------------------------------------------------------- showers ----------------- */
+/*
+ * Showers have no calculator: the hub block lists typical constructions with the catalog
+ * "від" prices of their base models (src/pricing/shower-pricing.ts reads src/data/shower-catalog.ts).
+ */
+export type ShowerVariant = 'shower-hub';
+export const isShowerVariant = (variant: PriceVariant): variant is ShowerVariant => variant.startsWith('shower-');

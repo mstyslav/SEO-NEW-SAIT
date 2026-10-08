@@ -1,13 +1,14 @@
 ---
 /**
  * Compact «орієнтовна вартість» block for catalog pages (glass partitions, frameless glazing,
- * glass railings, windows, glass doors). Numbers come from src/pricing/calculated-prices.ts (the calculators' own
+ * glass railings, windows, glass doors, showers). Numbers come from src/pricing/calculated-prices.ts (the calculators' own
  * tariffs and formulas, working rate from src/pricing/currency.ts); only wording lives here. Uses the PriceBlock layout/styles (card + factors column).
  */
-import { systemPricePerM2, doorPrice, examplePrice, railingGuide, isRailingVariant, RAILING_PAGES, canopyGuide, isCanopyVariant, CANOPY_PAGES, windowMarket, isWindowVariant, isDoorVariant, DOOR_PAGES, type PriceVariant, type RailingVariant, type CanopyVariant, type WindowVariant, type DoorVariant, type SystemKey, type DoorKind, type DoorSet } from '../../pricing/calculated-prices';
+import { systemPricePerM2, doorPrice, examplePrice, railingGuide, isRailingVariant, RAILING_PAGES, canopyGuide, isCanopyVariant, CANOPY_PAGES, windowMarket, isWindowVariant, isDoorVariant, DOOR_PAGES, isShowerVariant, type PriceVariant, type RailingVariant, type CanopyVariant, type WindowVariant, type DoorVariant, type ShowerVariant, type SystemKey, type DoorKind, type DoorSet } from '../../pricing/calculated-prices';
 import { SYSTEMS as RAILING_SYSTEMS } from '../../data/railing-pricing';
 import { WINDOW_INSTALL_FROM_UAH_PER_M2, type Sash } from '../../pricing/window-pricing';
 import { DOOR_MARKET, type DoorType } from '../../pricing/door-pricing';
+import { SHOWER_TYPICAL, SHOWER_HUB_FROM_UAH, type ShowerTypicalKey } from '../../pricing/shower-pricing';
 import { localizedPath, type Locale } from '../../i18n/helpers';
 // Styles: .price-block* in category-pages.css, which every page using this block already loads.
 
@@ -42,7 +43,7 @@ const glazingFactors: [string, string][] = ru
   : [['Розміри прорізу', 'Ціна рахується за м² скління.'], ['Тип відкривання', 'Поворотно-складне чи розсувне.'], ['Скло', 'Загартоване 8–10 мм, прозоре чи тоноване.'], ['Профіль і поріг', 'Колір профілю, висота порога, кутові з’єднання.'], ['Монтаж', 'Основа, висота й доступ до прорізу.']];
 
 const P = (ua: string, r: string) => (ru ? r : ua);
-const V: Record<Exclude<PriceVariant, RailingVariant | CanopyVariant | WindowVariant | DoorVariant>, V> = {
+const V: Record<Exclude<PriceVariant, RailingVariant | CanopyVariant | WindowVariant | DoorVariant | ShowerVariant>, V> = {
   'partition-hub': { heading: P('Скільки коштує скляна перегородка', 'Сколько стоит стеклянная перегородка'), rows: [[L.frameless, 'frameless'], [L.profile, 'profile'], [L.loft, 'loft']], doors: 'partition', example: { key: 'frameless', door: 'swing', ua: 'Перегородка {d}, безрамна, з розпашними дверима', ru: 'Перегородка {d}, безрамная, с распашными дверьми' }, cta: '/peregorodky-configurator/', factors: partitionFactors(P('Система|Безрамна, у профілі або Loft.', 'Система|Безрамная, в профиле или лофт.').split('|') as [string, string]) },
   'partition-loft': { heading: P('Скільки коштує Loft-перегородка', 'Сколько стоит лофт-перегородка'), rows: [[L.loftStd, 'loft'], [L.loftSlim, 'loftSlim'], [L.loftPremium, 'loftPremium']], doors: 'loft', example: { key: 'loft', door: 'swing', ua: 'Перегородка {d}, Loft, стандартний профіль, з розпашними дверима', ru: 'Перегородка {d}, лофт, стандартный профиль, с распашными дверьми' }, cta: '/loft-configurator/', factors: partitionFactors(P('Профіль|Стандартний, тонкий або Premium, кількість шпросів.', 'Профиль|Стандартный, тонкий или Premium, количество шпросов.').split('|') as [string, string]) },
   'partition-frameless': { heading: P('Скільки коштує цільноскляна перегородка', 'Сколько стоит цельностеклянная перегородка'), rows: [[L.frameless, 'frameless'], [L.premium, 'premium']], doors: 'partition', example: { key: 'frameless', ua: 'Перегородка {d}, безрамна, без дверей', ru: 'Перегородка {d}, безрамная, без дверей' }, cta: '/peregorodky-configurator/', factors: partitionFactors(P('Система|Безрамна або Premium, спосіб кріплення.', 'Система|Безрамная или Premium, способ крепления.').split('|') as [string, string]) },
@@ -208,6 +209,36 @@ if (isRailingVariant(variant)) {
     factors: ru
       ? [['Размер полотна', 'Ширина и высота определяют вес стекла и нужную фурнитуру.'], ['Открывание и крепление', 'Распашные, маятниковые или раздвижные; крепление к стене, стеклу или в проёме.'], ['Фурнитура', 'Петли, доводчик, раздвижная система, замок; цвет и отделка фурнитуры.'], ['Стекло', 'Прозрачное, матовое, тонированное, триплекс, рисунок или логотип.'], ['Нестандартные решения', 'Большие и тяжёлые полотна, фрамуги, боковые панели, особые вырезы.']]
       : [['Розмір полотна', 'Ширина й висота визначають вагу скла та потрібну фурнітуру.'], ['Відкривання й кріплення', 'Розпашні, маятникові чи розсувні; кріплення до стіни, скла чи в прорізі.'], ['Фурнітура', 'Петлі, доводчик, розсувна система, замок; колір і оздоблення фурнітури.'], ['Скло', 'Прозоре, матове, тоноване, триплекс, малюнок чи логотип.'], ['Нестандартні рішення', 'Великі й важкі полотна, фрамуги, бічні панелі, особливі вирізи.']]
+  };
+} else if (isShowerVariant(variant)) {
+  // Showers: typical constructions with the catalog "від" price of their base model (no calculator), product without installation.
+  const labels: Record<ShowerTypicalKey, [string, string]> = {
+    walkin: ['Walk-In перегородка', 'Walk-In перегородка'],
+    niche: ['Двері в нішу', 'Дверь в нишу'],
+    sliding: ['Розсувна конструкція', 'Раздвижная конструкция'],
+    corner: ['Кутова душова кабіна', 'Угловая душевая кабина']
+  };
+  block = {
+    heading: P('Вартість душових конструкцій', 'Стоимость душевых конструкций'),
+    kicker: P('Типові конструкції · ціна виробу за базовий розмір, без монтажу', 'Типовые конструкции · цена изделия за базовый размер, без монтажа'),
+    rows: SHOWER_TYPICAL.map((s) => [
+      P(...labels[s.key]),
+      `≈ ${from(s.fromUah)}`,
+      [s.model, s.baseSize && `${s.baseSize} мм`, P(`скло ${s.glassMm} мм`, `стекло ${s.glassMm} мм`)].filter(Boolean).join(', ')
+    ] as const),
+    doorsLine: null,
+    notes: [
+      P(`Загальний стартовий орієнтир для душових конструкцій Space Glass — ${from(SHOWER_HUB_FROM_UAH)}. Окремі базові моделі, як-от пряма перегородка Walk-In, можуть коштувати менше.`, `Общий стартовый ориентир для душевых конструкций Space Glass — ${from(SHOWER_HUB_FROM_UAH)}. Отдельные базовые модели, например прямая перегородка Walk-In, могут стоить меньше.`),
+      P('Вартість залежить від розміру, конфігурації, фурнітури та способу монтажу. Точну ціну підтверджуємо після заміру.', 'Стоимость зависит от размера, конфигурации, фурнитуры и способа монтажа. Точную цену подтверждаем после замера.'),
+      P('Монтаж розраховується окремо після заміру та залежить від конструкції й умов на об’єкті.', 'Монтаж рассчитывается отдельно после замера и зависит от конструкции и условий на объекте.'),
+      P('Доставка розраховується окремо залежно від міста та об’єкта.', 'Доставка рассчитывается отдельно в зависимости от города и объекта.')
+    ],
+    cta: '#request',
+    ctaLabel: P('Розрахувати мою душову', 'Рассчитать мою душевую'),
+    note: P('*Орієнтовна стартова вартість конкретної базової моделі за базовий розмір, без монтажу. Ціни готових моделей — на вересень 2026 року, можуть змінюватися.', '*Ориентировочная стартовая стоимость конкретной базовой модели за базовый размер, без монтажа. Цены готовых моделей — на сентябрь 2026 года, могут меняться.'),
+    factors: ru
+      ? [['Размеры', 'Ширина, высота и площадь стекла'], ['Тип и стекло', 'Конструкция, толщина, цвет и обработка'], ['Фурнитура', 'Петли, профиль, ручки, система открывания'], ['Монтаж', 'Сложность установки и условия объекта']]
+      : [['Розміри', 'Ширина, висота та площа скла'], ['Тип і скло', 'Конструкція, товщина, колір і обробка'], ['Фурнітура', 'Петлі, профіль, ручки, система відкривання'], ['Монтаж', 'Складність встановлення та умови об’єкта']]
   };
 } else {
   const v = V[variant];
