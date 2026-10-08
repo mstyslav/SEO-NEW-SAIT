@@ -15,6 +15,7 @@ import '../../styles/category-pages.css';
 import '../../styles/projects-common.css';
 import '../../styles/shower-master.css';
 import '../../styles/profile-systems.css';
+import { HUB_CONFIGURATORS } from '../../data/configurator-links';
 
 const title = "Дзеркала";
 const h1 = "Дзеркала на замовлення";
@@ -127,7 +128,7 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
         <div class="hero__actions">
           <a class="button button--mint" href="#types">Переглянути види</a>
           <a class="button button--outline" href="#request">Отримати розрахунок</a>
-          <a class="button button--outline" href="#mirror-prices">Ціни на дзеркала</a>
+          <a class="button button--outline" href={HUB_CONFIGURATORS['/dzerkala/']}>Розрахувати в конфігураторі</a>
         </div>
       </div>
       <figure class="category-hero__figure">
@@ -182,7 +183,7 @@ const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] :
     <section class="category-section category-section--mint" id="mirror-prices">
       <div class="category-heading"><div><p class="eyebrow">Ціни</p><h2>Скільки коштує дзеркало</h2></div><p>Для готових моделей нижче показуємо орієнтовну ціну від мінімального розміру. Дзеркало за індивідуальними розмірами розраховуємо окремо після уточнення конструкції.</p></div>
       <div class="category-prose">
-        <p>На вартість індивідуального дзеркала впливають розмір і форма, полотно, полірування крайки або фацет, отвори й вирізи, рама, LED-підсвітка, підігрів і спосіб кріплення. Тому не публікуємо універсальну ціну за м² там, де вона не дає коректної вартості готового виробу.</p>
+        <p>На вартість індивідуального дзеркала впливають розмір і форма, полотно, полірування крайки або фацет, отвори й вирізи, рама, LED-підсвітка, підігрів і спосіб кріплення. Для базового дзеркала без підсвітки використовуємо орієнтир 100 $/м²; LED-підсвітка додає 55 $/м². Форма, підігрів, сенсор та інші опції враховуються окремо.</p>
         <p>Монтаж і доставка залежать від габаритів, стіни, доступу на об’єкт і міста та розраховуються окремо. Для попереднього розрахунку достатньо фото місця, приблизних розмірів і побажань щодо форми та оснащення.</p>
       </div>
       <div class="category-heading"><div><p class="eyebrow">Каталог</p><h2>Популярні моделі Space Glass</h2></div><p>Готові дзеркала з підсвіткою та в рамі. Ціни орієнтовні, для мінімального розміру.</p></div>
