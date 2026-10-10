@@ -170,6 +170,9 @@
 .category-geo__cities li{padding:16px 20px;border:1px solid var(--mint);border-radius:14px;background:#fff}
 .category-geo__cities b{display:block;color:var(--text);font-size:1.1rem}
 .category-geo__cities span{display:block;margin-top:3px;color:var(--muted);font-size:.82rem}
+.category-geo__cities a{display:block;margin:-16px -20px;padding:16px 20px;border-radius:14px;color:inherit;text-decoration:none;transition:background-color .18s ease}
+.category-geo__cities a:hover{background:var(--mint-light,#f3faf7)}
+.category-geo__cities a b::after{content:" →";color:var(--mint-dark);font-weight:700}
 
 /* --- Internal links: symmetric grid --- */
 .category-links__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}

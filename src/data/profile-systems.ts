@@ -88,6 +88,8 @@ export interface ProfileCategory {
   heroExtra?: [string, string];
   /** One contextual sentence with a link after the intro: [before, anchor, href, after]. */
   introLink?: [string, string, string, string];
+  /** Geography block with links to the city pages: cities = [name, note, UA path]. */
+  geo?: { eyebrow: string; heading: string; text: string[]; cities: [string, string, string][] };
   /** Breadcrumb parent [label, UA path] when the page belongs to a use-case hub, not its product hub. */
   breadcrumbParent?: [string, string];
 }
@@ -803,6 +805,12 @@ export const profileCategories: ProfileCategory[] = [
     slug: 'fasadne-sklinnya',
     group: 'alu',
     path: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/',
+    geo: {
+      eyebrow: 'Географія',
+      heading: 'Фасадне скління: проєкт і монтаж у Києві, Одесі та Львові',
+      text: ['Проєктуємо, виготовляємо та монтуємо алюмінієві фасадні системи для комерційних і приватних об’єктів.', 'Для об’єктів в інших регіонах умови узгоджуємо окремо.'],
+      cities: [['Київ', 'проєкт і монтаж', '/city/kyiv/'], ['Одеса', 'проєкт і монтаж', '/city/odesa/'], ['Львів', 'проєкт і монтаж', '/city/lviv/']]
+    },
     name: 'Фасадне скління',
     h1: 'Алюмінієві фасадні системи та фасадне скління',
     metaTitle: 'Алюмінієві фасадні системи Aluprof — фасадне скління | Space Glass',
@@ -2620,6 +2628,7 @@ export const profileCategories: ProfileCategory[] = [
     slug: 'ofisni-perehorodky',
     group: 'pvc',
     path: '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/',
+    introLink: ['Якщо потрібна максимальна прозорість без масивного профілю, розгляньте також ', 'офісні скляні перегородки', '/sklyani-perehorodky/ofisni/', '.'],
     name: 'Офісні скляні перегородки',
     h1: 'Металопластикові офісні перегородки',
     metaTitle: 'Офісні перегородки з металопластику та скла | Space Glass',

@@ -77,6 +77,8 @@ export interface CityHub {
      *  Only used to enrich a shared category label with locally relevant,
      *  repo-confirmed detail — never to invent a new card or URL. */
     categoryOverrides?: Record<string, string>;
+    /** Compact row of links to subcategory pages with confirmed local demand (GSC, 2026-10). */
+    featured?: { label: string; links: CityHubLink[] };
   };
 
   localIntro: {
@@ -296,6 +298,15 @@ const kyivUk: CityHub = {
       'Повний цикл роботи зі склом та алюмінієм: від душових і перегородок для квартири до фасадного скління й алюмінієвих систем для комерційних об’єктів. Оберіть напрям, щоб побачити конкретні рішення, приклади та умови.',
     allLinkLabel: 'Переглянути всі напрямки та послуги →',
     allLinkHref: '/poslugy/',
+    featured: {
+      label: 'Окремі рішення:',
+      links: [
+        { label: 'Фасадне скління в Києві', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/' },
+        { label: 'Структурне скління фасадів', href: '/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/' },
+        { label: 'Скління приватних будинків', href: '/bezramne-sklinnya/sklinnya-budynkiv/' },
+        { label: 'Офісні скляні перегородки', href: '/sklyani-perehorodky/ofisni/' }
+      ]
+    },
     categoryOverrides: { '/alyuminiyevi-konstrukcziyi/': ALU_OVERRIDE_UK }
   },
 
@@ -493,6 +504,15 @@ const odesaUk: CityHub = {
       'Повний цикл роботи зі склом та алюмінієм — від душових і дзеркал для квартири до вітрин, вхідних груп і фасадного скління для кафе, ресторанів і магазинів. Оберіть напрям, щоб побачити конкретні рішення та приклади.',
     allLinkLabel: 'Переглянути всі напрямки та послуги →',
     allLinkHref: '/poslugy/',
+    featured: {
+      label: 'Окремі рішення:',
+      links: [
+        { label: 'Фасадне скління в Одесі', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/' },
+        { label: 'Структурне скління фасадів', href: '/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/' },
+        { label: 'Скління приватних будинків', href: '/bezramne-sklinnya/sklinnya-budynkiv/' },
+        { label: 'Офісні скляні перегородки', href: '/sklyani-perehorodky/ofisni/' }
+      ]
+    },
     categoryOverrides: { '/alyuminiyevi-konstrukcziyi/': ALU_OVERRIDE_UK }
   },
 
@@ -690,6 +710,15 @@ const lvivUk: CityHub = {
       'Повний цикл роботи зі склом та алюмінієм — від душових і перегородок за індивідуальними розмірами до огорож, дзеркал, безрамного скління й алюмінієвих систем. Оберіть напрям, щоб побачити конкретні рішення та приклади.',
     allLinkLabel: 'Переглянути всі напрямки та послуги →',
     allLinkHref: '/poslugy/',
+    featured: {
+      label: 'Окремі рішення:',
+      links: [
+        { label: 'Фасадне скління у Львові', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/' },
+        { label: 'Структурне скління фасадів', href: '/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/' },
+        { label: 'Скління приватних будинків', href: '/bezramne-sklinnya/sklinnya-budynkiv/' },
+        { label: 'Офісні скляні перегородки', href: '/sklyani-perehorodky/ofisni/' }
+      ]
+    },
     categoryOverrides: { '/alyuminiyevi-konstrukcziyi/': ALU_OVERRIDE_UK }
   },
 
@@ -887,6 +916,15 @@ const kyivRu: CityHub = {
       'Полный цикл работы со стеклом и алюминием: от душевых и перегородок для квартиры до фасадного остекления и алюминиевых систем для коммерческих объектов. Выберите направление, чтобы увидеть конкретные решения, примеры и условия.',
     allLinkLabel: 'Смотреть все направления и услуги →',
     allLinkHref: '/poslugy/',
+    featured: {
+      label: 'Отдельные решения:',
+      links: [
+        { label: 'Фасадное остекление в Киеве', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/' },
+        { label: 'Структурное остекление фасадов', href: '/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/' },
+        { label: 'Остекление частных домов', href: '/bezramne-sklinnya/sklinnya-budynkiv/' },
+        { label: 'Офисные стеклянные перегородки', href: '/sklyani-perehorodky/ofisni/' }
+      ]
+    },
     categoryOverrides: { '/alyuminiyevi-konstrukcziyi/': ALU_OVERRIDE_RU }
   },
 
@@ -1084,6 +1122,15 @@ const odesaRu: CityHub = {
       'Полный цикл работы со стеклом и алюминием — от душевых и зеркал для квартиры до витрин, входных групп и фасадного остекления для кафе, ресторанов и магазинов. Выберите направление, чтобы увидеть конкретные решения и примеры.',
     allLinkLabel: 'Смотреть все направления и услуги →',
     allLinkHref: '/poslugy/',
+    featured: {
+      label: 'Отдельные решения:',
+      links: [
+        { label: 'Фасадное остекление в Одессе', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/' },
+        { label: 'Структурное остекление фасадов', href: '/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/' },
+        { label: 'Остекление частных домов', href: '/bezramne-sklinnya/sklinnya-budynkiv/' },
+        { label: 'Офисные стеклянные перегородки', href: '/sklyani-perehorodky/ofisni/' }
+      ]
+    },
     categoryOverrides: { '/alyuminiyevi-konstrukcziyi/': ALU_OVERRIDE_RU }
   },
 
@@ -1281,6 +1328,15 @@ const lvivRu: CityHub = {
       'Полный цикл работы со стеклом и алюминием — от душевых и перегородок по индивидуальным размерам до ограждений, зеркал, безрамного остекления и алюминиевых систем. Выберите направление, чтобы увидеть конкретные решения и примеры.',
     allLinkLabel: 'Смотреть все направления и услуги →',
     allLinkHref: '/poslugy/',
+    featured: {
+      label: 'Отдельные решения:',
+      links: [
+        { label: 'Фасадное остекление во Львове', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/' },
+        { label: 'Структурное остекление фасадов', href: '/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/' },
+        { label: 'Остекление частных домов', href: '/bezramne-sklinnya/sklinnya-budynkiv/' },
+        { label: 'Офисные стеклянные перегородки', href: '/sklyani-perehorodky/ofisni/' }
+      ]
+    },
     categoryOverrides: { '/alyuminiyevi-konstrukcziyi/': ALU_OVERRIDE_RU }
   },
 

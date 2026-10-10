@@ -59,6 +59,13 @@
 }
 .city-hub__link:hover{text-decoration:underline;text-underline-offset:4px}
 
+/* Compact row of subcategory links under the category cards */
+.city-hub__featured{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:22px 0 0}
+.city-hub__featured span{color:var(--muted);font-size:.92rem}
+.city-hub__featured a{display:inline-flex;align-items:center;min-height:40px;padding:8px 16px;border:1px solid var(--green-line);border-radius:999px;background:#fff;color:var(--text);font-size:.94rem;text-decoration:none;transition:border-color .18s ease}
+.city-hub__featured a:hover{border-color:var(--mint-dark)}
+.city-hub__featured + .city-hub__link{margin-top:16px}
+
 /* Hero */
 .city-hub__hero{
   display:grid;

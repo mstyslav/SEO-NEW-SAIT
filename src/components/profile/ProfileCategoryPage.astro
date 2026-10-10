@@ -379,7 +379,18 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
       </div>
     </section>
 
-    {hasUsefulArticles && <UsefulArticles path={category.path} locale={locale} />}
+    {category.geo && (
+      <section class="category-section category-geo">
+        <div class="category-geo__grid">
+          <div class="category-geo__copy">
+            <p class="eyebrow">{category.geo.eyebrow}</p>
+            <h2>{category.geo.heading}</h2>
+            {category.geo.text.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+          <ul class="category-geo__cities">{category.geo.cities.map(([name, note, href]) => <li><a href={lp(href)}><b>{name}</b><span>{note}</span></a></li>)}</ul>
+        </div>
+      </section>
+    )}{hasUsefulArticles && <UsefulArticles path={category.path} locale={locale} />}
 
     <section class="category-section category-section--faq">
       <FAQBlock

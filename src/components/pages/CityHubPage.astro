@@ -171,6 +171,12 @@ const structuredData: JsonLdObject[] = [
               </a>
             ))}
           </div>
+          {hub.makeSection.featured && (
+            <p class="city-hub__featured">
+              <span>{hub.makeSection.featured.label}</span>
+              {hub.makeSection.featured.links.map((link) => <a href={localizeHref(link.href)}>{link.label}</a>)}
+            </p>
+          )}
           <a class="city-hub__link" href={localizeHref(hub.makeSection.allLinkHref)}>{hub.makeSection.allLinkLabel}</a>
         </section>
 

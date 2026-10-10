@@ -1962,6 +1962,7 @@ export const aluCategoriesRu: ProfileCategory[] = [
   },
   {
     "slug": "fasadne-sklinnya",
+    "geo": {"eyebrow": "География", "heading": "Фасадное остекление: проект и монтаж в Киеве, Одессе и Львове", "text": ["Проектируем, изготавливаем и монтируем алюминиевые фасадные системы для коммерческих и частных объектов.", "Для объектов в других регионах условия согласовываем отдельно."], "cities": [["Киев", "проект и монтаж", "/city/kyiv/"], ["Одесса", "проект и монтаж", "/city/odesa/"], ["Львов", "проект и монтаж", "/city/lviv/"]]},
     "group": "alu",
     "path": "/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/",
     "name": "Фасадное остекление",
@@ -5307,6 +5308,7 @@ export const pvcCategoriesRu: ProfileCategory[] = [
     "slug": "ofisni-perehorodky",
     "group": "pvc",
     "path": "/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/",
+    "introLink": ["Если нужна максимальная прозрачность без массивного профиля, рассмотрите также ", "офисные стеклянные перегородки", "/sklyani-perehorodky/ofisni/", "."],
     "name": "Офисные стеклянные перегородки",
     "h1": "Металлопластиковые офисные перегородки",
     "metaTitle": "Офисные перегородки из металлопластика и стекла | Space Glass",
