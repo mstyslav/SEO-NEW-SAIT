@@ -14,7 +14,8 @@ export const COMPANY_SAME_AS = [
   'https://www.instagram.com/spaceglass_od/',
   'https://t.me/spaceglass',
   'https://www.tiktok.com/@spaceglass',
-  'https://www.facebook.com/spaceglasscomua'
+  'https://www.facebook.com/spaceglasscomua',
+  'https://www.youtube.com/@spaceglass_od'
 ];
 export const organizationId = (origin: string | URL) => `${absoluteUrl('/', origin)}#organization`;
 
