@@ -7,5 +7,6 @@ workers_dev = false
 routes = [
   { pattern = "dyshovi.space-glass.com.ua/*", zone_name = "space-glass.com.ua" },
   { pattern = "ua.space-glass.com.ua/*", zone_name = "space-glass.com.ua" },
-  { pattern = "vikna.space-glass.com.ua/*", zone_name = "space-glass.com.ua" }
+  { pattern = "vikna.space-glass.com.ua/*", zone_name = "space-glass.com.ua" },
+  { pattern = "bezramne.space-glass.com.ua/*", zone_name = "space-glass.com.ua" }
 ]
