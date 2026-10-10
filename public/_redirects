@@ -387,3 +387,70 @@
 /ru/alyumini%D1%94vi-konstrukczi%D1%97/alyuminievye-okna /ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/ 301
 /ru/alyumini%d1%94vi-konstrukczi%d1%97/alyuminievye-okna /ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/ 301
 /ru/alyuminiєvi-konstrukcziї/alyuminievye-okna /ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/ 301
+
+# Legacy URL recovery (approved 2026-10-10, Task 18): old WordPress URLs that still answered 404 although a page
+# with the same intent exists. Targets checked: 200, self-canonical, indexable, same language. Each rule is given
+# with and without the trailing slash (static rules match the exact path only).
+# Left as 404 on purpose: /offert/, /pre-order/, feedback posts, __trashed, test and service pages.
+# Old «Клієнтам» hub (terms of work, payment, delivery) → payment and delivery page
+/klienty-sg/ /delivery-payment/ 301
+/klienty-sg /delivery-payment/ 301
+/ru/klienty-sg/ /ru/delivery-payment/ 301
+/ru/klienty-sg /ru/delivery-payment/ 301
+# Old «Гарантії» page → the guarantee article in the knowledge base
+/klienty-sg/garantiyi/ /knowledge/garantiya-na-montazh-skla/ 301
+/klienty-sg/garantiyi /knowledge/garantiya-na-montazh-skla/ 301
+/ru/klienty-sg/garantiyi/ /ru/knowledge/garantiya-na-montazh-skla/ 301
+/ru/klienty-sg/garantiyi /ru/knowledge/garantiya-na-montazh-skla/ 301
+# Old «Обслуговування та сервіс» page → services page (has the «Сервіс та гарантія» block)
+/klienty-sg/obsluhovuvannya-ta-servis/ /poslugy/ 301
+/klienty-sg/obsluhovuvannya-ta-servis /poslugy/ 301
+/ru/klienty-sg/obsluhovuvannya-ta-servis/ /ru/poslugy/ 301
+/ru/klienty-sg/obsluhovuvannya-ta-servis /ru/poslugy/ 301
+# WordPress pagination and the old blog index → first page / knowledge base (the RU blog rule is above)
+/catalog/page/2/ /catalog/ 301
+/catalog/page/2 /catalog/ 301
+/ru/catalog/page/2/ /ru/catalog/ 301
+/ru/catalog/page/2 /ru/catalog/ 301
+/ru/catalog/page/3/ /ru/catalog/ 301
+/ru/catalog/page/3 /ru/catalog/ 301
+/project/page/2/ /project/ 301
+/project/page/2 /project/ 301
+/project/page/3/ /project/ 301
+/project/page/3 /project/ 301
+/project/page/5/ /project/ 301
+/project/page/5 /project/ 301
+/ru/project/page/2/ /ru/project/ 301
+/ru/project/page/2 /ru/project/ 301
+/ru/project/page/4/ /ru/project/ 301
+/ru/project/page/4 /ru/project/ 301
+/blog/ /knowledge/ 301
+/blog /knowledge/ 301
+# Page 2 of the old partition category → same target as the category rule above
+/product-category/mizhkimnatni-peregorodky/page/2/ /sklyani-perehorodky/mizhkimnatni/ 301
+/product-category/mizhkimnatni-peregorodky/page/2 /sklyani-perehorodky/mizhkimnatni/ 301
+/ru/product-category/mezhkomnatnye-peregorodky/page/2/ /ru/sklyani-perehorodky/mizhkimnatni/ 301
+/ru/product-category/mezhkomnatnye-peregorodky/page/2 /ru/sklyani-perehorodky/mizhkimnatni/ 301
+# Old project labels → projects (the RU label rules are above)
+/label/business/ /project/ 301
+/label/business /project/ 301
+/label/business/page/2/ /project/ 301
+/label/business/page/2 /project/ 301
+/label/business/page/3/ /project/ 301
+/label/business/page/3 /project/ 301
+/label/private/ /project/ 301
+/label/private /project/ 301
+# WooCommerce attribute archives of the shower trays (colour, size) → shower trays
+/kolir/bilyj/ /dushovi-kabiny/dushovi-piddony/ 301
+/kolir/bilyj /dushovi-kabiny/dushovi-piddony/ 301
+/kolir/chorynj/ /dushovi-kabiny/dushovi-piddony/ 301
+/kolir/chorynj /dushovi-kabiny/dushovi-piddony/ 301
+/rozmir/8080/ /dushovi-kabiny/dushovi-piddony/ 301
+/rozmir/8080 /dushovi-kabiny/dushovi-piddony/ 301
+/rozmir/9090/ /dushovi-kabiny/dushovi-piddony/ 301
+/rozmir/9090 /dushovi-kabiny/dushovi-piddony/ 301
+/rozmir/100100/ /dushovi-kabiny/dushovi-piddony/ 301
+/rozmir/100100 /dushovi-kabiny/dushovi-piddony/ 301
+# Old product tag «душова» → shower hub
+/product-tag/dushova/ /dushovi-kabiny/ 301
+/product-tag/dushova /dushovi-kabiny/ 301
