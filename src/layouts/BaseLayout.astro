@@ -35,16 +35,6 @@ const { title, description, locale, image = '/images/v5/hero.webp', schemaType =
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales, hasLocalizedRoute } from '../i18n/helpers';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
 
-// Keep every rendered meta description within the 150-character site limit.
-const metaDescription = description.length <= 150
-  ? description
-  : (() => {
-      const cut = description.slice(0, 149);
-      const lastSpace = cut.lastIndexOf(' ');
-      const clean = (lastSpace >= 115 ? cut.slice(0, lastSpace) : cut).replace(/[,:;–—-]+$/u, '').trim();
-      return clean + '.';
-    })();
-
 const resolvedLocale = normalizeLocale(locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
 const basePath = stripLocale(Astro.url.pathname);
 const origin = Astro.site ?? Astro.url.origin;
@@ -103,7 +93,7 @@ import ScrollProgress from '../components/ScrollProgress.astro';
       </>
     )}
     {heroPreloadSrc && !heroPreloadMobileSrc && !heroPreloadMobileSrcset && <link rel="preload" as="image" href={heroPreloadSrc} imagesrcset={heroPreloadSrcset} imagesizes={heroPreloadSizes} fetchpriority="high" />}
-    <meta name="description" content={metaDescription} />
+    <meta name="description" content={description} />
     {robots && <meta name="robots" content={robots} />}
     <meta name="theme-color" content="#ffffff" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
@@ -117,14 +107,14 @@ import ScrollProgress from '../components/ScrollProgress.astro';
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Space Glass" />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={metaDescription} />
+    <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
     <meta property="og:locale" content={localeNames[resolvedLocale]} />
     {availableAlternateLocales.filter((item) => item !== resolvedLocale).map((item) => <meta property="og:locale:alternate" content={localeNames[item]} />)}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
