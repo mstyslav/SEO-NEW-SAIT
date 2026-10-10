@@ -420,6 +420,7 @@ export const mirrorCategories: ProfileCategory[] = [
       ['Дзеркала в рамі', '/dzerkala/dzerkala-v-rami/'],
       ['Дзеркальне панно', '/dzerkala/dzerkalne-panno/'],
       ['Дзеркала для спортзалів', '/dzerkala/dzerkala-dlya-sportzalu/'],
+      ['Дзеркала для салонів краси', '/dzerkala/dzerkala-dlya-salonu-krasy/'],
       ['Скляні перегородки', '/sklyani-perehorodky/'],
       ['Проєкти', '/project/']
     ],

@@ -67,7 +67,8 @@ export const businessExtras: Record<string, BusinessExtras> = {
     alsoLinks: [
       { label: 'Скляні перегородки з дверима', href: '/sklyani-perehorodky/z-dveryma/' },
       { label: 'Металопластикові офісні перегородки', href: '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/' },
-      { label: 'Алюмінієві фасадні системи', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/' }
+      { label: 'Алюмінієві фасадні системи', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/' },
+      { label: 'Усі види скляних перегородок', href: '/sklyani-perehorodky/' }
     ],
     faqAdd: [
       ['Який клас вогнестійкості мають скляні перегородки?', 'Клас вогнестійкості залежить від обраної системи скла й профілю та уточнюється на етапі проєктування під вимоги конкретного приміщення.'],
@@ -132,7 +133,8 @@ export const businessExtras: Record<string, BusinessExtras> = {
     alsoLinks: [
       { label: 'Алюмінієві фасадні системи', href: '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/' },
       { label: 'Алюмінієві розсувні системи', href: '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/' },
-      { label: 'Вітринне скління магазинів і закладів', href: '/poslugy/sklyani-fasady/vitrinne-sklinnya/' }
+      { label: 'Вітринне скління магазинів і закладів', href: '/poslugy/sklyani-fasady/vitrinne-sklinnya/' },
+      { label: 'Безрамні розсувні системи для терас', href: '/bezramne-sklinnya/sklyani-rozsuvni-systemy/' }
     ],
     faqAdd: [
       ['Чи запотіває скло вітрини взимку?', 'Це залежить від перепаду температур і вентиляції залу — енергоефективний склопакет знижує ризик конденсату.']

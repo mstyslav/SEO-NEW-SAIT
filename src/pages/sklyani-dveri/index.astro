@@ -32,6 +32,15 @@ const heroSizes = '(max-width: 900px) 100vw, 50vw';
 
 const typeCategories = doorCategories.filter((category) => category.path.startsWith(DOORS_HUB));
 const modelRange = doorCategories.find((category) => category.slug === 'mizhkimnatni-sklyani-dveri')!;
+// Descriptive link text for the model cards (one generic «Детальніше про модель» ×6 before).
+const modelLinkText: Record<string, string> = {
+  'model-line': 'Міжкімнатні скляні двері SG Line',
+  'model-trio': 'Двері SG Trio з трьома полями',
+  'model-vertical': 'Скляні двері SG Vertical',
+  'model-grid': 'Скляні міжкімнатні двері SG Grid',
+  'model-modern': 'Модель SG Modern: характеристики',
+  'model-arch': 'Арочні двері SG Arch'
+};
 const hubItems = typeCategories.map((category) => ({
   title: category.name,
   note: category.cardNote,
@@ -181,7 +190,7 @@ const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqSt
             <div class="profile-card__body">
               <h3>{model.title ?? model.name}</h3>
               <p class="profile-card__blurb">{model.blurb}</p>
-              <a class="button button--mint profile-card__cta" href={`${modelRange.path}#${model.id}`}>Детальніше про модель →</a>
+              <a class="button button--mint profile-card__cta" href={`${modelRange.path}#${model.id}`}>{modelLinkText[model.id] ?? 'Детальніше про модель'} →</a>
             </div>
           </article>
         ))}
