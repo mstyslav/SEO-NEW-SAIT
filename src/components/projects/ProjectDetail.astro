@@ -11,7 +11,7 @@ import { projectCategoryMap } from '../../data/project-taxonomy';
 import { buildProjectFaq } from '../../data/project-faq';
 import { buildProjectFacts } from '../../data/project-facts';
 import { projectRequestExample } from '../../data/project-request-examples';
-import { PROJECT_EXTRA_LINKS } from '../../data/project-extra-links';
+import { PROJECT_EXTRA_LINKS, PROJECT_EXTRA_LINKS_RU } from '../../data/project-extra-links';
 import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
 import { localizeProjectRu } from '../../data/ru/projects.ru';
 import { buildProjectFactsRu, buildProjectFaqRu, projectRequestExampleRu } from '../../data/ru/project-helpers.ru';
@@ -24,7 +24,7 @@ import path from 'node:path';
 const { project: sourceProject, relatedProjects = [], locale = 'uk' as Locale } = Astro.props;
 const isRu = locale === 'ru';
 const lp = (path: string) => localizedPath(path, locale);
-const extraLinks = isRu ? [] : (PROJECT_EXTRA_LINKS[sourceProject.slug] ?? []);
+const extraLinks = (isRu ? PROJECT_EXTRA_LINKS_RU : PROJECT_EXTRA_LINKS)[sourceProject.slug] ?? [];
 // RU pages render the same UA entity with its RU texts merged in (src/data/ru/projects.ru.ts).
 const project = isRu ? localizeProjectRu(sourceProject) : sourceProject;
 const origin = Astro.site ?? Astro.url.origin;
@@ -182,7 +182,7 @@ const heroSizes = '(max-width: 700px) calc(100vw - 32px), (max-width: 1050px) ca
         </section>
 
         <aside class="project-detail-v2__service-link">
-          <div><p class="eyebrow">{tx.serviceEyebrow}</p><h2>{tx.serviceTitle}</h2>{extraLinks.length > 0 && <p>У цьому проєкті також: {extraLinks.map(([label, href], index) => <>{index > 0 && ', '}<a href={href}>{label}</a></>)}.</p>}</div>
+          <div><p class="eyebrow">{tx.serviceEyebrow}</p><h2>{tx.serviceTitle}</h2>{extraLinks.length > 0 && <p>{isRu ? 'В этом проекте также' : 'У цьому проєкті також'}: {extraLinks.map(([label, href], index) => <>{index > 0 && ', '}<a href={lp(href)}>{label}</a></>)}.</p>}</div>
           <a href={lp(project.serviceLink.href)}>{project.serviceLink.label} <span aria-hidden="true">→</span></a>
         </aside>
 

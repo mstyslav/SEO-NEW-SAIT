@@ -1937,7 +1937,8 @@ export const profileCategories: ProfileCategory[] = [
       ['Зимові сади', '/alyuminiyevi-konstrukcziyi/zymovi-sady/'],
       ['Перголи', '/alyuminiyevi-konstrukcziyi/pergoly/'],
       ['Безрамне скління тераси', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/'],
-      ['Скління для будинку', '/pryvatnyj-sektor/']
+      ['Скління для будинку', '/pryvatnyj-sektor/'],
+      ['Встановлення вікон', '/montazh-vikon/']
     ],
     ctaTitle: 'Потрібна сітка плісе?',
     ctaText: 'Вкажіть, на які двері чи вікна потрібна сітка, та приблизні розміри — підберемо варіант і колір і порахуємо вартість.'
@@ -2385,7 +2386,8 @@ export const profileCategories: ProfileCategory[] = [
       ['Скляні двері', '/sklyani-dveri/'],
       ['Скління для будинку', '/pryvatnyj-sektor/'],
       ['Склопакет: як обрати', '/knowledge/sklopaket-yak-obraty/'],
-      ['Оплата і доставка', '/delivery-payment/']
+      ['Оплата і доставка', '/delivery-payment/'],
+      ['Професійний монтаж вікон', '/montazh-vikon/']
     ],
     ctaTitle: 'Підберемо двері під ваш проріз',
     ctaText: 'Вкажіть, які двері потрібні, та приблизні розміри — підберемо профіль, фурнітуру й заповнення та порахуємо вартість.'

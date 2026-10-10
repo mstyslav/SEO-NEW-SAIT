@@ -493,7 +493,7 @@ export const partitionCategoriesRu: ProfileCategory[] = [
       ['Обслуживаете ли после монтажа?', 'Да, регулировка дверей и фурнитуры в рамках сервиса.']
     ],
     details: projects('Офисные перегородки в наших проектах', 'Офисы, клиники и салоны в Одессе и Киеве.', ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv']),
-    related: [['Цельностеклянные перегородки', P('tsilnosklyani-perehorodky')], ['Трансформирующиеся перегородки', P('transformuyuchi-sklyani-peregorodky')], ['Стекло для офиса', '/dlya-biznesu/dlya-ofisu/'], ['Алюминиевые офисные перегородки', '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/']],
+    related: [['Цельностеклянные перегородки', P('tsilnosklyani-perehorodky')], ['Трансформирующиеся перегородки', P('transformuyuchi-sklyani-peregorodky')], ['Стекло для офиса', '/dlya-biznesu/dlya-ofisu/'], ['Алюминиевые офисные перегородки', '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/'], ['Стеклянные перегородки с дверями', P('z-dveryma')]],
     ctaTitle: 'Планируете офис?',
     ctaText: 'Пришлите план офиса, размеры или фото помещения — предложим тип стеклянных перегородок, зонирование и подготовим предварительный расчёт.'
   }),
