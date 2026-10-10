@@ -5,6 +5,19 @@ export const SITE_NAME = 'Space Glass';
 export const DEFAULT_IMAGE = '/images/v5/hero.webp';
 export const LOGO_PATH = '/images/space-glass-logo.png';
 
+// Company facts for structured data. Only what the site itself publishes (contacts page, footer):
+// one phone and e-mail for all offices, and the social profiles that open. No legal name, postal
+// codes or coordinates are published, so none are marked up.
+export const COMPANY_PHONE = '+380734251400';
+export const COMPANY_EMAIL = 'info@space-glass.com.ua';
+export const COMPANY_SAME_AS = [
+  'https://www.instagram.com/spaceglass_od/',
+  'https://t.me/spaceglass',
+  'https://www.tiktok.com/@spaceglass',
+  'https://www.facebook.com/spaceglasscomua'
+];
+export const organizationId = (origin: string | URL) => `${absoluteUrl('/', origin)}#organization`;
+
 export const absoluteUrl = (pathOrUrl: string | URL, origin: string | URL) => new URL(pathOrUrl, origin).href;
 
 export function organizationSchema(origin: string | URL): JsonLdObject {
@@ -19,7 +32,18 @@ export function organizationSchema(origin: string | URL): JsonLdObject {
       url: absoluteUrl(LOGO_PATH, origin)
     },
     image: absoluteUrl(DEFAULT_IMAGE, origin),
-    sameAs: []
+    telephone: COMPANY_PHONE,
+    email: COMPANY_EMAIL,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      telephone: COMPANY_PHONE,
+      email: COMPANY_EMAIL,
+      areaServed: 'UA',
+      availableLanguage: ['uk', 'ru']
+    },
+    areaServed: { '@type': 'Country', name: 'Ukraine' },
+    sameAs: COMPANY_SAME_AS
   };
 }
 
@@ -109,5 +133,35 @@ export function jsonLdGraph(nodes: Array<JsonLdObject | null | undefined>): Json
   return {
     '@context': 'https://schema.org',
     '@graph': nodes.filter(Boolean) as JsonLdObject[]
+  };
+}
+
+/** Office (branch) of the organization as shown on the contacts page: same business, one node per address. */
+export function officeSchema(
+  origin: string | URL,
+  office: { id: string; city: string; streetAddress: string; url: string }
+): JsonLdObject {
+  return {
+    '@type': 'HomeAndConstructionBusiness',
+    '@id': `${absoluteUrl('/contacts/', origin)}#office-${office.id}`,
+    name: `${SITE_NAME} — ${office.city}`,
+    url: absoluteUrl(office.url, origin),
+    parentOrganization: { '@id': organizationId(origin) },
+    logo: absoluteUrl(LOGO_PATH, origin),
+    telephone: COMPANY_PHONE,
+    email: COMPANY_EMAIL,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: office.streetAddress,
+      addressLocality: office.city,
+      addressCountry: 'UA'
+    },
+    areaServed: { '@type': 'City', name: office.city },
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '19:00'
+    }
   };
 }

@@ -84,11 +84,7 @@ const structuredData = [
     dateModified,
     inLanguage: 'ru',
     mainEntityOfPage: { '@id': `${url.href}#webpage` },
-    author: {
-      '@type': 'Organization',
-      name: 'Space Glass',
-      url: new URL('/', origin).href
-    },
+    author: { '@id': `${new URL('/', origin).href}#organization` },
     publisher: {
       '@id': `${new URL('/', origin).href}#organization`
     }
