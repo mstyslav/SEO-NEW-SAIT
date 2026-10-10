@@ -1,0 +1,68 @@
+---
+// Shared body of /404.html and /ru/404.html. Cloudflare serves these as the body of every unknown
+// URL (assets.not_found_handling = "404-page"), with HTTP 404: /ru/404.html under /ru/, /404.html elsewhere.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { localizedPath, type Locale } from '../i18n/helpers';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const lp = (path: string) => localizedPath(path, locale);
+
+const t = {
+  uk: {
+    title: 'Сторінку не знайдено | Space Glass', description: 'Сторінку не знайдено.',
+    h1: 'Схоже, ця сторінка більше не існує',
+    lead: 'Перевірте адресу або перейдіть до каталогу скляних та алюмінієвих рішень.',
+    home: 'На головну', catalog: 'Відкрити каталог', contact: 'Зв’язатися з нами →', sectionsLabel: 'Популярні розділи',
+    sections: [['Душові кабіни', '/dushovi-kabiny/'], ['Скляні перегородки', '/sklyani-perehorodky/'], ['Дзеркала', '/dzerkala/'], ['Безрамне скління', '/bezramne-sklinnya/'], ['Скляні двері', '/sklyani-dveri/'], ['Алюмінієві конструкції', '/alyuminiyevi-konstrukcziyi/']]
+  },
+  ru: {
+    title: 'Страница не найдена | Space Glass', description: 'Страница не найдена.',
+    h1: 'Похоже, этой страницы больше не существует',
+    lead: 'Проверьте адрес или перейдите в каталог стеклянных и алюминиевых решений.',
+    home: 'На главную', catalog: 'Открыть каталог', contact: 'Связаться с нами →', sectionsLabel: 'Популярные разделы',
+    sections: [['Душевые кабины', '/dushovi-kabiny/'], ['Стеклянные перегородки', '/sklyani-perehorodky/'], ['Зеркала', '/dzerkala/'], ['Безрамное остекление', '/bezramne-sklinnya/'], ['Стеклянные двери', '/sklyani-dveri/'], ['Алюминиевые конструкции', '/alyuminiyevi-konstrukcziyi/']]
+  }
+}[locale === 'ru' ? 'ru' : 'uk'];
+---
+<BaseLayout title={t.title} description={t.description} robots="noindex, follow" errorPage>
+<div class="sg-page-shell">
+  <Header />
+  <main id="main" class="not-found">
+    <section class="not-found__card">
+      <p class="not-found__code">404</p>
+      <h1>{t.h1}</h1>
+      <p class="not-found__lead">{t.lead}</p>
+      <div class="not-found__actions">
+        <a class="button button--mint" href={lp('/')}>{t.home}</a>
+        <a class="button button--outline" href={lp('/catalog/')}>{t.catalog}</a>
+      </div>
+      <nav class="not-found__sections" aria-label={t.sectionsLabel}>
+        <p>{t.sectionsLabel}</p>
+        <ul>{t.sections.map(([label, href]) => <li><a href={lp(href)}>{label}</a></li>)}</ul>
+      </nav>
+      <p class="not-found__more"><a href={lp('/contacts/')}>{t.contact}</a></p>
+    </section>
+  </main>
+  <Footer />
+</div>
+</BaseLayout>
+
+<style>
+  .not-found{display:grid;place-items:center;padding:56px 20px 72px;background:linear-gradient(180deg,#f3faf7 0%,#fff 70%)}
+  .not-found__card{width:min(620px,100%);padding:44px 40px 36px;border:1px solid #dfe7e3;border-radius:32px;background:#fff;text-align:center;box-shadow:0 24px 60px rgba(16,40,30,.08)}
+  .not-found__code{margin:0 0 10px;color:var(--green-dark,#07583a);font-size:clamp(56px,12vw,88px);font-weight:800;line-height:1;letter-spacing:-.04em}
+  .not-found h1{margin:0 0 14px;font-size:clamp(26px,4vw,38px);line-height:1.1;letter-spacing:-.03em}
+  .not-found__lead{margin:0 auto 26px;max-width:460px;color:#56625c;font-size:16px;line-height:1.55}
+  .not-found__actions{display:grid;gap:10px}
+  .not-found__sections{margin:28px 0 0;padding:22px 0 0;border-top:1px solid #dfe7e3}
+  .not-found__sections p{margin:0 0 12px;color:#646d69;font-size:14px}
+  .not-found__sections ul{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0;padding:0;list-style:none}
+  .not-found__sections a{display:inline-block;padding:9px 14px;border-radius:999px;background:#f5f8f6;color:#1c211e;font-size:14.5px;text-decoration:none}
+  .not-found__sections a:hover{background:#e8f6f0}
+  .not-found__more{margin:20px 0 0;font-size:14.5px}
+  .not-found__more a{color:var(--green-dark,#07583a);text-decoration:underline}
+  @media (max-width:600px){.not-found{padding:28px 14px 48px}.not-found__card{padding:32px 20px 26px;border-radius:26px}}
+</style>

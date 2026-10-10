@@ -28,9 +28,11 @@ interface Props {
   robots?: string;
   /** @id of the page's main entity, linked from the #webpage node as mainEntity. */
   mainEntityId?: string;
+  /** 404 pages are served as the body of any unknown URL: no canonical, hreflang, og:url or WebPage node. */
+  errorPage?: boolean;
 }
 
-const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, heroPreloadMobileMaxWidth = 900, robots, mainEntityId } = Astro.props;
+const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, heroPreloadMobileMaxWidth = 900, robots, mainEntityId, errorPage = false } = Astro.props;
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales, hasLocalizedRoute } from '../i18n/helpers';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
@@ -56,7 +58,7 @@ const extraStructuredData = Array.isArray(structuredData) ? structuredData : [st
 const schema = jsonLdGraph([
   organizationSchema(origin),
   websiteSchema(origin, resolvedLocale),
-  pageSchema,
+  ...(errorPage ? [] : [pageSchema]),
   ...extraStructuredData
 ]);
 const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
@@ -101,14 +103,14 @@ import ScrollProgress from '../components/ScrollProgress.astro';
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png" />
     <title>{title}</title>
-    <link rel="canonical" href={canonical} />
-    {availableAlternateLocales.map((item) => <link rel="alternate" hreflang={item} href={new URL(localizedPath(basePath, item), Astro.site ?? Astro.url.origin)} />)}
-    {availableAlternateLocales.includes('uk') && <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />}
+    {!errorPage && <link rel="canonical" href={canonical} />}
+    {!errorPage && availableAlternateLocales.map((item) => <link rel="alternate" hreflang={item} href={new URL(localizedPath(basePath, item), Astro.site ?? Astro.url.origin)} />)}
+    {!errorPage && availableAlternateLocales.includes('uk') && <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Space Glass" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {!errorPage && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={socialImage} />
     <meta property="og:locale" content={localeNames[resolvedLocale]} />
     {availableAlternateLocales.filter((item) => item !== resolvedLocale).map((item) => <meta property="og:locale:alternate" content={localeNames[item]} />)}

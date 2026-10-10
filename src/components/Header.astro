@@ -13,6 +13,8 @@ const currentPath = Astro.url.pathname;
 const lp = (path: string) => localizedPath(path, locale);
 
 const localeSwitchPath = (targetLocale: 'uk' | 'ru') => {
+  // 404 pages are shown at unknown URLs: the switcher leads to the other language's home page.
+  if (/^\/(?:ru\/)?404\/?$/.test(currentPath)) return targetLocale === 'ru' ? '/ru/' : '/';
   if (targetLocale === 'ru' && !hasLocalizedRoute(currentPath, 'ru')) return '/ru/';
   return localizedPath(currentPath, targetLocale);
 };
