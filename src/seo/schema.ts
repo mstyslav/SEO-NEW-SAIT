@@ -56,12 +56,7 @@ export function websiteSchema(origin: string | URL, language: string): JsonLdObj
     url: siteUrl,
     name: SITE_NAME,
     inLanguage: language,
-    publisher: { '@id': `${siteUrl}#organization` },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${siteUrl}?q={search_term_string}`,
-      'query-input': 'required name=search_term_string'
-    }
+    publisher: { '@id': `${siteUrl}#organization` }
   };
 }
 

@@ -454,3 +454,20 @@
 # Old product tag «душова» → shower hub
 /product-tag/dushova/ /dushovi-kabiny/ 301
 /product-tag/dushova /dushovi-kabiny/ 301
+
+# GSC indexation fixes (Task 35, 2026-10-13): legacy URLs from the Search Console page-indexing report that still
+# answered 404 although a page with the same intent exists — each one is the missing twin of a rule above.
+# Old «Цільноскляні перегородки» page (its sibling pages and the RU twin are redirected above)
+/peregorodki/tsilnosklyani-perehorodky/ /sklyani-perehorodky/tsilnosklyani-perehorodky/ 301
+/peregorodki/tsilnosklyani-perehorodky /sklyani-perehorodky/tsilnosklyani-perehorodky/ 301
+# RU twins of the old shower-cabin products mod1 / mod11 (the UA rules are above)
+/ru/product/dushova-kabina-mod1/ /ru/dushovi-kabiny/ 301
+/ru/product/dushova-kabina-mod1 /ru/dushovi-kabiny/ 301
+/ru/product/dushova-kabina-mod11/ /ru/dushovi-kabiny/ 301
+/ru/product/dushova-kabina-mod11 /ru/dushovi-kabiny/ 301
+# RU twin of the duplicate project page (the UA rule is at the top of the file)
+/ru/project/shtorka-dlya-vannoyi-v-m-odesa-2/ /ru/project/shtorka-dlya-vannoyi-v-m-odesa/ 301
+/ru/project/shtorka-dlya-vannoyi-v-m-odesa-2 /ru/project/shtorka-dlya-vannoyi-v-m-odesa/ 301
+# Old RU winter-gardens URL as Google stored it, with the non-Latin letters dropped (the full spellings are above)
+/ru/alyuminivi-konstrukczi/zimnie-sady/ /ru/alyuminiyevi-konstrukcziyi/zymovi-sady/ 301
+/ru/alyuminivi-konstrukczi/zimnie-sady /ru/alyuminiyevi-konstrukcziyi/zymovi-sady/ 301
