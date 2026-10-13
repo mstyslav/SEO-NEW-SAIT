@@ -3,6 +3,8 @@
 // with locale="ru"; RU texts in src/data/ru/projects.ru.ts.
 import { getCollection } from 'astro:content';
 import ProjectDetail from '../../../components/projects/ProjectDetail.astro';
+import ProjectCasePremium from '../../../components/projects/ProjectCasePremium.astro';
+import { projectCase } from '../../../data/project-cases';
 import { selectRelatedProjects } from '../../../data/select-related-projects';
 import { hasProjectRu } from '../../../data/ru/projects.ru';
 
@@ -14,5 +16,9 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const allProjects = await getCollection('projects', ({ data }) => data.status === 'published');
 const relatedProjects = selectRelatedProjects(entry.data, allProjects, 5);
+// Projects listed in src/data/project-cases.ts use the premium case template; all others — ProjectDetail.
+const caseContent = projectCase(entry.data.slug, 'ru');
 ---
-<ProjectDetail project={entry.data} relatedProjects={relatedProjects} locale="ru" />
+{caseContent
+  ? <ProjectCasePremium project={entry.data} relatedProjects={relatedProjects} locale="ru" draft={caseContent} />
+  : <ProjectDetail project={entry.data} relatedProjects={relatedProjects} locale="ru" />}

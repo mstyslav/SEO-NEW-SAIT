@@ -3,10 +3,10 @@
  * main serviceLink on the UA project page only (Task 26B, 2026-10-10). Keys are project slugs.
  */
 export const PROJECT_EXTRA_LINKS: Record<string, [string, string][]> = {
-  // Nofilters beauty salon, Odesa: custom mirrors for the work stations + glass interior doors.
+  // Nofilters beauty salon, Odesa: mirrors-only case (Task 33.3) — the main service link is the
+  // salon mirrors page; this is the second, business-level link. No door links.
   'zonuvannya-prostoru-odnokimnatnoyi-kvartyry': [
-    ['дзеркала для салонів краси', '/dzerkala/dzerkala-dlya-salonu-krasy/'],
-    ['скляні міжкімнатні двері', '/sklyani-perehorodky/sklyani-mizhkimnatni-dveri/']
+    ['скло для салонів краси', '/dlya-biznesu/salonam-krasy/']
   ],
   // Hotel Dvoryanskyi, Odesa: shower partitions + glass screens on the bath rim.
   'gotel-dvoryanskyj-odesa-dushovi-ta-shtorky-na-vanu': [
@@ -16,6 +16,9 @@ export const PROJECT_EXTRA_LINKS: Record<string, [string, string][]> = {
 
 /** Same for the RU project page: RU labels, UA-style hrefs (localized by the template). */
 export const PROJECT_EXTRA_LINKS_RU: Record<string, [string, string][]> = {
+  'zonuvannya-prostoru-odnokimnatnoyi-kvartyry': [
+    ['стекло для салонов красоты', '/dlya-biznesu/salonam-krasy/']
+  ],
   // Wall mirror in a black frame, ZhK Kontynent, Odesa.
   'dzerkalo-na-stinu-v-zhk-kontynent-m-odesa': [
     ['зеркала в раме на заказ', '/dzerkala/dzerkala-v-rami/']

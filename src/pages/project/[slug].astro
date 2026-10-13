@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import ProjectDetail from '../../components/projects/ProjectDetail.astro';
+import ProjectCasePremium from '../../components/projects/ProjectCasePremium.astro';
+import { projectCase } from '../../data/project-cases';
 import { selectRelatedProjects } from '../../data/select-related-projects';
 
 export async function getStaticPaths() {
@@ -11,5 +13,9 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const allProjects = await getCollection('projects', ({ data }) => data.status === 'published');
 const relatedProjects = selectRelatedProjects(entry.data, allProjects, 5);
+// Projects listed in src/data/project-cases.ts use the premium case template; all others — ProjectDetail.
+const caseContent = projectCase(entry.data.slug, 'uk');
 ---
-<ProjectDetail project={entry.data} relatedProjects={relatedProjects} locale="uk" />
+{caseContent
+  ? <ProjectCasePremium project={entry.data} relatedProjects={relatedProjects} locale="uk" draft={caseContent} />
+  : <ProjectDetail project={entry.data} relatedProjects={relatedProjects} locale="uk" />}

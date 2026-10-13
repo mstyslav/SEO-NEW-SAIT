@@ -1,0 +1,361 @@
+---
+// Premium project CASE page. Used only for the projects listed in src/data/project-cases.ts
+// (pilot: Nofilters); every other project keeps ProjectDetail.astro.
+// Modular: each content block renders only when the case has real data for it, and the section
+// numbers follow the blocks that are actually shown.
+// From the project entry (content JSON + RU overlay): head, JSON-LD, H1, city/object, lead,
+// characteristics, cover (hero), gallery, FAQ items, related projects, form values.
+// From the case (src/data/project-cases/*): the editorial blocks and the service links.
+// Styles: src/styles/project-case-critical.css (inlined) + public/styles/project-case.css (deferred).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import FAQBlock from '../FAQBlock.astro';
+import GoogleReviews from '../GoogleReviews.astro';
+import ProjectCard from './ProjectCard.astro';
+import ProjectRequestForm from './ProjectRequestForm.astro';
+import { projectCategoryMap } from '../../data/project-taxonomy';
+import { buildProjectFaq } from '../../data/project-faq';
+import { projectRequestExample } from '../../data/project-request-examples';
+import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { localizeProjectRu } from '../../data/ru/projects.ru';
+import { buildProjectFaqRu, projectRequestExampleRu } from '../../data/ru/project-helpers.ru';
+import { hasLocalizedRoute, localizedPath, type Locale } from '../../i18n/helpers';
+import fs from 'node:fs';
+import path from 'node:path';
+import criticalCss from '../../styles/project-case-critical.css?raw';
+
+const { project: sourceProject, relatedProjects = [], locale = 'uk' as Locale, draft } = Astro.props;
+const CASE_CSS = '/styles/project-case.css?v=20261013b';
+const isRu = locale === 'ru';
+const lp = (href: string) => localizedPath(href, locale);
+const project = isRu ? localizeProjectRu(sourceProject) : sourceProject;
+const origin = Astro.site ?? Astro.url.origin;
+const projectPath = lp(`/project/${project.slug}/`);
+const canonical = absoluteUrl(projectPath, origin);
+const hasRu = hasLocalizedRoute(`/project/${project.slug}/`, 'ru');
+const category = projectCategoryMap[sourceProject.category];
+const categoryLabel = isRu ? category.labelRu : category.label;
+// faqOwnOnly: the page shows only the project's own questions (no category-wide block).
+const projectFaq = draft.faqOwnOnly ? project.faq : isRu ? buildProjectFaqRu(project) : buildProjectFaq(project);
+const faqItems = projectFaq.map(({ question, answer }) => [question, answer] as [string, string]);
+const requestExample = isRu ? projectRequestExampleRu(project) : projectRequestExample(project);
+const related = relatedProjects.slice(0, 5);
+
+const tx = {
+  uk: { home: 'Головна', projects: 'Наші проєкти', breadcrumbs: 'Хлібні крихти', photos: 'Дивитися фото', openPhoto: 'Відкрити фото', factsLabel: 'Характеристики проєкту',
+    about: 'Про проєкт', task: 'Завдання', solution: 'Наше рішення', tech: 'Технічні особливості', process: 'Реалізація', projectFact: 'У цьому проєкті', result: 'Результат', benefits: 'Переваги рішення', gallery: 'Фотогалерея', galleryTitle: 'Фото проєкту', generalTag: 'Загальна інформація', service: 'Послуга', also: 'Також',
+    faqPrefix: 'Питання', faqIntro: 'Відповіді про розрахунок, індивідуальні розміри, матеріали, монтаж і догляд.', relatedEyebrow: 'Схожі проєкти', relatedTitle: 'Інші реалізовані рішення', back: 'Усі проєкти',
+    lbLabel: 'Перегляд фото проєкту', close: 'Закрити', prev: 'Попереднє фото', next: 'Наступне фото', of: 'з' },
+  ru: { home: 'Главная', projects: 'Наши проекты', breadcrumbs: 'Хлебные крошки', photos: 'Смотреть фото', openPhoto: 'Открыть фото', factsLabel: 'Характеристики проекта',
+    about: 'О проекте', task: 'Задача', solution: 'Наше решение', tech: 'Технические особенности', process: 'Реализация', projectFact: 'В этом проекте', result: 'Результат', benefits: 'Преимущества решения', gallery: 'Фотогалерея', galleryTitle: 'Фото проекта', generalTag: 'Общая информация', service: 'Услуга', also: 'Также',
+    faqPrefix: 'Вопросы', faqIntro: 'Ответы о расчёте, индивидуальных размерах, материалах, монтаже и уходе.', relatedEyebrow: 'Похожие проекты', relatedTitle: 'Другие реализованные решения', back: 'Все проекты',
+    lbLabel: 'Просмотр фото проекта', close: 'Закрыть', prev: 'Предыдущее фото', next: 'Следующее фото', of: 'из' }
+}[isRu ? 'ru' : 'uk'];
+
+// JSON-LD = production (CreativeWork with the production name/images, 3-level BreadcrumbList, FAQPage).
+const breadcrumbItems = [
+  { label: tx.home, href: lp('/') },
+  { label: tx.projects, href: lp('/project/') },
+  { label: project.h1, href: projectPath }
+];
+const structuredData = [
+  {
+    '@type': 'CreativeWork', '@id': `${canonical}#project`, url: canonical, name: project.h1, headline: project.h1,
+    description: project.seo.description, inLanguage: locale,
+    image: [project.cover, ...project.gallery].map((image) => ({ '@type': 'ImageObject', url: absoluteUrl(image.src, origin), width: image.width, height: image.height, caption: image.caption ?? image.alt })),
+    creator: { '@id': `${new URL('/', origin).href}#organization` },
+    ...(project.city ? { locationCreated: { '@type': 'Place', name: project.city } } : {}),
+    about: [project.constructionType, categoryLabel]
+  },
+  breadcrumbSchema(breadcrumbItems.map((item) => ({ label: item.label, href: absoluteUrl(item.href, origin) }))),
+  faqSchema(projectFaq)
+].filter(Boolean) as JsonLdObject[];
+
+const variant = (src: string, w: number) => src.replace(/\.webp$/, `-${w}.webp`);
+const hasVariant = (src: string, w: number) => fs.existsSync(path.join(process.cwd(), 'public', variant(src, w)));
+// Only widths whose file exists next to the original (`-480.webp`, `-720.webp`) are offered.
+const srcsetOf = (image: { src: string; width: number }) => [480, 720].filter((w) => w < image.width && hasVariant(image.src, w)).map((w) => `${variant(image.src, w)} ${w}w`).concat(`${image.src} ${image.width}w`).join(', ');
+const thumb = (image: { src: string; width: number }) => (image.width > 720 && hasVariant(image.src, 720) ? variant(image.src, 720) : image.src);
+const heroSizes = '(max-width: 700px) calc(100vw - 32px), (max-width: 1000px) calc(100vw - 64px), min(52vw, 760px)';
+const hero = { ...project.cover, caption: draft.heroCaption ?? project.cover.caption ?? '' };
+const tileSizes = '(max-width: 700px) 86vw, (max-width: 1000px) 46vw, 30vw';
+const gallery = project.gallery.map((image) => ({ ...image, caption: image.caption ?? '' }));
+const images = [hero, ...gallery].map(({ src, width, height, alt, caption }) => ({ src, width, height, alt, caption }));
+const num = (n: number) => String(n).padStart(2, '0');
+const filled = (list?: unknown[]) => Array.isArray(list) && list.length > 0;
+
+// Which blocks have data (empty block = no heading, no container, no spacing).
+const has = {
+  about: Boolean(draft.about && filled(draft.about.paragraphs)),
+  task: Boolean(draft.task?.text),
+  solution: Boolean(draft.solution && filled(draft.solution.paragraphs)),
+  tech: Boolean(draft.tech && filled(draft.tech.items)),
+  processFact: Boolean(draft.process?.fact),
+  processGeneral: Boolean(draft.process?.general && filled(draft.process.general.steps)),
+  result: Boolean(draft.result?.text),
+  benefits: Boolean(draft.benefits && filled(draft.benefits.items)),
+  gallery: images.length > 1,
+  service: Boolean(draft.service?.primary)
+};
+const hasStory = has.task || has.solution;
+const hasProcess = has.processFact || has.processGeneral;
+const storyImage = hasStory ? gallery[0] : undefined;
+const order = ['about', 'task', 'solution', 'tech', 'process', 'result', 'benefits', 'gallery', 'service'] as const;
+const shown = { ...has, process: hasProcess };
+const no = Object.fromEntries(order.filter((key) => shown[key]).map((key, index) => [key, num(index + 1)])) as Record<(typeof order)[number], string>;
+const facts = project.characteristics ?? [];
+const heroMeta = [project.city, project.objectType].filter(Boolean);
+---
+<BaseLayout
+  title={project.seo.title}
+  description={project.seo.description}
+  locale={locale}
+  image={project.cover.src}
+  structuredData={structuredData}
+  alternateLocales={hasRu ? ['uk', 'ru'] : ['uk']}
+  heroPreloadSrc={hero.src}
+  heroPreloadSrcset={srcsetOf(hero)}
+  heroPreloadSizes={heroSizes}
+>
+  <div class="sg-page-shell">
+    <Header locale={locale} />
+    <main id="main" class="pc">
+      <style is:inline set:html={criticalCss}></style>
+      <link rel="preload" as="style" href={CASE_CSS} fetchpriority="low" onload="this.onload=null;this.rel='stylesheet'" />
+      <noscript><link href={CASE_CSS} rel="stylesheet" /></noscript>
+      <section class="pc-hero">
+        <div class="pc-hero__copy">
+          <nav class="pc-crumbs" aria-label={tx.breadcrumbs}>
+            <a href={lp('/')}>{tx.home}</a><span aria-hidden="true">/</span><a href={lp('/project/')}>{tx.projects}</a><span aria-hidden="true">/</span><span aria-current="page">{project.h1}</span>
+          </nav>
+          {heroMeta.length > 0 && <p class="pc-hero__meta">{heroMeta.map((item, index) => <>{index > 0 && <i aria-hidden="true">·</i>}<span>{item}</span></>)}</p>}
+          <h1>{project.h1}</h1>
+          {project.shortDescription && <p class="pc-hero__lead">{project.shortDescription}</p>}
+          <div class="pc-hero__actions">
+            <a class="button button--mint" href="#project-request">{draft.cta.button}</a>
+            <button class="pc-hero__photos" type="button" data-pp-open="0">{tx.photos} <span>{images.length}</span></button>
+          </div>
+        </div>
+        <button class="pc-hero__media" type="button" data-pp-open="0" aria-label={`${tx.openPhoto}: ${hero.alt}`}>
+          <img src={hero.src} srcset={srcsetOf(hero)} sizes={heroSizes} width={hero.width} height={hero.height} alt={hero.alt} loading="eager" decoding="async" fetchpriority="high" />
+          {hero.caption && <span class="pc-hero__caption">{hero.caption}</span>}
+        </button>
+        {facts.length > 0 && (
+          <dl class="pc-facts" aria-label={tx.factsLabel}>
+            {facts.map(({ label, value }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
+          </dl>
+        )}
+      </section>
+
+      {has.about && (
+        <section class="pc-about pc-wrap pc-block" aria-labelledby="pc-about-title">
+          <p class="pc-kicker"><span>{no.about}</span>{tx.about}</p>
+          <div class="pc-about__grid">
+            <h2 id="pc-about-title">{draft.about.title}</h2>
+            <div class="pc-prose">{draft.about.paragraphs.map((text) => <p>{text}</p>)}</div>
+          </div>
+        </section>
+      )}
+
+      {hasStory && (
+        <section class:list={['pc-split', 'pc-wrap', 'pc-block', !storyImage && 'pc-split--text']}>
+          {storyImage && (
+            <button class="pc-split__media" type="button" data-pp-open="1" aria-label={`${tx.openPhoto}: ${storyImage.alt}`}>
+              <img src={thumb(storyImage)} srcset={srcsetOf(storyImage)} sizes="(max-width: 1000px) calc(100vw - 32px), 40vw" width={storyImage.width} height={storyImage.height} alt={storyImage.alt} loading="lazy" decoding="async" />
+            </button>
+          )}
+          <div class="pc-split__copy">
+            {has.task && (
+              <article>
+                <p class="pc-kicker"><span>{no.task}</span>{tx.task}</p>
+                <h2>{draft.task.title}</h2>
+                <div class="pc-prose"><p>{draft.task.text}</p></div>
+              </article>
+            )}
+            {has.solution && (
+              <article>
+                <p class="pc-kicker"><span>{no.solution}</span>{tx.solution}</p>
+                <h2>{draft.solution.title}</h2>
+                <div class="pc-prose">{draft.solution.paragraphs.map((text) => <p>{text}</p>)}</div>
+              </article>
+            )}
+          </div>
+        </section>
+      )}
+
+      {has.tech && (
+        <section class="pc-tech" aria-labelledby="pc-tech-title">
+          <div class="pc-wrap">
+            <header class="pc-head">
+              <p class="pc-kicker"><span>{no.tech}</span>{tx.tech}</p>
+              <h2 id="pc-tech-title">{draft.tech.title}</h2>
+            </header>
+            <dl class="pc-tech__grid">
+              {draft.tech.items.map(({ label, value }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
+            </dl>
+            {draft.tech.note && <p class="pc-note">{draft.tech.note}</p>}
+          </div>
+        </section>
+      )}
+
+      {hasProcess && (
+        <section class="pc-process pc-wrap pc-block" aria-labelledby="pc-process-title">
+          <header class="pc-head">
+            <p class="pc-kicker"><span>{no.process}</span>{tx.process}</p>
+            <h2 id="pc-process-title">{draft.process.title}</h2>
+          </header>
+          <div class:list={['pc-process__grid', !(has.processFact && has.processGeneral) && 'pc-process__grid--single']}>
+            {has.processFact && <p class="pc-process__fact"><b>{tx.projectFact}</b>{draft.process.fact}</p>}
+            {has.processGeneral && (
+              <aside class="pc-general" aria-label={draft.process.general.label}>
+                <p class="pc-general__label">{tx.generalTag}</p>
+                <h3>{draft.process.general.label}</h3>
+                <ol class="pc-steps">
+                  {draft.process.general.steps.map((step, index) => <li><span>{num(index + 1)}</span><b>{step.title}</b><p>{step.text}</p></li>)}
+                </ol>
+              </aside>
+            )}
+          </div>
+        </section>
+      )}
+
+      {has.result && (
+        <section class="pc-result pc-wrap pc-block" aria-labelledby="pc-result-title">
+          <div class="pc-result__panel">
+            <p class="pc-kicker"><span>{no.result}</span>{tx.result}</p>
+            <h2 id="pc-result-title">{draft.result.text}</h2>
+          </div>
+        </section>
+      )}
+
+      {has.benefits && (
+        <section class="pc-benefits pc-wrap pc-block" aria-labelledby="pc-benefits-title">
+          <header class="pc-head">
+            <p class="pc-kicker"><span>{no.benefits}</span>{tx.benefits}</p>
+            <h2 id="pc-benefits-title">{draft.benefits.title}</h2>
+            {draft.benefits.note && <p class="pc-note"><b>{tx.generalTag}.</b> {draft.benefits.note}</p>}
+          </header>
+          <ul class="pc-benefits__grid" data-count={draft.benefits.items.length}>
+            {draft.benefits.items.map((item, index) => <li><span>{num(index + 1)}</span><h3>{item.title}</h3><p>{item.text}</p></li>)}
+          </ul>
+        </section>
+      )}
+
+      {has.gallery && (
+        <section class="pc-gallery pc-wrap pc-block" aria-labelledby="pc-gallery-title">
+          <header class="pc-head">
+            <p class="pc-kicker"><span>{no.gallery}</span>{tx.gallery}</p>
+            <h2 id="pc-gallery-title">{draft.galleryTitle ?? tx.galleryTitle}</h2>
+          </header>
+          <div class="pc-gallery__grid" data-count={Math.min(images.length, 6)}>
+            {images.map((image, index) => (
+              <figure>
+                <button type="button" data-pp-open={index} aria-label={`${tx.openPhoto}: ${image.alt}`}>
+                  <img src={thumb(image)} srcset={srcsetOf(image)} sizes={tileSizes} width={image.width} height={image.height} alt={image.alt} loading="lazy" decoding="async" />
+                </button>
+                {image.caption && <figcaption>{image.caption}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {has.service && (
+        <section class="pc-service pc-wrap" aria-labelledby="pc-service-title">
+          <a class="pc-service__card" href={lp(draft.service.primary.href)}>
+            <span class="pc-kicker"><span>{no.service}</span>{draft.service.title}</span>
+            <strong id="pc-service-title">{draft.service.primary.label}</strong>
+            {draft.service.text && <span class="pc-service__text">{draft.service.text}</span>}
+            <b aria-hidden="true">→</b>
+          </a>
+          {filled(draft.service.secondary) && <p class="pc-service__also">{tx.also}: {draft.service.secondary.map((link, index) => <>{index > 0 && ', '}<a href={lp(link.href)}>{link.label}</a></>)}</p>}
+        </section>
+      )}
+
+      <section class="pc-wrap">
+        <div class="pc-cta" aria-labelledby="pc-cta-title">
+          <div>
+            <h2 id="pc-cta-title">{draft.cta.title}</h2>
+            <p>{draft.cta.text}</p>
+          </div>
+          <a class="button button--mint" href="#project-request">{draft.cta.button}</a>
+        </div>
+      </section>
+
+      <div class="pc-wrap">
+        <section class="pc-faq">
+          <FAQBlock title={draft.faqTitle} intro={tx.faqIntro} items={faqItems} visibleCount={6} locale={locale} />
+        </section>
+
+        {related.length > 0 && (
+          <section class="pc-related" aria-labelledby="pc-related-title">
+            <header class="pc-head pc-head--row">
+              <div><p class="eyebrow">{tx.relatedEyebrow}</p><h2 id="pc-related-title">{tx.relatedTitle}</h2></div>
+              <a class="pc-back" href={lp('/project/')}><b aria-hidden="true">←</b> {tx.back}</a>
+            </header>
+            <div class="pc-related__grid">{related.map((item) => <ProjectCard project={item} locale={locale} href={lp(`/project/${item.slug}/`)} />)}</div>
+          </section>
+        )}
+      </div>
+
+      <GoogleReviews locale={locale} />
+
+      <ProjectRequestForm projectTitle={project.cardTitle} city={project.city ?? ''} requestExample={requestExample} locale={locale} />
+
+      <dialog class="pp-lightbox" aria-label={tx.lbLabel} data-pp-lightbox data-images={JSON.stringify(images)} data-of={tx.of}>
+        <button type="button" class="pp-lightbox__close" data-pp-close aria-label={tx.close}>×</button>
+        <button type="button" class="pp-lightbox__nav pp-lightbox__nav--prev" data-pp-prev aria-label={tx.prev}>‹</button>
+        <figure>
+          <img data-pp-img alt="" />
+          <figcaption><span data-pp-count aria-live="polite"></span><span data-pp-caption></span></figcaption>
+        </figure>
+        <button type="button" class="pp-lightbox__nav pp-lightbox__nav--next" data-pp-next aria-label={tx.next}>›</button>
+      </dialog>
+    </main>
+    <Footer locale={locale} />
+  </div>
+</BaseLayout>
+
+<script is:inline>
+(() => {
+  const box = document.querySelector('[data-pp-lightbox]');
+  if (!box || typeof box.showModal !== 'function') return;
+  const images = JSON.parse(box.dataset.images || '[]');
+  const img = box.querySelector('[data-pp-img]');
+  const count = box.querySelector('[data-pp-count]');
+  const caption = box.querySelector('[data-pp-caption]');
+  const single = images.length < 2;
+  let current = 0;
+  let opener = null;
+  box.querySelectorAll('.pp-lightbox__nav').forEach((b) => { b.hidden = single; });
+  const show = (i) => {
+    current = (i + images.length) % images.length;
+    const im = images[current];
+    img.src = im.src; img.width = im.width; img.height = im.height; img.alt = im.alt;
+    count.textContent = (current + 1) + ' ' + box.dataset.of + ' ' + images.length;
+    caption.textContent = im.caption || '';
+    if (!single) { const n = new Image(); n.src = images[(current + 1) % images.length].src; }
+  };
+  document.querySelectorAll('[data-pp-open]').forEach((b) => b.addEventListener('click', () => {
+    opener = b; show(Number(b.dataset.ppOpen) || 0); box.showModal();
+  }));
+  box.querySelector('[data-pp-close]').addEventListener('click', () => box.close());
+  box.querySelector('[data-pp-prev]').addEventListener('click', () => show(current - 1));
+  box.querySelector('[data-pp-next]').addEventListener('click', () => show(current + 1));
+  box.addEventListener('click', (e) => { if (e.target === box) box.close(); });
+  box.addEventListener('close', () => { if (opener) opener.focus(); });
+  box.addEventListener('keydown', (e) => {
+    if (single) return;
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); show(current + 1); }
+  });
+  let startX = null;
+  box.addEventListener('touchstart', (e) => { startX = e.changedTouches[0].clientX; }, { passive: true });
+  box.addEventListener('touchend', (e) => {
+    if (startX === null || single) return;
+    const dx = e.changedTouches[0].clientX - startX; startX = null;
+    if (Math.abs(dx) > 40) show(current + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+})();
+</script>

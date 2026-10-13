@@ -20,7 +20,7 @@ export const PROJECT_LINKS: Record<string, string[]> = {
   '/sklyani-perehorodky/loft-sklyani-peregorodku/': ['mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'mizhkimnatni-peregorodku-v-stuli-loft', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'mizhkimnatni-peregorodky-v-dytyachu'],
   '/sklyani-perehorodky/mizhkimnatni/': ['dzerkalni-dveri-v-garderob', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'mizhkimnatni-peregorodky-v-dytyachu'],
   // Glass doors
-  '/sklyani-dveri/': ['chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'mirrored-wardrobe-doors-milos-odesa', 'zonuvannya-prostoru-odnokimnatnoyi-kvartyry', 'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
+  '/sklyani-dveri/': ['chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'mirrored-wardrobe-doors-milos-odesa', 'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
   '/sklyani-dveri/mayatnykovi-sklyani-dveri/': ['chastne-zamovlennya-odesa-dushova-ta-peregorodka'],
   // Railings
   '/sklyani-ohorozhi/': ['ogorozha-shodiv-ta-drugogo-poverhu', 'dzerkalni-dveri-v-garderob-2', 'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
