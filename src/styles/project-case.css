@@ -2,8 +2,9 @@
    First-screen rules live in src/styles/project-case-critical.css and are inlined in the page.
    Every selector starts with #main: the site has global heading rules with very high specificity
    (and !important), and an id is the simplest way to stay above them without touching them.
-   Kept outside the Astro bundle on purpose: the stylesheet set (and the generated critical CSS)
-   of the other project pages stays exactly as it is. Bump CASE_CSS_VERSION after editing. */
+   Loaded by URL (`?url` import in the component), not as part of the page CSS bundle: the
+   stylesheet set (and the generated critical CSS) of the other project pages stays exactly as
+   it is. The build gives the file a content hash, so nothing has to be versioned by hand. */
   #main .pc-head { max-width: 860px; margin-bottom: clamp(26px, 3vw, 40px); }
   #main .pc-head--row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; max-width: none; }
   #main .pc-prose p { margin: 0 0 1em; max-width: 62ch; color: var(--muted); font-size: clamp(1.02rem, 1.15vw, 1.14rem); line-height: 1.75; }

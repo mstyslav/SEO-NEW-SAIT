@@ -6,7 +6,8 @@
 // From the project entry (content JSON + RU overlay): head, JSON-LD, H1, city/object, lead,
 // characteristics, cover (hero), gallery, FAQ items, related projects, form values.
 // From the case (src/data/project-cases/*): the editorial blocks and the service links.
-// Styles: src/styles/project-case-critical.css (inlined) + public/styles/project-case.css (deferred).
+// Styles: src/styles/project-case-critical.css (inlined) + src/styles/project-case.css (deferred,
+// served as a hashed /_astro/ asset).
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../Header.astro';
 import Footer from '../Footer.astro';
@@ -24,9 +25,14 @@ import { hasLocalizedRoute, localizedPath, type Locale } from '../../i18n/helper
 import fs from 'node:fs';
 import path from 'node:path';
 import criticalCss from '../../styles/project-case-critical.css?raw';
+// `?url`: Vite emits the stylesheet as its own asset with a content hash in the file name
+// (/_astro/project-case.[hash].css) and gives back its URL. It is not added to the page CSS
+// bundle, so the stylesheets of the other project pages are unaffected, and a changed file gets a
+// new URL on the next build — no manual version number.
+import caseCssUrl from '../../styles/project-case.css?url';
 
 const { project: sourceProject, relatedProjects = [], locale = 'uk' as Locale, draft } = Astro.props;
-const CASE_CSS = '/styles/project-case.css?v=20261013b';
+const CASE_CSS = caseCssUrl;
 const isRu = locale === 'ru';
 const lp = (href: string) => localizedPath(href, locale);
 const project = isRu ? localizeProjectRu(sourceProject) : sourceProject;

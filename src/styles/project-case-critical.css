@@ -1,5 +1,5 @@
 /* First-screen CSS of the premium project case page (ProjectCasePremium.astro): inlined in the page.
-   The rest of the page styles: public/styles/project-case.css (loaded without blocking render). */
+   The rest of the page styles: src/styles/project-case.css (loaded without blocking render). */
   #main.pc { --g: 58px; --ink: #121411; --soft: #f7f9f8; --mintbg: #eff9f4; background: #fff; color: var(--ink); }
   #main .pc-wrap { padding-inline: var(--g); }
   #main .pc-head h2, #main .pc-about h2, #main .pc-split__copy h2, #main .pc-result h2, #main .pc-cta h2 { margin: 0; font-size: clamp(1.7rem, 2.6vw, 2.7rem); line-height: 1.08; letter-spacing: -.025em; text-wrap: balance; }
