@@ -17,11 +17,11 @@ ORDER = [
  'shower-wall-to-wall-brass-kyiv',
  'bank-glass-partition-matte-glass',                                                  # NEW bank
  'ogorozha-shodiv-ta-drugogo-poverhu',
- 'trapezoid-shower-lviv',
+ 'dzerkalo-z-pidsvidkoyu-v-m-odesa',
  'bedroom-glass-partition-stopsol-synchro',
  'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa',
  'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv',
- 'dzerkalo-z-pidsvidkoyu-v-m-odesa',
+ 'trapezoid-shower-lviv',
  'folding-glass-partition-mirror-film',
  'chastne-zamovlennya-odesa-dushova-ta-peregorodka',
  'sliding-shower-doors-kyiv',

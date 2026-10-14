@@ -148,11 +148,11 @@ Archive `/Users/mstyslav/Проекти Space Glass` (read-only; 37 folders, 256
 12. Перегородка від стіни до стіни, латунь — Київ — Душові — `/project/shower-wall-to-wall-brass-kyiv/`
 13. Перегородка з матовим склом для банку — Unknown → SEO lviv — Скло для бізнесу — B2B — `/project/bank-glass-partition-matte-glass/`
 14. Скляна огорожа приватного будинку в Одесі — Одеса — Сходи та огорожі — `/project/ogorozha-shodiv-ta-drugogo-poverhu/`
-15. Трапецієподібна перегородка, Львів — Львів — Душові — `/project/trapezoid-shower-lviv/`
+15. Кругле дзеркало з підсвіткою, будинок в Одесі — Одеса — Дзеркала — `/project/dzerkalo-z-pidsvidkoyu-v-m-odesa/`
 16. Перегородка в спальню зі склом Stopsol — Unknown → SEO lviv — Скляні перегородки — `/project/bedroom-glass-partition-stopsol-synchro/`
 17. Перегородки стоматологічної клініки в Одесі — Одеса — Скло для бізнесу — B2B — `/project/rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa/`
 18. Loft-перегородка з матовим склом у Києві — Київ — Скляні перегородки — `/project/mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv/`
-19. Кругле дзеркало з підсвіткою, будинок в Одесі — Одеса — Дзеркала — `/project/dzerkalo-z-pidsvidkoyu-v-m-odesa/`
+19. Трапецієподібна перегородка, Львів — Львів — Душові — `/project/trapezoid-shower-lviv/`
 20. Перегородка-гармошка з дзеркальною плівкою — Unknown → SEO odesa — Скляні перегородки — `/project/folding-glass-partition-mirror-film/`
 21. Скляна вхідна група магазину в Одесі — Одеса — Скло для бізнесу — B2B — `/project/chastne-zamovlennya-odesa-dushova-ta-peregorodka/`
 22. Розсувні душові двері, Київ — Київ — Душові — `/project/sliding-shower-doors-kyiv/`
