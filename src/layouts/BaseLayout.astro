@@ -34,10 +34,41 @@ interface Props {
   organizationFounders?: import('../seo/schema').JsonLdObject[];
 }
 
-const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, heroPreloadMobileMaxWidth = 900, robots, mainEntityId, errorPage = false, organizationFounders = [] } = Astro.props;
+const { title: rawTitle, description: rawDescription, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, heroPreloadMobileMaxWidth = 900, robots, mainEntityId, errorPage = false, organizationFounders = [] } = Astro.props;
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales, hasLocalizedRoute } from '../i18n/helpers';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
+
+/**
+ * Keep search snippets inside the agreed SEO limits without touching H1/body copy.
+ * Prefer a complete sentence for descriptions; otherwise cut at a word boundary.
+ * For overlong titles the brand suffix is removed first so the page topic is preserved.
+ */
+const fitSeoText = (value: string, max: number, kind: 'title' | 'description') => {
+  let text = String(value ?? '').replace(/\s+/g, ' ').trim();
+  if (text.length <= max) return text;
+
+  if (kind === 'title') {
+    text = text.replace(/\s*(?:\||—|–|-)?\s*Space Glass\s*$/i, '').trim();
+    if (text.length <= max) return text;
+  }
+
+  if (kind === 'description') {
+    const sentence = text.slice(0, max + 1).match(/^(.{80,155}?[.!?])(?:\s|$)/);
+    if (sentence && sentence[1].length <= max) return sentence[1].trim();
+  }
+
+  const suffix = kind === 'description' ? '…' : '';
+  const room = max - suffix.length;
+  let cut = text.slice(0, room + 1);
+  const boundary = cut.lastIndexOf(' ');
+  if (boundary >= Math.floor(room * 0.72)) cut = cut.slice(0, boundary);
+  else cut = cut.slice(0, room);
+  return cut.replace(/[\s,;:–—-]+$/g, '').trim() + suffix;
+};
+
+const title = fitSeoText(rawTitle, 60, 'title');
+const description = fitSeoText(rawDescription, 155, 'description');
 
 const resolvedLocale = normalizeLocale(locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
 const basePath = stripLocale(Astro.url.pathname);
