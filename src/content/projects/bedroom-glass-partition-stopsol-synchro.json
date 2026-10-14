@@ -1,0 +1,124 @@
+{
+  "slug": "bedroom-glass-partition-stopsol-synchro",
+  "locale": "uk",
+  "status": "published",
+  "featured": false,
+  "sortOrder": 160,
+  "seo": {
+    "title": "Перегородка в спальню зі склом Stopsol — проєкт | Space Glass",
+    "description": "Скляна перегородка, що відділяє спальню: скло Stopsol, розсувні полотна із синхромеханізмом і дотягувачами. Фото реалізованого проєкту Space Glass."
+  },
+  "h1": "Скляна перегородка в спальню зі склом Stopsol, синхромеханізмом і дотягувачами",
+  "cardTitle": "Перегородка в спальню зі склом Stopsol",
+  "cardTitleRu": "Перегородка в спальню со стеклом Stopsol",
+  "category": "glass-partitions",
+  "constructionType": "Розсувна скляна перегородка",
+  "constructionTypeRu": "Раздвижная стеклянная перегородка",
+  "objectType": "Спальня",
+  "shortDescription": "Перегородка відділяє спальню від житлової зони: скло Stopsol, розсувні полотна відкриваються синхронно й плавно доходять дотягувачами.",
+  "shortDescriptionRu": "Перегородка отделяет спальню от жилой зоны: стекло Stopsol, раздвижные полотна открываются синхронно и плавно доходят доводчиками.",
+  "clientTask": {
+    "title": "Розсувна скляна перегородка",
+    "text": "Перегородка відокремлює спальню. Заповнення — скло Stopsol, розсувні полотна працюють із синхромеханізмом і дотягувачами."
+  },
+  "solution": {
+    "title": "Перегородка відчинена й зачинена",
+    "text": "На фото видно, як віддзеркалювальний відтінок скла приховує спальню з боку вітальні, а відчинені полотна відкривають проріз на всю ширину."
+  },
+  "installation": {
+    "title": "Розсувна скляна перегородка",
+    "text": "Перегородка відділяє спальню від житлової зони: скло Stopsol, розсувні полотна відкриваються синхронно й плавно доходять дотягувачами."
+  },
+  "result": {
+    "title": "Скляна перегородка в спальню зі склом Stopsol, синхромеханізмом і дотягувачами",
+    "text": "Спальня отримала окрему зону без глухої стіни: полотна легко відкриваються разом, а скло Stopsol зберігає приватність."
+  },
+  "characteristics": [
+    {
+      "label": "Конструкція",
+      "value": "Розсувна перегородка"
+    },
+    {
+      "label": "Скло",
+      "value": "Stopsol"
+    },
+    {
+      "label": "Механізм",
+      "value": "Синхромеханізм"
+    },
+    {
+      "label": "Фурнітура",
+      "value": "Дотягувачі"
+    }
+  ],
+  "materials": [
+    "Скло Stopsol",
+    "Синхромеханізм і дотягувачі"
+  ],
+  "cover": {
+    "src": "/images/projects/bedroom-glass-partition-stopsol-synchro/bedroom-glass-partition-stopsol-synchro-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Розсувна скляна перегородка з відчиненими полотнами між спальнею та вітальнею"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/bedroom-glass-partition-stopsol-synchro/bedroom-glass-partition-stopsol-synchro-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Зачинена перегородка зі склом Stopsol з боку вітальні"
+    },
+    {
+      "src": "/images/projects/bedroom-glass-partition-stopsol-synchro/bedroom-glass-partition-stopsol-synchro-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Перегородка з відсунутими полотнами, за нею — спальня"
+    },
+    {
+      "src": "/images/projects/bedroom-glass-partition-stopsol-synchro/bedroom-glass-partition-stopsol-synchro-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Чотири полотна перегородки зі склом Stopsol у чорному профілі"
+    },
+    {
+      "src": "/images/projects/bedroom-glass-partition-stopsol-synchro/bedroom-glass-partition-stopsol-synchro-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Відсунуті полотна перегородки біля ліжка"
+    },
+    {
+      "src": "/images/projects/bedroom-glass-partition-stopsol-synchro/bedroom-glass-partition-stopsol-synchro-detail-05.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Нижня напрямна розсувної перегородки на підлозі"
+    },
+    {
+      "src": "/images/projects/bedroom-glass-partition-stopsol-synchro/bedroom-glass-partition-stopsol-synchro-detail-06.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Верхня напрямна та полотна перегородки під стелею"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Що таке скло Stopsol?",
+      "answer": "Це скло з тонким відбивним покриттям. Воно має дзеркальний відтінок і частково приховує те, що за ним, залежно від освітлення з обох боків."
+    },
+    {
+      "question": "Як працює синхромеханізм у розсувній перегородці?",
+      "answer": "Синхромеханізм зв’язує рух полотен: коли зсуваєте одне, інше рухається одночасно, тож проріз відкривається одним рухом."
+    },
+    {
+      "question": "Навіщо дотягувачі на розсувних полотнах?",
+      "answer": "Дотягувачі гальмують полотно наприкінці ходу й плавно доводять його до упору, без удару об профіль."
+    }
+  ],
+  "serviceLink": {
+    "label": "Міжкімнатні скляні перегородки",
+    "href": "/sklyani-perehorodky/mizhkimnatni/"
+  },
+  "relatedProjectSlugs": [
+    "corner-wardrobe-glass-partition-bronze-glass",
+    "sliding-glass-partition-room-balcony"
+  ]
+}

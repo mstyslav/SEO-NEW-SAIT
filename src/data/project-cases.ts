@@ -10,6 +10,7 @@
  * Every block is optional: a block without data is not rendered at all.
  */
 import { NOFILTERS_SLUG, nofiltersCase } from './project-cases/nofilters';
+import { archiveCases } from './project-cases/archive-2026-10';
 
 export type CaseContent = {
   /** Short caption shown on the hero photo. */
@@ -36,7 +37,9 @@ export type CaseContent = {
 export type ProjectCase = Record<'uk' | 'ru', CaseContent>;
 
 export const PROJECT_CASES: Record<string, ProjectCase> = {
-  [NOFILTERS_SLUG]: nofiltersCase
+  [NOFILTERS_SLUG]: nofiltersCase,
+  // Projects imported from the owner's local archive (October 2026) — all on the case template.
+  ...archiveCases
 };
 
 export const projectCase = (slug: string, locale: 'uk' | 'ru'): CaseContent | undefined => PROJECT_CASES[slug]?.[locale];

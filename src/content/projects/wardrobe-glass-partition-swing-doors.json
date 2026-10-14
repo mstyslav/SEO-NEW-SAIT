@@ -1,0 +1,114 @@
+{
+  "slug": "wardrobe-glass-partition-swing-doors",
+  "locale": "uk",
+  "status": "published",
+  "featured": false,
+  "sortOrder": 510,
+  "seo": {
+    "title": "Скляна перегородка в гардероб — реалізований проєкт | Space Glass",
+    "description": "Скляна перегородка, що відділяє гардероб: світлий профіль, тоноване скло з декоративною розкладкою, розпашні двері. Фото проєкту Space Glass."
+  },
+  "h1": "Скляна перегородка в гардероб з розпашними дверима",
+  "cardTitle": "Скляна перегородка в гардероб",
+  "cardTitleRu": "Стеклянная перегородка в гардероб",
+  "category": "glass-partitions",
+  "constructionType": "Скляна перегородка гардеробу",
+  "constructionTypeRu": "Стеклянная перегородка гардероба",
+  "objectType": "Гардероб",
+  "shortDescription": "Перегородка відділяє гардероб: двостулкові розпашні двері зі світлим профілем і декоративною розкладкою на склі.",
+  "shortDescriptionRu": "Перегородка отделяет гардероб: двустворчатые распашные двери со светлым профилем и декоративной раскладкой на стекле.",
+  "clientTask": {
+    "title": "Скляна перегородка гардеробу",
+    "text": "Перегородка відділяє гардероб: двостулкові розпашні двері зі світлим профілем і декоративною розкладкою на склі."
+  },
+  "solution": {
+    "title": "Перегородка гардеробу",
+    "text": "На фото — двостулкові розпашні двері зі світлим профілем: на склі видно декоративну розкладку прямокутниками, а за дверима — гардеробна зона."
+  },
+  "installation": {
+    "title": "Скляна перегородка гардеробу",
+    "text": "Перегородка відділяє гардероб: двостулкові розпашні двері зі світлим профілем і декоративною розкладкою на склі."
+  },
+  "result": {
+    "title": "Скляна перегородка в гардероб з розпашними дверима",
+    "text": "Гардероб отримав легкі скляні двері, які закривають зону зберігання й не роблять коридор темнішим."
+  },
+  "characteristics": [
+    {
+      "label": "Конструкція",
+      "value": "Скляна перегородка"
+    },
+    {
+      "label": "Призначення",
+      "value": "Гардероб"
+    },
+    {
+      "label": "Матеріал",
+      "value": "Скло"
+    }
+  ],
+  "materials": [
+    "Скло",
+    "Світлий профіль"
+  ],
+  "cover": {
+    "src": "/images/projects/wardrobe-glass-partition-swing-doors/wardrobe-glass-partition-swing-doors-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Скляна перегородка гардеробу з двостулковими дверима та декоративною розкладкою"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/wardrobe-glass-partition-swing-doors/wardrobe-glass-partition-swing-doors-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Двері гардеробу зі світлим профілем у кінці коридору"
+    },
+    {
+      "src": "/images/projects/wardrobe-glass-partition-swing-doors/wardrobe-glass-partition-swing-doors-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Відчинена стулка скляних дверей гардеробу"
+    },
+    {
+      "src": "/images/projects/wardrobe-glass-partition-swing-doors/wardrobe-glass-partition-swing-doors-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Петля на світлому профілі скляних дверей"
+    },
+    {
+      "src": "/images/projects/wardrobe-glass-partition-swing-doors/wardrobe-glass-partition-swing-doors-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Ручка з замком на дверях гардеробу"
+    },
+    {
+      "src": "/images/projects/wardrobe-glass-partition-swing-doors/wardrobe-glass-partition-swing-doors-detail-05.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Нижня частина дверей гардеробу з підсвіткою підлоги"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Чи можна закрити гардероб скляною перегородкою замість шафи-купе?",
+      "answer": "Так. Скляна перегородка з дверима закриває всю гардеробну зону й залишає її світлою."
+    },
+    {
+      "question": "Що таке декоративна розкладка на склі?",
+      "answer": "Це накладні елементи у вигляді ліній чи рамок на поверхні скла — вони імітують поділ на секції без додаткового профілю."
+    },
+    {
+      "question": "Двостулкові чи розсувні двері для гардеробу?",
+      "answer": "Розпашні двостулкові дають широкий доступ, але потребують місця перед прорізом; розсувні зручніші у вузьких коридорах."
+    }
+  ],
+  "serviceLink": {
+    "label": "Міжкімнатні скляні перегородки",
+    "href": "/sklyani-perehorodky/mizhkimnatni/"
+  },
+  "relatedProjectSlugs": [
+    "corner-wardrobe-glass-partition-bronze-glass",
+    "sklyani-peregorodky-u-garderobnu-v-m-odesa"
+  ]
+}

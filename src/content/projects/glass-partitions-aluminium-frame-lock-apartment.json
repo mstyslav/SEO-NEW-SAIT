@@ -1,0 +1,118 @@
+{
+  "slug": "glass-partitions-aluminium-frame-lock-apartment",
+  "locale": "uk",
+  "status": "published",
+  "featured": false,
+  "sortOrder": 490,
+  "seo": {
+    "title": "Скляні перегородки з алюмінієвою коробкою — проєкт | Space Glass",
+    "description": "Сучасні скляні перегородки в квартирі: двері в алюмінієвій коробці із замком, прозоре скло, тонкий темний профіль. Фото проєкту Space Glass."
+  },
+  "h1": "Сучасні скляні перегородки з алюмінієвою коробкою та замком у квартирі",
+  "cardTitle": "Перегородки з алюмінієвою коробкою та замком",
+  "cardTitleRu": "Перегородки с алюминиевой коробкой и замком",
+  "category": "glass-partitions",
+  "constructionType": "Скляні перегородки з дверима",
+  "constructionTypeRu": "Стеклянные перегородки с дверями",
+  "objectType": "Квартира",
+  "shortDescription": "Скляні перегородки в квартирі: двері в алюмінієвій коробці із замком і прозоре скло, що поділяє простір без втрати світла.",
+  "shortDescriptionRu": "Стеклянные перегородки в квартире: двери в алюминиевой коробке с замком и прозрачное стекло, которое делит пространство без потери света.",
+  "clientTask": {
+    "title": "Скляні перегородки з дверима",
+    "text": "У квартирі встановили сучасні скляні перегородки з алюмінієвою коробкою та замком."
+  },
+  "solution": {
+    "title": "Перегородки в квартирі",
+    "text": "На фото — кілька перегородок у різних прорізах: прозоре скло в тонкому темному профілі, двері із замком, знімки зроблено на етапі ремонту."
+  },
+  "installation": {
+    "title": "Скляні перегородки з дверима",
+    "text": "Скляні перегородки в квартирі: двері в алюмінієвій коробці із замком і прозоре скло, що поділяє простір без втрати світла."
+  },
+  "result": {
+    "title": "Сучасні скляні перегородки з алюмінієвою коробкою та замком у квартирі",
+    "text": "Кімнати квартири отримали скляні двері з замками: простір поділено, а денне світло проходить крізь усі зони."
+  },
+  "characteristics": [
+    {
+      "label": "Конструкція",
+      "value": "Скляні перегородки"
+    },
+    {
+      "label": "Коробка",
+      "value": "Алюмінієва"
+    },
+    {
+      "label": "Двері",
+      "value": "Із замком"
+    },
+    {
+      "label": "Об’єкт",
+      "value": "Квартира"
+    }
+  ],
+  "materials": [
+    "Скло",
+    "Алюмінієва коробка"
+  ],
+  "cover": {
+    "src": "/images/projects/glass-partitions-aluminium-frame-lock-apartment/glass-partitions-aluminium-frame-lock-apartment-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Скляна перегородка з дверима в алюмінієвій коробці в кімнаті квартири"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/glass-partitions-aluminium-frame-lock-apartment/glass-partitions-aluminium-frame-lock-apartment-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Дві скляні перегородки з дверима в сусідніх прорізах"
+    },
+    {
+      "src": "/images/projects/glass-partitions-aluminium-frame-lock-apartment/glass-partitions-aluminium-frame-lock-apartment-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Відчинені скляні двері в коридорі квартири"
+    },
+    {
+      "src": "/images/projects/glass-partitions-aluminium-frame-lock-apartment/glass-partitions-aluminium-frame-lock-apartment-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Скляна перегородка з дверима на всю висоту коридору"
+    },
+    {
+      "src": "/images/projects/glass-partitions-aluminium-frame-lock-apartment/glass-partitions-aluminium-frame-lock-apartment-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Замок із ключем на скляних дверях перегородки"
+    },
+    {
+      "src": "/images/projects/glass-partitions-aluminium-frame-lock-apartment/glass-partitions-aluminium-frame-lock-apartment-detail-05.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Петля скляних дверей на алюмінієвій коробці"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Що дає алюмінієва коробка скляним дверям?",
+      "answer": "Коробка створює жорстку раму для полотна, у ній розміщують петлі, ущільнення й відповідну частину замка."
+    },
+    {
+      "question": "Чи можна ставити скляні перегородки на етапі ремонту?",
+      "answer": "Так, але чистові поверхні мають бути готові або захищені. Порядок робіт погоджують із бригадою ремонту."
+    },
+    {
+      "question": "Який замок можна встановити на скляні двері перегородки?",
+      "answer": "Використовують замки, сумісні з полотном і профілем, — з ключем або фіксатором. Тип замка обирають до виготовлення."
+    }
+  ],
+  "serviceLink": {
+    "label": "Скляні перегородки з дверима",
+    "href": "/sklyani-perehorodky/z-dveryma/"
+  },
+  "relatedProjectSlugs": [
+    "interior-glass-partition-with-door",
+    "private-house-study-glass-partition-aluminium"
+  ]
+}

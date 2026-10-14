@@ -1,0 +1,118 @@
+{
+  "slug": "corner-wardrobe-glass-partition-bronze-glass",
+  "locale": "uk",
+  "status": "published",
+  "featured": false,
+  "sortOrder": 250,
+  "seo": {
+    "title": "Кутова перегородка для гардеробу з бронзовим склом | Space Glass",
+    "description": "Кутова скляна перегородка в квартирі, що відділяє гардероб: бронзове скло й розсувні двері. Фото реалізованого проєкту Space Glass."
+  },
+  "h1": "Кутова скляна перегородка для гардеробу з розсувними дверима та бронзовим склом",
+  "cardTitle": "Кутова перегородка для гардеробу, бронзове скло",
+  "cardTitleRu": "Угловая перегородка для гардероба, бронзовое стекло",
+  "category": "glass-partitions",
+  "constructionType": "Кутова скляна перегородка з розсувними дверима",
+  "constructionTypeRu": "Угловая стеклянная перегородка с раздвижными дверями",
+  "objectType": "Квартира",
+  "shortDescription": "Кутова перегородка відгороджує гардероб у квартирі: дві площини бронзового скла сходяться в кут, вхід — через розсувні двері.",
+  "shortDescriptionRu": "Угловая перегородка отгораживает гардероб в квартире: две плоскости бронзового стекла сходятся в угол, вход — через раздвижные двери.",
+  "clientTask": {
+    "title": "Кутова скляна перегородка з розсувними дверима",
+    "text": "У квартирі гардероб відгородили кутовою скляною перегородкою з розсувними дверима. Скло — бронзове."
+  },
+  "solution": {
+    "title": "Гардероб за бронзовим склом",
+    "text": "На фото видно, що тонований відтінок скла приглушує вміст гардеробу, а тонкий чорний профіль підкреслює геометрію кута."
+  },
+  "installation": {
+    "title": "Кутова скляна перегородка з розсувними дверима",
+    "text": "Кутова перегородка відгороджує гардероб у квартирі: дві площини бронзового скла сходяться в кут, вхід — через розсувні двері."
+  },
+  "result": {
+    "title": "Кутова скляна перегородка для гардеробу з розсувними дверима та бронзовим склом",
+    "text": "Гардероб став окремою зоною всередині кімнати без глухих стін: бронзове скло зберігає світло й робить зону менш помітною."
+  },
+  "characteristics": [
+    {
+      "label": "Конструкція",
+      "value": "Кутова перегородка"
+    },
+    {
+      "label": "Призначення",
+      "value": "Гардероб"
+    },
+    {
+      "label": "Двері",
+      "value": "Розсувні"
+    },
+    {
+      "label": "Скло",
+      "value": "Бронзове"
+    }
+  ],
+  "materials": [
+    "Бронзове скло",
+    "Розсувні двері"
+  ],
+  "cover": {
+    "src": "/images/projects/corner-wardrobe-glass-partition-bronze-glass/corner-wardrobe-glass-partition-bronze-glass-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Кутова скляна перегородка з бронзовим склом навколо гардеробу в квартирі"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/corner-wardrobe-glass-partition-bronze-glass/corner-wardrobe-glass-partition-bronze-glass-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Розсувні двері з бронзовим склом у кутовій перегородці"
+    },
+    {
+      "src": "/images/projects/corner-wardrobe-glass-partition-bronze-glass/corner-wardrobe-glass-partition-bronze-glass-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Кутова перегородка гардеробу з боку кімнати з підсвіткою"
+    },
+    {
+      "src": "/images/projects/corner-wardrobe-glass-partition-bronze-glass/corner-wardrobe-glass-partition-bronze-glass-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Кут перегородки та профіль під стелею"
+    },
+    {
+      "src": "/images/projects/corner-wardrobe-glass-partition-bronze-glass/corner-wardrobe-glass-partition-bronze-glass-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Ручка розсувних дверей на бронзовому склі"
+    },
+    {
+      "src": "/images/projects/corner-wardrobe-glass-partition-bronze-glass/corner-wardrobe-glass-partition-bronze-glass-detail-05.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Нижня напрямна розсувних дверей перегородки"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Навіщо бронзове скло в перегородці гардеробу?",
+      "answer": "Тоноване бронзове скло приглушує вміст гардеробу, але пропускає світло — зона виглядає охайно навіть тоді, коли речі на виду."
+    },
+    {
+      "question": "Чи можна зробити кутову перегородку з розсувними дверима?",
+      "answer": "Так. Одна площина може бути нерухомою, а в іншій розміщують розсувні полотна; схему визначають за розмірами кута."
+    },
+    {
+      "question": "Чи потрібна стеля особливої конструкції для такої перегородки?",
+      "answer": "Перегородка кріпиться до основи, яка витримає навантаження. Тип стелі й прихованих комунікацій перевіряють на замірі."
+    }
+  ],
+  "serviceLink": {
+    "label": "Міжкімнатні скляні перегородки",
+    "href": "/sklyani-perehorodky/mizhkimnatni/"
+  },
+  "relatedProjectSlugs": [
+    "wardrobe-glass-partition-swing-doors",
+    "bedroom-glass-partition-stopsol-synchro"
+  ]
+}

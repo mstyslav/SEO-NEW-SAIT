@@ -1,0 +1,132 @@
+{
+  "slug": "glass-stair-railing-titanium-nitride-house",
+  "locale": "uk",
+  "status": "published",
+  "featured": true,
+  "sortOrder": 20,
+  "seo": {
+    "title": "Скляна огорожа сходів, нітрид титану — проєкт | Space Glass",
+    "description": "Проєкт Space Glass у приватному будинку: сходи та скляна огорожа з покриттям нітрид титану. Фото маршу, огорожі другого поверху та вузлів кріплення."
+  },
+  "h1": "Сходи та скляна огорожа з покриттям нітрид титану в приватному будинку",
+  "cardTitle": "Скляна огорожа сходів з покриттям нітрид титану",
+  "cardTitleRu": "Стеклянное ограждение лестницы с покрытием нитрид титана",
+  "category": "railings",
+  "constructionType": "Сходи та скляна огорожа",
+  "constructionTypeRu": "Лестница и стеклянное ограждение",
+  "objectType": "Приватний будинок",
+  "shortDescription": "Сходи та скляна огорожа в приватному будинку: металеві елементи мають покриття нітрид титану, скло супроводжує марш і відкритий край другого поверху.",
+  "shortDescriptionRu": "Лестница и стеклянное ограждение в частном доме: металлические элементы с покрытием нитрид титана, стекло сопровождает марш и открытый край второго этажа.",
+  "clientTask": {
+    "title": "Сходи та скляна огорожа",
+    "text": "Об’єкт — приватний будинок. Space Glass виконала сходи та скляну огорожу; металеві елементи конструкції мають покриття нітрид титану."
+  },
+  "solution": {
+    "title": "Сходи та огорожа в інтер’єрі будинку",
+    "text": "На фото видно, як золотистий поручень і обрамлення маршу проходять уздовж сходів і продовжуються огорожею на другому поверсі, а скло залишає простір світлим і відкритим."
+  },
+  "installation": {
+    "title": "Сходи та скляна огорожа",
+    "text": "Сходи та скляна огорожа в приватному будинку: металеві елементи мають покриття нітрид титану, скло супроводжує марш і відкритий край другого поверху."
+  },
+  "result": {
+    "title": "Сходи та скляна огорожа з покриттям нітрид титану в приватному будинку",
+    "text": "Сходи стали головним акцентом інтер’єру: скло не перекриває простір, а металеві елементи з покриттям нітрид титану підтримують теплу палітру будинку."
+  },
+  "characteristics": [
+    {
+      "label": "Конструкція",
+      "value": "Сходи та скляна огорожа"
+    },
+    {
+      "label": "Об’єкт",
+      "value": "Приватний будинок"
+    },
+    {
+      "label": "Покриття металу",
+      "value": "Нітрид титану"
+    }
+  ],
+  "materials": [
+    "Скло огорожі",
+    "Покриття нітрид титану"
+  ],
+  "cover": {
+    "src": "/images/projects/glass-stair-railing-titanium-nitride-house/glass-stair-railing-titanium-nitride-house-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Сходи зі скляною огорожею та золотистим поручнем у світлому холі приватного будинку"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/glass-stair-railing-titanium-nitride-house/glass-stair-railing-titanium-nitride-house-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Вигляд маршу знизу: скло з обох боків сходів і поручні з покриттям нітрид титану"
+    },
+    {
+      "src": "/images/projects/glass-stair-railing-titanium-nitride-house/glass-stair-railing-titanium-nitride-house-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Скляна огорожа відкритого краю другого поверху з золотистим обрамленням"
+    },
+    {
+      "src": "/images/projects/glass-stair-railing-titanium-nitride-house/glass-stair-railing-titanium-nitride-house-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Поручень з покриттям нітрид титану над сходовим маршем біля вікна"
+    },
+    {
+      "src": "/images/projects/glass-stair-railing-titanium-nitride-house/glass-stair-railing-titanium-nitride-house-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Вигляд зверху на поворот сходів зі скляною огорожею"
+    },
+    {
+      "src": "/images/projects/glass-stair-railing-titanium-nitride-house/glass-stair-railing-titanium-nitride-house-detail-05.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Скляна огорожа маршу на тлі вітальні з диванами"
+    },
+    {
+      "src": "/images/projects/glass-stair-railing-titanium-nitride-house/glass-stair-railing-titanium-nitride-house-detail-06.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Скляна огорожа вздовж прорізу сходів на нижній поверх"
+    },
+    {
+      "src": "/images/projects/glass-stair-railing-titanium-nitride-house/glass-stair-railing-titanium-nitride-house-detail-07.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Золотистий поручень огорожі в місці повороту маршу"
+    },
+    {
+      "src": "/images/projects/glass-stair-railing-titanium-nitride-house/glass-stair-railing-titanium-nitride-house-detail-08.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Стійка-тримач скла з покриттям нітрид титану на краю перекриття"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Що таке покриття нітрид титану?",
+      "answer": "Це тонке декоративно-захисне покриття металу, яке дає золотистий відтінок. Його використовують для поручнів, профілів і фурнітури, коли потрібен колір латуні чи золота на металевих елементах."
+    },
+    {
+      "question": "Чи можна поєднати скляну огорожу сходів з огорожею другого поверху?",
+      "answer": "Так. Огорожу маршу та відкритого краю перекриття можна виконати в одному стилі, щоб лінія поручня й скла продовжувалась без зміни матеріалу."
+    },
+    {
+      "question": "Чи можна замовити огорожу в іншому кольорі металу?",
+      "answer": "Так. Колір металевих елементів обирають разом зі склом під інтер’єр; доступні варіанти погоджуємо під час розрахунку."
+    }
+  ],
+  "serviceLink": {
+    "label": "Скляні перила для сходів",
+    "href": "/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/"
+  },
+  "relatedProjectSlugs": [
+    "ogorozha-shodiv-ta-drugogo-poverhu",
+    "dzerkalni-dveri-v-garderob-2"
+  ]
+}

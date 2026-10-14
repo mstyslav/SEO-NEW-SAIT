@@ -1,0 +1,118 @@
+{
+  "slug": "private-house-study-glass-partition-aluminium",
+  "locale": "uk",
+  "status": "published",
+  "featured": false,
+  "sortOrder": 310,
+  "seo": {
+    "title": "Скляна перегородка в кабінет у будинку — проєкт | Space Glass",
+    "description": "Скляна перегородка, що відділяє кабінет у приватному будинку: профіль в алюмінієвому кольорі, скляні двері, мансардний поверх. Фото проєкту Space Glass."
+  },
+  "h1": "Скляна перегородка в кабінет у приватному будинку в алюмінієвому кольорі",
+  "cardTitle": "Перегородка в кабінет у приватному будинку",
+  "cardTitleRu": "Перегородка в кабинет в частном доме",
+  "category": "glass-partitions",
+  "constructionType": "Скляна перегородка з дверима",
+  "constructionTypeRu": "Стеклянная перегородка с дверью",
+  "objectType": "Приватний будинок",
+  "shortDescription": "Перегородка відділяє кабінет у приватному будинку: профіль в алюмінієвому кольорі, скло повторює скоси мансардної стелі.",
+  "shortDescriptionRu": "Перегородка отделяет кабинет в частном доме: профиль в алюминиевом цвете, стекло повторяет скосы мансардного потолка.",
+  "clientTask": {
+    "title": "Скляна перегородка з дверима",
+    "text": "Кабінет у приватному будинку відокремили скляною перегородкою. Профіль — в алюмінієвому кольорі."
+  },
+  "solution": {
+    "title": "Перегородка кабінету на мансарді",
+    "text": "На фото видно, що перегородка стоїть на мансардному поверсі: скло й профіль повторюють скіс стелі, а двері з ручкою ведуть у кабінет."
+  },
+  "installation": {
+    "title": "Скляна перегородка з дверима",
+    "text": "Перегородка відділяє кабінет у приватному будинку: профіль в алюмінієвому кольорі, скло повторює скоси мансардної стелі."
+  },
+  "result": {
+    "title": "Скляна перегородка в кабінет у приватному будинку в алюмінієвому кольорі",
+    "text": "Кабінет став тихою окремою кімнатою, а мансардний поверх зберіг відчуття простору й денне світло."
+  },
+  "characteristics": [
+    {
+      "label": "Конструкція",
+      "value": "Скляна перегородка"
+    },
+    {
+      "label": "Приміщення",
+      "value": "Кабінет"
+    },
+    {
+      "label": "Об’єкт",
+      "value": "Приватний будинок"
+    },
+    {
+      "label": "Колір профілю",
+      "value": "Алюмінієвий"
+    }
+  ],
+  "materials": [
+    "Скло",
+    "Профіль алюмінієвого кольору"
+  ],
+  "cover": {
+    "src": "/images/projects/private-house-study-glass-partition-aluminium/private-house-study-glass-partition-aluminium-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Скляна перегородка з дверима в кабінет під скошеною стелею мансарди"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/private-house-study-glass-partition-aluminium/private-house-study-glass-partition-aluminium-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Відчинені скляні двері кабінету з видом на вікно"
+    },
+    {
+      "src": "/images/projects/private-house-study-glass-partition-aluminium/private-house-study-glass-partition-aluminium-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Профіль перегородки алюмінієвого кольору біля стіни"
+    },
+    {
+      "src": "/images/projects/private-house-study-glass-partition-aluminium/private-house-study-glass-partition-aluminium-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Вузол перегородки під скосом стелі"
+    },
+    {
+      "src": "/images/projects/private-house-study-glass-partition-aluminium/private-house-study-glass-partition-aluminium-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Ручка на скляних дверях у профілі алюмінієвого кольору"
+    },
+    {
+      "src": "/images/projects/private-house-study-glass-partition-aluminium/private-house-study-glass-partition-aluminium-detail-05.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Нижній профіль перегородки на дерев’яній підлозі"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Чи можна встановити скляну перегородку під скошену стелю?",
+      "answer": "Так. Верхню лінію скла й профілю виготовляють під кут скосу, який фіксують на замірі."
+    },
+    {
+      "question": "Що означає профіль в алюмінієвому кольорі?",
+      "answer": "Це профіль натурального сріблястого відтінку алюмінію — нейтральний варіант, що пасує до світлого дерева й білих стін."
+    },
+    {
+      "question": "Чи підходить скляна перегородка для домашнього кабінету?",
+      "answer": "Так. Вона відділяє робоче місце й пропускає денне світло; за потреби частину скла роблять матовою."
+    }
+  ],
+  "serviceLink": {
+    "label": "Скляні перегородки з дверима",
+    "href": "/sklyani-perehorodky/z-dveryma/"
+  },
+  "relatedProjectSlugs": [
+    "apartment-study-glass-partition",
+    "glass-partitions-aluminium-frame-lock-apartment"
+  ]
+}

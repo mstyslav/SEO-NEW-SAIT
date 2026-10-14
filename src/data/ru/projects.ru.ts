@@ -1,3 +1,4 @@
+import { archiveProjectTextsRu } from './projects-archive.ru';
 /**
  * RU texts of the project pages /ru/project/{slug}/ — mirrors src/content/projects/*.json (the entity stays
  * UA-only: same slug, images, order, sizes, category and related projects). Only visible text is here:
@@ -3654,6 +3655,9 @@ type LocalizableProject = {
   city?: string;
   dimensions?: string;
 };
+
+// Projects imported from the owner's local archive (October 2026), generated texts.
+Object.assign(projectTextsRu, archiveProjectTextsRu);
 
 export const hasProjectRu = (slug: string) => slug in projectTextsRu;
 

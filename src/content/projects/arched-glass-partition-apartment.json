@@ -1,0 +1,114 @@
+{
+  "slug": "arched-glass-partition-apartment",
+  "locale": "uk",
+  "status": "published",
+  "featured": false,
+  "sortOrder": 280,
+  "seo": {
+    "title": "Арочна скляна перегородка в квартирі — проєкт | Space Glass",
+    "description": "Арочна перегородка зі скла в квартирі: скло вписане в арковий проріз, вхід через скляні двері. Фото реалізованого проєкту Space Glass."
+  },
+  "h1": "Арочна скляна перегородка з дверима в квартирі",
+  "cardTitle": "Арочна скляна перегородка в квартирі",
+  "cardTitleRu": "Арочная стеклянная перегородка в квартире",
+  "category": "glass-partitions",
+  "constructionType": "Арочна скляна перегородка",
+  "constructionTypeRu": "Арочная стеклянная перегородка",
+  "objectType": "Квартира",
+  "shortDescription": "Арочна перегородка зі скла в квартирі: конструкція повторює форму аркового прорізу, вхід — через скляні двері.",
+  "shortDescriptionRu": "Арочная перегородка из стекла в квартире: конструкция повторяет форму арочного проёма, вход — через стеклянную дверь.",
+  "clientTask": {
+    "title": "Арочна скляна перегородка",
+    "text": "Арочна перегородка зі скла в квартирі: конструкція повторює форму аркового прорізу, вхід — через скляні двері."
+  },
+  "solution": {
+    "title": "Арочна перегородка в квартирі",
+    "text": "На фото — перегородка в прорізі з півкруглим склепінням: темний профіль повторює дугу арки, у перегородці — розпашні скляні двері з напівпрозорим склом."
+  },
+  "installation": {
+    "title": "Арочна скляна перегородка",
+    "text": "Арочна перегородка зі скла в квартирі: конструкція повторює форму аркового прорізу, вхід — через скляні двері."
+  },
+  "result": {
+    "title": "Арочна скляна перегородка з дверима в квартирі",
+    "text": "Арковий проріз зберіг свою форму й отримав двері: прохід закривається, а світло з кімнати потрапляє в коридор."
+  },
+  "characteristics": [
+    {
+      "label": "Конструкція",
+      "value": "Арочна перегородка"
+    },
+    {
+      "label": "Об’єкт",
+      "value": "Квартира"
+    },
+    {
+      "label": "Матеріал",
+      "value": "Скло"
+    }
+  ],
+  "materials": [
+    "Скло",
+    "Профіль під арку"
+  ],
+  "cover": {
+    "src": "/images/projects/arched-glass-partition-apartment/arched-glass-partition-apartment-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Арочна скляна перегородка з дверима в прорізі з півкруглим склепінням"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/arched-glass-partition-apartment/arched-glass-partition-apartment-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Відчинені скляні двері в арочній перегородці"
+    },
+    {
+      "src": "/images/projects/arched-glass-partition-apartment/arched-glass-partition-apartment-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Арочна частина перегородки над відчиненими дверима"
+    },
+    {
+      "src": "/images/projects/arched-glass-partition-apartment/arched-glass-partition-apartment-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Дуга профілю перегородки під склепінням арки"
+    },
+    {
+      "src": "/images/projects/arched-glass-partition-apartment/arched-glass-partition-apartment-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Верх арочної перегородки зблизька"
+    },
+    {
+      "src": "/images/projects/arched-glass-partition-apartment/arched-glass-partition-apartment-detail-05.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Ручка на скляних дверях арочної перегородки"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Як знімають розміри для арочної перегородки?",
+      "answer": "На замірі фіксують ширину, висоту й радіус арки або знімають шаблон дуги — за ним виготовляють профіль і скло."
+    },
+    {
+      "question": "Чи можна поставити двері в арочну перегородку?",
+      "answer": "Так. Зазвичай двері розміщують у прямокутній частині, а арочна частина над ними залишається нерухомою."
+    },
+    {
+      "question": "Яке скло підходить для арочної перегородки в квартирі?",
+      "answer": "Прозоре, матове чи тоноване — залежить від того, наскільки потрібно закрити приміщення від огляду."
+    }
+  ],
+  "serviceLink": {
+    "label": "Міжкімнатні скляні перегородки",
+    "href": "/sklyani-perehorodky/mizhkimnatni/"
+  },
+  "relatedProjectSlugs": [
+    "arched-glass-partition-bathroom-painted-profile",
+    "interior-glass-partition-with-door"
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "slug": "apartment-study-glass-partition",
+  "locale": "uk",
+  "status": "published",
+  "featured": false,
+  "sortOrder": 550,
+  "seo": {
+    "title": "Скляна перегородка в кабінет у квартирі — проєкт | Space Glass",
+    "description": "Скляна перегородка з дверима, що відділяє кабінет у квартирі: прозоре скло й світлий профіль у дворівневому інтер’єрі. Фото проєкту Space Glass."
+  },
+  "h1": "Скляна перегородка в кабінет у квартирі",
+  "cardTitle": "Скляна перегородка в кабінет у квартирі",
+  "cardTitleRu": "Стеклянная перегородка в кабинет в квартире",
+  "category": "glass-partitions",
+  "constructionType": "Скляна перегородка з дверима",
+  "constructionTypeRu": "Стеклянная перегородка с дверью",
+  "objectType": "Квартира",
+  "shortDescription": "Перегородка відділяє кабінет у квартирі: прозоре скло у світлому профілі з дверима залишає кабінет частиною загального простору.",
+  "shortDescriptionRu": "Перегородка отделяет кабинет в квартире: прозрачное стекло в светлом профиле с дверью оставляет кабинет частью общего пространства.",
+  "clientTask": {
+    "title": "Скляна перегородка з дверима",
+    "text": "Перегородка відділяє кабінет у квартирі: прозоре скло у світлому профілі з дверима залишає кабінет частиною загального простору."
+  },
+  "solution": {
+    "title": "Кабінет за склом",
+    "text": "На фото — прозоре скло у світлому профілі з дверима: за перегородкою видно робочий стіл і вікна, а поруч проходять сходи на інший рівень квартири."
+  },
+  "installation": {
+    "title": "Скляна перегородка з дверима",
+    "text": "Перегородка відділяє кабінет у квартирі: прозоре скло у світлому профілі з дверима залишає кабінет частиною загального простору."
+  },
+  "result": {
+    "title": "Скляна перегородка в кабінет у квартирі",
+    "text": "Кабінет став окремим робочим місцем, з якого не зникли світло й вид: прозоре скло не закриває вікна."
+  },
+  "characteristics": [
+    {
+      "label": "Конструкція",
+      "value": "Скляна перегородка"
+    },
+    {
+      "label": "Приміщення",
+      "value": "Кабінет"
+    },
+    {
+      "label": "Об’єкт",
+      "value": "Квартира"
+    }
+  ],
+  "materials": [
+    "Прозоре скло",
+    "Світлий профіль"
+  ],
+  "cover": {
+    "src": "/images/projects/apartment-study-glass-partition/apartment-study-glass-partition-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Скляна перегородка кабінету з дверима та шторами у квартирі"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/apartment-study-glass-partition/apartment-study-glass-partition-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Робочий стіл за скляною перегородкою кабінету"
+    },
+    {
+      "src": "/images/projects/apartment-study-glass-partition/apartment-study-glass-partition-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Ручка на скляних дверях кабінету та сходи поруч"
+    },
+    {
+      "src": "/images/projects/apartment-study-glass-partition/apartment-study-glass-partition-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Скляні двері у світлому профілі з видом на іншу кімнату"
+    },
+    {
+      "src": "/images/projects/apartment-study-glass-partition/apartment-study-glass-partition-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Нижній профіль перегородки біля оздоблення стіни"
+    },
+    {
+      "src": "/images/projects/apartment-study-glass-partition/apartment-study-glass-partition-detail-05.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Вертикальний профіль перегородки біля вікна"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Чи ізолює скляна перегородка кабінет від шуму?",
+      "answer": "Скло зменшує шум, а рівень ізоляції залежить від скла, профілю та ущільнень. Для тихого кабінету ці параметри підбирають окремо."
+    },
+    {
+      "question": "Чи можна поставити скляний кабінет у дворівневій квартирі?",
+      "answer": "Так. Перегородку виготовляють під фактичну висоту приміщення та розташування сходів і вікон."
+    },
+    {
+      "question": "Як зберегти приватність у скляному кабінеті?",
+      "answer": "Допомагають штори, матові вставки або плівка на частині скла — їх можна додати й після монтажу."
+    }
+  ],
+  "serviceLink": {
+    "label": "Міжкімнатні скляні перегородки",
+    "href": "/sklyani-perehorodky/mizhkimnatni/"
+  },
+  "relatedProjectSlugs": [
+    "private-house-study-glass-partition-aluminium",
+    "interior-glass-partition-with-door"
+  ]
+}

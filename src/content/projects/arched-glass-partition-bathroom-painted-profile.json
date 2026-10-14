@@ -1,0 +1,120 @@
+{
+  "slug": "arched-glass-partition-bathroom-painted-profile",
+  "locale": "uk",
+  "status": "published",
+  "featured": true,
+  "sortOrder": 100,
+  "seo": {
+    "title": "Арочна перегородка з кімнати в душ — проєкт | Space Glass",
+    "description": "Скляна перегородка з аркою, що відділяє душову зону від кімнати: фарбований профіль і двері в арковому прорізі. Фото проєкту Space Glass."
+  },
+  "h1": "Скляна перегородка з аркою між кімнатою та душем у фарбованому профілі",
+  "cardTitle": "Арочна перегородка в душ, фарбований профіль",
+  "cardTitleRu": "Арочная перегородка в душ, окрашенный профиль",
+  "category": "glass-partitions",
+  "constructionType": "Арочна скляна перегородка з дверима",
+  "constructionTypeRu": "Арочная стеклянная перегородка с дверью",
+  "objectType": "Кімната з душовою зоною",
+  "shortDescription": "Перегородка з аркою відділяє душову зону від кімнати: скло вписане в арковий проріз, профіль фарбований, вхід — через скляні двері.",
+  "shortDescriptionRu": "Перегородка с аркой отделяет душевую зону от комнаты: стекло вписано в арочный проём, профиль окрашенный, вход — через стеклянную дверь.",
+  "clientTask": {
+    "title": "Арочна скляна перегородка з дверима",
+    "text": "Перегородка відділяє душову зону від кімнати. Її верхня частина повторює арку прорізу, а профіль конструкції — фарбований."
+  },
+  "solution": {
+    "title": "Арка, двері та профіль",
+    "text": "На фото видно двері в центрі перегородки та золотистий колір профілю, який перегукується з мармуровою обробкою санвузла."
+  },
+  "installation": {
+    "title": "Арочна скляна перегородка з дверима",
+    "text": "Перегородка з аркою відділяє душову зону від кімнати: скло вписане в арковий проріз, профіль фарбований, вхід — через скляні двері."
+  },
+  "result": {
+    "title": "Скляна перегородка з аркою між кімнатою та душем у фарбованому профілі",
+    "text": "Душова зона відокремлена від кімнати, але залишається видимою: арочне скло зберегло форму прорізу й світло в обох приміщеннях."
+  },
+  "characteristics": [
+    {
+      "label": "Конструкція",
+      "value": "Арочна перегородка"
+    },
+    {
+      "label": "Розташування",
+      "value": "Між кімнатою та душем"
+    },
+    {
+      "label": "Профіль",
+      "value": "Фарбований"
+    }
+  ],
+  "materials": [
+    "Скло перегородки",
+    "Фарбований профіль"
+  ],
+  "cover": {
+    "src": "/images/projects/arched-glass-partition-bathroom-painted-profile/arched-glass-partition-bathroom-painted-profile-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Арочна скляна перегородка з дверима в золотистому профілі перед ванною"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/arched-glass-partition-bathroom-painted-profile/arched-glass-partition-bathroom-painted-profile-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Перегородка з аркою на тлі мармурової стіни санвузла"
+    },
+    {
+      "src": "/images/projects/arched-glass-partition-bathroom-painted-profile/arched-glass-partition-bathroom-painted-profile-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Відчинені скляні двері в арочній перегородці"
+    },
+    {
+      "src": "/images/projects/arched-glass-partition-bathroom-painted-profile/arched-glass-partition-bathroom-painted-profile-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Арочна перегородка під кутом з видом на ванну"
+    },
+    {
+      "src": "/images/projects/arched-glass-partition-bathroom-painted-profile/arched-glass-partition-bathroom-painted-profile-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Кут фарбованого профілю дверей і перегородки"
+    },
+    {
+      "src": "/images/projects/arched-glass-partition-bathroom-painted-profile/arched-glass-partition-bathroom-painted-profile-detail-05.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Ручка з замком на дверях у фарбованому профілі"
+    },
+    {
+      "src": "/images/projects/arched-glass-partition-bathroom-painted-profile/arched-glass-partition-bathroom-painted-profile-detail-06.webp",
+      "width": 1280,
+      "height": 1707,
+      "alt": "Верхня арка перегородки й двері зблизька"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Чи можна зробити скляну перегородку під арку?",
+      "answer": "Так. Верхнє полотно й профіль виготовляють за шаблоном аркового прорізу, який знімають на замірі."
+    },
+    {
+      "question": "Що означає фарбований профіль?",
+      "answer": "Профіль покривають фарбою потрібного кольору, щоб він поєднувався з обробкою приміщення. Колір обирають до виготовлення."
+    },
+    {
+      "question": "Чи підходить така перегородка для душової зони?",
+      "answer": "Так, для вологих зон підбирають відповідне скло й ущільнення; схему відкривання дверей погоджують з урахуванням сантехніки."
+    }
+  ],
+  "serviceLink": {
+    "label": "Скляні перегородки з дверима",
+    "href": "/sklyani-perehorodky/z-dveryma/"
+  },
+  "relatedProjectSlugs": [
+    "arched-glass-partition-apartment",
+    "glass-partitions-aluminium-frame-lock-apartment"
+  ]
+}

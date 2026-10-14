@@ -2,8 +2,8 @@
   "slug": "teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat",
   "locale": "uk",
   "status": "published",
-  "featured": false,
-  "sortOrder": 110,
+  "featured": true,
+  "sortOrder": 90,
   "seo": {
     "title": "Тепле алюмінієве скління ресторану в Одесі | Space Glass",
     "description": "Реалізований проєкт Space Glass: тепле алюмінієве скління вхідної групи ресторану «Артшат» в Одесі. Фото конструкції, рішення та деталі монтажу."

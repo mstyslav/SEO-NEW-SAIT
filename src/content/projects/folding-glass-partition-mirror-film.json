@@ -1,0 +1,126 @@
+{
+  "slug": "folding-glass-partition-mirror-film",
+  "locale": "uk",
+  "status": "published",
+  "featured": false,
+  "sortOrder": 200,
+  "seo": {
+    "title": "Перегородка-гармошка з дзеркальною плівкою — проєкт | Space Glass",
+    "description": "Складна скляна перегородка-гармошка з дзеркальною плівкою: у зібраному стані — дзеркальна стіна, у складеному — відкритий простір. Фото проєкту Space Glass."
+  },
+  "h1": "Скляна перегородка-гармошка з дзеркальною плівкою",
+  "cardTitle": "Перегородка-гармошка з дзеркальною плівкою",
+  "cardTitleRu": "Перегородка-гармошка с зеркальной плёнкой",
+  "category": "glass-partitions",
+  "constructionType": "Складна перегородка-гармошка",
+  "constructionTypeRu": "Складная перегородка-гармошка",
+  "objectType": "Житловий інтер’єр",
+  "shortDescription": "Складна перегородка-гармошка з дзеркальною плівкою: зачинена — працює як дзеркальна стіна, складена — відкриває кімнату повністю.",
+  "shortDescriptionRu": "Складная перегородка-гармошка с зеркальной плёнкой: закрытая — работает как зеркальная стена, сложенная — полностью открывает комнату.",
+  "clientTask": {
+    "title": "Складна перегородка-гармошка",
+    "text": "Перегородка складається гармошкою, а на скло нанесена дзеркальна плівка."
+  },
+  "solution": {
+    "title": "Дзеркальна стіна та складені стулки",
+    "text": "На фото видно два стани: зачинені полотна віддзеркалюють вітальню й перетворюються на дзеркальну стіну, а складені стулки відкривають простір між зонами."
+  },
+  "installation": {
+    "title": "Складна перегородка-гармошка",
+    "text": "Складна перегородка-гармошка з дзеркальною плівкою: зачинена — працює як дзеркальна стіна, складена — відкриває кімнату повністю."
+  },
+  "result": {
+    "title": "Скляна перегородка-гармошка з дзеркальною плівкою",
+    "text": "Кімната може бути і закритою зоною з дзеркальною стіною, і частиною відкритого простору — залежно від того, як скласти перегородку."
+  },
+  "characteristics": [
+    {
+      "label": "Конструкція",
+      "value": "Перегородка-гармошка"
+    },
+    {
+      "label": "Покриття",
+      "value": "Дзеркальна плівка"
+    },
+    {
+      "label": "Відкривання",
+      "value": "Складне"
+    }
+  ],
+  "materials": [
+    "Скло з дзеркальною плівкою",
+    "Складна система"
+  ],
+  "cover": {
+    "src": "/images/projects/folding-glass-partition-mirror-film/folding-glass-partition-mirror-film-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Зачинена перегородка-гармошка з дзеркальною плівкою, у якій віддзеркалюється вітальня"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/folding-glass-partition-mirror-film/folding-glass-partition-mirror-film-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Дзеркальна стіна з полотен перегородки біля кухні"
+    },
+    {
+      "src": "/images/projects/folding-glass-partition-mirror-film/folding-glass-partition-mirror-film-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Частково складена перегородка-гармошка між вітальнею та кухнею"
+    },
+    {
+      "src": "/images/projects/folding-glass-partition-mirror-film/folding-glass-partition-mirror-film-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Складені стулки перегородки біля стіни вітальні"
+    },
+    {
+      "src": "/images/projects/folding-glass-partition-mirror-film/folding-glass-partition-mirror-film-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Стулки перегородки-гармошки в процесі складання"
+    },
+    {
+      "src": "/images/projects/folding-glass-partition-mirror-film/folding-glass-partition-mirror-film-detail-05.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Перегородка з напівпрозорим склом з боку іншої кімнати"
+    },
+    {
+      "src": "/images/projects/folding-glass-partition-mirror-film/folding-glass-partition-mirror-film-detail-06.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Замок і ручка на стулці перегородки-гармошки"
+    },
+    {
+      "src": "/images/projects/folding-glass-partition-mirror-film/folding-glass-partition-mirror-film-detail-07.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Вітальня з перегородкою-гармошкою по обидва боки"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Як працює перегородка-гармошка?",
+      "answer": "Полотна з’єднані між собою й складаються пакетом убік, тому проріз звільняється майже на всю ширину."
+    },
+    {
+      "question": "Навіщо дзеркальна плівка на склі перегородки?",
+      "answer": "Плівка дає дзеркальний ефект: зачинена перегородка віддзеркалює кімнату, візуально збільшує її та обмежує огляд того, що за склом."
+    },
+    {
+      "question": "Чи можна нанести плівку на вже встановлене скло?",
+      "answer": "Здебільшого так, але якість результату залежить від стану поверхні. Краще закласти плівку на етапі виготовлення."
+    }
+  ],
+  "serviceLink": {
+    "label": "Трансформуючі скляні перегородки",
+    "href": "/sklyani-perehorodky/transformuyuchi-sklyani-peregorodky/"
+  },
+  "relatedProjectSlugs": [
+    "bedroom-glass-partition-stopsol-synchro",
+    "glass-partition-to-kitchen"
+  ]
+}

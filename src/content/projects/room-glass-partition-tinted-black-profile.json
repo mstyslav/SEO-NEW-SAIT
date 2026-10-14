@@ -1,0 +1,114 @@
+{
+  "slug": "room-glass-partition-tinted-black-profile",
+  "locale": "uk",
+  "status": "published",
+  "featured": false,
+  "sortOrder": 420,
+  "seo": {
+    "title": "Перегородка з тонованим склом і чорним профілем | Space Glass",
+    "description": "Скляна перегородка в кімнату: тоноване скло, чорні профілі та розкладка на секції. Фото реалізованого проєкту Space Glass."
+  },
+  "h1": "Перегородка в кімнату з тонованим склом і чорними профілями",
+  "cardTitle": "Перегородка з тонованим склом і чорним профілем",
+  "cardTitleRu": "Перегородка с тонированным стеклом и чёрным профилем",
+  "category": "glass-partitions",
+  "constructionType": "Скляна перегородка з тонованим склом",
+  "constructionTypeRu": "Стеклянная перегородка с тонированным стеклом",
+  "objectType": "Кімната",
+  "shortDescription": "Перегородка відділяє кімнату: тоноване скло в чорних профілях з горизонтальними перемичками надає простору графічного ритму.",
+  "shortDescriptionRu": "Перегородка отделяет комнату: тонированное стекло в чёрных профилях с горизонтальными перемычками придаёт пространству графичный ритм.",
+  "clientTask": {
+    "title": "Скляна перегородка з тонованим склом",
+    "text": "Перегородку в кімнату виготовили з тонованим склом і чорними профілями."
+  },
+  "solution": {
+    "title": "Перегородка в кімнаті",
+    "text": "На фото видно, що конструкція розділена перемичками на секції в стилі лофт, а частина полотен зсувається, відкриваючи прохід у кімнату."
+  },
+  "installation": {
+    "title": "Скляна перегородка з тонованим склом",
+    "text": "Перегородка відділяє кімнату: тоноване скло в чорних профілях з горизонтальними перемичками надає простору графічного ритму."
+  },
+  "result": {
+    "title": "Перегородка в кімнату з тонованим склом і чорними профілями",
+    "text": "Кімната отримала окремий вхід без глухої стіни: тоноване скло трохи приховує інтер’єр, а чорні профілі задають чіткі лінії."
+  },
+  "characteristics": [
+    {
+      "label": "Конструкція",
+      "value": "Скляна перегородка"
+    },
+    {
+      "label": "Скло",
+      "value": "Тоноване"
+    },
+    {
+      "label": "Профіль",
+      "value": "Чорний"
+    }
+  ],
+  "materials": [
+    "Тоноване скло",
+    "Чорний профіль"
+  ],
+  "cover": {
+    "src": "/images/projects/room-glass-partition-tinted-black-profile/room-glass-partition-tinted-black-profile-hero.webp",
+    "width": 960,
+    "height": 1280,
+    "alt": "Скляна перегородка з тонованим склом і чорними профілями у світлій кімнаті"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/room-glass-partition-tinted-black-profile/room-glass-partition-tinted-black-profile-detail-01.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Перегородка з відсунутими полотнами перед відкритою шафою"
+    },
+    {
+      "src": "/images/projects/room-glass-partition-tinted-black-profile/room-glass-partition-tinted-black-profile-detail-02.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Секції перегородки з горизонтальними перемичками під кутом"
+    },
+    {
+      "src": "/images/projects/room-glass-partition-tinted-black-profile/room-glass-partition-tinted-black-profile-detail-03.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Відсунуте полотно перегородки та вхід у кімнату"
+    },
+    {
+      "src": "/images/projects/room-glass-partition-tinted-black-profile/room-glass-partition-tinted-black-profile-detail-04.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Торець перегородки з чорним профілем біля стіни"
+    },
+    {
+      "src": "/images/projects/room-glass-partition-tinted-black-profile/room-glass-partition-tinted-black-profile-detail-05.webp",
+      "width": 960,
+      "height": 1280,
+      "alt": "Полотно перегородки з тонованим склом поруч із шафою"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Чим тоноване скло відрізняється від прозорого в перегородці?",
+      "answer": "Тоноване скло має відтінок і частково приглушує огляд, зберігаючи світло. Прозоре повністю відкриває простір."
+    },
+    {
+      "question": "Чи можна поєднати тоноване скло з чорним профілем?",
+      "answer": "Так, це поширене поєднання для лофт-перегородок: темний профіль і тонування підкреслюють графіку конструкції."
+    },
+    {
+      "question": "Як обрати розкладку перемичок на перегородці?",
+      "answer": "Розкладку погоджують під висоту стелі, меблі та лінії інтер’єру — горизонталі часто вирівнюють по висоті дверей чи стільниць."
+    }
+  ],
+  "serviceLink": {
+    "label": "Лофт-перегородки",
+    "href": "/sklyani-perehorodky/loft-sklyani-peregorodku/"
+  },
+  "relatedProjectSlugs": [
+    "cracked-ice-triplex-glass-partition",
+    "glass-partition-room-to-balcony"
+  ]
+}

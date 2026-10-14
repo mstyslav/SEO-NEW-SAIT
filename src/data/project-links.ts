@@ -18,13 +18,13 @@ export const PROJECT_LINKS: Record<string, string[]> = {
   // Partitions
   '/sklyani-perehorodky/ofisni/': ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'choice-osklinya-kabinetu-v-vzhe-diyuchomu-magazyni', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'rozdilennya-zony-pryjomu-kliyenta-mizh-pidgotovchoyu-zonoyu-v-kliniczi-zdrava'],
   '/sklyani-perehorodky/loft-sklyani-peregorodku/': ['mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'mizhkimnatni-peregorodku-v-stuli-loft', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'mizhkimnatni-peregorodky-v-dytyachu'],
-  '/sklyani-perehorodky/mizhkimnatni/': ['dzerkalni-dveri-v-garderob', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'mizhkimnatni-peregorodky-v-dytyachu'],
+  '/sklyani-perehorodky/mizhkimnatni/': ['dzerkalni-dveri-v-garderob', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'mizhkimnatni-peregorodky-v-dytyachu', 'corner-wardrobe-glass-partition-bronze-glass'],
   // Glass doors
   '/sklyani-dveri/': ['chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'mirrored-wardrobe-doors-milos-odesa', 'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
   '/sklyani-dveri/mayatnykovi-sklyani-dveri/': ['chastne-zamovlennya-odesa-dushova-ta-peregorodka'],
   // Railings
-  '/sklyani-ohorozhi/': ['ogorozha-shodiv-ta-drugogo-poverhu', 'dzerkalni-dveri-v-garderob-2', 'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
-  '/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/': ['ogorozha-shodiv-ta-drugogo-poverhu', 'dzerkalni-dveri-v-garderob-2'],
+  '/sklyani-ohorozhi/': ['ogorozha-shodiv-ta-drugogo-poverhu', 'dzerkalni-dveri-v-garderob-2', 'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv', 'glass-stair-railing-titanium-nitride-house'],
+  '/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/': ['glass-stair-railing-titanium-nitride-house', 'ogorozha-shodiv-ta-drugogo-poverhu', 'dzerkalni-dveri-v-garderob-2'],
   // Frameless glazing
   '/bezramne-sklinnya/': ['sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
   '/bezramne-sklinnya/sklinnya-teras-ta-altanok/': ['sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
@@ -39,7 +39,11 @@ export const PROJECT_LINKS: Record<string, string[]> = {
   '/dzerkala/dzerkala-na-stinu/': ['dzerkalo-na-stinu-v-zhk-kontynent-m-odesa'],
   '/dzerkala/dzerkala-dlya-salonu-krasy/': ['zonuvannya-prostoru-odnokimnatnoyi-kvartyry'],
   '/sklyani-dveri/rozsuvni-sklyani-dveri/': ['mirrored-wardrobe-doors-milos-odesa'],
-  '/sklyani-perehorodky/z-dveryma/': ['choice-osklinya-kabinetu-v-vzhe-diyuchomu-magazyni', 'sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'mizhkimnatni-peregorodku-v-stuli-loft'],
+  '/sklyani-perehorodky/z-dveryma/': ['choice-osklinya-kabinetu-v-vzhe-diyuchomu-magazyni', 'sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'mizhkimnatni-peregorodku-v-stuli-loft', 'cracked-ice-triplex-glass-partition'],
   '/pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/': ['ogorozha-shodiv-ta-drugogo-poverhu', 'dzerkalni-dveri-v-garderob-2'],
-  '/poslugy/sklyani-fasady/vitrinne-sklinnya/': ['zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya']
+  '/poslugy/sklyani-fasady/vitrinne-sklinnya/': ['zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya'],
+  // Local archive import (October 2026): only where the construction matches the page.
+  '/sklyani-perehorodky/transformuyuchi-sklyani-peregorodky/': ['folding-glass-partition-mirror-film'],
+  '/sklyani-dveri/dveri-v-aliuminiievomu-profili/': ['dental-clinic-glass-doors-aluminium-frame', 'glass-partitions-aluminium-frame-lock-apartment'],
+  '/sklyani-dveri/matovi-sklyani-dveri/': ['bank-glass-partition-matte-glass', 'dental-clinic-glass-doors-aluminium-frame']
 };
