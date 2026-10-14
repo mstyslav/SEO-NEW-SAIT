@@ -21,7 +21,8 @@ export const organizationId = (origin: string | URL) => `${absoluteUrl('/', orig
 
 export const absoluteUrl = (pathOrUrl: string | URL, origin: string | URL) => new URL(pathOrUrl, origin).href;
 
-export function organizationSchema(origin: string | URL): JsonLdObject {
+// Founders are marked up only where the page itself shows them (the About team section), not sitewide.
+export function organizationSchema(origin: string | URL, founders: JsonLdObject[] = []): JsonLdObject {
   const siteUrl = absoluteUrl('/', origin);
   return {
     '@type': 'Organization',
@@ -44,7 +45,8 @@ export function organizationSchema(origin: string | URL): JsonLdObject {
       availableLanguage: ['uk', 'ru']
     },
     areaServed: { '@type': 'Country', name: 'Ukraine' },
-    sameAs: COMPANY_SAME_AS
+    sameAs: COMPANY_SAME_AS,
+    ...(founders.length ? { founder: founders } : {})
   };
 }
 

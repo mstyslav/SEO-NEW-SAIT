@@ -28,7 +28,8 @@ export interface AboutContent {
     title: string;
     intro: string;
     careerLinkLabel: string;
-    members: { name: string; role: string; img: string }[];
+    /** `link`: an external page of this person (one per card at most, plain followed link). */
+    members: { name: string; role: string; img: string; link?: { href: string; label: string } }[];
   };
   trust: { eyebrow: string; titleHtml: string; linkLabel: string };
   systems: { eyebrow: string; title: string; linkLabel: string };
@@ -121,7 +122,7 @@ export const aboutContent: Record<Locale, AboutContent> = {
       careerLinkLabel: 'Приєднуйся до команди →',
       members: [
         { name: 'Олександр', role: 'Співвласник, співзасновник', img: '/images/team/Олександр-450.webp' },
-        { name: 'Мстислав', role: 'Співвласник, співзасновник', img: '/images/team/Мстислав-450.webp' },
+        { name: 'Мстислав', role: 'Співвласник, співзасновник', img: '/images/team/Мстислав-450.webp', link: { href: 'https://mstyslavhrabko.com/uk/', label: 'Персональний сайт' } },
         { name: 'Микола', role: 'Керівник відділу продажів', img: '/images/team/Микола-450.webp' },
         { name: 'Юлія', role: 'Контент-мейкер', img: '/images/team/yuliia-content-450.webp' },
         { name: 'Анастасія', role: 'SMM-спеціаліст', img: '/images/team/Анастасія-450.webp' },
@@ -237,7 +238,7 @@ export const aboutContent: Record<Locale, AboutContent> = {
       careerLinkLabel: 'Присоединяйся к команде →',
       members: [
         { name: 'Александр', role: 'Совладелец, сооснователь', img: '/images/team/Олександр-450.webp' },
-        { name: 'Мстислав', role: 'Совладелец, сооснователь', img: '/images/team/Мстислав-450.webp' },
+        { name: 'Мстислав', role: 'Совладелец, сооснователь', img: '/images/team/Мстислав-450.webp', link: { href: 'https://mstyslavhrabko.com/ru/', label: 'Персональный сайт' } },
         { name: 'Николай', role: 'Руководитель отдела продаж', img: '/images/team/Микола-450.webp' },
         { name: 'Юлия', role: 'Контент-мейкер', img: '/images/team/yuliia-content-450.webp' },
         { name: 'Анастасия', role: 'SMM-специалист', img: '/images/team/Анастасія-450.webp' },

@@ -30,9 +30,11 @@ interface Props {
   mainEntityId?: string;
   /** 404 pages are served as the body of any unknown URL: no canonical, hreflang, og:url or WebPage node. */
   errorPage?: boolean;
+  /** Person nodes added as `founder` of the #organization node on this page only. */
+  organizationFounders?: import('../seo/schema').JsonLdObject[];
 }
 
-const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, heroPreloadMobileMaxWidth = 900, robots, mainEntityId, errorPage = false } = Astro.props;
+const { title, description, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, heroPreloadMobileMaxWidth = 900, robots, mainEntityId, errorPage = false, organizationFounders = [] } = Astro.props;
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales, hasLocalizedRoute } from '../i18n/helpers';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
@@ -56,7 +58,7 @@ const pageSchema = webPageSchema({
 });
 const extraStructuredData = Array.isArray(structuredData) ? structuredData : [structuredData];
 const schema = jsonLdGraph([
-  organizationSchema(origin),
+  organizationSchema(origin, organizationFounders),
   websiteSchema(origin, resolvedLocale),
   ...(errorPage ? [] : [pageSchema]),
   ...extraStructuredData
