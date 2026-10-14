@@ -313,7 +313,9 @@ const heroMeta = [project.city, project.objectType].filter(Boolean);
         <button type="button" class="pp-lightbox__close" data-pp-close aria-label={tx.close}>×</button>
         <button type="button" class="pp-lightbox__nav pp-lightbox__nav--prev" data-pp-prev aria-label={tx.prev}>‹</button>
         <figure>
-          <img data-pp-img alt="" />
+          {/* width/height = the first photo (the viewer opens on it); the script sets the size of every
+              photo it shows, and CSS (width/height: auto) uses them only for the aspect ratio. */}
+          <img data-pp-img alt="" width={hero.width} height={hero.height} />
           <figcaption><span data-pp-count aria-live="polite"></span><span data-pp-caption></span></figcaption>
         </figure>
         <button type="button" class="pp-lightbox__nav pp-lightbox__nav--next" data-pp-next aria-label={tx.next}>›</button>
