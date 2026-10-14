@@ -3,7 +3,7 @@
   "locale": "uk",
   "status": "published",
   "featured": false,
-  "sortOrder": 310,
+  "sortOrder": 320,
   "seo": {
     "title": "Скляна перегородка в кабінет у будинку — проєкт | Space Glass",
     "description": "Скляна перегородка, що відділяє кабінет у приватному будинку: профіль в алюмінієвому кольорі, скляні двері, мансардний поверх. Фото проєкту Space Glass."
@@ -11,6 +11,9 @@
   "h1": "Скляна перегородка в кабінет у приватному будинку в алюмінієвому кольорі",
   "cardTitle": "Перегородка в кабінет у приватному будинку",
   "cardTitleRu": "Перегородка в кабинет в частном доме",
+  "seoLocations": [
+    "kyiv"
+  ],
   "category": "glass-partitions",
   "constructionType": "Скляна перегородка з дверима",
   "constructionTypeRu": "Стеклянная перегородка с дверью",
@@ -112,7 +115,7 @@
     "href": "/sklyani-perehorodky/z-dveryma/"
   },
   "relatedProjectSlugs": [
-    "apartment-study-glass-partition",
+    "apartment-study-glass-partition-kyiv",
     "glass-partitions-aluminium-frame-lock-apartment"
   ]
 }

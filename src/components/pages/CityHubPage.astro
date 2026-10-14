@@ -56,6 +56,21 @@ const localProjects = (
   .sort((a, b) => a.sortOrder - b.sortOrder)
   .slice(0, 6);
 
+// Projects whose factual city is unknown but which are assigned to this market (`seoLocations`).
+// Shown after the local projects as other Space Glass solutions — never as objects in this city.
+const assignedProjects = (
+  await getCollection(
+    'projects',
+    ({ data }) => data.status === 'published' && data.locale === 'uk' && !data.city && (data.seoLocations ?? []).includes(hub.slug as 'kyiv' | 'odesa' | 'lviv')
+  )
+)
+  .map(({ data }) => data)
+  .sort((a, b) => a.sortOrder - b.sortOrder)
+  .slice(0, 3);
+const assignedText = locale === 'ru'
+  ? { title: 'Другие реализованные решения Space Glass', intro: 'Примеры наших работ на других объектах. Такие конструкции изготавливаем и монтируем и для заказчиков в этом городе.', aria: 'Другие реализованные решения Space Glass' }
+  : { title: 'Інші реалізовані рішення Space Glass', intro: 'Приклади наших робіт на інших об’єктах. Такі конструкції виготовляємо й монтуємо і для замовників у цьому місті.', aria: 'Інші реалізовані рішення Space Glass' };
+
 const origin = Astro.site ?? Astro.url.origin;
 const pagePath = `/city/${hub.slug}/`;
 
@@ -230,6 +245,19 @@ const structuredData: JsonLdObject[] = [
             </div>
           ) : (
             <p class="city-hub__empty">{hub.projectsSection.emptyText}</p>
+          )}
+          {assignedProjects.length > 0 && (
+            <>
+              <div class="city-hub__head city-hub__head--assigned" style="margin-top:56px">
+                <h3>{assignedText.title}</h3>
+                <p>{assignedText.intro}</p>
+              </div>
+              <div class="city-hub__project-grid projects-index-v2__grid" aria-label={assignedText.aria}>
+                {assignedProjects.map((project) => (
+                  <ProjectCard project={project} href={localizeHref(`/project/${project.slug}/`)} locale={locale} />
+                ))}
+              </div>
+            </>
           )}
         </section>
 

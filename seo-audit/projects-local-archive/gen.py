@@ -32,8 +32,10 @@ RELATED = {
     'A29': ['A26', 'dzerkalni-dveri-v-garderob'], 'A23': ['A28', 'A33'], 'A19': ['A36', 'A16'],
     'A36': ['A19', 'A32'], 'A21': ['A18', 'sklyani-peregorodky-u-garderobnu-v-m-odesa'],
     'A26': ['A33', 'A34'], 'A27': ['A32', 'A19'], 'A33': ['A26', 'A23'],
+    'A17': ['A18', 'A22'], 'A22': ['A21', 'A17'],
 }
 by_id = {p['id']: p for p in data.PROJECTS}
+CITY_RU = {'Київ': 'Киев', 'Одеса': 'Одесса', 'Львів': 'Львов'}
 
 
 def related(pid):
@@ -85,6 +87,8 @@ for p in data.PROJECTS:
         slug=slug, locale='uk', status='published', featured=False, sortOrder=0,
         seo={'title': uk['seo_t'], 'description': uk['seo_d']},
         h1=uk['h1'], cardTitle=uk['card'], cardTitleRu=ru['card'],
+        **({'city': p['city'], 'cityRu': CITY_RU[p['city']]} if p.get('city') else {}),
+        **({'seoLocations': [data.SEO_LOCATIONS[slug][0]]} if slug in data.SEO_LOCATIONS else {}),
         category=p['category'], constructionType=uk['type'], constructionTypeRu=ru['type'],
         objectType=uk['obj'], shortDescription=uk['short'], shortDescriptionRu=ru['short'],
         **body(uk),
@@ -110,6 +114,7 @@ for p in data.PROJECTS:
         characteristics=[{'label': l, 'value': v} for l, v in ru['chars']], materials=ru['mats'],
         coverAlt=ru['alts'][p['hero']], gallery=[[ru['alts'][g]] for g in p['gallery']],
         faq=[{'question': q, 'answer': a} for q, a in ru['faq']], serviceLinkLabel=ru['svc'],
+        **({'city': CITY_RU[p['city']]} if p.get('city') else {}),
     )
 
     def case(t, svc_labels, cta_title, button):

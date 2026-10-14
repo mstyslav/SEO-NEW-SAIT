@@ -24,6 +24,8 @@ for (const { file, data } of projects) {
   // The slug is the public URL — many projects keep the address indexed on the old site, so it
   // no longer has to repeat the (internal) file name. It must still be a clean URL segment.
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(data.slug ?? '')) errors.push(`${file}: slug "${data.slug}" is not a clean URL segment`);
+  // `city` is the factual location; `seoLocations` is only for projects whose city is unknown.
+  if (data.city && data.seoLocations?.length) errors.push(`${file}: a project with a factual city must not have seoLocations`);
   if (!data.serviceLink?.label?.trim()) errors.push(`${file}: service link needs a visible label`);
   if (!serviceRoutePrefixes.some((prefix) => data.serviceLink?.href?.startsWith(prefix))) {
     errors.push(`${file}: serviceLink.href must point to a service page, got "${data.serviceLink?.href ?? ''}"`);

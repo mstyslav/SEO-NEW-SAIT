@@ -44,6 +44,6 @@ export const PROJECT_LINKS: Record<string, string[]> = {
   '/poslugy/sklyani-fasady/vitrinne-sklinnya/': ['zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya'],
   // Local archive import (October 2026): only where the construction matches the page.
   '/sklyani-perehorodky/transformuyuchi-sklyani-peregorodky/': ['folding-glass-partition-mirror-film'],
-  '/sklyani-dveri/dveri-v-aliuminiievomu-profili/': ['dental-clinic-glass-doors-aluminium-frame', 'glass-partitions-aluminium-frame-lock-apartment'],
-  '/sklyani-dveri/matovi-sklyani-dveri/': ['bank-glass-partition-matte-glass', 'dental-clinic-glass-doors-aluminium-frame']
+  '/sklyani-dveri/dveri-v-aliuminiievomu-profili/': ['dental-clinic-glass-doors-aluminium-frame-kyiv', 'glass-partitions-aluminium-frame-lock-apartment'],
+  '/sklyani-dveri/matovi-sklyani-dveri/': ['bank-glass-partition-matte-glass', 'dental-clinic-glass-doors-aluminium-frame-kyiv']
 };

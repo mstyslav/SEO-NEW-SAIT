@@ -11,6 +11,9 @@
   "h1": "Скляна вітрина на подіумі для магазину",
   "cardTitle": "Скляна вітрина на подіумі для магазину",
   "cardTitleRu": "Стеклянная витрина на подиуме для магазина",
+  "seoLocations": [
+    "kyiv"
+  ],
   "category": "business-glass",
   "constructionType": "Скляна вітрина на подіумі",
   "constructionTypeRu": "Стеклянная витрина на подиуме",
@@ -103,6 +106,6 @@
   },
   "relatedProjectSlugs": [
     "bank-glass-partition-matte-glass",
-    "office-glass-partition-white"
+    "office-glass-partition-white-odesa"
   ]
 }

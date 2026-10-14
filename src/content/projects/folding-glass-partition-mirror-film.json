@@ -11,6 +11,9 @@
   "h1": "Скляна перегородка-гармошка з дзеркальною плівкою",
   "cardTitle": "Перегородка-гармошка з дзеркальною плівкою",
   "cardTitleRu": "Перегородка-гармошка с зеркальной плёнкой",
+  "seoLocations": [
+    "odesa"
+  ],
   "category": "glass-partitions",
   "constructionType": "Складна перегородка-гармошка",
   "constructionTypeRu": "Складная перегородка-гармошка",
@@ -121,6 +124,6 @@
   },
   "relatedProjectSlugs": [
     "bedroom-glass-partition-stopsol-synchro",
-    "glass-partition-to-kitchen"
+    "kitchen-glass-partition-apartment-odesa"
   ]
 }

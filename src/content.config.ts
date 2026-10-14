@@ -30,6 +30,10 @@ const projects = defineCollection({
     // Optional: some old projects never stated the city — never invent one.
     city: z.enum(['Київ', 'Львів', 'Одеса']).optional(),
     cityRu: z.enum(['Киев', 'Одесса', 'Львов']).optional(),
+    // SEO market for a project whose factual `city` is unknown: the city hub may show it as an «other
+    // Space Glass solution», never as the place of the object (no city on the page, no city in schema).
+    // `city` stays the only factual location.
+    seoLocations: z.array(z.enum(['kyiv', 'odesa', 'lviv'])).max(1).optional(),
     category: z.enum(projectCategoryIds),
     constructionType: z.string().min(3),
     constructionTypeRu: z.string().min(3).optional(),

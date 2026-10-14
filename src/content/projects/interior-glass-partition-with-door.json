@@ -3,7 +3,7 @@
   "locale": "uk",
   "status": "published",
   "featured": false,
-  "sortOrder": 460,
+  "sortOrder": 470,
   "seo": {
     "title": "Міжкімнатна скляна перегородка з дверима — проєкт | Space Glass",
     "description": "Міжкімнатна перегородка з дверима: темне скло, розпашні двері із замком і фігурний проріз. Фото реалізованого проєкту Space Glass."
@@ -11,6 +11,9 @@
   "h1": "Міжкімнатна скляна перегородка з дверима",
   "cardTitle": "Міжкімнатна перегородка з дверима",
   "cardTitleRu": "Межкомнатная перегородка с дверью",
+  "seoLocations": [
+    "lviv"
+  ],
   "category": "glass-partitions",
   "constructionType": "Міжкімнатна перегородка з дверима",
   "constructionTypeRu": "Межкомнатная перегородка с дверью",

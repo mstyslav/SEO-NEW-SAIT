@@ -1,16 +1,18 @@
 {
-  "slug": "apartment-study-glass-partition",
+  "slug": "apartment-study-glass-partition-kyiv",
   "locale": "uk",
   "status": "published",
   "featured": false,
-  "sortOrder": 550,
+  "sortOrder": 570,
   "seo": {
-    "title": "Скляна перегородка в кабінет у квартирі — проєкт | Space Glass",
-    "description": "Скляна перегородка з дверима, що відділяє кабінет у квартирі: прозоре скло й світлий профіль у дворівневому інтер’єрі. Фото проєкту Space Glass."
+    "title": "Скляна перегородка в кабінет у Києві — проєкт | Space Glass",
+    "description": "Проєкт Space Glass у Києві: скляна перегородка з дверима відділяє кабінет у квартирі, прозоре скло й світлий профіль. Фото готової перегородки."
   },
-  "h1": "Скляна перегородка в кабінет у квартирі",
-  "cardTitle": "Скляна перегородка в кабінет у квартирі",
-  "cardTitleRu": "Стеклянная перегородка в кабинет в квартире",
+  "h1": "Скляна перегородка в кабінет у квартирі в Києві",
+  "cardTitle": "Перегородка в кабінет у квартирі, Київ",
+  "cardTitleRu": "Перегородка в кабинет в квартире, Киев",
+  "city": "Київ",
+  "cityRu": "Киев",
   "category": "glass-partitions",
   "constructionType": "Скляна перегородка з дверима",
   "constructionTypeRu": "Стеклянная перегородка с дверью",
@@ -19,7 +21,7 @@
   "shortDescriptionRu": "Перегородка отделяет кабинет в квартире: прозрачное стекло в светлом профиле с дверью оставляет кабинет частью общего пространства.",
   "clientTask": {
     "title": "Скляна перегородка з дверима",
-    "text": "Перегородка відділяє кабінет у квартирі: прозоре скло у світлому профілі з дверима залишає кабінет частиною загального простору."
+    "text": "Кабінет у квартирі в Києві відокремили скляною перегородкою."
   },
   "solution": {
     "title": "Кабінет за склом",
@@ -30,7 +32,7 @@
     "text": "Перегородка відділяє кабінет у квартирі: прозоре скло у світлому профілі з дверима залишає кабінет частиною загального простору."
   },
   "result": {
-    "title": "Скляна перегородка в кабінет у квартирі",
+    "title": "Скляна перегородка в кабінет у квартирі в Києві",
     "text": "Кабінет став окремим робочим місцем, з якого не зникли світло й вид: прозоре скло не закриває вікна."
   },
   "characteristics": [
@@ -45,6 +47,10 @@
     {
       "label": "Об’єкт",
       "value": "Квартира"
+    },
+    {
+      "label": "Місто",
+      "value": "Київ"
     }
   ],
   "materials": [
@@ -52,38 +58,38 @@
     "Світлий профіль"
   ],
   "cover": {
-    "src": "/images/projects/apartment-study-glass-partition/apartment-study-glass-partition-hero.webp",
+    "src": "/images/projects/apartment-study-glass-partition-kyiv/apartment-study-glass-partition-kyiv-hero.webp",
     "width": 960,
     "height": 1280,
     "alt": "Скляна перегородка кабінету з дверима та шторами у квартирі"
   },
   "gallery": [
     {
-      "src": "/images/projects/apartment-study-glass-partition/apartment-study-glass-partition-detail-01.webp",
+      "src": "/images/projects/apartment-study-glass-partition-kyiv/apartment-study-glass-partition-kyiv-detail-01.webp",
       "width": 960,
       "height": 1280,
       "alt": "Робочий стіл за скляною перегородкою кабінету"
     },
     {
-      "src": "/images/projects/apartment-study-glass-partition/apartment-study-glass-partition-detail-02.webp",
+      "src": "/images/projects/apartment-study-glass-partition-kyiv/apartment-study-glass-partition-kyiv-detail-02.webp",
       "width": 960,
       "height": 1280,
       "alt": "Ручка на скляних дверях кабінету та сходи поруч"
     },
     {
-      "src": "/images/projects/apartment-study-glass-partition/apartment-study-glass-partition-detail-03.webp",
+      "src": "/images/projects/apartment-study-glass-partition-kyiv/apartment-study-glass-partition-kyiv-detail-03.webp",
       "width": 960,
       "height": 1280,
       "alt": "Скляні двері у світлому профілі з видом на іншу кімнату"
     },
     {
-      "src": "/images/projects/apartment-study-glass-partition/apartment-study-glass-partition-detail-04.webp",
+      "src": "/images/projects/apartment-study-glass-partition-kyiv/apartment-study-glass-partition-kyiv-detail-04.webp",
       "width": 960,
       "height": 1280,
       "alt": "Нижній профіль перегородки біля оздоблення стіни"
     },
     {
-      "src": "/images/projects/apartment-study-glass-partition/apartment-study-glass-partition-detail-05.webp",
+      "src": "/images/projects/apartment-study-glass-partition-kyiv/apartment-study-glass-partition-kyiv-detail-05.webp",
       "width": 960,
       "height": 1280,
       "alt": "Вертикальний профіль перегородки біля вікна"

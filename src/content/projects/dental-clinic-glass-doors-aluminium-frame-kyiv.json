@@ -1,16 +1,18 @@
 {
-  "slug": "dental-clinic-glass-doors-aluminium-frame",
+  "slug": "dental-clinic-glass-doors-aluminium-frame-kyiv",
   "locale": "uk",
   "status": "published",
   "featured": false,
   "sortOrder": 230,
   "seo": {
-    "title": "Скляні двері в алюмінієвій коробці для стоматології | Space Glass",
-    "description": "Проєкт Space Glass для стоматології: скляні двері в алюмінієвій коробці для кабінетів і службових приміщень клініки. Фото дверей у готовому інтер’єрі."
+    "title": "Скляні двері для стоматології в Києві — проєкт | Space Glass",
+    "description": "Проєкт Space Glass у Києві: скляні двері в алюмінієвій коробці для кабінетів і службових приміщень стоматології. Фото дверей у готовому інтер’єрі."
   },
-  "h1": "Скляні двері в алюмінієвій коробці для стоматології",
-  "cardTitle": "Скляні двері в алюмінієвій коробці для стоматології",
-  "cardTitleRu": "Стеклянные двери в алюминиевой коробке для стоматологии",
+  "h1": "Скляні двері в алюмінієвій коробці для стоматології в Києві",
+  "cardTitle": "Двері в алюмінієвій коробці для стоматології, Київ",
+  "cardTitleRu": "Двери в алюминиевой коробке для стоматологии, Киев",
+  "city": "Київ",
+  "cityRu": "Киев",
   "category": "glass-doors",
   "constructionType": "Скляні двері в алюмінієвій коробці",
   "constructionTypeRu": "Стеклянные двери в алюминиевой коробке",
@@ -19,7 +21,7 @@
   "shortDescriptionRu": "Стеклянные двери в алюминиевых коробках для кабинетов стоматологии: одностворчатые и двустворчатые полотна с матовым стеклом в готовом интерьере клиники.",
   "clientTask": {
     "title": "Скляні двері в алюмінієвій коробці",
-    "text": "Для стоматології виготовили скляні двері в алюмінієвій коробці."
+    "text": "Для стоматології в Києві виготовили скляні двері в алюмінієвій коробці."
   },
   "solution": {
     "title": "Двері в приміщеннях клініки",
@@ -30,7 +32,7 @@
     "text": "Скляні двері в алюмінієвих коробках для кабінетів стоматології: одностулкові й двостулкові полотна з матовим склом у готовому інтер’єрі клініки."
   },
   "result": {
-    "title": "Скляні двері в алюмінієвій коробці для стоматології",
+    "title": "Скляні двері в алюмінієвій коробці для стоматології в Києві",
     "text": "Кабінети клініки отримали однакові скляні двері: світло проходить у коридор, а матове скло зберігає приватність пацієнтів."
   },
   "characteristics": [
@@ -45,6 +47,10 @@
     {
       "label": "Об’єкт",
       "value": "Стоматологія"
+    },
+    {
+      "label": "Місто",
+      "value": "Київ"
     }
   ],
   "materials": [
@@ -52,44 +58,44 @@
     "Алюмінієва коробка"
   ],
   "cover": {
-    "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame/dental-clinic-glass-doors-aluminium-frame-hero.webp",
+    "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame-kyiv/dental-clinic-glass-doors-aluminium-frame-kyiv-hero.webp",
     "width": 1280,
     "height": 1707,
     "alt": "Скляні двері в алюмінієвій коробці в коридорі стоматологічної клініки"
   },
   "gallery": [
     {
-      "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame/dental-clinic-glass-doors-aluminium-frame-detail-01.webp",
+      "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame-kyiv/dental-clinic-glass-doors-aluminium-frame-kyiv-detail-01.webp",
       "width": 1280,
       "height": 1707,
       "alt": "Двостулкові та одностулкові скляні двері в алюмінієвих коробках"
     },
     {
-      "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame/dental-clinic-glass-doors-aluminium-frame-detail-02.webp",
+      "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame-kyiv/dental-clinic-glass-doors-aluminium-frame-kyiv-detail-02.webp",
       "width": 1280,
       "height": 1707,
       "alt": "Двостулкові двері з матовим склом в алюмінієвій коробці"
     },
     {
-      "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame/dental-clinic-glass-doors-aluminium-frame-detail-03.webp",
+      "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame-kyiv/dental-clinic-glass-doors-aluminium-frame-kyiv-detail-03.webp",
       "width": 1280,
       "height": 1707,
       "alt": "Відчинені двостулкові скляні двері в кабінет клініки"
     },
     {
-      "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame/dental-clinic-glass-doors-aluminium-frame-detail-04.webp",
+      "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame-kyiv/dental-clinic-glass-doors-aluminium-frame-kyiv-detail-04.webp",
       "width": 1280,
       "height": 1707,
       "alt": "Відчинене скляне полотно в алюмінієвій коробці біля робочої зони"
     },
     {
-      "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame/dental-clinic-glass-doors-aluminium-frame-detail-05.webp",
+      "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame-kyiv/dental-clinic-glass-doors-aluminium-frame-kyiv-detail-05.webp",
       "width": 1280,
       "height": 1707,
       "alt": "Кут алюмінієвої коробки та матове скляне полотно"
     },
     {
-      "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame/dental-clinic-glass-doors-aluminium-frame-detail-06.webp",
+      "src": "/images/projects/dental-clinic-glass-doors-aluminium-frame-kyiv/dental-clinic-glass-doors-aluminium-frame-kyiv-detail-06.webp",
       "width": 960,
       "height": 1280,
       "alt": "Петля скляних дверей на алюмінієвій коробці"

@@ -1,0 +1,120 @@
+{
+  "slug": "office-glass-partition-white-odesa",
+  "locale": "uk",
+  "status": "published",
+  "featured": false,
+  "sortOrder": 360,
+  "seo": {
+    "title": "Офісна перегородка з білим матовим склом, Одеса | Space Glass",
+    "description": "Проєкт Space Glass в Одесі: офісна перегородка з білими матовими секціями та горизонтальними перемичками відділяє зону офісу. Фото готової конструкції."
+  },
+  "h1": "Офісна скляна перегородка з білим матовим заповненням в Одесі",
+  "cardTitle": "Офісна перегородка з білим матовим склом, Одеса",
+  "cardTitleRu": "Офисная перегородка с белым матовым стеклом, Одесса",
+  "city": "Одеса",
+  "cityRu": "Одесса",
+  "category": "glass-partitions",
+  "constructionType": "Офісна скляна перегородка",
+  "constructionTypeRu": "Офисная стеклянная перегородка",
+  "objectType": "Офіс",
+  "shortDescription": "Офісна перегородка в Одесі: білі матові скляні секції з горизонтальними перемичками відділяють зону й зберігають світло.",
+  "shortDescriptionRu": "Офисная перегородка в Одессе: белые матовые стеклянные секции с горизонтальными перемычками отделяют зону и сохраняют свет.",
+  "clientTask": {
+    "title": "Офісна скляна перегородка",
+    "text": "Для офісу в Одесі виготовили скляну перегородку в білому рішенні: світлими є матові скляні полотна."
+  },
+  "solution": {
+    "title": "Перегородка в офісі",
+    "text": "На фото — білі матові секції в темному профілі з горизонтальними перемичками та розсувні полотна з квадратною ручкою: перегородка відділяє зону відпочинку від решти приміщення."
+  },
+  "installation": {
+    "title": "Офісна скляна перегородка",
+    "text": "Офісна перегородка в Одесі: білі матові скляні секції з горизонтальними перемичками відділяють зону й зберігають світло."
+  },
+  "result": {
+    "title": "Офісна скляна перегородка з білим матовим заповненням в Одесі",
+    "text": "Офіс отримав окрему зону, яка залишається світлою: матове скло обмежує огляд, але не блокує денне світло."
+  },
+  "characteristics": [
+    {
+      "label": "Конструкція",
+      "value": "Офісна перегородка"
+    },
+    {
+      "label": "Об’єкт",
+      "value": "Офіс"
+    },
+    {
+      "label": "Заповнення",
+      "value": "Біле матове скло"
+    },
+    {
+      "label": "Місто",
+      "value": "Одеса"
+    }
+  ],
+  "materials": [
+    "Скло",
+    "Профіль"
+  ],
+  "cover": {
+    "src": "/images/projects/office-glass-partition-white-odesa/office-glass-partition-white-odesa-hero.webp",
+    "width": 1280,
+    "height": 1707,
+    "alt": "Офісна скляна перегородка з матовим склом і горизонтальними перемичками"
+  },
+  "gallery": [
+    {
+      "src": "/images/projects/office-glass-partition-white-odesa/office-glass-partition-white-odesa-detail-01.webp",
+      "width": 1280,
+      "height": 1707,
+      "alt": "Перегородка з матових секцій біля зони відпочинку в офісі"
+    },
+    {
+      "src": "/images/projects/office-glass-partition-white-odesa/office-glass-partition-white-odesa-detail-02.webp",
+      "width": 1280,
+      "height": 1707,
+      "alt": "Матові скляні секції офісної перегородки зблизька"
+    },
+    {
+      "src": "/images/projects/office-glass-partition-white-odesa/office-glass-partition-white-odesa-detail-03.webp",
+      "width": 1280,
+      "height": 1707,
+      "alt": "Розсувні полотна офісної перегородки з матовим склом"
+    },
+    {
+      "src": "/images/projects/office-glass-partition-white-odesa/office-glass-partition-white-odesa-detail-04.webp",
+      "width": 1280,
+      "height": 1707,
+      "alt": "Офісна перегородка вздовж стіни із засклинням"
+    },
+    {
+      "src": "/images/projects/office-glass-partition-white-odesa/office-glass-partition-white-odesa-detail-05.webp",
+      "width": 1280,
+      "height": 1707,
+      "alt": "Квадратна ручка на розсувному полотні перегородки"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Навіщо в офісній перегородці біле матове скло?",
+      "answer": "Біле матове заповнення закриває зону від прямого огляду, але пропускає денне світло — приміщення за перегородкою не стає темним."
+    },
+    {
+      "question": "Навіщо горизонтальні перемички в скляній перегородці?",
+      "answer": "Перемички ділять велике поле на секції: так легше виготовити й замінити скло, а перегородка отримує виразний ритм."
+    },
+    {
+      "question": "Чи можна поєднати в офісній перегородці нерухомі й розсувні секції?",
+      "answer": "Так. Частину полотен роблять нерухомими, а частину — розсувними для проходу."
+    }
+  ],
+  "serviceLink": {
+    "label": "Офісні скляні перегородки",
+    "href": "/sklyani-perehorodky/ofisni/"
+  },
+  "relatedProjectSlugs": [
+    "bank-glass-partition-matte-glass",
+    "sklyani-peregorodky-dlya-ofisu-v-m-odesa"
+  ]
+}

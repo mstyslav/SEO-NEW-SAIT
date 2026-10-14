@@ -11,6 +11,9 @@
   "h1": "Скляна перегородка з матовим склом, дверима із замком і віконцем для банку",
   "cardTitle": "Перегородка з матовим склом для банку",
   "cardTitleRu": "Перегородка с матовым стеклом для банка",
+  "seoLocations": [
+    "lviv"
+  ],
   "category": "business-glass",
   "constructionType": "Скляна перегородка з дверима та віконцем",
   "constructionTypeRu": "Стеклянная перегородка с дверью и окошком",
@@ -100,7 +103,7 @@
     "href": "/sklyani-perehorodky/ofisni/"
   },
   "relatedProjectSlugs": [
-    "office-glass-partition-white",
-    "dental-clinic-glass-doors-aluminium-frame"
+    "office-glass-partition-white-odesa",
+    "dental-clinic-glass-doors-aluminium-frame-kyiv"
   ]
 }

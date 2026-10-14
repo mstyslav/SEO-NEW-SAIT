@@ -3,7 +3,7 @@
   "locale": "uk",
   "status": "published",
   "featured": false,
-  "sortOrder": 360,
+  "sortOrder": 370,
   "seo": {
     "title": "Скляні перегородки кабінету Choice | Space Glass",
     "description": "Скляна перегородка кабінету 2,4 × 3,1 м з брендуванням Choice у діючому магазині — для підписання дилерських угод і переговорів."
@@ -11,6 +11,9 @@
   "h1": "Скляні перегородки кабінету Choice",
   "cardTitle": "Скляні перегородки кабінету Choice",
   "cardTitleRu": "Стеклянные перегородки кабинета Choice",
+  "seoLocations": [
+    "lviv"
+  ],
   "category": "business-glass",
   "constructionType": "Скляна перегородка з дверима",
   "constructionTypeRu": "Стеклянная перегородка с дверью",

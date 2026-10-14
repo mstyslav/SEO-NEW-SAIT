@@ -1,20 +1,22 @@
 {
-  "slug": "glass-partition-to-kitchen",
+  "slug": "kitchen-glass-partition-apartment-odesa",
   "locale": "uk",
   "status": "published",
   "featured": false,
-  "sortOrder": 370,
+  "sortOrder": 380,
   "seo": {
-    "title": "Скляна перегородка в кухню — реалізований проєкт | Space Glass",
-    "description": "Скляна перегородка, що відділяє кухню від житлової кімнати: розсувні полотна в темному профілі. Фото реалізованого проєкту Space Glass."
+    "title": "Скляна перегородка в кухню в Одесі — проєкт | Space Glass",
+    "description": "Проєкт Space Glass в Одесі: скляна перегородка відділяє кухню від житлової кімнати квартири, розсувні полотна в темному профілі. Фото готової перегородки."
   },
-  "h1": "Скляна перегородка в кухню з розсувними полотнами",
-  "cardTitle": "Скляна перегородка в кухню",
-  "cardTitleRu": "Стеклянная перегородка в кухню",
+  "h1": "Скляна перегородка в кухню з розсувними полотнами в квартирі в Одесі",
+  "cardTitle": "Скляна перегородка в кухню, Одеса",
+  "cardTitleRu": "Стеклянная перегородка в кухню, Одесса",
+  "city": "Одеса",
+  "cityRu": "Одесса",
   "category": "glass-partitions",
   "constructionType": "Скляна перегородка в кухню",
   "constructionTypeRu": "Стеклянная перегородка в кухню",
-  "objectType": "Кухня",
+  "objectType": "Квартира",
   "shortDescription": "Перегородка відділяє кухню від житлової зони: прозорі полотна в темному профілі зачиняють проріз і зберігають огляд між кімнатами.",
   "shortDescriptionRu": "Перегородка отделяет кухню от жилой зоны: прозрачные полотна в тёмном профиле закрывают проём и сохраняют обзор между комнатами.",
   "clientTask": {
@@ -30,7 +32,7 @@
     "text": "Перегородка відділяє кухню від житлової зони: прозорі полотна в темному профілі зачиняють проріз і зберігають огляд між кімнатами."
   },
   "result": {
-    "title": "Скляна перегородка в кухню з розсувними полотнами",
+    "title": "Скляна перегородка в кухню з розсувними полотнами в квартирі в Одесі",
     "text": "Запахи й шум кухні залишаються за склом, а кімнати продовжують бачити одна одну й ділити світло."
   },
   "characteristics": [
@@ -43,8 +45,12 @@
       "value": "Кухня"
     },
     {
-      "label": "Скло",
-      "value": "Прозоре"
+      "label": "Об’єкт",
+      "value": "Квартира"
+    },
+    {
+      "label": "Місто",
+      "value": "Одеса"
     }
   ],
   "materials": [
@@ -52,32 +58,32 @@
     "Темний профіль"
   ],
   "cover": {
-    "src": "/images/projects/glass-partition-to-kitchen/glass-partition-to-kitchen-hero.webp",
+    "src": "/images/projects/kitchen-glass-partition-apartment-odesa/kitchen-glass-partition-apartment-odesa-hero.webp",
     "width": 960,
     "height": 1280,
     "alt": "Скляна перегородка з прозорими полотнами між вітальнею та кухнею-їдальнею"
   },
   "gallery": [
     {
-      "src": "/images/projects/glass-partition-to-kitchen/glass-partition-to-kitchen-detail-01.webp",
+      "src": "/images/projects/kitchen-glass-partition-apartment-odesa/kitchen-glass-partition-apartment-odesa-detail-01.webp",
       "width": 960,
       "height": 1280,
       "alt": "Перегородка з відчиненим полотном і видом на кухню"
     },
     {
-      "src": "/images/projects/glass-partition-to-kitchen/glass-partition-to-kitchen-detail-02.webp",
+      "src": "/images/projects/kitchen-glass-partition-apartment-odesa/kitchen-glass-partition-apartment-odesa-detail-02.webp",
       "width": 960,
       "height": 1280,
       "alt": "Полотна перегородки зібрані біля стіни, прохід на кухню відкритий"
     },
     {
-      "src": "/images/projects/glass-partition-to-kitchen/glass-partition-to-kitchen-detail-03.webp",
+      "src": "/images/projects/kitchen-glass-partition-apartment-odesa/kitchen-glass-partition-apartment-odesa-detail-03.webp",
       "width": 960,
       "height": 1280,
       "alt": "Розсувне полотно перегородки біля кухонної зони"
     },
     {
-      "src": "/images/projects/glass-partition-to-kitchen/glass-partition-to-kitchen-detail-04.webp",
+      "src": "/images/projects/kitchen-glass-partition-apartment-odesa/kitchen-glass-partition-apartment-odesa-detail-04.webp",
       "width": 960,
       "height": 1280,
       "alt": "Ручка на полотні перегородки та обідній стіл за склом"
