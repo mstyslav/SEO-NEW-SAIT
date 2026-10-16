@@ -9,6 +9,7 @@ interface FooterText {
   contactsTitle: string;
   productsTitle: string;
   callSecondary: string;
+  /** Empty = the opening-hours line is not shown (DE: no confirmed hours for Austria). */
   hours: string;
   citiesLine: string;
   brandDescription: string;
@@ -54,12 +55,12 @@ export const intlFooterText: Record<IntlLocale, { text: FooterText; services: st
       categoriesTitle: 'Produkte',
       servicesTitle: 'Leistungen',
       companyTitle: 'Unternehmen',
-      citiesTitle: 'Standorte',
+      citiesTitle: 'Projektgebiet',
       contactsTitle: 'Kontakt',
       productsTitle: 'Unsere Produkte',
       callSecondary: 'Rückruf anfordern',
-      hours: 'Mo–Fr: 09:00–19:00 (Kyjiwer Zeit)',
-      citiesLine: 'Kyjiw · Lwiw · Odesa',
+      hours: '',
+      citiesLine: 'Projekte in Wien und Österreich',
       brandDescription: 'Hochwertige Glaskonstruktionen für Wohnen, Gewerbe und Architekturprojekte.',
       copyright: '© 2014–2026 Space Glass. Alle Rechte vorbehalten.',
       benefits: [
@@ -78,7 +79,7 @@ export const intlFooterText: Record<IntlLocale, { text: FooterText; services: st
       ['Kontakt', '/contacts/'],
       ['Datenschutz', '/privacy-policy/']
     ],
-    cities: [['Kyjiw'], ['Odesa'], ['Lwiw'], ['Alle Kontakte']]
+    cities: [['Wien'], ['Österreich'], ['Alle Kontakte']]
   },
   es: {
     text: {

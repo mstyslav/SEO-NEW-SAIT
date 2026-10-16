@@ -17,12 +17,12 @@ export const hubCommonDe: HubCommon = {
     ['Montage', 'Einbau, Justierung und Übergabe']
   ],
   areaEyebrow: 'Einsatzgebiet',
-  areaTitle: 'Aufmaß und Montage in Kyjiw, Odesa und Lwiw',
+  areaTitle: 'Projekte in Wien und ganz Österreich',
   areaParagraphs: [
-    'Unsere Teams übernehmen Aufmaß, Fertigung und Montage in Kyjiw, Odesa und Lwiw sowie in den umliegenden Regionen. Projekte in anderen Teilen der Ukraine werden individuell vereinbart.',
-    'Ausgewählte Produkte und Konstruktionen können auch in andere europäische Länder geliefert werden — senden Sie uns Pläne oder Fotos und den Standort, und wir sagen Ihnen, was und wie geliefert werden kann.'
+    'Wir realisieren Glas- und Aluminiumlösungen für Projekte in Wien und Österreich. Aufmaß, Lieferung und Montage werden je nach Produkt und Projekt individuell abgestimmt.',
+    'Senden Sie uns Pläne oder Fotos und den Standort Ihres Objekts — wir sagen Ihnen, was geliefert werden kann und wie der Ablauf für Ihr Projekt aussieht.'
   ],
-  offices: [['Kyjiw', 'Büro und Montage'], ['Odesa', 'Büro und Montage'], ['Lwiw', 'Büro und Montage']],
+  offices: [['Wien', 'Anfragen und Projekte'], ['Österreich', 'Lieferung und Montage nach Projekt']],
   projectsEyebrow: 'Referenzen',
   projectsTitle: 'Umgesetzte Projekte',
   allProjects: 'Alle Projekte',
@@ -46,7 +46,7 @@ export const hubsDe: Record<string, HubCopy> = {
         'Wir nehmen das Aufmaß, wählen System, Glas und Beschläge, erstellen Zeichnungen und Spezifikationen, fertigen auf eigenen Maschinen nach den freigegebenen Maßen, liefern und montieren — und bleiben auch danach für Justierung und Service erreichbar.',
         'Seit 2014 haben wir über 5.000 Projekte für Wohnen und Gewerbe umgesetzt und mehr als 50.000 m² Verglasung eingebaut.'
       ],
-      spec: [['5.000+ Projekte', 'für Wohnen und Gewerbe'], ['50.000+ m²', 'eingebaute Verglasung'], ['10+ Jahre', 'Praxiserfahrung'], ['Kyjiw · Odesa · Lwiw', 'Büros und Montageteams']]
+      spec: [['5.000+ Projekte', 'für Wohnen und Gewerbe'], ['50.000+ m²', 'eingebaute Verglasung'], ['10+ Jahre', 'Praxiserfahrung'], ['Wien · Österreich', 'Anfragen und Projekte']]
     },
     types: {
       eyebrow: 'Produkte',
@@ -85,7 +85,7 @@ export const hubsDe: Record<string, HubCopy> = {
         ['Wie erhalte ich eine erste Kostenschätzung?', 'Senden Sie Fotos, ungefähre Maße und eine kurze Beschreibung über das Formular. Wir beurteilen die Konstruktion und melden uns mit einem Lösungsvorschlag und einer Kostenschätzung.'],
         ['Was soll ich für ein Angebot senden?', 'Fotos des Einbauorts, ungefähre Maße und den Standort. Falls vorhanden, ergänzen Sie Zeichnungen, Planungsunterlagen und Wünsche zu Glas und Beschlägen.'],
         ['Führen Sie ein Aufmaß durch?', 'Ja. Ein professionelles Aufmaß erfasst die tatsächliche Geometrie und die Befestigungsuntergründe — die Grundlage für eine präzise Fertigung.'],
-        ['Wo ist ein Aufmaß möglich?', 'Unsere Teams arbeiten in Kyjiw, Odesa und Lwiw sowie in den umliegenden Regionen. Andere Standorte stimmen wir je nach Konstruktion und Logistik ab.'],
+        ['Wo ist ein Aufmaß möglich?', 'Wir begleiten Projekte in Wien und ganz Österreich. Aufmaß und Termin stimmen wir je nach Produkt und Projekt individuell ab.'],
         ['Arbeiten Sie mit DWG- oder PDF-Plänen?', 'Ja. Wir prüfen die Pläne von Architekten und Planern, klären die Anschlussdetails und passen die Lösung an die Bedingungen vor Ort an.'],
         ['Erstellen Sie Werkplanungen?', 'Ja. Vor der Fertigung erstellt unser Team Zeichnungen, Befestigungsdetails und eine Materialspezifikation zur Freigabe.'],
         ['Kann ich ohne Montage bestellen?', 'Ja, für einen Teil der Systeme — wenn Sie eigene Monteure haben, liefern wir die Konstruktion mit technischer Dokumentation und Montagehinweisen.'],
@@ -261,7 +261,7 @@ export const hubsDe: Record<string, HubCopy> = {
         'Wir fertigen Türen nach der tatsächlichen Öffnung: rahmenlose Drehtüren und Loft-Türen in schlanken Profilen, Schiebetüren mit Laufwerk oder im Rahmen und Pendeltüren für stark frequentierte Eingänge. Glas, Dekor und Beschläge wählen wir projektbezogen.',
         'Verwendet wird ausschließlich ESG (8–10 mm) oder VSG; Bohrungen für Beschläge entstehen vor dem Vorspannen.'
       ],
-      spec: [['ESG / VSG 8–12 mm', 'Sicherheitsglas'], ['Nach Maß der Öffnung', 'ohne Futter und Verkleidungen'], ['Dekor und Logo', 'Satinierung nach Vorlage'], ['Kyjiw · Odesa · Lwiw', 'Aufmaß, Montage und Service']]
+      spec: [['ESG / VSG 8–12 mm', 'Sicherheitsglas'], ['Nach Maß der Öffnung', 'ohne Futter und Verkleidungen'], ['Dekor und Logo', 'Satinierung nach Vorlage'], ['Wien · Österreich', 'Aufmaß und Montage nach Projekt']]
     },
     types: {
       eyebrow: 'Ausführungen',
@@ -538,7 +538,7 @@ export const hubsDe: Record<string, HubCopy> = {
         'Wir wählen das System nach Nutzung: saisonale Terrasse oder zusätzlicher Wohnraum, häufiger Durchgang oder windige Küste, manuell oder per Fernbedienung. Für die Übergangszeit gibt es Systeme mit Isolierglas.',
         'Den gesamten Ablauf übernehmen wir: Aufmaß und Prüfung der Decke, Planung von Flügeln und Parkposition, Fertigung mit ESG, Montage und Service.'
       ],
-      spec: [['29 Systeme', 'Falt, Schiebe, Guillotine, schwellenlos'], ['ESG 8–10 mm', 'oder Isolierglas 20–28 mm'], ['Bis 4 m Höhe', 'Schwelle ab 0 mm'], ['Kyjiw · Odesa · Lwiw', 'Aufmaß, Montage und Service']]
+      spec: [['29 Systeme', 'Falt, Schiebe, Guillotine, schwellenlos'], ['ESG 8–10 mm', 'oder Isolierglas 20–28 mm'], ['Bis 4 m Höhe', 'Schwelle ab 0 mm'], ['Wien · Österreich', 'Aufmaß und Montage nach Projekt']]
     },
     types: {
       eyebrow: 'Systeme',

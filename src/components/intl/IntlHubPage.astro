@@ -186,7 +186,7 @@ const structuredData = [itemList, faqData].filter(Boolean) as JsonLdObject[];
           <h2>{area.title}</h2>
           {area.paragraphs.map((text) => <p>{text}</p>)}
         </div>
-        <ul class="category-geo__cities">{common.offices.map(([city, note]) => <li><a href={href('contacts', '#offices')}><b>{city}</b><span>{note}</span></a></li>)}</ul>
+        <ul class="category-geo__cities">{common.offices.map(([city, note]) => <li><a href={locale === 'de' ? '#request' : href('contacts', '#offices')}><b>{city}</b><span>{note}</span></a></li>)}</ul>
       </div>
     </section>
 
