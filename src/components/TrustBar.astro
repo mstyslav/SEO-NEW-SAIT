@@ -13,8 +13,9 @@ interface Props {
 
 const { locale = 'uk' } = Astro.props;
 const items = trustBarItems[locale];
+const ariaLabel = ({ en: 'Why Space Glass', de: 'Vorteile von Space Glass', es: 'Ventajas de Space Glass' } as Record<string, string>)[locale] ?? 'Переваги Space Glass';
 ---
-<section class="sg-trustbar" aria-label="Переваги Space Glass">
+<section class="sg-trustbar" aria-label={ariaLabel}>
   {items.map(([title, text, icon]) => (
     <div class="sg-trustbar__item">
       <span class="sg-trustbar__icon" data-trust-icon={icon} aria-hidden="true">

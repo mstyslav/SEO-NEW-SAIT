@@ -4,13 +4,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from './Header.astro';
 import Footer from './Footer.astro';
-import { localizedPath, type Locale } from '../i18n/helpers';
+import { isIntlLocale, localizedPath, type Locale } from '../i18n/helpers';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const lp = (path: string) => localizedPath(path, locale);
 
-const t = {
+const t = ({
   uk: {
     title: 'Сторінку не знайдено | Space Glass', description: 'Сторінку не знайдено.',
     h1: 'Схоже, ця сторінка більше не існує',
@@ -24,8 +24,30 @@ const t = {
     lead: 'Проверьте адрес или перейдите в каталог стеклянных и алюминиевых решений.',
     home: 'На главную', catalog: 'Открыть каталог', contact: 'Связаться с нами →', sectionsLabel: 'Популярные разделы',
     sections: [['Душевые кабины', '/dushovi-kabiny/'], ['Стеклянные перегородки', '/sklyani-perehorodky/'], ['Зеркала', '/dzerkala/'], ['Безрамное остекление', '/bezramne-sklinnya/'], ['Стеклянные двери', '/sklyani-dveri/'], ['Алюминиевые конструкции', '/alyuminiyevi-konstrukcziyi/']]
+  },
+  en: {
+    title: 'Page not found | Space Glass', description: 'Page not found.',
+    h1: 'This page does not seem to exist',
+    lead: 'Check the address or continue to our glass and aluminium products.',
+    home: 'Go to the home page', catalog: 'View products', contact: 'Contact us →', sectionsLabel: 'Popular sections',
+    sections: [['Glass shower enclosures', '/dushovi-kabiny/'], ['Glass partitions', '/sklyani-perehorodky/'], ['Custom mirrors', '/dzerkala/'], ['Frameless glazing', '/bezramne-sklinnya/'], ['Glass doors', '/sklyani-dveri/'], ['Aluminium windows and doors', '/alyuminiyevi-konstrukcziyi/']]
+  },
+  de: {
+    title: 'Seite nicht gefunden | Space Glass', description: 'Seite nicht gefunden.',
+    h1: 'Diese Seite existiert offenbar nicht mehr',
+    lead: 'Prüfen Sie die Adresse oder sehen Sie sich unsere Glas- und Aluminiumlösungen an.',
+    home: 'Zur Startseite', catalog: 'Produkte ansehen', contact: 'Kontakt aufnehmen →', sectionsLabel: 'Beliebte Bereiche',
+    sections: [['Glasduschen', '/dushovi-kabiny/'], ['Glastrennwände', '/sklyani-perehorodky/'], ['Spiegel nach Maß', '/dzerkala/'], ['Rahmenlose Verglasung', '/bezramne-sklinnya/'], ['Glastüren', '/sklyani-dveri/'], ['Aluminium-Fenster und -Türen', '/alyuminiyevi-konstrukcziyi/']]
+  },
+  es: {
+    title: 'Página no encontrada | Space Glass', description: 'Página no encontrada.',
+    h1: 'Parece que esta página ya no existe',
+    lead: 'Compruebe la dirección o consulte nuestras soluciones de vidrio y aluminio.',
+    home: 'Ir al inicio', catalog: 'Ver productos', contact: 'Contactar →', sectionsLabel: 'Secciones populares',
+    sections: [['Mamparas de ducha', '/dushovi-kabiny/'], ['Tabiques de vidrio', '/sklyani-perehorodky/'], ['Espejos a medida', '/dzerkala/'], ['Cortinas de cristal', '/bezramne-sklinnya/'], ['Puertas de vidrio', '/sklyani-dveri/'], ['Ventanas y puertas de aluminio', '/alyuminiyevi-konstrukcziyi/']]
   }
-}[locale === 'ru' ? 'ru' : 'uk'];
+}[locale]);
+const catalogPath = isIntlLocale(locale) ? '/poslugy/' : '/catalog/';
 ---
 <BaseLayout title={t.title} description={t.description} robots="noindex, follow" errorPage>
 <div class="sg-page-shell">
@@ -37,7 +59,7 @@ const t = {
       <p class="not-found__lead">{t.lead}</p>
       <div class="not-found__actions">
         <a class="button button--mint" href={lp('/')}>{t.home}</a>
-        <a class="button button--outline" href={lp('/catalog/')}>{t.catalog}</a>
+        <a class="button button--outline" href={lp(catalogPath)}>{t.catalog}</a>
       </div>
       <nav class="not-found__sections" aria-label={t.sectionsLabel}>
         <p>{t.sectionsLabel}</p>

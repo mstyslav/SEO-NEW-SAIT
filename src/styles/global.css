@@ -3125,3 +3125,15 @@ html { touch-action: manipulation; }
   body .sg-page-shell .project-detail-v2__service-link h2 { margin-bottom: 0; }
   body .sg-page-shell .knowledge-library { padding-bottom: 44px; }
 }
+
+/* ===== Language menu (UA · RU · EN · DE · ES) — Header.astro [data-language-switcher] ===== */
+.language-switcher__menu{position:absolute;top:calc(100% + 8px);right:0;z-index:1300;display:grid;gap:2px;min-width:184px;margin:0;padding:6px;list-style:none;border:1px solid rgba(127,215,189,.55);border-radius:14px;background:#070908;box-shadow:0 18px 40px rgba(0,0,0,.32)}
+.language-switcher__menu[hidden]{display:none!important}
+.language-switcher__menu li{margin:0;padding:0}
+.language-switcher__option{display:flex;align-items:center;gap:10px;min-height:42px;padding:0 12px;border-radius:10px;color:#dce5e1;font-size:14px;line-height:1.2;text-decoration:none;white-space:nowrap}
+.language-switcher__option b{display:inline-block;min-width:24px;color:var(--mint);font-size:11px;font-weight:800;letter-spacing:.04em}
+.language-switcher__option:hover,.language-switcher__option:focus-visible{background:#14221c;color:#fff;outline:none}
+.language-switcher__option.is-active{background:#14221c;color:#fff}
+.language-switcher__button{font:inherit}
+.sg-ua-catalog-menu__note{margin:7px 0 0;color:#aeb9b4;font-size:12px;line-height:1.4}
+.sg-header .simple-catalog__category-row--single{grid-template-columns:minmax(0,1fr)}

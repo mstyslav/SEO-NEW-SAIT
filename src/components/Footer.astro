@@ -1,16 +1,21 @@
 ---
-import { localeFromPath, localizedPath, normalizeLocale } from '../i18n/helpers';
+import { isIntlLocale, localeFromPath, localizedPath, normalizeLocale } from '../i18n/helpers';
+import { intlNavItems } from '../content/i18n/intl/navigation';
+import { intlFooterText } from '../content/i18n/intl/footer';
 
 const locale = normalizeLocale(Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
+const intl = isIntlLocale(locale);
 const lp = (path: string) => localizedPath(path, locale);
 
 const categoryLabelsByLocale = {
   uk: ['Душові конструкції','Дзеркала','Скляні перегородки','Скляні двері','Скляні огорожі','Скляні козирки','Безрамне скління','Алюмінієві конструкції','Скляні фасади','Металопластикові конструкції','Скло для бізнесу'],
   ru: ['Душевые конструкции','Зеркала','Стеклянные перегородки','Стеклянные двери','Стеклянные ограждения','Стеклянные козырьки','Безрамное остекление','Алюминиевые конструкции','Стеклянные фасады','Металлопластиковые конструкции','Стекло для бизнеса']
 };
-const categoryLabels = categoryLabelsByLocale[locale] ?? categoryLabelsByLocale.uk;
-const categoryHrefs = ['/dushovi-kabiny/','/dzerkala/','/sklyani-perehorodky/','/sklyani-dveri/','/sklyani-ohorozhi/','/sklyani-kozyrky/','/bezramne-sklinnya/','/alyuminiyevi-konstrukcziyi/','/poslugy/sklyani-fasady/','/metaloplastykovi-konstrukcziyi/','/dlya-biznesu/'];
-const categoryTypes = ['shower','mirror','partition','door','railing','canopy','frameless','aluminium','facade','pvc','business-glass'];
+// EN/DE/ES: the translated hubs (winter gardens instead of the UA-only metal-plastic section).
+const intlNav = intl ? intlNavItems(locale) : [];
+const categoryLabels = intl ? intlNav.map(({ name }) => name) : (categoryLabelsByLocale[locale] ?? categoryLabelsByLocale.uk);
+const categoryHrefs = intl ? intlNav.map(({ href }) => href) : ['/dushovi-kabiny/','/dzerkala/','/sklyani-perehorodky/','/sklyani-dveri/','/sklyani-ohorozhi/','/sklyani-kozyrky/','/bezramne-sklinnya/','/alyuminiyevi-konstrukcziyi/','/poslugy/sklyani-fasady/','/metaloplastykovi-konstrukcziyi/','/dlya-biznesu/'];
+const categoryTypes = ['shower','mirror','partition','door','railing','canopy','frameless','aluminium','facade',intl ? 'winter-garden' : 'pvc','business-glass'];
 const categories = categoryLabels.map((label, i) => [label, categoryHrefs[i]]);
 // Desktop (≥1281px) shows the categories as two independent columns (CSS multi-column,
 // see the <style> below) so a two-line label in one column no longer pushes the other
@@ -26,7 +31,18 @@ const productStrip = categoryLabels.map((label, i) => [label, categoryHrefs[i], 
 // columns of the one-row desktop product strip (901–1199px) instead of overlapping.
 const SOFT_HYPHENS: Record<string, string> = {
   'Металопластикові': 'Мета\u00adло\u00adплас\u00adти\u00adкові',
-  'Металлопластиковые': 'Метал\u00adло\u00adплас\u00adти\u00adко\u00adвые'
+  'Металлопластиковые': 'Метал\u00adло\u00adплас\u00adти\u00adко\u00adвые',
+  'Glasduschen': 'Glas\u00adduschen',
+  'Glastrennwände': 'Glas\u00adtrenn\u00adwände',
+  'Glasgeländer': 'Glas\u00adge\u00adlän\u00adder',
+  'Glasvordächer': 'Glas\u00advor\u00addächer',
+  'Verglasung': 'Ver\u00adgla\u00adsung',
+  'Glasfassaden': 'Glas\u00adfas\u00adsaden',
+  'Wintergärten': 'Winter\u00adgärten',
+  'Glaslösungen': 'Glas\u00adlö\u00adsun\u00adgen',
+  'Aluminium-Fenster': 'Alu\u00admi\u00adnium-Fenster',
+  'Barandillas': 'Baran\u00addillas',
+  'Marquesinas': 'Marque\u00adsinas'
 };
 const softHyphenate = (text: string) => text.replace(/[\p{L}]+/gu, (w) => SOFT_HYPHENS[w] ?? w);
 
@@ -35,7 +51,9 @@ const serviceLabelsByLocale = {
   uk: ['Виготовлення','Монтаж','Замір','Проєктування','Гарантія та сервіс'],
   ru: ['Изготовление','Монтаж','Замер','Проектирование','Гарантия и сервис']
 };
-const services = (serviceLabelsByLocale[locale] ?? serviceLabelsByLocale.uk).map((label, i) => [label, serviceHrefs[i]]);
+const services = intl
+  ? intlFooterText[locale].services.map((label, i) => [label, i === 0 ? lp('/poslugy/') : `${lp('/poslugy/')}#process`])
+  : (serviceLabelsByLocale[locale] ?? serviceLabelsByLocale.uk).map((label, i) => [label, serviceHrefs[i]]);
 
 const companyByLocale = {
   uk: [
@@ -53,7 +71,9 @@ const companyByLocale = {
     ['Отзывы', `${lp('/about/')}#reviews`]
   ]
 };
-const company = companyByLocale[locale] ?? companyByLocale.uk;
+const company = intl
+  ? intlFooterText[locale].company.map(([label, path]) => [label, lp(path)])
+  : (companyByLocale[locale] ?? companyByLocale.uk);
 
 const citiesByLocale = {
   uk: [
@@ -69,7 +89,10 @@ const citiesByLocale = {
     ['Вся Украина','/catalog/']
   ]
 };
-const cities = citiesByLocale[locale] ?? citiesByLocale.uk;
+// EN/DE/ES have no city pages: the office cities lead to the offices on the contact page.
+const cities = intl
+  ? intlFooterText[locale].cities.map(([label]) => [label, '/contacts/'])
+  : (citiesByLocale[locale] ?? citiesByLocale.uk);
 
 const footerTextByLocale = {
   uk: {
@@ -121,7 +144,8 @@ const footerTextByLocale = {
     quoteCta: ['Получить расчёт','Отправьте проект или фото']
   }
 };
-const ft = footerTextByLocale[locale] ?? footerTextByLocale.uk;
+const ft = intl ? intlFooterText[locale].text : (footerTextByLocale[locale] ?? footerTextByLocale.uk);
+const phoneLabel = intl ? '+380 73 425 14 00' : '+38 (073) 425 14 00';
 const currentYear = new Date().getFullYear();
 ---
 <footer class="site-footer footer-refined">
@@ -156,8 +180,8 @@ const currentYear = new Date().getFullYear();
     </div>
     <div class="footer-refined__col"><strong>{ft.servicesTitle}</strong>{services.map(([label,href]) => <a href={href}>{label}</a>)}</div>
     <div class="footer-refined__col"><strong>{ft.companyTitle}</strong>{company.map(([label,href]) => <a href={href}>{label}</a>)}</div>
-    <div class="footer-refined__col footer-refined__cities"><strong>{ft.citiesTitle}</strong>{cities.map(([label,href]) => <a href={lp(href)}>{label}</a>)}</div>
-    <div class="footer-refined__contacts"><strong>{ft.contactsTitle}</strong><a href="tel:+380734251400"><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>+38 (073) 425 14 00</span></a><a href="mailto:info@space-glass.com.ua"><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4V6Zm0 0 8 7 8-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>info@space-glass.com.ua</span></a><span><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><b>{ft.citiesLine}</b></span><span><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5v4.7l3.2 1.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>{ft.hours}</b></span><a class="footer-refined__call-secondary" href={lp("/contacts/")}><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>{ft.callSecondary}</b><i>→</i></a></div>
+    <div class="footer-refined__col footer-refined__cities"><strong>{ft.citiesTitle}</strong>{cities.map(([label,href]) => <a href={intl ? `${lp(href)}#offices` : lp(href)}>{label}</a>)}</div>
+    <div class="footer-refined__contacts"><strong>{ft.contactsTitle}</strong><a href="tel:+380734251400"><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>{phoneLabel}</span></a><a href="mailto:info@space-glass.com.ua"><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4V6Zm0 0 8 7 8-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>info@space-glass.com.ua</span></a><span><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><b>{ft.citiesLine}</b></span><span><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5v4.7l3.2 1.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>{ft.hours}</b></span><a class="footer-refined__call-secondary" href={lp("/contacts/")}><svg class="footer-refined__contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>{ft.callSecondary}</b><i>→</i></a></div>
   </div>
 
   <div class="footer-refined__products">
@@ -191,6 +215,7 @@ const currentYear = new Date().getFullYear();
   <circle cx="49" cy="37" r="1.5"/>
 </svg>}
             {type === 'frameless' && <svg viewBox="0 0 72 72"><path d="M10 58h52"/><path d="M16 58V14h40v44"/><path d="M29 14v44M43 14v44"/><path d="M20 20h5M33 20h5M47 20h5"/></svg>}
+            {type === 'winter-garden' && <svg viewBox="0 0 72 72"><path d="M10 60V30l26-18 26 18v30"/><path d="M10 60h52"/><path d="M23 60V33M36 60V24M49 60V33"/><path d="M10 44h52"/></svg>}
             {type === 'business-glass' && <svg viewBox="0 0 72 72"><path d="M12 58V20h48v38"/><path d="M18 20v-6h36v6"/><path d="M24 26v26M36 26v26M48 26v26"/><path d="M12 38h48"/><path d="M18 58h36"/></svg>}
           </span>
           <b>{softHyphenate(label)}</b>

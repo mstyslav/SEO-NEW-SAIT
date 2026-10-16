@@ -1,12 +1,18 @@
 import { hasProjectRu } from '../data/ru/projects.ru';
-export const supportedLocales = ['uk', 'ru'] as const;
+import { intlFallbackPath, intlRouteOfPath, intlRouteOfUk, isIntlLocale } from './intl-routes';
+export const supportedLocales = ['uk', 'ru', 'en', 'de', 'es'] as const;
 export type Locale = typeof supportedLocales[number];
+export { isIntlLocale };
 
 export function normalizeLocale(locale?: string): Locale {
   return supportedLocales.includes(locale as Locale) ? (locale as Locale) : 'uk';
 }
 
 export function stripLocale(pathname: string): string {
+  // EN/DE/ES pages have localized slugs: their "base" is the UA page they translate
+  // (src/i18n/intl-routes.ts). An unlisted /en|de|es/ path is returned unchanged.
+  const intl = intlRouteOfPath(pathname);
+  if (intl) return intl.uk;
   const stripped = pathname.replace(/^\/(uk|ru)(?=\/|$)/, '');
   return stripped || '/';
 }
@@ -148,6 +154,8 @@ export function hasLocalizedRoute(pathname: string, locale: Locale): boolean {
 
   const base = stripLocale(pathname);
 
+  if (isIntlLocale(locale)) return Boolean(intlRouteOfUk(base));
+
   // All RU Knowledge article routes are generated from the localized
   // knowledge dataset under /ru/knowledge/[slug]/.
   if (locale === 'ru' && /^\/knowledge\/[^/]+\/$/.test(base)) return true;
@@ -174,11 +182,17 @@ export function localizedPath(pathname: string, locale: Locale): string {
   const suffix = cut === -1 ? '' : pathname.slice(cut);
   const base = stripLocale(path);
   if (locale === 'uk') return `${base}${suffix}`;
+  // EN/DE/ES: the localized page, otherwise its nearest localized parent (or the localized home
+  // page) — an international page never links to a UA/RU page by fallback.
+  if (isIntlLocale(locale)) {
+    const route = intlRouteOfUk(base);
+    return route ? `${route[locale]}${suffix}` : intlFallbackPath(base, locale);
+  }
   if (!hasLocalizedRoute(base, locale)) return `${base}${suffix}`;
   return `/${locale}${base === '/' ? '/' : base}${suffix}`;
 }
 
 export function localeFromPath(pathname: string): Locale {
-  const match = pathname.match(/^\/(uk|ru)(?=\/|$)/);
+  const match = pathname.match(/^\/(uk|ru|en|de|es)(?=\/|$)/);
   return match ? (match[1] as Locale) : 'uk';
 }

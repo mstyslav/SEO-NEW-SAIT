@@ -3,6 +3,7 @@
 // The choice is stored in localStorage 'sg-cookie-consent' ('all' | 'necessary');
 // analytics_storage stays 'denied' until the visitor accepts.
 import type { Locale } from '../i18n/helpers';
+import { intlHref } from '../i18n/intl-routes';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
@@ -24,6 +25,33 @@ const t = {
     policy: '/ru/cookies-policy/',
     reject: 'Только необходимые',
     accept: 'Принять'
+  },
+  en: {
+    aria: 'Cookie settings',
+    title: 'Your privacy settings',
+    text: 'We use necessary cookies and, only with your consent, analytics to improve the website.',
+    more: 'Learn more',
+    policy: intlHref('cookies', 'en'),
+    reject: 'Necessary only',
+    accept: 'Accept'
+  },
+  de: {
+    aria: 'Cookie-Einstellungen',
+    title: 'Ihre Datenschutzeinstellungen',
+    text: 'Wir verwenden notwendige Cookies und – nur mit Ihrer Einwilligung – Analyse-Tools, um die Website zu verbessern.',
+    more: 'Mehr erfahren',
+    policy: intlHref('cookies', 'de'),
+    reject: 'Nur notwendige',
+    accept: 'Akzeptieren'
+  },
+  es: {
+    aria: 'Configuración de cookies',
+    title: 'Su configuración de privacidad',
+    text: 'Usamos cookies necesarias y, solo con su consentimiento, analítica para mejorar el sitio web.',
+    more: 'Más información',
+    policy: intlHref('cookies', 'es'),
+    reject: 'Solo necesarias',
+    accept: 'Aceptar'
   }
 }[locale];
 ---

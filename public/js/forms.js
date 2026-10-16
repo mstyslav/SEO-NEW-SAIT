@@ -4,9 +4,30 @@ const endpoint=document.documentElement.dataset.leadEndpoint||'/api/kommo-lead';
 let humanSignal=false;
 ['pointerdown','keydown','touchstart','scroll'].forEach(type=>window.addEventListener(type,()=>{humanSignal=true},{once:true,passive:true}));
 // Success pop-up (instead of leaving the page): check mark, thanks by name, next step, call button.
-// Language comes from the URL: /ru/… = RU, everything else = UA.
-const isRu=location.pathname==='/ru/'||location.pathname.startsWith('/ru/');
-const T=isRu?{title:'Спасибо',title2:'Заявка отправлена',text:'Менеджер свяжется с вами в ближайшее рабочее время, уточнит детали и подготовит расчёт.',product:'Запрос',ok:'Хорошо',call:'Позвонить нам',close:'Закрыть',
+// Language comes from the URL: /ru/ /en/ /de/ /es/ prefixes, everything else = UA.
+const pageLang=(location.pathname.match(/^\/(ru|en|de|es)(?=\/|$)/)||[])[1]||'uk';
+const isRu=pageLang==='ru';
+const TI={
+  en:{title:'Thank you',title2:'Request sent',text:'Our manager will contact you during business hours to clarify the details and prepare a quote.',product:'Request',ok:'OK',call:'Call us',close:'Close',
+    jobText:'We have received your application and will contact you to discuss the details.',
+    sending:'Sending…',status:'Sending your request securely…',phone:'Please check the phone number and country code.',
+    error:'The request could not be sent online. Please call +380 73 425 14 00 or try again.',tooMany:'Too many requests in a row. Please wait a minute and try again.',
+    fileSize:'The file is too large — 10 MB maximum.',fileType:'This file type is not supported. Please attach JPG, PNG, WEBP, PDF or DWG.',
+    fileNotSent:'Your request was sent, but the file could not be transferred — our manager will ask for it when calling.'},
+  de:{title:'Vielen Dank',title2:'Anfrage gesendet',text:'Unser Team meldet sich während der Geschäftszeiten bei Ihnen, klärt die Details und erstellt eine Kostenschätzung.',product:'Anfrage',ok:'OK',call:'Anrufen',close:'Schließen',
+    jobText:'Wir haben Ihre Bewerbung erhalten und melden uns, um die Details zu besprechen.',
+    sending:'Wird gesendet…',status:'Ihre Anfrage wird sicher übermittelt…',phone:'Bitte prüfen Sie die Telefonnummer und die Landesvorwahl.',
+    error:'Die Anfrage konnte nicht online gesendet werden. Rufen Sie uns an: +380 73 425 14 00, oder versuchen Sie es erneut.',tooMany:'Zu viele Anfragen in kurzer Zeit. Bitte warten Sie eine Minute und versuchen Sie es erneut.',
+    fileSize:'Die Datei ist zu groß — maximal 10 MB.',fileType:'Dieser Dateityp wird nicht unterstützt. Bitte JPG, PNG, WEBP, PDF oder DWG anhängen.',
+    fileNotSent:'Ihre Anfrage wurde gesendet, die Datei konnte jedoch nicht übertragen werden — wir fragen beim Rückruf danach.'},
+  es:{title:'¡Gracias',title2:'Solicitud enviada',text:'Nuestro equipo le contactará en horario laboral para aclarar los detalles y preparar el presupuesto.',product:'Solicitud',ok:'De acuerdo',call:'Llamar',close:'Cerrar',
+    jobText:'Hemos recibido su candidatura y le contactaremos para hablar de los detalles.',
+    sending:'Enviando…',status:'Enviando su solicitud de forma segura…',phone:'Compruebe el número de teléfono y el prefijo del país.',
+    error:'No se ha podido enviar la solicitud en línea. Llame al +380 73 425 14 00 o inténtelo de nuevo.',tooMany:'Demasiadas solicitudes seguidas. Espere un minuto y vuelva a intentarlo.',
+    fileSize:'El archivo es demasiado grande: máximo 10 MB.',fileType:'Este tipo de archivo no es compatible. Adjunte JPG, PNG, WEBP, PDF o DWG.',
+    fileNotSent:'La solicitud se ha enviado, pero no se ha podido transferir el archivo: se lo pediremos al llamarle.'}
+};
+const T=TI[pageLang]||(isRu?{title:'Спасибо',title2:'Заявка отправлена',text:'Менеджер свяжется с вами в ближайшее рабочее время, уточнит детали и подготовит расчёт.',product:'Запрос',ok:'Хорошо',call:'Позвонить нам',close:'Закрыть',
     jobText:'Мы получили вашу заявку и свяжемся с вами, чтобы обсудить детали.',
     sending:'Отправляем…',status:'Безопасно передаём ваш запрос…',phone:'Проверьте номер телефона и код страны.',
     error:'Не удалось отправить онлайн. Позвоните +38 (073) 425 14 00 или попробуйте ещё раз.',tooMany:'Слишком много заявок подряд. Подождите минуту и попробуйте снова.',
@@ -17,16 +38,16 @@ const T=isRu?{title:'Спасибо',title2:'Заявка отправлена',
     sending:'Надсилаємо…',status:'Безпечно передаємо ваш запит…',phone:'Перевірте номер телефону та код країни.',
     error:'Не вдалося надіслати онлайн. Зателефонуйте +38 (073) 425 14 00 або спробуйте ще раз.',tooMany:'Забагато заявок поспіль. Зачекайте хвилину та спробуйте знову.',
     fileSize:'Файл завеликий — максимум 10 МБ.',fileType:'Цей тип файлу не підтримується. Додайте JPG, PNG, WEBP, PDF або DWG.',
-    fileNotSent:'Заявку надіслано, але файл не вдалося передати — менеджер попросить його під час дзвінка.'};
+    fileNotSent:'Заявку надіслано, але файл не вдалося передати — менеджер попросить його під час дзвінка.'});
 // Attachment limits — mirror ATTACH_* in worker/index.ts.
 const ATTACH_MAX_BYTES=10*1024*1024;
 const ATTACH_EXT=/\.(jpe?g|png|webp|pdf|dwg)$/i;
 
 // GA4 (gtag + Consent Mode are set up in BaseLayout). Only non-personal parameters are sent:
 // never name, phone, e-mail, city, message, file or configuration.
-const pageLanguage=isRu?'ru':'ua';
+const pageLanguage=pageLang==='uk'?'ua':pageLang;
 const track=(name,params)=>{try{if(typeof window.gtag!=='function') return; const p={page_path:location.pathname,page_language:pageLanguage}; Object.entries(params||{}).forEach(([k,v])=>{if(v!==undefined&&v!=='')p[k]=v;}); window.gtag('event',name,p);}catch{}};
-const leadType=()=>location.pathname.replace(/^\/ru\//,'/').split('/')[1]||'home';
+const leadType=()=>location.pathname.replace(/^\/(ru|en|de|es)\//,'/').split('/')[1]||'home';
 const FORM_TYPES=[['contacts-form','contacts','contacts_page'],['profile-request__form','profile_request','page_bottom'],['project-request-form__form','project_request','project_page'],['quote-form--home-final','home_quote','home_final'],['tray-order__form','tray_order','tray_configurator'],['rc__request','configurator_request','configurator'],['career__form','job_application','about_career']];
 const formInfo=form=>{const hit=FORM_TYPES.find(([cls])=>form.classList.contains(cls));return{form_id:form.dataset.formId||(hit?hit[1]:'lead_form'),form_location:form.dataset.formLocation||(hit?hit[2]:'content')};};
 const productCategory=form=>{const field=form.querySelector('input[type="hidden"][name="product"], select[name="product"]');const v=field&&String(field.value||'').trim();return v?v.slice(0,100):undefined;};
@@ -37,7 +58,7 @@ const productCategory=form=>{const field=form.querySelector('input[type="hidden"
 // touched / a form is submitted) so it never competes with the hero image, the validation
 // utils (~60 KB gz) on the first interaction with it. The number is sent in E.164
 // (+380671234567); the Worker validates it again (worker/index.ts → normalisePhone).
-const PHONE_ERROR=isRu?'Проверьте номер телефона и код страны.':'Перевірте номер телефону та код країни.';
+const PHONE_ERROR=TI[pageLang]?TI[pageLang].phone:isRu?'Проверьте номер телефона и код страны.':'Перевірте номер телефону та код країни.';
 const ITI_BASE='/vendor/intl-tel-input-29.5.3/';
 const PHONE_COUNTRIES=['ua','at','it','de','pl','es','cz','sk','fr','ch','md','ro'];
 const phoneInputs=[...document.querySelectorAll('[data-lead-form] input[type="tel"][name="phone"]')];
@@ -99,7 +120,9 @@ const preparePhones=async form=>{
 let phoneInit=null;
 const initPhones=()=>{
   if(phoneInit||!phoneInputs.length) return phoneInit||Promise.resolve();
-  const lang=isRu?'ru':'uk';
+  const lang=pageLang;
+  // Country preselected in the phone field: Ukraine by default; Austria for German, Spain for Spanish pages.
+  const initialCountry={de:'at',es:'es'}[pageLang]||'ua';
   phoneInit=Promise.all([
     loadAsset('link',{rel:'stylesheet',href:ITI_BASE+'css/intlTelInput.min.css'}),
     window.intlTelInput?Promise.resolve():loadAsset('script',{src:ITI_BASE+'js/intlTelInput.min.js'}),
@@ -118,7 +141,7 @@ const initPhones=()=>{
       input.removeAttribute('maxlength');
       input.placeholder='50 123 4567';
       const widget=window.intlTelInput(input,{
-        initialCountry:'ua',
+        initialCountry,
         countryOrder:PHONE_COUNTRIES,
         countryNameLocale:lang,
         uiTranslations:locale.default,

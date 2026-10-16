@@ -17,7 +17,7 @@ interface Props {
   options: string[];
   optionsLabel?: string;
   commentPlaceholder?: string;
-  locale?: 'uk' | 'ru';
+  locale?: 'uk' | 'ru' | 'en' | 'de' | 'es';
   /**
    * Which product family the page sells — picks the middle promise in the intro list:
    * 'glazing' — profile systems with insulating glass units (aluminium, PVC, facades, frameless);
@@ -26,6 +26,8 @@ interface Props {
    */
   family?: 'glazing' | 'glass' | 'generic';
 }
+
+import { intlHref } from '../../i18n/intl-routes';
 
 const {
   id = 'request',
@@ -58,8 +60,36 @@ const L = {
     comment: 'Комментарий', undecided: 'Ещё не определились — помогите выбрать', option: 'Система',
     commentPh: 'Размеры проёмов, количество изделий, пожелания по цвету или стеклу',
     consent: 'Соглашаюсь с', policy: 'политикой конфиденциальности', submit: 'Отправить заявку', policyHref: '/ru/privacy-policy/'
+  },
+  en: {
+    eyebrow: 'Request from this page',
+    points: ['We reply within one business day', { glazing: 'We select the system and glazing unit', glass: 'We select the design, glass and hardware', generic: 'We find a solution for your opening' }[family], 'Preliminary quote — free of charge'],
+    call: 'Or call us:',
+    name: 'Name', namePh: 'Your name', phone: 'Phone', city: 'City / country', cityPh: 'City, country',
+    comment: 'Message', undecided: 'Not sure yet — please advise', option: 'System',
+    commentPh: 'Opening sizes, number of items, glass or colour preferences',
+    consent: 'I agree to the', policy: 'privacy policy', submit: 'Send request', policyHref: intlHref('privacy', 'en')
+  },
+  de: {
+    eyebrow: 'Anfrage von dieser Seite',
+    points: ['Antwort innerhalb eines Werktags', { glazing: 'Wir wählen System und Isolierglas aus', glass: 'Wir wählen Konstruktion, Glas und Beschläge aus', generic: 'Wir finden die Lösung für Ihre Öffnung' }[family], 'Unverbindliche Kostenschätzung — kostenlos'],
+    call: 'Oder rufen Sie an:',
+    name: 'Name', namePh: 'Ihr Name', phone: 'Telefon', city: 'Ort / Land', cityPh: 'Ort, Land',
+    comment: 'Nachricht', undecided: 'Noch unentschlossen — bitte beraten', option: 'System',
+    commentPh: 'Maße der Öffnungen, Stückzahl, Wünsche zu Glas oder Farbe',
+    consent: 'Ich stimme der', policy: 'Datenschutzerklärung', submit: 'Anfrage senden', policyHref: intlHref('privacy', 'de'), consentAfter: ' zu'
+  },
+  es: {
+    eyebrow: 'Solicitud desde esta página',
+    points: ['Respondemos en un día laborable', { glazing: 'Elegimos el sistema y el doble acristalamiento', glass: 'Elegimos el diseño, el vidrio y los herrajes', generic: 'Buscamos la solución para su hueco' }[family], 'Presupuesto orientativo gratuito'],
+    call: 'O llámenos:',
+    name: 'Nombre', namePh: 'Su nombre', phone: 'Teléfono', city: 'Ciudad / país', cityPh: 'Ciudad, país',
+    comment: 'Mensaje', undecided: 'Aún no lo tengo claro — necesito consejo', option: 'Sistema',
+    commentPh: 'Medidas de los huecos, número de unidades, preferencias de vidrio o color',
+    consent: 'Acepto la', policy: 'política de privacidad', submit: 'Enviar solicitud', policyHref: intlHref('privacy', 'es')
   }
-}[locale];
+}[locale] as { eyebrow: string; points: string[]; call: string; name: string; namePh: string; phone: string; city: string; cityPh: string; comment: string; undecided: string; option: string; commentPh: string; consent: string; policy: string; submit: string; policyHref: string; consentAfter?: string };
+const phoneLabel = ['en', 'de', 'es'].includes(locale) ? '+380 73 425 14 00' : '+38 (073) 425 14 00';
 ---
 <section id={id} class="profile-request" aria-labelledby={`${id}-title`}>
   <div class="profile-request__intro">
@@ -69,7 +99,7 @@ const L = {
     <ul class="profile-request__points">
       {L.points.map((point) => <li>{point}</li>)}
     </ul>
-    <p class="profile-request__phone">{L.call} <a href="tel:+380734251400">+38 (073) 425 14 00</a></p>
+    <p class="profile-request__phone">{L.call} <a href="tel:+380734251400">{phoneLabel}</a></p>
   </div>
 
   <form class="quote-form contacts-v15-form profile-request__form" data-lead-form data-success-url="/thank-you/">
@@ -90,7 +120,7 @@ const L = {
       <label>{L.city}<input name="city" autocomplete="address-level2" type="text" placeholder={L.cityPh} /></label>
     </div>
     <label>{L.comment}<textarea name="comment" rows="4" placeholder={commentPlaceholder ?? L.commentPh}></textarea></label>
-    <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>{L.consent} <a href={L.policyHref}>{L.policy}</a>.</span></label>
+    <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>{L.consent} <a href={L.policyHref}>{L.policy}</a>{L.consentAfter ?? ''}.</span></label>
     <button class="button button--mint" type="submit">{L.submit}</button>
     <p data-form-status hidden role="status"></p>
   </form>

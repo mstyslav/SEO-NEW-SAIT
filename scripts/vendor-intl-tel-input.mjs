@@ -1,7 +1,7 @@
 // Copies the intl-tel-input files the site serves itself (no CDN) into public/vendor/intl-tel-input-<version>/ (versioned path, cached as immutable).
 // Re-run after upgrading the package: node scripts/vendor-intl-tel-input.mjs
 // Loaded by public/js/forms.js: core + CSS on pages with a phone field; utils.js (libphonenumber)
-// lazily on first interaction with the field; UI translations for UA/RU.
+// lazily on first interaction with the field; UI translations for UA/RU/EN/DE/ES.
 import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
@@ -13,6 +13,9 @@ const files = [
   ['dist/js/utils.js', 'js/utils.js'],
   ['dist/js/locale/uk.js', 'js/locale/uk.js'],
   ['dist/js/locale/ru.js', 'js/locale/ru.js'],
+  ['dist/js/locale/en.js', 'js/locale/en.js'],
+  ['dist/js/locale/de.js', 'js/locale/de.js'],
+  ['dist/js/locale/es.js', 'js/locale/es.js'],
   ['dist/css/intlTelInput.min.css', 'css/intlTelInput.min.css'],
   ['dist/img/flags.webp', 'img/flags.webp'],
   ['dist/img/flags@2x.webp', 'img/flags@2x.webp'],

@@ -10,7 +10,7 @@ interface Props {
 
 const { projectTitle, city, requestExample, locale = 'uk' } = Astro.props;
 const successUrl = localizedPath('/thank-you/', locale);
-const tx = {
+const tx = ({
   uk: {
     eyebrow: 'Заявка на розрахунок', title: 'Розрахувати подібний проєкт', intro: 'Залиште контакти й коротко опишіть потрібну конструкцію. Менеджер уточнить деталі та підготує попередню оцінку.',
     example: 'Наприклад:', name: 'Ім’я', namePh: 'Ваше ім’я', phone: 'Телефон', city: 'Місто', cityPh: 'Київ, Львів, Одеса...', need: 'Що потрібно',
@@ -20,8 +20,23 @@ const tx = {
     eyebrow: 'Заявка на расчёт', title: 'Рассчитать похожий проект', intro: 'Оставьте контакты и коротко опишите нужную конструкцию. Менеджер уточнит детали и подготовит предварительную оценку.',
     example: 'Например:', name: 'Имя', namePh: 'Ваше имя', phone: 'Телефон', city: 'Город', cityPh: 'Киев, Львов, Одесса...', need: 'Что нужно',
     needPh: 'Ориентировочные размеры и пожелания к конструкции', consent: 'Соглашаюсь с', policy: 'политикой конфиденциальности', send: 'Отправить запрос'
+  },
+  en: {
+    eyebrow: 'Quote request', title: 'Get a quote for a similar project', intro: 'Leave your contact details and briefly describe the structure you need. Our manager will clarify the details and prepare a preliminary estimate.',
+    example: 'For example:', name: 'Name', namePh: 'Your name', phone: 'Phone', city: 'City / country', cityPh: 'City, country', need: 'What do you need',
+    needPh: 'Approximate dimensions and your wishes for the structure', consent: 'I agree to the', policy: 'privacy policy', send: 'Send request'
+  },
+  de: {
+    eyebrow: 'Anfrage', title: 'Ähnliches Projekt anfragen', intro: 'Hinterlassen Sie Ihre Kontaktdaten und beschreiben Sie kurz die gewünschte Konstruktion. Wir klären die Details und erstellen eine unverbindliche Kostenschätzung.',
+    example: 'Zum Beispiel:', name: 'Name', namePh: 'Ihr Name', phone: 'Telefon', city: 'Ort / Land', cityPh: 'Ort, Land', need: 'Ihr Vorhaben',
+    needPh: 'Ungefähre Maße und Ihre Wünsche an die Konstruktion', consent: 'Ich stimme der', policy: 'Datenschutzerklärung', consentAfter: ' zu', send: 'Anfrage senden'
+  },
+  es: {
+    eyebrow: 'Solicitud de presupuesto', title: 'Presupuesto para un proyecto similar', intro: 'Déjenos sus datos de contacto y describa brevemente la estructura que necesita. Aclararemos los detalles y prepararemos una estimación orientativa.',
+    example: 'Por ejemplo:', name: 'Nombre', namePh: 'Su nombre', phone: 'Teléfono', city: 'Ciudad / país', cityPh: 'Ciudad, país', need: 'Qué necesita',
+    needPh: 'Medidas aproximadas y sus preferencias para la estructura', consent: 'Acepto la', policy: 'política de privacidad', send: 'Enviar solicitud'
   }
-}[locale === 'ru' ? 'ru' : 'uk'];
+}[locale] ?? null) as { eyebrow: string; title: string; intro: string; example: string; name: string; namePh: string; phone: string; city: string; cityPh: string; need: string; needPh: string; consent: string; policy: string; consentAfter?: string; send: string };
 ---
 
 <section class="project-request-form" id="project-request" aria-labelledby="project-request-title">
@@ -34,13 +49,14 @@ const tx = {
 
   <form class="quote-form contacts-v15-form project-request-form__form" data-lead-form data-success-url={successUrl}>
     <input name="product" type="hidden" value={projectTitle} />
+    {locale !== 'uk' && locale !== 'ru' && <input name="locale" type="hidden" value={locale} />}
     <div class="contacts-form-grid">
       <label>{tx.name}<input name="name" type="text" autocomplete="name" placeholder={tx.namePh} required /></label>
       <label>{tx.phone}<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
     </div>
     <label>{tx.city}<input name="city" autocomplete="address-level2" type="text" value={city} placeholder={tx.cityPh} /></label>
     <label>{tx.need}<textarea name="comment" rows="5" placeholder={tx.needPh}></textarea></label>
-    <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>{tx.consent} <a href={localizedPath('/privacy-policy/', locale)}>{tx.policy}</a>.</span></label>
+    <label class="quote-consent"><input name="consent" value="accepted" type="checkbox" required /><span>{tx.consent} <a href={localizedPath('/privacy-policy/', locale)}>{tx.policy}</a>{tx.consentAfter ?? ''}.</span></label>
     <button class="button button--mint" type="submit">{tx.send}</button>
     <p data-form-status hidden role="status"></p>
   </form>

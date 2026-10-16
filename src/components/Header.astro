@@ -1,37 +1,69 @@
 ---
 import translations from '../i18n/translations.json';
 import i18nConfig from '../i18n/config.json';
-import { hasLocalizedRoute, localeFromPath, localizedPath, normalizeLocale } from '../i18n/helpers';
+import { hasLocalizedRoute, isIntlLocale, localeFromPath, localizedPath, normalizeLocale, supportedLocales } from '../i18n/helpers';
+import type { Locale } from '../i18n/helpers';
 import { getCatalogNavigation } from '../data/catalog-navigation';
+import { intlCatalogNavigation } from '../content/i18n/intl/navigation';
 
 const requestedLocale = Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname);
 const locale = normalizeLocale(requestedLocale);
+const intl = isIntlLocale(locale);
 const t = translations[locale] ?? translations.uk;
 const localeInfo = i18nConfig.locales[locale] ?? i18nConfig.locales.uk;
-const catalogNavigation = getCatalogNavigation(locale);
+const catalogNavigation = intl ? intlCatalogNavigation(locale) : getCatalogNavigation(locale);
 const currentPath = Astro.url.pathname;
 const lp = (path: string) => localizedPath(path, locale);
 
-const localeSwitchPath = (targetLocale: 'uk' | 'ru') => {
+const NOT_FOUND_PATH = new RegExp('^/(?:(?:ru|en|de|es)/)?404/?$');
+const localeSwitchPath = (targetLocale: Locale) => {
   // 404 pages are shown at unknown URLs: the switcher leads to the other language's home page.
-  if (/^\/(?:ru\/)?404\/?$/.test(currentPath)) return targetLocale === 'ru' ? '/ru/' : '/';
+  if (NOT_FOUND_PATH.test(currentPath)) return targetLocale === 'uk' ? '/' : `/${targetLocale}/`;
   if (targetLocale === 'ru' && !hasLocalizedRoute(currentPath, 'ru')) return '/ru/';
+  // EN/DE/ES: the same page when it exists, otherwise its nearest translated parent page.
   return localizedPath(currentPath, targetLocale);
 };
-const nextLocale: 'uk' | 'ru' = locale === 'ru' ? 'uk' : 'ru';
-const directLocaleHref = localeSwitchPath(nextLocale);
-const directLocaleLabel = nextLocale === 'uk' ? 'Перейти українською' : 'Перейти російською';
+// Every language in a small menu; the current one is marked, the others link to the same page
+// in that language (or a safe fallback — see localeSwitchPath).
+const languageOptions = supportedLocales.map((code) => ({
+  code,
+  short: i18nConfig.locales[code].short,
+  label: i18nConfig.locales[code].label,
+  htmlLang: i18nConfig.locales[code].htmlLang,
+  href: localeSwitchPath(code),
+  current: code === locale
+}));
+const languageMenuLabel = (t as Record<string, string>).languageMenuAria ?? (locale === 'ru' ? 'Выбрать язык' : 'Обрати мову');
 
-const links = [
-  [t.solutions, '/rishennya/'],
-  [t.services, '/poslugy/'],
-  [t.projects, '/project/'],
-  [t.knowledge, '/knowledge/'],
-  [t.about, '/about/'],
-  [t.contacts, '/contacts/'],
-];
-
+const links = intl
+  ? [
+      [t.business, '/dlya-biznesu/'],
+      [t.projects, '/project/'],
+      [t.about, '/about/'],
+      [t.contacts, '/contacts/'],
+    ]
+  : [
+      [t.solutions, '/rishennya/'],
+      [t.services, '/poslugy/'],
+      [t.projects, '/project/'],
+      [t.knowledge, '/knowledge/'],
+      [t.about, '/about/'],
+      [t.contacts, '/contacts/'],
+    ];
+// International pages: "Products" opens the products & services hub (there is no catalog page).
+const catalogHref = lp(intl ? '/poslugy/' : '/catalog/');
+const phoneLabel = intl ? '+380 73 425 14 00' : '+38 (073) 425 14 00';
+// EN/DE/ES only, inline before the header so it applies on first paint (no layout shift):
+// • the header icon order (global.css, HeaderFixes) targets the phone link by its UA aria-label —
+//   the same order by class here;
+// • long German/Spanish compounds (Aluminiumkonstruktionen, Terrassenverglasung …) hyphenate
+//   instead of overflowing narrow headings, cards and fact lists.
+const INTL_INLINE_CSS = '.sg-nav-actions>.nav-icon--phone{order:5}@media(max-width:1120px){.sg-header .sg-nav-actions>.nav-icon--phone{order:3!important}}'
+  + 'main :is(h1,h2,h3,h4,dt,dd,small),.about-stat span{overflow-wrap:break-word!important;-webkit-hyphens:auto!important;hyphens:auto!important}'
+  + 'main :is(p,li){overflow-wrap:break-word}'
+  + '.about-main-hero .sg-hero__copy h1>span{white-space:normal!important}';
 ---
+{intl && <style is:inline set:html={INTL_INLINE_CSS}></style>}
 <header class="site-header sg-header">
   <div class="container nav sg-nav">
     <a class="brand-logo" href={lp("/")} aria-label={t.brandLogoAria}><img
@@ -42,13 +74,13 @@ const links = [
       style="width:101px;height:auto"
     /></a>
     <nav class="nav__links sg-nav-links" aria-label={t.mainNavAria}>
-      <a class="nav-link nav-link--catalog" href={lp("/catalog/")}>{t.catalog}</a>
+      <a class="nav-link nav-link--catalog" href={catalogHref}>{t.catalog}</a>
       {links.map(([label, href]) => <a class="nav-link" href={lp(href)}>{label}</a>)}
       <button class="nav-link sg-categories-trigger sg-categories-trigger--ua" type="button" aria-controls="sg-ua-catalog-menu" aria-expanded="false" aria-haspopup="true" aria-label={t.openCatalogMenuAria} data-ua-catalog-menu-button><span></span><span></span><span></span></button>
     </nav>
     <div class="nav__actions sg-nav-actions">
-      <div class="language-switcher" data-language-switcher><a class="language-switcher__button language-switcher__button--direct" href={directLocaleHref} hreflang={nextLocale} lang={nextLocale} aria-label={`${localeInfo.short} — ${directLocaleLabel}`} title={directLocaleLabel} data-language-button data-target-locale={nextLocale}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 12h17M12 3c2.4 2.5 3.6 5.5 3.6 9S14.4 18.5 12 21M12 3C9.6 5.5 8.4 8.5 8.4 12S9.6 18.5 12 21" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span>{localeInfo.short}</span></a></div>
-      <a class:list={['nav-icon', 'nav-icon--search', 'nav-icon--search-ua-desktop']} href={lp("/catalog/")} aria-label={t.searchAria}>⌕</a>
+      <div class="language-switcher" data-language-switcher><button class="language-switcher__button language-switcher__button--direct" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sg-language-menu" aria-label={`${languageMenuLabel}: ${localeInfo.label}`} title={languageMenuLabel} data-language-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 12h17M12 3c2.4 2.5 3.6 5.5 3.6 9S14.4 18.5 12 21M12 3C9.6 5.5 8.4 8.5 8.4 12S9.6 18.5 12 21" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span>{localeInfo.short}</span></button><ul class="language-switcher__menu" id="sg-language-menu" aria-label={languageMenuLabel} hidden data-language-menu>{languageOptions.map((option) => <li><a class:list={['language-switcher__option', option.current && 'is-active']} href={option.href} hreflang={option.htmlLang} lang={option.htmlLang} aria-current={option.current ? 'true' : undefined} data-target-locale={option.code} data-language-button><b>{option.short}</b><span>{option.label}</span></a></li>)}</ul></div>
+      <a class:list={['nav-icon', 'nav-icon--search', 'nav-icon--search-ua-desktop']} href={catalogHref} aria-label={t.searchAria}>⌕</a>
       <a class="nav-icon nav-icon--phone" href="tel:+380734251400" aria-label={t.phoneAria}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a class="button button--mint sg-header-cta" href={lp("/contacts/")}>{t.quote}</a>
       <button class="sg-mobile-toggle" type="button" aria-controls="sg-mobile-menu" aria-expanded="false" aria-label={t.menu} data-mobile-menu-button><span></span><span></span><span></span></button>
@@ -56,15 +88,15 @@ const links = [
   </div>
   <section class="sg-ua-catalog-menu" id="sg-ua-catalog-menu" aria-label={t.catalogCategoriesAria} data-ua-catalog-menu hidden>
     <div class="sg-ua-catalog-menu__grid">
-      {catalogNavigation.map(category => <section class="sg-ua-catalog-menu__group"><h2><a href={lp(category.href)}>{category.name}</a></h2><ul>{category.services.map(service => <li><a href={lp(service.path)}>{service.shortName}</a></li>)}</ul></section>)}
+      {catalogNavigation.map(category => <section class="sg-ua-catalog-menu__group"><h2><a href={lp(category.href)}>{category.name}</a></h2>{category.services.length > 0 ? <ul>{category.services.map(service => <li><a href={lp(service.path)}>{service.shortName}</a></li>)}</ul> : category.note && <p class="sg-ua-catalog-menu__note">{category.note}</p>}</section>)}
     </div>
-    <div class="sg-ua-catalog-menu__cities" aria-label={t.searchByCityLabel}>
+    {!intl && <div class="sg-ua-catalog-menu__cities" aria-label={t.searchByCityLabel}>
       <span>⌖ {t.searchByCityLabel}</span>
       <a href={lp("/city/kyiv/")}>{t.cityKyiv}</a>
       <a href={lp("/city/odesa/")}>{t.cityOdesa}</a>
       <a href={lp("/city/lviv/")}>{t.cityLviv}</a>
       <a href={lp("/catalog/")}>{t.cityAllUkraine} <b aria-hidden="true">→</b></a>
-    </div>
+    </div>}
     <div class="sg-ua-catalog-menu__benefits" aria-label={t.catalogMenuBenefitsLabel}>
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6M8 10h.01M16 10h.01" /></svg><p><b>{t.catalogMenuBenefitProductionTitle}</b><span>{t.catalogMenuBenefitProductionText}</span></p></div>
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 7 3v5c0 4.6-2.8 8.5-7 10-4.2-1.5-7-5.4-7-10V6l7-3Zm-3 9 2 2 4-4" /></svg><p><b>{t.warrantyShort}</b><span>{t.catalogMenuBenefitWarrantyText}</span></p></div>
@@ -72,7 +104,7 @@ const links = [
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 10h3l4 4v2h-7zM6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM18 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" /></svg><p><b>{t.catalogMenuBenefitDeliveryTitle}</b><span>{t.catalogMenuBenefitDeliveryText}</span></p></div>
     </div>
   </section>
-  <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden><div class="sg-mobile-menu__panel"><div class="simple-catalog simple-catalog--mobile"><div class="simple-catalog__mobile-row"><a class="sg-mobile-menu__primary" href={lp("/catalog/")}>{t.catalog}</a><button class="simple-catalog__toggle" type="button" aria-label={t.expandCatalogMenu} aria-controls="sg-mobile-catalog-categories" aria-expanded="false" data-mobile-catalog-toggle data-expand-label={t.expandCatalogMenu} data-collapse-label={t.collapseCatalogMenu}><i aria-hidden="true"></i></button></div><div class="simple-catalog__menu" id="sg-mobile-catalog-categories" data-mobile-catalog-menu hidden>{catalogNavigation.map((category, index) => { const services = category.services.filter((service, serviceIndex, allServices) => allServices.findIndex(({ shortName, path }) => path === service.path && shortName === service.shortName) === serviceIndex); const servicesId = `sg-mobile-catalog-services-${index + 1}`; return <section><div class="simple-catalog__category-row"><a class="simple-catalog__category" href={lp(category.href)}>{category.name}</a><button class="simple-catalog__service-toggle" type="button" aria-label={`${t.expandSubcategoriesPrefix}: ${category.name}`} aria-controls={servicesId} aria-expanded="false" data-mobile-category-toggle data-category-name={category.name} data-expand-prefix={t.expandSubcategoriesPrefix} data-collapse-prefix={t.collapseSubcategoriesPrefix}><i aria-hidden="true"></i></button></div><div class="simple-catalog__services" id={servicesId} data-mobile-category-menu hidden>{services.map((service) => <a href={lp(service.path)}>{service.shortName}</a>)}</div></section>})}</div></div>{links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}<a href="tel:+380734251400">+38 (073) 425 14 00</a><a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a></div></div>
+  <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden><div class="sg-mobile-menu__panel"><div class="simple-catalog simple-catalog--mobile"><div class="simple-catalog__mobile-row"><a class="sg-mobile-menu__primary" href={catalogHref}>{t.catalog}</a><button class="simple-catalog__toggle" type="button" aria-label={t.expandCatalogMenu} aria-controls="sg-mobile-catalog-categories" aria-expanded="false" data-mobile-catalog-toggle data-expand-label={t.expandCatalogMenu} data-collapse-label={t.collapseCatalogMenu}><i aria-hidden="true"></i></button></div><div class="simple-catalog__menu" id="sg-mobile-catalog-categories" data-mobile-catalog-menu hidden>{catalogNavigation.map((category, index) => { const services = category.services.filter((service, serviceIndex, allServices) => allServices.findIndex(({ shortName, path }) => path === service.path && shortName === service.shortName) === serviceIndex); const servicesId = `sg-mobile-catalog-services-${index + 1}`; if (services.length === 0) return <section><div class="simple-catalog__category-row simple-catalog__category-row--single"><a class="simple-catalog__category" href={lp(category.href)}>{category.name}</a></div></section>; return <section><div class="simple-catalog__category-row"><a class="simple-catalog__category" href={lp(category.href)}>{category.name}</a><button class="simple-catalog__service-toggle" type="button" aria-label={`${t.expandSubcategoriesPrefix}: ${category.name}`} aria-controls={servicesId} aria-expanded="false" data-mobile-category-toggle data-category-name={category.name} data-expand-prefix={t.expandSubcategoriesPrefix} data-collapse-prefix={t.collapseSubcategoriesPrefix}><i aria-hidden="true"></i></button></div><div class="simple-catalog__services" id={servicesId} data-mobile-category-menu hidden>{services.map((service) => <a href={lp(service.path)}>{service.shortName}</a>)}</div></section>})}</div></div>{links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}<a href="tel:+380734251400">{phoneLabel}</a><a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a></div></div>
 </header>
 <style is:inline>
   .simple-catalog summary{display:inline-flex;align-items:center;gap:6px;min-height:48px;color:#fff;cursor:pointer;list-style:none}.simple-catalog summary::-webkit-details-marker{display:none}.simple-catalog--mobile summary{min-height:44px}
@@ -342,10 +374,32 @@ const links = [
   }
 </script>
 <script>
-  const languageButton=document.querySelector('[data-language-button]');
-  languageButton?.addEventListener('click',()=>{
-    localStorage.setItem('spaceGlassLocale',languageButton.dataset.targetLocale||'uk');
-  });
+  const languageSwitcher=document.querySelector('[data-language-switcher]');
+  const languageToggle=languageSwitcher?.querySelector('[data-language-toggle]');
+  const languageMenu=languageSwitcher?.querySelector('[data-language-menu]');
+  if(languageSwitcher&&languageToggle&&languageMenu){
+    // Fixed to the viewport under the button: the mobile header row clips absolutely positioned children.
+    const placeLanguageMenu=()=>{
+      const r=languageToggle.getBoundingClientRect();
+      languageMenu.style.position='fixed';
+      languageMenu.style.top=`${Math.round(r.bottom+8)}px`;
+      languageMenu.style.right=`${Math.max(8,Math.round(document.documentElement.clientWidth-r.right))}px`;
+    };
+    const setLanguageMenu=(open)=>{
+      if(open) placeLanguageMenu();
+      languageMenu.hidden=!open;
+      languageSwitcher.classList.toggle('is-open',open);
+      languageToggle.setAttribute('aria-expanded',String(open));
+    };
+    languageToggle.addEventListener('click',(event)=>{event.stopPropagation();setLanguageMenu(languageMenu.hidden);});
+    document.addEventListener('click',(event)=>{if(!languageMenu.hidden&&!languageSwitcher.contains(event.target)) setLanguageMenu(false);});
+    document.addEventListener('keydown',(event)=>{if(event.key==='Escape'&&!languageMenu.hidden){setLanguageMenu(false);languageToggle.focus();}});
+    window.addEventListener('scroll',()=>{if(!languageMenu.hidden) setLanguageMenu(false);},{passive:true});
+    window.addEventListener('resize',()=>{if(!languageMenu.hidden) placeLanguageMenu();});
+    languageMenu.querySelectorAll('[data-target-locale]').forEach((link)=>link.addEventListener('click',()=>{
+      try{localStorage.setItem('spaceGlassLocale',link.dataset.targetLocale||'uk');}catch{}
+    }));
+  }
 </script>
 <style>
 /* Social icons — match existing header controls */

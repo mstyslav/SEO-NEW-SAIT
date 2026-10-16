@@ -1,13 +1,20 @@
 ---
 import { localeFromPath } from '../i18n/helpers';
-const isRu = localeFromPath(Astro.url.pathname) === 'ru';
+const scrollLocale = localeFromPath(Astro.url.pathname);
+const isRu = scrollLocale === 'ru';
+const scrollLabels: Record<string, [string, string]> = {
+  en: ['Back to the top of the page', 'Back to top'],
+  de: ['Zurück zum Seitenanfang', 'Nach oben'],
+  es: ['Volver al inicio de la página', 'Arriba']
+};
+const intlScroll = scrollLabels[scrollLocale];
 ---
 
 <button
   class="sg-scroll-progress"
   type="button"
-  aria-label={isRu ? 'Вернуться в начало страницы' : 'Повернутися на початок сторінки'}
-  title={isRu ? 'Наверх' : 'Вгору'}
+  aria-label={intlScroll ? intlScroll[0] : isRu ? 'Вернуться в начало страницы' : 'Повернутися на початок сторінки'}
+  title={intlScroll ? intlScroll[1] : isRu ? 'Наверх' : 'Вгору'}
   data-scroll-progress
 >
   <svg

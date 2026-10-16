@@ -1,8 +1,8 @@
 (() => {
-  // The page language comes ONLY from the URL: /ru/… is Russian, everything else is
-  // Ukrainian. A previously chosen language (localStorage / ?lang=) must never change
+  // The page language comes ONLY from the URL: /ru/ /en/ /de/ /es/ prefixes, everything else is
+  // Ukrainian (EN/DE/ES pages are rendered fully translated: no dictionary, lang stays as built). A previously chosen language (localStorage / ?lang=) must never change
   // the texts of a UA URL — the server already rendered the right language.
-  const locale = /^\/ru(\/|$)/.test(location.pathname) ? 'ru' : 'uk';
+  const locale = (location.pathname.match(/^\/(ru|en|de|es)(?=\/|$)/) || [])[1] || 'uk';
   try { localStorage.setItem('spaceGlassLocale', locale); } catch {}
 
   document.querySelectorAll('[data-language-switcher] [data-locale]').forEach((el) => {

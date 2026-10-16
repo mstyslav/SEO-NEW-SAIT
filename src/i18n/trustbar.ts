@@ -18,5 +18,23 @@ export const trustBarItems: Record<Locale, TrustBarItem[]> = {
     ['Гарантия: стекло — 5 лет', 'Фурнитура — 2 года · монтаж — 1 год', 'shield-check'],
     ['Доставка по Украине', 'И Европе', 'truck'],
     ['Индивидуальные решения', 'Под ваш проект', 'custom-design']
+  ],
+  en: [
+    ['In-house production', 'In Ukraine', 'factory'],
+    ['Warranty: glass — 5 years', 'Hardware — 2 years · installation — 1 year', 'shield-check'],
+    ['Delivery in Ukraine', 'And to Europe', 'truck'],
+    ['Made to measure', 'For your project', 'custom-design']
+  ],
+  de: [
+    ['Eigene Fertigung', 'In der Ukraine', 'factory'],
+    ['Garantie: Glas — 5 Jahre', 'Beschläge — 2 Jahre · Montage — 1 Jahr', 'shield-check'],
+    ['Lieferung in der Ukraine', 'Und nach Europa', 'truck'],
+    ['Maßanfertigung', 'Für Ihr Projekt', 'custom-design']
+  ],
+  es: [
+    ['Fabricación propia', 'En Ucrania', 'factory'],
+    ['Garantía: vidrio — 5 años', 'Herrajes — 2 años · instalación — 1 año', 'shield-check'],
+    ['Envíos en Ucrania', 'Y a Europa', 'truck'],
+    ['Fabricación a medida', 'Para su proyecto', 'custom-design']
   ]
 };

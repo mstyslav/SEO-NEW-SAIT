@@ -145,7 +145,7 @@ function telegramText(lead: Lead, origin: string): string {
     lead.estimatedPrice && `💰 ${esc(lead.estimatedPrice)}`,
     '',
     lead.page && `🔗 ${esc(origin + lead.page)}`,
-    `🕒 ${time}${lead.locale === 'ru' ? ' · RU' : ''}`
+    `🕒 ${time}${lead.locale && ['ru', 'en', 'de', 'es'].includes(lead.locale) ? ` · ${lead.locale.toUpperCase()}` : ''}`
   ];
   return lines.filter((l) => l !== undefined && l !== false).join('\n').slice(0, MAX);
 }

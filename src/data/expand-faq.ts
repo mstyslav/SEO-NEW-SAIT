@@ -38,7 +38,9 @@ const fallback: Record<'ru'|'en'|'de', Pair[]> = {
 
 export function expandFaq(items: Pair[], title: string, locale: Locale = 'uk', limit = 20): Pair[] {
   const topic = topicLabel(title, locale);
-  const generated = locale === 'uk' ? templates.uk.map((make) => make(topic)) : fallback[locale].map(([q,a]) => [`${q} — ${topic}`, a] as Pair);
+  // No generic filler for locales without a template set (ES); EN/DE/ES pages pass their own full FAQ.
+  const pool = locale === 'uk' ? null : (fallback as Partial<Record<Locale, Pair[]>>)[locale] ?? [];
+  const generated = pool === null ? templates.uk.map((make) => make(topic)) : pool.map(([q,a]) => [`${q} — ${topic}`, a] as Pair);
   const seen = new Set(items.map(([q]) => q.toLocaleLowerCase(locale)));
   const result = [...items];
   for (const pair of generated) {

@@ -36,7 +36,8 @@ interface Props {
 
 const { title: rawTitle, description: rawDescription, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, heroPreloadMobileMaxWidth = 900, robots, mainEntityId, errorPage = false, organizationFounders = [] } = Astro.props;
 
-import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales, hasLocalizedRoute } from '../i18n/helpers';
+import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales, hasLocalizedRoute, isIntlLocale } from '../i18n/helpers';
+import { intlLocales } from '../i18n/intl-routes';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
 
 /**
@@ -75,9 +76,17 @@ const basePath = stripLocale(Astro.url.pathname);
 const origin = Astro.site ?? Astro.url.origin;
 const canonical = new URL(localizedPath(basePath, resolvedLocale), origin);
 const socialImage = new URL(image, origin);
-const localeNames = { uk: 'uk_UA', ru: 'ru_UA' } as const;
-const skipLinks = { uk: 'Перейти до змісту', ru: 'Перейти к содержанию' } as const;
-const menuLabels = { uk: 'Відкрити меню', ru: 'Открыть меню' } as const;
+const localeNames = { uk: 'uk_UA', ru: 'ru_UA', en: 'en_GB', de: 'de_AT', es: 'es_ES' } as const;
+const skipLinks = { uk: 'Перейти до змісту', ru: 'Перейти к содержанию', en: 'Skip to content', de: 'Zum Inhalt springen', es: 'Ir al contenido' } as const;
+const menuLabels = { uk: 'Відкрити меню', ru: 'Открыть меню', en: 'Open menu', de: 'Menü öffnen', es: 'Abrir el menú' } as const;
+// Alt text the inline script below gives the homepage hero image (uk/ru keep the original text).
+const heroAlts = {
+  uk: 'Панорамні скляні перегородки та алюмінієві конструкції Space Glass у сучасному інтер’єрі',
+  ru: 'Панорамні скляні перегородки та алюмінієві конструкції Space Glass у сучасному інтер’єрі',
+  en: 'Floor-to-ceiling glass partitions and aluminium structures by Space Glass in a modern interior',
+  de: 'Raumhohe Glastrennwände und Aluminiumkonstruktionen von Space Glass in einem modernen Interieur',
+  es: 'Tabiques de vidrio de suelo a techo y estructuras de aluminio de Space Glass en un interior moderno'
+} as const;
 const pageSchema = webPageSchema({
   canonical: canonical.href,
   title,
@@ -97,7 +106,10 @@ const schema = jsonLdGraph([
 const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
 // hreflang only for language versions that really exist: a UA-only page must not declare
 // hreflang="ru" pointing at its own UA URL (localizedPath falls back to the UA path).
-const availableAlternateLocales = (alternateLocales ?? supportedLocales).filter((item) => item === 'uk' || item === resolvedLocale || hasLocalizedRoute(basePath, item));
+// EN/DE/ES alternates always come from the route map (src/i18n/intl-routes.ts), also on pages that
+// restrict `alternateLocales` to uk/ru, so every UA/RU ↔ EN/DE/ES pair is reciprocal.
+const declaredAlternates = alternateLocales ?? supportedLocales;
+const availableAlternateLocales = [...new Set([...declaredAlternates, ...intlLocales])].filter((item) => item === 'uk' || item === resolvedLocale || hasLocalizedRoute(basePath, item));
 import ScrollProgress from '../components/ScrollProgress.astro';
 // The page language comes only from the URL (/ru/… = RU, everything else = UA). translate="no" +
 // notranslate stop browsers (Chrome/Yandex/Safari with a Russian UI) from auto-translating a UA page
@@ -159,7 +171,7 @@ import ScrollProgress from '../components/ScrollProgress.astro';
     {showHomeReviews && <GoogleReviews />}
     <SiteEnhancements />
     <HeaderFixes />
-    <script is:inline define:vars={{ menuLabel: menuLabels[resolvedLocale], moveReviews: showHomeReviews }}>
+    <script is:inline define:vars={{ menuLabel: menuLabels[resolvedLocale], moveReviews: showHomeReviews, heroAlt: heroAlts[resolvedLocale] }}>
       const mobileMenuButton = document.querySelector('[data-mobile-menu-button]');
       if (mobileMenuButton) {
         mobileMenuButton.setAttribute('aria-label', menuLabel);
@@ -167,7 +179,7 @@ import ScrollProgress from '../components/ScrollProgress.astro';
       }
       const heroImage = document.querySelector('.sg-hero__image img');
       if (heroImage) {
-        heroImage.setAttribute('alt', 'Панорамні скляні перегородки та алюмінієві конструкції Space Glass у сучасному інтер’єрі');
+        heroImage.setAttribute('alt', heroAlt);
         heroImage.setAttribute('decoding', 'async');
       }
       if (moveReviews) {
@@ -177,8 +189,8 @@ import ScrollProgress from '../components/ScrollProgress.astro';
       }
     </script>
     <CookieConsent locale={resolvedLocale} />
-    <script src="/js/i18n-client.js" defer></script>
-    <script src="/js/forms.js?v=intl-phone-20261007-3" defer></script>
+    <script src="/js/i18n-client.js?v=langs-20261016" defer></script>
+    <script src="/js/forms.js?v=langs-20261016" defer></script>
       <ScrollProgress />
   </body>
 </html>

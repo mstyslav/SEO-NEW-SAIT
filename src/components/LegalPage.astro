@@ -9,15 +9,21 @@ const {
   locale = 'uk'
 } = Astro.props;
 
+const intlLabels: Record<string, [string, string]> = {
+  en: ['Legal information', 'Last updated'],
+  de: ['Rechtliche Hinweise', 'Zuletzt aktualisiert'],
+  es: ['Información legal', 'Última actualización']
+};
+
 const legalLabel =
-  locale === 'ru'
+  intlLabels[locale]?.[0] ?? (locale === 'ru'
     ? 'Юридическая информация'
-    : 'Юридична інформація';
+    : 'Юридична інформація');
 
 const updatedLabel =
-  locale === 'ru'
+  intlLabels[locale]?.[1] ?? (locale === 'ru'
     ? 'Последнее обновление'
-    : 'Останнє оновлення';
+    : 'Останнє оновлення');
 ---
 <BaseLayout title={`${title} | Space Glass`} description={description}>
   <Header />
