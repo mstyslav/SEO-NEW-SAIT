@@ -95,10 +95,13 @@ for (const route of INTL_ROUTES) {
     const url = site + p;
     if (canonicalOf(html) !== url) err(p, `canonical ${canonicalOf(html)}`);
     const alt = alternatesOf(html);
-    const expected = Object.fromEntries(Object.entries({ uk: route.uk, en: route.en, de: route.de, es: route.es }).filter(([, v]) => v));
+    // A German-only page (no UA/RU original) declares only itself: no uk/ru/en/es twins, no x-default.
+    const deOnly = Boolean(route.deOnlyFallback);
+    const expected = Object.fromEntries(Object.entries(deOnly ? { de: route.de } : { uk: route.uk, en: route.en, de: route.de, es: route.es }).filter(([, v]) => v));
+    if (deOnly && Object.keys(alt).some((code) => code !== 'de')) err(p, `German-only page declares hreflang ${Object.keys(alt).join(',')}`);
     for (const [code, target] of Object.entries(expected)) if (alt[code] !== site + target) err(p, `hreflang ${code} = ${alt[code]} (expected ${site + target})`);
     for (const code of ['en', 'de', 'es']) if (alt[code] && !expected[code]) err(p, `hreflang ${code} → ${alt[code]} but this page has no ${code} version`);
-    if (alt['x-default'] !== site + route.uk) err(p, `x-default = ${alt['x-default']}`);
+    if (!deOnly && alt['x-default'] !== site + route.uk) err(p, `x-default = ${alt['x-default']}`);
     for (const [code, href] of Object.entries(alt)) {
       const tp = href.replace(site, '');
       if (status(tp) !== 'ok') { err(p, `hreflang ${code} → ${tp} is ${status(tp)}`); continue; }
@@ -164,7 +167,7 @@ for (const route of INTL_ROUTES) {
       const code = attr(m[0], 'data-target-locale');
       if (status(target) !== 'ok') err(p, `language menu ${code} → ${target} (${status(target)})`);
       if (locOf(target) !== code) err(p, `language menu ${code} → ${target} has another language`);
-      const sameRoute = code === 'uk' ? route.uk : code === 'ru' ? null : route[code];
+      const sameRoute = code === 'uk' ? (deOnly ? route.deOnlyFallback : route.uk) : code === 'ru' ? null : (deOnly && code !== 'de' ? null : route[code]);
       if (sameRoute && target !== sameRoute) err(p, `language menu ${code} → ${target} (expected ${sameRoute})`);
       if (code !== 'uk' && code !== 'ru' && !sameRoute && !target.startsWith(`/${code}/`)) err(p, `language menu ${code} fallback ${target}`);
     }

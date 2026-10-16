@@ -60,7 +60,7 @@ export const childrenDe6: Record<string, ChildCopy> = {
   },
 
   'glasvordach-zugstangen': {
-    meta: { title: 'Glasvordach mit Zugstangen | Space Glass', description: 'Glasvordach an Zugstangen und Punkthaltern aus Edelstahl: gerades oder gebogenes Glas, abgehängter Rahmen für große Flächen. Anfrage aus Wien und Österreich.' },
+    meta: { title: 'Glasvordach mit Zugstangen | Space Glass', description: 'Glasvordach an Zugstangen und Edelstahl-Punkthaltern: gerades oder gebogenes Glas, abgehängter Rahmen für große Flächen. Anfrage aus Wien und Österreich.' },
     name: 'Glasvordach mit Zugstangen',
     card: ['Glasvordach mit Zugstangen', 'Punkthalter aus Edelstahl, gerades oder gebogenes Glas, abgehängter Rahmen.'],
     eyebrow: 'Glasvordächer / Zugstangen',
@@ -175,7 +175,7 @@ export const childrenDe6: Record<string, ChildCopy> = {
   },
 
   schaufensterverglasung: {
-    meta: { title: 'Schaufensterverglasung nach Maß | Space Glass', description: 'Schaufensterverglasung: große Glasfelder in schlanken Aluminiumprofilen, VSG, Eingangstür mit Türschließer, Farbe nach RAL. Anfrage aus Wien und Österreich.' },
+    meta: { title: 'Schaufensterverglasung nach Maß | Space Glass', description: 'Schaufensterverglasung: große Glasfelder in schlanken Aluminiumprofilen, VSG, Eingangstür mit Türschließer, RAL-Farben. Anfrage aus Wien und Österreich.' },
     name: 'Schaufensterverglasung',
     card: ['Schaufensterverglasung', 'Große Glasfelder in Aluminiumprofilen für Geschäfte und Betriebe.'],
     eyebrow: 'Glasfassaden / Schaufenster',

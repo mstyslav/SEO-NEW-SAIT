@@ -11,6 +11,9 @@ const sq = (base: string, width = 1080, height = 1080): ChildImage => ({
   sizes
 });
 
+/** Photos that exist only as -480 and -900. */
+const two = (base: string): ChildImage => ({ src: `${base}-900.webp`, srcset: `${base}-480.webp 480w, ${base}-900.webp 900w`, width: 1080, height: 1080, sizes });
+
 const biz = (name: string): ChildImage => ({
   src: `/images/business/biz-${name}-800.webp`,
   srcset: `/images/business/biz-${name}-640.webp 640w, /images/business/biz-${name}-800.webp 800w, /images/business/biz-${name}-1280.webp 1280w`,
@@ -61,6 +64,13 @@ export const CHILD_IMAGES: Record<string, ChildImage> = {
   gastronomie: biz('restoranam'),
   'buero-glasloesungen': biz('dlya-ofisu'),
   einzelhandel: biz('magazynam'),
+  'franzoesischer-balkon': two(`${R}/gp-canto-fasad`),
+  badewannenaufsatz: sq(`${D}/sq-shtorky-dlya-vannoyi`),
+  'glas-raumteiler-wohnung': sq(`${P}/hero-mizhkimnatni`),
+  'bautraeger-wohnanlagen': biz('zhytlovym-kompleksam'),
+  'aluminium-buerotrennwand': sq(`${S}/cat-alu-ofis`),
+  'spiegel-mit-rahmen': sq('/images/catalog/dzerkala/cat-rama'),
+  kaltwintergarten: two(`${S}/veranda`),
   hotels: {
     src: '/images/business/biz-goteli-800.webp',
     srcset: '/images/business/biz-goteli-640.webp 640w, /images/business/biz-goteli-800.webp 800w, /images/business/biz-goteli-1280.webp 1280w',

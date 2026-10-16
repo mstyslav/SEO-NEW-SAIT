@@ -3,11 +3,11 @@ import type { ChildCopy } from './types';
 
 export const childrenDe4: Record<string, ChildCopy> = {
   balkongelaender: {
-    meta: { title: 'Balkongeländer aus Glas nach Maß | Space Glass', description: 'Glasgeländer für Balkone: VSG 8,76–21,52 mm, Klemmprofil an der Plattenstirn, französische Balkone, Edelstahl AISI 316. Anfrage aus Wien und Österreich.' },
+    meta: { title: 'Balkon- und Terrassengeländer aus Glas | Space Glass', description: 'Glasgeländer für Balkon und Terrasse als Absturzsicherung: VSG 8,76–21,52 mm, Klemmprofil, Edelstahl AISI 316. Anfrage aus Wien und Österreich.' },
     name: 'Balkongeländer aus Glas',
     card: ['Balkongeländer aus Glas', 'Freie Aussicht statt Brüstung: VSG im Klemmprofil, französische Balkone und mehr.'],
     eyebrow: 'Glasgeländer / Balkon',
-    h1: 'Balkongeländer aus Glas',
+    h1: 'Balkon- und Terrassengeländer aus Glas',
     lead: 'Eine Aussicht, die nichts verdeckt: Das Glasgeländer ersetzt die geschlossene Brüstung und die Metallstäbe. Die Fassade wirkt modern, und das VSG schützt vor Wind — auch wenn eine Scheibe bricht, fällt niemand durch.',
     heroAlt: 'Balkongeländer aus Glas an einer Fassade',
     intro: {
@@ -15,7 +15,8 @@ export const childrenDe4: Record<string, ChildCopy> = {
       paragraphs: [
         'Auf dem Balkon ersetzt Glas die geschlossene Brüstung und die Metallstäbe: Aus dem Raum sieht man die Landschaft, und die Fassade wirkt modern. VSG schützt vor Wind und verhindert, dass jemand fällt, selbst wenn eine Scheibe bricht.',
         'Meist befestigen wir das Glas im Klemmprofil an der Stirn der Balkonplatte — so beansprucht das Geländer keine Balkonfläche, und das Profil verdeckt die Plattenkante. Für schmale und französische Balkone eignet sich die Punktbefestigung direkt an der Fensteröffnung.',
-        'Alle Beschläge für den Außenbereich bestehen aus Edelstahl AISI 316 und eloxiertem Aluminium — sie rosten nicht am Meer und werden vom Regen nicht dunkel.'
+        'Alle Beschläge für den Außenbereich bestehen aus Edelstahl AISI 316 und eloxiertem Aluminium — sie rosten nicht am Meer und werden vom Regen nicht dunkel.',
+        'Dasselbe gilt für die Terrasse: Ein Glasgeländer dient dort als Absturzsicherung, ohne den Blick zu verstellen. Auf Holz- oder Verbunddielen befestigen wir das Glas auf Minihandläufen am Unterbau, auf Beton im Klemmprofil. Höhe, Glas und Befestigung legen wir nach dem Aufmaß und den für Ihr Objekt geltenden Vorschriften fest.'
       ],
       spec: [['VSG 8,76–21,52 mm', 'laminiertes vorgespanntes Glas'], ['1,0–1,2 m', 'Höhe je nach geltenden Vorschriften'], ['AISI 316', 'Beschläge für den Außenbereich'], ['Stirnbefestigung', 'beansprucht keine Balkonfläche']]
     },
@@ -24,11 +25,12 @@ export const childrenDe4: Record<string, ChildCopy> = {
       title: 'Varianten für Balkongeländer',
       intro: 'Sechs Lösungen für Balkone von Wohnungen und Häusern.',
       items: [
-        ['LINEO — französischer Balkon im Fensterrahmen', 'Glasgeländer an der Fensteröffnung: Klemmprofile werden direkt am Fensterrahmen verschraubt — ein leichter Schutz vor dem Panoramafenster. VSG, Höhe unter dem Fenster, typisch 0,9–1,1 m; Farben Edelstahl, Weiß, Anthrazit, RAL; Montage ohne Laibungen und Wände; teilweise Satinierung möglich.'],
-        ['Französischer Balkon mit Haltern', 'Französischer Balkon auf Edelstahl-Haltern in der Laibung des Fensters: Das Glas „schwebt“ in der Öffnung. Halter aus 100 % Edelstahl, VSG, Höhe 0,9–1,1 m; für Ziegel und Putz geeignet; berührt den Rahmen nicht.'],
+        ['Französischer Balkon am Fenster', 'Glas in der Öffnung eines bodentiefen Fensters — am Fensterrahmen (LINEO) oder auf Edelstahlhaltern in der Laibung (CANTO); VSG, Höhe typisch 0,9–1,1 m. Alle Ausführungen finden Sie auf der Seite Französischer Balkon aus Glas.'],
         ['Bündiges Profil mit der Platte', 'Klemmprofil, oben befestigt, aber bündig mit der Plattenkante: Die Befestigung liegt im Profil, die Fassade wirkt geschlossen. Aluminiumprofil 124,5 × 46 mm mit Flansch 91 mm, VSG 17,52 oder 21,52 mm, Glashöhe bis 1300 mm, Paneel bis 2500 mm, Last bis 3 kN/m; Farben Edelstahl, Schwarz, Anthrazit, Weiß, RAL.'],
         ['Stirnbefestigung', 'Stirnprofil für Balkone in Mehrfamilienhäusern — das Geländer beansprucht keine Balkonfläche und sieht an der ganzen Fassade gleich aus. Aluminiumprofil 124,5 × 46 mm, VSG 17,52 oder 21,52 mm, Glashöhe bis 1300 mm, Montage mit Abstand möglich.'],
-        ['Geländer mit Stirnverkleidung', 'Glasgeländer mit Verkleidung der Plattenstirn von 23–60 cm Höhe — verbirgt dicke Decken und lässt die Fassade durchgehend gläsern wirken. Profil 230 × 45 mm, Verkleidung 230–600 mm aus Edelstahl oder lackiertem Stahl.']
+        ['Geländer mit Stirnverkleidung', 'Glasgeländer mit Verkleidung der Plattenstirn von 23–60 cm Höhe — verbirgt dicke Decken und lässt die Fassade durchgehend gläsern wirken. Profil 230 × 45 mm, Verkleidung 230–600 mm aus Edelstahl oder lackiertem Stahl.'],
+        ['Terrasse: Pfosten mit Handlauf (GARDO)', 'Runde Edelstahlpfosten mit Handlauf — eine günstige Lösung für Balkone und Terrassen. Pfosten AISI 304, Ø 42,4 × 2 mm, VSG 8,76 oder 12,76 mm, Höhe bis 1000 mm, Pfostenabstand 500–1500 mm, Montage oben oder an der Stirn; Form I, L oder U.'],
+        ['Terrasse: quadratische Pfosten (DENSARO)', 'Quadratische Pfosten mit durchgehender Klemmung des Glases über die Höhe — strenge, moderne Geometrie für Balkone und Terrassen. Pfosten AISI 304, 60 × 40 mm, VSG 12,76 mm, Höhe bis 1100 mm, Pfostenabstand 500–1500 mm; Aluminium-Kantenschutz.']
       ]
     },
     benefits: {
@@ -53,11 +55,13 @@ export const childrenDe4: Record<string, ChildCopy> = {
         ['Wie wird das Glas befestigt?', 'Meist im Klemmprofil an der Plattenstirn; bei französischen Balkonen am Fensterrahmen oder auf Haltern in der Laibung.'],
         ['Rostet das Geländer?', 'Nein: Für den Außenbereich verwenden wir Edelstahl AISI 316 und eloxiertes Aluminium.'],
         ['Was ist ein französischer Balkon?', 'Ein Glasgeländer in der Öffnung eines bodentiefen Fensters — leichter Schutz vor dem Panoramafenster.'],
-        ['Welche Farben gibt es?', 'Edelstahl, Weiß, Anthrazit, Schwarz oder RAL, je nach System.']
+        ['Welche Farben gibt es?', 'Edelstahl, Weiß, Anthrazit, Schwarz oder RAL, je nach System.'],
+        ['Gibt es auch Geländer für die Terrasse?', 'Ja: auf Holz- oder Verbunddielen mit Minihandläufen am Unterbau, auf Beton im Klemmprofil; für Cafés und Restaurants in Segmenten, die sich leicht warten lassen.'],
+        ['Dient das Glasgeländer als Absturzsicherung?', 'Ja, VSG-Glasgeländer schützen vor dem Absturz. Höhe, Glas und Befestigung legen wir nach dem Aufmaß und den für Ihr Objekt geltenden Vorschriften fest; eine pauschale Zusage geben wir nicht.']
       ]
     },
     form: { title: 'Balkongeländer aus Glas anfragen', text: 'Senden Sie Fotos des Balkons und ungefähre Maße — wir empfehlen die Befestigung und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Variante', options: ['Französischer Balkon (am Fensterrahmen)', 'Französischer Balkon (Halter in der Laibung)', 'Bündiges Profil', 'Stirnbefestigung', 'Mit Stirnverkleidung', 'Noch unentschlossen'], commentPlaceholder: 'Länge und Höhe, Plattenstirn, Material, Farbe, Ort in Österreich', product: 'Balkongeländer aus Glas' },
-    related: ['treppengelaender', 'balkonverglasung', 'glas-faltwand']
+    related: ['franzoesischer-balkon', 'treppengelaender', 'balkonverglasung', 'glas-faltwand']
   },
 
   glasschiebetuer: {

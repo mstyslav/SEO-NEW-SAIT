@@ -3,7 +3,7 @@ import type { ChildCopy } from './types';
 
 export const childrenDe2: Record<string, ChildCopy> = {
   terrassenverglasung: {
-    meta: { title: 'Rahmenlose Terrassenverglasung nach Maß | Space Glass', description: 'Rahmenlose Terrassenverglasung für Terrasse und Veranda: Faltwand, Schiebe- und Guillotine-System, Schwelle ab 0 mm. Anfrage aus Wien und Österreich.' },
+    meta: { title: 'Rahmenlose Terrassenverglasung nach Maß | Space Glass', description: 'Rahmenlose Terrassenverglasung, kalt oder warm mit Isolierglas: Faltwand, Schiebe- und Guillotine-System, schwellenlos. Anfrage aus Wien und Österreich.' },
     name: 'Terrassenverglasung',
     card: ['Terrassenverglasung', 'Rahmenlos verglast: Falt-, Schiebe-, Guillotine- und schwellenlose Systeme.'],
     eyebrow: 'Rahmenlose Verglasung / Terrasse',
@@ -15,7 +15,8 @@ export const childrenDe2: Record<string, ChildCopy> = {
       paragraphs: [
         'Rahmenlose Verglasung macht eine offene Terrasse zum geschützten Raum, ohne das Panorama zu verlieren. Im geöffneten Zustand falten oder verschieben sich die Flügel, und die Terrasse ist wieder frei.',
         'Das System wählen wir nach Nutzung: Die Glas-Faltwand öffnet die Terrasse vollständig, das Schiebesystem hat breitere Flügel, das Guillotine-System fährt per Antrieb, schwellenlose Systeme eignen sich für häufigen Durchgang.',
-        'Wird die Terrasse auch in der Übergangszeit genutzt, empfehlen wir ein System für Isolierglas; zusammen mit einem Glasdach wird die Terrasse zur Veranda.'
+        'Wird die Terrasse auch in der Übergangszeit genutzt, empfehlen wir ein System für Isolierglas; zusammen mit einem Glasdach wird die Terrasse zur Veranda.',
+        'Kalt oder warm: Einfachglas (ESG) schützt vor Wind und Regen, hält aber die Wärme nicht. Warme Systeme verwenden Isolierglas 20–28 mm und verstärkte Dichtungen; die wärmste Variante ist die Guillotine THERMO mit Polyamid-Trennung und Isolierglas 24 mm. Diese Seite behandelt die Verglasung einer vorhandenen Terrasse; ein Raum mit eigenem Dach und Seiten ist ein Kaltwintergarten.'
       ],
       spec: [['Höhe bis 4000 mm', 'Verglasung ATRIUM'], ['Schwelle ab 0 mm', 'schwellenlose Systeme'], ['Isolierglas', 'für eine längere Saison'], ['Fernbedienung', 'bei Guillotine-Systemen']]
     },
@@ -28,7 +29,10 @@ export const childrenDe2: Record<string, ChildCopy> = {
         ['Warmes Faltsystem für Isolierglas', 'Faltsystem für Isolierglas 28 mm mit gerundeter Schwelle von 23 mm — stört weder den täglichen Durchgang noch den Transport von Gegenständen auf Rädern. Für Terrassen und Gastgärten.'],
         ['Schiebesystem mit Parallelbewegung', 'Parallel-Schiebesystem mit Schwelle 12,5 mm: Der erste Flügel zieht die weiteren mit, die Öffnung ist in Sekunden offen. Höhe bis 3000 mm, Flügelbreite bis 1200 mm, ESG 8 oder 10 mm.'],
         ['Warmes Schiebesystem für Isolierglas', 'Schiebesystem für Isolierglas 20 mm; verstärkte Rollen tragen je 120 kg, dadurch Flügel bis 1,3–1,5 m Breite. Schwelle 15 mm — für windige und schneereiche Regionen.'],
-        ['Guillotine-Systeme', 'Vertikal verschiebbare Glasflügel mit Antrieb und Fernbedienung — für Terrassen mit Komfortanspruch.']
+        ['Guillotine-Systeme', 'Vertikal verschiebbare Glasflügel mit Antrieb und Fernbedienung — für Terrassen mit Komfortanspruch.'],
+        ['Schwellenlos: oben aufgehängt (ATRIUM, CENTRUM, MOMENTUM)', 'Die ganze Last liegt an der oberen Führung, unten sichern Riegel die Flügel: keine Schwelle, ebener Boden für Füße und Rollen. ESG 10 mm oder VSG, Flügelbreite bis 1000 mm, Wagen bis 150 kg; ATRIUM bis 4000 mm Höhe, CENTRUM mit Drehung der Flügel um 360°, MOMENTUM als Faltsystem mit Fußentriegelung.'],
+        ['Warmes Faltsystem mit 7-mm-Schwelle (TIARA TWIN ZERO)', 'Das Unterprofil liegt im Boden, nur 7 mm ragen über den Belag — gut für Kinderwagen und Rollwagen. Isolierglas 28 mm, Höhe bis 2500 mm, Flügelbreite bis 650 mm (Tür 750 mm), Länge bis 10 m; Wasserableitung aus der Profilkammer, auch L-, U- und Radiusöffnungen.'],
+        ['Warmes Schiebesystem mit hoher Schwelle (SLIDING MAX TRACK)', 'Schiebesystem für Isolierglas 20 mm mit Schwelle 42 mm — für Balkone in Hochhäusern und Terrassen in windigen Lagen mit viel Niederschlag. Höhe bis 3000 mm, Flügelbreite bis 1300 mm, Wagen bis 120 kg.']
       ]
     },
     benefits: {
@@ -53,11 +57,13 @@ export const childrenDe2: Record<string, ChildCopy> = {
         ['Wie hoch kann die Verglasung sein?', 'Je nach System bis 2700, 3000 oder — beim System ATRIUM — bis 4000 mm.'],
         ['Welche Glasstärken gibt es?', 'ESG 8 oder 10 mm bei einfacher Verglasung; Isolierglas 20 oder 28 mm bei den warmen Systemen.'],
         ['Wie niedrig kann die Schwelle sein?', 'Schwellenlose Systeme kommen mit 0 mm aus; die gerundete Schwelle der Faltsysteme beträgt 23 mm, bei Schiebesystemen sind 7,5–16 mm für ständigen Durchgang üblich.'],
-        ['Welche Formen sind möglich?', 'Gerade, L- und U-förmige sowie runde Verglasungen.']
+        ['Welche Formen sind möglich?', 'Gerade, L- und U-förmige sowie runde Verglasungen.'],
+        ['Was ist der Unterschied zwischen kalter und warmer Verglasung?', 'Kalte Systeme arbeiten mit Einfachglas (ESG 8–10 mm) und schützen vor Wind und Regen. Warme Systeme verwenden Isolierglas 20–28 mm und verstärkte Dichtungen, die Guillotine THERMO zusätzlich eine Polyamid-Trennung.'],
+        ['Ist eine Terrassenverglasung ein Wintergarten?', 'Nein. Sie schließt eine vorhandene Terrasse seitlich. Ein Raum mit eigenem Dach und Seitenwänden ist ein Kaltwintergarten, ein beheizter Raum ein Wintergarten.']
       ]
     },
-    form: { title: 'Terrassenverglasung anfragen', text: 'Senden Sie Fotos der Terrasse und ungefähre Maße — wir wählen das System und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'System', options: ['Faltsystem', 'Schiebesystem', 'Guillotine-System', 'Schwellenloses System', 'Mit Isolierglas', 'Noch unentschlossen'], commentPlaceholder: 'Breite und Höhe der Öffnung, Form, Schwelle, Glas, Ort in Österreich', product: 'Rahmenlose Terrassenverglasung' },
-    related: ['glas-faltwand', 'schiebeverglasung', 'balkonverglasung']
+    form: { title: 'Terrassenverglasung anfragen', text: 'Senden Sie Fotos der Terrasse und ungefähre Maße — wir wählen das System und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'System', options: ['Faltsystem', 'Schiebesystem', 'Guillotine-System', 'Schwellenloses System', 'Mit Isolierglas (warm)', 'Noch unentschlossen'], commentPlaceholder: 'Breite und Höhe der Öffnung, Form, Schwelle, kalt oder warm, Ort in Österreich', product: 'Rahmenlose Terrassenverglasung' },
+    related: ['glas-faltwand', 'schiebeverglasung', 'kaltwintergarten', 'balkonverglasung']
   },
 
   'glas-faltwand': {

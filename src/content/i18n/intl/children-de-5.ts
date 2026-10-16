@@ -63,11 +63,11 @@ export const childrenDe5: Record<string, ChildCopy> = {
   },
 
   nischendusche: {
-    meta: { title: 'Nischendusche aus Glas nach Maß | Space Glass', description: 'Dusche in der Nische: Drehtür, Pendeltür, Schiebetür oder Falttür aus ESG 8 mm, Beschläge in Chrom, Schwarz oder Gold. Anfrage aus Wien und Österreich.' },
+    meta: { title: 'Nischendusche & Duschtür für die Nische | Space Glass', description: 'Duschtür für die Nische nach Maß: Dreh-, Schiebe- oder Falttür aus ESG 8 mm, Beschläge in Chrom, Schwarz oder Gold. Anfrage aus Wien und Österreich.' },
     name: 'Nischendusche',
     card: ['Nischendusche aus Glas', 'Drei Wände gibt es schon — das Glas schließt nur den Zugang.'],
     eyebrow: 'Duschkabinen / Nische',
-    h1: 'Dusche in der Nische: Glastür nach Maß',
+    h1: 'Duschtür für die Nische: Nischendusche aus Glas',
     lead: 'Die Nische ist die wirtschaftlichste Form der Dusche: Drei Wände sind bereits vorhanden, das Glas schließt nur den Eingang. Wir fertigen die Tür auf das tatsächliche Maß der Öffnung.',
     heroAlt: 'Nischendusche mit Glastür im Bad',
     intro: {
@@ -75,7 +75,8 @@ export const childrenDe5: Record<string, ChildCopy> = {
       paragraphs: [
         'Bei der Nischendusche übernehmen die vorhandenen Wände den größten Teil der Arbeit. Das spart Material und Platz und ist meist günstiger als eine vollständige Kabine.',
         'Für die Nische kommen eine einzelne Drehtür, eine Tür mit festem Seitenteil, zwei Flügel von der Mitte aus, eine Schiebetür oder eine Falttür in Frage. Das Schema richtet sich nach der Breite der Öffnung und dem Platz vor der Dusche.',
-        'Wände von Nischen sind selten perfekt lotrecht; deshalb bestimmen wir die Glasmaße erst nach dem Aufmaß und fertigen die Tür auf das tatsächliche Maß.'
+        'Wände von Nischen sind selten perfekt lotrecht; deshalb bestimmen wir die Glasmaße erst nach dem Aufmaß und fertigen die Tür auf das tatsächliche Maß.',
+        'Dreh-, Schiebe- oder Falttür? Die Drehtür braucht Platz zum Aufschwingen; die Falttür („Buch“) klappt zusammen und braucht etwa halb so viel Platz wie eine Drehtür; die Schiebetür braucht vor der Dusche gar keinen Platz.'
       ],
       spec: [['Nach Aufmaß', 'auch bei unebenen Wänden'], ['5 Öffnungsarten', 'Dreh-, Schiebe-, Falttür'], ['ESG 8 mm', 'vorgespanntes Sicherheitsglas'], ['Chrom · Schwarz · Gold', 'Farbe der Beschläge']]
     },
@@ -89,7 +90,10 @@ export const childrenDe5: Record<string, ChildCopy> = {
         ['MAYFIELD — zwei Flügel von der Mitte', 'Zwei bewegliche Flügel erzeugen einen breiten Durchgang und eignen sich für Nischen unterschiedlicher Breite, ohne das Gefühl von Enge.'],
         ['ANGEL — zwei feste Seitenteile mit Tür', 'Zwei feststehende Seitenwände und eine nach außen öffnende Drehtür — für großzügige Nischen mit leichtem Zugang; schränkt die Raumplanung nicht ein.'],
         ['STENLI — Schiebetür mit Seitenteil', 'Schiebetür mit festem Seitenteil für die Nische; braucht keinen Platz vor der Dusche und passt in kompakte Bäder.'],
-        ['STILL — mittlere Schiebetür mit zwei festen Wänden', 'Zentrale Schiebetüren und zwei feststehende Wände, geeignet für schmale Nischen.']
+        ['STILL — mittlere Schiebetür mit zwei festen Wänden', 'Zentrale Schiebetüren und zwei feststehende Wände, geeignet für schmale Nischen.'],
+        ['FORCE — feste Platte mit Tür', 'Feststehende Seitenplatte und Tür; die Öffnungsrichtung ist wählbar. Bequeme Einstiegsbreite ohne unnötigen Platzverbrauch; ESG 8 mm, Beschläge in Chrom oder Schwarz (Gold auf Anfrage).'],
+        ['LAMADIA — Falttür („Buch“)', 'Tür aus zwei Glasteilen, die nach dem Buchprinzip zusammenklappen — für die kompaktesten Nischen, ganz ohne zusätzliche Elemente. ESG 8 mm, Chrom, Schwarz oder Gold.'],
+        ['SMITH — feste Platte und Falttür', 'Feststehende Platte und Falttür, die sich nach innen in die Dusche zusammenklappt: breiter Zugang und kein Platzverbrauch im Bad; feste Platte ab 200 mm, ESG 8 mm.']
       ]
     },
     benefits: {
@@ -114,15 +118,17 @@ export const childrenDe5: Record<string, ChildCopy> = {
         ['Welches Glas wird verwendet?', 'Vorgespanntes Glas (ESG) mit 8 mm.'],
         ['Welche Farben haben die Beschläge?', 'Chrom, Schwarz oder Gold.'],
         ['Was passt in eine kleine Nische?', 'Schiebetüren und Falttüren, weil sie keinen Platz zum Aufschwingen benötigen.'],
-        ['Kann die Tür nach außen öffnen?', 'Ja, die Drehtüren öffnen nach außen, bei PRINCESS auch nach innen.']
+        ['Kann die Tür nach außen öffnen?', 'Ja, die Drehtüren öffnen nach außen, bei PRINCESS auch nach innen.'],
+        ['Dreh-, Schiebe- oder Falttür — was passt?', 'Die Drehtür braucht Schwenkraum; die Falttür etwa halb so viel Platz; die Schiebetür keinen Platz vor der Dusche. Die Wahl hängt von Breite der Nische und Platz im Bad ab.'],
+        ['Gibt es Duschtüren mit festem Seitenteil?', 'Ja: COLOMBO und FORCE mit einer festen Platte, ANGEL mit zwei festen Seitenteilen und SMITH als feste Platte mit Falttür.']
       ]
     },
-    form: { title: 'Nischendusche anfragen', text: 'Senden Sie Fotos und Breite der Nische — wir empfehlen das Türmodell und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Öffnungsart', options: ['Drehtür', 'Festes Seitenteil mit Drehtür', 'Zwei Flügel von der Mitte', 'Schiebetür', 'Falttür', 'Noch unentschlossen'], commentPlaceholder: 'Breite und Höhe der Nische, Farbe der Beschläge, Ort in Österreich', product: 'Nischendusche' },
+    form: { title: 'Nischendusche anfragen', text: 'Senden Sie Fotos und Breite der Nische — wir empfehlen das Türmodell und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Öffnungsart', options: ['Drehtür', 'Festes Seitenteil mit Drehtür', 'Zwei Flügel von der Mitte', 'Schiebetür', 'Falttür (Buch)', 'Noch unentschlossen'], commentPlaceholder: 'Breite und Höhe der Nische, Farbe der Beschläge, Ort in Österreich', product: 'Nischendusche' },
     related: ['walk-in-dusche', 'schiebetuer-dusche', 'eckdusche']
   },
 
   aluminiumtuer: {
-    meta: { title: 'Aluminiumtüren nach Maß | Space Glass', description: 'Aluminiumtüren nach Maß: Haustüren, Pivot-, Falt- und Geschäftseingangstüren, Wärmedämmung laut Hersteller ab Ud 0,63 W/(m²K). Anfrage aus Wien und Österreich.' },
+    meta: { title: 'Aluminiumtüren nach Maß | Space Glass', description: 'Aluminiumtüren nach Maß: Haus-, Pivot-, Falt- und Geschäftseingangstüren, Wärmedämmung laut Hersteller ab Ud 0,63 W/(m²K). Anfrage aus Wien und Österreich.' },
     name: 'Aluminiumtüren',
     card: ['Aluminiumtüren nach Maß', 'Haustüren, Pivot-, Falt- und Geschäftseingangstüren in Aluminiumprofilen.'],
     eyebrow: 'Aluminiumkonstruktionen / Türen',
@@ -181,11 +187,11 @@ export const childrenDe5: Record<string, ChildCopy> = {
   },
 
   'aluminium-pergola': {
-    meta: { title: 'Aluminium-Pergola nach Maß | Space Glass', description: 'Pergola aus Aluminium: Lamellendach, Markisentuch oder Glasdach, ZIP-Screens und Schiebeverglasung für die Seiten. Anfrage aus Wien und Österreich.' },
+    meta: { title: 'Aluminium-Pergola & Terrassenüberdachung | Space Glass', description: 'Aluminium-Pergola als Terrassenüberdachung: Lamellendach, Markise oder Glasdach, ZIP-Screens und Seitenverglasung. Anfrage aus Wien und Österreich.' },
     name: 'Aluminium-Pergola',
     card: ['Aluminium-Pergola', 'Terrassenüberdachung mit Lamellen, Markise oder Glasdach.'],
     eyebrow: 'Aluminiumkonstruktionen / Pergola',
-    h1: 'Aluminium-Pergola nach Maß',
+    h1: 'Aluminium-Pergola und Terrassenüberdachung nach Maß',
     lead: 'Eine Pergola ist ein leichtes Aluminiumgestell über der Terrasse mit Dach gegen Sonne und Regen. Anders als ein Wintergarten bleibt sie offen: eine Verlängerung des Hauses im Freien.',
     heroAlt: 'Aluminium-Pergola über einer Terrasse',
     intro: {
@@ -193,7 +199,8 @@ export const childrenDe5: Record<string, ChildCopy> = {
       paragraphs: [
         'Das Dach der Pergola kann aus drehbaren Lamellen bestehen, die Licht und Belüftung regeln, aus einem elektrisch einfahrbaren Tuch oder aus Glas, das Licht durchlässt und vollständig vor Regen schützt.',
         'Die Seiten schließen wir mit ZIP-Screens gegen Sonne und Insekten oder mit Schiebeverglasung — so wird die Saison auf der Terrasse länger.',
-        'Aluminium rostet und fault nicht. Die Farbe wählen Sie nach RAL passend zur Fassade; Größe und Ausstattung richten sich nach Ihrer Terrasse.'
+        'Aluminium rostet und fault nicht. Die Farbe wählen Sie nach RAL passend zur Fassade; Größe und Ausstattung richten sich nach Ihrer Terrasse.',
+        'Als Terrassenüberdachung mit Glasdach besteht die Pergola aus Aluminiumpfosten und -riegeln mit Dach aus laminiertem Sicherheitsglas: maximales Licht und voller Regenschutz. Das Dach wird auf Schneelast berechnet, die Entwässerung ist in das Gestell integriert. Eine Pergola bleibt offen; wird daraus ein geschlossener Glasraum mit Seitenwänden, sprechen wir vom Kaltwintergarten.'
       ],
       spec: [['Rostet und fault nicht', 'Aluminium'], ['Elektroantrieb', 'Steuerung per Fernbedienung'], ['Tuch bis 5 × 6 m', 'Veranda V ZiiiP'], ['RAL-Farbe', 'passend zur Fassade']]
     },
@@ -232,19 +239,21 @@ export const childrenDe5: Record<string, ChildCopy> = {
         ['Wie groß darf das Markisentuch sein?', 'Beim System Veranda V ZiiiP bis 5,0 m Breite und 6,0 m Ausladung, laut Herstellerangaben.'],
         ['Wie schließe ich die Seiten?', 'Mit ZIP-Screens gegen Sonne, Wind und Insekten oder mit rahmenloser Glasschiebeverglasung.'],
         ['Wird das Dach elektrisch bedient?', 'Ja, per Elektroantrieb und Fernbedienung; Regen- und Windsensoren sind optional.'],
-        ['Welche Farben sind möglich?', 'RAL-Farben; beim Markisensystem z. B. RAL 9010, 7016, 9005 und 9006.']
+        ['Welche Farben sind möglich?', 'RAL-Farben; beim Markisensystem z. B. RAL 9010, 7016, 9005 und 9006.'],
+        ['Kann die Pergola als Terrassenüberdachung mit Glasdach ausgeführt werden?', 'Ja: Aluminiumgestell mit Dach aus laminiertem Sicherheitsglas, berechnet auf Schneelast, mit im Gestell integrierter Entwässerung.'],
+        ['Wann wird aus einer Pergola ein Kaltwintergarten?', 'Wenn Dach und Seitenwände zu einem geschlossenen, unbeheizten Glasraum kombiniert werden — etwa mit Glasdach und Schiebeverglasung. Siehe Kaltwintergarten.']
       ]
     },
-    form: { title: 'Aluminium-Pergola anfragen', text: 'Senden Sie Fotos der Terrasse und ungefähre Maße — wir empfehlen die Ausführung und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Dach', options: ['Lamellendach', 'Markisendach', 'Glasdach', 'Mit Seitenverglasung', 'Mit ZIP-Screens', 'Wandpergola', 'Noch unentschlossen'], commentPlaceholder: 'Größe der Terrasse, Dach, Seiten, Farbe, Ort in Österreich', product: 'Aluminium-Pergola' },
-    related: ['terrassenverglasung', 'aluminium-schiebetuer', 'schiebeverglasung']
+    form: { title: 'Aluminium-Pergola anfragen', text: 'Senden Sie Fotos der Terrasse und ungefähre Maße — wir empfehlen die Ausführung und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Dach', options: ['Lamellendach', 'Markisendach', 'Terrassenüberdachung mit Glasdach', 'Mit Seitenverglasung', 'Mit ZIP-Screens', 'Wandpergola', 'Noch unentschlossen'], commentPlaceholder: 'Größe der Terrasse, Dach, Seiten, Farbe, Ort in Österreich', product: 'Aluminium-Pergola' },
+    related: ['kaltwintergarten', 'terrassenverglasung', 'aluminium-schiebetuer', 'schiebeverglasung']
   },
 
   glasdrehtuer: {
-    meta: { title: 'Glasdrehtür nach Maß | Space Glass', description: 'Glasdrehtüren nach Maß: rahmenlos mit Bändern an der Wand oder am Glas, ESG oder VSG 8–10 mm, ein- oder zweiflügelig. Anfrage aus Wien und Österreich.' },
+    meta: { title: 'Glasdrehtür nach Maß, klar oder satiniert | Space Glass', description: 'Glasdrehtür nach Maß, klar oder satiniert (Milchglas): rahmenlos, ESG oder VSG 8–10 mm, ein- oder zweiflügelig. Anfrage aus Wien und Österreich.' },
     name: 'Glasdrehtür',
     card: ['Glasdrehtür nach Maß', 'Klassische Tür aus Glas an Bändern: rahmenlos, im Portal oder in der Trennwand.'],
     eyebrow: 'Glastüren / Drehtür',
-    h1: 'Glasdrehtür nach Maß',
+    h1: 'Glasdrehtür nach Maß — klar oder satiniert',
     lead: 'Glasdrehtüren sind mit Bändern an Wand, Zarge oder einer festen Glasscheibe befestigt. Das Blatt besteht aus durchgehendem Sicherheitsglas 8–10 mm, rahmenlos oder im schlanken Aluminiumprofil.',
     heroAlt: 'Rahmenlose Glasdrehtür im Innenraum',
     intro: {
@@ -252,7 +261,8 @@ export const childrenDe5: Record<string, ChildCopy> = {
       paragraphs: [
         'Die Tür kann in eine oder in beide Richtungen öffnen und ein- oder zweiflügelig ausgeführt sein. Als Zubehör kommen Bügelgriff, Schloss, WC-Verriegelung, Türschließer oder Türstopper in Frage.',
         'Die Bohrungen für Bänder und Schloss werden vor dem Vorspannen des Glases ausgeführt. Deshalb stimmen wir vor der Fertigung eine Zeichnung mit der Lage aller Beschläge ab.',
-        'Eine Drehtür aus Glas lässt sich in Büro, Praxis, Salon oder Wohnung einsetzen — je nach Anforderung an Transparenz oder Privatsphäre mit klarem oder satiniertem Glas.'
+        'Eine Drehtür aus Glas lässt sich in Büro, Praxis, Salon oder Wohnung einsetzen — je nach Anforderung an Transparenz oder Privatsphäre mit klarem oder satiniertem Glas.',
+        'Satiniertes Glas, im Alltag oft Milchglas genannt, streut das Licht: Der Raum bleibt hell, was darin geschieht, bleibt unsichtbar. Es ist die erste Wahl für Schlafzimmer, Bäder, Arztzimmer und Besprechungsräume. Satiniert werden kann das ganze Blatt oder nur ein Teil — ein Streifen auf Augenhöhe, ein Muster, eine Zimmernummer oder ein Firmenlogo (Sandstrahlen nach Vektorvorlage).'
       ],
       spec: [['Glas 8–10 mm', 'vorgespannt oder VSG'], ['Bis 2,6 m', 'übliche Blatthöhe'], ['Bänder an Wand oder Glas', 'ohne Zarge möglich'], ['Schloss, Schließer', 'bei Bedarf']]
     },
@@ -266,7 +276,9 @@ export const childrenDe5: Record<string, ChildCopy> = {
         ['In der Glastrennwand', 'Die Tür ist an einer festen Glasscheibe befestigt — Zugang zu einem verglasten Büro oder Besprechungsraum ganz ohne Rahmen. ESG 10 mm, Bänder Glas–Glas, Oberlicht möglich, Türschließer oben oder am Boden; Öffnen in eine oder beide Richtungen.'],
         ['Zweiflügelige Tür', 'Zwei Glasflügel für breite Öffnungen — Wohnzimmer, Saal, Eingang zu einem Betrieb; jeder Flügel öffnet einzeln. ESG 10 mm, Breite der Öffnung bis ca. 2 m, Feststellung durch Riegel oder Türschließer, Bügelgriffe an beiden Flügeln; mit Seitenteilen möglich.'],
         ['Loft-Drehtür im Profil', 'Glas im schlanken Aluminiumprofil mit Sprossenteilung nach Skizze — Loft-Stil für Wohnungen, Salons und Studios. Profil schwarz oder RAL, ein vollwertiges Schloss im Profil, kombinierbar mit Loft-Trennwänden.'],
-        ['Tür mit satiniertem Glas', 'Satiniertes Glas 8–10 mm lässt Licht durch, verbirgt aber Silhouetten — für Schlafzimmer, Bäder und Arbeitszimmer. Vollständige oder teilweise Mattierung, Streifen, Muster oder Logo per Sandstrahlung möglich.']
+        ['Tür mit satiniertem Glas (Milchglas)', 'Satiniertes Glas 8–10 mm lässt Licht durch, verbirgt aber Silhouetten — für Schlafzimmer, Bäder und Arbeitszimmer. Vollständige oder teilweise Mattierung, Streifen, Muster oder Logo per Sandstrahlung; leicht zu reinigen, die Kante ist poliert.'],
+        ['Teilsatinierung mit Zimmernummer oder Logo', 'Satiniertes Blatt mit klarer Nummer, Beschriftung oder Piktogramm: Orientierung und Privatsphäre in einem Glas. Satin 8–10 mm, Bänder Glas–Wand, Griff und Schloss optional; für Praxen, Büros und Salons.'],
+        ['Vollsatiniertes Blatt für Bad und Schlafzimmer', 'Vollständig satiniertes Blatt: maximale Privatsphäre bei erhaltenem Licht. Satin 8–10 mm, polierte Kante, Feststeller für Sanitärräume, Öffnen in eine Richtung.']
       ]
     },
     benefits: {
@@ -291,15 +303,17 @@ export const childrenDe5: Record<string, ChildCopy> = {
         ['Wie hoch kann die Tür sein?', 'Die übliche Blatthöhe liegt bis 2,6 m; Maximalmaße hängen von Beschlägen und Wänden ab und werden nach dem Aufmaß festgelegt.'],
         ['Gibt es zweiflügelige Türen?', 'Ja, für Öffnungen bis etwa 2 m; jeder Flügel öffnet einzeln.'],
         ['Welche Beschläge sind möglich?', 'Bügelgriff, Schloss, WC-Verriegelung, Türschließer und Türstopper.'],
-        ['Wann werden die Bohrungen gesetzt?', 'Vor dem Vorspannen des Glases; deshalb stimmen wir vorher eine Zeichnung ab.']
+        ['Wann werden die Bohrungen gesetzt?', 'Vor dem Vorspannen des Glases; deshalb stimmen wir vorher eine Zeichnung ab.'],
+        ['Was ist satiniertes Glas oder Milchglas?', 'Satiniertes Glas streut das Licht: Der Raum bleibt hell, Silhouetten bleiben unsichtbar. Das ganze Blatt oder nur ein Teil kann satiniert werden.'],
+        ['Kann ich ein Logo oder eine Zimmernummer auf die Tür bekommen?', 'Ja, per Sandstrahlung nach Vektorvorlage — als Muster, Streifen, Nummer oder Logo.']
       ]
     },
-    form: { title: 'Glasdrehtür anfragen', text: 'Senden Sie Fotos und Maße der Öffnung — wir empfehlen die Ausführung und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Ausführung', options: ['Rahmenlos an der Wand', 'Im Portal', 'In der Glastrennwand', 'Zweiflügelig', 'Loft-Drehtür im Profil', 'Mit satiniertem Glas', 'Noch unentschlossen'], commentPlaceholder: 'Maße der Öffnung, Glas, Griff und Schloss, Ort in Österreich', product: 'Glasdrehtür' },
+    form: { title: 'Glasdrehtür anfragen', text: 'Senden Sie Fotos und Maße der Öffnung — wir empfehlen die Ausführung und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Ausführung', options: ['Rahmenlos an der Wand', 'Im Portal', 'In der Glastrennwand', 'Zweiflügelig', 'Loft-Drehtür im Profil', 'Satiniert / Milchglas', 'Noch unentschlossen'], commentPlaceholder: 'Maße der Öffnung, Glas, Griff und Schloss, Ort in Österreich', product: 'Glasdrehtür' },
     related: ['glasschiebetuer', 'trennwand-tuer', 'glastuer-aluminiumrahmen']
   },
 
   'glastuer-aluminiumrahmen': {
-    meta: { title: 'Loft-Glastür im Aluminiumrahmen | Space Glass', description: 'Glastüren im Aluminiumprofil im Loft-Stil: Sprossenteilung nach Skizze, Farbe RAL, klares oder satiniertes Glas, Einsteckschloss. Anfrage aus Wien und Österreich.' },
+    meta: { title: 'Loft-Glastür im Aluminiumrahmen | Space Glass', description: 'Glastür im Aluminiumprofil, Loft-Stil: Sprossen nach Skizze, Farbe RAL, klares oder satiniertes Glas, Einsteckschloss. Anfrage aus Wien und Österreich.' },
     name: 'Glastür im Aluminiumrahmen',
     card: ['Loft-Glastür im Aluminiumrahmen', 'Schlankes Profil, Sprossenteilung nach Skizze, Farbe nach RAL.'],
     eyebrow: 'Glastüren / Aluminiumprofil',
@@ -357,7 +371,7 @@ export const childrenDe5: Record<string, ChildCopy> = {
   },
 
   'rahmenloses-glasgelaender': {
-    meta: { title: 'Rahmenloses Glasgeländer | Space Glass', description: 'Rahmenloses Glasgeländer im Klemmprofil ohne Pfosten: VSG 17,52–21,52 mm, 6 Profilsysteme für Boden, Stirn und Verkleidung. Anfrage aus Wien und Österreich.' },
+    meta: { title: 'Rahmenloses Glasgeländer | Space Glass', description: 'Rahmenloses Glasgeländer im Klemmprofil ohne Pfosten: VSG 17,52–21,52 mm, 6 Profilsysteme für Boden und Stirn. Anfrage aus Wien und Österreich.' },
     name: 'Rahmenloses Glasgeländer',
     card: ['Rahmenloses Glasgeländer', 'Glas im Klemmprofil, ohne Pfosten und Handlauf — sechs Profilsysteme.'],
     eyebrow: 'Glasgeländer / rahmenlos',

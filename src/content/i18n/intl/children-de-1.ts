@@ -116,31 +116,37 @@ export const childrenDe1: Record<string, ChildCopy> = {
   },
 
   'schiebe-trennwand': {
-    meta: { title: 'Schiebe-Glastrennwand mit Laufschiene | Space Glass', description: 'Hängende Glasschiebewand an der Laufschiene: ohne Bodenschiene und Schwelle, Softclose, ESG 8–10 mm. Anfrage aus Wien und ganz Österreich.' },
+    meta: { title: 'Schiebe-Glastrennwand nach Maß | Space Glass', description: 'Glasschiebewand: hängend an der Schiene, bodengeführt oder teleskopisch, ESG 8–10 mm, Softclose. Anfrage aus Wien und ganz Österreich.' },
     name: 'Schiebe-Glastrennwand',
-    card: ['Schiebe-Glastrennwand', 'Glasschiebewand an der Laufschiene — ohne Schwelle und Bodenführung.'],
+    card: ['Schiebe-Glastrennwand', 'Glasschiebewand: hängend an der Schiene, bodengeführt oder teleskopisch.'],
     eyebrow: 'Glastrennwände / Schiebewand',
-    h1: 'Schiebe-Glastrennwand mit Laufschiene',
-    lead: 'Die Glasflügel laufen an einer oberen Schiene — auf dem Boden gibt es weder Schwelle noch Führung. Ideal, wenn für eine Drehtür kein Platz ist: Küche, Ankleide, Schlafzimmer, Büro.',
+    h1: 'Schiebe-Glastrennwand: hängend, bodengeführt, teleskopisch',
+    lead: 'Die Glasflügel laufen an einer oberen Schiene oder auf Rollen am Boden — und brauchen keinen Platz zum Aufschwingen. Ideal, wenn für eine Drehtür kein Platz ist: Küche, Ankleide, Schlafzimmer, Büro, Terrasse.',
     heroAlt: 'Hängende Glasschiebewand an einer Laufschiene zwischen Küche und Wohnbereich',
     intro: {
       title: 'Keine Schwelle, kein Platzbedarf für den Türflügel',
       paragraphs: [
         'Bei einer hängenden Glasschiebewand laufen die Glasflügel auf Rollen an einer Schiene an Decke oder Wand. Der Boden bleibt eben, und die Tür braucht keinen Platz zum Aufschwingen.',
         'Die Schiene kann im Profil verschwinden (verdeckter Laufwagen mit Softclose-Dämpfer), als Designelement offen aus Edelstahl geführt werden oder als schwarze Industrieschiene zum Loft-Stil passen.',
-        'Ein Flügel verschließt eine Öffnung, mehrere Flügel gliedern den Raum in Zonen.'
+        'Ein Flügel verschließt eine Öffnung, mehrere Flügel gliedern den Raum in Zonen.',
+        'Bodengeführte (untergestützte) Systeme laufen mit den Rollen unten, die obere Schiene führt die Flügel nur: So lassen sich große und schwere Flügel unter abgehängten oder gespannten Decken oder Trockenbau einsetzen, die Decke trägt kein Gewicht. Die Schwelle beträgt je nach System 7,5 bis 30 mm. Teleskopische Systeme fahren mehrere Flügel hintereinander: Der erste Flügel zieht die weiteren mit, oder mehrere Flügel laufen auf eigenen Schienen und parken als schmales Paket.'
       ],
       spec: [['Ohne Schwelle', 'ebener Boden'], ['Softclose', 'leises Abbremsen'], ['Flügel bis 75 kg', 'bei offener Schiene'], ['ESG 8–10 mm', 'je nach System']]
     },
     variants: {
       eyebrow: 'Systeme',
-      title: 'Vier hängende Schiebesysteme',
-      intro: 'Von der verdeckten Laufschiene bis zur offenen Edelstahlschiene.',
+      title: 'Schiebesysteme: hängend, bodengeführt, teleskopisch',
+      intro: 'Von der verdeckten Laufschiene bis zum bodengeführten System für große Flügel. Werte für Basiskonfigurationen, Details nach Aufmaß.',
       items: [
         ['PIANO — verdeckter Laufwagen', 'Hängende Schiebetür mit verdecktem Laufwagen im Aluminiumprofil und Softclose-Dämpfer; der Flügel wird am Ende des Weges leise abgebremst. ESG 8–10 mm, Montage an Decke oder Wand. Für Wohnungen und Büros.'],
         ['SUSPENS — offene Schiene', 'Schiebesystem auf offener Edelstahlschiene: Rollen und Schiene werden zum Designelement. Flügel bis 75 kg, ESG 8–10 mm, Wandmontage. Für Küchen, Ankleiden und Schlafzimmer.'],
         ['LIGERA — schwarze Schiene', 'Glasschiebetür an schwarzer Industrieschiene, ESG 10 mm, Schließdämpfer auf Wunsch, Wandmontage. Passt zur Loft-Trennwand und zu schwarzen Beschlägen.'],
-        ['MERCATO — Aluminiumprofil', 'Schiebesystem im Aluminiumprofil, wenn mehrere Flügel gebraucht werden. ESG 8–10 mm, ein oder mehrere Flügel, Profil in Silber oder Schwarz. Für Büros, Läden und Wohnungen.']
+        ['MERCATO — Aluminiumprofil', 'Schiebesystem im Aluminiumprofil, wenn mehrere Flügel gebraucht werden. ESG 8–10 mm, ein oder mehrere Flügel, Profil in Silber oder Schwarz. Für Büros, Läden und Wohnungen.'],
+        ['ATRIUM — teleskopisch, hängend, ohne Schwelle', 'Hängendes System für Öffnungen bis 4 m Höhe: Die Flügel (10 mm, ESG oder VSG) laufen an der oberen Führung und parken als Paket; keine Schwelle. Flügelbreite bis 1000 mm, Wagen bis 150 kg. Für Lofts und hohe Decken, auch für breite Öffnungen mit wenig Platz für das Flügelpaket.'],
+        ['SLIDING SLIM — bodengeführt, Schwelle 7,5 mm', 'Parallel-Schiebesystem nach dem Prinzip des Schranks mit der niedrigsten Schwelle (7,5 mm). Höhe bis 3000 mm, Flügelbreite bis 900 mm, ESG 8 oder 10 mm, 3 oder 5 Schienen; Parken von jeder Seite, für große Öffnungen.'],
+        ['SLIDING SMART — teleskopisch, Schwelle 12,5 mm', 'Der erste Flügel zieht die weiteren mit, sodass eine breite Öffnung mit einer Bewegung frei wird. Höhe bis 3000 mm, Flügelbreite bis 1200 mm, ESG 8 oder 10 mm, 3 oder 5 Schienen, Filzdichtungen.'],
+        ['SLIDING NEXT — bodengeführt, schlanke Profile', 'System der neuen Generation für ESG 10 mm: schlanke Flügelprofile, mehrere Schlossvarianten, Smart-Griff, mittiger Zugang. Schwellen 16 mm (FLAT) oder 29,5 mm; ALL GLASS ohne oberes Profil für den Eindruck von durchgehendem Glas. Höhe bis 3000 mm, Flügelbreite bis 1100 mm.'],
+        ['SLIDING TRACK — Zugluftschutz', 'Schiebesystem mit Schwelle 30 mm und doppelter Bürstendichtung unter den Flügeln — für Trennwände zwischen Raum und Terrasse oder Balkon, wo Zugluft stört. Höhe bis 3000 mm, Flügelbreite bis 1300 mm, ESG 8 oder 10 mm; auch für L- und U-förmige Öffnungen.']
       ]
     },
     benefits: {
@@ -165,10 +171,12 @@ export const childrenDe1: Record<string, ChildCopy> = {
         ['Wie schwer darf ein Flügel sein?', 'Bei der offenen Schiene (SUSPENS) bis 75 kg. Für die anderen Systeme legen wir die Daten bei der Planung fest.'],
         ['Kann der Flügel leise schließen?', 'Ja. Das System PIANO hat einen Softclose-Dämpfer, bei LIGERA ist ein Dämpfer auf Wunsch möglich.'],
         ['Wo wird die Schiene montiert?', 'An Decke oder Wand — je nach System und Raum.'],
-        ['Für welche Räume eignet sich die Schiebewand?', 'Für Küche und Wohnbereich, Ankleide, Schlafzimmer, Büros und Läden, überall dort, wo eine Drehtür zu viel Platz braucht.']
+        ['Für welche Räume eignet sich die Schiebewand?', 'Für Küche und Wohnbereich, Ankleide, Schlafzimmer, Büros und Läden, überall dort, wo eine Drehtür zu viel Platz braucht.'],
+        ['Hängend oder bodengeführt?', 'Hängende Systeme haben keine Schwelle und keine Bodenführung. Bodengeführte Systeme tragen die Last unten und eignen sich für große, schwere Flügel unter Decken, die nichts tragen sollen; die Schwelle liegt zwischen 7,5 und 30 mm.'],
+        ['Was ist eine teleskopische Glasschiebewand?', 'Mehrere Flügel laufen hintereinander: Der erste zieht die weiteren mit (SLIDING SMART) oder mehrere Flügel parken als Paket (ATRIUM). So wird eine breite Öffnung mit einer Bewegung frei.']
       ]
     },
-    form: { title: 'Schiebe-Glastrennwand anfragen', text: 'Senden Sie Fotos und Maße der Öffnung — wir wählen das System und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'System', options: ['PIANO — verdeckter Laufwagen', 'SUSPENS — offene Schiene', 'LIGERA — schwarze Schiene', 'MERCATO — Aluminiumprofil', 'Noch unentschlossen'], commentPlaceholder: 'Breite und Höhe der Öffnung, Anzahl Flügel, Einsatz, Ort in Österreich', product: 'Schiebe-Glastrennwand' },
+    form: { title: 'Schiebe-Glastrennwand anfragen', text: 'Senden Sie Fotos und Maße der Öffnung — wir wählen das System und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'System', options: ['Hängend (PIANO, SUSPENS, LIGERA, MERCATO)', 'Bodengeführt (SLIDING SLIM, NEXT, TRACK)', 'Teleskopisch (SLIDING SMART, ATRIUM)', 'Noch unentschlossen'], commentPlaceholder: 'Breite und Höhe der Öffnung, Anzahl Flügel, Einsatz, Ort in Österreich', product: 'Schiebe-Glastrennwand' },
     related: ['glasschiebetuer', 'loft-trennwand', 'trennwand-tuer']
   },
 

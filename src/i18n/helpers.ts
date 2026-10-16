@@ -1,5 +1,5 @@
 import { hasProjectRu } from '../data/ru/projects.ru';
-import { intlFallbackPath, intlRouteOfPath, intlRouteOfUk, isIntlLocale } from './intl-routes';
+import { intlDeOnlyFallback, intlFallbackPath, intlRouteOfPath, intlRouteOfUk, isIntlLocale } from './intl-routes';
 export const supportedLocales = ['uk', 'ru', 'en', 'de', 'es'] as const;
 export type Locale = typeof supportedLocales[number];
 export { isIntlLocale };
@@ -181,6 +181,9 @@ export function localizedPath(pathname: string, locale: Locale): string {
   const path = cut === -1 ? pathname : pathname.slice(0, cut);
   const suffix = cut === -1 ? '' : pathname.slice(cut);
   const base = stripLocale(path);
+  // A German-only page has no UA/RU/EN/ES original: other languages get its nearest real UA parent.
+  const deOnlyFallback = locale === 'de' ? undefined : intlDeOnlyFallback(base);
+  if (deOnlyFallback) return localizedPath(deOnlyFallback, locale);
   if (locale === 'uk') return `${base}${suffix}`;
   // EN/DE/ES: the localized page, otherwise its nearest localized parent (or the localized home
   // page) — an international page never links to a UA/RU page by fallback.

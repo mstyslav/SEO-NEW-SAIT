@@ -37,7 +37,7 @@ interface Props {
 const { title: rawTitle, description: rawDescription, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, heroPreloadMobileMaxWidth = 900, robots, mainEntityId, errorPage = false, organizationFounders = [] } = Astro.props;
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales, hasLocalizedRoute, isIntlLocale } from '../i18n/helpers';
-import { intlLocales } from '../i18n/intl-routes';
+import { intlDeOnlyFallback, intlLocales } from '../i18n/intl-routes';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
 
 /**
@@ -109,7 +109,11 @@ const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
 // EN/DE/ES alternates always come from the route map (src/i18n/intl-routes.ts), also on pages that
 // restrict `alternateLocales` to uk/ru, so every UA/RU ↔ EN/DE/ES pair is reciprocal.
 const declaredAlternates = alternateLocales ?? supportedLocales;
-const availableAlternateLocales = [...new Set([...declaredAlternates, ...intlLocales])].filter((item) => item === 'uk' || item === resolvedLocale || hasLocalizedRoute(basePath, item));
+// A German-only page (no UA/RU original) declares only itself: no fake twins, no x-default to a UA page.
+const isDeOnlyPage = Boolean(intlDeOnlyFallback(basePath));
+const availableAlternateLocales = isDeOnlyPage
+  ? [resolvedLocale]
+  : [...new Set([...declaredAlternates, ...intlLocales])].filter((item) => item === 'uk' || item === resolvedLocale || hasLocalizedRoute(basePath, item));
 import ScrollProgress from '../components/ScrollProgress.astro';
 // The page language comes only from the URL (/ru/… = RU, everything else = UA). translate="no" +
 // notranslate stop browsers (Chrome/Yandex/Safari with a Russian UI) from auto-translating a UA page

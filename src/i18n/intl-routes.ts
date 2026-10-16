@@ -28,6 +28,8 @@ export interface IntlRoute {
   /** A locale a page does not (yet) have is left out: no hreflang, no sitemap entry, links fall back to the parent hub. */
   en?: string;
   de?: string;
+  /** Set for pages that exist only in German: the nearest real UA page (language switcher target). */
+  deOnlyFallback?: string;
   es?: string;
   /** Child pages: id of the parent hub (same locale). */
   parent?: string;
@@ -108,12 +110,32 @@ const DE_CHILDREN: Array<{ id: string; parent: string; uk: string; slug: string 
   { id: 'wandspiegel', parent: 'mirrors', uk: '/dzerkala/dzerkala-na-stinu/', slug: 'wandspiegel-nach-mass' },
   { id: 'gastronomie', parent: 'business', uk: '/dlya-biznesu/restoranam/', slug: 'gastronomie' },
   { id: 'buero-glasloesungen', parent: 'business', uk: '/dlya-biznesu/dlya-ofisu/', slug: 'buero' },
-  { id: 'einzelhandel', parent: 'business', uk: '/dlya-biznesu/magazynam/', slug: 'einzelhandel' }
+  { id: 'einzelhandel', parent: 'business', uk: '/dlya-biznesu/magazynam/', slug: 'einzelhandel' },
+  { id: 'franzoesischer-balkon', parent: 'railings', uk: '/sklyani-ohorozhi/sklyani-ohorozhi-na-stiykakh/', slug: 'franzoesischer-balkon-glas' },
+  { id: 'badewannenaufsatz', parent: 'showers', uk: '/dushovi-kabiny/shtorky-dlya-vannoyi/', slug: 'badewannenaufsatz-glas' },
+  { id: 'glas-raumteiler-wohnung', parent: 'partitions', uk: '/sklyani-perehorodky/mizhkimnatni/', slug: 'glas-raumteiler-wohnung' },
+  { id: 'bautraeger-wohnanlagen', parent: 'business', uk: '/dlya-biznesu/zhytlovym-kompleksam/', slug: 'bautraeger-wohnanlagen' },
+  { id: 'aluminium-buerotrennwand', parent: 'partitions', uk: '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/', slug: 'aluminium-buerotrennwand' },
+  { id: 'spiegel-mit-rahmen', parent: 'mirrors', uk: '/dzerkala/dzerkala-v-rami/', slug: 'spiegel-mit-rahmen' }
+];
+/**
+ * Pages that exist only in German (no UA/RU equivalent). They get no hreflang to UA/RU/EN/ES and no
+ * x-default; `uk` is an internal key that is never a real URL, `fallback` is the nearest real UA page
+ * the language switcher links to.
+ */
+const DE_ONLY_CHILDREN: Array<{ id: string; parent: string; slug: string; fallback: string }> = [
+  { id: 'kaltwintergarten', parent: 'wintergardens', slug: 'kaltwintergarten', fallback: '/alyuminiyevi-konstrukcziyi/zymovi-sady/' }
 ];
 for (const child of DE_CHILDREN) {
   const parent = INTL_ROUTES.find((route) => route.id === child.parent);
   if (!parent?.de) throw new Error(`Unknown parent hub ${child.parent}`);
   INTL_ROUTES.push({ id: `child:${child.id}`, kind: 'child', parent: child.parent, uk: child.uk, de: `${parent.de}${child.slug}/` });
+}
+
+for (const child of DE_ONLY_CHILDREN) {
+  const parent = INTL_ROUTES.find((route) => route.id === child.parent);
+  if (!parent?.de) throw new Error(`Unknown parent hub ${child.parent}`);
+  INTL_ROUTES.push({ id: `child:${child.id}`, kind: 'child', parent: child.parent, uk: `/de-only/${child.slug}/`, de: `${parent.de}${child.slug}/`, deOnlyFallback: child.fallback });
 }
 
 const byUk = new Map(INTL_ROUTES.map((route) => [route.uk, route]));
@@ -127,6 +149,9 @@ export const intlRouteOfPath = (pathname: string): IntlRoute | undefined => byIn
 
 /** The route entry of a UA (unprefixed) path, if that page has international versions. */
 export const intlRouteOfUk = (ukPath: string): IntlRoute | undefined => byUk.get(ukPath);
+
+/** The UA fallback page of a German-only page (undefined for every page that has a UA original). */
+export const intlDeOnlyFallback = (basePath: string): string | undefined => byUk.get(basePath)?.deOnlyFallback;
 
 export const intlRouteById = (id: string): IntlRoute | undefined => byId.get(id);
 
