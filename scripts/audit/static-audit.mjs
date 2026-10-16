@@ -68,10 +68,12 @@ for (const url of urls) {
   const head = html.slice(0, html.indexOf('</head>'));
   const body = html.slice(html.indexOf('</head>'));
   const isRu = p === '/ru/' || p.startsWith('/ru/');
+  // Page language from the URL prefix: /ru/ /en/ /de/ /es/, everything else UA.
+  const loc = p.match(/^\/(ru|en|de|es)(?=\/|$)/)?.[1] ?? 'uk';
 
   // ---- head / SEO
   const lang = html.match(/<html[^>]*\slang="([^"]+)"/)?.[1];
-  if (lang !== (isRu ? 'ru' : 'uk')) add('P0', `html lang mismatch (got ${lang})`, p);
+  if (lang !== loc) add('P0', `html lang mismatch (got ${lang})`, p);
   const title = head.match(/<title>([^<]*)<\/title>/)?.[1]?.trim();
   if (!title) add('P0', 'missing <title>', p);
   else if (title.length > 70) add('P3', 'title longer than 70 chars', p, `${title.length}`);
@@ -87,13 +89,14 @@ for (const url of urls) {
   const alt = Object.fromEntries(alternates.map((a) => [a.lang, a.href]));
   if (!alternates.length) add('P2', 'no hreflang alternates', p);
   else {
-    if (alt[isRu ? 'ru' : 'uk'] !== url) add('P0', 'hreflang self-reference missing/wrong', p, JSON.stringify(alt));
+    if (alt[loc] !== url) add('P0', 'hreflang self-reference missing/wrong', p, JSON.stringify(alt));
     if (alt.uk && alt['x-default'] !== alt.uk) add('P1', 'x-default ≠ uk alternate', p);
     for (const a of alternates) {
       const ap = a.href.replace(site, '');
       const st = resolveStatus(ap);
       if (st !== 'ok') add('P0', `hreflang target is ${st}`, p, `${a.lang} → ${ap}`);
-      if ((a.lang === 'ru') !== (ap === '/ru/' || ap.startsWith('/ru/')) && a.lang !== 'x-default') add('P0', 'hreflang language/URL mismatch', p, `${a.lang} → ${ap}`);
+      const apLoc = ap.match(/^\/(ru|en|de|es)(?=\/|$)/)?.[1] ?? 'uk';
+      if (a.lang !== 'x-default' && a.lang !== apLoc) add('P0', 'hreflang language/URL mismatch', p, `${a.lang} → ${ap}`);
     }
   }
   if (!/<meta name="viewport"[^>]*width=device-width/.test(head)) add('P1', 'missing responsive viewport', p);
@@ -137,7 +140,11 @@ for (const url of urls) {
       if (st === '404') add('P0', 'internal link → 404', p, clean);
       else if (st === 'redirect') add('P1', 'internal link → redirect', p, clean);
       else if (st === 'slash-redirect') add('P2', 'internal link without trailing slash', p, clean);
-      if (!isRu && (clean === '/ru/' || clean.startsWith('/ru/')) && !/hreflang|lang-switch|data-lang/.test(tag)) add('P3', 'UA page links into /ru/ (outside language switcher)', p, clean);
+      if (loc === 'uk' && (clean === '/ru/' || clean.startsWith('/ru/')) && !/hreflang|lang-switch|data-lang|data-target-locale/.test(tag)) add('P3', 'UA page links into /ru/ (outside language switcher)', p, clean);
+      // EN/DE/ES pages link only to their own language (the language menu is the exception).
+      const linkLoc = clean.match(/^\/(ru|en|de|es)(?=\/|$)/)?.[1] ?? 'uk';
+      const isPage = clean.endsWith('/') && !/^\/(_astro|images|vendor|js|api|fonts)\//.test(clean);
+      if (['en', 'de', 'es'].includes(loc) && isPage && linkLoc !== loc && !/data-target-locale/.test(tag)) add('P0', `${loc.toUpperCase()} page links to another language (outside language menu)`, p, clean);
     }
   }
   for (const m of body.matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/g)) {

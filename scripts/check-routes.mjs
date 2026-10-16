@@ -83,7 +83,10 @@ for (const loc of sitemap) {
   if (!built(route)) errors.push(`sitemap URL without a built page: ${route}`);
 }
 const isRu = (route) => route === '/ru/' || route.startsWith('/ru/');
+// EN/DE/ES pages have localized slugs and are checked by scripts/check-intl.mjs (route map, hreflang).
+const isIntl = (route) => /^\/(en|de|es)\//.test(route);
 for (const route of urls) {
+  if (isIntl(route)) continue;
   const twin = isRu(route) ? route.slice(3) : `/ru${route}`;
   if (!urls.has(twin)) errors.push(`sitemap URL without a ${isRu(route) ? 'UA' : 'RU'} twin: ${route}`);
 }
@@ -94,4 +97,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`OK: ${critical.length * 2 + single.length + files.length} critical routes are built; ${urls.size} sitemap URLs have pages and UA/RU twins.`);
+console.log(`OK: ${critical.length * 2 + single.length + files.length} critical routes are built; ${urls.size} sitemap URLs have pages; UA/RU twins complete (EN/DE/ES: ${[...urls].filter(isIntl).length} URLs, see check-intl).`);
