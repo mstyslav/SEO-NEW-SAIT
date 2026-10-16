@@ -71,6 +71,10 @@ export const CHILD_IMAGES: Record<string, ChildImage> = {
   'aluminium-buerotrennwand': sq(`${S}/cat-alu-ofis`),
   'spiegel-mit-rahmen': sq('/images/catalog/dzerkala/cat-rama'),
   kaltwintergarten: two(`${S}/veranda`),
+  glaspendeltuer: sq('/images/catalog/sklyani-dveri/hero4-mayatnykovi-sklyani-dveri'),
+  'glasvordach-konsolen': sq('/images/catalog/sklyani-kozyrky/hero-kozyrky-na-kronshteinakh'),
+  'spiegel-fitnessstudio': sq('/images/catalog/dzerkala/cat-sport'),
+  'salon-glas-spiegel': biz('salonam-krasy'),
   hotels: {
     src: '/images/business/biz-goteli-800.webp',
     srcset: '/images/business/biz-goteli-640.webp 640w, /images/business/biz-goteli-800.webp 800w, /images/business/biz-goteli-1280.webp 1280w',

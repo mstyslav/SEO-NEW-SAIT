@@ -75,11 +75,11 @@ export const contactsCopy: Record<IntlLocale, ContactsCopy> = {
     ]
   },
   de: {
-    title: 'Kontakt Space Glass — Büros in Kyjiw, Odesa und Lwiw',
-    description: 'Kontakt zu Space Glass: Telefon, E-Mail und Büros in Kyjiw, Odesa und Lwiw. Senden Sie Fotos, Maße oder Pläne — wir erstellen ein Angebot für Ihr Projekt.',
+    title: 'Kontakt Space Glass — Projekte in Wien und Österreich',
+    description: 'Anfrage für ein Projekt in Wien oder Österreich: Fotos, Maße oder Pläne senden — wir erstellen eine unverbindliche Kostenschätzung.',
     eyebrow: 'Kontakt',
-    heading: 'Sprechen wir über Ihr Projekt',
-    intro: 'Senden Sie uns ungefähre Maße und beschreiben Sie Ihr Vorhaben — wir erstellen eine unverbindliche Kostenschätzung.',
+    heading: 'Anfrage für Ihr Projekt in Wien oder Österreich',
+    intro: 'Senden Sie uns Fotos, ungefähre Maße oder Pläne und beschreiben Sie Ihr Vorhaben — wir erstellen eine unverbindliche Kostenschätzung. Lieferung und Montage stimmen wir je nach Produkt und Projekt individuell ab.',
     quickLinksAria: 'Schnellkontakt',
     name: 'Name', namePlaceholder: 'Ihr Name', phone: 'Telefon', city: 'Ort / Land', cityPlaceholder: 'Ort, Land',
     need: 'Ihr Vorhaben', needPlaceholder: 'Beschreiben Sie kurz die gewünschte Konstruktion',
@@ -92,8 +92,8 @@ export const contactsCopy: Record<IntlLocale, ContactsCopy> = {
       ['Ungefähre Maße', 'Für eine erste Kostenschätzung genügen die wichtigsten Außenmaße.'],
       ['Zeichnung / PDF / DWG', 'Liegt bereits eine Planung vor, senden Sie uns die Zeichnung oder die technischen Unterlagen zur Prüfung.']
     ],
-    offices: 'Unsere Büros',
-    chooseCity: 'Stadt wählen',
+    offices: 'Unsere Standorte in der Ukraine',
+    chooseCity: 'Standort wählen',
     officeList: [
       { id: 'odesa', city: 'Odesa', address: 'Hlyniana-Straße 5' },
       { id: 'kyiv', city: 'Kyjiw', address: 'Laureatska-Straße 8' },
@@ -102,12 +102,12 @@ export const contactsCopy: Record<IntlLocale, ContactsCopy> = {
     schedule: 'Öffnungszeiten', hours: 'Mo–Fr: 09:00–19:00 (Kyjiwer Zeit)', route: 'Route planen', map: 'Karte öffnen',
     socialAria: 'Space Glass in sozialen Netzwerken', mapTitle: 'Karte des Büros von Space Glass',
     geoEyebrow: 'Einsatzgebiet',
-    geoTitle: 'Sitz in der Ukraine, offen für Projekte im Ausland',
+    geoTitle: 'Projekte in Wien und Österreich',
     geoText: [
-      'Fertigung und Montageteams sitzen in Kyjiw, Odesa und Lwiw. Projekte in der übrigen Ukraine setzen wir je nach Konstruktion, Leistungsumfang und Logistik um.',
-      'Ausgewählte Produkte und Konstruktionen können auch in europäische Länder geliefert werden. Für ein Projekt außerhalb der Ukraine senden Sie uns Pläne oder Fotos und den Standort — wir sagen Ihnen, was geliefert werden kann und wie Lieferung und Montage organisiert werden können.'
+      'Wir realisieren Glas- und Aluminiumlösungen für Projekte in Wien und Österreich. Aufmaß, Lieferung und Montage werden je nach Produkt und Projekt individuell abgestimmt.',
+      'Das Unternehmen hat seinen Sitz in der Ukraine; Fertigung und Montageteams sitzen in Kyjiw, Odesa und Lwiw. Senden Sie uns Pläne oder Fotos und den Standort Ihres Objekts — wir sagen Ihnen, was geliefert werden kann und wie der Ablauf für Ihr Projekt aussieht.'
     ],
-    geoCitiesAria: 'Büros von Space Glass',
+    geoCitiesAria: 'Standorte von Space Glass in der Ukraine',
     b2bEyebrow: 'Für Unternehmen',
     b2bTitle: 'Sie arbeiten an einem Gewerbeprojekt?',
     b2bText: 'Wir arbeiten mit Architekten, Innenarchitekten, Bauträgern und Generalunternehmern zusammen — auf Basis von Zeichnungen, Leistungsverzeichnissen und Projektunterlagen.',
@@ -121,8 +121,8 @@ export const contactsCopy: Record<IntlLocale, ContactsCopy> = {
       ['Kann ich PDF- oder DWG-Dateien senden?', 'Ja. Hängen Sie PDF, DWG oder andere technische Unterlagen an — das beschleunigt Prüfung und Kalkulation.'],
       ['Brauche ich eine fertige Zeichnung?', 'Nein. Für den Start reichen Fotos und ungefähre Maße; die technische Lösung und die Zeichnung erarbeiten wir bei Bedarf gemeinsam.'],
       ['Wie schnell erhalte ich die Kostenschätzung?', 'Das hängt von der Komplexität und der Vollständigkeit der Angaben ab. Nach Eingang der Anfrage nennen wir Ihnen den voraussichtlichen Zeitraum.'],
-      ['Kann ich ein Aufmaß vor Ort vereinbaren?', 'Ja, in Kyjiw, Odesa und Lwiw sowie in den umliegenden Regionen — sobald die Aufgabe geklärt und ein Termin für den Zugang zum Objekt abgestimmt ist.'],
-      ['Arbeiten Sie auch außerhalb der Ukraine?', 'Ausgewählte Produkte und Konstruktionen können in europäische Länder geliefert werden. Lieferung und Montage im Ausland werden für jedes Projekt individuell vereinbart.'],
+      ['Kann ich ein Aufmaß vor Ort vereinbaren?', 'Das stimmen wir je nach Projekt und Objekt individuell ab. Für die erste Kostenschätzung genügen Fotos und ungefähre Maße.'],
+      ['Arbeiten Sie an Projekten in Österreich?', 'Ja, wir nehmen Anfragen für Projekte in Wien und Österreich an. Lieferung und Montage werden für jedes Projekt individuell vereinbart.'],
       ['Kann ich nur die Fertigung ohne Montage bestellen?', 'Ja, für einen Teil der Konstruktionen ist Fertigung mit Lieferung möglich. Die Bedingungen hängen von System und Ausführung ab.'],
       ['Übernehmen Sie die Montage selbst?', 'Ja. Unsere erfahrenen Teams montieren, sobald die technische Lösung freigegeben und das Objekt vorbereitet ist.'],
       ['Arbeiten Sie mit Unternehmen und Bauträgern?', 'Ja. Wir arbeiten mit Architekten, Planern, Bauträgern und Unternehmen an Gewerbe- und Architekturprojekten.'],

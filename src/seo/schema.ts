@@ -22,8 +22,11 @@ export const organizationId = (origin: string | URL) => `${absoluteUrl('/', orig
 export const absoluteUrl = (pathOrUrl: string | URL, origin: string | URL) => new URL(pathOrUrl, origin).href;
 
 // Founders are marked up only where the page itself shows them (the About team section), not sitewide.
-export function organizationSchema(origin: string | URL, founders: JsonLdObject[] = []): JsonLdObject {
+export function organizationSchema(origin: string | URL, founders: JsonLdObject[] = [], locale?: string): JsonLdObject {
   const siteUrl = absoluteUrl('/', origin);
+  // German pages target Austria: the service area is Austria (Wien). No availableLanguage on the contact
+  // point — that would claim German-speaking support, which is not confirmed. No address, no local business.
+  const de = locale === 'de';
   return {
     '@type': 'Organization',
     '@id': `${siteUrl}#organization`,
@@ -41,10 +44,10 @@ export function organizationSchema(origin: string | URL, founders: JsonLdObject[
       contactType: 'customer service',
       telephone: COMPANY_PHONE,
       email: COMPANY_EMAIL,
-      areaServed: 'UA',
-      availableLanguage: ['uk', 'ru']
+      areaServed: de ? 'AT' : 'UA',
+      ...(de ? {} : { availableLanguage: ['uk', 'ru'] })
     },
-    areaServed: { '@type': 'Country', name: 'Ukraine' },
+    areaServed: de ? [{ '@type': 'Country', name: 'Österreich' }, { '@type': 'City', name: 'Wien' }] : { '@type': 'Country', name: 'Ukraine' },
     sameAs: COMPANY_SAME_AS,
     ...(founders.length ? { founder: founders } : {})
   };

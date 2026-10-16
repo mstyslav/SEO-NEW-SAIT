@@ -98,7 +98,7 @@ const pageSchema = webPageSchema({
 });
 const extraStructuredData = Array.isArray(structuredData) ? structuredData : [structuredData];
 const schema = jsonLdGraph([
-  organizationSchema(origin, organizationFounders),
+  organizationSchema(origin, organizationFounders, resolvedLocale),
   websiteSchema(origin, resolvedLocale),
   ...(errorPage ? [] : [pageSchema]),
   ...extraStructuredData

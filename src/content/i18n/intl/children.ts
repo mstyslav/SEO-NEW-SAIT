@@ -8,12 +8,13 @@ import { childrenDe4 } from './children-de-4';
 import { childrenDe5 } from './children-de-5';
 import { childrenDe6 } from './children-de-6';
 import { childrenDe7 } from './children-de-7';
+import { childrenDe8 } from './children-de-8';
 
 const empty: Record<string, ChildCopy> = {};
 
 export const childCopy: Record<IntlLocale, Record<string, ChildCopy>> = {
   en: empty,
-  de: { ...childrenDe1, ...childrenDe2, ...childrenDe3, ...childrenDe4, ...childrenDe5, ...childrenDe6, ...childrenDe7 },
+  de: { ...childrenDe1, ...childrenDe2, ...childrenDe3, ...childrenDe4, ...childrenDe5, ...childrenDe6, ...childrenDe7, ...childrenDe8 },
   es: empty
 };
 

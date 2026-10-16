@@ -14,7 +14,7 @@ const TI={
     error:'The request could not be sent online. Please call +380 73 425 14 00 or try again.',tooMany:'Too many requests in a row. Please wait a minute and try again.',
     fileSize:'The file is too large — 10 MB maximum.',fileType:'This file type is not supported. Please attach JPG, PNG, WEBP, PDF or DWG.',
     fileNotSent:'Your request was sent, but the file could not be transferred — our manager will ask for it when calling.'},
-  de:{title:'Vielen Dank',title2:'Anfrage gesendet',text:'Unser Team meldet sich während der Geschäftszeiten bei Ihnen, klärt die Details und erstellt eine Kostenschätzung.',product:'Anfrage',ok:'OK',call:'Anrufen',close:'Schließen',
+  de:{title:'Vielen Dank',title2:'Anfrage gesendet',text:'Unser Team meldet sich während der Geschäftszeiten bei Ihnen, klärt die Details und erstellt eine Kostenschätzung.',product:'Anfrage',ok:'OK',call:'Anrufen',more:'Weitere Lösungen',moreHref:'/de/leistungen/',close:'Schließen',
     jobText:'Wir haben Ihre Bewerbung erhalten und melden uns, um die Details zu besprechen.',
     sending:'Wird gesendet…',status:'Ihre Anfrage wird sicher übermittelt…',phone:'Bitte prüfen Sie die Telefonnummer und die Landesvorwahl.',
     error:'Die Anfrage konnte nicht online gesendet werden. Rufen Sie uns an: +380 73 425 14 00, oder versuchen Sie es erneut.',tooMany:'Zu viele Anfragen in kurzer Zeit. Bitte warten Sie eine Minute und versuchen Sie es erneut.',
@@ -220,7 +220,7 @@ function showSuccess(payload){
 <div class="sg-success__icon"><svg viewBox="0 0 40 40"><path d="M10 21l7 7 14-15"/></svg></div>
 <p class="sg-success__eyebrow">${T.title2}</p><h2 id="sg-success-title">${T.title}${first?', '+escHtml(first):''}!</h2>
 <p>${payload.kind==='job'?T.jobText:T.text}</p>${payload.product?`<span class="sg-success__product">${T.product}: ${escHtml(payload.product)}</span>`:''}
-<div class="sg-success__actions"><button type="button" class="button button--mint" data-close>${T.ok}</button><a class="button button--outline" href="tel:+380734251400">${T.call}</a></div></div>`;
+<div class="sg-success__actions"><button type="button" class="button button--mint" data-close>${T.ok}</button>${T.moreHref?`<a class="button button--outline" href="${T.moreHref}">${T.more}</a>`:`<a class="button button--outline" href="tel:+380734251400">${T.call}</a>`}</div></div>`;
   const prevFocus=document.activeElement;
   const close=()=>{wrap.classList.remove('is-open');document.removeEventListener('keydown',onKey);setTimeout(()=>wrap.remove(),250);prevFocus&&prevFocus.focus&&prevFocus.focus();};
   const onKey=e=>{if(e.key==='Escape')close();};

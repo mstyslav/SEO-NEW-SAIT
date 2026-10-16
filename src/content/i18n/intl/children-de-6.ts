@@ -312,6 +312,7 @@ export const childrenDe6: Record<string, ChildCopy> = {
       intro: 'Von der Terrasse bis zum Sanitärbereich.',
       items: [
         ['Terrasse und Sommerbereich', 'Rahmenlose Schiebeverglasung — die Terrasse arbeitet das ganze Jahr. Vertikal- und Schiebesysteme, kalt oder warm.'],
+        ['Windschutz für Gastgarten und Terrasse', 'Glassegmente von 1,0 bis 1,6 m Höhe halten Zugluft von den Gästen ab und lassen den Blick auf Straße oder Garten offen. Auf Holz- oder Verbunddielen auf Minihandläufen am Unterbau, auf Beton im Klemmprofil; Beschläge aus Edelstahl AISI 316, Glaskanten geschliffen und poliert. Für Cafés und Restaurants fertigen wir Segmente, die sich leicht warten und bei Bedarf umstellen lassen.'],
         ['Lounge und Ruhezonen', 'Pergolen und Schiebesysteme, die den Gastraum zur Terrasse öffnen.'],
         ['Zonentrennung', 'Glas- und Loft-Trennwände für VIP-Räume und die Küche.'],
         ['Eingangsbereich', 'Glastüren und Schaufenster, die von der Straße aus auffallen.'],
@@ -339,6 +340,7 @@ export const childrenDe6: Record<string, ChildCopy> = {
         ['Welche Terrassenverglasung ist für Restaurants geeignet?', 'Rahmenlose Schiebesysteme, kalt für die Sommerterrasse oder warm mit Isolierglas für kühlere Tage.'],
         ['Was ist der Unterschied zwischen Schiebe- und Faltsystemen?', 'Schiebeflügel laufen entlang einer Schiene, Faltflügel werden seitlich zusammengelegt; die Wahl hängt von Breite und gewünschtem Öffnungswinkel ab.'],
         ['Bleibt die Aussicht erhalten?', 'Ja, rahmenlose Systeme kommen ohne senkrechte Pfosten aus.'],
+        ['Gibt es einen Windschutz aus Glas für den Gastgarten?', 'Ja: Glassegmente mit 1,0 bis 1,6 m Höhe halten Zugluft ab und verdecken die Aussicht nicht. Höhe und Befestigung legen wir nach dem Aufmaß fest; eine Zusage zu bestimmten Vorschriften geben wir nicht.'],
         ['Kann das Restaurant während der Montage geöffnet bleiben?', 'Wir planen die Montage so, dass der Betrieb nicht lange schließen muss; Einzelheiten stimmen wir im Projekt ab.'],
         ['Gibt es Trennwände für VIP-Zonen?', 'Ja, Glas- und Loft-Trennwände.'],
         ['Kann die Gestaltung zum Konzept passen?', 'Profilfarbe, Glas und Dekor richten sich nach Ihrem Konzept.']

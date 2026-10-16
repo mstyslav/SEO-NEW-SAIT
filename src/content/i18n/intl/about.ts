@@ -96,12 +96,12 @@ export const intlAboutContent: Record<IntlLocale, AboutContent> = {
   de: {
     meta: {
       title: 'Über Space Glass — Team, Erfahrung, 5.000+ Projekte',
-      description: 'Space Glass plant, fertigt und montiert Glas- und Aluminiumkonstruktionen: eigene Fertigung, erfahrenes Team und über 5.000 umgesetzte Projekte.'
+      description: 'Space Glass: Glas- und Aluminiumlösungen für Projekte in Wien und Österreich. Erfahrenes Team, über 5.000 umgesetzte Projekte, Planung bis Montage.'
     },
     hero: {
       eyebrow: 'SPACE GLASS · ÜBER UNS',
       h1: ['Glaskonstruktionen', 'und Aluminiumsysteme', 'von Space Glass'],
-      subtitle: 'Wir planen, fertigen und montieren Glastrennwände, Loft-Trennwände, Glasgeländer, Glasduschen, Glastüren, Fassaden- und rahmenlose Verglasungen, Aluminiumfenster und -türen, Pergolen und Sonnenschutzsysteme. Wir arbeiten in der gesamten Ukraine und setzen Projekte in Europa um.',
+      subtitle: 'Space Glass: Glas- und Aluminiumlösungen für Projekte in Wien und Österreich. Wir planen, fertigen und montieren Glastrennwände, Loft-Trennwände, Glasgeländer, Glasduschen, Glastüren, Fassaden- und rahmenlose Verglasungen, Aluminiumfenster und -türen, Pergolen und Sonnenschutzsysteme. Das Unternehmen hat seinen Sitz in der Ukraine.',
       imageAlt: 'Das Team von Space Glass an einem fertigen Objekt mit Glasgeländer'
     },
     statsAriaLabel: 'Space Glass in Zahlen',
@@ -109,7 +109,7 @@ export const intlAboutContent: Record<IntlLocale, AboutContent> = {
       ['5.000+', 'umgesetzte Projekte für Wohnen und Gewerbe in der Ukraine und in Europa'],
       ['50.000+', 'm² Verglasung in Wohn- und Gewerbebauten unterschiedlicher Komplexität'],
       ['10+', 'Jahre Praxiserfahrung mit Glas- und Aluminiumkonstruktionen'],
-      ['3+', 'Kyjiw · Odesa · Lwiw — Projekte jeder Größe in der ganzen Ukraine']
+      ['3', 'Standorte in der Ukraine: Kyjiw · Odesa · Lwiw']
     ],
     directions: {
       eyebrow: 'UNSERE BEREICHE',
@@ -123,7 +123,7 @@ export const intlAboutContent: Record<IntlLocale, AboutContent> = {
       title: 'Erfahrung, die Zukunft gestaltet',
       paragraphs: [
         'Space Glass ist aus praktischer Erfahrung mit Glas und Beschlägen entstanden. Seit 2014 haben wir unser technisches Know-how ausgebaut, unser Team aufgebaut, eigene Abläufe eingeführt und uns Schritt für Schritt von Einzelprodukten zu kompletten Glas- und Aluminiumlösungen entwickelt.',
-        'Heute arbeitet Space Glass an privaten, gewerblichen und architektonischen Projekten in der Ukraine und in Europa. Wir planen, fertigen und montieren Glas- und Aluminiumkonstruktionen — von Trennwänden, Türen, Duschen und Geländern bis zu Fassadenverglasung, Aluminiumfenstern, Pergolen und kompletten Architektursystemen — und begleiten jedes Projekt bis zur Übergabe.'
+        'Heute arbeitet Space Glass an privaten, gewerblichen und architektonischen Projekten — mit Sitz in der Ukraine und Projekten in Europa. Wir planen, fertigen und montieren Glas- und Aluminiumkonstruktionen — von Trennwänden, Türen, Duschen und Geländern bis zu Fassadenverglasung, Aluminiumfenstern, Pergolen und kompletten Architektursystemen — und begleiten jedes Projekt bis zur Übergabe.'
       ],
       timelineAriaLabel: 'Die Entwicklung von Space Glass'
     },

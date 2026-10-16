@@ -121,13 +121,13 @@ export const intlHomeContent: Record<IntlLocale, IntlHomeContent> = {
   de: {
     meta: {
       title: 'Space Glass — Glas- und Aluminiumkonstruktionen nach Maß',
-      description: 'Glastrennwände, Glasduschen, Glastüren, Geländer, rahmenlose Verglasung und Glasfassaden nach Maß. Eigene Fertigung in der Ukraine, Lieferung nach Europa.'
+      description: 'Glas- und Aluminiumlösungen nach Maß für Projekte in Wien und Österreich: Glastrennwände, Glasduschen, Geländer, Verglasung. Anfrage mit Fotos und Maßen.'
     },
     hero: {
       eyebrow: 'Hochwertige Glaskonstruktionen',
       h1Line1: 'Glaskonstruktionen',
       h1Line2: 'für Wohnen und Gewerbe',
-      lead: 'Glas- und Aluminiumkonstruktionen nach Maß: Ganzglas- und Loft-Trennwände, Glasduschen, Geländer, Glastüren, Fenster, Fassaden- und rahmenlose Verglasung, Wintergärten und Vordächer. Wir planen, fertigen und montieren — mit eigener Produktion in der Ukraine und Lieferung ausgewählter Produkte nach Europa.',
+      lead: 'Glas- und Aluminiumlösungen nach Maß für Projekte in Wien und Österreich: Ganzglas- und Loft-Trennwände, Glasduschen, Geländer, Glastüren, Fenster, Fassaden- und rahmenlose Verglasung, Wintergärten und Vordächer — für Wohnen und Gewerbe. Wir planen, fertigen und montieren; Aufmaß, Lieferung und Montage stimmen wir je nach Projekt individuell ab.',
       ctaPrimary: 'Angebot anfragen',
       ctaSecondary: 'Produkte ansehen',
       imageAlt: 'Glastrennwand von Space Glass'
@@ -187,11 +187,11 @@ export const intlHomeContent: Record<IntlLocale, IntlHomeContent> = {
       intro: 'Antworten zu Angebot, Aufmaß, Fertigung, Lieferung, Montage, Garantie und Service.',
       items: [
         ['Wie erhalte ich eine Kostenschätzung?', 'Senden Sie uns Fotos, ungefähre Maße oder eine Zeichnung. Wir klären die Details und erstellen eine unverbindliche Kostenschätzung.'],
-        ['Wo montieren Sie?', 'Unsere Montageteams arbeiten in Kyjiw, Lwiw und Odesa sowie in den umliegenden Regionen. Andere Standorte stimmen wir projektbezogen ab.'],
+        ['Wo realisieren Sie Projekte?', 'Wir begleiten Projekte in Wien und ganz Österreich. Aufmaß, Lieferung und Montage werden je nach Produkt und Projekt individuell abgestimmt.'],
         ['Liefern Sie in andere europäische Länder?', 'Ja, ausgewählte Produkte und Konstruktionen können in europäische Länder geliefert werden. Lieferung und Montage im Ausland werden für jedes Projekt individuell vereinbart.'],
         ['Arbeiten Sie für Gewerbekunden?', 'Ja, wir setzen Projekte für Büros, Läden, Restaurants, Hotels und Praxen um.'],
         ['Sind Sondermaße möglich?', 'Ja, die meisten Konstruktionen fertigen wir nach einer technischen Prüfung des Objekts individuell.'],
-        ['Führen Sie ein Aufmaß vor Ort durch?', 'Ja, ein professionelles Aufmaß ist in den Städten möglich, in denen wir montieren.'],
+        ['Führen Sie ein Aufmaß vor Ort durch?', 'Das stimmen wir je nach Projekt und Objekt individuell ab. Für die erste Kostenschätzung genügen Fotos und ungefähre Maße.'],
         ['Wie lange dauert die Fertigung?', 'Das hängt von Konstruktion, Material, Komplexität und Auslastung ab. Die Lieferzeit bestätigen wir nach Freigabe der Zeichnung.'],
         ['Welche Garantie geben Sie?', '5 Jahre auf das Glas, 2 Jahre auf die Beschläge und 1 Jahr auf die Montage.'],
         ['Kann ich nur die Fertigung ohne Montage bestellen?', 'Ja, für einen Teil der Produkte und Konstruktionen bieten wir Fertigung mit Lieferung an.'],

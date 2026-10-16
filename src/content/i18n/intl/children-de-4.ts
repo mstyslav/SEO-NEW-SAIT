@@ -30,6 +30,7 @@ export const childrenDe4: Record<string, ChildCopy> = {
         ['Stirnbefestigung', 'Stirnprofil für Balkone in Mehrfamilienhäusern — das Geländer beansprucht keine Balkonfläche und sieht an der ganzen Fassade gleich aus. Aluminiumprofil 124,5 × 46 mm, VSG 17,52 oder 21,52 mm, Glashöhe bis 1300 mm, Montage mit Abstand möglich.'],
         ['Geländer mit Stirnverkleidung', 'Glasgeländer mit Verkleidung der Plattenstirn von 23–60 cm Höhe — verbirgt dicke Decken und lässt die Fassade durchgehend gläsern wirken. Profil 230 × 45 mm, Verkleidung 230–600 mm aus Edelstahl oder lackiertem Stahl.'],
         ['Terrasse: Pfosten mit Handlauf (GARDO)', 'Runde Edelstahlpfosten mit Handlauf — eine günstige Lösung für Balkone und Terrassen. Pfosten AISI 304, Ø 42,4 × 2 mm, VSG 8,76 oder 12,76 mm, Höhe bis 1000 mm, Pfostenabstand 500–1500 mm, Montage oben oder an der Stirn; Form I, L oder U.'],
+        ['Terrasse: Windschutz aus Glas', 'Ein Glasgeländer von 1,0 bis 1,6 m Höhe bricht den Wind auf der Terrasse und lässt den Blick offen. Anders als ein Holz- oder Metallzaun braucht Glas keinen Anstrich und beschattet nichts. Auf Holz- oder Verbunddielen befestigen wir das Glas auf Minihandläufen am Unterbau, auf Beton im Klemmprofil; Beschläge aus Edelstahl AISI 316 und eloxiertem Aluminium, Glaskanten geschliffen und poliert.'],
         ['Terrasse: quadratische Pfosten (DENSARO)', 'Quadratische Pfosten mit durchgehender Klemmung des Glases über die Höhe — strenge, moderne Geometrie für Balkone und Terrassen. Pfosten AISI 304, 60 × 40 mm, VSG 12,76 mm, Höhe bis 1100 mm, Pfostenabstand 500–1500 mm; Aluminium-Kantenschutz.']
       ]
     },
@@ -56,6 +57,7 @@ export const childrenDe4: Record<string, ChildCopy> = {
         ['Rostet das Geländer?', 'Nein: Für den Außenbereich verwenden wir Edelstahl AISI 316 und eloxiertes Aluminium.'],
         ['Was ist ein französischer Balkon?', 'Ein Glasgeländer in der Öffnung eines bodentiefen Fensters — leichter Schutz vor dem Panoramafenster.'],
         ['Welche Farben gibt es?', 'Edelstahl, Weiß, Anthrazit, Schwarz oder RAL, je nach System.'],
+        ['Kann Glas als Windschutz für die Terrasse dienen?', 'Ja: Ein Glasgeländer mit 1,0 bis 1,6 m Höhe hält Zugluft ab und lässt die Aussicht frei. Höhe und Befestigung legen wir nach dem Aufmaß fest; eine Zusage zu bestimmten Vorschriften geben wir nicht.'],
         ['Gibt es auch Geländer für die Terrasse?', 'Ja: auf Holz- oder Verbunddielen mit Minihandläufen am Unterbau, auf Beton im Klemmprofil; für Cafés und Restaurants in Segmenten, die sich leicht warten lassen.'],
         ['Dient das Glasgeländer als Absturzsicherung?', 'Ja, VSG-Glasgeländer schützen vor dem Absturz. Höhe, Glas und Befestigung legen wir nach dem Aufmaß und den für Ihr Objekt geltenden Vorschriften fest; eine pauschale Zusage geben wir nicht.']
       ]

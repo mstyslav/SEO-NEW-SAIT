@@ -116,7 +116,11 @@ const DE_CHILDREN: Array<{ id: string; parent: string; uk: string; slug: string 
   { id: 'glas-raumteiler-wohnung', parent: 'partitions', uk: '/sklyani-perehorodky/mizhkimnatni/', slug: 'glas-raumteiler-wohnung' },
   { id: 'bautraeger-wohnanlagen', parent: 'business', uk: '/dlya-biznesu/zhytlovym-kompleksam/', slug: 'bautraeger-wohnanlagen' },
   { id: 'aluminium-buerotrennwand', parent: 'partitions', uk: '/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/', slug: 'aluminium-buerotrennwand' },
-  { id: 'spiegel-mit-rahmen', parent: 'mirrors', uk: '/dzerkala/dzerkala-v-rami/', slug: 'spiegel-mit-rahmen' }
+  { id: 'spiegel-mit-rahmen', parent: 'mirrors', uk: '/dzerkala/dzerkala-v-rami/', slug: 'spiegel-mit-rahmen' },
+  { id: 'glaspendeltuer', parent: 'doors', uk: '/sklyani-dveri/mayatnykovi-sklyani-dveri/', slug: 'glaspendeltuer' },
+  { id: 'glasvordach-konsolen', parent: 'canopies', uk: '/sklyani-kozyrky/kozyrky-na-kronshteinakh/', slug: 'glasvordach-mit-konsolen' },
+  { id: 'spiegel-fitnessstudio', parent: 'mirrors', uk: '/dzerkala/dzerkala-dlya-sportzalu/', slug: 'spiegel-fitnessstudio' },
+  { id: 'salon-glas-spiegel', parent: 'business', uk: '/dlya-biznesu/salonam-krasy/', slug: 'salon-glas-und-spiegel' }
 ];
 /**
  * Pages that exist only in German (no UA/RU equivalent). They get no hreflang to UA/RU/EN/ES and no
