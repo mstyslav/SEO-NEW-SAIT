@@ -13,7 +13,8 @@ import TrustBar from '../TrustBar.astro';
 import ProfileRequestForm from '../profile/ProfileRequestForm.astro';
 import IntlProjectCard from './IntlProjectCard.astro';
 import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
-import { INTL_CASES, intlHref, type IntlLocale } from '../../i18n/intl-routes';
+import { INTL_CASES, INTL_ROUTES, intlHref, type IntlLocale } from '../../i18n/intl-routes';
+import { childCopy, childLabels } from '../../content/i18n/intl/children';
 import { HUB_VISUALS } from '../../content/i18n/intl/hubs-config';
 import { hubCopy, hubCommon } from '../../content/i18n/intl/hubs';
 import { caseCopy, caseLabels } from '../../content/i18n/intl/cases';
@@ -53,6 +54,11 @@ const cases = visual.cases.map((caseId) => {
   const text = caseCopy[locale][caseId];
   return { href: href(`case:${caseId}`), cover: project.cover, alt: text.coverAlt, title: text.cardTitle, city: text.city, categoryLabel: text.categoryLabel, constructionType: text.constructionType, shortDescription: text.shortDescription };
 });
+
+// Detail pages of this hub that exist in this locale (e.g. the German money pages).
+const detailPages = INTL_ROUTES.filter((item) => item.kind === 'child' && item.parent === id && item[locale])
+  .map((item) => ({ href: intlHref(item.id, locale), card: childCopy[locale][item.id.replace('child:', '')].card }));
+const detailLabels = childLabels[locale];
 
 const process = copy.process ?? { title: common.processTitle, steps: common.processSteps };
 const area = copy.area ?? { title: common.areaTitle, paragraphs: common.areaParagraphs };
@@ -128,6 +134,15 @@ const structuredData = [itemList, faqData].filter(Boolean) as JsonLdObject[];
           : <article class="category-icon-card category-icon-card--static"><span class="category-icon-card__icon" set:html={card.icon} /><h3>{card.title}</h3><p>{card.text}</p></article>)}
       </div>
     </section>
+
+    {detailPages.length > 0 && (
+      <section id="details" class="category-section category-section--mint">
+        <div class="category-heading"><div><p class="eyebrow">{detailLabels.sectionEyebrow}</p><h2>{detailLabels.sectionTitle.replace('{name}', copy.name)}</h2></div><p>{detailLabels.sectionIntro}</p></div>
+        <div class="category-icon-grid category-icon-grid--showers">
+          {detailPages.map(({ href: link, card }) => <a class="category-icon-card" href={link}><h3>{card[0]}</h3><p>{card[1]}</p><b aria-hidden="true">→</b></a>)}
+        </div>
+      </section>
+    )}
 
     {copy.options && (
       <section class="category-section category-section--mint">

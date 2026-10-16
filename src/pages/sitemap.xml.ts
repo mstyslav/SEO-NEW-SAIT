@@ -90,7 +90,7 @@ export const GET: APIRoute = async ({ site }) => {
   const businessUrls = [BUSINESS_HUB, ...businessPages.map(({ slug }) => businessPath(slug))];
 
   // EN/DE/ES pages — exactly the entries of src/i18n/intl-routes.ts (each one is a real 200 page).
-  const intlUrls = INTL_ROUTES.flatMap((route) => intlLocales.map((locale) => route[locale]));
+  const intlUrls = INTL_ROUTES.flatMap((route) => intlLocales.flatMap((locale) => (route[locale] ? [route[locale] as string] : [])));
 
   const urls = [...new Set([
     ...fileUrls,

@@ -107,3 +107,39 @@ export interface LegalCopy {
 }
 
 export type ByLocale<T> = Record<IntlLocale, T>;
+
+/** A child page of a hub (e.g. Ganzglaswand under Glastrennwände): rendered by IntlChildPage.astro. */
+export interface ChildCopy {
+  meta: { title: string; description: string };
+  /** Short name for breadcrumbs, related links and the hub's list of detail pages. */
+  name: string;
+  /** Card on the parent hub: short title + one sentence. */
+  card: Pair;
+  eyebrow: string;
+  h1: string;
+  lead: string;
+  heroAlt: string;
+  intro: { title: string; paragraphs: string[]; spec: Pair[] };
+  variants: { eyebrow: string; title: string; intro: string; items: Pair[] };
+  benefits: { eyebrow: string; title: string; items: Pair[] };
+  /** Austria block: market-specific wording of this page (what we offer to customers in Austria). */
+  austria?: { title: string; paragraphs: string[] };
+  faq: { title: string; intro: string; items: Pair[] };
+  form: { title: string; text: string; optionsLabel: string; options: string[]; commentPlaceholder: string; product: string };
+  /** Ids of related child pages (without the `child:` prefix), besides the parent hub. */
+  related: string[];
+}
+
+export interface ChildLabels {
+  variantsLink: string;
+  sectionEyebrow: string;
+  sectionTitle: string;
+  sectionIntro: string;
+  readMore: string;
+  relatedEyebrow: string;
+  relatedTitle: string;
+  parentLabel: string;
+  austriaEyebrow: string;
+  austriaCta: [string, string];
+  contactCta: [string, string];
+}

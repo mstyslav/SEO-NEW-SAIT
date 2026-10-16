@@ -1,0 +1,153 @@
+---
+// Child page of a hub (German money pages): same sections, CSS and components as the hubs
+// (IntlHubPage.astro). Text: src/content/i18n/intl/children-de-*.ts, photo: children-config.ts.
+// Only locales that have a version of the page (src/i18n/intl-routes.ts) can render it.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import FAQBlock from '../FAQBlock.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import TrustBar from '../TrustBar.astro';
+import ProfileRequestForm from '../profile/ProfileRequestForm.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { INTL_ROUTES, intlHref, type IntlLocale } from '../../i18n/intl-routes';
+import { HUB_VISUALS } from '../../content/i18n/intl/hubs-config';
+import { hubCopy, hubCommon } from '../../content/i18n/intl/hubs';
+import { childCopy, childLabels } from '../../content/i18n/intl/children';
+import { CHILD_IMAGES } from '../../content/i18n/intl/children-config';
+import '../../styles/category-pages.css';
+import '../../styles/shower-master.css';
+import '../../styles/profile-systems.css';
+
+interface Props { locale: IntlLocale; id: string }
+const { locale, id } = Astro.props;
+const route = INTL_ROUTES.find((item) => item.id === `child:${id}`)!;
+const copy = childCopy[locale][id];
+const labels = childLabels[locale];
+const common = hubCommon[locale];
+const image = CHILD_IMAGES[id];
+const parentId = route.parent!;
+const parent = hubCopy[locale][parentId];
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(intlHref(route.id, locale), origin);
+const href = (hubId: string, hash = '') => intlHref(hubId, locale, hash);
+
+// Related pages: the parent hub first, then the siblings named in the content (only those that exist in this locale).
+const related = [
+  { label: parent.name, href: href(parentId) },
+  ...copy.related.filter((other) => childCopy[locale][other]).map((other) => ({ label: childCopy[locale][other].name, href: href(`child:${other}`) }))
+];
+const crumbs = [
+  { label: common.home, href: href('home') },
+  { label: parent.name, href: href(parentId) },
+  { label: copy.name }
+];
+const faqData = faqSchema(copy.faq.items.map(([question, answer]) => ({ question, answer })));
+const structuredData = [faqData].filter(Boolean) as JsonLdObject[];
+const austria = copy.austria ?? { title: common.areaTitle, paragraphs: common.areaParagraphs };
+const parentVisual = HUB_VISUALS[parentId];
+---
+<BaseLayout
+  title={copy.meta.title}
+  description={copy.meta.description}
+  locale={locale}
+  image={image.src}
+  schemaType="WebPage"
+  structuredData={structuredData}
+  heroPreloadSrc={image.src}
+  heroPreloadSrcset={image.srcset}
+  heroPreloadSizes={image.sizes}
+>
+<div class="sg-page-shell">
+  <Header locale={locale} />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={crumbs} />
+        <p class="eyebrow">{copy.eyebrow}</p>
+        <h1>{copy.h1}</h1>
+        <p class="lead">{copy.lead}</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#varianten">{labels.variantsLink}</a>
+          <a class="button button--outline" href="#request">{common.request}</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          <img src={image.src} srcset={image.srcset} sizes={image.sizes} alt={copy.heroAlt} width={image.width} height={image.height} decoding="async" fetchpriority="high" />
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale={locale} />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>{copy.intro.title}</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          {copy.intro.paragraphs.map((text) => <p>{text}</p>)}
+        </div>
+        <ul class="category-intro__spec">
+          {copy.intro.spec.map(([value, note]) => <li><b>{value}</b><span>{note}</span></li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section id="varianten" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">{copy.variants.eyebrow}</p><h2>{copy.variants.title}</h2></div><p>{copy.variants.intro}</p></div>
+      <div class="material-grid material-grid--parts">
+        {copy.variants.items.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">{copy.benefits.eyebrow}</p><h2>{copy.benefits.title}</h2></div></div>
+      <div class="material-grid material-grid--parts">
+        {copy.benefits.items.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    <section id="process" class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">{common.processEyebrow}</p><h2>{common.processTitle}</h2></div></div>
+      <div class="category-process__grid">
+        {common.processSteps.map(([title, text], index) => <div><span>{String(index + 1).padStart(2, '0')}</span><b>{title}</b><small>{text}</small></div>)}
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">{labels.austriaEyebrow}</p>
+          <h2>{austria.title}</h2>
+          {austria.paragraphs.map((text) => <p>{text}</p>)}
+        </div>
+        <ul class="category-geo__cities"><li><a href="#request"><b>{labels.austriaCta[0]}</b><span>{labels.austriaCta[1]}</span></a></li><li><a href={href('contacts', '#offices')}><b>{labels.contactCta[0]}</b><span>{labels.contactCta[1]}</span></a></li></ul>
+      </div>
+    </section>
+
+    <section id="faq" class="category-section category-section--faq">
+      <FAQBlock title={copy.faq.title} intro={copy.faq.intro} items={copy.faq.items} visibleCount={6} expandTo={copy.faq.items.length} locale={locale} />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">{labels.relatedEyebrow}</p><h2>{labels.relatedTitle}</h2></div></div>
+      <div class="category-links__grid">
+        {related.map(({ label, href: link }) => <a href={link}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={intlHref(route.id, locale)}
+      product={copy.form.product}
+      title={copy.form.title}
+      text={copy.form.text}
+      options={copy.form.options}
+      optionsLabel={copy.form.optionsLabel}
+      commentPlaceholder={copy.form.commentPlaceholder}
+      locale={locale}
+      family={parentVisual?.family ?? 'glass'}
+    />
+  </main>
+  <Footer locale={locale} />
+</div>
+</BaseLayout>

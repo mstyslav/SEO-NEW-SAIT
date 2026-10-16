@@ -1,0 +1,16 @@
+---
+// DE child pages of the hubs (src/i18n/intl-routes.ts, kind "child"): /de/<hub>/<slug>/.
+import IntlChildPage from '../../../components/intl/IntlChildPage.astro';
+import { INTL_ROUTES, assertIntlRoute, intlSlug } from '../../../i18n/intl-routes';
+
+export function getStaticPaths() {
+  return INTL_ROUTES.filter((route) => route.kind === 'child' && route.de).map((route) => {
+    const parent = INTL_ROUTES.find((item) => item.id === route.parent)!;
+    return { params: { hub: intlSlug(parent, 'de'), child: intlSlug(route, 'de') }, props: { id: route.id.replace('child:', ''), routeId: route.id } };
+  });
+}
+
+const { id, routeId } = Astro.props;
+assertIntlRoute(Astro.url.pathname, routeId, 'de');
+---
+<IntlChildPage locale="de" id={id} />

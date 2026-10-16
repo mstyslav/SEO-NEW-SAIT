@@ -154,7 +154,7 @@ export function hasLocalizedRoute(pathname: string, locale: Locale): boolean {
 
   const base = stripLocale(pathname);
 
-  if (isIntlLocale(locale)) return Boolean(intlRouteOfUk(base));
+  if (isIntlLocale(locale)) return Boolean(intlRouteOfUk(base)?.[locale]);
 
   // All RU Knowledge article routes are generated from the localized
   // knowledge dataset under /ru/knowledge/[slug]/.
@@ -185,8 +185,8 @@ export function localizedPath(pathname: string, locale: Locale): string {
   // EN/DE/ES: the localized page, otherwise its nearest localized parent (or the localized home
   // page) — an international page never links to a UA/RU page by fallback.
   if (isIntlLocale(locale)) {
-    const route = intlRouteOfUk(base);
-    return route ? `${route[locale]}${suffix}` : intlFallbackPath(base, locale);
+    const target = intlRouteOfUk(base)?.[locale];
+    return target ? `${target}${suffix}` : intlFallbackPath(base, locale);
   }
   if (!hasLocalizedRoute(base, locale)) return `${base}${suffix}`;
   return `/${locale}${base === '/' ? '/' : base}${suffix}`;

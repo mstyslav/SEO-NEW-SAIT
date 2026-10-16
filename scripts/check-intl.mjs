@@ -64,6 +64,7 @@ let pages = 0; let links = 0; let images = 0; let forms = 0; let jsonld = 0;
 for (const route of INTL_ROUTES) {
   for (const locale of intlLocales) {
     const p = route[locale];
+    if (!p) continue; // locale not (yet) written for this page
     pages++;
     const html = read(p);
     if (html === null) { err(p, 'not built (404)'); continue; }
@@ -94,8 +95,9 @@ for (const route of INTL_ROUTES) {
     const url = site + p;
     if (canonicalOf(html) !== url) err(p, `canonical ${canonicalOf(html)}`);
     const alt = alternatesOf(html);
-    const expected = { uk: route.uk, en: route.en, de: route.de, es: route.es };
+    const expected = Object.fromEntries(Object.entries({ uk: route.uk, en: route.en, de: route.de, es: route.es }).filter(([, v]) => v));
     for (const [code, target] of Object.entries(expected)) if (alt[code] !== site + target) err(p, `hreflang ${code} = ${alt[code]} (expected ${site + target})`);
+    for (const code of ['en', 'de', 'es']) if (alt[code] && !expected[code]) err(p, `hreflang ${code} → ${alt[code]} but this page has no ${code} version`);
     if (alt['x-default'] !== site + route.uk) err(p, `x-default = ${alt['x-default']}`);
     for (const [code, href] of Object.entries(alt)) {
       const tp = href.replace(site, '');
@@ -164,6 +166,7 @@ for (const route of INTL_ROUTES) {
       if (locOf(target) !== code) err(p, `language menu ${code} → ${target} has another language`);
       const sameRoute = code === 'uk' ? route.uk : code === 'ru' ? null : route[code];
       if (sameRoute && target !== sameRoute) err(p, `language menu ${code} → ${target} (expected ${sameRoute})`);
+      if (code !== 'uk' && code !== 'ru' && !sameRoute && !target.startsWith(`/${code}/`)) err(p, `language menu ${code} fallback ${target}`);
     }
     for (const m of body.matchAll(/<(img|source)\b[^>]*>/g)) {
       const tag = m[0];
@@ -217,7 +220,7 @@ for (const [kind, map] of [['title', titles], ['description', descriptions], ['H
 }
 
 // sitemap: no other /en|de|es/ URLs than the route map
-const routeUrls = new Set(INTL_ROUTES.flatMap((r) => intlLocales.map((l) => r[l])));
+const routeUrls = new Set(INTL_ROUTES.flatMap((r) => intlLocales.map((l) => r[l]).filter(Boolean)));
 for (const u of sitemap) if (/^\/(en|de|es)\//.test(u) && !routeUrls.has(u)) err(u, 'in sitemap but not in the route map');
 
 // localized 404 pages
@@ -232,7 +235,7 @@ for (const locale of intlLocales) {
   if (CYRILLIC.test(vis)) err(`/${locale}/404.html`, 'Cyrillic text');
 }
 
-console.log(`EN/DE/ES check: ${pages} pages (${INTL_ROUTES.length} routes × ${intlLocales.length} locales), ${links} internal links, ${images} images, ${forms} lead forms, ${jsonld} JSON-LD blocks`);
+console.log(`EN/DE/ES check: ${pages} pages (${INTL_ROUTES.length} routes), ${links} internal links, ${images} images, ${forms} lead forms, ${jsonld} JSON-LD blocks`);
 console.log(`Errors: ${errors.length} · warnings: ${warnings.length}`);
 for (const e of errors.slice(0, verbose ? Infinity : 40)) console.log(`  ERROR ${e}`);
 if (verbose) for (const w of warnings) console.log(`  warn  ${w}`);

@@ -17,7 +17,7 @@
 export const intlLocales = ['en', 'de', 'es'] as const;
 export type IntlLocale = typeof intlLocales[number];
 
-export type IntlPageKind = 'home' | 'about' | 'contacts' | 'hub' | 'projects' | 'case' | 'legal';
+export type IntlPageKind = 'home' | 'about' | 'contacts' | 'hub' | 'child' | 'projects' | 'case' | 'legal';
 
 export interface IntlRoute {
   /** Stable page id, used to look up the localized content. */
@@ -25,9 +25,12 @@ export interface IntlRoute {
   kind: IntlPageKind;
   /** The UA (unprefixed) page this is a language version of. */
   uk: string;
-  en: string;
-  de: string;
-  es: string;
+  /** A locale a page does not (yet) have is left out: no hreflang, no sitemap entry, links fall back to the parent hub. */
+  en?: string;
+  de?: string;
+  es?: string;
+  /** Child pages: id of the parent hub (same locale). */
+  parent?: string;
 }
 
 const page = (id: string, kind: IntlPageKind, uk: string, en: string, de: string, es: string): IntlRoute => ({
@@ -67,8 +70,38 @@ export const INTL_ROUTES: IntlRoute[] = [
   page('terms', 'legal', '/terms/', '/terms-of-use/', '/nutzungsbedingungen/', '/condiciones-de-uso/')
 ];
 
+// DE-only child pages of the hubs above (batch 1 of the German money pages). Slug = last URL segment.
+// A page of this list has only uk/ru/de versions until its EN/ES versions are written.
+const DE_CHILDREN: Array<{ id: string; parent: string; uk: string; slug: string }> = [
+  { id: 'ganzglaswand', parent: 'partitions', uk: '/sklyani-perehorodky/tsilnosklyani-perehorodky/', slug: 'ganzglaswand' },
+  { id: 'loft-trennwand', parent: 'partitions', uk: '/sklyani-perehorodky/loft-sklyani-peregorodku/', slug: 'loft-glastrennwand' },
+  { id: 'schiebe-trennwand', parent: 'partitions', uk: '/sklyani-perehorodky/pidvisni-sklyani-peregorodky/', slug: 'schiebe-glastrennwand' },
+  { id: 'trennwand-tuer', parent: 'partitions', uk: '/sklyani-perehorodky/z-dveryma/', slug: 'glastrennwand-mit-tuer' },
+  { id: 'buero-trennwand', parent: 'partitions', uk: '/sklyani-perehorodky/ofisni/', slug: 'buero-glastrennwand' },
+  { id: 'terrassenverglasung', parent: 'frameless', uk: '/bezramne-sklinnya/sklinnya-teras-ta-altanok/', slug: 'terrassenverglasung' },
+  { id: 'glas-faltwand', parent: 'frameless', uk: '/bezramne-sklinnya/povorotno-skladni-systemy/', slug: 'glas-faltwand' },
+  { id: 'schiebeverglasung', parent: 'frameless', uk: '/bezramne-sklinnya/sklyani-rozsuvni-systemy/', slug: 'schiebeverglasung' },
+  { id: 'balkonverglasung', parent: 'frameless', uk: '/bezramne-sklinnya/sklinnya-balkoniv/', slug: 'balkonverglasung' },
+  { id: 'walk-in-dusche', parent: 'showers', uk: '/dushovi-kabiny/peregorodka-dlya-dusha/', slug: 'walk-in-duschwand' },
+  { id: 'eckdusche', parent: 'showers', uk: '/dushovi-kabiny/kytova-dushova-kabina/', slug: 'eckdusche' },
+  { id: 'schiebetuer-dusche', parent: 'showers', uk: '/dushovi-kabiny/rozsuvni/', slug: 'duschkabine-schiebetuer' },
+  { id: 'aluminiumfenster', parent: 'aluminium', uk: '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/', slug: 'aluminiumfenster' },
+  { id: 'aluminium-schiebetuer', parent: 'aluminium', uk: '/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/', slug: 'aluminium-schiebetuer' },
+  { id: 'treppengelaender', parent: 'railings', uk: '/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/', slug: 'treppengelaender-aus-glas' },
+  { id: 'balkongelaender', parent: 'railings', uk: '/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/', slug: 'balkongelaender-aus-glas' },
+  { id: 'glasschiebetuer', parent: 'doors', uk: '/sklyani-dveri/rozsuvni-sklyani-dveri/', slug: 'glasschiebetuer' },
+  { id: 'pfosten-riegel', parent: 'facades', uk: '/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/', slug: 'pfosten-riegel-fassade' },
+  { id: 'led-spiegel', parent: 'mirrors', uk: '/dzerkala/led-dzerkala/', slug: 'led-spiegel' },
+  { id: 'hotels', parent: 'business', uk: '/dlya-biznesu/goteli/', slug: 'hotels' }
+];
+for (const child of DE_CHILDREN) {
+  const parent = INTL_ROUTES.find((route) => route.id === child.parent);
+  if (!parent?.de) throw new Error(`Unknown parent hub ${child.parent}`);
+  INTL_ROUTES.push({ id: `child:${child.id}`, kind: 'child', parent: child.parent, uk: child.uk, de: `${parent.de}${child.slug}/` });
+}
+
 const byUk = new Map(INTL_ROUTES.map((route) => [route.uk, route]));
-const byIntl = new Map(INTL_ROUTES.flatMap((route) => intlLocales.map((locale) => [route[locale], route] as const)));
+const byIntl = new Map(INTL_ROUTES.flatMap((route) => intlLocales.filter((locale) => route[locale]).map((locale) => [route[locale] as string, route] as const)));
 const byId = new Map(INTL_ROUTES.map((route) => [route.id, route]));
 
 export const isIntlLocale = (locale: string | undefined): locale is IntlLocale => intlLocales.includes(locale as IntlLocale);
@@ -84,7 +117,7 @@ export const intlRouteById = (id: string): IntlRoute | undefined => byId.get(id)
 /** Localized URL of a page by id — throws on a typo so a broken link can never be built. */
 export const intlHref = (id: string, locale: IntlLocale, hash = ''): string => {
   const route = byId.get(id);
-  if (!route) throw new Error(`Unknown international page id: ${id}`);
+  if (!route?.[locale]) throw new Error(`No ${locale} version of international page: ${id}`);
   return `${route[locale]}${hash}`;
 };
 
@@ -97,7 +130,7 @@ export const intlFallbackPath = (ukPath: string, locale: IntlLocale): string => 
   for (let length = parts.length; length > 0; length -= 1) {
     const candidate = `/${parts.slice(0, length).join('/')}/`;
     const route = byUk.get(candidate);
-    if (route) return route[locale];
+    if (route?.[locale]) return route[locale] as string;
   }
   return `/${locale}/`;
 };
@@ -113,4 +146,7 @@ export const assertIntlRoute = (pathname: string, id: string, locale: IntlLocale
 };
 
 /** Last path segment of a page's localized URL (for getStaticPaths of the dynamic route files). */
-export const intlSlug = (route: IntlRoute, locale: IntlLocale): string => route[locale].split('/').filter(Boolean).pop() ?? '';
+export const intlSlug = (route: IntlRoute, locale: IntlLocale): string => (route[locale] ?? '').split('/').filter(Boolean).pop() ?? '';
+
+/** Routes that have a version in `locale`. */
+export const intlRoutesOf = (locale: IntlLocale): IntlRoute[] => INTL_ROUTES.filter((route) => route[locale]);
