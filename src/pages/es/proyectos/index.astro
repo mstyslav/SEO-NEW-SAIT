@@ -1,0 +1,7 @@
+---
+// ES projects page — the cases listed in src/i18n/intl-routes.ts (INTL_CASES).
+import IntlProjectsPage from '../../../components/intl/IntlProjectsPage.astro';
+import { assertIntlRoute } from '../../../i18n/intl-routes';
+assertIntlRoute(Astro.url.pathname, 'projects', 'es');
+---
+<IntlProjectsPage locale="es" />

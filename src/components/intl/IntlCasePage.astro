@@ -1,0 +1,333 @@
+---
+// EN/DE/ES project case page. Same layout and CSS as the UA premium case template
+// (components/projects/ProjectCasePremium.astro); photos and their sizes come from the project entry
+// (src/content/projects/*.json), every text from src/content/i18n/intl/cases-*.ts.
+import { getCollection } from 'astro:content';
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import FAQBlock from '../FAQBlock.astro';
+import ProjectRequestForm from '../projects/ProjectRequestForm.astro';
+import IntlProjectCard from './IntlProjectCard.astro';
+import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { INTL_CASES, intlHref, type IntlLocale } from '../../i18n/intl-routes';
+import { caseCopy, caseLabels } from '../../content/i18n/intl/cases';
+import { hubCopy } from '../../content/i18n/intl/hubs';
+import criticalCss from '../../styles/project-case-critical.css?raw';
+import caseCssUrl from '../../styles/project-case.css?url';
+
+interface Props { locale: IntlLocale; caseId: string }
+const { locale, caseId } = Astro.props;
+const entry = INTL_CASES.find((item) => item.id === caseId)!;
+const projects = await getCollection('projects', ({ data }) => data.status === 'published');
+const project = projects.find(({ data }) => data.slug === entry.ukSlug)!.data;
+const c = caseCopy[locale][caseId];
+const tx = caseLabels[locale];
+const origin = Astro.site ?? Astro.url.origin;
+const projectPath = intlHref(`case:${caseId}`, locale);
+const canonical = absoluteUrl(projectPath, origin);
+const homeHref = intlHref('home', locale);
+const projectsHref = intlHref('projects', locale);
+
+const breadcrumbItems = [
+  { label: tx.home, href: homeHref },
+  { label: tx.projects, href: projectsHref },
+  { label: c.h1, href: projectPath }
+];
+
+const variant = (src: string, w: number) => src.replace(/\.webp$/, `-${w}.webp`);
+const hasVariant = (src: string, w: number) => fs.existsSync(path.join(process.cwd(), 'public', variant(src, w)));
+const srcsetOf = (image: { src: string; width: number }) => [480, 720].filter((w) => w < image.width && hasVariant(image.src, w)).map((w) => `${variant(image.src, w)} ${w}w`).concat(`${image.src} ${image.width}w`).join(', ');
+const thumb = (image: { src: string; width: number }) => (image.width > 720 && hasVariant(image.src, 720) ? variant(image.src, 720) : image.src);
+const heroSizes = '(max-width: 700px) calc(100vw - 32px), (max-width: 1000px) calc(100vw - 64px), min(52vw, 760px)';
+const tileSizes = '(max-width: 700px) 86vw, (max-width: 1000px) 46vw, 30vw';
+const hero = { src: project.cover.src, width: project.cover.width, height: project.cover.height, alt: c.coverAlt, caption: c.heroCaption ?? '' };
+const gallery = project.gallery.map((image, index) => ({ src: image.src, width: image.width, height: image.height, alt: c.galleryAlts[index] ?? c.coverAlt, caption: '' }));
+const images = [hero, ...gallery];
+const num = (n: number) => String(n).padStart(2, '0');
+const filled = (list?: unknown[]) => Array.isArray(list) && list.length > 0;
+
+const has = {
+  about: Boolean(c.about && filled(c.about.paragraphs)),
+  task: Boolean(c.task?.text),
+  solution: Boolean(c.solution && filled(c.solution.paragraphs)),
+  tech: Boolean(c.tech && filled(c.tech.items)),
+  processFact: Boolean(c.process?.fact),
+  processGeneral: Boolean(c.process?.general && filled(c.process.general.steps)),
+  result: Boolean(c.result?.text),
+  benefits: Boolean(c.benefits && filled(c.benefits.items)),
+  gallery: images.length > 1,
+  service: true
+};
+const hasStory = has.task || has.solution;
+const hasProcess = has.processFact || has.processGeneral;
+const storyImage = hasStory ? gallery[0] : undefined;
+const order = ['about', 'task', 'solution', 'tech', 'process', 'result', 'benefits', 'gallery', 'service'] as const;
+const shown = { ...has, process: hasProcess };
+const no = Object.fromEntries(order.filter((key) => shown[key]).map((key, index) => [key, num(index + 1)])) as Record<(typeof order)[number], string>;
+const heroMeta = [c.city, c.objectType].filter(Boolean);
+const serviceHref = intlHref(c.service.hubId, locale);
+const serviceLabel = hubCopy[locale][c.service.hubId].name;
+
+const related = INTL_CASES.filter((item) => item.id !== caseId).slice(0, 3).map((item) => {
+  const data = projects.find(({ data: p }) => p.slug === item.ukSlug)!.data;
+  const text = caseCopy[locale][item.id];
+  return { href: intlHref(`case:${item.id}`, locale), cover: data.cover, alt: text.coverAlt, title: text.cardTitle, city: text.city, categoryLabel: text.categoryLabel, constructionType: text.constructionType, shortDescription: text.shortDescription };
+});
+
+const structuredData = [
+  {
+    '@type': 'CreativeWork', '@id': `${canonical}#project`, url: canonical, name: c.h1, headline: c.h1,
+    description: c.seo.description, inLanguage: locale,
+    image: images.map((image) => ({ '@type': 'ImageObject', url: absoluteUrl(image.src, origin), width: image.width, height: image.height, caption: image.caption || image.alt })),
+    creator: { '@id': `${new URL('/', origin).href}#organization` },
+    ...(c.city ? { locationCreated: { '@type': 'Place', name: c.city } } : {}),
+    about: [c.constructionType, c.categoryLabel]
+  },
+  breadcrumbSchema(breadcrumbItems.map((item) => ({ label: item.label, href: absoluteUrl(item.href, origin) }))),
+  faqSchema(c.faq.map(([question, answer]) => ({ question, answer })))
+].filter(Boolean) as JsonLdObject[];
+---
+<BaseLayout
+  title={c.seo.title}
+  description={c.seo.description}
+  locale={locale}
+  image={project.cover.src}
+  structuredData={structuredData}
+  heroPreloadSrc={hero.src}
+  heroPreloadSrcset={srcsetOf(hero)}
+  heroPreloadSizes={heroSizes}
+>
+  <div class="sg-page-shell">
+    <Header locale={locale} />
+    <main id="main" class="pc">
+      <style is:inline set:html={criticalCss}></style>
+      <link rel="preload" as="style" href={caseCssUrl} fetchpriority="low" onload="this.onload=null;this.rel='stylesheet'" />
+      <noscript><link href={caseCssUrl} rel="stylesheet" /></noscript>
+      <section class="pc-hero">
+        <div class="pc-hero__copy">
+          <nav class="pc-crumbs" aria-label={tx.breadcrumbs}>
+            <a href={homeHref}>{tx.home}</a><span aria-hidden="true">/</span><a href={projectsHref}>{tx.projects}</a><span aria-hidden="true">/</span><span aria-current="page">{c.h1}</span>
+          </nav>
+          {heroMeta.length > 0 && <p class="pc-hero__meta">{heroMeta.map((item, index) => <>{index > 0 && <i aria-hidden="true">·</i>}<span>{item}</span></>)}</p>}
+          <h1>{c.h1}</h1>
+          <p class="pc-hero__lead">{c.shortDescription}</p>
+          <div class="pc-hero__actions">
+            <a class="button button--mint" href="#project-request">{c.cta.button}</a>
+            {images.length > 1 && <button class="pc-hero__photos" type="button" data-pp-open="0">{tx.photos} <span>{images.length}</span></button>}
+          </div>
+        </div>
+        <button class="pc-hero__media" type="button" data-pp-open="0" aria-label={`${tx.openPhoto}: ${hero.alt}`}>
+          <img src={hero.src} srcset={srcsetOf(hero)} sizes={heroSizes} width={hero.width} height={hero.height} alt={hero.alt} loading="eager" decoding="async" fetchpriority="high" />
+          {hero.caption && <span class="pc-hero__caption">{hero.caption}</span>}
+        </button>
+        <dl class="pc-facts" aria-label={tx.factsLabel}>
+          {c.facts.map(({ label, value }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
+        </dl>
+      </section>
+
+      {has.about && (
+        <section class="pc-about pc-wrap pc-block" aria-labelledby="pc-about-title">
+          <p class="pc-kicker"><span>{no.about}</span>{tx.about}</p>
+          <div class="pc-about__grid">
+            <h2 id="pc-about-title">{c.about!.title}</h2>
+            <div class="pc-prose">{c.about!.paragraphs.map((text) => <p>{text}</p>)}</div>
+          </div>
+        </section>
+      )}
+
+      {hasStory && (
+        <section class:list={['pc-split', 'pc-wrap', 'pc-block', !storyImage && 'pc-split--text']}>
+          {storyImage && (
+            <button class="pc-split__media" type="button" data-pp-open="1" aria-label={`${tx.openPhoto}: ${storyImage.alt}`}>
+              <img src={thumb(storyImage)} srcset={srcsetOf(storyImage)} sizes="(max-width: 1000px) calc(100vw - 32px), 40vw" width={storyImage.width} height={storyImage.height} alt={storyImage.alt} loading="lazy" decoding="async" />
+            </button>
+          )}
+          <div class="pc-split__copy">
+            {has.task && (
+              <article>
+                <p class="pc-kicker"><span>{no.task}</span>{tx.task}</p>
+                <h2>{c.task!.title}</h2>
+                <div class="pc-prose"><p>{c.task!.text}</p></div>
+              </article>
+            )}
+            {has.solution && (
+              <article>
+                <p class="pc-kicker"><span>{no.solution}</span>{tx.solution}</p>
+                <h2>{c.solution!.title}</h2>
+                <div class="pc-prose">{c.solution!.paragraphs.map((text) => <p>{text}</p>)}</div>
+              </article>
+            )}
+          </div>
+        </section>
+      )}
+
+      {has.tech && (
+        <section class="pc-tech" aria-labelledby="pc-tech-title">
+          <div class="pc-wrap">
+            <header class="pc-head">
+              <p class="pc-kicker"><span>{no.tech}</span>{tx.tech}</p>
+              <h2 id="pc-tech-title">{c.tech!.title}</h2>
+            </header>
+            <dl class="pc-tech__grid">
+              {c.tech!.items.map(({ label, value }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
+            </dl>
+            {c.tech!.note && <p class="pc-note">{c.tech!.note}</p>}
+          </div>
+        </section>
+      )}
+
+      {hasProcess && (
+        <section class="pc-process pc-wrap pc-block" aria-labelledby="pc-process-title">
+          <header class="pc-head">
+            <p class="pc-kicker"><span>{no.process}</span>{tx.process}</p>
+            <h2 id="pc-process-title">{c.process!.title}</h2>
+          </header>
+          <div class:list={['pc-process__grid', !(has.processFact && has.processGeneral) && 'pc-process__grid--single']}>
+            {has.processFact && <p class="pc-process__fact"><b>{tx.projectFact}</b>{c.process!.fact}</p>}
+            {has.processGeneral && (
+              <aside class="pc-general" aria-label={c.process!.general!.label}>
+                <p class="pc-general__label">{tx.generalTag}</p>
+                <h3>{c.process!.general!.label}</h3>
+                <ol class="pc-steps">
+                  {c.process!.general!.steps.map((step, index) => <li><span>{num(index + 1)}</span><b>{step.title}</b><p>{step.text}</p></li>)}
+                </ol>
+              </aside>
+            )}
+          </div>
+        </section>
+      )}
+
+      {has.result && (
+        <section class="pc-result pc-wrap pc-block" aria-labelledby="pc-result-title">
+          <div class="pc-result__panel">
+            <p class="pc-kicker"><span>{no.result}</span>{tx.result}</p>
+            <h2 id="pc-result-title">{c.result!.text}</h2>
+          </div>
+        </section>
+      )}
+
+      {has.benefits && (
+        <section class="pc-benefits pc-wrap pc-block" aria-labelledby="pc-benefits-title">
+          <header class="pc-head">
+            <p class="pc-kicker"><span>{no.benefits}</span>{tx.benefits}</p>
+            <h2 id="pc-benefits-title">{c.benefits!.title}</h2>
+            {c.benefits!.note && <p class="pc-note"><b>{tx.generalTag}.</b> {c.benefits!.note}</p>}
+          </header>
+          <ul class="pc-benefits__grid" data-count={c.benefits!.items.length}>
+            {c.benefits!.items.map((item, index) => <li><span>{num(index + 1)}</span><h3>{item.title}</h3><p>{item.text}</p></li>)}
+          </ul>
+        </section>
+      )}
+
+      {has.gallery && (
+        <section class="pc-gallery pc-wrap pc-block" aria-labelledby="pc-gallery-title">
+          <header class="pc-head">
+            <p class="pc-kicker"><span>{no.gallery}</span>{tx.gallery}</p>
+            <h2 id="pc-gallery-title">{c.galleryTitle}</h2>
+          </header>
+          <div class="pc-gallery__grid" data-count={Math.min(images.length, 6)}>
+            {images.map((image, index) => (
+              <figure>
+                <button type="button" data-pp-open={index} aria-label={`${tx.openPhoto}: ${image.alt}`}>
+                  <img src={thumb(image)} srcset={srcsetOf(image)} sizes={tileSizes} width={image.width} height={image.height} alt={image.alt} loading="lazy" decoding="async" />
+                </button>
+              </figure>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section class="pc-service pc-wrap" aria-labelledby="pc-service-title">
+        <a class="pc-service__card" href={serviceHref}>
+          <span class="pc-kicker"><span>{no.service}</span>{c.service.title}</span>
+          <strong id="pc-service-title">{serviceLabel}</strong>
+          {c.service.text && <span class="pc-service__text">{c.service.text}</span>}
+          <b aria-hidden="true">→</b>
+        </a>
+      </section>
+
+      <section class="pc-wrap">
+        <div class="pc-cta" aria-labelledby="pc-cta-title">
+          <div>
+            <h2 id="pc-cta-title">{c.cta.title}</h2>
+            <p>{c.cta.text}</p>
+          </div>
+          <a class="button button--mint" href="#project-request">{c.cta.button}</a>
+        </div>
+      </section>
+
+      <div class="pc-wrap">
+        <section class="pc-faq">
+          <FAQBlock title={c.faqTitle} intro={tx.faqIntro} items={c.faq} visibleCount={6} expandTo={c.faq.length} locale={locale} />
+        </section>
+
+        <section class="pc-related" aria-labelledby="pc-related-title">
+          <header class="pc-head pc-head--row">
+            <div><p class="eyebrow">{tx.relatedEyebrow}</p><h2 id="pc-related-title">{tx.relatedTitle}</h2></div>
+            <a class="pc-back" href={projectsHref}><b aria-hidden="true">←</b> {tx.back}</a>
+          </header>
+          <div class="pc-related__grid">{related.map((item) => <IntlProjectCard {...item} viewLabel={tx.viewProject} />)}</div>
+        </section>
+      </div>
+
+      <ProjectRequestForm projectTitle={c.cardTitle} city={c.city ?? ''} requestExample={c.requestExample} locale={locale} />
+
+      <dialog class="pp-lightbox" aria-label={tx.lbLabel} data-pp-lightbox data-images={JSON.stringify(images)} data-of={tx.of}>
+        <button type="button" class="pp-lightbox__close" data-pp-close aria-label={tx.close}>×</button>
+        <button type="button" class="pp-lightbox__nav pp-lightbox__nav--prev" data-pp-prev aria-label={tx.prev}>‹</button>
+        <figure>
+          <img data-pp-img alt="" width={hero.width} height={hero.height} />
+          <figcaption><span data-pp-count aria-live="polite"></span><span data-pp-caption></span></figcaption>
+        </figure>
+        <button type="button" class="pp-lightbox__nav pp-lightbox__nav--next" data-pp-next aria-label={tx.next}>›</button>
+      </dialog>
+    </main>
+    <Footer locale={locale} />
+  </div>
+</BaseLayout>
+
+<script is:inline>
+(() => {
+  const box = document.querySelector('[data-pp-lightbox]');
+  if (!box || typeof box.showModal !== 'function') return;
+  const images = JSON.parse(box.dataset.images || '[]');
+  const img = box.querySelector('[data-pp-img]');
+  const count = box.querySelector('[data-pp-count]');
+  const caption = box.querySelector('[data-pp-caption]');
+  const single = images.length < 2;
+  let current = 0;
+  let opener = null;
+  box.querySelectorAll('.pp-lightbox__nav').forEach((b) => { b.hidden = single; });
+  const show = (i) => {
+    current = (i + images.length) % images.length;
+    const im = images[current];
+    img.src = im.src; img.width = im.width; img.height = im.height; img.alt = im.alt;
+    count.textContent = (current + 1) + ' ' + box.dataset.of + ' ' + images.length;
+    caption.textContent = im.caption || '';
+    if (!single) { const n = new Image(); n.src = images[(current + 1) % images.length].src; }
+  };
+  document.querySelectorAll('[data-pp-open]').forEach((b) => b.addEventListener('click', () => {
+    opener = b; show(Number(b.dataset.ppOpen) || 0); box.showModal();
+  }));
+  box.querySelector('[data-pp-close]').addEventListener('click', () => box.close());
+  box.querySelector('[data-pp-prev]').addEventListener('click', () => show(current - 1));
+  box.querySelector('[data-pp-next]').addEventListener('click', () => show(current + 1));
+  box.addEventListener('click', (e) => { if (e.target === box) box.close(); });
+  box.addEventListener('close', () => { if (opener) opener.focus(); });
+  box.addEventListener('keydown', (e) => {
+    if (single) return;
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); show(current + 1); }
+  });
+  let startX = null;
+  box.addEventListener('touchstart', (e) => { startX = e.changedTouches[0].clientX; }, { passive: true });
+  box.addEventListener('touchend', (e) => {
+    if (startX === null || single) return;
+    const dx = e.changedTouches[0].clientX - startX; startX = null;
+    if (Math.abs(dx) > 40) show(current + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+})();
+</script>

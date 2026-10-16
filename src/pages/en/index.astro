@@ -1,0 +1,7 @@
+---
+// EN homepage — same template as UA/RU (content: src/content/i18n/intl/home.ts).
+import HomePage from '../../components/pages/HomePage.astro';
+import { assertIntlRoute } from '../../i18n/intl-routes';
+assertIntlRoute(Astro.url.pathname, 'home', 'en');
+---
+<HomePage locale="en" />

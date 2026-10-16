@@ -1,0 +1,13 @@
+---
+// ES product and service hub pages — every route of kind "hub" in src/i18n/intl-routes.ts.
+import IntlHubPage from '../../components/intl/IntlHubPage.astro';
+import { INTL_ROUTES, assertIntlRoute, intlSlug } from '../../i18n/intl-routes';
+
+export function getStaticPaths() {
+  return INTL_ROUTES.filter((route) => route.kind === 'hub').map((route) => ({ params: { hub: intlSlug(route, 'es') }, props: { id: route.id } }));
+}
+
+const { id } = Astro.props;
+assertIntlRoute(Astro.url.pathname, id, 'es');
+---
+<IntlHubPage locale="es" id={id} />

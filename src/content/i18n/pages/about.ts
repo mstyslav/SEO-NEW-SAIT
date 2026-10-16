@@ -7,6 +7,7 @@
 // src/pages/about.astro (extracted verbatim, not reworded), so switching the
 // template over to these keys does not change the uk output at all.
 import type { Locale } from '../../../i18n/helpers';
+import { intlAboutContent } from '../intl/about';
 
 export interface AboutContent {
   meta: { title: string; description: string };
@@ -34,7 +35,8 @@ export interface AboutContent {
   trust: { eyebrow: string; titleHtml: string; linkLabel: string };
   systems: { eyebrow: string; title: string; linkLabel: string };
   finalCta: { eyebrow: string; title: string; text: string; buttonLabel: string };
-  career: {
+  /** Optional: EN/DE/ES pages have no career form. */
+  career?: {
     eyebrow: string;
     title: string;
     text: string;
@@ -281,5 +283,6 @@ export const aboutContent: Record<Locale, AboutContent> = {
       jobOptions: ['Монтаж', 'Продажи', 'Проектирование', 'Маркетинг', 'Другое'],
       submitLabel: 'Отправить заявку →'
     }
-  }
+  },
+  ...intlAboutContent
 };

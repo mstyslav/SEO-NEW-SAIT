@@ -1,0 +1,7 @@
+---
+// DE About — same template as UA/RU (content: src/content/i18n/intl/about.ts).
+import AboutPage from '../../../components/pages/AboutPage.astro';
+import { assertIntlRoute } from '../../../i18n/intl-routes';
+assertIntlRoute(Astro.url.pathname, 'about', 'de');
+---
+<AboutPage locale="de" />

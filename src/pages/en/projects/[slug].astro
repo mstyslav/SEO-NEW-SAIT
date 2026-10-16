@@ -1,0 +1,13 @@
+---
+// EN project case pages — one per entry of INTL_CASES (src/i18n/intl-routes.ts).
+import IntlCasePage from '../../../components/intl/IntlCasePage.astro';
+import { INTL_CASES, assertIntlRoute } from '../../../i18n/intl-routes';
+
+export function getStaticPaths() {
+  return INTL_CASES.map((item) => ({ params: { slug: item.en }, props: { caseId: item.id } }));
+}
+
+const { caseId } = Astro.props;
+assertIntlRoute(Astro.url.pathname, `case:${caseId}`, 'en');
+---
+<IntlCasePage locale="en" caseId={caseId} />

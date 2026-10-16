@@ -6,9 +6,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../Header.astro';
 import Footer from '../Footer.astro';
 import GoogleReviews from '../GoogleReviews.astro';
-import { localizedPath, type Locale } from '../../i18n/helpers';
+import { isIntlLocale, localizedPath, type Locale } from '../../i18n/helpers';
 import { aboutContent } from '../../content/i18n/pages/about';
 import { getCatalogNavigation } from '../../data/catalog-navigation';
+import { intlNavItems } from '../../content/i18n/intl/navigation';
 
 interface Props {
   locale: Locale;
@@ -26,10 +27,13 @@ const founders = [{
 }];
 const lp = (path: string) => localizedPath(path, locale);
 
-const aboutDirections = getCatalogNavigation(locale).map(({ name, href }) => ({
+const intl = isIntlLocale(locale);
+const aboutDirections = (intl ? intlNavItems(locale) : getCatalogNavigation(locale)).map(({ name, href }) => ({
   label: name,
   href
 }));
+// EN/DE/ES: no career form (vacancies are in Ukraine) and no UA review quotes; "systems" links to products.
+const systemsHref = lp(intl ? '/poslugy/' : '/catalog/');
 
 const clients = [
   ['CHOICE', '/images/partners/choice.svg'],
@@ -55,7 +59,7 @@ const systems: [string, string, number][] = [
   <div class="sg-page-shell">
     <Header locale={locale} />
     <main id="main" class="about-premium">
-      <section class:list={["sg-hero", "about-main-hero", locale === "ru" && "about-main-hero--ru"]}>
+      <section class:list={["sg-hero", "about-main-hero", (locale === "ru" || intl) && "about-main-hero--ru"]}>
   <div class="sg-hero__copy">
     <p class="eyebrow">{t.hero.eyebrow}</p>
 
@@ -131,13 +135,13 @@ const systems: [string, string, number][] = [
         <div class="team-grid">
           {t.team.members.map(({ name, role, img, link }) => <article class="team-card"><div class="team-photo"><img src={img} alt={`${name} — ${role}`} width="450" height="600" loading="lazy" decoding="async" /></div><div class="team-caption"><h3>{name}</h3><p>{role}</p>{link && <a class="team-link" href={link.href}>{link.label}<span aria-hidden="true"> ↗</span></a>}</div></article>)}
         </div>
-        <a class="outline-link" href="#career">{t.team.careerLinkLabel}</a>
+        {t.career && <a class="outline-link" href="#career">{t.team.careerLinkLabel}</a>}
       </section>
 
-      <section id="career" class="career section-pad">
+      {t.career && <section id="career" class="career section-pad">
         <div class="career__copy"><p class="eyebrow">{t.career.eyebrow}</p><h2>{t.career.title}</h2><p>{t.career.text}</p></div>
         <form class="career__form" data-lead-form><input type="hidden" name="kind" value="job" /><input type="hidden" name="locale" value={locale} /><input type="text" name="name" autocomplete="name" required aria-label={t.career.nameLabel} placeholder={t.career.namePlaceholder} /><input type="tel" name="phone" autocomplete="tel" inputmode="tel" required aria-label={t.career.phoneLabel} placeholder={t.career.phonePlaceholder} /><select name="job" required aria-label={t.career.jobAriaLabel}><option value="" disabled selected>{t.career.jobPlaceholder}</option>{t.career.jobOptions.map((option) => <option>{option}</option>)}</select><button type="submit">{t.career.submitLabel}</button><p class="career__status" data-form-status hidden role="status"></p></form>
-      </section>
+      </section>}
 
       <section id="partners" class="trust section-pad about-partners-final">
       <div class="about-partners-final__intro">
@@ -165,15 +169,15 @@ const systems: [string, string, number][] = [
     </section>
 
       <section class="systems section-pad">
-        <div class="section-head section-head--compact"><div><p class="eyebrow">{t.systems.eyebrow}</p><h2>{t.systems.title}</h2></div><a href={lp('/catalog/')}>{t.systems.linkLabel}</a></div>
+        <div class="section-head section-head--compact"><div><p class="eyebrow">{t.systems.eyebrow}</p><h2>{t.systems.title}</h2></div><a href={systemsHref}>{t.systems.linkLabel}</a></div>
         <div class="logo-strip logo-strip--systems">
           {systems.map(([name,img,height]) => <div class="logo-item logo-item--system"><img src={img} alt={name} width="300" height={height} loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /><span>{name}</span></div>)}
         </div>
       </section>
 
-      <div id="reviews">
+      {!intl && <div id="reviews">
         <GoogleReviews locale={locale} />
-      </div>
+      </div>}
 
       <section class="final-cta" id="contact"><div><p class="eyebrow">{t.finalCta.eyebrow}</p><h2>{t.finalCta.title}</h2><p>{t.finalCta.text}</p></div><a href={`${lp('/contacts/')}#contact-form`}>{t.finalCta.buttonLabel}</a></section>
     </main>

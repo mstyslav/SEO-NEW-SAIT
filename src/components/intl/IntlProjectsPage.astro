@@ -1,0 +1,81 @@
+---
+// EN/DE/ES projects page: the same hero and card grid as the UA /project/ page, limited to the cases
+// that have a translated case page (src/i18n/intl-routes.ts → INTL_CASES).
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import IntlProjectCard from './IntlProjectCard.astro';
+import { absoluteUrl, type JsonLdObject } from '../../seo/schema';
+import { INTL_CASES, intlHref, type IntlLocale } from '../../i18n/intl-routes';
+import { caseCopy, caseLabels } from '../../content/i18n/intl/cases';
+import { projectsPageCopy } from '../../content/i18n/intl/pages';
+import '../../styles/projects-common.css';
+import '../../styles/projects-index-v2.css';
+
+interface Props { locale: IntlLocale }
+const { locale } = Astro.props;
+const t = projectsPageCopy[locale];
+const origin = Astro.site ?? Astro.url.origin;
+const projects = await getCollection('projects', ({ data }) => data.status === 'published');
+const cards = INTL_CASES.map((item) => {
+  const project = projects.find(({ data }) => data.slug === item.ukSlug)!.data;
+  const text = caseCopy[locale][item.id];
+  return { href: intlHref(`case:${item.id}`, locale), cover: project.cover, alt: text.coverAlt, title: text.cardTitle, city: text.city, categoryLabel: text.categoryLabel, constructionType: text.constructionType, shortDescription: text.shortDescription };
+});
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${absoluteUrl(intlHref('projects', locale), origin)}#projects`,
+  name: t.gridTitle,
+  numberOfItems: cards.length,
+  itemListElement: cards.map((card, index) => ({ '@type': 'ListItem', position: index + 1, name: card.title, url: absoluteUrl(card.href, origin) }))
+};
+---
+<BaseLayout title={t.meta.title} description={t.meta.description} locale={locale} schemaType="CollectionPage" structuredData={[itemList]} image="/images/projects/projects-hero/projects-hero-desktop.webp">
+<div class="sg-page-shell"><Header locale={locale} /><main id="main">
+<div class="projects-index-v2">
+  <div class="projects-index-v2__wrap">
+    <header class="projects-index-v2__hero">
+      <div class="projects-index-v2__hero-copy">
+        <p class="eyebrow">{t.eyebrow}</p>
+        <h1>{t.h1}</h1>
+        <p class="lead">{t.lead}</p>
+      </div>
+      <div class="projects-index-v2__hero-media">
+        <picture>
+          <source media="(max-width: 900px)" srcset="/images/projects/projects-hero/projects-hero-mobile.webp" />
+          <img
+            src="/images/projects/projects-hero/projects-hero-desktop.webp"
+            srcset="/images/projects/projects-hero/projects-hero-desktop-640.webp 640w, /images/projects/projects-hero/projects-hero-desktop-800.webp 800w, /images/projects/projects-hero/projects-hero-desktop-960.webp 960w, /images/projects/projects-hero/projects-hero-desktop.webp 1200w"
+            sizes="(min-width: 901px) min(50vw, 733px), 100vw"
+            width="1200" height="900" alt={t.heroAlt}
+            loading="eager" fetchpriority="high" decoding="async"
+          />
+        </picture>
+      </div>
+    </header>
+    <section class="intl-projects-intro" aria-label={t.gridTitle}>
+      {t.intro.map((text) => <p>{text}</p>)}
+    </section>
+    <h2 class="intl-projects-title">{t.gridTitle}</h2>
+    <section class="projects-index-v2__grid" aria-label={t.gridTitle}>
+      {cards.map((card) => <IntlProjectCard {...card} viewLabel={caseLabels[locale].viewProject} />)}
+    </section>
+    <section class="intl-projects-more">
+      <div><h2>{t.more.title}</h2><p>{t.more.text}</p></div>
+      <a class="button button--mint" href={intlHref('contacts', locale, '#contact-form')}>{t.more.button}</a>
+    </section>
+  </div>
+</div>
+</main><Footer locale={locale} /></div></BaseLayout>
+
+<style>
+  .intl-projects-intro{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 40px;margin:8px 0 34px;color:var(--muted,#5d6964);font-size:1rem;line-height:1.65}
+  .intl-projects-intro p{margin:0}
+  .intl-projects-title{margin:0 0 22px;font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.15;letter-spacing:-.02em}
+  .intl-projects-more{display:flex;align-items:center;justify-content:space-between;gap:28px;margin:46px 0 70px;padding:30px 34px;border:1px solid var(--green-line,#d7e7df);border-radius:22px;background:#eef9f4}
+  .intl-projects-more h2{margin:0 0 8px;font-size:clamp(1.3rem,2vw,1.7rem);line-height:1.2}
+  .intl-projects-more p{margin:0;max-width:640px;color:var(--muted,#5d6964)}
+  .intl-projects-more .button{flex:0 0 auto}
+  @media(max-width:800px){.intl-projects-intro{grid-template-columns:1fr}.intl-projects-more{flex-direction:column;align-items:flex-start;padding:24px}}
+</style>

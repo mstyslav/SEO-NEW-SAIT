@@ -1,0 +1,9 @@
+---
+// DE legal page — translation of the UA page (content: src/content/i18n/intl/legal.ts).
+import LegalPage from '../../../components/LegalPage.astro';
+import { legalCopy } from '../../../content/i18n/intl/legal';
+import { assertIntlRoute } from '../../../i18n/intl-routes';
+assertIntlRoute(Astro.url.pathname, 'privacy', 'de');
+const page = legalCopy.de.privacy;
+---
+<LegalPage title={page.title} description={page.description} updated={page.updated} locale="de"><Fragment set:html={page.html} /></LegalPage>

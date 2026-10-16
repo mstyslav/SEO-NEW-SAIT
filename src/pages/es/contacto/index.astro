@@ -1,0 +1,7 @@
+---
+// ES contact page (content: src/content/i18n/intl/pages.ts).
+import IntlContactsPage from '../../../components/intl/IntlContactsPage.astro';
+import { assertIntlRoute } from '../../../i18n/intl-routes';
+assertIntlRoute(Astro.url.pathname, 'contacts', 'es');
+---
+<IntlContactsPage locale="es" />

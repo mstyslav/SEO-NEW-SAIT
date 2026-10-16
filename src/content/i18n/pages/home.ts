@@ -6,6 +6,8 @@
 // the template (extracted verbatim, not reworded), so switching the template
 // over to these keys does not change the uk output at all.
 import type { Locale } from '../../../i18n/helpers';
+import { intlHomeContent } from '../intl/home';
+import { profileIcons } from '../../../data/profile-icons';
 
 export type HomeCategory = [string, string, string, string, boolean?];
 export type HomePopularSolution = [string, string, string, string, number, number];
@@ -23,7 +25,7 @@ export interface HomeContent {
   quote: { eyebrow: string; title: string; intro: string; messagePlaceholder: string };
 }
 
-export const homeContent: Record<Locale, HomeContent> = {
+export const homeContent = {
   uk: {
     meta: {
       title: 'Space Glass — скляні та алюмінієві конструкції в Україні',
@@ -220,4 +222,14 @@ export const homeContent: Record<Locale, HomeContent> = {
       messagePlaceholder: 'Например: душевая Walk-in'
     }
   }
-};
+} as Record<Locale, HomeContent>;
+
+// EN/DE/ES (src/content/i18n/intl/home.ts) get the same category icons as UA; winter gardens use the
+// aluminium-profile icon of the UA winter-garden page.
+const ukCategoryIcons = new Map(homeContent.uk.categories.map(([, , href, icon]) => [href, icon]));
+for (const [locale, content] of Object.entries(intlHomeContent)) {
+  homeContent[locale as Locale] = {
+    ...content,
+    categories: content.categories.map(([title, text, href]) => [title, text, href, ukCategoryIcons.get(href) ?? profileIcons['alu/zymovi-sady']])
+  };
+}

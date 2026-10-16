@@ -20,10 +20,12 @@ import { doorCategoriesRu } from '../data/ru/door-catalog.ru';
 import { facadeCategoriesRu } from '../data/ru/facade-catalog.ru';
 import { businessPagesRu } from '../data/ru/business-pages.ru';
 import { hasProjectRu } from '../data/ru/projects.ru';
+import { INTL_ROUTES, intlLocales } from '../i18n/intl-routes';
 const pages = import.meta.glob('./**/*.astro');
 // uk/* pages are non-canonical duplicates of the unprefixed root pages (their own
 // canonical tag points at the unprefixed URL), so they must not be submitted separately.
-const excludedLocales = /^\.\/(en|de|uk)(?:\/|$)/;
+// en/de/es pages are listed from the route map below (intlUrls), never discovered by the glob.
+const excludedLocales = /^\.\/(en|de|es|uk)(?:\/|$)/;
 // These ru/* pages redirect straight back to the unprefixed (uk) URL and never render real
 // Russian content, so they must not be submitted to search engines as indexable RU pages.
 // ru/about, ru/catalog, ru/projects and ru/poslugy are NOT in this list: all render real,
@@ -87,8 +89,12 @@ export const GET: APIRoute = async ({ site }) => {
   const partitionUrls = [PARTITION_HUB, ...partitionCategories.map(({ path }) => path)];
   const businessUrls = [BUSINESS_HUB, ...businessPages.map(({ slug }) => businessPath(slug))];
 
+  // EN/DE/ES pages — exactly the entries of src/i18n/intl-routes.ts (each one is a real 200 page).
+  const intlUrls = INTL_ROUTES.flatMap((route) => intlLocales.map((locale) => route[locale]));
+
   const urls = [...new Set([
     ...fileUrls,
+    ...intlUrls,
     ...projectUrls,
     ...ruProjectUrls,
     ...knowledgeUrls,

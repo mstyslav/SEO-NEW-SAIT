@@ -1,0 +1,203 @@
+---
+// EN/DE/ES product / service hub page. Same sections, CSS and components as the UA hubs
+// (e.g. src/pages/sklyani-perehorodky/index.astro) — prices, configurators, city pages and the UA
+// knowledge base are left out (UA market only). Content: src/content/i18n/intl/hubs-{en,de,es}.ts,
+// photos/icons: src/content/i18n/intl/hubs-config.ts.
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import FAQBlock from '../FAQBlock.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import TrustBar from '../TrustBar.astro';
+import ProfileRequestForm from '../profile/ProfileRequestForm.astro';
+import IntlProjectCard from './IntlProjectCard.astro';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { INTL_CASES, intlHref, type IntlLocale } from '../../i18n/intl-routes';
+import { HUB_VISUALS } from '../../content/i18n/intl/hubs-config';
+import { hubCopy, hubCommon } from '../../content/i18n/intl/hubs';
+import { caseCopy, caseLabels } from '../../content/i18n/intl/cases';
+import { homeContent } from '../../content/i18n/pages/home';
+import { profileIcons } from '../../data/profile-icons';
+import '../../styles/category-pages.css';
+import '../../styles/shower-master.css';
+import '../../styles/profile-systems.css';
+import '../../styles/projects-common.css';
+
+interface Props { locale: IntlLocale; id: string }
+const { locale, id } = Astro.props;
+const copy = hubCopy[locale][id];
+const common = hubCommon[locale];
+const visual = HUB_VISUALS[id];
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = absoluteUrl(intlHref(id, locale), origin);
+const href = (hubId: string, hash = '') => intlHref(hubId, locale, hash);
+
+// Services hub: the type cards are the product hubs (links), with the homepage category icons.
+const homeIcons = new Map(homeContent.uk.categories.map(([, , path, icon]) => [path, icon]));
+const hubIconById: Record<string, string> = {
+  showers: homeIcons.get('/dushovi-kabiny/') ?? '', partitions: homeIcons.get('/sklyani-perehorodky/') ?? '', doors: homeIcons.get('/sklyani-dveri/') ?? '',
+  railings: homeIcons.get('/sklyani-ohorozhi/') ?? '', mirrors: homeIcons.get('/dzerkala/') ?? '', canopies: homeIcons.get('/sklyani-kozyrky/') ?? '',
+  frameless: homeIcons.get('/bezramne-sklinnya/') ?? '', aluminium: homeIcons.get('/alyuminiyevi-konstrukcziyi/') ?? '',
+  wintergardens: profileIcons['alu/zymovi-sady'], facades: homeIcons.get('/poslugy/sklyani-fasady/') ?? '', business: homeIcons.get('/dlya-biznesu/') ?? ''
+};
+const typeCards = copy.types.items.map(([title, text], index) => {
+  const linkId = visual.typeLinks?.[index];
+  return { title, text, href: linkId ? href(linkId) : undefined, icon: linkId ? hubIconById[linkId] : visual.icons[index] };
+});
+
+const projects = await getCollection('projects', ({ data }) => data.status === 'published');
+const cases = visual.cases.map((caseId) => {
+  const entry = INTL_CASES.find((item) => item.id === caseId)!;
+  const project = projects.find(({ data }) => data.slug === entry.ukSlug)!.data;
+  const text = caseCopy[locale][caseId];
+  return { href: href(`case:${caseId}`), cover: project.cover, alt: text.coverAlt, title: text.cardTitle, city: text.city, categoryLabel: text.categoryLabel, constructionType: text.constructionType, shortDescription: text.shortDescription };
+});
+
+const process = copy.process ?? { title: common.processTitle, steps: common.processSteps };
+const area = copy.area ?? { title: common.areaTitle, paragraphs: common.areaParagraphs };
+const related = visual.related.map((hubId) => ({ label: hubCopy[locale][hubId].name, href: href(hubId) }));
+
+const crumbs = [
+  { label: common.home, href: href('home') },
+  ...(visual.parent ? [{ label: hubCopy[locale][visual.parent].name, href: href(visual.parent) }] : []),
+  { label: copy.name }
+];
+
+const faqData = faqSchema(copy.faq.items.map(([question, answer]) => ({ question, answer })));
+const itemList: JsonLdObject | null = visual.typeLinks
+  ? { '@type': 'ItemList', '@id': `${pageUrl}#directions`, name: copy.types.title, numberOfItems: typeCards.length,
+      itemListElement: typeCards.map((card, index) => ({ '@type': 'ListItem', position: index + 1, name: card.title, url: absoluteUrl(card.href!, origin) })) }
+  : null;
+const structuredData = [itemList, faqData].filter(Boolean) as JsonLdObject[];
+---
+<BaseLayout
+  title={copy.meta.title}
+  description={copy.meta.description}
+  locale={locale}
+  image={visual.hero.image}
+  schemaType={visual.schemaType ?? 'CollectionPage'}
+  structuredData={structuredData}
+  heroPreloadSrc={visual.hero.src}
+  heroPreloadSrcset={visual.hero.srcset}
+  heroPreloadSizes={visual.hero.sizes}
+  heroPreloadMobileSrcset={visual.hero.mobile?.srcset}
+>
+<div class="sg-page-shell">
+  <Header locale={locale} />
+  <main id="main">
+    <section class="category-hero category-hero--photo profile-hero">
+      <div class="category-hero__copy">
+        <Breadcrumbs items={crumbs} />
+        <p class="eyebrow">{copy.eyebrow}</p>
+        <h1>{copy.h1}</h1>
+        <p class="lead">{copy.lead}</p>
+        <div class="hero__actions">
+          <a class="button button--mint" href="#types">{copy.explore}</a>
+          <a class="button button--outline" href="#request">{common.request}</a>
+        </div>
+      </div>
+      <figure class="category-hero__figure">
+        <div class="category-hero__frame">
+          {visual.hero.mobile
+            ? <picture><source media="(max-width: 900px)" srcset={visual.hero.mobile.srcset} sizes="100vw" width={visual.hero.mobile.width} height={visual.hero.mobile.height} /><img src={visual.hero.src} srcset={visual.hero.srcset} sizes={visual.hero.sizes} alt={copy.heroAlt} width={visual.hero.width} height={visual.hero.height} decoding="async" fetchpriority="high" /></picture>
+            : <img src={visual.hero.src} srcset={visual.hero.srcset} sizes={visual.hero.sizes} alt={copy.heroAlt} width={visual.hero.width} height={visual.hero.height} decoding="async" fetchpriority="high" />}
+        </div>
+      </figure>
+    </section>
+
+    <TrustBar locale={locale} />
+
+    <section class="category-section category-section--mint">
+      <div class="category-heading"><div><p class="eyebrow">Space Glass</p><h2>{copy.intro.title}</h2></div></div>
+      <div class="category-intro-grid">
+        <div class="category-prose">
+          {copy.intro.paragraphs.map((text) => <p>{text}</p>)}
+        </div>
+        <ul class="category-intro__spec">
+          {copy.intro.spec.map(([value, note]) => <li><b>{value}</b><span>{note}</span></li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section id="types" class="category-section">
+      <div class="category-heading"><div><p class="eyebrow">{copy.types.eyebrow}</p><h2>{copy.types.title}</h2></div><p>{copy.types.intro}</p></div>
+      <div class="category-icon-grid category-icon-grid--showers">
+        {typeCards.map((card) => card.href
+          ? <a class="category-icon-card" href={card.href}><span class="category-icon-card__icon" set:html={card.icon} /><h3>{card.title}</h3><p>{card.text}</p><b aria-hidden="true">→</b></a>
+          : <article class="category-icon-card category-icon-card--static"><span class="category-icon-card__icon" set:html={card.icon} /><h3>{card.title}</h3><p>{card.text}</p></article>)}
+      </div>
+    </section>
+
+    {copy.options && (
+      <section class="category-section category-section--mint">
+        <div class="category-heading"><div><p class="eyebrow">{copy.options.eyebrow}</p><h2>{copy.options.title}</h2></div><p>{copy.options.intro}</p></div>
+        <dl class="material-thickness">
+          {copy.options.items.map(([name, text]) => <div><dt>{name}</dt><dd>{text}</dd></div>)}
+        </dl>
+      </section>
+    )}
+
+    <section class:list={['category-section', !copy.options && 'category-section--mint']}>
+      <div class="category-heading"><div><p class="eyebrow">{copy.benefits.eyebrow}</p><h2>{copy.benefits.title}</h2></div></div>
+      <div class="material-grid material-grid--parts">
+        {copy.benefits.items.map(([name, text]) => <article><b>{name}</b><p>{text}</p></article>)}
+      </div>
+    </section>
+
+    {cases.length > 0 && (
+      <section class="category-section">
+        <div class="category-heading category-heading--projects">
+          <div class="category-heading--projects__title"><p class="eyebrow">{common.projectsEyebrow}</p><h2>{common.projectsTitle}</h2></div>
+          <div class="category-heading--projects__aside"><a class="category-arrow-link" href={href('projects')}>{common.allProjects} <span aria-hidden="true">→</span></a></div>
+        </div>
+        <div class="projects-index-v2__grid category-projects-grid">
+          {cases.map((item) => <IntlProjectCard {...item} viewLabel={caseLabels[locale].viewProject} />)}
+        </div>
+      </section>
+    )}
+
+    <section id="process" class="category-process">
+      <div class="category-heading"><div><p class="eyebrow eyebrow--light">{common.processEyebrow}</p><h2>{process.title}</h2></div></div>
+      <div class="category-process__grid">
+        {process.steps.map(([title, text], index) => <div><span>{String(index + 1).padStart(2, '0')}</span><b>{title}</b><small>{text}</small></div>)}
+      </div>
+    </section>
+
+    <section class="category-section category-geo">
+      <div class="category-geo__grid">
+        <div class="category-geo__copy">
+          <p class="eyebrow">{common.areaEyebrow}</p>
+          <h2>{area.title}</h2>
+          {area.paragraphs.map((text) => <p>{text}</p>)}
+        </div>
+        <ul class="category-geo__cities">{common.offices.map(([city, note]) => <li><a href={href('contacts', '#offices')}><b>{city}</b><span>{note}</span></a></li>)}</ul>
+      </div>
+    </section>
+
+    <section id="faq" class="category-section category-section--faq">
+      <FAQBlock title={copy.faq.title} intro={copy.faq.intro} items={copy.faq.items} visibleCount={6} expandTo={copy.faq.items.length} locale={locale} />
+    </section>
+
+    <section class="category-section category-links">
+      <div class="category-heading"><div><p class="eyebrow">{common.relatedEyebrow}</p><h2>{common.relatedTitle}</h2></div></div>
+      <div class="category-links__grid">
+        {related.map(({ label, href: link }) => <a href={link}>{label}</a>)}
+      </div>
+    </section>
+
+    <ProfileRequestForm
+      page={intlHref(id, locale)}
+      product={copy.form.product}
+      title={copy.form.title}
+      text={copy.form.text}
+      options={copy.form.options}
+      optionsLabel={copy.form.optionsLabel}
+      commentPlaceholder={copy.form.commentPlaceholder}
+      locale={locale}
+      family={visual.family}
+    />
+  </main>
+  <Footer locale={locale} />
+</div>
+</BaseLayout>

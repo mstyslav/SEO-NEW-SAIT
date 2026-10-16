@@ -1,0 +1,36 @@
+---
+// Project card of the EN/DE/ES pages: same markup and styles as components/projects/ProjectCard.astro,
+// with the localized case texts (src/content/i18n/intl/cases-*.ts) and a link to the localized case page.
+interface Props {
+  href: string;
+  cover: { src: string; width: number; height: number };
+  alt: string;
+  title: string;
+  city?: string;
+  categoryLabel: string;
+  constructionType: string;
+  shortDescription: string;
+  viewLabel: string;
+  eager?: boolean;
+}
+const { href, cover, alt, title, city, categoryLabel, constructionType, shortDescription, viewLabel, eager = false } = Astro.props;
+const RESPONSIVE_WIDTHS = [480, 720, 960];
+const srcset = RESPONSIVE_WIDTHS.filter((w) => w <= cover.width)
+  .map((w) => `${w === cover.width ? cover.src : cover.src.replace('.webp', `-${w}.webp`)} ${w}w`)
+  .join(', ');
+const sizes = '(max-width: 700px) calc(100vw - 32px), (max-width: 1050px) calc((min(1380px, 100vw - 116px) - 18px) / 2), calc((min(1380px, 100vw - 116px) - 36px) / 3)';
+---
+<article class="project-card-v2" data-project-card>
+  <a href={href}>
+    <div class="project-card-v2__media">
+      <img src={cover.src} srcset={srcset} sizes={sizes} width={cover.width} height={cover.height} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+    </div>
+    <div class="project-card-v2__body">
+      <p>{city && <>{city} <span aria-hidden="true">/</span> </>}{categoryLabel}</p>
+      <h2>{title}</h2>
+      <span class="project-card-v2__type">{constructionType}</span>
+      <span class="project-card-v2__description">{shortDescription}</span>
+      <b>{viewLabel} <span aria-hidden="true">→</span></b>
+    </div>
+  </a>
+</article>
