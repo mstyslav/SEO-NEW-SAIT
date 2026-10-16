@@ -11,6 +11,14 @@ const sq = (base: string, width = 1080, height = 1080): ChildImage => ({
   sizes
 });
 
+const biz = (name: string): ChildImage => ({
+  src: `/images/business/biz-${name}-800.webp`,
+  srcset: `/images/business/biz-${name}-640.webp 640w, /images/business/biz-${name}-800.webp 800w, /images/business/biz-${name}-1280.webp 1280w`,
+  width: 1280,
+  height: 960,
+  sizes
+});
+
 const P = '/images/catalog/sklyani-perehorodky';
 const B = '/images/catalog/bezramne';
 const D = '/images/catalog/dushovi-kabiny/models';
@@ -37,6 +45,22 @@ export const CHILD_IMAGES: Record<string, ChildImage> = {
   glasschiebetuer: sq('/images/catalog/sklyani-dveri/hero4-rozsuvni-sklyani-dveri'),
   'pfosten-riegel': sq(`${S}/cat-fas2-stiykovo-ryhelne-sklinnya`),
   'led-spiegel': sq('/images/catalog/dzerkala/cat-led'),
+  'vertikal-schiebeverglasung': sq(`${B}/cat-giljotynni-systemy`),
+  nischendusche: sq(`${D}/sq-u-nishu`),
+  aluminiumtuer: sq(`${S}/cat-alu-dveri`),
+  'aluminium-pergola': sq(`${S}/cat-alu-perholy`),
+  glasdrehtuer: sq('/images/catalog/sklyani-dveri/hero4-rozpashni-sklyani-dveri'),
+  'glastuer-aluminiumrahmen': sq('/images/catalog/sklyani-dveri/hero4-dveri-v-aliuminiievomu-profili'),
+  'rahmenloses-glasgelaender': sq(`${R}/hero-bezramni-sklyani-ohorozhi`),
+  'pool-glasgelaender': sq(`${R}/hero-sklyani-ohorozhi-baseiniv`),
+  'glasvordach-freitragend': sq('/images/catalog/sklyani-kozyrky/hero-konsolni-kozyrky'),
+  'glasvordach-zugstangen': sq('/images/catalog/sklyani-kozyrky/hero-kozyrky-na-tyahakh'),
+  'structural-glazing': sq(`${S}/cat-fas2-strukturne-sklinnya-fasadu`),
+  schaufensterverglasung: sq(`${S}/cat-fas2-vitrinne-sklinnya`),
+  wandspiegel: sq('/images/catalog/dzerkala/cat-stina'),
+  gastronomie: biz('restoranam'),
+  'buero-glasloesungen': biz('dlya-ofisu'),
+  einzelhandel: biz('magazynam'),
   hotels: {
     src: '/images/business/biz-goteli-800.webp',
     srcset: '/images/business/biz-goteli-640.webp 640w, /images/business/biz-goteli-800.webp 800w, /images/business/biz-goteli-1280.webp 1280w',

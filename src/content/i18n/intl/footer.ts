@@ -63,9 +63,9 @@ export const intlFooterText: Record<IntlLocale, { text: FooterText; services: st
       brandDescription: 'Hochwertige Glaskonstruktionen für Wohnen, Gewerbe und Architekturprojekte.',
       copyright: '© 2014–2026 Space Glass. Alle Rechte vorbehalten.',
       benefits: [
-        ['Eigene Fertigung', 'Volle Qualitätskontrolle'],
+        ['Glas- und Aluminiumsysteme', 'Für Wohnen und Gewerbe'],
         ['Garantie: Glas — 5 Jahre', 'Beschläge — 2 Jahre · Montage — 1 Jahr'],
-        ['Lieferung in der Ukraine und in Europa', 'Ausgewählte Produkte und Konstruktionen'],
+        ['Lieferung und Montage', 'Projektbezogen abgestimmt'],
         ['Maßanfertigung', 'Geplant für Ihr Projekt']
       ],
       quoteCta: ['Angebot anfragen', 'Grundriss oder Fotos senden']

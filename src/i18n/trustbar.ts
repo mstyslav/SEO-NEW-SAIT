@@ -26,9 +26,9 @@ export const trustBarItems: Record<Locale, TrustBarItem[]> = {
     ['Made to measure', 'For your project', 'custom-design']
   ],
   de: [
-    ['Eigene Fertigung', 'In der Ukraine', 'factory'],
+    ['Glas- und Aluminiumsysteme', 'Für Wohnen und Gewerbe', 'factory'],
     ['Garantie: Glas — 5 Jahre', 'Beschläge — 2 Jahre · Montage — 1 Jahr', 'shield-check'],
-    ['Lieferung in der Ukraine', 'Und nach Europa', 'truck'],
+    ['Lieferung und Montage', 'Projektbezogen abgestimmt', 'truck'],
     ['Maßanfertigung', 'Für Ihr Projekt', 'custom-design']
   ],
   es: [

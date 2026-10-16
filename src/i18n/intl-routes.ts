@@ -92,7 +92,23 @@ const DE_CHILDREN: Array<{ id: string; parent: string; uk: string; slug: string 
   { id: 'glasschiebetuer', parent: 'doors', uk: '/sklyani-dveri/rozsuvni-sklyani-dveri/', slug: 'glasschiebetuer' },
   { id: 'pfosten-riegel', parent: 'facades', uk: '/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/', slug: 'pfosten-riegel-fassade' },
   { id: 'led-spiegel', parent: 'mirrors', uk: '/dzerkala/led-dzerkala/', slug: 'led-spiegel' },
-  { id: 'hotels', parent: 'business', uk: '/dlya-biznesu/goteli/', slug: 'hotels' }
+  { id: 'hotels', parent: 'business', uk: '/dlya-biznesu/goteli/', slug: 'hotels' },
+  { id: 'vertikal-schiebeverglasung', parent: 'frameless', uk: '/bezramne-sklinnya/giljotynni-systemy/', slug: 'vertikal-schiebeverglasung' },
+  { id: 'nischendusche', parent: 'showers', uk: '/dushovi-kabiny/u-nishu/', slug: 'nischendusche' },
+  { id: 'aluminiumtuer', parent: 'aluminium', uk: '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/', slug: 'aluminiumtueren' },
+  { id: 'aluminium-pergola', parent: 'aluminium', uk: '/alyuminiyevi-konstrukcziyi/pergoly/', slug: 'aluminium-pergola' },
+  { id: 'glasdrehtuer', parent: 'doors', uk: '/sklyani-dveri/rozpashni-sklyani-dveri/', slug: 'glasdrehtuer' },
+  { id: 'glastuer-aluminiumrahmen', parent: 'doors', uk: '/sklyani-dveri/dveri-v-aliuminiievomu-profili/', slug: 'glastuer-aluminiumrahmen' },
+  { id: 'rahmenloses-glasgelaender', parent: 'railings', uk: '/sklyani-ohorozhi/bezramni-sklyani-ohorozhi/', slug: 'rahmenloses-glasgelaender' },
+  { id: 'pool-glasgelaender', parent: 'railings', uk: '/sklyani-ohorozhi/sklyani-ohorozhi-baseiniv/', slug: 'glasgelaender-pool' },
+  { id: 'glasvordach-freitragend', parent: 'canopies', uk: '/sklyani-kozyrky/konsolni-kozyrky/', slug: 'glasvordach-freitragend' },
+  { id: 'glasvordach-zugstangen', parent: 'canopies', uk: '/sklyani-kozyrky/kozyrky-na-tyahakh/', slug: 'glasvordach-zugstangen' },
+  { id: 'structural-glazing', parent: 'facades', uk: '/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/', slug: 'structural-glazing-fassade' },
+  { id: 'schaufensterverglasung', parent: 'facades', uk: '/poslugy/sklyani-fasady/vitrinne-sklinnya/', slug: 'schaufensterverglasung' },
+  { id: 'wandspiegel', parent: 'mirrors', uk: '/dzerkala/dzerkala-na-stinu/', slug: 'wandspiegel-nach-mass' },
+  { id: 'gastronomie', parent: 'business', uk: '/dlya-biznesu/restoranam/', slug: 'gastronomie' },
+  { id: 'buero-glasloesungen', parent: 'business', uk: '/dlya-biznesu/dlya-ofisu/', slug: 'buero' },
+  { id: 'einzelhandel', parent: 'business', uk: '/dlya-biznesu/magazynam/', slug: 'einzelhandel' }
 ];
 for (const child of DE_CHILDREN) {
   const parent = INTL_ROUTES.find((route) => route.id === child.parent);
