@@ -7,7 +7,7 @@
  * POST /api/kommo-lead (and /api/lead) — the endpoint used by every `[data-lead-form]`
  * (public/js/forms.js). The lead is delivered to every configured channel:
  *   1. Telegram group   — secrets TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
- *   2. E-mail           — (next step)
+ *   2. E-mail           — optional Resend API (verified sender + secrets)
  *   3. Kommo CRM        — (next step)
  * The request succeeds if at least one channel accepted the lead.
  *
@@ -18,8 +18,8 @@
  * lead message ({ file_sent } tells the page whether that worked).
  *
  * Anti-spam (silently dropped with a fake "ok"): hidden honeypot field, JS-only marker +
- * header, < 3 s on the page, links / junk submissions, foreign Origin;
- * phone must be a valid number for its country (libphonenumber); 3 leads/min per IP.
+ * header, links / junk submissions, foreign Origin;
+ * phone must be a valid number for its country (libphonenumber); 5 leads/min per IP.
  *
  * Secrets are set with `npx wrangler secret put NAME` — never commit them.
  */
@@ -32,6 +32,10 @@ export interface Env {
   LEAD_LIMITER?: { limit(options: { key: string }): Promise<{ success: boolean }> };
   TELEGRAM_BOT_TOKEN?: string;
   TELEGRAM_CHAT_ID?: string;
+  /** Optional Resend API key and verified sender; configure as Cloudflare secrets. */
+  RESEND_API_KEY?: string;
+  LEAD_EMAIL_FROM?: string;
+  LEAD_EMAIL_TO?: string;
 }
 
 type Lead = {
@@ -173,6 +177,34 @@ async function sendTelegramFile(file: File, lead: Lead, env: Env): Promise<boole
   return response.ok;
 }
 
+/** Optional independent email delivery. Requires verified sender domain and Resend API key. */
+async function sendLeadEmail(lead: Lead, env: Env, origin: string): Promise<boolean> {
+  if (!env.RESEND_API_KEY || !env.LEAD_EMAIL_FROM || !env.LEAD_EMAIL_TO) return false;
+  const subject = lead.kind === 'job' ? 'Space Glass — заявка на вакансію' : 'Space Glass — нова заявка з сайту';
+  const body = [
+    subject, `Ім'я: ${lead.name}`, `Телефон: ${lead.phone}`,
+    lead.email && `Email: ${lead.email}`, lead.city && `Місто: ${lead.city}`,
+    lead.product && `Продукт: ${lead.product}`, lead.job && `Вакансія: ${lead.job}`,
+    lead.comment && `Коментар: ${lead.comment}`,
+    lead.options && `Опції: ${lead.options}`,
+    lead.configuration && `Конфігурація: ${lead.configuration}`,
+    lead.estimatedPrice && `Орієнтовна ціна: ${lead.estimatedPrice}`,
+    lead.page && `Сторінка: ${origin + lead.page}`
+  ].filter(Boolean).join('\n');
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { 'authorization': `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
+      body: JSON.stringify({ from: env.LEAD_EMAIL_FROM, to: [env.LEAD_EMAIL_TO], subject, text: body })
+    });
+    if (!response.ok) console.error('lead email delivery failed', response.status);
+    return response.ok;
+  } catch (error) {
+    console.error('lead email transport error', String(error));
+    return false;
+  }
+}
+
 async function handleLead(request: Request, env: Env): Promise<Response> {
   if (request.method !== 'POST') return json({ ok: false, error: 'method_not_allowed' }, 405);
   let body: Record<string, unknown>;
@@ -226,7 +258,7 @@ async function handleLead(request: Request, env: Env): Promise<Response> {
   }
 
   const origin = new URL(request.url).origin;
-  const results = await Promise.allSettled([sendTelegram(lead, env, origin)]);
+  const results = await Promise.allSettled([sendTelegram(lead, env, origin), sendLeadEmail(lead, env, origin)]);
   const delivered = results.some((r) => r.status === 'fulfilled' && r.value);
   if (!delivered) {
     console.error('lead not delivered', JSON.stringify(results));
