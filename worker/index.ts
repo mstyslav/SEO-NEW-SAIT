@@ -184,7 +184,7 @@ async function telegramPost(
     let payload: { description?: string; parameters?: { migrate_to_chat_id?: number | string } } = {};
     try { payload = await response.json(); } catch { /* invalid Telegram response */ }
     const newId = payload.parameters?.migrate_to_chat_id;
-    if (attempt === 0 && response.status === 400 && newId && /^-?\\d+$/.test(String(newId)) && String(newId) !== chatId) {
+    if (attempt === 0 && response.status === 400 && newId && /^-?[0-9]+$/.test(String(newId)) && String(newId) !== chatId) {
       migratedChatId = String(newId);
       console.warn('telegram group migrated; retrying with new chat ID', migratedChatId);
       continue;
