@@ -250,7 +250,12 @@ async function handleLead(request: Request, env: Env): Promise<Response> {
   if (!phone) return json({ ok: false, error: 'invalid_phone' }, 400);
   lead.phone = phone;
 
-  // Emergency: rate limiter temporarily disabled while diagnosing production lead failures.
+  // Rate limit per visitor IP (5 leads / minute).
+  const ip = request.headers.get('cf-connecting-ip') ?? 'unknown';
+  if (env.LEAD_LIMITER && !(await env.LEAD_LIMITER.limit({ key: ip })).success) {
+    console.log('lead rate-limited');
+    return json({ ok: false, error: 'too_many_requests' }, 429);
+  }
 
   const origin = new URL(request.url).origin;
   const results = await Promise.allSettled([sendTelegram(lead, env, origin), sendLeadEmail(lead, env, origin)]);
