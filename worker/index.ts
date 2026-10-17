@@ -90,7 +90,7 @@ function spamReasons(input: Record<string, unknown>, lead: Lead): string[] {
   if (typeof input.website === 'string' && input.website) reasons.push('honeypot');
   if (typeof input._js !== 'string' || !input._js.startsWith('sg-')) reasons.push('no_js');
   const elapsed = Number(input._elapsed);
-  if (!Number.isFinite(elapsed) || elapsed < 3000) reasons.push('too_fast');
+  // Do not reject legitimate fast submissions; retain JS marker and honeypot checks.
   if (URL_RE.test(lead.name) || URL_RE.test(lead.comment ?? '')) reasons.push('link');
   if (lead.name.length < 2) reasons.push('bad_name');
   if (/[\u4e00-\u9fff]/.test(lead.name + (lead.comment ?? ''))) reasons.push('cjk');
@@ -211,17 +211,17 @@ async function handleLead(request: Request, env: Env): Promise<Response> {
   const origin0 = request.headers.get('origin');
   if (origin0 && new URL(origin0).host !== new URL(request.url).host) reasons.push('foreign_origin');
   if (reasons.length) {
-    console.log('lead dropped as spam', reasons.join(','), lead.phone);
+    console.log('lead dropped as spam', reasons.join(','));
     return json({ ok: true });
   }
   const phone = normalisePhone(lead.phone);
   if (!phone) return json({ ok: false, error: 'invalid_phone' }, 400);
   lead.phone = phone;
 
-  // Rate limit per visitor IP (3 leads / minute).
+  // Rate limit per visitor IP (5 leads / minute).
   const ip = request.headers.get('cf-connecting-ip') ?? 'unknown';
   if (env.LEAD_LIMITER && !(await env.LEAD_LIMITER.limit({ key: ip })).success) {
-    console.log('lead rate-limited', ip);
+    console.log('lead rate-limited');
     return json({ ok: false, error: 'too_many_requests' }, 429);
   }
 
