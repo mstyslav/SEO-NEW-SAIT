@@ -7,7 +7,7 @@
  * POST /api/kommo-lead (and /api/lead) — the endpoint used by every `[data-lead-form]`
  * (public/js/forms.js). The lead is delivered to every configured channel:
  *   1. Telegram group   — secrets TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
- *   2. E-mail           — optional Resend API (verified sender + secrets)
+ *   2. E-mail           — optional Resend API (requires verified sender and secrets)
  *   3. Kommo CRM        — (next step)
  * The request succeeds if at least one channel accepted the lead.
  *
