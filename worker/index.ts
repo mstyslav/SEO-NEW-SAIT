@@ -154,27 +154,65 @@ function telegramText(lead: Lead, origin: string): string {
   return lines.filter((l) => l !== undefined && l !== false).join('\n').slice(0, MAX);
 }
 
-async function sendTelegram(lead: Lead, env: Env, origin: string): Promise<boolean> {
+/**
+ * Telegram can migrate a basic group to a supergroup, invalidating the old chat ID.
+ * Telegram supplies parameters.migrate_to_chat_id in the failed API response.
+ * Retry once with that ID for both messages and attachments, without logging tokens.
+ * This is an in-request fallback; update TELEGRAM_CHAT_ID in Cloudflare for permanence.
+ */
+let migratedChatId: string | undefined;
+
+async function telegramPost(
+  method: 'sendMessage' | 'sendDocument',
+  env: Env,
+  buildBody: (chatId: string) => BodyInit,
+  headers?: HeadersInit
+): Promise<boolean> {
   if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return false;
-  const response = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text: telegramText(lead, origin), parse_mode: 'HTML', disable_web_page_preview: true })
-  });
-  if (!response.ok) console.error('telegram', response.status, await response.text());
-  return response.ok;
+  const endpoint = `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${method}`;
+  const initialId = migratedChatId ?? env.TELEGRAM_CHAT_ID;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const chatId = attempt === 0 ? initialId : migratedChatId!;
+    let response: Response;
+    try {
+      response = await fetch(endpoint, { method: 'POST', headers, body: buildBody(chatId) });
+    } catch (error) {
+      console.error('telegram transport error', method, String(error));
+      return false;
+    }
+    if (response.ok) return true;
+    let payload: { description?: string; parameters?: { migrate_to_chat_id?: number | string } } = {};
+    try { payload = await response.json(); } catch { /* invalid Telegram response */ }
+    const newId = payload.parameters?.migrate_to_chat_id;
+    if (attempt === 0 && response.status === 400 && newId && /^-?\\d+$/.test(String(newId)) && String(newId) !== chatId) {
+      migratedChatId = String(newId);
+      console.warn('telegram group migrated; retrying with new chat ID', migratedChatId);
+      continue;
+    }
+    console.error('telegram delivery failed', method, response.status, payload.description ?? 'unknown');
+    return false;
+  }
+  return false;
 }
 
-/** Sends the attachment as a document reply under the lead message. */
+async function sendTelegram(lead: Lead, env: Env, origin: string): Promise<boolean> {
+  return telegramPost('sendMessage', env, (chatId) => JSON.stringify({
+    chat_id: chatId,
+    text: telegramText(lead, origin),
+    parse_mode: 'HTML',
+    disable_web_page_preview: true
+  }), { 'content-type': 'application/json' });
+}
+
+/** Sends the attachment as a document after the lead message. */
 async function sendTelegramFile(file: File, lead: Lead, env: Env): Promise<boolean> {
-  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return false;
-  const form = new FormData();
-  form.append('chat_id', env.TELEGRAM_CHAT_ID);
-  form.append('caption', `📎 Файл до заявки: ${lead.name}, ${lead.phone}`.slice(0, 1000));
-  form.append('document', file, file.name.replace(/[\r\n"]/g, '_').slice(0, 120) || 'file');
-  const response = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendDocument`, { method: 'POST', body: form });
-  if (!response.ok) console.error('telegram file', response.status, await response.text());
-  return response.ok;
+  return telegramPost('sendDocument', env, (chatId) => {
+    const form = new FormData();
+    form.append('chat_id', chatId);
+    form.append('caption', `📎 Файл до заявки: ${lead.name}, ${lead.phone}`.slice(0, 1000));
+    form.append('document', file, file.name.replace(/[\\r\\n"]/g, '_').slice(0, 120) || 'file');
+    return form;
+  });
 }
 
 /** Optional independent email delivery. Requires verified sender domain and Resend API key. */
