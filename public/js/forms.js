@@ -14,6 +14,8 @@ const root=document.documentElement;
 const MARKET=(root.dataset.market||'UA').toUpperCase();
 const CALL_TEL=root.dataset.contactCall||'';
 const CONTACT_EMAIL=root.dataset.contactEmail||'info@space-glass.com.ua';
+const CALL_SHOWN=root.dataset.contactPhoneDisplay||'';
+const WHATSAPP=root.dataset.contactWhatsapp||'';
 const PAGE_LANG=(root.lang||pageLang).slice(0,5);
 const TI={
   en:{title:'Thank you',title2:'Request sent',text:'Our manager will contact you during business hours to clarify the details and prepare a quote.',product:'Request',ok:'OK',call:'Call us',close:'Close',
@@ -66,6 +68,8 @@ const productCategory=form=>{const field=form.querySelector('input[type="hidden"
 // touched / a form is submitted) so it never competes with the hero image, the validation
 // utils (~60 KB gz) on the first interaction with it. The number is sent in E.164
 // (+380671234567); the Worker validates it again (worker/index.ts → normalisePhone).
+// A market with its own phone (Austria): messages print that number instead of the company one.
+if(CALL_SHOWN&&T.error){T.error=T.error.replace(/\+380 73 425 14 00|\+38 \(073\) 425 14 00/,CALL_SHOWN);}
 // No callable phone for this market (Austria until its own number exists): offer the e-mail instead of the company phone.
 if(!CALL_TEL){const ERR_MAIL={uk:'Не вдалося надіслати онлайн. Напишіть на '+CONTACT_EMAIL+' або спробуйте ще раз.',ru:'Не удалось отправить онлайн. Напишите на '+CONTACT_EMAIL+' или попробуйте ещё раз.',en:'The request could not be sent online. Please write to '+CONTACT_EMAIL+' or try again.',de:'Die Anfrage konnte nicht online gesendet werden. Schreiben Sie uns an '+CONTACT_EMAIL+' oder versuchen Sie es erneut.',es:'No se ha podido enviar la solicitud en línea. Escríbanos a '+CONTACT_EMAIL+' o inténtelo de nuevo.'};T.error=ERR_MAIL[pageLang]||ERR_MAIL.uk;}
 const PHONE_ERROR=TI[pageLang]?TI[pageLang].phone:isRu?'Проверьте номер телефона и код страны.':'Перевірте номер телефону та код країни.';
@@ -230,7 +234,7 @@ function showSuccess(payload){
 <div class="sg-success__icon"><svg viewBox="0 0 40 40"><path d="M10 21l7 7 14-15"/></svg></div>
 <p class="sg-success__eyebrow">${T.title2}</p><h2 id="sg-success-title">${T.title}${first?', '+escHtml(first):''}!</h2>
 <p>${payload.kind==='job'?T.jobText:T.text}</p>${payload.product?`<span class="sg-success__product">${T.product}: ${escHtml(payload.product)}</span>`:''}
-<div class="sg-success__actions"><button type="button" class="button button--mint" data-close>${T.ok}</button>${CALL_TEL?`<a class="button button--outline" href="tel:${escHtml(CALL_TEL)}">${T.call}</a>`:T.moreHref?`<a class="button button--outline" href="${T.moreHref}">${T.more}</a>`:''}</div></div>`;
+<div class="sg-success__actions"><button type="button" class="button button--mint" data-close>${T.ok}</button>${CALL_TEL?`<a class="button button--outline" href="tel:${escHtml(CALL_TEL)}">${T.call}</a>`:T.moreHref?`<a class="button button--outline" href="${T.moreHref}">${T.more}</a>`:''}${WHATSAPP?`<a class="button button--outline" href="${escHtml(WHATSAPP)}" target="_blank" rel="noopener noreferrer">WhatsApp</a>`:''}</div></div>`;
   const prevFocus=document.activeElement;
   const close=()=>{wrap.classList.remove('is-open');document.removeEventListener('keydown',onKey);setTimeout(()=>wrap.remove(),250);prevFocus&&prevFocus.focus&&prevFocus.focus();};
   const onKey=e=>{if(e.key==='Escape')close();};

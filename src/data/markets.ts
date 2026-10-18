@@ -130,13 +130,14 @@ export const MARKETS: Record<MarketCode, Market> = {
     // No public office / showroom in Austria — do not add one without the owner's confirmation.
     offices: [],
     contact: {
-      phone: null, // NEEDS INPUT — AUSTRIA PHONE (+43…)
-      whatsapp: null, // NEEDS INPUT — AUSTRIA WHATSAPP (only a number confirmed to work in WhatsApp)
-      email: null, // NEEDS INPUT — AUSTRIA EMAIL (until then the company e-mail is used via contactFallback)
-      telegram: null
+      // Confirmed by the owner (2026-10-18): the Austrian line answers in German; the same number is on WhatsApp.
+      phone: { e164: '+4367764336327', display: '+43 677 64336327' },
+      whatsapp: '+4367764336327', // wa.me/4367764336327
+      email: 'info@space-glass.com.ua', // same company mailbox
+      telegram: null // not offered for Austria; the company Telegram is used via contactFallback
     },
     contactFallback: 'UA',
-    languages: [], // NEEDS INPUT — add 'de' only once a German-speaking contact is confirmed (it becomes ContactPoint.availableLanguage)
+    languages: ['de'], // ContactPoint.availableLanguage: the Austrian line is German-speaking (confirmed by the owner)
     label: { uk: 'Австрія', ru: 'Австрия', en: 'Austria', de: 'Österreich', es: 'Austria' },
     note: {
       uk: 'Для об’єктів в Австрії надішліть фото, розміри або креслення — підготуємо попередній розрахунок.',

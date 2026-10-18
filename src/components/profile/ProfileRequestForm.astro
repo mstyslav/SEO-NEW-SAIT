@@ -100,6 +100,7 @@ const marketContact = (Astro.locals as { marketContacts?: import('../data/market
 const contactPhone = marketContact?.phone ?? null;
 const callable = Boolean(contactPhone) && !marketContact?.fallback.includes('phone');
 const contactEmail = marketContact?.email ?? 'info@space-glass.com.ua';
+const whatsappLink = marketContact?.whatsapp ? `https://wa.me/${marketContact.whatsapp.replace(/\D/g, '')}` : null;
 const phoneLabel = contactPhone && !marketContact?.phoneIsCompany ? contactPhone.display : ['en', 'de', 'es'].includes(locale) ? '+380 73 425 14 00' : '+38 (073) 425 14 00';
 ---
 <section id={id} class="profile-request" aria-labelledby={`${id}-title`}>
@@ -110,7 +111,7 @@ const phoneLabel = contactPhone && !marketContact?.phoneIsCompany ? contactPhone
     <ul class="profile-request__points">
       {L.points.map((point) => <li>{point}</li>)}
     </ul>
-    <p class="profile-request__phone">{callable ? L.call : L.write} {callable ? <a href={`tel:${contactPhone!.e164}`}>{phoneLabel}</a> : <a href={`mailto:${contactEmail}`}>{contactEmail}</a>}</p>
+    <p class="profile-request__phone">{callable ? L.call : L.write} {callable ? <a href={`tel:${contactPhone!.e164}`}>{phoneLabel}</a> : <a href={`mailto:${contactEmail}`}>{contactEmail}</a>}{whatsappLink && <> · <a href={whatsappLink} target="_blank" rel="noopener noreferrer">WhatsApp</a></>}</p>
   </div>
 
   <form class="quote-form contacts-v15-form profile-request__form" data-lead-form data-success-url="/thank-you/">
