@@ -10,6 +10,10 @@ import Header from '../Header.astro';
 import Footer from '../Footer.astro';
 import FAQBlock from '../FAQBlock.astro';
 import ProjectRequestForm from '../projects/ProjectRequestForm.astro';
+// Not rendered here: the UA case pages load the related-card and request-form styles (projects-common.css,
+// project-detail-v2.css) through ProjectDetail, which src/pages/project/[slug].astro imports next to the
+// premium template. Importing it keeps the same stylesheet chunks (and critical CSS) for EN/DE/ES.
+import '../projects/ProjectDetail.astro';
 import IntlProjectCard from './IntlProjectCard.astro';
 import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
 import { INTL_CASES, intlHref, type IntlLocale } from '../../i18n/intl-routes';
@@ -71,7 +75,7 @@ const heroMeta = [c.city, c.objectType].filter(Boolean);
 const serviceHref = intlHref(c.service.hubId, locale);
 const serviceLabel = hubCopy[locale][c.service.hubId].name;
 
-const related = INTL_CASES.filter((item) => item.id !== caseId).slice(0, 3).map((item) => {
+const related = INTL_CASES.filter((item) => item.id !== caseId).slice(0, 5).map((item) => {
   const data = projects.find(({ data: p }) => p.slug === item.ukSlug)!.data;
   const text = caseCopy[locale][item.id];
   return { href: intlHref(`case:${item.id}`, locale), cover: data.cover, alt: text.coverAlt, title: text.cardTitle, city: text.city, categoryLabel: text.categoryLabel, constructionType: text.constructionType, shortDescription: text.shortDescription };

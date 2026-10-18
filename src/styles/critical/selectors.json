@@ -2797,7 +2797,7 @@
     ]
    }
   },
-  "BaseLayout+Footer+select-related-projects": {
+  "BaseLayout+Footer+ProjectDetail": {
    "pages": 41,
    "selectors": {
     "BaseLayout": [
@@ -2973,7 +2973,7 @@
      ".simple-catalog__menu[data-astro-cid-nen7h5rs] a[data-astro-cid-nen7h5rs]:focus-visible",
      ".simple-catalog__menu[data-astro-cid-nen7h5rs] a[data-astro-cid-nen7h5rs]:hover"
     ],
-    "select-related-projects": [
+    "ProjectDetail": [
      ".project-detail-v2__breadcrumbs[data-astro-cid-aih2bczu]",
      ".project-detail-v2__breadcrumbs[data-astro-cid-aih2bczu] a[data-astro-cid-aih2bczu]",
      ".project-detail-v2__breadcrumbs[data-astro-cid-aih2bczu] a[data-astro-cid-aih2bczu]:hover",
