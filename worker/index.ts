@@ -49,6 +49,8 @@ type Lead = {
   estimatedPrice?: string;
   page?: string;
   locale?: string;
+  /** Market of the page (UA, AT, … — src/data/markets.ts), sent by public/js/forms.js. */
+  market?: string;
   options?: string;
   createdAt?: string;
   /** 'job' = vacancy application from /about/ (not a sales lead). */
@@ -107,7 +109,7 @@ function parseLead(input: Record<string, unknown>): Lead | null {
   if (!name || !phone) return null;
   const page = str(input.page, 300) ?? (typeof input.source === 'string' && input.source.startsWith('/') ? str(input.source, 300) : undefined);
   // Any extra select the form had (e.g. «Система», «Ваш бізнес») arrives under its own name.
-  const known = new Set(['name', 'phone', 'email', 'city', 'comment', 'message', 'product', 'configuration', 'estimatedPrice', 'page', 'source', 'locale', 'createdAt', 'consent', 'website', '_elapsed', '_h', '_js', 'kind', 'job', 'attachment']);
+  const known = new Set(['name', 'phone', 'email', 'city', 'comment', 'message', 'product', 'configuration', 'estimatedPrice', 'page', 'source', 'locale', 'market', 'createdAt', 'consent', 'website', '_elapsed', '_h', '_js', 'kind', 'job', 'attachment']);
   const options = Object.entries(input)
     .filter(([key, value]) => !known.has(key) && typeof value === 'string' && value.trim())
     .map(([key, value]) => `${key}: ${String(value).trim().slice(0, 200)}`)
@@ -123,6 +125,7 @@ function parseLead(input: Record<string, unknown>): Lead | null {
     estimatedPrice: str(input.estimatedPrice, 60),
     page,
     locale: str(input.locale, 5),
+    market: typeof input.market === 'string' && /^[A-Z]{2}$/.test(input.market) ? input.market : undefined,
     options: options || undefined,
     createdAt: str(input.createdAt, 40),
     kind: input.kind === 'job' ? 'job' : undefined,
@@ -149,7 +152,7 @@ function telegramText(lead: Lead, origin: string): string {
     lead.estimatedPrice && `💰 ${esc(lead.estimatedPrice)}`,
     '',
     lead.page && `🔗 ${esc(origin + lead.page)}`,
-    `🕒 ${time}${lead.locale && ['ru', 'en', 'de', 'es'].includes(lead.locale) ? ` · ${lead.locale.toUpperCase()}` : ''}`
+    `🕒 ${time}${lead.locale && ['ru', 'en', 'de', 'es'].includes(lead.locale) ? ` · ${lead.locale.toUpperCase()}` : ''}${lead.market && lead.market !== 'UA' ? ` · ринок ${lead.market}` : ''}`
   ];
   return lines.filter((l) => l !== undefined && l !== false).join('\n').slice(0, MAX);
 }

@@ -32,13 +32,16 @@ interface Props {
   errorPage?: boolean;
   /** Person nodes added as `founder` of the #organization node on this page only. */
   organizationFounders?: import('../seo/schema').JsonLdObject[];
+  /** Market of the page (src/data/markets.ts); default = the language's market (de → AT, everything else → UA). */
+  market?: import('../data/markets').MarketCode;
 }
 
-const { title: rawTitle, description: rawDescription, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, heroPreloadMobileMaxWidth = 900, robots, mainEntityId, errorPage = false, organizationFounders = [] } = Astro.props;
+const { title: rawTitle, description: rawDescription, locale, image = '/images/v5/hero.webp', schemaType = 'WebPage', structuredData = [], alternateLocales, heroPreloadSrc, heroPreloadSrcset, heroPreloadSizes, heroPreloadMobileSrc, heroPreloadMobileSrcset, heroPreloadMobileMaxWidth = 900, robots, mainEntityId, errorPage = false, organizationFounders = [], market } = Astro.props;
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales, hasLocalizedRoute, isIntlLocale } from '../i18n/helpers';
 import { intlDeOnlyFallback, intlLocales } from '../i18n/intl-routes';
 import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
+import { resolveMarket, marketContacts } from '../data/markets';
 
 /**
  * Keep search snippets inside the agreed SEO limits without touching H1/body copy.
@@ -73,6 +76,14 @@ const description = fitSeoText(rawDescription, 155, 'description');
 
 const resolvedLocale = normalizeLocale(locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
 const basePath = stripLocale(Astro.url.pathname);
+// Market of the page (≠ language): contacts, schema and the market sent with every lead. Header/Footer (rendered
+// inside this layout's slot) read the contacts from Astro.locals instead of importing the market config.
+const pageMarket = resolveMarket(resolvedLocale, market);
+const pageContacts = marketContacts(pageMarket);
+(Astro.locals as { marketContacts?: typeof pageContacts }).marketContacts = pageContacts;
+// A callable phone is offered only when it is the market's own (or the base market's) number — not when an
+// Austrian page would borrow the Ukrainian company phone until an Austrian number exists.
+const callPhone = pageContacts.phone && !pageContacts.fallback.includes('phone') ? pageContacts.phone.e164 : undefined;
 const origin = Astro.site ?? Astro.url.origin;
 const canonical = new URL(localizedPath(basePath, resolvedLocale), origin);
 const socialImage = new URL(image, origin);
@@ -98,7 +109,7 @@ const pageSchema = webPageSchema({
 });
 const extraStructuredData = Array.isArray(structuredData) ? structuredData : [structuredData];
 const schema = jsonLdGraph([
-  organizationSchema(origin, organizationFounders, resolvedLocale),
+  organizationSchema(origin, organizationFounders, pageMarket),
   websiteSchema(origin, resolvedLocale),
   ...(errorPage ? [] : [pageSchema]),
   ...extraStructuredData
@@ -120,7 +131,7 @@ import ScrollProgress from '../components/ScrollProgress.astro';
 // into Russian on the same URL; the RU version is a separate /ru/ page.
 ---
 <!doctype html>
-<html lang={resolvedLocale} translate="no">
+<html lang={resolvedLocale} translate="no" data-market={pageMarket.code} data-contact-call={callPhone} data-contact-email={pageContacts.email ?? undefined}>
   <head>
     <meta charset="UTF-8" />
     <meta name="google" content="notranslate" />
@@ -194,7 +205,7 @@ import ScrollProgress from '../components/ScrollProgress.astro';
     </script>
     <CookieConsent locale={resolvedLocale} />
     <script src="/js/i18n-client.js?v=langs-20261016" defer></script>
-    <script src="/js/forms.js?v=langs-20261016" defer></script>
+    <script src="/js/forms.js?v=market-20261018" defer></script>
       <ScrollProgress />
   </body>
 </html>

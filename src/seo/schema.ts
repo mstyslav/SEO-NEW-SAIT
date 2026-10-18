@@ -1,3 +1,5 @@
+import { MARKETS, marketContacts, type Market } from '../data/markets';
+
 export type JsonLdValue = string | number | boolean | null | JsonLdObject | JsonLdValue[];
 export type JsonLdObject = { [key: string]: JsonLdValue };
 
@@ -7,9 +9,10 @@ export const LOGO_PATH = '/images/space-glass-logo.png';
 
 // Company facts for structured data. Only what the site itself publishes (contacts page, footer):
 // one phone and e-mail for all offices, and the social profiles that open. No legal name, postal
-// codes or coordinates are published, so none are marked up.
-export const COMPANY_PHONE = '+380734251400';
-export const COMPANY_EMAIL = 'info@space-glass.com.ua';
+// codes or coordinates are published, so none are marked up. Phone/e-mail come from the market config
+// (src/data/markets.ts): the company-wide channels are the Ukrainian ones.
+export const COMPANY_PHONE = MARKETS.UA.contact.phone!.e164;
+export const COMPANY_EMAIL = MARKETS.UA.contact.email!;
 export const COMPANY_SAME_AS = [
   'https://www.instagram.com/spaceglass_od/',
   'https://t.me/spaceglass',
@@ -22,11 +25,12 @@ export const organizationId = (origin: string | URL) => `${absoluteUrl('/', orig
 export const absoluteUrl = (pathOrUrl: string | URL, origin: string | URL) => new URL(pathOrUrl, origin).href;
 
 // Founders are marked up only where the page itself shows them (the About team section), not sitewide.
-export function organizationSchema(origin: string | URL, founders: JsonLdObject[] = [], locale?: string): JsonLdObject {
+export function organizationSchema(origin: string | URL, founders: JsonLdObject[] = [], market: Market = MARKETS.UA): JsonLdObject {
   const siteUrl = absoluteUrl('/', origin);
-  // German pages target Austria: the service area is Austria (Wien). No availableLanguage on the contact
-  // point — that would claim German-speaking support, which is not confirmed. No address, no local business.
-  const de = locale === 'de';
+  // The page's market decides the contact point and the service area. A market without an office (Austria)
+  // is a service area of the same organization: no address, no LocalBusiness, and no availableLanguage
+  // until the market lists a confirmed contact language (market.languages).
+  const contacts = marketContacts(market);
   return {
     '@type': 'Organization',
     '@id': `${siteUrl}#organization`,
@@ -42,12 +46,12 @@ export function organizationSchema(origin: string | URL, founders: JsonLdObject[
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
-      telephone: COMPANY_PHONE,
-      email: COMPANY_EMAIL,
-      areaServed: de ? 'AT' : 'UA',
-      ...(de ? {} : { availableLanguage: ['uk', 'ru'] })
+      telephone: contacts.phone?.e164 ?? COMPANY_PHONE,
+      email: contacts.email ?? COMPANY_EMAIL,
+      areaServed: market.countryCode,
+      ...(market.languages.length ? { availableLanguage: market.languages } : {})
     },
-    areaServed: de ? [{ '@type': 'Country', name: 'Österreich' }, { '@type': 'City', name: 'Wien' }] : { '@type': 'Country', name: 'Ukraine' },
+    areaServed: market.schemaCity ? [{ '@type': 'Country', name: market.schemaCountry }, { '@type': 'City', name: market.schemaCity }] : { '@type': 'Country', name: market.schemaCountry },
     sameAs: COMPANY_SAME_AS,
     ...(founders.length ? { founder: founders } : {})
   };
@@ -140,7 +144,7 @@ export function jsonLdGraph(nodes: Array<JsonLdObject | null | undefined>): Json
 /** Office (branch) of the organization as shown on the contacts page: same business, one node per address. */
 export function officeSchema(
   origin: string | URL,
-  office: { id: string; city: string; streetAddress: string; url: string }
+  office: { id: string; city: string; streetAddress: string; url: string; countryCode?: string }
 ): JsonLdObject {
   return {
     '@type': 'HomeAndConstructionBusiness',
@@ -155,7 +159,7 @@ export function officeSchema(
       '@type': 'PostalAddress',
       streetAddress: office.streetAddress,
       addressLocality: office.city,
-      addressCountry: 'UA'
+      addressCountry: office.countryCode ?? 'UA'
     },
     areaServed: { '@type': 'City', name: office.city },
     openingHoursSpecification: {

@@ -7,6 +7,14 @@ let humanSignal=false;
 // Language comes from the URL: /ru/ /en/ /de/ /es/ prefixes, everything else = UA.
 const pageLang=(location.pathname.match(/^\/(ru|en|de|es)(?=\/|$)/)||[])[1]||'uk';
 const isRu=pageLang==='ru';
+// Market of the page (BaseLayout <html data-market>, src/data/markets.ts): sent with every lead next to the page
+// language and the source URL; its contacts decide whether the call button / phone in messages is offered.
+// The market is NOT the phone-input country: that follows the page LANGUAGE (see initialCountry below).
+const root=document.documentElement;
+const MARKET=(root.dataset.market||'UA').toUpperCase();
+const CALL_TEL=root.dataset.contactCall||'';
+const CONTACT_EMAIL=root.dataset.contactEmail||'info@space-glass.com.ua';
+const PAGE_LANG=(root.lang||pageLang).slice(0,5);
 const TI={
   en:{title:'Thank you',title2:'Request sent',text:'Our manager will contact you during business hours to clarify the details and prepare a quote.',product:'Request',ok:'OK',call:'Call us',close:'Close',
     jobText:'We have received your application and will contact you to discuss the details.',
@@ -58,6 +66,8 @@ const productCategory=form=>{const field=form.querySelector('input[type="hidden"
 // touched / a form is submitted) so it never competes with the hero image, the validation
 // utils (~60 KB gz) on the first interaction with it. The number is sent in E.164
 // (+380671234567); the Worker validates it again (worker/index.ts → normalisePhone).
+// No callable phone for this market (Austria until its own number exists): offer the e-mail instead of the company phone.
+if(!CALL_TEL){const ERR_MAIL={uk:'Не вдалося надіслати онлайн. Напишіть на '+CONTACT_EMAIL+' або спробуйте ще раз.',ru:'Не удалось отправить онлайн. Напишите на '+CONTACT_EMAIL+' или попробуйте ещё раз.',en:'The request could not be sent online. Please write to '+CONTACT_EMAIL+' or try again.',de:'Die Anfrage konnte nicht online gesendet werden. Schreiben Sie uns an '+CONTACT_EMAIL+' oder versuchen Sie es erneut.',es:'No se ha podido enviar la solicitud en línea. Escríbanos a '+CONTACT_EMAIL+' o inténtelo de nuevo.'};T.error=ERR_MAIL[pageLang]||ERR_MAIL.uk;}
 const PHONE_ERROR=TI[pageLang]?TI[pageLang].phone:isRu?'Проверьте номер телефона и код страны.':'Перевірте номер телефону та код країни.';
 const ITI_BASE='/vendor/intl-tel-input-29.5.3/';
 const PHONE_COUNTRIES=['ua','at','it','de','pl','es','cz','sk','fr','ch','md','ro'];
@@ -220,7 +230,7 @@ function showSuccess(payload){
 <div class="sg-success__icon"><svg viewBox="0 0 40 40"><path d="M10 21l7 7 14-15"/></svg></div>
 <p class="sg-success__eyebrow">${T.title2}</p><h2 id="sg-success-title">${T.title}${first?', '+escHtml(first):''}!</h2>
 <p>${payload.kind==='job'?T.jobText:T.text}</p>${payload.product?`<span class="sg-success__product">${T.product}: ${escHtml(payload.product)}</span>`:''}
-<div class="sg-success__actions"><button type="button" class="button button--mint" data-close>${T.ok}</button>${T.moreHref?`<a class="button button--outline" href="${T.moreHref}">${T.more}</a>`:`<a class="button button--outline" href="tel:+380734251400">${T.call}</a>`}</div></div>`;
+<div class="sg-success__actions"><button type="button" class="button button--mint" data-close>${T.ok}</button>${CALL_TEL?`<a class="button button--outline" href="tel:${escHtml(CALL_TEL)}">${T.call}</a>`:T.moreHref?`<a class="button button--outline" href="${T.moreHref}">${T.more}</a>`:''}</div></div>`;
   const prevFocus=document.activeElement;
   const close=()=>{wrap.classList.remove('is-open');document.removeEventListener('keydown',onKey);setTimeout(()=>wrap.remove(),250);prevFocus&&prevFocus.focus&&prevFocus.focus();};
   const onKey=e=>{if(e.key==='Escape')close();};
@@ -257,6 +267,8 @@ document.querySelectorAll('[data-lead-form]').forEach(form=>{
     const payload=Object.fromEntries([...data.entries()].filter(([,v])=>typeof v==='string'));
     form.querySelectorAll('input[type="tel"][name="phone"]').forEach(input=>{const number=phoneValue(input); if(number) payload.phone=number;});
     payload.source=location.pathname; payload.createdAt=new Date().toISOString();
+    // Market + language of the page the lead came from (source = page path).
+    payload.market=MARKET; if(!payload.locale) payload.locale=PAGE_LANG;
     payload._elapsed=String(Date.now()-openedAt); payload._h=humanSignal?'1':'0'; payload._js='sg-'+(openedAt%9973);
     // Analytics context is read before form.reset() — it never includes what the visitor typed.
     const info=formInfo(form); const category=productCategory(form);

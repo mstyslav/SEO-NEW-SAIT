@@ -190,3 +190,23 @@
     font-size: 12px;
   }
 }
+
+/* Markets row under the map (src/data/markets.ts): offices = red dot like the map markers,
+   service area without an office (Austria) = mint ring — never an office marker. */
+.contacts-markets { grid-column:1 / -1; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:14px; }
+.contacts-market { display:flex; flex-direction:column; min-width:0; padding:clamp(22px, 2.6vw, 30px); border:1px solid #c4dfd3; border-radius:20px; background:#fff; }
+.contacts-market--area { background:linear-gradient(120deg, #fbfefd, #f0faf5); border-color:#b8ddce; }
+.contacts-market__kind { display:flex; align-items:center; gap:9px; margin:0 0 12px; color:#277d65; font-size:11px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }
+.contacts-market__dot { flex:0 0 auto; width:10px; height:10px; border-radius:50%; background:#cb3e3e; box-shadow:0 0 0 2px #fff, 0 0 0 3px rgba(203, 62, 62, .25); }
+.contacts-market--area .contacts-market__dot { background:transparent; border:2px solid #3c9c7c; box-shadow:0 0 0 4px rgba(117, 191, 165, .22); }
+.contacts-market h3 { margin:0; font-size:clamp(1.35rem, 2vw, 1.75rem); line-height:1.1; letter-spacing:-.03em; }
+.contacts-market p:not(.contacts-market__kind) { margin:10px 0 0; color:#5b6861; font-size:15px; line-height:1.55; }
+.contacts-market__actions { display:flex; flex-wrap:wrap; gap:10px 18px; margin-top:auto; padding-top:18px; }
+.contacts-market__actions a { display:inline-flex; align-items:center; min-height:24px; color:#1b2923; font-size:14px; font-weight:700; text-decoration:none; overflow-wrap:anywhere; }
+.contacts-market__actions a:hover, .contacts-market__actions a:focus-visible { color:#21775f; text-decoration:underline; text-underline-offset:3px; }
+.contacts-market__actions .contacts-market__cta { color:#237a62; }
+.contacts-market__actions .contacts-market__cta::after { content:"→"; margin-left:6px; }
+@media (max-width: 620px) {
+  .contacts-markets { gap:12px; }
+  .contacts-market { padding:22px 20px; }
+}

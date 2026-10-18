@@ -47,6 +47,7 @@ const L = {
     eyebrow: 'Заявка з цієї сторінки',
     points: ['Відповімо протягом робочого дня', { glazing: 'Підберемо систему та склопакет', glass: 'Підберемо конструкцію, скло та фурнітуру', generic: 'Підберемо рішення під ваш проріз' }[family], 'Попередній розрахунок — безкоштовно'],
     call: 'Або телефонуйте:',
+    write: 'Або напишіть нам:',
     name: 'Ім’я', namePh: 'Ваше ім’я', phone: 'Телефон', city: 'Місто', cityPh: 'Київ, Одеса, Львів...',
     comment: 'Коментар', undecided: 'Ще не визначились — допоможіть обрати', option: 'Система',
     commentPh: 'Розміри прорізів, кількість виробів, побажання щодо кольору чи скла',
@@ -56,6 +57,7 @@ const L = {
     eyebrow: 'Заявка с этой страницы',
     points: ['Ответим в течение рабочего дня', { glazing: 'Подберём систему и стеклопакет', glass: 'Подберём конструкцию, стекло и фурнитуру', generic: 'Подберём решение под ваш проём' }[family], 'Предварительный расчёт — бесплатно'],
     call: 'Или звоните:',
+    write: 'Или напишите нам:',
     name: 'Имя', namePh: 'Ваше имя', phone: 'Телефон', city: 'Город', cityPh: 'Киев, Одесса, Львов...',
     comment: 'Комментарий', undecided: 'Ещё не определились — помогите выбрать', option: 'Система',
     commentPh: 'Размеры проёмов, количество изделий, пожелания по цвету или стеклу',
@@ -65,6 +67,7 @@ const L = {
     eyebrow: 'Request from this page',
     points: ['We reply within one business day', { glazing: 'We select the system and glazing unit', glass: 'We select the design, glass and hardware', generic: 'We find a solution for your opening' }[family], 'Preliminary quote — free of charge'],
     call: 'Or call us:',
+    write: 'Or write to us:',
     name: 'Name', namePh: 'Your name', phone: 'Phone', city: 'City / country', cityPh: 'City, country',
     comment: 'Message', undecided: 'Not sure yet — please advise', option: 'System',
     commentPh: 'Opening sizes, number of items, glass or colour preferences',
@@ -73,7 +76,8 @@ const L = {
   de: {
     eyebrow: 'Anfrage von dieser Seite',
     points: ['Antwort innerhalb eines Werktags', { glazing: 'Wir wählen System und Isolierglas aus', glass: 'Wir wählen Konstruktion, Glas und Beschläge aus', generic: 'Wir finden die Lösung für Ihre Öffnung' }[family], 'Unverbindliche Kostenschätzung — kostenlos'],
-    call: 'Oder schreiben Sie uns:',
+    call: 'Oder rufen Sie an:',
+    write: 'Oder schreiben Sie uns:',
     name: 'Name', namePh: 'Ihr Name', phone: 'Telefon', city: 'Ort / Land', cityPh: 'Ort, Land',
     comment: 'Nachricht', undecided: 'Noch unentschlossen — bitte beraten', option: 'System',
     commentPh: 'Maße der Öffnungen, Stückzahl, Wünsche zu Glas oder Farbe',
@@ -83,13 +87,20 @@ const L = {
     eyebrow: 'Solicitud desde esta página',
     points: ['Respondemos en un día laborable', { glazing: 'Elegimos el sistema y el doble acristalamiento', glass: 'Elegimos el diseño, el vidrio y los herrajes', generic: 'Buscamos la solución para su hueco' }[family], 'Presupuesto orientativo gratuito'],
     call: 'O llámenos:',
+    write: 'O escríbanos:',
     name: 'Nombre', namePh: 'Su nombre', phone: 'Teléfono', city: 'Ciudad / país', cityPh: 'Ciudad, país',
     comment: 'Mensaje', undecided: 'Aún no lo tengo claro — necesito consejo', option: 'Sistema',
     commentPh: 'Medidas de los huecos, número de unidades, preferencias de vidrio o color',
     consent: 'Acepto la', policy: 'política de privacidad', submit: 'Enviar solicitud', policyHref: intlHref('privacy', 'es')
   }
-}[locale] as { eyebrow: string; points: string[]; call: string; name: string; namePh: string; phone: string; city: string; cityPh: string; comment: string; undecided: string; option: string; commentPh: string; consent: string; policy: string; submit: string; policyHref: string; consentAfter?: string };
-const phoneLabel = ['en', 'de', 'es'].includes(locale) ? '+380 73 425 14 00' : '+38 (073) 425 14 00';
+}[locale] as { eyebrow: string; points: string[]; call: string; write: string; name: string; namePh: string; phone: string; city: string; cityPh: string; comment: string; undecided: string; option: string; commentPh: string; consent: string; policy: string; submit: string; policyHref: string; consentAfter?: string };
+// Phone line follows the page MARKET (src/data/markets.ts via locals): a market that only borrows the company
+// phone (Austria until its own number exists) gets an e-mail line instead; a callable phone keeps the old line.
+const marketContact = (Astro.locals as { marketContacts?: import('../data/markets').ResolvedContacts }).marketContacts;
+const contactPhone = marketContact?.phone ?? null;
+const callable = Boolean(contactPhone) && !marketContact?.fallback.includes('phone');
+const contactEmail = marketContact?.email ?? 'info@space-glass.com.ua';
+const phoneLabel = contactPhone && !marketContact?.phoneIsCompany ? contactPhone.display : ['en', 'de', 'es'].includes(locale) ? '+380 73 425 14 00' : '+38 (073) 425 14 00';
 ---
 <section id={id} class="profile-request" aria-labelledby={`${id}-title`}>
   <div class="profile-request__intro">
@@ -99,7 +110,7 @@ const phoneLabel = ['en', 'de', 'es'].includes(locale) ? '+380 73 425 14 00' : '
     <ul class="profile-request__points">
       {L.points.map((point) => <li>{point}</li>)}
     </ul>
-    <p class="profile-request__phone">{L.call} {locale === 'de' ? <a href="mailto:info@space-glass.com.ua">info@space-glass.com.ua</a> : <a href="tel:+380734251400">{phoneLabel}</a>}</p>
+    <p class="profile-request__phone">{callable ? L.call : L.write} {callable ? <a href={`tel:${contactPhone!.e164}`}>{phoneLabel}</a> : <a href={`mailto:${contactEmail}`}>{contactEmail}</a>}</p>
   </div>
 
   <form class="quote-form contacts-v15-form profile-request__form" data-lead-form data-success-url="/thank-you/">

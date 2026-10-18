@@ -11,6 +11,8 @@ export interface ContactsCopy {
   offices: string; chooseCity: string; officeList: Array<{ id: 'odesa' | 'kyiv' | 'lviv'; city: string; address: string }>;
   schedule: string; hours: string; route: string; map: string; socialAria: string; mapTitle: string;
   geoEyebrow: string; geoTitle: string; geoText: string[]; geoCitiesAria: string;
+  /** Markets row under the geography text (src/data/markets.ts): aria label, kind of the offices card, kind of the service-area card, CTA. */
+  marketsAria: string; marketOffices: string; marketArea: string; marketRequest: string;
   b2bEyebrow: string; b2bTitle: string; b2bText: string; b2bLine: string; b2bCta: string;
   faqTitle: string; faqIntro: string; faq: Pair[];
 }
@@ -50,6 +52,7 @@ export const contactsCopy: Record<IntlLocale, ContactsCopy> = {
       'Selected products and structures can also be delivered to European countries. For a project outside Ukraine, send us the drawings or photos and the location — we will tell you what can be supplied and how delivery and installation can be organised.'
     ],
     geoCitiesAria: 'Space Glass offices',
+    marketsAria: 'Space Glass markets', marketOffices: 'Offices', marketArea: 'Service area', marketRequest: 'Send a request',
     b2bEyebrow: 'For businesses',
     b2bTitle: 'Working on a commercial project?',
     b2bText: 'We work with architects, interior designers, developers and general contractors, and with drawings, specifications and project documentation.',
@@ -108,6 +111,7 @@ export const contactsCopy: Record<IntlLocale, ContactsCopy> = {
       'Das Unternehmen hat seinen Sitz in der Ukraine; Fertigung und Montageteams sitzen in Kyjiw, Odesa und Lwiw. Senden Sie uns Pläne oder Fotos und den Standort Ihres Objekts — wir sagen Ihnen, was geliefert werden kann und wie der Ablauf für Ihr Projekt aussieht.'
     ],
     geoCitiesAria: 'Standorte von Space Glass in der Ukraine',
+    marketsAria: 'Märkte von Space Glass', marketOffices: 'Standorte', marketArea: 'Einsatzgebiet', marketRequest: 'Anfrage senden',
     b2bEyebrow: 'Für Unternehmen',
     b2bTitle: 'Sie arbeiten an einem Gewerbeprojekt?',
     b2bText: 'Wir arbeiten mit Architekten, Innenarchitekten, Bauträgern und Generalunternehmern zusammen — auf Basis von Zeichnungen, Leistungsverzeichnissen und Projektunterlagen.',
@@ -166,6 +170,7 @@ export const contactsCopy: Record<IntlLocale, ContactsCopy> = {
       'También podemos enviar productos y estructuras seleccionados a países europeos. Para un proyecto fuera de Ucrania, envíenos los planos o las fotos y la ubicación: le diremos qué podemos suministrar y cómo organizar el envío y la instalación.'
     ],
     geoCitiesAria: 'Oficinas de Space Glass',
+    marketsAria: 'Mercados de Space Glass', marketOffices: 'Oficinas', marketArea: 'Zona de servicio', marketRequest: 'Enviar solicitud',
     b2bEyebrow: 'Para empresas',
     b2bTitle: '¿Trabaja en un proyecto comercial?',
     b2bText: 'Colaboramos con arquitectos, interioristas, promotores y contratistas generales, y trabajamos con planos, mediciones y documentación de proyecto.',
