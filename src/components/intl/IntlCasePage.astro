@@ -19,6 +19,7 @@ import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../
 import { INTL_CASES, intlHref, type IntlLocale } from '../../i18n/intl-routes';
 import { caseCopy, caseLabels } from '../../content/i18n/intl/cases';
 import { hubCopy } from '../../content/i18n/intl/hubs';
+import { CASE_CHILDREN, childCopy } from '../../content/i18n/intl/children';
 import criticalCss from '../../styles/project-case-critical.css?raw';
 import caseCssUrl from '../../styles/project-case.css?url';
 
@@ -74,6 +75,8 @@ const no = Object.fromEntries(order.filter((key) => shown[key]).map((key, index)
 const heroMeta = [c.city, c.objectType].filter(Boolean);
 const serviceHref = intlHref(c.service.hubId, locale);
 const serviceLabel = hubCopy[locale][c.service.hubId].name;
+// Product pages of this case that exist in this locale (German child pages) — shown under the service card.
+const productLinks = (CASE_CHILDREN[caseId] ?? []).filter((child) => childCopy[locale][child]).map((child) => ({ label: childCopy[locale][child].name, href: intlHref(`child:${child}`, locale) }));
 
 const related = INTL_CASES.filter((item) => item.id !== caseId).slice(0, 5).map((item) => {
   const data = projects.find(({ data: p }) => p.slug === item.ukSlug)!.data;
@@ -251,6 +254,7 @@ const structuredData = [
           {c.service.text && <span class="pc-service__text">{c.service.text}</span>}
           <b aria-hidden="true">→</b>
         </a>
+        {productLinks.length > 0 && tx.also && <p class="pc-service__also">{tx.also}: {productLinks.map((link, index) => <>{index > 0 && ', '}<a href={link.href}>{link.label}</a></>)}</p>}
       </section>
 
       <section class="pc-wrap">

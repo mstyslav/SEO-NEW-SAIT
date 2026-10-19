@@ -59,7 +59,7 @@ export const childrenDe7: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Französischen Balkon anfragen', text: 'Senden Sie ein Foto des Fensters und die Maße — wir wählen die Befestigung und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Befestigung', options: ['Am Fensterrahmen (LINEO)', 'Halter in der Laibung (CANTO)', 'Mit Handlauf', 'Noch unentschlossen'], commentPlaceholder: 'Breite und Höhe des Fensters, Wandaufbau, Farbe, Ort in Österreich', product: 'Französischer Balkon aus Glas' },
-    related: ['balkongelaender', 'balkonverglasung', 'treppengelaender']
+    related: ['balkongelaender', 'balkonverglasung', 'treppengelaender', 'bautraeger-wohnanlagen']
   },
 
   badewannenaufsatz: {
@@ -349,7 +349,7 @@ export const childrenDe7: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Spiegel mit Rahmen anfragen', text: 'Senden Sie Foto und Maße — wir empfehlen ein Modell oder fertigen nach Maß.', optionsLabel: 'Rahmen', options: ['Metallrahmen', 'Aluminiumrahmen mit LED', 'Massivholzrahmen', 'Nach Maß', 'Noch unentschlossen'], commentPlaceholder: 'Größe, Form, Rahmen, Beleuchtung, Ort in Österreich', product: 'Spiegel mit Rahmen' },
-    related: ['wandspiegel', 'led-spiegel']
+    related: ['wandspiegel', 'led-spiegel', 'salon-glas-spiegel', 'spiegel-fitnessstudio']
   },
 
   kaltwintergarten: {

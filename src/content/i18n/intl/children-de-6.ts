@@ -56,7 +56,7 @@ export const childrenDe6: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Freitragendes Glasvordach anfragen', text: 'Senden Sie ein Foto des Eingangs und die Maße — wir wählen das System und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'System', options: ['Freitragend (DURA PLUS)', 'Mit Seitenwand', 'Im Aluminiumrahmen mit LED', 'Noch unentschlossen'], commentPlaceholder: 'Breite, Ausladung, Wand, Glas, Ort in Österreich', product: 'Freitragendes Glasvordach' },
-    related: ['glasvordach-zugstangen', 'einzelhandel', 'balkongelaender']
+    related: ['glasvordach-zugstangen', 'einzelhandel', 'balkongelaender', 'glasvordach-konsolen']
   },
 
   'glasvordach-zugstangen': {
@@ -112,7 +112,7 @@ export const childrenDe6: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Glasvordach mit Zugstangen anfragen', text: 'Senden Sie Fotos des Eingangs und ungefähre Maße — wir wählen das System und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'System', options: ['PUNTO (gerade)', 'ARCATA (Bogen)', 'TUBO (abgehängter Rahmen)', 'Noch unentschlossen'], commentPlaceholder: 'Breite, Ausladung, Wand, Glas, Ort in Österreich', product: 'Glasvordach mit Zugstangen' },
-    related: ['glasvordach-freitragend', 'einzelhandel', 'pfosten-riegel']
+    related: ['glasvordach-freitragend', 'einzelhandel', 'pfosten-riegel', 'glasvordach-konsolen']
   },
 
   'structural-glazing': {
@@ -229,7 +229,7 @@ export const childrenDe6: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Schaufensterverglasung anfragen', text: 'Senden Sie Fotos der Fassade und Maße — wir wählen das System und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'System', options: ['Pfosten-Riegel (MB-SR50N)', 'Semi-Structural (EFEKT)', 'Kaltes System (MB-45)', 'Warmes System (MB-79N)', 'Großformat (MB-86N)', 'Noch unentschlossen'], commentPlaceholder: 'Fläche, Tür, Wärmedämmung, Farbe, Ort in Österreich', product: 'Schaufensterverglasung' },
-    related: ['pfosten-riegel', 'einzelhandel', 'aluminiumtuer']
+    related: ['pfosten-riegel', 'einzelhandel', 'aluminiumtuer', 'structural-glazing']
   },
 
   wandspiegel: {
@@ -286,7 +286,7 @@ export const childrenDe6: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Wandspiegel anfragen', text: 'Senden Sie ein Foto der Wand mit Maßen — wir empfehlen ein Modell oder fertigen den Spiegel nach Maß.', optionsLabel: 'Modell', options: ['MEGA MIRROR CROWN', 'MEGA MIRROR JANNU', 'BELFAST', 'Spiegelwand aus Modulen', 'Nach Maß', 'Noch unentschlossen'], commentPlaceholder: 'Breite und Höhe, Ausschnitte, Beleuchtung, Ort in Österreich', product: 'Wandspiegel' },
-    related: ['led-spiegel', 'gastronomie', 'einzelhandel']
+    related: ['led-spiegel', 'gastronomie', 'einzelhandel', 'salon-glas-spiegel', 'spiegel-fitnessstudio']
   },
 
   gastronomie: {
@@ -347,7 +347,7 @@ export const childrenDe6: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Glaslösung für Gastronomie anfragen', text: 'Beschreiben Sie Ihren Betrieb und senden Sie Fotos oder Pläne — wir erstellen einen Vorschlag und eine unverbindliche Kostenschätzung.', optionsLabel: 'Bereich', options: ['Terrasse', 'Lounge und Pergola', 'Trennwände', 'Eingang und Schaufenster', 'Spiegel', 'Sanitärbereich', 'Mehrere Bereiche'], commentPlaceholder: 'Art des Betriebs, Fläche, Zeitplan, Ort in Österreich', product: 'Glas für Gastronomie' },
-    related: ['terrassenverglasung', 'ganzglaswand', 'hotels']
+    related: ['terrassenverglasung', 'ganzglaswand', 'hotels', 'glaspendeltuer']
   },
 
   'buero-glasloesungen': {
@@ -406,7 +406,7 @@ export const childrenDe6: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Glaslösung fürs Büro anfragen', text: 'Senden Sie den Büroplan oder Fotos — wir erstellen einen Vorschlag und eine unverbindliche Kostenschätzung.', optionsLabel: 'Bereich', options: ['Einzelbüros', 'Besprechungsräume', 'Großraumbüro', 'Türen', 'Empfang und Eingang', 'Mehrere Bereiche'], commentPlaceholder: 'Fläche, Raumhöhe, Schalldämmung, Zeitplan, Ort in Österreich', product: 'Glas für Büros' },
-    related: ['buero-trennwand', 'loft-trennwand', 'glasdrehtuer']
+    related: ['buero-trennwand', 'loft-trennwand', 'glasdrehtuer', 'aluminium-buerotrennwand']
   },
 
   einzelhandel: {

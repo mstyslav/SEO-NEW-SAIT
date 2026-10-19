@@ -1,4 +1,4 @@
-import { MARKETS, marketContacts, type Market } from '../data/markets';
+import { MARKETS, activeMarkets, marketContacts } from '../data/markets';
 
 export type JsonLdValue = string | number | boolean | null | JsonLdObject | JsonLdValue[];
 export type JsonLdObject = { [key: string]: JsonLdValue };
@@ -25,12 +25,14 @@ export const organizationId = (origin: string | URL) => `${absoluteUrl('/', orig
 export const absoluteUrl = (pathOrUrl: string | URL, origin: string | URL) => new URL(pathOrUrl, origin).href;
 
 // Founders are marked up only where the page itself shows them (the About team section), not sitewide.
-export function organizationSchema(origin: string | URL, founders: JsonLdObject[] = [], market: Market = MARKETS.UA): JsonLdObject {
+export function organizationSchema(origin: string | URL, founders: JsonLdObject[] = []): JsonLdObject {
   const siteUrl = absoluteUrl('/', origin);
-  // The page's market decides the contact point and the service area. A market without an office (Austria)
-  // is a service area of the same organization: no address, no LocalBusiness, and no availableLanguage
-  // until the market lists a confirmed contact language (market.languages).
-  const contacts = marketContacts(market);
+  // One brand node, byte-identical on every page and language: Google merges nodes by @id, so a
+  // per-market variant (Ukraine on UA/EN/ES pages, Austria on DE pages) contradicted itself.
+  // Every active market (src/data/markets.ts) adds its service area and its own contact point.
+  // A market without an office (Austria) is a service area of the same brand: no address, no
+  // LocalBusiness, no legal name — the legal entities are not published on the site.
+  const markets = activeMarkets();
   return {
     '@type': 'Organization',
     '@id': `${siteUrl}#organization`,
@@ -43,15 +45,21 @@ export function organizationSchema(origin: string | URL, founders: JsonLdObject[
     image: absoluteUrl(DEFAULT_IMAGE, origin),
     telephone: COMPANY_PHONE,
     email: COMPANY_EMAIL,
-    contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'customer service',
-      telephone: contacts.phone?.e164 ?? COMPANY_PHONE,
-      email: contacts.email ?? COMPANY_EMAIL,
-      areaServed: market.countryCode,
-      ...(market.languages.length ? { availableLanguage: market.languages } : {})
-    },
-    areaServed: market.schemaCity ? [{ '@type': 'Country', name: market.schemaCountry }, { '@type': 'City', name: market.schemaCity }] : { '@type': 'Country', name: market.schemaCountry },
+    contactPoint: markets.map((market) => {
+      const contacts = marketContacts(market);
+      return {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        telephone: contacts.phone?.e164 ?? COMPANY_PHONE,
+        email: contacts.email ?? COMPANY_EMAIL,
+        areaServed: market.countryCode,
+        ...(market.languages.length ? { availableLanguage: market.languages } : {})
+      };
+    }),
+    areaServed: markets.flatMap((market) => [
+      { '@type': 'Country', name: market.schemaCountry },
+      ...(market.schemaCity ? [{ '@type': 'City', name: market.schemaCity }] : [])
+    ]),
     sameAs: COMPANY_SAME_AS,
     ...(founders.length ? { founder: founders } : {})
   };

@@ -19,9 +19,11 @@ const solutionImages: Array<[string, string, number, number]> = [
   ['/poslugy/sklyani-fasady/', '/images/catalog/profile-systems/cat-fas2-hub-480.webp', 480, 480],
   ['/alyuminiyevi-konstrukcziyi/', '/images/catalog/profile-systems/cat-alu-rozsuvni-480.webp', 480, 480]
 ];
-const solutions = (texts: [string, string][]) => texts.map(([title, text], index) => {
+// Optional 3rd item: the UA path of a more specific page than the category (resolved to the locale's own
+// page by localizedPath, e.g. a German child page); the card keeps the category photo.
+const solutions = (texts: Array<[string, string] | [string, string, string]>) => texts.map(([title, text, page], index) => {
   const [href, image, width, height] = solutionImages[index];
-  return [title, text, href, image, width, height] as [string, string, string, string, number, number];
+  return [title, text, page ?? href, image, width, height] as [string, string, string, string, number, number];
 });
 
 export const intlHomeContent: Record<IntlLocale, IntlHomeContent> = {
@@ -154,17 +156,19 @@ export const intlHomeContent: Record<IntlLocale, IntlHomeContent> = {
       viewLabel: 'Lösung ansehen →',
       allLink: 'Alle Glaslösungen ansehen →'
     },
+    // The category cards above already link every hub, so the carousel leads to one popular German detail
+    // page per category (texts = the cards of those pages). Wintergärten stays on the hub.
     popularSolutions: solutions([
-      ['Glasduschen', 'Walk-in-, Eck-, Schiebeduschen und individuelle Duschabtrennungen aus Glas.'],
-      ['Glastrennwände', 'Rahmenlose und gerahmte Glastrennwände für Wohnungen, Büros und Gewerbeflächen.'],
-      ['Rahmenlose Verglasung', 'Schiebe- und Faltsysteme aus Glas für Terrassen und große Öffnungen.'],
-      ['Glasgeländer', 'Rahmenlose Glasgeländer und Pfostengeländer für Treppen, Balkone und Terrassen.'],
-      ['Glasvordächer', 'Vordächer über dem Eingang — freitragend, mit Zugstangen oder im Rahmen.'],
-      ['Glastüren', 'Dreh-, Schiebe- und Pendeltüren aus Glas für Wohn- und Gewerberäume.'],
+      ['Walk-In-Duschwand', 'Feststehende Duschabtrennung ohne Tür — nach Aufmaß aus ESG 8 mm.', '/dushovi-kabiny/peregorodka-dlya-dusha/'],
+      ['Ganzglaswand', 'Raumhohes Glas mit transparenten Stößen — mit Profil oder nur auf Punkthaltern.', '/sklyani-perehorodky/tsilnosklyani-perehorodky/'],
+      ['Terrassenverglasung', 'Rahmenlos verglast: Falt-, Schiebe-, Guillotine- und schwellenlose Systeme.', '/bezramne-sklinnya/sklinnya-teras-ta-altanok/'],
+      ['Balkongeländer aus Glas', 'Freie Aussicht statt Brüstung: VSG im Klemmprofil, französische Balkone und mehr.', '/sklyani-ohorozhi/sklyani-ohorozhi-balkoniv/'],
+      ['Freitragendes Glasvordach', 'Nur Glas über der Tür: Befestigung ausschließlich an der Wand, ohne Zugstangen.', '/sklyani-kozyrky/konsolni-kozyrky/'],
+      ['Glasschiebetür', 'Schiebetür aus Glas an offener oder verdeckter Schiene — kein Platzbedarf vor der Öffnung.', '/sklyani-dveri/rozsuvni-sklyani-dveri/'],
       ['Wintergärten', 'Verglaste Terrassen und Wintergärten aus Aluminium für die ganzjährige Nutzung.'],
-      ['Spiegel nach Maß', 'Spiegel in Sondermaßen für Bad, Wohnbereich und Gewerbe.'],
-      ['Glasfassaden', 'Fassadenverglasung für Wohn- und Gewerbebauten mit Aluminiumsystemen.'],
-      ['Aluminium-Fenster und -Türen', 'Aluminiumfenster, -türen und Schiebesysteme für Wohnen und Gewerbe.']
+      ['LED-Spiegel', 'Spiegel mit Frontlicht oder Hintergrundbeleuchtung — fertig oder nach Maß.', '/dzerkala/led-dzerkala/'],
+      ['Pfosten-Riegel-Fassade', 'Die Klassiker der Glasfassade: Pfosten, Riegel und Isolierglas in Aluminium.', '/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/'],
+      ['Aluminiumfenster', 'Thermisch getrennte Fenster nach Maß — mit schlanken Rahmen und großen Glasflächen.', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/']
     ]),
     projects: {
       title: 'Unsere Projekte',

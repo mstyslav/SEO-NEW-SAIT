@@ -63,7 +63,7 @@ export const childrenDe4: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Balkongeländer aus Glas anfragen', text: 'Senden Sie Fotos des Balkons und ungefähre Maße — wir empfehlen die Befestigung und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Variante', options: ['Französischer Balkon (am Fensterrahmen)', 'Französischer Balkon (Halter in der Laibung)', 'Bündiges Profil', 'Stirnbefestigung', 'Mit Stirnverkleidung', 'Noch unentschlossen'], commentPlaceholder: 'Länge und Höhe, Plattenstirn, Material, Farbe, Ort in Österreich', product: 'Balkongeländer aus Glas' },
-    related: ['franzoesischer-balkon', 'treppengelaender', 'balkonverglasung', 'glas-faltwand']
+    related: ['franzoesischer-balkon', 'treppengelaender', 'balkonverglasung', 'glas-faltwand', 'bautraeger-wohnanlagen']
   },
 
   glasschiebetuer: {
@@ -121,7 +121,7 @@ export const childrenDe4: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Glasschiebetür anfragen', text: 'Senden Sie Foto und Maße der Öffnung — wir empfehlen die Ausführung und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Ausführung', options: ['Offene Schiene mit Rollen', 'Rolle mit Dämpfer', 'Verdeckte Schiene im Aluminiumprofil', 'Zweiflügelig', 'Rahmenlos', 'Noch unentschlossen'], commentPlaceholder: 'Breite und Höhe der Öffnung, Raum, Glas, Schloss, Ort in Österreich', product: 'Glasschiebetür' },
-    related: ['schiebe-trennwand', 'trennwand-tuer', 'schiebetuer-dusche']
+    related: ['schiebe-trennwand', 'trennwand-tuer', 'schiebetuer-dusche', 'glastuer-aluminiumrahmen']
   },
 
   'pfosten-riegel': {
@@ -178,7 +178,7 @@ export const childrenDe4: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Pfosten-Riegel-Fassade anfragen', text: 'Senden Sie Pläne oder Fotos mit Maßen — wir wählen das System und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'System', options: ['MB-MT50N', 'MB-SR50N', 'MB-SR50N HI', 'MB-SR60N', 'Noch unentschlossen'], commentPlaceholder: 'Gebäudeart, Fassadenfläche, vorhandene Pläne, Anforderungen, Ort in Österreich', product: 'Pfosten-Riegel-Fassade' },
-    related: ['aluminiumfenster', 'aluminium-schiebetuer', 'hotels']
+    related: ['aluminiumfenster', 'aluminium-schiebetuer', 'hotels', 'structural-glazing']
   },
 
   'led-spiegel': {

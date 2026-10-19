@@ -63,7 +63,7 @@ export const childrenDe2: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Terrassenverglasung anfragen', text: 'Senden Sie Fotos der Terrasse und ungefähre Maße — wir wählen das System und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'System', options: ['Faltsystem', 'Schiebesystem', 'Guillotine-System', 'Schwellenloses System', 'Mit Isolierglas (warm)', 'Noch unentschlossen'], commentPlaceholder: 'Breite und Höhe der Öffnung, Form, Schwelle, kalt oder warm, Ort in Österreich', product: 'Rahmenlose Terrassenverglasung' },
-    related: ['glas-faltwand', 'schiebeverglasung', 'kaltwintergarten', 'balkonverglasung']
+    related: ['glas-faltwand', 'schiebeverglasung', 'kaltwintergarten', 'balkonverglasung', 'aluminium-pergola']
   },
 
   'glas-faltwand': {
@@ -178,7 +178,7 @@ export const childrenDe2: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Schiebeverglasung anfragen', text: 'Senden Sie Fotos und Maße der Öffnung — wir wählen das System und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'System', options: ['SLIDING SLIM (Schwelle 7,5 mm)', 'Schwelle 12,5 mm', 'Schwelle 30 mm (windige Lagen)', 'Neue Generation', 'Noch unentschlossen'], commentPlaceholder: 'Breite und Höhe der Öffnung, Form, Schwelle, Ort in Österreich', product: 'Rahmenlose Schiebeverglasung' },
-    related: ['terrassenverglasung', 'glas-faltwand', 'balkonverglasung']
+    related: ['terrassenverglasung', 'glas-faltwand', 'balkonverglasung', 'vertikal-schiebeverglasung']
   },
 
   balkonverglasung: {
@@ -235,7 +235,7 @@ export const childrenDe2: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Balkonverglasung anfragen', text: 'Senden Sie Fotos des Balkons und ungefähre Maße — wir empfehlen ein System und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'System', options: ['BALCONMAX INTEGRA (Brüstung + Faltsystem)', 'BALCONTWIN INTEGRA (Isolierglas)', 'Brüstung + Schiebesystem', 'Guillotine für Balkone', 'Noch unentschlossen'], commentPlaceholder: 'Balkonmaße, Geschoss, Form, Glas, Ort in Österreich', product: 'Rahmenlose Balkonverglasung' },
-    related: ['terrassenverglasung', 'glas-faltwand', 'balkongelaender']
+    related: ['terrassenverglasung', 'glas-faltwand', 'balkongelaender', 'vertikal-schiebeverglasung']
   },
 
   'walk-in-dusche': {
@@ -294,6 +294,6 @@ export const childrenDe2: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Walk-In-Duschwand anfragen', text: 'Senden Sie Fotos des Bades und ungefähre Maße — wir schlagen ein Modell vor und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Modell', options: ['FALLS', 'BOND', 'VOLIO', 'VIRGINIA', 'HELEN', 'DELLA', 'Noch unentschlossen'], commentPlaceholder: 'Maße der Duschzone, Beschlagfarbe, Nische oder Ecke, Ort in Österreich', product: 'Walk-In-Duschwand' },
-    related: ['eckdusche', 'schiebetuer-dusche', 'hotels']
+    related: ['eckdusche', 'schiebetuer-dusche', 'hotels', 'badewannenaufsatz']
   }
 };

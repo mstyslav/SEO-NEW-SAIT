@@ -46,7 +46,8 @@ export const intlFooterText: Record<IntlLocale, { text: FooterText; services: st
       ['Projects', '/project/'],
       ['Commercial glazing', '/dlya-biznesu/'],
       ['Contact', '/contacts/'],
-      ['Privacy policy', '/privacy-policy/']
+      ['Privacy policy', '/privacy-policy/'],
+      ['Terms of use', '/terms/']
     ],
     cities: [['Kyiv'], ['Odesa'], ['Lviv'], ['All contacts']]
   },
@@ -77,7 +78,8 @@ export const intlFooterText: Record<IntlLocale, { text: FooterText; services: st
       ['Projekte', '/project/'],
       ['Glaslösungen für Gewerbe', '/dlya-biznesu/'],
       ['Kontakt', '/contacts/'],
-      ['Datenschutz', '/privacy-policy/']
+      ['Datenschutz', '/privacy-policy/'],
+      ['Nutzungsbedingungen', '/terms/']
     ],
     cities: [['Wien'], ['Österreich'], ['Alle Kontakte']]
   },
@@ -108,7 +110,8 @@ export const intlFooterText: Record<IntlLocale, { text: FooterText; services: st
       ['Proyectos', '/project/'],
       ['Vidrio para empresas', '/dlya-biznesu/'],
       ['Contacto', '/contacts/'],
-      ['Política de privacidad', '/privacy-policy/']
+      ['Política de privacidad', '/privacy-policy/'],
+      ['Condiciones de uso', '/terms/']
     ],
     cities: [['Kiev'], ['Odesa'], ['Leópolis'], ['Todos los contactos']]
   }
