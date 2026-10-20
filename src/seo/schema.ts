@@ -24,25 +24,45 @@ export const organizationId = (origin: string | URL) => `${absoluteUrl('/', orig
 
 export const absoluteUrl = (pathOrUrl: string | URL, origin: string | URL) => new URL(pathOrUrl, origin).href;
 
-// Founders are marked up only where the page itself shows them (the About team section), not sitewide.
-export function organizationSchema(origin: string | URL, founders: JsonLdObject[] = [], market: Market = MARKETS.UA): JsonLdObject {
-  const siteUrl = absoluteUrl('/', origin);
-  // The page's market decides the contact point and the service area. A market without an office (Austria)
-  // is a service area of the same organization: no address, no LocalBusiness, and no availableLanguage
-  // until the market lists a confirmed contact language (market.languages).
+export const brandId = (origin: string | URL) => `${absoluteUrl('/', origin)}#brand`;
+/** @id of the business serving a market (UA → the historical #organization, AT → #organization-at). */
+export const marketOrganizationId = (origin: string | URL, market: Market) => `${absoluteUrl('/', origin)}#${(market.organization ?? MARKETS.UA.organization!).id}`;
+
+/** The common commercial brand of the Ukrainian business and Space Glass KG. */
+export function brandSchema(origin: string | URL): JsonLdObject {
+  return {
+    '@type': 'Brand',
+    '@id': brandId(origin),
+    name: SITE_NAME,
+    url: absoluteUrl('/', origin),
+    logo: absoluteUrl(LOGO_PATH, origin)
+  };
+}
+
+/**
+ * The business of one market as its own Organization — the same node (same values) on every page it
+ * appears on. UA and AT are separate legal structures: separate @id, linked only through the shared
+ * `brand`, no parentOrganization/subOrganization (not confirmed). Only published facts: legalName when
+ * the owner confirmed it, no registration numbers; a service-area market (Austria) gets the country as
+ * its address and no street, office or LocalBusiness.
+ * Founders are marked up only where the page itself shows them (the About team section), not sitewide.
+ */
+export function marketOrganizationSchema(origin: string | URL, market: Market, founders: JsonLdObject[] = []): JsonLdObject {
   const contacts = marketContacts(market);
   return {
     '@type': 'Organization',
-    '@id': `${siteUrl}#organization`,
+    '@id': marketOrganizationId(origin, market),
     name: SITE_NAME,
-    url: siteUrl,
+    ...(market.organization?.legalName ? { legalName: market.organization.legalName } : {}),
+    url: absoluteUrl(market.organization?.url ?? '/', origin),
+    brand: { '@id': brandId(origin) },
     logo: {
       '@type': 'ImageObject',
       url: absoluteUrl(LOGO_PATH, origin)
     },
     image: absoluteUrl(DEFAULT_IMAGE, origin),
-    telephone: COMPANY_PHONE,
-    email: COMPANY_EMAIL,
+    telephone: contacts.phone?.e164 ?? COMPANY_PHONE,
+    email: contacts.email ?? COMPANY_EMAIL,
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
@@ -51,21 +71,42 @@ export function organizationSchema(origin: string | URL, founders: JsonLdObject[
       areaServed: market.countryCode,
       ...(market.languages.length ? { availableLanguage: market.languages } : {})
     },
-    areaServed: market.schemaCity ? [{ '@type': 'Country', name: market.schemaCountry }, { '@type': 'City', name: market.schemaCity }] : { '@type': 'Country', name: market.schemaCountry },
-    sameAs: COMPANY_SAME_AS,
+    ...(market.presence === 'service-area' ? { address: { '@type': 'PostalAddress', addressCountry: market.countryCode } } : {}),
+    areaServed: { '@type': 'Country', name: market.schemaCountry },
+    // The social profiles are the Ukrainian business's own accounts.
+    ...(market.code === 'UA' ? { sameAs: COMPANY_SAME_AS } : {}),
     ...(founders.length ? { founder: founders } : {})
   };
 }
 
-export function websiteSchema(origin: string | URL, language: string): JsonLdObject {
+/** The Ukrainian business (#organization): publisher of the website, owner of the offices and projects. */
+export function organizationSchema(origin: string | URL, founders: JsonLdObject[] = []): JsonLdObject {
+  return marketOrganizationSchema(origin, MARKETS.UA, founders);
+}
+
+/** The website node is the same on every page: all its languages, published by the Ukrainian business. */
+export function websiteSchema(origin: string | URL): JsonLdObject {
   const siteUrl = absoluteUrl('/', origin);
   return {
     '@type': 'WebSite',
     '@id': `${siteUrl}#website`,
     url: siteUrl,
     name: SITE_NAME,
-    inLanguage: language,
+    inLanguage: ['uk', 'ru', 'en', 'de', 'es'],
     publisher: { '@id': `${siteUrl}#organization` }
+  };
+}
+
+/** A service page's offer, provided by the business of the page's market. */
+export function serviceSchema({ canonical, name, description, providerId, areaServed }: { canonical: string; name: string; description: string; providerId: string; areaServed: string }): JsonLdObject {
+  return {
+    '@type': 'Service',
+    '@id': `${canonical}#service`,
+    url: canonical,
+    name,
+    description,
+    provider: { '@id': providerId },
+    areaServed: { '@type': 'Country', name: areaServed }
   };
 }
 
@@ -76,7 +117,8 @@ export function webPageSchema({
   image,
   language,
   type = 'WebPage',
-  mainEntityId
+  mainEntityId,
+  aboutId
 }: {
   canonical: string | URL;
   title: string;
@@ -86,6 +128,8 @@ export function webPageSchema({
   type?: string;
   /** @id of the page's main entity (e.g. the Article of a knowledge page). */
   mainEntityId?: string;
+  /** @id of the business the page is about (the page market's organization); default = #organization. */
+  aboutId?: string;
 }): JsonLdObject {
   const url = canonical.toString();
   const siteUrl = new URL('/', url).href;
@@ -98,7 +142,7 @@ export function webPageSchema({
     description,
     inLanguage: language,
     isPartOf: { '@id': `${siteUrl}#website` },
-    about: { '@id': `${siteUrl}#organization` },
+    about: { '@id': aboutId ?? `${siteUrl}#organization` },
     primaryImageOfPage: {
       '@type': 'ImageObject',
       url: image.toString()

@@ -40,17 +40,21 @@ const { title: rawTitle, description: rawDescription, locale, image = '/images/v
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales, hasLocalizedRoute, isIntlLocale } from '../i18n/helpers';
 import { intlDeOnlyFallback, intlLocales } from '../i18n/intl-routes';
-import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
+import { brandSchema, organizationSchema, marketOrganizationSchema, marketOrganizationId, serviceSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
 import { resolveMarket, marketContacts, whatsappHref } from '../data/markets';
 
 /**
  * Keep search snippets inside the agreed SEO limits without touching H1/body copy.
  * Prefer a complete sentence for descriptions; otherwise cut at a word boundary.
  * For overlong titles the brand suffix is removed first so the page topic is preserved.
+ * Removing the brand or keeping only the first complete sentence is the agreed policy. A cut in the
+ * middle of a phrase is reported at build time (page URL, source text, result, reason) so the source
+ * text can be shortened; SEO_STRICT=1 turns that report into a build error.
  */
 const fitSeoText = (value: string, max: number, kind: 'title' | 'description') => {
   let text = String(value ?? '').replace(/\s+/g, ' ').trim();
   if (text.length <= max) return text;
+  const source = text;
 
   if (kind === 'title') {
     text = text.replace(/\s*(?:\||—|–|-)?\s*Space Glass\s*$/i, '').trim();
@@ -68,7 +72,11 @@ const fitSeoText = (value: string, max: number, kind: 'title' | 'description') =
   const boundary = cut.lastIndexOf(' ');
   if (boundary >= Math.floor(room * 0.72)) cut = cut.slice(0, boundary);
   else cut = cut.slice(0, room);
-  return cut.replace(/[\s,;:–—-]+$/g, '').trim() + suffix;
+  const result = cut.replace(/[\s,;:–—-]+$/g, '').trim() + suffix;
+  const report = `[seo] ${kind} cut mid-phrase on ${Astro.url.pathname} (${source.length} > ${max} chars; shorten the source text)\n  source: ${source}\n  result: ${result}`;
+  if (import.meta.env.SEO_STRICT === '1' || process.env.SEO_STRICT === '1') throw new Error(report);
+  console.warn(report);
+  return result;
 };
 
 const title = fitSeoText(rawTitle, 60, 'title');
@@ -76,7 +84,7 @@ const description = fitSeoText(rawDescription, 155, 'description');
 
 const resolvedLocale = normalizeLocale(locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
 const basePath = stripLocale(Astro.url.pathname);
-// Market of the page (≠ language): contacts, schema and the market sent with every lead. Header/Footer (rendered
+// Market of the page (≠ language): contacts and the market sent with every lead (the Organization schema node is the same on every page). Header/Footer (rendered
 // inside this layout's slot) read the contacts from Astro.locals instead of importing the market config.
 const pageMarket = resolveMarket(resolvedLocale, market);
 const pageContacts = marketContacts(pageMarket);
@@ -101,20 +109,32 @@ const heroAlts = {
   de: 'Raumhohe Glastrennwände und Aluminiumkonstruktionen von Space Glass in einem modernen Interieur',
   es: 'Tabiques de vidrio de suelo a techo y estructuras de aluminio de Space Glass en un interior moderno'
 } as const;
+// Organizations: the brand and the Ukrainian business (#organization, publisher of the site) on every page;
+// a page of another market (DE → Austria) adds that market's own business (Space Glass KG) and is about it.
+const pageOrganizationId = marketOrganizationId(origin, pageMarket);
+// schemaType "Service" = a service page: the page stays a WebPage whose main entity is a Service node,
+// provided by the business of the page's market (a WebPage node typed "Service" was not a valid Service).
+const serviceNode = schemaType === 'Service' && !errorPage
+  ? serviceSchema({ canonical: canonical.href, name: title, description, providerId: pageOrganizationId, areaServed: pageMarket.schemaCountry })
+  : undefined;
 const pageSchema = webPageSchema({
   canonical: canonical.href,
   title,
   description,
   image: socialImage.href,
   language: resolvedLocale,
-  type: schemaType,
-  mainEntityId
+  type: serviceNode ? 'WebPage' : schemaType,
+  mainEntityId: mainEntityId ?? (serviceNode ? `${canonical.href}#service` : undefined),
+  aboutId: pageOrganizationId
 });
 const extraStructuredData = Array.isArray(structuredData) ? structuredData : [structuredData];
 const schema = jsonLdGraph([
-  organizationSchema(origin, organizationFounders, pageMarket),
-  websiteSchema(origin, resolvedLocale),
+  brandSchema(origin),
+  organizationSchema(origin, organizationFounders),
+  ...(pageMarket.code !== 'UA' ? [marketOrganizationSchema(origin, pageMarket)] : []),
+  websiteSchema(origin),
   ...(errorPage ? [] : [pageSchema]),
+  ...(serviceNode ? [serviceNode] : []),
   ...extraStructuredData
 ]);
 const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';

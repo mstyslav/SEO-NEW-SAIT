@@ -56,7 +56,7 @@ export const childrenDe1: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Ganzglaswand anfragen', text: 'Senden Sie einen Grundriss oder Fotos des Raums mit Maßen — wir wählen das System und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Ausführung', options: ['Ganzglaswand im Klemmprofil', 'Ganzglaswand auf Punkthaltern', 'Ganzglaswand mit Pendeltüren', 'Noch unentschlossen'], commentPlaceholder: 'Raum (Wohnung, Büro, Praxis), Maße, Türen, Glas, Ort in Österreich', product: 'Ganzglaswand' },
-    related: ['trennwand-tuer', 'buero-trennwand', 'loft-trennwand']
+    related: ['trennwand-tuer', 'buero-trennwand', 'loft-trennwand', 'glas-raumteiler-wohnung']
   },
 
   'loft-trennwand': {
@@ -112,7 +112,7 @@ export const childrenDe1: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Loft-Trennwand anfragen', text: 'Senden Sie Fotos und Maße des Raums und Ihre Wünsche zur Sprossenteilung — wir erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Ausführung', options: ['Loft-Trennwand mit Sprossen', 'Loft-Trennwand mit Tür', 'Schiebetür an schwarzer Schiene', 'Noch unentschlossen'], commentPlaceholder: 'Raum, Maße, Sprossenraster, Tür, Glas, Ort in Österreich', product: 'Loft-Glastrennwand' },
-    related: ['ganzglaswand', 'trennwand-tuer', 'schiebe-trennwand']
+    related: ['ganzglaswand', 'trennwand-tuer', 'schiebe-trennwand', 'glas-raumteiler-wohnung']
   },
 
   'schiebe-trennwand': {
@@ -292,6 +292,6 @@ export const childrenDe1: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Bürotrennwand anfragen', text: 'Senden Sie den Büroplan oder Fotos mit Maßen — wir schlagen eine Aufteilung vor und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Lösung', options: ['Glasbox „Raum im Raum“ (CAJA)', 'Trennwand mit Türen', 'Schiebetrennwand', 'Ganzglaswand mit Pendeltüren', 'Noch unentschlossen'], commentPlaceholder: 'Fläche, Anzahl Räume, Türen, Branding, Ort in Österreich', product: 'Bürotrennwand aus Glas' },
-    related: ['trennwand-tuer', 'ganzglaswand', 'schiebe-trennwand']
+    related: ['trennwand-tuer', 'ganzglaswand', 'schiebe-trennwand', 'aluminium-buerotrennwand', 'buero-glasloesungen']
   }
 };

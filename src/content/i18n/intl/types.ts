@@ -78,6 +78,8 @@ export interface CaseLabels {
   home: string; projects: string; breadcrumbs: string; photos: string; openPhoto: string; factsLabel: string;
   about: string; task: string; solution: string; tech: string; process: string; projectFact: string; result: string;
   benefits: string; gallery: string; generalTag: string; service: string;
+  /** Lead-in of the line with the product pages of this case (e.g. "Auch"); only shown where they exist. */
+  also?: string;
   faqIntro: string; relatedEyebrow: string; relatedTitle: string; back: string;
   lbLabel: string; close: string; prev: string; next: string; of: string; viewProject: string;
 }
@@ -142,4 +144,6 @@ export interface ChildLabels {
   austriaEyebrow: string;
   austriaCta: [string, string];
   contactCta: [string, string];
+  /** Prefix of a link to a reference project in the related links (e.g. "Projekt"). */
+  projectLabel: string;
 }

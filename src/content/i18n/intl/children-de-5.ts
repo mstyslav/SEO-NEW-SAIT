@@ -59,7 +59,7 @@ export const childrenDe5: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Vertikal-Schiebeverglasung anfragen', text: 'Senden Sie Fotos und ungefähre Maße der Öffnung — wir empfehlen ein System und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'System', options: ['GILIOTINA MONO', 'GILIOTINA TWIN', 'GILIOTINA TWIN TOP', 'GILIOTINA THERMO', 'GILIOTINA BALCON', 'Mit Glasdach', 'Noch unentschlossen'], commentPlaceholder: 'Breite und Höhe, Terrasse oder Balkon, Glas, Steuerung, Ort in Österreich', product: 'Vertikal-Schiebeverglasung' },
-    related: ['terrassenverglasung', 'schiebeverglasung', 'balkonverglasung']
+    related: ['terrassenverglasung', 'schiebeverglasung', 'balkonverglasung', 'gastronomie']
   },
 
   nischendusche: {
@@ -124,7 +124,7 @@ export const childrenDe5: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Nischendusche anfragen', text: 'Senden Sie Fotos und Breite der Nische — wir empfehlen das Türmodell und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Öffnungsart', options: ['Drehtür', 'Festes Seitenteil mit Drehtür', 'Zwei Flügel von der Mitte', 'Schiebetür', 'Falttür (Buch)', 'Noch unentschlossen'], commentPlaceholder: 'Breite und Höhe der Nische, Farbe der Beschläge, Ort in Österreich', product: 'Nischendusche' },
-    related: ['walk-in-dusche', 'schiebetuer-dusche', 'eckdusche']
+    related: ['walk-in-dusche', 'schiebetuer-dusche', 'eckdusche', 'badewannenaufsatz']
   },
 
   aluminiumtuer: {
@@ -309,7 +309,7 @@ export const childrenDe5: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Glasdrehtür anfragen', text: 'Senden Sie Fotos und Maße der Öffnung — wir empfehlen die Ausführung und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Ausführung', options: ['Rahmenlos an der Wand', 'Im Portal', 'In der Glastrennwand', 'Zweiflügelig', 'Loft-Drehtür im Profil', 'Satiniert / Milchglas', 'Noch unentschlossen'], commentPlaceholder: 'Maße der Öffnung, Glas, Griff und Schloss, Ort in Österreich', product: 'Glasdrehtür' },
-    related: ['glasschiebetuer', 'trennwand-tuer', 'glastuer-aluminiumrahmen']
+    related: ['glasschiebetuer', 'trennwand-tuer', 'glastuer-aluminiumrahmen', 'glaspendeltuer']
   },
 
   'glastuer-aluminiumrahmen': {
@@ -426,7 +426,7 @@ export const childrenDe5: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Rahmenloses Glasgeländer anfragen', text: 'Senden Sie Fotos und Längen — wir wählen das Profilsystem und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Profilsystem', options: ['Bündig mit der Plattenkante', 'Schmales Profil oben', 'Kompaktes Profil', 'Stirnprofil', 'Mit Stirnverkleidung', 'Noch unentschlossen'], commentPlaceholder: 'Länge, Höhe, Untergrund, Handlauf, Ort in Österreich', product: 'Rahmenloses Glasgeländer' },
-    related: ['balkongelaender', 'treppengelaender', 'pool-glasgelaender']
+    related: ['balkongelaender', 'treppengelaender', 'pool-glasgelaender', 'franzoesischer-balkon']
   },
 
   'pool-glasgelaender': {

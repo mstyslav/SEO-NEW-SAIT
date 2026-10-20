@@ -177,6 +177,7 @@ export const supplementalKnowledgeArticles: KnowledgeArticle[] = seeds.map((seed
   return {
     ...seed,
     description: rewrite?.description ?? seed.description ?? `${seed.title}. Практичний експертний матеріал Space Glass: вибір, замір, проєктування, монтаж, типові помилки та догляд.`,
+    ...(rewrite?.metaDescription ? { metaDescription: rewrite.metaDescription } : {}),
     intro: rewrite?.intro ?? seed.focus,
     readingTime: rewrite ? readingMinutes(rewrite) : 9,
     sections: rewrite?.sections ?? sections(seed),

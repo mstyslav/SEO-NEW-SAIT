@@ -58,7 +58,7 @@ export const childrenDe3: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Eckdusche anfragen', text: 'Senden Sie Fotos des Bades und ungefähre Maße — wir empfehlen ein Modell und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Modell', options: ['RAIN', 'VICTORIA', 'NEVADA', 'CRISTAL', 'WELSFORD', 'BRAUN', 'Noch unentschlossen'], commentPlaceholder: 'Maße der Ecke, Türöffnung, Beschlagfarbe, Ort in Österreich', product: 'Eckdusche aus Glas' },
-    related: ['walk-in-dusche', 'schiebetuer-dusche', 'hotels']
+    related: ['walk-in-dusche', 'schiebetuer-dusche', 'hotels', 'nischendusche']
   },
 
   'schiebetuer-dusche': {
@@ -290,6 +290,6 @@ export const childrenDe3: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Treppengeländer aus Glas anfragen', text: 'Senden Sie Fotos der Treppe und ungefähre Maße — wir empfehlen die Befestigung und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Befestigung', options: ['Klemmprofil (CLIP)', 'Stirnmontage', 'Punkthalter', 'Bündiges Profil', 'Noch unentschlossen'], commentPlaceholder: 'Lauflänge, Höhe, Wange (Beton, Stahl, Holz), Handlauf, Ort in Österreich', product: 'Treppengeländer aus Glas' },
-    related: ['balkongelaender', 'glasschiebetuer', 'balkonverglasung']
+    related: ['balkongelaender', 'glasschiebetuer', 'balkonverglasung', 'pool-glasgelaender', 'rahmenloses-glasgelaender']
   }
 };

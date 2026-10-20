@@ -297,7 +297,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   "sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu": {
     "seo": {
       "title": "Стеклянные душевые перегородки для Cherry Twins в Одессе | Space Glass",
-      "description": "Стеклянные душевые перегородки для санузлов комплекса Cherry Twins Odessa: безопасное стекло, чёрная фурнитура и удобная уборка в местах с большим потоком гостей."
+      "description": "Стеклянные душевые перегородки для санузлов комплекса Cherry Twins Odessa: безопасное стекло, чёрная фурнитура и удобная уборка при большом потоке гостей."
     },
     "h1": "Стеклянные душевые перегородки для Cherry Twins Odessa",
     "cardTitle": "Душевые перегородки Cherry Twins, Одесса",
@@ -1973,7 +1973,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   "zonuvannya-prostoru-odnokimnatnoyi-kvartyry": {
     "seo": {
       "title": "Зеркала для салона красоты Nofilters в Одессе | Space Glass",
-      "description": "Овальные зеркала индивидуальной формы для рабочих мест мастеров в салоне красоты Nofilters в Одессе: реализованный проект Space Glass, фото и детали решения."
+      "description": "Овальные зеркала индивидуальной формы для рабочих мест мастеров в салоне красоты Nofilters в Одессе: реализованный проект, фото и детали решения."
     },
     "h1": "Зеркала для салона красоты Nofilters в Одессе",
     "cardTitle": "Зеркала салона Nofilters, Одесса",
@@ -2761,7 +2761,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "shower-wall-to-wall-brass-kyiv": {
     "seo": {
-      "title": "Душевая перегородка от стены до стены с латунным профилем в Киеве",
+      "title": "Душевая перегородка стена-в-стену с латунным профилем, Киев",
       "description": "Реализованный проект Space Glass: душевая перегородка от стены до стены с дверью на латунном профиле в Киеве. Мраморная облицовка, деревянный акцент."
     },
     "h1": "Душевая перегородка от стены до стены с латунным профилем в Киеве",

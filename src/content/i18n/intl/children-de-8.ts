@@ -60,7 +60,7 @@ export const childrenDe8: Record<string, ChildCopy> = {
       ]
     },
     form: { title: 'Glaspendeltür anfragen', text: 'Senden Sie Fotos und Maße der Öffnung — wir wählen Beschläge und erstellen eine unverbindliche Kostenschätzung.', optionsLabel: 'Ausführung', options: ['Geschäftseingang mit Seitenteilen', 'In der Büro-Trennwand', 'Mit Schloss', 'Mit Feststellung 90°', 'Noch unentschlossen'], commentPlaceholder: 'Maße der Öffnung, Ein- oder Zweiflügler, Griff, Schloss, Ort in Österreich', product: 'Glaspendeltür' },
-    related: ['glasdrehtuer', 'trennwand-tuer', 'aluminiumtueren', 'einzelhandel']
+    related: ['glasdrehtuer', 'trennwand-tuer', 'aluminiumtuer', 'einzelhandel']
   },
 
   'glasvordach-konsolen': {

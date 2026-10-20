@@ -6,7 +6,7 @@ import type { CaseCopy, CaseLabels } from './types';
 export const caseLabelsDe: CaseLabels = {
   home: 'Startseite', projects: 'Projekte', breadcrumbs: 'Brotkrümelnavigation', photos: 'Fotos ansehen', openPhoto: 'Foto öffnen', factsLabel: 'Projektdaten',
   about: 'Über das Projekt', task: 'Aufgabe', solution: 'Unsere Lösung', tech: 'Technische Details', process: 'Umsetzung', projectFact: 'In diesem Projekt', result: 'Ergebnis',
-  benefits: 'Vorteile', gallery: 'Galerie', generalTag: 'Allgemeine Information', service: 'Leistung',
+  benefits: 'Vorteile', gallery: 'Galerie', generalTag: 'Allgemeine Information', service: 'Leistung', also: 'Auch',
   faqIntro: 'Antworten zu Kostenschätzung, Sondermaßen, Material, Montage und Pflege.', relatedEyebrow: 'Weitere Projekte', relatedTitle: 'Weitere umgesetzte Projekte', back: 'Alle Projekte',
   lbLabel: 'Projektfotos ansehen', close: 'Schließen', prev: 'Vorheriges Foto', next: 'Nächstes Foto', of: 'von', viewProject: 'Projekt ansehen'
 };

@@ -29,7 +29,22 @@ const labelsDe: ChildLabels = {
   parentLabel: 'Übersicht',
   austriaEyebrow: 'Anfrage aus Österreich',
   austriaCta: ['Anfrage senden', 'Fotos, Maße oder Grundriss'],
-  contactCta: ['Kontakt und Büros', 'Telefon, E-Mail, Standorte']
+  contactCta: ['Kontakt und Büros', 'Telefon, E-Mail, Standorte'],
+  projectLabel: 'Projekt'
 };
+/**
+ * Child pages that show what a translated project case really contains (case id → child page ids).
+ * Only products named in the case facts (src/content/i18n/intl/cases-*.ts): the case links to them and
+ * each of them links back to the case. The projects stay where they were built (Kyiv / Odesa).
+ */
+export const CASE_CHILDREN: Record<string, string[]> = {
+  osocor: ['terrassenverglasung'],
+  'stair-railing': ['treppengelaender'],
+  'coffee-ocean': ['gastronomie'],
+  'office-odesa': ['buero-trennwand', 'trennwand-tuer', 'buero-glasloesungen'],
+  'hotel-showers': ['walk-in-dusche', 'badewannenaufsatz', 'hotels'],
+  nofilters: ['wandspiegel', 'salon-glas-spiegel']
+};
+
 // EN/ES have no child pages yet; the labels are only read when a locale has them.
 export const childLabels: Record<IntlLocale, ChildLabels> = { en: labelsDe, de: labelsDe, es: labelsDe };

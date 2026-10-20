@@ -13,7 +13,8 @@ import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
 import { INTL_ROUTES, intlHref, type IntlLocale } from '../../i18n/intl-routes';
 import { HUB_VISUALS } from '../../content/i18n/intl/hubs-config';
 import { hubCopy, hubCommon } from '../../content/i18n/intl/hubs';
-import { childCopy, childLabels } from '../../content/i18n/intl/children';
+import { CASE_CHILDREN, childCopy, childLabels } from '../../content/i18n/intl/children';
+import { caseCopy } from '../../content/i18n/intl/cases';
 import { CHILD_IMAGES } from '../../content/i18n/intl/children-config';
 import '../../styles/category-pages.css';
 import '../../styles/shower-master.css';
@@ -32,10 +33,12 @@ const origin = Astro.site ?? Astro.url.origin;
 const pageUrl = absoluteUrl(intlHref(route.id, locale), origin);
 const href = (hubId: string, hash = '') => intlHref(hubId, locale, hash);
 
-// Related pages: the parent hub first, then the siblings named in the content (only those that exist in this locale).
+// Related pages: the parent hub first, then the siblings named in the content (only those that exist in this locale),
+// then the translated project cases that contain this product (CASE_CHILDREN).
 const related = [
   { label: parent.name, href: href(parentId) },
-  ...copy.related.filter((other) => childCopy[locale][other]).map((other) => ({ label: childCopy[locale][other].name, href: href(`child:${other}`) }))
+  ...copy.related.filter((other) => childCopy[locale][other]).map((other) => ({ label: childCopy[locale][other].name, href: href(`child:${other}`) })),
+  ...Object.entries(CASE_CHILDREN).filter(([, children]) => children.includes(id)).map(([caseId]) => ({ label: `${labels.projectLabel}: ${caseCopy[locale][caseId].cardTitle}`, href: href(`case:${caseId}`) }))
 ];
 const crumbs = [
   { label: common.home, href: href('home') },
