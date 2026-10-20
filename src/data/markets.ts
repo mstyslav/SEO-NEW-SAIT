@@ -44,10 +44,15 @@ export interface Market {
   status: 'active' | 'planned';
   /** ISO 3166-1 alpha-2 — schema addressCountry / areaServed, intl-tel-input default country. */
   countryCode: string;
-  /** Country name used in schema.org areaServed (must match what is already published for the market). */
+  /** Country name used in schema.org areaServed / address of the market's organization. */
   schemaCountry: string;
-  /** City added to areaServed next to the country (service-area markets). */
-  schemaCity?: string;
+  /**
+   * The business that serves this market, as its own schema.org Organization (src/seo/schema.ts).
+   * UA and AT are separate legal structures under the common brand Space Glass (owner, 2026-10-20):
+   * separate @id, no parent/sub relation (not confirmed), linked only through `brand`.
+   * legalName only when confirmed by the owner; null = not published, the field is left out.
+   */
+  organization: { id: string; legalName: string | null; /** The part of the site that presents this business. */ url: string } | null;
   country: MarketText;
   /** Main city of the market (Vienna for Austria) — shown as the service-area city, not as an office. */
   primaryCity: MarketText | null;
@@ -94,6 +99,8 @@ export const MARKETS: Record<MarketCode, Market> = {
     status: 'active',
     countryCode: 'UA',
     schemaCountry: 'Ukraine',
+    // The historical #organization node: offices, projects, articles and the founder's site refer to it.
+    organization: { id: 'organization', legalName: null, url: '/' }, // NEEDS INPUT: legal name of the Ukrainian business (not published)
     country: { uk: 'Україна', ru: 'Украина', en: 'Ukraine', de: 'Ukraine', es: 'Ucrania' },
     primaryCity: null,
     presence: 'offices',
@@ -121,8 +128,9 @@ export const MARKETS: Record<MarketCode, Market> = {
     code: 'AT',
     status: 'active',
     countryCode: 'AT',
-    schemaCountry: 'Österreich',
-    schemaCity: 'Wien',
+    schemaCountry: 'Austria',
+    // Confirmed by the owner (2026-10-20): Space Glass KG, Austria. No Firmenbuch number, UID or address published.
+    organization: { id: 'organization-at', legalName: 'Space Glass KG', url: '/de/' },
     country: { uk: 'Австрія', ru: 'Австрия', en: 'Austria', de: 'Österreich', es: 'Austria' },
     primaryCity: { uk: 'Відень', ru: 'Вена', en: 'Vienna', de: 'Wien', es: 'Viena' },
     presence: 'service-area',
@@ -155,6 +163,7 @@ export const MARKETS: Record<MarketCode, Market> = {
     status: 'planned',
     countryCode: 'ES',
     schemaCountry: 'Spain',
+    organization: null,
     country: { uk: 'Іспанія', ru: 'Испания', en: 'Spain', de: 'Spanien', es: 'España' },
     primaryCity: null,
     presence: 'service-area',

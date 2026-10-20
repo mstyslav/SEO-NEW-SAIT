@@ -40,7 +40,7 @@ const { title: rawTitle, description: rawDescription, locale, image = '/images/v
 
 import { localeFromPath, normalizeLocale, stripLocale, localizedPath, supportedLocales, hasLocalizedRoute, isIntlLocale } from '../i18n/helpers';
 import { intlDeOnlyFallback, intlLocales } from '../i18n/intl-routes';
-import { organizationSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
+import { brandSchema, organizationSchema, marketOrganizationSchema, marketOrganizationId, serviceSchema, websiteSchema, webPageSchema, jsonLdGraph } from '../seo/schema';
 import { resolveMarket, marketContacts, whatsappHref } from '../data/markets';
 
 /**
@@ -109,20 +109,32 @@ const heroAlts = {
   de: 'Raumhohe Glastrennwände und Aluminiumkonstruktionen von Space Glass in einem modernen Interieur',
   es: 'Tabiques de vidrio de suelo a techo y estructuras de aluminio de Space Glass en un interior moderno'
 } as const;
+// Organizations: the brand and the Ukrainian business (#organization, publisher of the site) on every page;
+// a page of another market (DE → Austria) adds that market's own business (Space Glass KG) and is about it.
+const pageOrganizationId = marketOrganizationId(origin, pageMarket);
+// schemaType "Service" = a service page: the page stays a WebPage whose main entity is a Service node,
+// provided by the business of the page's market (a WebPage node typed "Service" was not a valid Service).
+const serviceNode = schemaType === 'Service' && !errorPage
+  ? serviceSchema({ canonical: canonical.href, name: title, description, providerId: pageOrganizationId, areaServed: pageMarket.schemaCountry })
+  : undefined;
 const pageSchema = webPageSchema({
   canonical: canonical.href,
   title,
   description,
   image: socialImage.href,
   language: resolvedLocale,
-  type: schemaType,
-  mainEntityId
+  type: serviceNode ? 'WebPage' : schemaType,
+  mainEntityId: mainEntityId ?? (serviceNode ? `${canonical.href}#service` : undefined),
+  aboutId: pageOrganizationId
 });
 const extraStructuredData = Array.isArray(structuredData) ? structuredData : [structuredData];
 const schema = jsonLdGraph([
+  brandSchema(origin),
   organizationSchema(origin, organizationFounders),
-  websiteSchema(origin, resolvedLocale),
+  ...(pageMarket.code !== 'UA' ? [marketOrganizationSchema(origin, pageMarket)] : []),
+  websiteSchema(origin),
   ...(errorPage ? [] : [pageSchema]),
+  ...(serviceNode ? [serviceNode] : []),
   ...extraStructuredData
 ]);
 const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
