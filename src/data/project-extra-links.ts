@@ -16,6 +16,14 @@ export const PROJECT_EXTRA_LINKS: Record<string, [string, string][]> = {
   // link stays the Loft page, this adds the interior-partitions category it also belongs to.
   'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv': [
     ['міжкімнатні скляні перегородки', '/sklyani-perehorodky/mizhkimnatni/']
+  ],
+  // Task 58: aluminium facade (Coffee Ocean) and aluminium entrance group (Artshat), Odesa.
+  'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya': [
+    ['алюмінієві фасадні системи', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/']
+  ],
+  // Artshat: the project data confirms aluminium glazing / facade profile, not entrance doors.
+  'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat': [
+    ['алюмінієві фасадні системи', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/']
   ]
 };
 
@@ -25,10 +33,14 @@ export const PROJECT_EXTRA_LINKS: Record<string, [string, string][]> = {
  * category, so it reads as a call to action instead).
  */
 export const PROJECT_EXTRA_LEAD: Record<string, string> = {
-  'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv': 'Переглянути рішення'
+  'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv': 'Переглянути рішення',
+  'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya': 'Переглянути рішення',
+  'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat': 'Переглянути рішення'
 };
 export const PROJECT_EXTRA_LEAD_RU: Record<string, string> = {
-  'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv': 'Посмотреть решения'
+  'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv': 'Посмотреть решения',
+  'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya': 'Посмотреть решения',
+  'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat': 'Посмотреть решения'
 };
 
 /** Same for the RU project page: RU labels, UA-style hrefs (localized by the template). */
@@ -42,5 +54,11 @@ export const PROJECT_EXTRA_LINKS_RU: Record<string, [string, string][]> = {
   ],
   'mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv': [
     ['межкомнатные стеклянные перегородки', '/sklyani-perehorodky/mizhkimnatni/']
+  ],
+  'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya': [
+    ['алюминиевые фасадные системы', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/']
+  ],
+  'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat': [
+    ['алюминиевые фасадные системы', '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/']
   ]
 };

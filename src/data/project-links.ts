@@ -29,6 +29,8 @@ export const PROJECT_LINKS: Record<string, string[]> = {
   '/bezramne-sklinnya/': ['sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
   '/bezramne-sklinnya/sklinnya-teras-ta-altanok/': ['sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
   // Aluminium
+  // Task 58: real aluminium projects only (materials checked in src/content/projects).
+  '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/': ['zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat'],
   '/alyuminiyevi-konstrukcziyi/': ['teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat', 'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya'],
   // Facades
   '/poslugy/sklyani-fasady/': ['zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya', 'chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat'],
