@@ -20,21 +20,21 @@ const generalGlassSteps = [
 
 export const casesEs: Record<string, CaseCopy> = {
   osocor: {
-    seo: { title: 'Cortinas de cristal en terraza, OSOCOR RESIDENCE, Kiev', description: 'Cortinas de cristal en terraza, barandillas y puertas de vidrio para OSOCOR RESIDENCE en Kiev: el proyecto terminado, los detalles clave y la instalación.' },
-    h1: 'Cortinas de cristal y barandillas de vidrio en una terraza de Kiev',
-    cardTitle: 'Cortinas de cristal en una terraza de Kiev',
-    city: 'Kiev',
+    seo: { title: 'Cortinas de cristal en terraza, OSOCOR RESIDENCE, Kyiv', description: 'Cortinas de cristal en terraza, barandillas y puertas de vidrio para OSOCOR RESIDENCE en Kyiv: el proyecto terminado, los detalles clave y la instalación.' },
+    h1: 'Cortinas de cristal y barandillas de vidrio en una terraza de Kyiv',
+    cardTitle: 'Cortinas de cristal en una terraza de Kyiv',
+    city: 'Kyiv',
     objectType: 'OSOCOR RESIDENCE',
     constructionType: 'Cortinas de cristal, barandillas y puertas de vidrio',
-    shortDescription: 'Cortinas de cristal, barandillas y puertas de vidrio para OSOCOR RESIDENCE en Kiev: protección del viento y la lluvia sin perder las vistas.',
+    shortDescription: 'Cortinas de cristal, barandillas y puertas de vidrio para OSOCOR RESIDENCE en Kyiv: protección del viento y la lluvia sin perder las vistas.',
     categoryLabel: 'Cortinas de cristal',
     facts: [
       { label: 'Tipo', value: 'Cortinas de cristal, barandillas y puertas de vidrio' },
       { label: 'Proyecto', value: 'OSOCOR RESIDENCE' },
-      { label: 'Ciudad', value: 'Kiev' },
+      { label: 'Ciudad', value: 'Kyiv' },
       { label: 'Ejecución', value: 'A medida' }
     ],
-    coverAlt: 'Cortinas de cristal en la terraza de OSOCOR RESIDENCE en Kiev, un proyecto realizado por Space Glass',
+    coverAlt: 'Cortinas de cristal en la terraza de OSOCOR RESIDENCE en Kyiv, un proyecto realizado por Space Glass',
     galleryAlts: ['Vista panorámica del acristalamiento sin perfiles', 'Frente de vidrio de la terraza', 'Barandilla de vidrio transparente', 'Sistema de acristalamiento sin perfiles visto de lado', 'Acristalamiento de la terraza tras la instalación'],
     galleryTitle: 'La terraza tras la instalación',
     task: { title: 'Una solución para OSOCOR RESIDENCE', text: 'El cliente necesitaba un acristalamiento acorde con la geometría de la terraza, su uso diario y los acabados existentes: un resultado cuidado en lugar de una solución estándar.' },

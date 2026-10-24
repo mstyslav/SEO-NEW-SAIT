@@ -186,7 +186,7 @@ export const intlAboutContent: Record<IntlLocale, AboutContent> = {
       ['5000+', 'proyectos realizados para viviendas y empresas en Ucrania y Europa'],
       ['50 000+', 'm² de acristalamiento en edificios residenciales y comerciales de distinta complejidad'],
       ['10+', 'años de experiencia práctica con estructuras de vidrio y aluminio'],
-      ['3+', 'Kiev · Odesa · Leópolis — proyectos de todo tipo en toda Ucrania']
+      ['3+', 'Kyiv · Odesa · Lviv — proyectos de todo tipo en toda Ucrania']
     ],
     directions: {
       eyebrow: 'QUÉ HACEMOS',

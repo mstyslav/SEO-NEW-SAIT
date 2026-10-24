@@ -92,8 +92,8 @@ export const intlFooterText: Record<IntlLocale, { text: FooterText; services: st
       contactsTitle: 'Contacto',
       productsTitle: 'Nuestros productos',
       callSecondary: 'Solicitar una llamada',
-      hours: 'Lun–Vie: 09:00–19:00 (hora de Kiev)',
-      citiesLine: 'Kiev · Leópolis · Odesa',
+      hours: 'Lun–Vie: 09:00–19:00 (hora de Kyiv)',
+      citiesLine: 'Kyiv · Lviv · Odesa',
       brandDescription: 'Estructuras de vidrio de alta gama para viviendas, empresas y proyectos de arquitectura.',
       copyright: '© 2014–2026 Space Glass. Todos los derechos reservados.',
       benefits: [
@@ -113,6 +113,6 @@ export const intlFooterText: Record<IntlLocale, { text: FooterText; services: st
       ['Política de privacidad', '/privacy-policy/'],
       ['Condiciones de uso', '/terms/']
     ],
-    cities: [['Kiev'], ['Odesa'], ['Leópolis'], ['Todos los contactos']]
+    cities: [['Kyiv'], ['Odesa'], ['Lviv'], ['Todos los contactos']]
   }
 };

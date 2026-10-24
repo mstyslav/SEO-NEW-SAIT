@@ -240,7 +240,7 @@ export const projectsPageCopy: Record<IntlLocale, ProjectsPageCopy> = {
     lead: 'Una selección de proyectos para viviendas, hoteles, restaurantes, oficinas y salones: cortinas de cristal, barandillas, fachadas, tabiques, mamparas de ducha y espejos. Cada caso muestra el encargo, la solución, los materiales y el resultado.',
     heroAlt: 'Barandilla de vidrio en una escalera con perfil color latón en un interior moderno y luminoso',
     intro: [
-      'Cada estructura de esta página fue diseñada, fabricada e instalada por Space Glass según las medidas de una obra real, la mayoría en Odesa y Kiev, donde nuestros equipos trabajan a diario.',
+      'Cada estructura de esta página fue diseñada, fabricada e instalada por Space Glass según las medidas de una obra real, la mayoría en Odesa y Kyiv, donde nuestros equipos trabajan a diario.',
       'Aquí solo encontrará los casos descritos por completo en español. Si planea algo parecido, envíenos fotos o planos y le propondremos una solución con un presupuesto orientativo.'
     ],
     gridTitle: 'Proyectos seleccionados',

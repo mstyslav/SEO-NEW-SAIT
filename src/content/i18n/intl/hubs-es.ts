@@ -17,12 +17,12 @@ export const hubCommonEs: HubCommon = {
     ['Instalación', 'Montaje, ajuste y entrega']
   ],
   areaEyebrow: 'Dónde trabajamos',
-  areaTitle: 'Medición e instalación en Kiev, Odesa y Leópolis',
+  areaTitle: 'Medición e instalación en Kyiv, Odesa y Lviv',
   areaParagraphs: [
-    'Nuestros equipos realizan la medición, la fabricación y la instalación en Kiev, Odesa y Leópolis y sus regiones. Los proyectos en otras partes de Ucrania se acuerdan de forma individual.',
+    'Nuestros equipos realizan la medición, la fabricación y la instalación en Kyiv, Odesa y Lviv y sus regiones. Los proyectos en otras partes de Ucrania se acuerdan de forma individual.',
     'También podemos enviar productos y estructuras seleccionados a otros países europeos: envíenos planos o fotos y la ubicación, y le diremos qué podemos suministrar y cómo.'
   ],
-  offices: [['Kiev', 'oficina e instalación'], ['Odesa', 'oficina e instalación'], ['Leópolis', 'oficina e instalación']],
+  offices: [['Kyiv', 'oficina e instalación'], ['Odesa', 'oficina e instalación'], ['Lviv', 'oficina e instalación']],
   projectsEyebrow: 'Portafolio',
   projectsTitle: 'Proyectos realizados',
   allProjects: 'Todos los proyectos',
@@ -46,7 +46,7 @@ export const hubsEs: Record<string, HubCopy> = {
         'Medimos la obra, elegimos sistema, vidrio y herrajes, preparamos planos y especificaciones, fabricamos con nuestra maquinaria según las medidas aprobadas, enviamos e instalamos, y seguimos disponibles para ajustes y servicio.',
         'Desde 2014 hemos realizado más de 5000 proyectos para viviendas y empresas e instalado más de 50 000 m² de acristalamiento.'
       ],
-      spec: [['5000+ proyectos', 'para viviendas y empresas'], ['50 000+ m²', 'de acristalamiento instalado'], ['10+ años', 'de experiencia práctica'], ['Kiev · Odesa · Leópolis', 'oficinas y equipos de instalación']]
+      spec: [['5000+ proyectos', 'para viviendas y empresas'], ['50 000+ m²', 'de acristalamiento instalado'], ['10+ años', 'de experiencia práctica'], ['Kyiv · Odesa · Lviv', 'oficinas y equipos de instalación']]
     },
     types: {
       eyebrow: 'Productos',
@@ -85,7 +85,7 @@ export const hubsEs: Record<string, HubCopy> = {
         ['¿Cómo obtengo un presupuesto orientativo?', 'Envíe fotos de la obra, medidas aproximadas y una breve descripción a través del formulario. Valoramos el tipo de estructura y le respondemos con una propuesta y una estimación.'],
         ['¿Qué debo enviar para el presupuesto?', 'Fotos de la zona de instalación, medidas aproximadas y la ubicación. Si tiene planos, un proyecto de interiorismo o preferencias de vidrio y herrajes, añádalos.'],
         ['¿Hacen mediciones en obra?', 'Sí. Una medición profesional registra la geometría real y los soportes de anclaje, imprescindible para una fabricación precisa.'],
-        ['¿Dónde ofrecen medición?', 'Nuestros equipos trabajan en Kiev, Odesa y Leópolis y sus regiones. Otras ubicaciones se acuerdan según la estructura y la logística.'],
+        ['¿Dónde ofrecen medición?', 'Nuestros equipos trabajan en Kyiv, Odesa y Lviv y sus regiones. Otras ubicaciones se acuerdan según la estructura y la logística.'],
         ['¿Trabajan con planos DWG o PDF?', 'Sí. Revisamos los planos de arquitectos y diseñadores, aclaramos los encuentros y adaptamos la solución a las condiciones reales.'],
         ['¿Preparan planos técnicos?', 'Sí. Antes de fabricar, nuestro equipo prepara planos, detalles de anclaje y una especificación de materiales para su aprobación.'],
         ['¿Puedo pedir la estructura sin instalación?', 'Sí, para algunos sistemas: si tiene instaladores propios, suministramos la estructura con documentación técnica y recomendaciones de montaje.'],
@@ -261,7 +261,7 @@ export const hubsEs: Record<string, HubCopy> = {
         'Fabricamos las puertas según el hueco real: abatibles sin marco y puertas loft con perfil fino, correderas con rodamientos o con marco y pivotantes para entradas con mucho tránsito. Elegimos vidrio, decoración y herrajes para cada proyecto.',
         'Solo usamos vidrio templado (8–10 mm) o laminado; los taladros para los herrajes se hacen antes del templado.'
       ],
-      spec: [['Vidrio 8–12 mm', 'templado o laminado'], ['A medida del hueco', 'sin tapajuntas ni precercos'], ['Decoración y logotipo', 'mateado según su diseño'], ['Kiev · Odesa · Leópolis', 'medición, instalación y servicio']]
+      spec: [['Vidrio 8–12 mm', 'templado o laminado'], ['A medida del hueco', 'sin tapajuntas ni precercos'], ['Decoración y logotipo', 'mateado según su diseño'], ['Kyiv · Odesa · Lviv', 'medición, instalación y servicio']]
     },
     types: {
       eyebrow: 'Tipos',
@@ -538,7 +538,7 @@ export const hubsEs: Record<string, HubCopy> = {
         'Elegimos el sistema según el uso: terraza de temporada o salón adicional, paso frecuente o costa ventosa, apertura manual o con mando. Para las estaciones frías hay sistemas con doble acristalamiento.',
         'Nos ocupamos de todo: medición y revisión del forjado, despiece de hojas y zona de recogida, fabricación con vidrio templado, instalación y servicio.'
       ],
-      spec: [['29 sistemas', 'plegables, correderos, guillotina, sin umbral'], ['Vidrio 8–10 mm', 'o doble acristalamiento 20–28 mm'], ['Hasta 4 m de alto', 'umbral desde 0 mm'], ['Kiev · Odesa · Leópolis', 'medición, instalación y servicio']]
+      spec: [['29 sistemas', 'plegables, correderos, guillotina, sin umbral'], ['Vidrio 8–10 mm', 'o doble acristalamiento 20–28 mm'], ['Hasta 4 m de alto', 'umbral desde 0 mm'], ['Kyiv · Odesa · Lviv', 'medición, instalación y servicio']]
     },
     types: {
       eyebrow: 'Sistemas',

@@ -284,7 +284,7 @@ export const intlHomeContent: Record<IntlLocale, IntlHomeContent> = {
       intro: 'Respuestas sobre presupuestos, mediciones, fabricación, envío, instalación, garantía y servicio.',
       items: [
         ['¿Cómo obtengo un presupuesto orientativo?', 'Envíenos fotos, medidas aproximadas o un plano. Aclaramos los detalles y preparamos una estimación.'],
-        ['¿Dónde instalan?', 'Nuestros equipos de instalación trabajan en Kiev, Leópolis y Odesa y sus regiones. Otras ubicaciones se acuerdan para cada proyecto.'],
+        ['¿Dónde instalan?', 'Nuestros equipos de instalación trabajan en Kyiv, Lviv y Odesa y sus regiones. Otras ubicaciones se acuerdan para cada proyecto.'],
         ['¿Envían a otros países de Europa?', 'Sí, podemos enviar productos y estructuras seleccionados a países europeos. El envío y la instalación en el extranjero se acuerdan de forma individual para cada proyecto.'],
         ['¿Trabajan con proyectos comerciales?', 'Sí, realizamos proyectos para oficinas, comercios, restaurantes, hoteles y clínicas.'],
         ['¿Se pueden pedir estructuras a medida?', 'Sí, la mayoría de las estructuras se fabrican a medida tras una revisión técnica de la obra.'],
