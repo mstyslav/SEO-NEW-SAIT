@@ -1,0 +1,28 @@
+---
+// Ukraine + Austria SVG maps for the Contacts pages (all five locales). Outlines and marker positions come from
+// src/data/contact-maps.ts (generated from Natural Earth, see scripts/generate-contact-maps.mjs); markers live inside the
+// SVG, never positioned with CSS. Wien is a service area (ring marker), the three Ukrainian cities are offices (dots).
+import { CONTACT_MAPS, CONTACT_MAP_VIEWBOX } from '../../data/contact-maps';
+
+type Locale = 'uk' | 'ru' | 'en' | 'de' | 'es';
+interface Props { locale: Locale; marketOrder?: 'ukraine-first' | 'austria-first' }
+const { locale, marketOrder = 'ukraine-first' } = Astro.props;
+
+const T: Record<Locale, { cities: Record<'kyiv' | 'odesa' | 'lviv' | 'wien', string>; ukraine: [string, string]; austria: [string, string] }> = {
+  uk: { cities: { kyiv: 'Київ', odesa: 'Одеса', lviv: 'Львів', wien: 'Відень' }, ukraine: ['Карта України з містами Львів, Київ і Одеса', 'Україна — офіси в Києві, Одесі та Львові'], austria: ['Карта Австрії з позначкою Відня', 'Австрія — зона обслуговування, Відень'] },
+  ru: { cities: { kyiv: 'Киев', odesa: 'Одесса', lviv: 'Львов', wien: 'Вена' }, ukraine: ['Карта Украины с городами Львов, Киев и Одесса', 'Украина — офисы в Киеве, Одессе и Львове'], austria: ['Карта Австрии с отметкой Вены', 'Австрия — зона обслуживания, Вена'] },
+  en: { cities: { kyiv: 'Kyiv', odesa: 'Odesa', lviv: 'Lviv', wien: 'Vienna' }, ukraine: ['Map of Ukraine with Lviv, Kyiv and Odesa', 'Ukraine — offices in Kyiv, Odesa and Lviv'], austria: ['Map of Austria with Vienna marked', 'Projects in Vienna and Austria'] },
+  de: { cities: { kyiv: 'Kyjiw', odesa: 'Odesa', lviv: 'Lwiw', wien: 'Wien' }, ukraine: ['Karte der Ukraine mit Lwiw, Kyjiw und Odesa', 'Ukraine — Standorte in Kyjiw, Odesa und Lwiw'], austria: ['Karte von Österreich mit Wien', 'Projekte in Wien und Österreich'] },
+  es: { cities: { kyiv: 'Kyiv', odesa: 'Odesa', lviv: 'Lviv', wien: 'Viena' }, ukraine: ['Mapa de Ucrania con Lviv, Kyiv y Odesa', 'Ucrania — oficinas en Kyiv, Odesa y Lviv'], austria: ['Mapa de Austria con Viena', 'Proyectos en Viena y Austria'] }
+};
+const t = T[locale];
+const viewBox = `0 0 ${CONTACT_MAP_VIEWBOX.width} ${CONTACT_MAP_VIEWBOX.height}`;
+const ukCities = (['lviv', 'kyiv', 'odesa'] as const).map((id) => ({ id, label: t.cities[id], ...CONTACT_MAPS.ukraine.markers[id] }));
+const wien = CONTACT_MAPS.austria.markers.wien;
+const order = marketOrder === 'austria-first' ? ['austria', 'ukraine'] : ['ukraine', 'austria'];
+---
+<div class="contacts-maps" data-map-order={marketOrder}>
+  {order.map((key) => key === 'ukraine'
+    ? <figure class="contacts-map contacts-map--ukraine" role="img" aria-label={t.ukraine[0]}><svg viewBox={viewBox} aria-hidden="true" focusable="false"><path class="contacts-map__outline" d={CONTACT_MAPS.ukraine.path}/>{ukCities.map((c) => <g class="contacts-map__city" data-city={c.id}><circle cx={c.x} cy={c.y} r="5"/><text x={c.x + 11} y={c.y + 5}>{c.label}</text></g>)}</svg><figcaption>{t.ukraine[1]}</figcaption></figure>
+    : <figure class="contacts-map contacts-map--austria" role="img" aria-label={t.austria[0]}><svg viewBox={viewBox} aria-hidden="true" focusable="false"><path class="contacts-map__outline" d={CONTACT_MAPS.austria.path}/><g class="contacts-map__city contacts-map__city--area" data-city="wien"><circle cx={wien.x} cy={wien.y} r="5"/><text x={wien.x - 11} y={wien.y + 5} text-anchor="end">{t.cities.wien}</text></g></svg><figcaption>{t.austria[1]}</figcaption></figure>)}
+</div>

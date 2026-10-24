@@ -208,3 +208,7 @@
   .contacts-markets { gap:12px; }
   .contacts-market { padding:22px 20px; }
 }
+
+/* International contacts: the section is a block, so space the maps and the markets row. */
+.contacts-geography--intl .contacts-maps { margin-top:clamp(28px, 4vw, 48px); }
+.contacts-geography--intl .contacts-markets { margin-top:14px; }
