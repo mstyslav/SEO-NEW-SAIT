@@ -20,32 +20,32 @@ const PAGE_LANG=(root.lang||pageLang).slice(0,5);
 const TI={
   en:{title:'Thank you',title2:'Request sent',text:'Our manager will contact you during business hours to clarify the details and prepare a quote.',product:'Request',ok:'OK',call:'Call us',close:'Close',
     jobText:'We have received your application and will contact you to discuss the details.',
-    sending:'Sending…',status:'Sending your request securely…',phone:'Please check the phone number and country code.',
+    sending:'Sending…',status:'Sending your request securely…',req:'Please fill out this field.',email:'Please enter a valid email address.',check:'Please tick this box to continue.',phone:'Please check the phone number and country code.',
     error:'The request could not be sent online. Please call +380 73 425 14 00 or try again.',tooMany:'Too many requests in a row. Please wait a minute and try again.',
     fileSize:'The file is too large — 10 MB maximum.',fileType:'This file type is not supported. Please attach JPG, PNG, WEBP, PDF or DWG.',
     fileNotSent:'Your request was sent, but the file could not be transferred — our manager will ask for it when calling.'},
   de:{title:'Vielen Dank',title2:'Anfrage gesendet',text:'Unser Team meldet sich während der Geschäftszeiten bei Ihnen, klärt die Details und erstellt eine Kostenschätzung.',product:'Anfrage',ok:'OK',call:'Anrufen',more:'Weitere Lösungen',moreHref:'/de/leistungen/',close:'Schließen',
     jobText:'Wir haben Ihre Bewerbung erhalten und melden uns, um die Details zu besprechen.',
-    sending:'Wird gesendet…',status:'Ihre Anfrage wird sicher übermittelt…',phone:'Bitte prüfen Sie die Telefonnummer und die Landesvorwahl.',
+    sending:'Wird gesendet…',status:'Ihre Anfrage wird sicher übermittelt…',req:'Bitte füllen Sie dieses Feld aus.',email:'Bitte geben Sie eine gültige E-Mail-Adresse ein.',check:'Bitte setzen Sie dieses Häkchen, um fortzufahren.',phone:'Bitte prüfen Sie die Telefonnummer und die Landesvorwahl.',
     error:'Die Anfrage konnte nicht online gesendet werden. Rufen Sie uns an: +380 73 425 14 00, oder versuchen Sie es erneut.',tooMany:'Zu viele Anfragen in kurzer Zeit. Bitte warten Sie eine Minute und versuchen Sie es erneut.',
     fileSize:'Die Datei ist zu groß — maximal 10 MB.',fileType:'Dieser Dateityp wird nicht unterstützt. Bitte JPG, PNG, WEBP, PDF oder DWG anhängen.',
     fileNotSent:'Ihre Anfrage wurde gesendet, die Datei konnte jedoch nicht übertragen werden — wir fragen beim Rückruf danach.'},
   es:{title:'¡Gracias',title2:'Solicitud enviada',text:'Nuestro equipo le contactará en horario laboral para aclarar los detalles y preparar el presupuesto.',product:'Solicitud',ok:'De acuerdo',call:'Llamar',close:'Cerrar',
     jobText:'Hemos recibido su candidatura y le contactaremos para hablar de los detalles.',
-    sending:'Enviando…',status:'Enviando su solicitud de forma segura…',phone:'Compruebe el número de teléfono y el prefijo del país.',
+    sending:'Enviando…',status:'Enviando su solicitud de forma segura…',req:'Por favor, complete este campo.',email:'Introduzca una dirección de correo electrónico válida.',check:'Marque esta casilla para continuar.',phone:'Compruebe el número de teléfono y el prefijo del país.',
     error:'No se ha podido enviar la solicitud en línea. Llame al +380 73 425 14 00 o inténtelo de nuevo.',tooMany:'Demasiadas solicitudes seguidas. Espere un minuto y vuelva a intentarlo.',
     fileSize:'El archivo es demasiado grande: máximo 10 MB.',fileType:'Este tipo de archivo no es compatible. Adjunte JPG, PNG, WEBP, PDF o DWG.',
     fileNotSent:'La solicitud se ha enviado, pero no se ha podido transferir el archivo: se lo pediremos al llamarle.'}
 };
 const T=TI[pageLang]||(isRu?{title:'Спасибо',title2:'Заявка отправлена',text:'Менеджер свяжется с вами в ближайшее рабочее время, уточнит детали и подготовит расчёт.',product:'Запрос',ok:'Хорошо',call:'Позвонить нам',close:'Закрыть',
     jobText:'Мы получили вашу заявку и свяжемся с вами, чтобы обсудить детали.',
-    sending:'Отправляем…',status:'Безопасно передаём ваш запрос…',phone:'Проверьте номер телефона и код страны.',
+    sending:'Отправляем…',status:'Безопасно передаём ваш запрос…',req:'Пожалуйста, заполните это поле.',email:'Введите корректный адрес электронной почты.',check:'Поставьте отметку, чтобы продолжить.',phone:'Проверьте номер телефона и код страны.',
     error:'Не удалось отправить онлайн. Позвоните +38 (073) 425 14 00 или попробуйте ещё раз.',tooMany:'Слишком много заявок подряд. Подождите минуту и попробуйте снова.',
     fileSize:'Файл слишком большой — максимум 10 МБ.',fileType:'Этот тип файла не поддерживается. Прикрепите JPG, PNG, WEBP, PDF или DWG.',
     fileNotSent:'Заявка отправлена, но файл не удалось передать — менеджер попросит его при звонке.'}
   :{title:'Дякуємо',title2:'Заявку надіслано',text:'Менеджер зв’яжеться з вами найближчим робочим часом, уточнить деталі та підготує розрахунок.',product:'Запит',ok:'Добре',call:'Зателефонувати нам',close:'Закрити',
     jobText:'Ми отримали вашу заявку та зв’яжемося з вами, щоб обговорити деталі.',
-    sending:'Надсилаємо…',status:'Безпечно передаємо ваш запит…',phone:'Перевірте номер телефону та код країни.',
+    sending:'Надсилаємо…',status:'Безпечно передаємо ваш запит…',req:'Будь ласка, заповніть це поле.',email:'Введіть коректну адресу електронної пошти.',check:'Поставте позначку, щоб продовжити.',phone:'Перевірте номер телефону та код країни.',
     error:'Не вдалося надіслати онлайн. Зателефонуйте +38 (073) 425 14 00 або спробуйте ще раз.',tooMany:'Забагато заявок поспіль. Зачекайте хвилину та спробуйте знову.',
     fileSize:'Файл завеликий — максимум 10 МБ.',fileType:'Цей тип файлу не підтримується. Додайте JPG, PNG, WEBP, PDF або DWG.',
     fileNotSent:'Заявку надіслано, але файл не вдалося передати — менеджер попросить його під час дзвінка.'});
@@ -144,6 +144,39 @@ if(CALL_SHOWN&&T.error){T.error=T.error.replace(/\+380 73 425 14 00|\+38 \(073\)
 // No callable phone for this market (Austria until its own number exists): offer the e-mail instead of the company phone.
 if(!CALL_TEL){const ERR_MAIL={uk:'Не вдалося надіслати онлайн. Напишіть на '+CONTACT_EMAIL+' або спробуйте ще раз.',ru:'Не удалось отправить онлайн. Напишите на '+CONTACT_EMAIL+' или попробуйте ещё раз.',en:'The request could not be sent online. Please write to '+CONTACT_EMAIL+' or try again.',de:'Die Anfrage konnte nicht online gesendet werden. Schreiben Sie uns an '+CONTACT_EMAIL+' oder versuchen Sie es erneut.',es:'No se ha podido enviar la solicitud en línea. Escríbanos a '+CONTACT_EMAIL+' o inténtelo de nuevo.'};T.error=ERR_MAIL[pageLang]||ERR_MAIL.uk;}
 const PHONE_ERROR=TI[pageLang]?TI[pageLang].phone:isRu?'Проверьте номер телефона и код страны.':'Перевірте номер телефону та код країни.';
+// Native validation bubbles are written in the BROWSER's language, so an English browser shows "Please fill out this field."
+// on a Ukrainian page. Keep the native validation (required, focus on the first invalid field, screen-reader announcement)
+// and only replace its text with the page language. The phone field keeps its own message (validatePhone) when it is filled but invalid.
+const FIELD_ERROR=el=>{
+  const v=el.validity;
+  if(v.valueMissing) return el.type==='checkbox'||el.type==='radio'?T.check:T.req;
+  if(v.typeMismatch&&el.type==='email') return T.email;
+  return '';
+};
+const clearFieldError=el=>{
+  if(el.dataset.sgMsg!=='1') return;
+  el.setCustomValidity(''); delete el.dataset.sgMsg;
+  if(el.name!=='phone') el.removeAttribute('aria-invalid');
+};
+document.addEventListener('invalid',event=>{
+  const el=event.target;
+  if(!el.form||!el.form.hasAttribute('data-lead-form')||!el.setCustomValidity) return;
+  if(el.validity.customError&&el.dataset.sgMsg!=='1') return; // e.g. the phone message: keep it
+  el.setCustomValidity(''); // re-evaluate the built-in state before choosing a message
+  const text=FIELD_ERROR(el);
+  if(!text) return;
+  el.setCustomValidity(text); el.dataset.sgMsg='1';
+  // The phone field has its own aria-invalid handling (and the status line), so it is not marked here.
+  if(el.name!=='phone') el.setAttribute('aria-invalid','true');
+},true);
+['input','change'].forEach(type=>document.addEventListener(type,event=>{
+  const el=event.target;
+  if(el&&el.form&&el.form.hasAttribute('data-lead-form')) clearFieldError(el);
+},true));
+document.addEventListener('reset',event=>{
+  const form=event.target;
+  if(form&&form.hasAttribute&&form.hasAttribute('data-lead-form')) form.querySelectorAll('[data-sg-msg]').forEach(clearFieldError);
+},true);
 const ITI_BASE='/vendor/intl-tel-input-29.5.3/';
 const PHONE_COUNTRIES=['ua','at','it','de','pl','es','cz','sk','fr','ch','md','ro'];
 const phoneInputs=[...document.querySelectorAll('[data-lead-form] input[type="tel"][name="phone"]')];
