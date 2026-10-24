@@ -1,5 +1,5 @@
 """Glass element drawing: 743 x 1399 mm, 6 mm clear, polished edges, R100 on top-right corner.
-Outputs glass_743x1399_R100.dxf and glass_743x1399_R100.pdf next to this script."""
+Outputs glass_689x1399_R100.dxf and glass_689x1399_R100.pdf next to this script."""
 import math
 import os
 import ezdxf
@@ -8,10 +8,10 @@ from reportlab.lib.pagesizes import A4, landscape
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-W, H, R = 743.0, 1399.0, 100.0
+W, H, R = 689.0, 1399.0, 100.0
 BULGE = math.tan(math.radians(90) / 4)
 OUT = os.path.dirname(os.path.abspath(__file__))
-NAME = "glass_743x1399_R100"
+NAME = "glass_689x1399_R100"
 NOTES = [
     "Скло 6 мм, прозоре",
     "Євро-кромка, полірування",
@@ -49,7 +49,7 @@ mm = 72 / 25.4
 S = 1 / 8
 pw, ph = landscape(A4)
 c = canvas.Canvas(os.path.join(OUT, NAME + ".pdf"), pagesize=(pw, ph))
-c.setTitle("Елемент 743x1399 R100")
+c.setTitle("Елемент 689x1399 R100")
 ox, oy = 45 * mm, 17 * mm  # glass origin on page
 w, h, r = W * S * mm, H * S * mm, R * S * mm
 c.setLineWidth(1.4)
