@@ -253,3 +253,18 @@ export function getCatalogNavigation(locale: Locale = 'uk'): CatalogNavigationCa
 // Backward-compatible uk-only export for any caller that hasn't moved to
 // getCatalogNavigation(locale) yet.
 export const catalogNavigation = getCatalogNavigation('uk');
+
+// Header menus only (desktop mega menu + mobile accordion): shower trays are a standalone
+// catalog direction next to the shower category. The URL stays under /dushovi-kabiny/ and the
+// /catalog/ cards, About directions and other getCatalogNavigation() consumers are unchanged.
+export function getHeaderCatalogNavigation(locale: Locale = 'uk'): CatalogNavigationCategory[] {
+  const categories = getCatalogNavigation(locale);
+  const piddony: CatalogNavigationCategory = {
+    slug: 'dushovi-piddony',
+    name: locale === 'uk' ? 'Душові піддони' : 'Душевые поддоны',
+    href: '/dushovi-kabiny/dushovi-piddony/',
+    services: []
+  };
+  const showerIndex = categories.findIndex((category) => category.slug === 'dushovi-konstruktsii');
+  return [...categories.slice(0, showerIndex + 1), piddony, ...categories.slice(showerIndex + 1)];
+}

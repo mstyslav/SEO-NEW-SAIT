@@ -3,7 +3,7 @@ import translations from '../i18n/translations.json';
 import i18nConfig from '../i18n/config.json';
 import { hasLocalizedRoute, isIntlLocale, localeFromPath, localizedPath, normalizeLocale, supportedLocales } from '../i18n/helpers';
 import type { Locale } from '../i18n/helpers';
-import { getCatalogNavigation } from '../data/catalog-navigation';
+import { getHeaderCatalogNavigation } from '../data/catalog-navigation';
 import { intlCatalogNavigation } from '../content/i18n/intl/navigation';
 
 const requestedLocale = Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname);
@@ -11,7 +11,7 @@ const locale = normalizeLocale(requestedLocale);
 const intl = isIntlLocale(locale);
 const t = translations[locale] ?? translations.uk;
 const localeInfo = i18nConfig.locales[locale] ?? i18nConfig.locales.uk;
-const catalogNavigation = intl ? intlCatalogNavigation(locale) : getCatalogNavigation(locale);
+const catalogNavigation = intl ? intlCatalogNavigation(locale) : getHeaderCatalogNavigation(locale);
 const currentPath = Astro.url.pathname;
 const lp = (path: string) => localizedPath(path, locale);
 
@@ -94,7 +94,7 @@ const INTL_INLINE_CSS = '.sg-nav-actions>.nav-icon--phone{order:5}@media(max-wid
   </div>
   <section class="sg-ua-catalog-menu" id="sg-ua-catalog-menu" aria-label={t.catalogCategoriesAria} data-ua-catalog-menu hidden>
     <div class="sg-ua-catalog-menu__grid">
-      {catalogNavigation.map(category => <section class="sg-ua-catalog-menu__group"><h2><a href={lp(category.href)}>{category.name}</a></h2>{category.services.length > 0 ? <ul>{category.services.map(service => <li><a href={lp(service.path)}>{service.shortName}</a></li>)}</ul> : category.note && <p class="sg-ua-catalog-menu__note">{category.note}</p>}</section>)}
+      {catalogNavigation.map(category => <section class="sg-ua-catalog-menu__group"><p class="sg-ua-catalog-menu__title"><a href={lp(category.href)}>{category.name}</a></p>{category.services.length > 0 ? <ul>{category.services.map(service => <li><a href={lp(service.path)}>{service.shortName}</a></li>)}</ul> : category.note && <p class="sg-ua-catalog-menu__note">{category.note}</p>}</section>)}
     </div>
     {!intl && <div class="sg-ua-catalog-menu__cities" aria-label={t.searchByCityLabel}>
       <span>⌖ {t.searchByCityLabel}</span>
@@ -215,7 +215,7 @@ const INTL_INLINE_CSS = '.sg-nav-actions>.nav-icon--phone{order:5}@media(max-wid
     }
     .sg-ua-catalog-menu__group:nth-child(5n + 1){padding-left:0;border-left:0}
     .sg-ua-catalog-menu__group:nth-child(n + 6){padding-top:12px;border-top:1px solid rgba(127,215,189,.28)}
-    .sg-ua-catalog-menu__group h2{
+    .sg-ua-catalog-menu__group .sg-ua-catalog-menu__title{
       margin:0!important;
       padding-bottom:8px;
       border-bottom:1px solid rgba(127,215,189,.58);
@@ -224,9 +224,9 @@ const INTL_INLINE_CSS = '.sg-nav-actions>.nav-icon--phone{order:5}@media(max-wid
       font-weight:650!important;
       letter-spacing:0!important;
     }
-    .sg-ua-catalog-menu__group h2 a{color:#fff;text-decoration:none}
-    .sg-ua-catalog-menu__group h2 a:hover,
-    .sg-ua-catalog-menu__group h2 a:focus-visible{color:var(--mint)}
+    .sg-ua-catalog-menu__group .sg-ua-catalog-menu__title a{color:#fff;text-decoration:none}
+    .sg-ua-catalog-menu__group .sg-ua-catalog-menu__title a:hover,
+    .sg-ua-catalog-menu__group .sg-ua-catalog-menu__title a:focus-visible{color:var(--mint)}
     .sg-ua-catalog-menu__group ul{display:grid;gap:2px;margin:7px 0 0;padding:0;list-style:none}
     .sg-ua-catalog-menu__group li{font-size:12px;line-height:1.4}
     .sg-ua-catalog-menu__group li a{color:#c1c9c5;text-decoration:none}

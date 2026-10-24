@@ -67,6 +67,19 @@ const bySize = [
   ['Walk-In / большой', '900×1400 – 900×1600 мм', 'Вытянутая зона под открытую перегородку без дверей.']
 ];
 
+// --- Size table (only sizes that exist in the catalog data) -------------------
+const sizeZone = (size: string) => {
+  const [w, d] = size.split('×').map(Number);
+  const area = (w * d) / 1_000_000;
+  return area <= 0.81 ? 'Компактный душ' : area <= 1.1 ? 'Стандарт' : 'Walk-In / большой';
+};
+const sizeRows = [...new Set(piddonySeries.flatMap((s) => s.sizes))]
+  .map((size) => {
+    const [w, d] = size.split('×').map(Number);
+    return { size, w, d, zone: sizeZone(size), series: piddonySeries.filter((s) => s.sizes.includes(size)).map((s) => s.publicName) };
+  })
+  .sort((a, b) => a.w * a.d - b.w * b.d || a.w - b.w);
+
 // --- How to choose -------------------------------------------------------
 const chooseSteps = [
   ['Измерьте зону', 'Ширина и глубина мокрой зоны по чистовой отделке с учётом будущего стекла.'],
@@ -163,8 +176,8 @@ const tableHeads = ['Поддон', 'Форма', 'Размеры, мм', 'То�
   <main id="main">
     <section class="category-hero category-hero--photo">
       <div class="category-hero__copy">
-        <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: 'Душевые кабины', href: lp('/dushovi-kabiny/') }, { label: title }]} />
-        <p class="eyebrow">Душевые кабины / Поддоны</p>
+        <Breadcrumbs items={[{ label: 'Главная', href: lp('/') }, { label: title }]} />
+        <p class="eyebrow">Каталог / Душевые поддоны</p>
         <h1>Душевые поддоны</h1>
         <p class="lead">Душевые поддоны из искусственного камня под стеклянную душевую Space Glass. Квадратные, прямоугольные и пятиугольные поддоны с сифоном в комплекте и противоскольжением. Подбираем поддон по размеру и форме душевой зоны, согласуем со стеклом, организуем доставку и монтаж.</p>
         <div class="hero__actions">
@@ -344,6 +357,21 @@ const tableHeads = ['Поддон', 'Форма', 'Размеры, мм', 'То�
             <div class="category-steps__item"><span>{size}</span><b>{name}</b><p>{text}</p></div>
           ))}
         </div>
+      </div>
+
+      <div class="material-subblock">
+        <h3 class="piddon-zone-size-title">Размеры в каталоге</h3>
+        <div class="piddon-table-wrap">
+          <table class="piddon-table piddon-table--sizes" aria-label="Размеры душевых поддонов в каталоге Space Glass">
+            <thead><tr><th scope="col">Размер, мм</th><th scope="col">Зона</th><th scope="col">Серии в каталоге</th></tr></thead>
+            <tbody>
+              {sizeRows.map((row) => (
+                <tr><th scope="row">{row.size}</th><td>{row.zone}</td><td>{row.series.join(', ')}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="piddon-note">Перечень — размеры, представленные в каталоге, в миллиметрах (ширина × глубина). Подбирайте размер по фактической мокрой зоне после чистовой отделки; наличие конкретной комплектации и другие размеры уточняйте у менеджера. Цены — в таблице сравнения выше.</p>
       </div>
     </section>
 
@@ -1184,6 +1212,12 @@ const tableHeads = ['Поддон', 'Форма', 'Размеры, мм', 'То�
   .piddon-table td:last-child{font-weight:700}
   .piddon-table tbody tr:last-child th,
   .piddon-table tbody tr:last-child td{border-bottom:0}
+  .piddon-table.piddon-table--sizes{min-width:0}
+  .piddon-table.piddon-table--sizes th:nth-child(1){width:22%}
+  .piddon-table.piddon-table--sizes th:nth-child(2){width:26%}
+  .piddon-table.piddon-table--sizes th:nth-child(3){width:52%}
+  .piddon-table.piddon-table--sizes th:last-child,
+  .piddon-table.piddon-table--sizes td:last-child{white-space:normal;font-weight:400;font-variant-numeric:normal}
 
   .piddon-desktop-break,
   .piddon-install-break{display:none}

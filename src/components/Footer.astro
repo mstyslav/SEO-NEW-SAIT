@@ -18,6 +18,8 @@ const categoryLabels = intl ? intlNav.map(({ name }) => name) : (categoryLabelsB
 const categoryHrefs = intl ? intlNav.map(({ href }) => href) : ['/dushovi-kabiny/','/dzerkala/','/sklyani-perehorodky/','/sklyani-dveri/','/sklyani-ohorozhi/','/sklyani-kozyrky/','/bezramne-sklinnya/','/alyuminiyevi-konstrukcziyi/','/poslugy/sklyani-fasady/','/metaloplastykovi-konstrukcziyi/','/dlya-biznesu/'];
 const categoryTypes = ['shower','mirror','partition','door','railing','canopy','frameless','aluminium','facade',intl ? 'winter-garden' : 'pvc','business-glass'];
 const categories = categoryLabels.map((label, i) => [label, categoryHrefs[i]]);
+// Shower trays are a standalone catalog direction (UA/RU only); the URL stays under /dushovi-kabiny/.
+if (!intl) categories.splice(1, 0, [locale === 'ru' ? 'Душевые поддоны' : 'Душові піддони', '/dushovi-kabiny/dushovi-piddony/']);
 // Desktop (≥1281px) shows the categories as two independent columns (CSS multi-column,
 // see the <style> below) so a two-line label in one column no longer pushes the other
 // column down. The DOM lists the left column (items 1,3,5,…) then the right one (2,4,6,…),
