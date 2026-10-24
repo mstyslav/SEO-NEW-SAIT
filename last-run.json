@@ -1,19 +1,20 @@
 {
  "status": "SUBMITTED",
  "reason": "",
- "commit": "620e8788207d2aeb7bce6bfb6c3244272053d91d",
+ "commit": "27af76133bc82e10ec014f44aa455cb8e500aebf",
  "verifiedVia": "Workers Builds check-run + production /deploy-version.txt",
  "changed": {
   "added": [],
   "updated": [
-   "/ru/alyuminiyevi-konstrukcziyi/pergoly/",
-   "/ru/bezramne-sklinnya/sklinnya-teras-ta-altanok/",
-   "/ru/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/"
+   "/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/",
+   "/poslugy/sklyani-fasady/vitrinne-sklinnya/",
+   "/ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/",
+   "/ru/poslugy/sklyani-fasady/vitrinne-sklinnya/"
   ],
   "removed": []
  },
- "submitted": 3,
- "accepted": 3,
+ "submitted": 4,
+ "accepted": 4,
  "failed": 0,
  "dropped": [],
  "removedHandling": [],

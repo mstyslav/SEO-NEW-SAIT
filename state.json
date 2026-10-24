@@ -1,13 +1,13 @@
 {
  "version": 1,
- "lastCommit": "620e8788207d2aeb7bce6bfb6c3244272053d91d",
+ "lastCommit": "27af76133bc82e10ec014f44aa455cb8e500aebf",
  "manifest": {
-  "commit": "620e8788207d2aeb7bce6bfb6c3244272053d91d",
+  "commit": "27af76133bc82e10ec014f44aa455cb8e500aebf",
   "pages": {
    "/": "94d45be92e58e384",
    "/about/": "2efc909c2ae0fd4e",
    "/alyuminiyevi-konstrukcziyi/": "1e21f41dafd54829",
-   "/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/": "ff182a42e641cffe",
+   "/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/": "f6e4f6da46a876d6",
    "/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/": "be62a66e7436ecd3",
    "/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/": "328b0c144003b19d",
    "/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/": "26dafeb629d6efd4",
@@ -283,7 +283,7 @@
    "/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/": "b616349abdef43cc",
    "/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/": "9b5289b7da1b6e91",
    "/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/": "6acbbf95db4093ad",
-   "/poslugy/sklyani-fasady/vitrinne-sklinnya/": "0384911e8311c05e",
+   "/poslugy/sklyani-fasady/vitrinne-sklinnya/": "59d3eb1e0b6a5434",
    "/privacy-policy/": "82bf2a4d7cf328de",
    "/project/": "3d3ac1582c1cd9b5",
    "/project/apartment-study-glass-partition-kyiv/": "fab2b4a7cac91cb3",
@@ -356,7 +356,7 @@
    "/ru/": "39511694456ddcf3",
    "/ru/about/": "065aff8f10d13ecd",
    "/ru/alyuminiyevi-konstrukcziyi/": "39729e302077ca15",
-   "/ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/": "cbeadb4e5b97a6c3",
+   "/ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/": "d83728ca4df56af9",
    "/ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/": "fbef9c24db8d48b8",
    "/ru/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/": "564d750e3e8f9f58",
    "/ru/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/": "c8671ff1e8ee1b39",
@@ -509,7 +509,7 @@
    "/ru/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/": "7236d4218a4110c1",
    "/ru/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/": "e937abe44a3655c9",
    "/ru/poslugy/sklyani-fasady/strukturne-sklinnya-fasadu/": "49e739d6842e1b40",
-   "/ru/poslugy/sklyani-fasady/vitrinne-sklinnya/": "3a9f76b8c5b342ca",
+   "/ru/poslugy/sklyani-fasady/vitrinne-sklinnya/": "7a59b0cc22477a2e",
    "/ru/privacy-policy/": "bfcc9c7d80d205c7",
    "/ru/project/": "da3d0bab8f7d9a9b",
    "/ru/project/apartment-study-glass-partition-kyiv/": "8429a21d2a19d526",
@@ -649,6 +649,15 @@
  },
  "pending": [],
  "history": [
+  {
+   "at": "2026-10-24T20:35:53.741Z",
+   "commit": "27af76133bc82e10ec014f44aa455cb8e500aebf",
+   "status": "SUBMITTED",
+   "submitted": 4,
+   "accepted": 4,
+   "failed": 0,
+   "reason": ""
+  },
   {
    "at": "2026-10-24T20:17:59.294Z",
    "commit": "620e8788207d2aeb7bce6bfb6c3244272053d91d",
