@@ -1,8 +1,8 @@
 {
  "version": 1,
- "lastCommit": "9c1b1c154eed8d04c7a2f7058d45a547402ca2f9",
+ "lastCommit": "620e8788207d2aeb7bce6bfb6c3244272053d91d",
  "manifest": {
-  "commit": "9c1b1c154eed8d04c7a2f7058d45a547402ca2f9",
+  "commit": "620e8788207d2aeb7bce6bfb6c3244272053d91d",
   "pages": {
    "/": "94d45be92e58e384",
    "/about/": "2efc909c2ae0fd4e",
@@ -360,7 +360,7 @@
    "/ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/": "fbef9c24db8d48b8",
    "/ru/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/": "564d750e3e8f9f58",
    "/ru/alyuminiyevi-konstrukcziyi/ofisne-sklinnya/": "c8671ff1e8ee1b39",
-   "/ru/alyuminiyevi-konstrukcziyi/pergoly/": "13f0373679532002",
+   "/ru/alyuminiyevi-konstrukcziyi/pergoly/": "21f29efa781bb43f",
    "/ru/alyuminiyevi-konstrukcziyi/rozsuvni-dveri/": "1f32a6da8c9151db",
    "/ru/alyuminiyevi-konstrukcziyi/sitky-plise/": "c9f956c0bb25e6d0",
    "/ru/alyuminiyevi-konstrukcziyi/zymovi-sady/": "1e3d41d09d46a32a",
@@ -373,7 +373,7 @@
    "/ru/bezramne-sklinnya/povorotno-skladni-systemy/": "0576f2232fec0738",
    "/ru/bezramne-sklinnya/sklinnya-balkoniv/": "d1cda65f3bf8a404",
    "/ru/bezramne-sklinnya/sklinnya-budynkiv/": "ffe74bdb96998f86",
-   "/ru/bezramne-sklinnya/sklinnya-teras-ta-altanok/": "a5e47816293dc7ee",
+   "/ru/bezramne-sklinnya/sklinnya-teras-ta-altanok/": "d7fea3ac4a30887c",
    "/ru/bezramne-sklinnya/sklyani-rozsuvni-systemy/": "b46fc884a5e2f8a8",
    "/ru/bezramne-sklinnya/teple-bezramne-sklinnya/": "ba55d5a07ffc6860",
    "/ru/catalog/": "d7845835503849bc",
@@ -599,7 +599,7 @@
    "/ru/sklyani-ohorozhi/sklyani-ohorozhi-baseiniv/": "cd01674039836763",
    "/ru/sklyani-ohorozhi/sklyani-ohorozhi-na-stiykakh/": "6ee5746ac4cee9ef",
    "/ru/sklyani-ohorozhi/sklyani-ohorozhi-teras/": "e1d706f3c3df52d3",
-   "/ru/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/": "6c4824ddc061a0c6",
+   "/ru/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/": "3d68a444842d9a67",
    "/ru/sklyani-perehorodky/": "6a50b472c59bb433",
    "/ru/sklyani-perehorodky/loft-sklyani-peregorodku/": "09e426d93c00328c",
    "/ru/sklyani-perehorodky/mizhkimnatni/": "ea983783c4a6989d",
@@ -649,6 +649,15 @@
  },
  "pending": [],
  "history": [
+  {
+   "at": "2026-10-24T20:17:59.294Z",
+   "commit": "620e8788207d2aeb7bce6bfb6c3244272053d91d",
+   "status": "SUBMITTED",
+   "submitted": 3,
+   "accepted": 3,
+   "failed": 0,
+   "reason": ""
+  },
   {
    "at": "2026-10-24T14:07:13.364Z",
    "commit": "9c1b1c154eed8d04c7a2f7058d45a547402ca2f9",

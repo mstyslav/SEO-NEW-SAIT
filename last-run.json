@@ -1,0 +1,24 @@
+{
+ "status": "SUBMITTED",
+ "reason": "",
+ "commit": "620e8788207d2aeb7bce6bfb6c3244272053d91d",
+ "verifiedVia": "Workers Builds check-run + production /deploy-version.txt",
+ "changed": {
+  "added": [],
+  "updated": [
+   "/ru/alyuminiyevi-konstrukcziyi/pergoly/",
+   "/ru/bezramne-sklinnya/sklinnya-teras-ta-altanok/",
+   "/ru/sklyani-ohorozhi/sklyani-peryla-dlia-skhodiv/"
+  ],
+  "removed": []
+ },
+ "submitted": 3,
+ "accepted": 3,
+ "failed": 0,
+ "dropped": [],
+ "removedHandling": [],
+ "responses": [
+  200
+ ],
+ "pending": 0
+}
