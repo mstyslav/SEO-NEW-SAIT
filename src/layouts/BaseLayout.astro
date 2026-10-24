@@ -70,6 +70,8 @@ const fitSeoText = (value: string, max: number, kind: 'title' | 'description') =
     for (const s of sentences) {
       const next = acc ? `${acc} ${s}` : s;
       if (next.length > max) break;
+      // never stop inside an open bracket, e.g. "… грн (RAIN."
+      if ((next.match(/\(/g)?.length ?? 0) !== (next.match(/\)/g)?.length ?? 0)) break;
       acc = next;
     }
     if (acc.length >= minLen) return acc;
@@ -77,7 +79,9 @@ const fitSeoText = (value: string, max: number, kind: 'title' | 'description') =
       const rest = text.slice(acc.length).trim();
       const room = max - acc.length - 1;
       const clauseEnd = rest.slice(0, room + 1).search(/[,;:][^,;:]*$/);
-      const clause = clauseEnd > 0 ? rest.slice(0, clauseEnd).replace(/[\s,;:–—-]+$/g, '') : '';
+      let clause = clauseEnd > 0 ? rest.slice(0, clauseEnd).replace(/[\s,;:–—-]+$/g, '') : '';
+      // a clause cut inside brackets drops the bracket: "… від 21 332 грн (RAIN" → "… від 21 332 грн"
+      if ((clause.match(/\(/g)?.length ?? 0) > (clause.match(/\)/g)?.length ?? 0)) clause = clause.slice(0, clause.lastIndexOf('(')).replace(/[\s,;:–—-]+$/g, '');
       if (clause && acc.length + 1 + clause.length + 1 >= minLen) return `${acc} ${clause}.`;
       return acc;
     }
