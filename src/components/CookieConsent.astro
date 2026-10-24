@@ -1,7 +1,7 @@
 ---
-// Cookie banner for GA4 Consent Mode (gtag + defaults are set in BaseLayout <head>).
+// Cookie banner. GA4 is loaded by BaseLayout only after consent ('all'); the footer button [data-cookie-settings] reopens this banner.
 // The choice is stored in localStorage 'sg-cookie-consent' ('all' | 'necessary');
-// analytics_storage stays 'denied' until the visitor accepts.
+
 import type { Locale } from '../i18n/helpers';
 import { intlHref } from '../i18n/intl-routes';
 
@@ -67,10 +67,25 @@ const t = {
     try { saved = localStorage.getItem('sg-cookie-consent'); } catch {}
     if (saved !== 'all' && saved !== 'necessary') box.hidden = false;
     const apply = (choice) => {
+      const a = window.sgAnalytics;
+      const wasRunning = !!(a && a.wasLoaded());
       try { localStorage.setItem('sg-cookie-consent', choice); } catch {}
-      if (typeof window.gtag === 'function') window.gtag('consent', 'update', { analytics_storage: choice === 'all' ? 'granted' : 'denied' });
+      // Tells public/js/forms.js (lead attribution) so it can start or clear the session attribution at once.
+      try { window.dispatchEvent(new CustomEvent('sg-consent-change', { detail: { choice } })); } catch {}
       box.hidden = true;
+      if (choice === 'all') { if (a) a.load(); return; }
+      if (a) { a.disable(); a.clearCookies(); }
+      // The running Google tag cannot be unloaded: reload once. The page then starts without it (consent is no longer 'all'),
+      // so this cannot loop. Without the tag having run there is nothing to reload.
+      if (wasRunning) location.reload();
     };
+    document.addEventListener('click', (e) => {
+      const opener = e.target instanceof Element ? e.target.closest('[data-cookie-settings]') : null;
+      if (!opener) return;
+      box.hidden = false;
+      box.setAttribute('tabindex', '-1');
+      box.focus({ preventScroll: true });
+    });
     box.querySelector('[data-cookie-accept]')?.addEventListener('click', () => apply('all'));
     box.querySelector('[data-cookie-reject]')?.addEventListener('click', () => apply('necessary'));
   })();

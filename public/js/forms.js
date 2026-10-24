@@ -56,8 +56,79 @@ const ATTACH_EXT=/\.(jpe?g|png|webp|pdf|dwg)$/i;
 // GA4 (gtag + Consent Mode are set up in BaseLayout). Only non-personal parameters are sent:
 // never name, phone, e-mail, city, message, file or configuration.
 const pageLanguage=pageLang==='uk'?'ua':pageLang;
-const track=(name,params)=>{try{if(typeof window.gtag!=='function') return; const p={page_path:location.pathname,page_language:pageLanguage}; Object.entries(params||{}).forEach(([k,v])=>{if(v!==undefined&&v!=='')p[k]=v;}); window.gtag('event',name,p);}catch{}};
+const track=(name,params)=>{try{if(!(window.sgAnalytics&&window.sgAnalytics.enabled())||typeof window.gtag!=='function') return; const p={page_path:location.pathname,page_language:pageLanguage}; Object.entries(params||{}).forEach(([k,v])=>{if(v!==undefined&&v!=='')p[k]=v;}); window.gtag('event',name,p);}catch{}};
 const leadType=()=>location.pathname.replace(/^\/(ru|en|de|es)\//,'/').split('/')[1]||'home';
+// <sg-attribution>
+// Lead attribution (Task 60 / 60.1) — CONSENT-AWARE. The visit context (first landing path, UTM values, referrer
+// hostname, click-id presence flags, device class) is captured, kept for the session and sent with a lead ONLY while
+// the visitor has accepted analytics (localStorage sg-cookie-consent === 'all', the choice of CookieConsent.astro).
+// Without that choice nothing is captured, stored (sessionStorage / cookies) or kept in memory, and every lead
+// carries only operational data: the page it was sent from (existing `source`) and the random lead_id.
+// A choice other than 'all' (or a removed choice) clears the stored context immediately. No cookies are used.
+// The label of the traffic source is NOT computed here — the Worker derives it from these raw ingredients and GA4
+// stays the source of truth.
+const ATTR_KEY='sg-attr';
+const AD_CLICK_IDS=['gbraid','wbraid','fbclid','msclkid','ttclid','twclid','li_fat_id','yclid','dclid'];
+const deviceCategory=()=>{
+  try{
+    const ua=navigator.userAgent||'';
+    if(!ua) return 'unknown';
+    if(/iPad|Tablet|PlayBook|Silk/i.test(ua)||(/Android/i.test(ua)&&!/Mobile/i.test(ua))||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)) return 'tablet';
+    if((navigator.userAgentData&&navigator.userAgentData.mobile===true)||/Mobi|iPhone|iPod/i.test(ua)) return 'mobile';
+    return 'desktop';
+  }catch{ return 'unknown'; }
+};
+const newLeadId=()=>{
+  try{ if(window.crypto&&typeof window.crypto.randomUUID==='function') return window.crypto.randomUUID(); }catch{}
+  try{
+    const b=new Uint8Array(16); window.crypto.getRandomValues(b); b[6]=(b[6]&15)|64; b[8]=(b[8]&63)|128;
+    const h=[...b].map(x=>x.toString(16).padStart(2,'0')).join('');
+    return h.slice(0,8)+'-'+h.slice(8,12)+'-'+h.slice(12,16)+'-'+h.slice(16,20)+'-'+h.slice(20);
+  }catch{}
+  return '';
+};
+let attrMemory=null;
+const attrConsent=()=>{ try{ return localStorage.getItem('sg-cookie-consent')==='all'; }catch{ return false; } };
+const clearAttribution=()=>{ attrMemory=null; try{ sessionStorage.removeItem(ATTR_KEY); }catch{} };
+const readAttr=()=>{
+  if(!attrConsent()){ clearAttribution(); return null; }
+  try{ const v=JSON.parse(sessionStorage.getItem(ATTR_KEY)||'null'); if(v&&typeof v==='object') return v; }catch{}
+  return attrMemory;
+};
+const writeAttr=value=>{
+  if(!attrConsent()) return;
+  attrMemory=value;
+  try{ sessionStorage.setItem(ATTR_KEY,JSON.stringify(value)); }catch{}
+};
+// Runs on page load and when the visitor accepts. A new touch replaces the stored one only when the visit really
+// starts a new campaign / external arrival; same-site navigation keeps the first landing.
+const captureAttribution=()=>{
+  if(!attrConsent()){ clearAttribution(); return null; }
+  let q; try{ q=new URLSearchParams(location.search); }catch{ q=new URLSearchParams(''); }
+  const utm={}; ['source','medium','campaign','content','term'].forEach(k=>{ const v=q.get('utm_'+k); if(v) utm[k]=String(v).slice(0,100); });
+  let ref=''; try{ if(document.referrer){ const h=new URL(document.referrer).hostname.toLowerCase(); if(h&&h!==location.hostname) ref=h; } }catch{}
+  const gclid=q.has('gclid'); const adclick=AD_CLICK_IDS.some(k=>q.has(k));
+  const campaign=Object.keys(utm).length>0||gclid||adclick;
+  const stored=readAttr();
+  if(stored&&!campaign&&!ref) return stored;
+  const fresh={landing:location.pathname,utm,ref,gclid,adclick,device:deviceCategory()};
+  writeAttr(fresh);
+  return fresh;
+};
+captureAttribution();
+// Fields added to a lead: none without consent (consent is read again at submit time, so a withdrawn choice
+// takes effect immediately even if no event was delivered).
+const attributionFields=()=>{
+  if(!attrConsent()){ clearAttribution(); return {}; }
+  const a=readAttr()||captureAttribution()||{};
+  const f={attr_landing:a.landing||'',attr_ref:a.ref||'',attr_gclid:a.gclid?'1':'0',attr_adclick:a.adclick?'1':'0',attr_device:a.device||deviceCategory()};
+  ['source','medium','campaign','content','term'].forEach(k=>{ f['attr_utm_'+k]=(a.utm&&a.utm[k])||''; });
+  return f;
+};
+// The banner announces the choice (CookieConsent.astro); other tabs announce it through the storage event.
+window.addEventListener('sg-consent-change',event=>{ const c=event&&event.detail&&event.detail.choice; if(c==='all') captureAttribution(); else clearAttribution(); });
+window.addEventListener('storage',event=>{ if(event.key===null||event.key==='sg-cookie-consent'){ if(attrConsent()) captureAttribution(); else clearAttribution(); } });
+// </sg-attribution>
 const FORM_TYPES=[['contacts-form','contacts','contacts_page'],['profile-request__form','profile_request','page_bottom'],['project-request-form__form','project_request','project_page'],['quote-form--home-final','home_quote','home_final'],['tray-order__form','tray_order','tray_configurator'],['rc__request','configurator_request','configurator'],['career__form','job_application','about_career']];
 const formInfo=form=>{const hit=FORM_TYPES.find(([cls])=>form.classList.contains(cls));return{form_id:form.dataset.formId||(hit?hit[1]:'lead_form'),form_location:form.dataset.formLocation||(hit?hit[2]:'content')};};
 const productCategory=form=>{const field=form.querySelector('input[type="hidden"][name="product"], select[name="product"]');const v=field&&String(field.value||'').trim();return v?v.slice(0,100):undefined;};
@@ -203,7 +274,7 @@ document.addEventListener('click',event=>{
   const a=event.target.closest&&event.target.closest('a[href]');
   if(!a) return;
   const href=a.getAttribute('href')||'';
-  const name=/^tel:/i.test(href)?'click_phone':/^mailto:/i.test(href)?'click_email':/^https?:\/\/(t\.me|telegram\.me)\//i.test(href)?'click_telegram':null;
+  const name=/^tel:/i.test(href)?'click_phone':/^mailto:/i.test(href)?'click_email':/^https?:\/\/(t\.me|telegram\.me)\//i.test(href)?'click_telegram':/^(https?:\/\/(wa\.me|api\.whatsapp\.com|web\.whatsapp\.com|chat\.whatsapp\.com)\/|whatsapp:)/i.test(href)?'click_whatsapp':null;
   if(name) track(name,{link_location:linkLocation(a)});
 },{capture:true});
 const escHtml=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
@@ -271,6 +342,10 @@ document.querySelectorAll('[data-lead-form]').forEach(form=>{
     const payload=Object.fromEntries([...data.entries()].filter(([,v])=>typeof v==='string'));
     form.querySelectorAll('input[type="tel"][name="phone"]').forEach(input=>{const number=phoneValue(input); if(number) payload.phone=number;});
     payload.source=location.pathname; payload.createdAt=new Date().toISOString();
+    // One lead_id per logical submission: a retry after an error reuses it, a new lead after a success gets a new one.
+    const leadId=form.dataset.sgLeadId||(form.dataset.sgLeadId=newLeadId());
+    if(leadId) payload.lead_id=leadId;
+    Object.assign(payload,attributionFields());
     // Market + language of the page the lead came from (source = page path).
     payload.market=MARKET; if(!payload.locale) payload.locale=PAGE_LANG;
     payload._elapsed=String(Date.now()-openedAt); payload._h=humanSignal?'1':'0'; payload._js='sg-'+(openedAt%9973);
@@ -297,8 +372,9 @@ document.querySelectorAll('[data-lead-form]').forEach(form=>{
       // A lead counts only when the server confirms it was really delivered (spam never gets lead_sent).
       if(result.ok===true&&result.lead_sent===true){
         if(payload.kind==='job') track('job_application',{form_id:info.form_id,form_location:info.form_location});
-        else track('generate_lead',{form_id:info.form_id,form_location:info.form_location,lead_type:leadType(),product_category:category});
+        else track('generate_lead',{form_id:info.form_id,form_location:info.form_location,lead_type:leadType(),product_category:category,lead_id:leadId||undefined});
       }
+      delete form.dataset.sgLeadId;
       try{localStorage.setItem('spaceGlassLastQuote',JSON.stringify({name:payload.name,phone:payload.phone,email:payload.email,city:payload.city,product:payload.product,configuration:payload.configuration,estimatedPrice:payload.estimatedPrice}));}catch{}
       form.reset();
       if(status){ status.hidden=true; status.textContent=''; }

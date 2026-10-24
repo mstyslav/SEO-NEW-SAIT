@@ -1,6 +1,7 @@
 ---
 import { isIntlLocale, localeFromPath, localizedPath, normalizeLocale } from '../i18n/helpers';
 import { intlNavItems } from '../content/i18n/intl/navigation';
+import { impressumComplete } from '../data/legal-entities';
 import { intlFooterText } from '../content/i18n/intl/footer';
 
 const locale = normalizeLocale(Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
@@ -74,6 +75,8 @@ const companyByLocale = {
 const company = intl
   ? intlFooterText[locale].company.map(([label, path]) => [label, lp(path)])
   : (companyByLocale[locale] ?? companyByLocale.uk);
+// German-only Impressum (Austrian company): linked only once its mandatory data is complete.
+if (locale === 'de' && impressumComplete) company.push(['Impressum', '/de/impressum/']);
 
 const citiesByLocale = {
   uk: [
@@ -144,6 +147,7 @@ const footerTextByLocale = {
     quoteCta: ['Получить расчёт','Отправьте проект или фото']
   }
 };
+const cookieSettingsLabel = ({ uk: 'Налаштування cookies', ru: 'Настройки cookies', en: 'Cookie settings', de: 'Cookie-Einstellungen', es: 'Configuración de cookies' } as Record<string, string>)[locale] ?? 'Налаштування cookies';
 const ft = intl ? intlFooterText[locale].text : (footerTextByLocale[locale] ?? footerTextByLocale.uk);
 // Contacts of the page market, resolved once by BaseLayout (src/data/markets.ts) and read from locals.
 const marketContact = (Astro.locals as { marketContacts?: import('../data/markets').ResolvedContacts }).marketContacts;
@@ -233,10 +237,13 @@ const currentYear = new Date().getFullYear();
 
   <div class="footer-refined__bottom">
     <span>{ft.copyright}</span>
+    <button type="button" class="footer-refined__cookie-settings" data-cookie-settings>{cookieSettingsLabel}</button>
   </div>
 </footer>
 
 <style>
+  .footer-refined__cookie-settings{margin-left:14px;padding:8px 4px;min-height:44px;background:none;border:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer;opacity:.85}
+  .footer-refined__cookie-settings:hover,.footer-refined__cookie-settings:focus-visible{opacity:1}
   /* Footer — "Наша продукція" heading */
   .footer-refined__products h3 {
     color: #fff;

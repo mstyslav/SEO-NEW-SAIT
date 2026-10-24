@@ -7,6 +7,7 @@ import { framelessCategories } from '../data/frameless-catalog';
 import { facadeCategories } from '../data/facade-catalog';
 import { doorCategories } from '../data/door-catalog';
 import { railingCategories } from '../data/railing-catalog';
+import { impressumComplete } from '../data/legal-entities';
 import { BUSINESS_HUB, businessPages, businessPath } from '../data/business-pages';
 import { CANOPY_HUB, canopyCategories } from '../data/canopy-catalog';
 import { PARTITION_HUB, partitionCategories } from '../data/partition-catalog';
@@ -96,6 +97,7 @@ export async function sitemapPaths(): Promise<string[]> {
   const urls = [...new Set([
     ...fileUrls,
     ...intlUrls,
+    ...(impressumComplete ? ['/de/impressum/'] : []),
     ...projectUrls,
     ...ruProjectUrls,
     ...knowledgeUrls,
