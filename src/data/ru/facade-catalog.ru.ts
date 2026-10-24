@@ -2486,6 +2486,10 @@ export const facadeCategoriesRu: ProfileCategory[] = [
         "/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/"
       ],
       [
+        "Алюминиевые двери",
+        "/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/"
+      ],
+      [
         "Стоечно-ригельное остекление",
         "/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/"
       ],
