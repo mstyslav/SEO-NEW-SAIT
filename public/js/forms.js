@@ -147,6 +147,11 @@ const PHONE_ERROR=TI[pageLang]?TI[pageLang].phone:isRu?'Проверьте но�
 const ITI_BASE='/vendor/intl-tel-input-29.5.3/';
 const PHONE_COUNTRIES=['ua','at','it','de','pl','es','cz','sk','fr','ch','md','ro'];
 const phoneInputs=[...document.querySelectorAll('[data-lead-form] input[type="tel"][name="phone"]')];
+// Default country of the phone field follows the page LANGUAGE (never the IP): Ukraine for uk/ru/en, Austria for de, Spain for es.
+// `example` is that country's mobile number as the placeholder, shown before the library (and its number examples) has loaded.
+const PHONE_DEFAULT={de:{iso:'at',dial:'43',example:'664 123456'},es:{iso:'es',dial:'34',example:'612 34 56 78'}}[pageLang]||{iso:'ua',dial:'380',example:'50 123 4567'};
+// Until the country widget is built the field has no flag/code, so its placeholder carries the dial code itself.
+phoneInputs.forEach(input=>{input.placeholder='+'+PHONE_DEFAULT.dial+' '+PHONE_DEFAULT.example;});
 const phoneWidgets=new Map();
 let phoneUtils=null;
 const loadAsset=(tag,attrs)=>new Promise((resolve,reject)=>{const el=Object.assign(document.createElement(tag),attrs);el.onload=resolve;el.onerror=reject;document.head.appendChild(el);});
@@ -206,8 +211,7 @@ let phoneInit=null;
 const initPhones=()=>{
   if(phoneInit||!phoneInputs.length) return phoneInit||Promise.resolve();
   const lang=pageLang;
-  // Country preselected in the phone field: Ukraine by default; Austria for German, Spain for Spanish pages.
-  const initialCountry={de:'at',es:'es'}[pageLang]||'ua';
+  const initialCountry=PHONE_DEFAULT.iso;
   phoneInit=Promise.all([
     loadAsset('link',{rel:'stylesheet',href:ITI_BASE+'css/intlTelInput.min.css'}),
     window.intlTelInput?Promise.resolve():loadAsset('script',{src:ITI_BASE+'js/intlTelInput.min.js'}),
@@ -224,7 +228,7 @@ const initPhones=()=>{
       input.inputMode='tel';
       input.autocomplete='tel';
       input.removeAttribute('maxlength');
-      input.placeholder='50 123 4567';
+      input.placeholder=PHONE_DEFAULT.example; // the dial code is shown by the country button
       const widget=window.intlTelInput(input,{
         initialCountry,
         countryOrder:PHONE_COUNTRIES,
@@ -255,7 +259,7 @@ const initPhones=()=>{
     if(phoneInputs.includes(active)&&document.activeElement!==active){active.focus();loadPhoneUtils();}
   }).catch(()=>{
     // Library unavailable: plain field, the Worker still validates and normalises the number.
-    phoneInputs.forEach(input=>{input.placeholder='+380 50 123 4567';});
+    phoneInputs.forEach(input=>{input.placeholder='+'+PHONE_DEFAULT.dial+' '+PHONE_DEFAULT.example;});
   });
   return phoneInit;
 };
