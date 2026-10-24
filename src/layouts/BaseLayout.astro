@@ -64,8 +64,29 @@ const fitSeoText = (value: string, max: number, kind: 'title' | 'description') =
   }
 
   if (kind === 'description') {
-    const sentence = text.slice(0, max + 1).match(/^(.{80,155}?[.!?])(?:\s|$)/);
-    if (sentence && sentence[1].length <= max) return sentence[1].trim();
+    // Greedy: as many whole sentences as fit; a lone short first sentence (<110, flagged as "too short"
+    // by SEO tools) is extended with whole clauses of the next sentence, closed with a full stop.
+    const minLen = 110;
+    const sentences = text.match(/[^.!?]+[.!?]+(?=\s|$)/g)?.map((s) => s.trim()) ?? [];
+    let acc = '';
+    for (const s of sentences) {
+      const next = acc ? `${acc} ${s}` : s;
+      if (next.length > max) break;
+      // never stop inside an open bracket, e.g. "… грн (RAIN."
+      if ((next.match(/\(/g)?.length ?? 0) !== (next.match(/\)/g)?.length ?? 0)) break;
+      acc = next;
+    }
+    if (acc.length >= minLen) return acc;
+    if (acc.length >= 80) {
+      const rest = text.slice(acc.length).trim();
+      const room = max - acc.length - 1;
+      const clauseEnd = rest.slice(0, room + 1).search(/[,;:][^,;:]*$/);
+      let clause = clauseEnd > 0 ? rest.slice(0, clauseEnd).replace(/[\s,;:–—-]+$/g, '') : '';
+      // a clause cut inside brackets drops the bracket: "… від 21 332 грн (RAIN" → "… від 21 332 грн"
+      if ((clause.match(/\(/g)?.length ?? 0) > (clause.match(/\)/g)?.length ?? 0)) clause = clause.slice(0, clause.lastIndexOf('(')).replace(/[\s,;:–—-]+$/g, '');
+      if (clause && acc.length + 1 + clause.length + 1 >= minLen) return `${acc} ${clause}.`;
+      return acc;
+    }
   }
 
   const suffix = kind === 'description' ? '…' : '';
@@ -145,7 +166,7 @@ const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
 // EN/DE/ES alternates always come from the route map (src/i18n/intl-routes.ts), also on pages that
 // restrict `alternateLocales` to uk/ru, so every UA/RU ↔ EN/DE/ES pair is reciprocal.
 const declaredAlternates = alternateLocales ?? supportedLocales;
-// A German-only page (no UA/RU original) declares only itself: no fake twins, no x-default to a UA page.
+// A German-only page (no UA/RU original) declares only itself: no fake twins; its x-default points at itself, never at a UA page.
 const isDeOnlyPage = Boolean(intlDeOnlyFallback(basePath));
 const availableAlternateLocales = standalone
   ? []
@@ -218,6 +239,7 @@ import ScrollProgress from '../components/ScrollProgress.astro';
     <title>{title}</title>
     {!errorPage && <link rel="canonical" href={canonical} />}
     {!errorPage && availableAlternateLocales.map((item) => <link rel="alternate" hreflang={item} href={new URL(localizedPath(basePath, item), Astro.site ?? Astro.url.origin)} />)}
+    {!errorPage && isDeOnlyPage && <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, resolvedLocale), Astro.site ?? Astro.url.origin)} />}
     {!errorPage && availableAlternateLocales.includes('uk') && <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Space Glass" />

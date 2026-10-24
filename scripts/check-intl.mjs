@@ -95,10 +95,11 @@ for (const route of INTL_ROUTES) {
     const url = site + p;
     if (canonicalOf(html) !== url) err(p, `canonical ${canonicalOf(html)}`);
     const alt = alternatesOf(html);
-    // A German-only page (no UA/RU original) declares only itself: no uk/ru/en/es twins, no x-default.
+    // A German-only page (no UA/RU original) declares only itself: no uk/ru/en/es twins; its x-default must point at itself.
     const deOnly = Boolean(route.deOnlyFallback);
     const expected = Object.fromEntries(Object.entries(deOnly ? { de: route.de } : { uk: route.uk, en: route.en, de: route.de, es: route.es }).filter(([, v]) => v));
-    if (deOnly && Object.keys(alt).some((code) => code !== 'de')) err(p, `German-only page declares hreflang ${Object.keys(alt).join(',')}`);
+    if (deOnly && alt['x-default'] !== site + p) err(p, `German-only x-default = ${alt['x-default']} (must be the page itself)`);
+    if (deOnly && Object.keys(alt).some((code) => code !== 'de' && code !== 'x-default')) err(p, `German-only page declares hreflang ${Object.keys(alt).join(',')}`);
     for (const [code, target] of Object.entries(expected)) if (alt[code] !== site + target) err(p, `hreflang ${code} = ${alt[code]} (expected ${site + target})`);
     for (const code of ['en', 'de', 'es']) if (alt[code] && !expected[code]) err(p, `hreflang ${code} → ${alt[code]} but this page has no ${code} version`);
     if (!deOnly && alt['x-default'] !== site + route.uk) err(p, `x-default = ${alt['x-default']}`);

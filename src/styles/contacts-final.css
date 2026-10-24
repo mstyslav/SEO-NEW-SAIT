@@ -73,19 +73,24 @@
 .contacts-geography__copy { min-width:0; }
 .contacts-geography .contacts-city-list { margin-top:27px; }
 .contacts-geography .contacts-city-list span { min-width:104px; padding:11px 16px; }
-.contacts-ukraine-map { width:100%; min-width:0; }
-.contacts-ukraine-map svg { display:block; width:100%; height:auto; overflow:visible; }
-.contacts-ukraine-map__outline { fill:#fff; stroke:#5b8f7d; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-.contacts-ukraine-map__coast { fill:none; stroke:#a8cdbf; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round; }
-.contacts-ukraine-map__city circle { fill:#cb3e3e; stroke:#fff; stroke-width:2; }
-.contacts-ukraine-map__city text { fill:#1a2922; font:700 15px/1.2 Arial, sans-serif; }
+/* Geography maps (src/data/contact-maps.ts): fixed aspect ratio from the SVG viewBox, so no layout shift. */
+.contacts-geography .contacts-section__inner { row-gap:clamp(28px, 4vw, 48px); }
+.contacts-geography__copy { grid-column:1 / -1; }
+.contacts-maps { grid-column:1 / -1; display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:clamp(18px, 3vw, 40px); }
+.contacts-map { display:flex; flex-direction:column; gap:14px; min-width:0; margin:0; padding:clamp(16px, 2.4vw, 28px); border:1px solid #c4dfd3; border-radius:20px; background:#fff; }
+.contacts-map svg { display:block; width:100%; height:auto; aspect-ratio:480 / 300; overflow:visible; }
+.contacts-map figcaption { color:#5b6861; font-size:14px; font-weight:650; line-height:1.4; }
+.contacts-map__outline { fill:#f6fbf8; stroke:#5b8f7d; stroke-width:1.6; stroke-linejoin:round; }
+.contacts-map__city circle { r:5px; fill:#cb3e3e; stroke:#fff; stroke-width:2; }
+.contacts-map__city--area circle { fill:#fff; stroke:#3c9c7c; stroke-width:3; }
+.contacts-map__city text { fill:#1a2922; font:700 16px/1.2 Arial, sans-serif; paint-order:stroke; stroke:#fff; stroke-width:4px; stroke-linejoin:round; }
 .contacts-faq .contacts-section__inner { max-width:1320px; }
 .contacts-faq .faq-block { max-width:none; }
 
 @media (max-width: 768px) {
   .contacts-geography .contacts-section__inner { grid-template-columns:1fr; gap:32px; }
   .contacts-geography .contacts-section-head h2 { max-width:22ch; }
-  .contacts-ukraine-map { width:55%; max-width:680px; margin:0 auto; }
+  .contacts-maps { grid-template-columns:1fr; }
 }
 
 @media (min-width: 621px) and (max-width: 768px) {
@@ -108,8 +113,9 @@
   .contacts-geography .contacts-section-head h2 { max-width:none; }
   .contacts-geography .contacts-city-list { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); width:100%; margin-top:22px; }
   .contacts-geography .contacts-city-list span { width:100%; min-width:0; padding-inline:8px; text-align:center; }
-  .contacts-ukraine-map { width:70%; }
-  .contacts-ukraine-map__city text { font-size:16px; }
+  .contacts-map { padding:14px; }
+  .contacts-map__city circle { r:7px; }
+  .contacts-map__city text { font-size:24px; stroke-width:5px; }
 }
 
 /* Contacts office social icons — visible black marks */
@@ -146,14 +152,6 @@
 .contacts-page .contacts-social-mini a[aria-label="YouTube"] svg path:last-child {
   fill: currentColor;
   stroke: none;
-}
-
-/* Crimea — part of Ukraine map */
-.contacts-ukraine-map__crimea {
-  fill: #eef8f3;
-  stroke: #75bfa5;
-  stroke-width: 2;
-  stroke-linejoin: round;
 }
 
 /* Contacts critical button geometry — prevent CLS before BaseLayout CSS arrives */
@@ -210,3 +208,7 @@
   .contacts-markets { gap:12px; }
   .contacts-market { padding:22px 20px; }
 }
+
+/* International contacts: the section is a block, so space the maps and the markets row. */
+.contacts-geography--intl .contacts-maps { margin-top:clamp(28px, 4vw, 48px); }
+.contacts-geography--intl .contacts-markets { margin-top:14px; }
