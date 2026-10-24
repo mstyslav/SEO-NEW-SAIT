@@ -7,7 +7,7 @@ Decisions and facts that only the business owner can provide. Updated: 2026-10-2
 | 1 | P1 | WAITING FOR OWNER | **Aluminium door prices** [R-030] — see checklist A | Competitors win search snippets with prices ("from 210 EUR/m²"); Space Glass shows none | Aluminium doors |
 | 2 | P1 | WAITING FOR OWNER | **Real project cases with photos** [R-031] — see checklist B | No verified aluminium entrance-door or partition case exists; cases build trust and internal links | Aluminium doors, partitions |
 | 3 | P2 | WAITING FOR OWNER | **Link-building decision** [R-033]: budget yes/no, login to existing directory cards (dverprof, 048.ua) | Authority gap vs SCLASS; nothing is bought or contacted without approval | Authority |
-| 4 | P2 | WAITING FOR OWNER | **Where to back up evidence** [R-035] (task-64…70 reports are local-only; repo is public) | Losing GSC/GA4 baselines would break the 07.11 / 21.11 / 05.12 comparisons | Repository |
+| 4 | P2 | DONE | **Evidence backup** [R-035]: reports are in the private Google Drive folder `Space Glass / SEO / Reports / 2026` (owner-only). Optional: keep refreshing it after each task | Protects the 07.11 / 21.11 / 05.12 baselines | Repository |
 | 5 | P3 | WAITING FOR OWNER | **GA4 internal/bot traffic filter** [R-024]: approve a GA4 admin change | Cleaner engagement data (China bots, team visits from Austria) | Analytics |
 | 6 | P3 | WAITING FOR OWNER | **Shower tray model prices** [R-032] (per model, verified) | Enables product price markup later; not before | Shower trays |
 | 7 | P3 | WAITING FOR OWNER | **Knowledge-article facts** [R-034] (10 topics) or approval to merge 10 articles | Removes thin generic articles | Knowledge |

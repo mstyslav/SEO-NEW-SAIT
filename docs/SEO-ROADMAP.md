@@ -15,25 +15,26 @@ IDs are stable; numbering is grouped (R-00x done, R-01x scheduled/measurement, R
 
 Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER · SCHEDULED · BLOCKED.
 
-## Dashboard (27 items)
+## Dashboard (29 items)
 
 | Status | Count |
 |---|---|
-| DONE | 7 |
+| DONE | 9 |
 | READY | 3 |
 | IN PROGRESS | 0 |
 | WAITING FOR DATA | 3 |
-| WAITING FOR OWNER | 9 |
-| SCHEDULED | 5 |
+| WAITING FOR OWNER | 8 |
+| SCHEDULED | 6 |
 | BLOCKED | 0 |
 
 ## Important dates
 | Date | What |
 |---|---|
-| 2026-11-03 | Ahrefs audit (row limit resets) — R-016; noindex investigation target — R-020 |
+| 2026-11-03 | Ahrefs audit (row limit resets) — R-016 |
 | after 2026-11-04 (plan 2026-11-05) | Glass partitions reassessment — R-012 |
 | 2026-11-07 | TASK 69/70 first check — R-010, R-011 |
-| 2026-11-21 | TASK 69/70 second check; shower trays 4-week review; GA4 contact events review — R-010, R-011, R-014, R-019 |
+| 2026-11-10 | Other GSC non-indexed categories (404, crawled-not-indexed, redirects) — R-043; IndexNow wait research — R-021 |
+| 2026-11-21 | noindex report monitor (R-042); TASK 69/70 second check; shower trays 4-week review; GA4 contact events review — R-010, R-011, R-014, R-019 |
 | 2026-11-27 | Austria review — R-040 |
 | 2026-12-05 | TASK 69/70 final (42-day) check; shower trays 6-week review |
 
@@ -58,7 +59,7 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 | R-014 | P2 | SCHEDULED | 2026-11-21 | Shower trays review 4-6 weeks after TASK 66: category impressions, commercial keywords, CTR, positions, internal-linking |
 | R-016 | P1 | SCHEDULED | 2026-11-03 | Ahrefs audit: Space Glass vs SCLASS (sclass.od.ua) |
 | R-019 | P2 | WAITING FOR DATA | 2026-11-21 | GA4 contact events review on real visitors: contact_method, phone/email/Telegram/WhatsApp clicks, generate_lead |
-| R-020 | P1 | READY | 2026-11-03 | Investigate GSC "Excluded by noindex" = 9,936 URLs (snapshot 2026-10-24) |
+| R-020 | P1 | DONE | 2026-10-24 | GSC "Excluded by noindex" = 9,936 URLs audited (TASK 72) |
 | R-021 | P3 | READY | 2026-11-10 | IndexNow reliability: deploy wait is 25 min (--wait 1500) inside a 45 min job; Cloudflare queue once took ~33 min, so th |
 | R-022 | P2 | READY | 2026-11-17 | Analytics coverage research ONLY: Cloudflare Web Analytics, Google Consent Mode v2, GDPR/ePrivacy implications, compatib |
 | R-023 | P2 | WAITING FOR DATA | 2026-11-21 | Page-3 commercial pages: UA interior partitions (pos ~40), aluminium windows (pos ~45), facade glazing (pos ~30, 536 imp |
@@ -69,9 +70,11 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 | R-032 | P3 | WAITING FOR OWNER | 2026-12-15 | Shower tray model prices: Product/Offer schema must NOT be added until each of the 4 tray models has a verified price/av |
 | R-033 | P2 | WAITING FOR OWNER | 2026-11-10 | Link building (authority): approved budget/decisions and logins |
 | R-034 | P3 | WAITING FOR OWNER | 2026-12-15 | Knowledge articles: 20 generic articles left (10 merge candidates, 10 need verified facts) |
-| R-035 | P2 | WAITING FOR OWNER | 2026-11-07 | Evidence reports (task-64..70) are untracked local files; the repository is PUBLIC, so GSC/GA4 data was deliberately not |
+| R-035 | P2 | DONE | 2026-10-24 | Private backup of evidence reports (TASK 64-72): 8 zip archives uploaded to a private Google Drive folder "Space Glass / |
 | R-040 | P2 | WAITING FOR DATA | 2026-11-27 | Austria review (separate from Ukraine): GSC AT/DE after the 2026-10-16 launch (DE 72 URLs) |
 | R-041 | P3 | WAITING FOR OWNER | 2026-12-01 | Open Austria backlog from DE P2/P3 work: Austrian reference case, neutral/.at/.eu email-domain question, DE contact posi |
+| R-042 | P3 | SCHEDULED | 2026-11-21 | Monitor GSC "Excluded by noindex" (9,936, old WordPress filter URLs now 404): expect the count to fall and "Not found (4 |
+| R-043 | P2 | READY | 2026-11-10 | Other GSC non-indexed categories not yet investigated: Crawled - currently not indexed 132 (error flag), Not found (404) |
 
 ## Details per open item
 
@@ -133,16 +136,6 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 - **Target date:** 2026-11-21
 - **Evidence:** TASK 68.1 DebugView verification
 - **Related files:** task-68/TASK-68.1-DEPLOY-VERIFICATION.md (LOCAL (untracked, not in git))
-- **Last updated:** 2026-10-24
-
-### R-020 — Technical SEO (P1, READY)
-- **Category:** Technical SEO
-- **Description:** Investigate GSC "Excluded by noindex" = 9,936 URLs (snapshot 2026-10-24). Confirm they are intended (e.g. configurators, thank-you, legacy params). Not inspected so far.
-- **Dependency:** GSC read access
-- **Next action:** Read-only: open GSC Page indexing > noindex, sample URL patterns, compare with robots/noindex rules in code. Report; fix only confirmed defects.
-- **Target date:** 2026-11-03
-- **Evidence:** TASK 67 indexation snapshot (indexed 616; noindex 9,936; 404 171; redirect 101)
-- **Related files:** task-67/TASK-67-GSC-INDEXATION.csv (LOCAL (untracked, not in git)); seo-audit/post-migration/2026-09-30-indexation-baseline.md
 - **Last updated:** 2026-10-24
 
 ### R-021 — Technical SEO (P3, READY)
@@ -245,16 +238,6 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 - **Related files:** seo-audit/knowledge-content-upgrade-backlog.md
 - **Last updated:** 2026-10-24
 
-### R-035 — Repository (P2, WAITING FOR OWNER)
-- **Category:** Repository
-- **Description:** Evidence reports (task-64..70) are untracked local files; the repository is PUBLIC, so GSC/GA4 data was deliberately not committed. Risk of loss if the local folder is deleted. Also the primary checkout has uncommitted changes (75 entries).
-- **Dependency:** Owner decision: private backup location
-- **Next action:** Owner chooses: keep local, or back up to a private location/repo. Do not commit performance data to the public repo.
-- **Target date:** 2026-11-07
-- **Evidence:** git status of /Users/mstyslav/space-glass-cloud-projects; gh repo view = PUBLIC
-- **Related files:** docs/SEO-OWNER-ACTIONS.md
-- **Last updated:** 2026-10-24
-
 ### R-040 — Austria SEO (P2, WAITING FOR DATA)
 - **Category:** Austria SEO
 - **Description:** Austria review (separate from Ukraine): GSC AT/DE after the 2026-10-16 launch (DE 72 URLs). So far AT 21 clicks/92 impr, mostly the brand query; DE 0 clicks/39 impr. Check indexing of DE pages, DE queries, Wien-related demand, contact/WhatsApp use.
@@ -275,6 +258,26 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 - **Related files:** src/content/i18n/intl/; src/i18n/intl-routes.ts
 - **Last updated:** 2026-10-24
 
+### R-042 — Technical SEO (P3, SCHEDULED)
+- **Category:** Technical SEO
+- **Description:** Monitor GSC "Excluded by noindex" (9,936, old WordPress filter URLs now 404): expect the count to fall and "Not found (404)" to rise as Google re-crawls. Re-export once the count changes (GSC lists max 1,000 rows, a different subset may appear).
+- **Dependency:** Google re-crawl of the old URLs (weeks)
+- **Next action:** Check Page indexing on 2026-11-21 and 2026-12-05; if noindex stays ~9.9k, re-export the list and look for non-/catalog/ patterns. No redirects, no mass indexing requests.
+- **Target date:** 2026-11-21
+- **Evidence:** TASK 72: 6,929 (05.08) -> 9,980 (22.09) -> 9,936 (16.10)
+- **Related files:** docs/SEO-AUDIT-NOINDEX-SUMMARY.md
+- **Last updated:** 2026-10-24
+
+### R-043 — Technical SEO (P2, READY)
+- **Category:** Technical SEO
+- **Description:** Other GSC non-indexed categories not yet investigated: Crawled - currently not indexed 132 (error flag), Not found (404) 171, redirect pages 101, robots-blocked 23, 403 18, alternate canonical 8. Look for valuable old URLs that need a relevant 301.
+- **Dependency:** GSC read access
+- **Next action:** Read-only: export each category, classify (old WP URL / current page / parameter), check live status and existing redirects; propose redirects only for URLs with proven value. No redirect changes in the audit task.
+- **Target date:** 2026-11-10
+- **Evidence:** TASK 67/72 GSC page-indexing snapshot 2026-10-24
+- **Related files:** task-67/TASK-67-GSC-INDEXATION.csv (LOCAL)
+- **Last updated:** 2026-10-24
+
 ## Completed (evidence)
 | ID | Summary | Evidence |
 |---|---|---|
@@ -285,6 +288,8 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 | R-005 | Aluminium doors UA/RU title+description aligned to head queries; 2 contextual links (vitrine glazing -> doors) (TASK 70). Partitions analysed, intentionally unchanged. | PR #42, main 27af761, production verified; IndexNow 4/4 accepted |
 | R-006 | Shower trays: research (TASK 64/65) and implementation (TASK 66): URL unchanged, catalog direction, mega-menu H2s removed before H1, size table. | main 9c1b1c1 deployed 2026-10-24 13:59 UTC; research in task-64/, task-65/ (LOCAL (untracked, not in git)). No TASK 66 report file exists locally |
 | R-007 | Earlier completed milestones (verified in git): domain switch to Astro 2026-09-27; RU parity and redirects; knowledge recovery; TASK 51 technical SEO (f0e013d, 2026-10-20); TASK 55.4 UA/RU commercial meta (1f22f6f, 2026-10-21); category link strengthening (2026-10-22); EN/DE/ES 75 URLs (4f3d9d1, 2026-10-16); Austria market layer (a273238, 2026-10-18); TASK 60 consent-gated GA4 + legal pages/Impressum (c0f2317, 2026-10-24); automatic IndexNow (943b8cf, 2026-10-24). | git history on main |
+| R-020 | GSC "Excluded by noindex" = 9,936 URLs audited (TASK 72). Sample of 1,000 (GSC export cap): all old WordPress faceted /catalog/ filter URLs, last crawled 2026-09-27, all return 404 now; 0 commercial pages affected; sitemap 641/641 clean. Verdict: expected historical exclusion, no P0/P1 issue. | TASK 72 audit; GSC data date 2026-10-16; 1,000/9,936 URLs sampled (not random); 641 sitemap URLs checked on production; 7 commercial pages inspected in GSC |
+| R-035 | Private backup of evidence reports (TASK 64-72): 8 zip archives uploaded to a private Google Drive folder "Space Glass / SEO / Reports / 2026" (owner-only, general access restricted). TASK 66 has no report file. Byte-level read-back was not performed (names, count and privacy verified). | Drive folder created and 8 files verified present 2026-10-24; public repo still holds no GSC/GA4 data |
 
 ## Evidence location
 The reports `task-64/` … `task-70/` (GSC/GA4 numbers, competitor tables, baselines) are **local, untracked files** in the working folder of the project owner. This repository is public, so performance data is intentionally not committed (see R-035). Committed evidence: `seo-audit/` and commit/PR references above.
