@@ -25,6 +25,7 @@
  */
 
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
+import { ATTRIBUTION_KEYS, attributionLines, attributionPlainLines, parseAttribution, type Attribution } from './attribution';
 
 export interface Env {
   ASSETS: Fetcher;
@@ -56,6 +57,8 @@ type Lead = {
   /** 'job' = vacancy application from /about/ (not a sales lead). */
   kind?: string;
   job?: string;
+  /** Task 60: lead_id + browser-reported source context (validated, never trusted as fact), see worker/attribution.ts. */
+  attribution: Attribution;
 };
 
 /** Attachment limits — mirror ATTACH_* in public/js/forms.js and the accept attribute on /contacts/. */
@@ -109,7 +112,7 @@ function parseLead(input: Record<string, unknown>): Lead | null {
   if (!name || !phone) return null;
   const page = str(input.page, 300) ?? (typeof input.source === 'string' && input.source.startsWith('/') ? str(input.source, 300) : undefined);
   // Any extra select the form had (e.g. «Система», «Ваш бізнес») arrives under its own name.
-  const known = new Set(['name', 'phone', 'email', 'city', 'comment', 'message', 'product', 'configuration', 'estimatedPrice', 'page', 'source', 'locale', 'market', 'createdAt', 'consent', 'website', '_elapsed', '_h', '_js', 'kind', 'job', 'attachment']);
+  const known = new Set(['name', 'phone', 'email', 'city', 'comment', 'message', 'product', 'configuration', 'estimatedPrice', 'page', 'source', 'locale', 'market', 'createdAt', 'consent', 'website', '_elapsed', '_h', '_js', 'kind', 'job', 'attachment', ...ATTRIBUTION_KEYS]);
   const options = Object.entries(input)
     .filter(([key, value]) => !known.has(key) && typeof value === 'string' && value.trim())
     .map(([key, value]) => `${key}: ${String(value).trim().slice(0, 200)}`)
@@ -129,7 +132,8 @@ function parseLead(input: Record<string, unknown>): Lead | null {
     options: options || undefined,
     createdAt: str(input.createdAt, 40),
     kind: input.kind === 'job' ? 'job' : undefined,
-    job: str(input.job, 120)
+    job: str(input.job, 120),
+    attribution: parseAttribution(input)
   };
 }
 
@@ -154,7 +158,10 @@ function telegramText(lead: Lead, origin: string): string {
     lead.page && `🔗 ${esc(origin + lead.page)}`,
     `🕒 ${time}${lead.locale && ['ru', 'en', 'de', 'es'].includes(lead.locale) ? ` · ${lead.locale.toUpperCase()}` : ''}${lead.market && lead.market !== 'UA' ? ` · ринок ${lead.market}` : ''}`
   ];
-  return lines.filter((l) => l !== undefined && l !== false).join('\n').slice(0, MAX);
+  const body = lines.filter((l) => l !== undefined && l !== false).join('\n');
+  // The attribution block always fits: a very long comment/configuration is cut instead of the block.
+  const block = attributionLines(lead.attribution, lead.page, esc).join('\n');
+  return `${body.slice(0, Math.max(0, MAX - block.length - 1))}\n${block}`;
 }
 
 /**
@@ -230,7 +237,8 @@ async function sendLeadEmail(lead: Lead, env: Env, origin: string): Promise<bool
     lead.options && `Опції: ${lead.options}`,
     lead.configuration && `Конфігурація: ${lead.configuration}`,
     lead.estimatedPrice && `Орієнтовна ціна: ${lead.estimatedPrice}`,
-    lead.page && `Сторінка: ${origin + lead.page}`
+    lead.page && `Сторінка: ${origin + lead.page}`,
+    ...attributionPlainLines(lead.attribution)
   ].filter(Boolean).join('\n');
   try {
     const response = await fetch('https://api.resend.com/emails', {

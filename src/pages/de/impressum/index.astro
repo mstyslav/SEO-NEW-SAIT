@@ -1,0 +1,32 @@
+---
+// DE Impressum (Space Glass KG) — data in src/data/legal-entities.ts. While `impressumComplete` is false the page is
+// noindex, not in the footer and not in the sitemap.
+import LegalPage from '../../../components/LegalPage.astro';
+import { AT_ENTITY, impressumComplete } from '../../../data/legal-entities';
+const rows: Array<[string, string]> = [
+  ['Unternehmen', `${AT_ENTITY.name} (Marke: Space Glass)`],
+  ['Firmenbuchnummer', AT_ENTITY.firmenbuch],
+  ['Firmenbuchgericht', AT_ENTITY.court],
+  ['Sitz / Geschäftsanschrift', `${AT_ENTITY.street}, ${AT_ENTITY.postalCity}, ${AT_ENTITY.country}`],
+  ['UID-Nummer', AT_ENTITY.uid],
+  ['Vertretungsbefugt', AT_ENTITY.representative],
+  ['Telefon', AT_ENTITY.phoneDisplay],
+  ['E-Mail', AT_ENTITY.email],
+  ...(AT_ENTITY.gewerbebehoerde ? [['Gewerbebehörde', AT_ENTITY.gewerbebehoerde] as [string, string]] : []),
+  ...(AT_ENTITY.kammer ? [['Kammerzugehörigkeit', AT_ENTITY.kammer] as [string, string]] : [])
+];
+const pending = [...(AT_ENTITY.gewerbebehoerde ? [] : ['Zuständige Gewerbebehörde']), ...(AT_ENTITY.kammer ? [] : ['Kammerzugehörigkeit / Fachgruppe'])];
+---
+<LegalPage title="Impressum" description="Impressum der Space Glass KG." updated="24.10.2026" locale="de" standalone robots={impressumComplete ? undefined : 'noindex, follow'}>
+  <h2>Angaben zum Unternehmen</h2>
+  <dl>{rows.map(([k, v]) => <><dt><strong>{k}</strong></dt><dd>{v}</dd></>)}</dl>
+  <h2>Gewerbeberechtigungen (GISA)</h2>
+  <ul>{AT_ENTITY.gewerbe.map((g) => <li>{g.wortlaut} (GISA-Zahl {g.gisaZahl}, Status: aufrecht)</li>)}</ul>
+  {!impressumComplete && (
+    <>
+      <h2>Weitere Pflichtangaben</h2>
+      <p>Folgende Angaben werden noch ergänzt:</p>
+      <ul>{pending.map((p) => <li>{p}</li>)}</ul>
+    </>
+  )}
+</LegalPage>

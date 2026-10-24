@@ -6,7 +6,9 @@ const {
   title,
   description,
   updated = '30 серпня 2026',
-  locale = 'uk'
+  locale = 'uk',
+  robots,
+  standalone
 } = Astro.props;
 
 const intlLabels: Record<string, [string, string]> = {
@@ -25,7 +27,7 @@ const updatedLabel =
     ? 'Последнее обновление'
     : 'Останнє оновлення');
 ---
-<BaseLayout title={`${title} | Space Glass`} description={description}>
+<BaseLayout title={`${title} | Space Glass`} description={description} robots={robots} standalone={standalone}>
   <Header />
   <main id="main" class="legal-page">
     <header class="legal-page__hero">
