@@ -137,8 +137,8 @@ export const contactsCopy: Record<IntlLocale, ContactsCopy> = {
     ]
   },
   es: {
-    title: 'Contacto Space Glass — oficinas en Kiev, Odesa y Leópolis',
-    description: 'Contacte con Space Glass: teléfono, correo y nuestras oficinas en Kiev, Odesa y Leópolis. Envíe fotos, medidas o planos y le prepararemos un presupuesto.',
+    title: 'Contacto Space Glass — oficinas en Kyiv, Odesa y Lviv',
+    description: 'Contacte con Space Glass: teléfono, correo y nuestras oficinas en Kyiv, Odesa y Lviv. Envíe fotos, medidas o planos y le prepararemos un presupuesto.',
     eyebrow: 'Contacto',
     heading: 'Hablemos de su proyecto',
     intro: 'Envíenos medidas aproximadas y cuéntenos qué necesita: le prepararemos una estimación orientativa.',
@@ -158,15 +158,15 @@ export const contactsCopy: Record<IntlLocale, ContactsCopy> = {
     chooseCity: 'Elija una ciudad',
     officeList: [
       { id: 'odesa', city: 'Odesa', address: 'Calle Hlyniana, 5' },
-      { id: 'kyiv', city: 'Kiev', address: 'Calle Laureatska, 8' },
-      { id: 'lviv', city: 'Leópolis', address: 'Calle Kulparkivska, 144' }
+      { id: 'kyiv', city: 'Kyiv', address: 'Calle Laureatska, 8' },
+      { id: 'lviv', city: 'Lviv', address: 'Calle Kulparkivska, 144' }
     ],
-    schedule: 'Horario', hours: 'Lun–Vie: 09:00–19:00 (hora de Kiev)', route: 'Cómo llegar', map: 'Abrir mapa',
+    schedule: 'Horario', hours: 'Lun–Vie: 09:00–19:00 (hora de Kyiv)', route: 'Cómo llegar', map: 'Abrir mapa',
     socialAria: 'Space Glass en redes sociales', mapTitle: 'Mapa de la oficina de Space Glass',
     geoEyebrow: 'Dónde trabajamos',
     geoTitle: 'Con sede en Ucrania y abiertos a proyectos en el extranjero',
     geoText: [
-      'Nuestra producción y nuestros equipos de instalación están en Kiev, Odesa y Leópolis, y realizamos proyectos en toda Ucrania según el tipo de estructura, el volumen de trabajo y la logística.',
+      'Nuestra producción y nuestros equipos de instalación están en Kyiv, Odesa y Lviv, y realizamos proyectos en toda Ucrania según el tipo de estructura, el volumen de trabajo y la logística.',
       'También podemos enviar productos y estructuras seleccionados a países europeos. Para un proyecto fuera de Ucrania, envíenos los planos o las fotos y la ubicación: le diremos qué podemos suministrar y cómo organizar el envío y la instalación.'
     ],
     geoCitiesAria: 'Oficinas de Space Glass',
@@ -184,7 +184,7 @@ export const contactsCopy: Record<IntlLocale, ContactsCopy> = {
       ['¿Puedo enviar archivos PDF o DWG?', 'Sí. Adjunte PDF, DWG u otra documentación técnica: así la revisión y el presupuesto son más rápidos.'],
       ['¿Necesito un plano terminado?', 'No. Para empezar bastan fotos y medidas aproximadas; si hace falta, desarrollaremos juntos la solución técnica y el plano.'],
       ['¿Cuánto tardan en preparar el presupuesto?', 'Depende de la complejidad de la solicitud y de la información disponible. Al recibirla, le indicaremos el plazo aproximado.'],
-      ['¿Puedo pedir una medición en obra?', 'Sí, en Kiev, Odesa y Leópolis y sus regiones, una vez definida la tarea y acordado un horario de acceso a la obra.'],
+      ['¿Puedo pedir una medición en obra?', 'Sí, en Kyiv, Odesa y Lviv y sus regiones, una vez definida la tarea y acordado un horario de acceso a la obra.'],
       ['¿Trabajan fuera de Ucrania?', 'Podemos enviar productos y estructuras seleccionados a países europeos. El envío y la instalación en el extranjero se acuerdan de forma individual para cada proyecto.'],
       ['¿Puedo encargar solo la fabricación, sin instalación?', 'Sí, para parte de las estructuras ofrecemos fabricación con envío. Las condiciones dependen del sistema y la configuración.'],
       ['¿Instalan ustedes las estructuras?', 'Sí. Nuestros equipos con experiencia instalan una vez aprobada la solución técnica y preparada la obra.'],

@@ -13,5 +13,17 @@ export default defineConfig({
   // (replaces the former hand-written homepage/about/poslugy/contacts/projects/rishennya/
   // catalog/knowledge critical-CSS files, which had drifted from the real CSS).
   // localized404 moves /ru/404/index.html to /ru/404.html and must stay last.
+  // The critical-CSS list (src/styles/critical/selectors.json) is keyed by generated stylesheet NAMES, and a shared
+  // component would otherwise lend its name to the CSS chunk (contacts-final.css became "ContactMaps"). Pin the
+  // contacts stylesheet to its own chunk so its name no longer depends on which components import it.
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: (id) => (id.endsWith('/src/styles/contacts-final.css') ? 'contacts-final' : undefined)
+        }
+      }
+    }
+  },
   integrations: [heroMidWidth(), heroAvif(), templateCriticalCss(), localized404()]
 });

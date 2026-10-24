@@ -3402,7 +3402,7 @@
     ]
    }
   },
-  "BaseLayout+ContactMaps+Footer": {
+  "BaseLayout+contacts-final+Footer": {
    "pages": 2,
    "selectors": {
     "BaseLayout": [
@@ -3597,7 +3597,7 @@
      ".simple-catalog__menu[data-astro-cid-nen7h5rs] a[data-astro-cid-nen7h5rs]:focus-visible",
      ".simple-catalog__menu[data-astro-cid-nen7h5rs] a[data-astro-cid-nen7h5rs]:hover"
     ],
-    "ContactMaps": [
+    "contacts-final": [
      ".contacts-calculation",
      ".contacts-editorial-item",
      ".contacts-editorial-item + .contacts-editorial-item",

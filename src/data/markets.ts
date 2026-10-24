@@ -120,7 +120,7 @@ export const MARKETS: Record<MarketCode, Market> = {
       ru: 'Офисы в Киеве, Одессе и Львове. Проекты по всей Украине.',
       en: 'Offices in Kyiv, Odesa and Lviv. Projects across Ukraine.',
       de: 'Büros in Kyjiw, Odesa und Lwiw. Projekte in der ganzen Ukraine.',
-      es: 'Oficinas en Kiev, Odesa y Leópolis. Proyectos en toda Ucrania.'
+      es: 'Oficinas en Kyiv, Odesa y Lviv. Proyectos en toda Ucrania.'
     },
     landingPages: []
   },
