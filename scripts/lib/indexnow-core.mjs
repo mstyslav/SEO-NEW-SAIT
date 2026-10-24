@@ -99,7 +99,8 @@ export async function submitIndexNow(urls, { fetchImpl = fetch, sleep = (ms) => 
         const res = await fetchImpl(API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json; charset=utf-8', 'User-Agent': 'space-glass-indexnow/1.0' },
-          body: JSON.stringify({ host: HOST, key: KEY, keyLocation: KEY_LOCATION, urlList: batch })
+          body: JSON.stringify({ host: HOST, key: KEY, keyLocation: KEY_LOCATION, urlList: batch }),
+          signal: AbortSignal.timeout(30000)
         });
         status = res.status;
         if (status === 200 || status === 202) ok = true;
@@ -112,4 +113,40 @@ export async function submitIndexNow(urls, { fetchImpl = fetch, sleep = (ms) => 
     (ok ? accepted : failed).push(...batch);
   }
   return { accepted, failed, responses };
+}
+
+/** Cloudflare answered with a bot/managed challenge instead of the page (typical for datacenter IPs such as GitHub runners). */
+export function isChallenge(res, bodyText = '') {
+  return Boolean(res.headers?.get?.('cf-mitigated')) || (res.status === 403 && /just a moment|challenge-platform/i.test(bodyText));
+}
+
+/** Static redirect rules of the site (public/_redirects: "from to status", exact paths). */
+export function parseRedirects(text) {
+  const rules = new Map();
+  for (const line of text.split('\n')) {
+    const [from, to, status] = line.trim().split(/\s+/);
+    if (!from || from.startsWith('#') || !to) continue;
+    rules.set(from, Number(status) || 301);
+  }
+  return rules;
+}
+
+/**
+ * What production answers for a URL path, derived from the build output that Cloudflare just deployed
+ * (static assets: dist/ is exactly what is served). Avoids requesting the site from GitHub runner IPs, which
+ * Cloudflare challenges. Returns { kind: live | noindex | noncanonical | redirect | gone, status }.
+ */
+export function buildProbe(distDir) {
+  const redirectsFile = path.join(distDir, '_redirects');
+  const redirects = parseRedirects(fs.existsSync(redirectsFile) ? fs.readFileSync(redirectsFile, 'utf8') : '');
+  return async (pathname) => {
+    const file = path.join(distDir, pathname, pathname.endsWith('/') ? 'index.html' : '');
+    if (redirects.has(pathname) || redirects.has(pathname.replace(/\/$/, ''))) return { kind: 'redirect', status: redirects.get(pathname) ?? redirects.get(pathname.replace(/\/$/, '')) };
+    if (!fs.existsSync(file)) return { kind: 'gone', status: 404 };
+    const html = fs.readFileSync(file, 'utf8');
+    if (/<meta name="robots" content="[^"]*noindex/i.test(html)) return { kind: 'noindex', status: 200 };
+    const canonical = (html.match(/<link rel="canonical" href="([^"]*)"/i) || [])[1];
+    if (canonical !== ORIGIN + pathname) return { kind: 'noncanonical', status: 200, canonical };
+    return { kind: 'live', status: 200 };
+  };
 }

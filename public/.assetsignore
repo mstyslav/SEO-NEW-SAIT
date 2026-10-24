@@ -1,0 +1,2 @@
+# Not published: used only by the CI run of the post-deploy IndexNow workflow.
+build-manifest.json

@@ -27,8 +27,8 @@
 /js/*
   Cache-Control: public, max-age=3600, must-revalidate
 
-# Deploy manifest read by the post-deploy IndexNow run: must always reflect the live version.
-/build-manifest.json
+# Bare commit SHA of the live deployment, read by the post-deploy IndexNow run: must always be fresh.
+/deploy-version.txt
   Cache-Control: no-store
 
 /*

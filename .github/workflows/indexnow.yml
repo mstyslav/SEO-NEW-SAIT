@@ -1,9 +1,13 @@
 name: IndexNow after deploy
 
-# Runs after every push to main, but submits nothing until production really serves that commit
-# (scripts/indexnow-auto.mjs polls https://space-glass.com.ua/build-manifest.json). Only new, changed
-# or removed URLs are sent. State (last manifest, pending URLs, history) lives on branch `indexnow-state`.
-# Manual run: Actions → "IndexNow after deploy" → Run workflow (retries pending URLs; "dry" only reports).
+# Runs after every push to main. Nothing is submitted until the Cloudflare "Workers Builds" check-run of that exact
+# commit has completed successfully (GitHub API, authenticated; production /deploy-version.txt is an extra check when
+# reachable). The CI build of the same commit is deterministic (page hashes equal the live site's), so its manifest
+# tells which URLs are new / changed / removed since the last run; only those are sent. No request is made to
+# space-glass.com.ua for page content: Cloudflare challenges GitHub runner IPs. State (last manifest, pending URLs,
+# history) lives on branch `indexnow-state`.
+# Manual run: Actions → "IndexNow after deploy" → Run workflow. "dry" only reports; "force" lifts the 500-URL
+# automatic limit for a deliberate site-wide change.
 
 on:
   push:
@@ -14,9 +18,14 @@ on:
         description: Dry run (report only, submit nothing, keep state)
         type: boolean
         default: true
+      force:
+        description: Send even when more than 500 URLs changed
+        type: boolean
+        default: false
 
 permissions:
-  contents: write
+  contents: write # push the state branch
+  checks: read # read the Workers Builds check-run
 
 # One run at a time, never cancelled half-way: a second push queues instead of racing on the state branch.
 concurrency:
@@ -26,12 +35,17 @@ concurrency:
 jobs:
   indexnow:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 45
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
       - name: Load state branch
         run: |
           mkdir -p "$RUNNER_TEMP/state"
@@ -40,16 +54,13 @@ jobs:
             git --work-tree="$RUNNER_TEMP/state" checkout FETCH_HEAD -- state.json
           fi
       - name: Submit changed URLs
-        id: submit
         run: |
-          if [ "${{ github.event_name }}" = "push" ]; then
-            # a newer main already exists: its own run handles the diff, this one would only mismatch
-            [ "$(git ls-remote origin refs/heads/main | cut -f1)" = "$GITHUB_SHA" ] || { echo "INDEXNOW STATUS: SKIPPED"; echo "REASON: SUPERSEDED BY A NEWER COMMIT"; exit 0; }
-            node scripts/indexnow-auto.mjs --state "$RUNNER_TEMP/state" --commit "$GITHUB_SHA" --wait 1500
-          else
-            DRY=""; [ "${{ inputs.dry }}" = "true" ] && DRY="--dry"
-            node scripts/indexnow-auto.mjs --state "$RUNNER_TEMP/state" $DRY
+          ARGS="--state $RUNNER_TEMP/state --manifest dist/build-manifest.json --commit $GITHUB_SHA --wait 1500"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            [ "${{ inputs.dry }}" = "true" ] && ARGS="$ARGS --dry"
+            [ "${{ inputs.force }}" = "true" ] && ARGS="$ARGS --force"
           fi
+          node scripts/indexnow-auto.mjs $ARGS
       - name: Save state
         if: always() && (github.event_name == 'push' || inputs.dry != true)
         run: |
@@ -59,8 +70,7 @@ jobs:
           git remote add origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
           cp "$RUNNER_TEMP/state/state.json" .
           [ -f "$RUNNER_TEMP/state/last-run.json" ] && cp "$RUNNER_TEMP/state/last-run.json" .
+          git fetch -q --depth=1 origin indexnow-state 2>/dev/null && git reset -q --soft FETCH_HEAD || true
           git add -A
           git -c user.name="indexnow-bot" -c user.email="indexnow-bot@users.noreply.github.com" commit -q -m "indexnow state for ${GITHUB_SHA::7}" || exit 0
-          git fetch -q --depth=1 origin indexnow-state 2>/dev/null && git reset -q --soft FETCH_HEAD || true
-          git -c user.name="indexnow-bot" -c user.email="indexnow-bot@users.noreply.github.com" commit -q --allow-empty-message -m "indexnow state for ${GITHUB_SHA::7}" 2>/dev/null || true
           git push -q origin HEAD:indexnow-state
