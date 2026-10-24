@@ -312,7 +312,7 @@ document.addEventListener('click',event=>{
   if(!a) return;
   const href=a.getAttribute('href')||'';
   const name=/^tel:/i.test(href)?'click_phone':/^mailto:/i.test(href)?'click_email':/^https?:\/\/(t\.me|telegram\.me)\//i.test(href)?'click_telegram':/^(https?:\/\/(wa\.me|api\.whatsapp\.com|web\.whatsapp\.com|chat\.whatsapp\.com)\/|whatsapp:)/i.test(href)?'click_whatsapp':null;
-  if(name) track(name,{link_location:linkLocation(a)});
+  if(name) track(name,{contact_method:name.slice(6),link_location:linkLocation(a)});
 },{capture:true});
 const escHtml=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
 function showSuccess(payload){
