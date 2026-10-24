@@ -28,7 +28,7 @@ function world({ pages = {}, commit = 'aaa', keyOk = true } = {}) {
   return w;
 }
 const ok = (html) => ({ html, status: 200 });
-const opts = (w, extra = {}) => ({ fetchImpl: w.fetch, sleep: async () => {}, retries: 2, ...extra });
+const opts = (w, extra = {}) => ({ fetchImpl: w.fetch, sleep: async () => {}, retries: 2, log: () => {}, ...extra });
 const sentUrls = (w) => w.api.flat().sort();
 
 const results = [];

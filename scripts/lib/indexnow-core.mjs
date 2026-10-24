@@ -98,7 +98,7 @@ export async function submitIndexNow(urls, { fetchImpl = fetch, sleep = (ms) => 
       try {
         const res = await fetchImpl(API_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json; charset=utf-8' },
+          headers: { 'Content-Type': 'application/json; charset=utf-8', 'User-Agent': 'space-glass-indexnow/1.0' },
           body: JSON.stringify({ host: HOST, key: KEY, keyLocation: KEY_LOCATION, urlList: batch })
         });
         status = res.status;

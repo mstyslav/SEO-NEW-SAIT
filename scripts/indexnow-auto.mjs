@@ -32,7 +32,7 @@ async function pMap(items, limit, fn) {
 /** Live classification of one URL path: what production answers right now. */
 async function probe(pathname, fetchImpl) {
   try {
-    const res = await fetchImpl(ORIGIN + pathname, { redirect: 'manual' });
+    const res = await fetchImpl(ORIGIN + pathname, { redirect: 'manual', headers: UA });
     if (res.status >= 300 && res.status < 400) return { kind: 'redirect', status: res.status };
     if (res.status === 404 || res.status === 410) return { kind: 'gone', status: res.status };
     if (res.status !== 200) return { kind: 'error', status: res.status };
@@ -46,35 +46,48 @@ async function probe(pathname, fetchImpl) {
   }
 }
 
+const UA = { 'User-Agent': 'space-glass-indexnow/1.0 (+https://space-glass.com.ua)' };
+
+/** Returns { manifest } or { why } (why = what was seen instead, for the log). */
 async function fetchProdManifest(fetchImpl) {
   try {
-    const res = await fetchImpl(`${ORIGIN}${MANIFEST_PATH}?t=${Date.now()}`, { headers: { 'Cache-Control': 'no-cache' } });
-    if (res.status !== 200) return null;
-    const json = await res.json();
-    return json?.version === 1 && json.pages ? json : null;
-  } catch {
-    return null;
+    const res = await fetchImpl(`${ORIGIN}${MANIFEST_PATH}?t=${Date.now()}`, { headers: { 'Cache-Control': 'no-cache', ...UA } });
+    if (res.status !== 200) return { why: `HTTP ${res.status} ${res.headers?.get?.('cf-mitigated') ? '(cf-mitigated: ' + res.headers.get('cf-mitigated') + ')' : ''}`.trim() };
+    const text = await res.text();
+    let json;
+    try { json = JSON.parse(text); } catch { return { why: `HTTP 200 but not JSON: ${text.slice(0, 80).replace(/\s+/g, ' ')}` }; }
+    return json?.version === 1 && json.pages ? { manifest: json } : { why: 'JSON without manifest fields' };
+  } catch (e) {
+    return { why: `network error: ${e.message}` };
   }
 }
 
 /** Waits until production serves the expected commit. Returns { manifest } or { blocked }. */
-async function confirmProduction({ fetchImpl, sleep, commit, waitMs, pollMs }) {
+async function confirmProduction({ fetchImpl, sleep, commit, waitMs, pollMs, log }) {
   const deadline = Date.now() + waitMs;
-  let last = null;
+  let seen = null;
+  let why = 'production manifest unavailable';
   for (;;) {
-    last = await fetchProdManifest(fetchImpl);
-    if (last && (!commit || last.commit === commit)) return { manifest: last };
+    const r = await fetchProdManifest(fetchImpl);
+    if (r.manifest) {
+      seen = r.manifest;
+      if (!commit || seen.commit === commit) return { manifest: seen };
+      log(`waiting: production serves ${String(seen.commit).slice(0, 7)}, expected ${commit.slice(0, 7)}`);
+    } else {
+      why = r.why;
+      log(`waiting: ${r.why}`);
+    }
     if (Date.now() >= deadline) break;
     await sleep(pollMs);
   }
-  return { blocked: last ? `production serves ${String(last.commit).slice(0, 7)}, expected ${String(commit).slice(0, 7)}` : 'production manifest unavailable' };
+  return { blocked: seen ? `production serves ${String(seen.commit).slice(0, 7)}, expected ${String(commit).slice(0, 7)}` : why };
 }
 
-export async function run({ state = {}, commit = null, fetchImpl = fetch, sleep = defaultSleep, waitMs = 0, pollMs = 30000, dry = false, retries = 4, retryDelayMs = 30000, now = () => new Date().toISOString() } = {}) {
+export async function run({ state = {}, commit = null, fetchImpl = fetch, sleep = defaultSleep, waitMs = 0, pollMs = 30000, dry = false, retries = 4, retryDelayMs = 30000, log = (m) => console.error(m), now = () => new Date().toISOString() } = {}) {
   const result = { status: '', reason: '', commit: null, changed: { added: [], updated: [], removed: [] }, submitted: 0, accepted: 0, failed: 0, dropped: [], removedHandling: [], responses: [], pending: 0 };
   const next = structuredClone({ version: 1, lastCommit: null, manifest: null, pending: [], history: [], ...state });
 
-  const prod = await confirmProduction({ fetchImpl, sleep, commit, waitMs, pollMs });
+  const prod = await confirmProduction({ fetchImpl, sleep, commit, waitMs, pollMs, log });
   if (prod.blocked) return { ...result, status: 'BLOCKED', reason: `PRODUCTION VERSION MISMATCH: ${prod.blocked}`, state, nextState: state };
   const manifest = prod.manifest;
   result.commit = manifest.commit;
