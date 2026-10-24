@@ -390,7 +390,7 @@ export const facadeCategories: ProfileCategory[] = [
       ['Чи потрібне погодження вітрини?', 'Для фасаду будинку може знадобитися погодження з власником будівлі чи місцевою владою. Радимо уточнити заздалегідь.'],
       ['Чи робите віконце видачі для кафе?', 'Так, у вітрину можна вбудувати відкидне або розсувне віконце видачі.']
     ],
-    related: [['Скляні вхідні групи', P('sklyani-vkhidni-hrupy')], ['Стійково-ригельне скління', P('stiykovo-ryhelne-sklinnya')], ['Структурне скління фасаду', P('strukturne-sklinnya-fasadu')], ['Скляні козирки', '/sklyani-kozyrky/'], ['Скло для магазинів', '/dlya-biznesu/magazynam/'], ['Скло для ресторанів', '/dlya-biznesu/restoranam/'], ...REL],
+    related: [['Скляні вхідні групи', P('sklyani-vkhidni-hrupy')], ['Алюмінієві двері', `${ALU}alyuminiyevi-dveri/`], ['Стійково-ригельне скління', P('stiykovo-ryhelne-sklinnya')], ['Структурне скління фасаду', P('strukturne-sklinnya-fasadu')], ['Скляні козирки', '/sklyani-kozyrky/'], ['Скло для магазинів', '/dlya-biznesu/magazynam/'], ['Скло для ресторанів', '/dlya-biznesu/restoranam/'], ...REL],
     ctaTitle: 'Потрібна вітрина?',
     ctaText: 'Надішліть фото фасаду й розміри — підберемо систему та підготуємо розрахунок.'
   }),
