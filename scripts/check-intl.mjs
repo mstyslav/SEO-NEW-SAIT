@@ -56,6 +56,10 @@ const foreignUi = {
 const CYRILLIC = /[А-Яа-яЁёЇїІіЄєҐґ]/;
 // Cyrillic allowed only here: the founder's original-script name in JSON-LD (Person.alternateName).
 const allowedCyrillic = ['Мстислав Грабко'];
+// Legal name of the Ukrainian sole proprietor (FOP) in the privacy policy / terms of EN/DE/ES: shown in the original script on purpose.
+const allowedLegalNameCyrillic = ['Гожда Марія Олегівна'];
+// Standalone pages outside the route map that are listed in the sitemap on purpose (German Impressum of the Austrian company).
+const standaloneSitemapUrls = new Set(['/de/impressum/']);
 
 const sitemap = new Set([...fs.readFileSync(path.join(dist, 'sitemap.xml'), 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].replace(site, '')));
 const titles = {}; const descriptions = {}; const h1s = {};
@@ -207,7 +211,8 @@ for (const route of INTL_ROUTES) {
     const attrText = [...visible.matchAll(/\s(?:alt|title|aria-label|placeholder|content|value|data-empty-label|data-expand-label|data-collapse-label|data-expand-prefix|data-collapse-prefix|data-category-name|data-of)="([^"]*)"/g)].map((m) => m[1]).join(' | ');
     const text = decode(visible.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ');
     const metaText = [title, desc, meta('og:title'), meta('og:description'), meta('twitter:title'), meta('twitter:description')].join(' | ');
-    for (const [where, value] of [['text', text], ['attributes', decode(attrText)], ['meta', metaText]]) {
+    for (let [where, value] of [['text', text], ['attributes', decode(attrText)], ['meta', metaText]]) {
+      for (const allowed of allowedLegalNameCyrillic) value = value.split(allowed).join('');
       const i = value.search(CYRILLIC);
       if (i >= 0) err(p, `Cyrillic in ${where}: …${value.slice(Math.max(0, i - 50), i + 50)}…`);
     }
@@ -225,7 +230,7 @@ for (const [kind, map] of [['title', titles], ['description', descriptions], ['H
 
 // sitemap: no other /en|de|es/ URLs than the route map
 const routeUrls = new Set(INTL_ROUTES.flatMap((r) => intlLocales.map((l) => r[l]).filter(Boolean)));
-for (const u of sitemap) if (/^\/(en|de|es)\//.test(u) && !routeUrls.has(u)) err(u, 'in sitemap but not in the route map');
+for (const u of sitemap) if (/^\/(en|de|es)\//.test(u) && !routeUrls.has(u) && !standaloneSitemapUrls.has(u)) err(u, 'in sitemap but not in the route map');
 
 // localized 404 pages
 for (const locale of intlLocales) {

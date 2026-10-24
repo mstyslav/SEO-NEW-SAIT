@@ -239,6 +239,8 @@ import ScrollProgress from '../components/ScrollProgress.astro';
     <title>{title}</title>
     {!errorPage && <link rel="canonical" href={canonical} />}
     {!errorPage && availableAlternateLocales.map((item) => <link rel="alternate" hreflang={item} href={new URL(localizedPath(basePath, item), Astro.site ?? Astro.url.origin)} />)}
+    {!errorPage && standalone && <link rel="alternate" hreflang={resolvedLocale} href={canonical} />}
+    {!errorPage && standalone && <link rel="alternate" hreflang="x-default" href={canonical} />}
     {!errorPage && isDeOnlyPage && <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, resolvedLocale), Astro.site ?? Astro.url.origin)} />}
     {!errorPage && availableAlternateLocales.includes('uk') && <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(basePath, 'uk'), Astro.site ?? Astro.url.origin)} />}
     <meta property="og:type" content="website" />
