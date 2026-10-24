@@ -1,0 +1,66 @@
+name: IndexNow after deploy
+
+# Runs after every push to main, but submits nothing until production really serves that commit
+# (scripts/indexnow-auto.mjs polls https://space-glass.com.ua/build-manifest.json). Only new, changed
+# or removed URLs are sent. State (last manifest, pending URLs, history) lives on branch `indexnow-state`.
+# Manual run: Actions → "IndexNow after deploy" → Run workflow (retries pending URLs; "dry" only reports).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry:
+        description: Dry run (report only, submit nothing, keep state)
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+# One run at a time, never cancelled half-way: a second push queues instead of racing on the state branch.
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Load state branch
+        run: |
+          mkdir -p "$RUNNER_TEMP/state"
+          if git ls-remote --exit-code --heads origin indexnow-state >/dev/null 2>&1; then
+            git fetch --depth=1 origin indexnow-state
+            git --work-tree="$RUNNER_TEMP/state" checkout FETCH_HEAD -- state.json
+          fi
+      - name: Submit changed URLs
+        id: submit
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            # a newer main already exists: its own run handles the diff, this one would only mismatch
+            [ "$(git ls-remote origin refs/heads/main | cut -f1)" = "$GITHUB_SHA" ] || { echo "INDEXNOW STATUS: SKIPPED"; echo "REASON: SUPERSEDED BY A NEWER COMMIT"; exit 0; }
+            node scripts/indexnow-auto.mjs --state "$RUNNER_TEMP/state" --commit "$GITHUB_SHA" --wait 1500
+          else
+            DRY=""; [ "${{ inputs.dry }}" = "true" ] && DRY="--dry"
+            node scripts/indexnow-auto.mjs --state "$RUNNER_TEMP/state" $DRY
+          fi
+      - name: Save state
+        if: always() && (github.event_name == 'push' || inputs.dry != true)
+        run: |
+          [ -f "$RUNNER_TEMP/state/state.json" ] || exit 0
+          rm -rf "$RUNNER_TEMP/push" && mkdir "$RUNNER_TEMP/push" && cd "$RUNNER_TEMP/push"
+          git init -q -b indexnow-state
+          git remote add origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+          cp "$RUNNER_TEMP/state/state.json" .
+          [ -f "$RUNNER_TEMP/state/last-run.json" ] && cp "$RUNNER_TEMP/state/last-run.json" .
+          git add -A
+          git -c user.name="indexnow-bot" -c user.email="indexnow-bot@users.noreply.github.com" commit -q -m "indexnow state for ${GITHUB_SHA::7}" || exit 0
+          git fetch -q --depth=1 origin indexnow-state 2>/dev/null && git reset -q --soft FETCH_HEAD || true
+          git -c user.name="indexnow-bot" -c user.email="indexnow-bot@users.noreply.github.com" commit -q --allow-empty-message -m "indexnow state for ${GITHUB_SHA::7}" 2>/dev/null || true
+          git push -q origin HEAD:indexnow-state

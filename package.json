@@ -19,6 +19,8 @@
     "audit:lighthouse": "node scripts/audit/lighthouse.mjs",
     "audit:crawl": "node scripts/audit/crawl.mjs",
     "indexnow": "node scripts/indexnow.mjs",
+    "indexnow:auto": "node scripts/indexnow-auto.mjs",
+    "test:indexnow": "node scripts/test-indexnow-auto.mjs",
     "check:intl": "node scripts/check-intl.mjs"
   },
   "dependencies": {

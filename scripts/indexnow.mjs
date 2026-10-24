@@ -4,10 +4,9 @@
 //   npm run indexnow -- --dry   → print what would be sent
 //   npm run indexnow -- /a/ /b/ → only these paths
 import fs from 'node:fs';
+import { HOST, KEY, ORIGIN } from './lib/indexnow-core.mjs';
 
-const KEY = '24b7e88d34f656f929a681a60c6f719e';
-const HOST = 'space-glass.com.ua';
-const ORIGIN = `https://${HOST}`;
+// Manual submit. The automatic post-deploy run is scripts/indexnow-auto.mjs (changed URLs only).
 const args = process.argv.slice(2);
 const dry = args.includes('--dry');
 const paths = args.filter((a) => a.startsWith('/'));
