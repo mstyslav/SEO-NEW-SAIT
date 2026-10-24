@@ -1,25 +1,18 @@
 {
- "status": "SUBMITTED",
- "reason": "",
- "commit": "27af76133bc82e10ec014f44aa455cb8e500aebf",
+ "status": "SKIPPED",
+ "reason": "NO CHANGED URLS",
+ "commit": "c934ded793456e313ae39a90126c4fec0c3f8825",
  "verifiedVia": "Workers Builds check-run + production /deploy-version.txt",
  "changed": {
   "added": [],
-  "updated": [
-   "/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/",
-   "/poslugy/sklyani-fasady/vitrinne-sklinnya/",
-   "/ru/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/",
-   "/ru/poslugy/sklyani-fasady/vitrinne-sklinnya/"
-  ],
+  "updated": [],
   "removed": []
  },
- "submitted": 4,
- "accepted": 4,
+ "submitted": 0,
+ "accepted": 0,
  "failed": 0,
  "dropped": [],
  "removedHandling": [],
- "responses": [
-  200
- ],
+ "responses": [],
  "pending": 0
 }
