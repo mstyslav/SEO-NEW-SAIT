@@ -9,7 +9,7 @@ import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import TrustBar from '../../../components/TrustBar.astro';
 import ProjectCard from '../../../components/projects/ProjectCard.astro';
 import ProfileRequestForm from '../../../components/profile/ProfileRequestForm.astro';
-import { faqSchema, type JsonLdObject } from '../../../seo/schema';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../../seo/schema';
 import { mirrorTypes } from '../../../data/mirror-types';
 import { MIRROR_HUB, MIRROR_IMG } from '../../../data/mirror-catalog';
 import { mirrorCategoriesRu as mirrorCategories } from '../../../data/ru/mirror-catalog.ru';
@@ -90,7 +90,16 @@ const faq: [string, string][] = [
 ];
 
 const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
-const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] : [];
+// ItemList 1:1 with the visible type cards (each links to a real child page).
+const origin = Astro.site ?? Astro.url.origin;
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${absoluteUrl(Astro.url.pathname, origin)}#directions`,
+  name: title,
+  numberOfItems: items.length,
+  itemListElement: items.map((item, index) => ({ '@type': 'ListItem', position: index + 1, name: item.title, url: absoluteUrl(item.href, origin) }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
 ---
 <BaseLayout
   title="Зеркала на заказ по размеру — LED, в ванную, на стену"

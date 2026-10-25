@@ -81,6 +81,7 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 | R-046 | P1 | DONE | 2026-10-25 | Backlink quality audit (TASK 75): GSC export verified (9 domains, 317 linking pages, 144-page sample), donors checked li |
 | R-047 | P2 | WAITING FOR OWNER | 2026-11-03 | Owner to confirm whether the DIPFO article (dofollow, exact-match anchor "скляні перегородки на замовлення") and the uba |
 | R-048 | P2 | SCHEDULED | 2027-01-15 | Repeat the backlink/SCLASS comparison after two months of execution: Ahrefs full tool, GSC Links report, referral traffi |
+| R-049 | P2 | DONE | 2026-10-25 | Structured data audit (TASK 83): Ahrefs 'Product missing' (148) and 'Article missing' (7) not applied - site has no priced products and the 80 knowledge articles already carry Article; fake Product/Offer would violate guidelines. 'ItemList missing' (4) confirmed real on UA/RU /dzerkala/ and /dushovi-kabiny/: ItemList added 1:1 with the visible type cards (6 and 9 items). |
 
 ## Details per open item
 

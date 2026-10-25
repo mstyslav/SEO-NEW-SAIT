@@ -8,7 +8,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TrustBar from '../../components/TrustBar.astro';
 import CalculatedPriceBlock from '../../components/pricing/CalculatedPriceBlock.astro';
 import { SHOWER_HUB_FROM_UAH } from '../../pricing/shower-pricing';
-import { faqSchema, type JsonLdObject } from '../../seo/schema';
+import { absoluteUrl, faqSchema, type JsonLdObject } from '../../seo/schema';
 import ProjectCard from '../../components/projects/ProjectCard.astro';
 import ProfileRequestForm from '../../components/profile/ProfileRequestForm.astro';
 import '../../styles/category-pages.css';
@@ -142,7 +142,16 @@ const faq = [
 
 // FAQ schema 1:1 with the visible FAQ (FAQBlock expandTo = faq.length, so nothing is added to the list).
 const faqStructuredData = faqSchema(faq.map(([question, answer]) => ({ question, answer })));
-const structuredData: JsonLdObject[] = faqStructuredData ? [faqStructuredData] : [];
+// ItemList 1:1 with the visible type cards (each links to a real child page).
+const origin = Astro.site ?? Astro.url.origin;
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${absoluteUrl(Astro.url.pathname, origin)}#directions`,
+  name: title,
+  numberOfItems: items.length,
+  itemListElement: items.map((item, index) => ({ '@type': 'ListItem', position: index + 1, name: item.title, url: absoluteUrl(item.href, origin) }))
+};
+const structuredData: JsonLdObject[] = [itemList, ...(faqStructuredData ? [faqStructuredData] : [])];
 ---
 <BaseLayout title={`${h1} | Space Glass`} description={subtitle} structuredData={structuredData}>
 <div class="sg-page-shell">
