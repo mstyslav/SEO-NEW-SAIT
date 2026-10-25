@@ -1,18 +1,22 @@
 {
- "status": "SKIPPED",
- "reason": "NO CHANGED URLS",
- "commit": "f8cd3f6256af06fb1ce0f1665b34ef5f0dd24ba5",
+ "status": "SUBMITTED",
+ "reason": "",
+ "commit": "722e8a888d8df90dc62dc4f8eb043573116bfa8a",
  "verifiedVia": "Workers Builds check-run + production /deploy-version.txt",
  "changed": {
   "added": [],
-  "updated": [],
+  "updated": [
+   "/de/impressum/"
+  ],
   "removed": []
  },
- "submitted": 0,
- "accepted": 0,
+ "submitted": 1,
+ "accepted": 1,
  "failed": 0,
  "dropped": [],
  "removedHandling": [],
- "responses": [],
+ "responses": [
+  200
+ ],
  "pending": 0
 }

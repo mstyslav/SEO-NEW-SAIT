@@ -1,8 +1,8 @@
 {
  "version": 1,
- "lastCommit": "f8cd3f6256af06fb1ce0f1665b34ef5f0dd24ba5",
+ "lastCommit": "722e8a888d8df90dc62dc4f8eb043573116bfa8a",
  "manifest": {
-  "commit": "f8cd3f6256af06fb1ce0f1665b34ef5f0dd24ba5",
+  "commit": "722e8a888d8df90dc62dc4f8eb043573116bfa8a",
   "pages": {
    "/": "94d45be92e58e384",
    "/about/": "2efc909c2ae0fd4e",
@@ -80,7 +80,7 @@
    "/de/glasvordaecher/glasvordach-freitragend/": "f5565983c936509a",
    "/de/glasvordaecher/glasvordach-mit-konsolen/": "4311b51c16801771",
    "/de/glasvordaecher/glasvordach-zugstangen/": "04a5c9e620bad560",
-   "/de/impressum/": "1eae08ef9cee7529",
+   "/de/impressum/": "3326ad3c1d01835c",
    "/de/kontakt/": "65e431d3c6f37b28",
    "/de/leistungen/": "8cacadda2768b085",
    "/de/nutzungsbedingungen/": "0d606b95646d6d5d",
@@ -647,6 +647,15 @@
  },
  "pending": [],
  "history": [
+  {
+   "at": "2026-10-25T10:39:47.955Z",
+   "commit": "722e8a888d8df90dc62dc4f8eb043573116bfa8a",
+   "status": "SUBMITTED",
+   "submitted": 1,
+   "accepted": 1,
+   "failed": 0,
+   "reason": ""
+  },
   {
    "at": "2026-10-25T09:08:58.745Z",
    "commit": "f8cd3f6256af06fb1ce0f1665b34ef5f0dd24ba5",
