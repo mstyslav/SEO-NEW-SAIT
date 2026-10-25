@@ -74,7 +74,11 @@ const faqData = faqSchema(copy.faq.items.map(([question, answer]) => ({ question
 const itemList: JsonLdObject | null = visual.typeLinks
   ? { '@type': 'ItemList', '@id': `${pageUrl}#directions`, name: copy.types.title, numberOfItems: typeCards.length,
       itemListElement: typeCards.map((card, index) => ({ '@type': 'ListItem', position: index + 1, name: card.title, url: absoluteUrl(card.href!, origin) })) }
-  : null;
+  : detailPages.length > 1
+    // Hubs without type links: the visible detail-page cards (each a real child page) are the list.
+    ? { '@type': 'ItemList', '@id': `${pageUrl}#directions`, name: copy.name, numberOfItems: detailPages.length,
+        itemListElement: detailPages.map((page, index) => ({ '@type': 'ListItem', position: index + 1, name: page.card[0], url: absoluteUrl(page.href, origin) })) }
+    : null;
 const structuredData = [itemList, faqData].filter(Boolean) as JsonLdObject[];
 ---
 <BaseLayout
