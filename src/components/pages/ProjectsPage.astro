@@ -3,7 +3,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../Header.astro';
 import Footer from '../Footer.astro';
 import ProjectsIndex from '../projects/ProjectsIndex.astro';
-import type { Locale } from '../../i18n/helpers';
+import { getCollection } from 'astro:content';
+import { absoluteUrl, type JsonLdObject } from '../../seo/schema';
+import { localizedPath, type Locale } from '../../i18n/helpers';
 
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
@@ -15,8 +17,26 @@ const meta = locale === 'ru' ? {
   title: 'Реалізовані проєкти Space Glass — фото робіт',
   description: 'Фото реалізованих проєктів Space Glass: скляні перегородки, душові, двері, огорожі, фасади й безрамне скління в Києві, Одесі, Львові та по Україні.'
 };
+
+// ItemList 1:1 with the project cards ProjectsIndex renders (same filter and order, same card links and titles).
+const origin = Astro.site ?? Astro.url.origin;
+const projects = (await getCollection('projects', ({ data }) => data.status === 'published' && data.locale === 'uk'))
+  .map(({ data }) => data)
+  .sort((a, b) => a.sortOrder - b.sortOrder);
+const itemList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${absoluteUrl(localizedPath('/project/', locale), origin)}#projects`,
+  name: meta.title,
+  numberOfItems: projects.length,
+  itemListElement: projects.map((project, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: locale === 'ru' && project.cardTitleRu ? project.cardTitleRu : project.cardTitle,
+    url: absoluteUrl(localizedPath(`/project/${project.slug}/`, locale), origin)
+  }))
+};
 ---
-<BaseLayout title={meta.title} description={meta.description} locale={locale}>
+<BaseLayout title={meta.title} description={meta.description} locale={locale} schemaType="CollectionPage" structuredData={[itemList]}>
 <div class="sg-page-shell"><Header locale={locale}/><main id="main">
 <ProjectsIndex locale={locale} />
 </main><Footer locale={locale}/></div></BaseLayout>

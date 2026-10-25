@@ -82,6 +82,7 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 | R-047 | P2 | WAITING FOR OWNER | 2026-11-03 | Owner to confirm whether the DIPFO article (dofollow, exact-match anchor "скляні перегородки на замовлення") and the uba |
 | R-048 | P2 | SCHEDULED | 2027-01-15 | Repeat the backlink/SCLASS comparison after two months of execution: Ahrefs full tool, GSC Links report, referral traffi |
 | R-049 | P2 | DONE | 2026-10-25 | Structured data audit (TASK 83): Ahrefs 'Product missing' (148) and 'Article missing' (7) not applied - site has no priced products and the 80 knowledge articles already carry Article; fake Product/Offer would violate guidelines. 'ItemList missing' (4) confirmed real on UA/RU /dzerkala/ and /dushovi-kabiny/: ItemList added 1:1 with the visible type cards (6 and 9 items). |
+| R-050 | P2 | DONE | 2026-10-25 | Ahrefs follow-up (TASK 83.2): 7 'Article missing' URLs verified as category/service/knowledge-index pages, not articles - no Article added. 'ItemList missing' 4: /ru/project/ real (63 cards) -> ItemList + CollectionPage added on UA/RU /project/; 3 /ru/dlya-biznesu/* are Service pages with zone text blocks, no ItemList. EN/DE/ES: 9 DE hubs with 3-7 visible child-page cards got ItemList; 22 EN/ES hubs have no linked list, DE wintergaerten only 1 child - none added. Requires Ahrefs re-crawl to confirm. |
 
 ## Details per open item
 
