@@ -1,17 +1,20 @@
 {
  "status": "SUBMITTED",
  "reason": "",
- "commit": "722e8a888d8df90dc62dc4f8eb043573116bfa8a",
+ "commit": "fd0c62c018b40ca04db40973023e6ffe2bcce2cf",
  "verifiedVia": "Workers Builds check-run + production /deploy-version.txt",
  "changed": {
   "added": [],
   "updated": [
-   "/de/impressum/"
+   "/dushovi-kabiny/",
+   "/dzerkala/",
+   "/ru/dushovi-kabiny/",
+   "/ru/dzerkala/"
   ],
   "removed": []
  },
- "submitted": 1,
- "accepted": 1,
+ "submitted": 4,
+ "accepted": 4,
  "failed": 0,
  "dropped": [],
  "removedHandling": [],
