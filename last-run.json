@@ -1,27 +1,18 @@
 {
- "status": "SUBMITTED",
- "reason": "",
- "commit": "1851a35f1c80b6335c4e3e9b2d28636f3e3db726",
+ "status": "SKIPPED",
+ "reason": "NO CHANGED URLS",
+ "commit": "118d85d5532a85fe8fa5c1de61610e401ff9c262",
  "verifiedVia": "Workers Builds check-run + production /deploy-version.txt",
  "changed": {
   "added": [],
-  "updated": [
-   "/dzerkala/",
-   "/dzerkala/dzerkala-dlya-salonu-krasy/",
-   "/dzerkala/led-dzerkala/",
-   "/ru/dzerkala/",
-   "/ru/dzerkala/dzerkala-dlya-salonu-krasy/",
-   "/ru/dzerkala/led-dzerkala/"
-  ],
+  "updated": [],
   "removed": []
  },
- "submitted": 6,
- "accepted": 6,
+ "submitted": 0,
+ "accepted": 0,
  "failed": 0,
  "dropped": [],
  "removedHandling": [],
- "responses": [
-  200
- ],
+ "responses": [],
  "pending": 0
 }
