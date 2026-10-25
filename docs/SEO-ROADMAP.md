@@ -15,28 +15,29 @@ IDs are stable; numbering is grouped (R-00x done, R-01x scheduled/measurement, R
 
 Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER · SCHEDULED · BLOCKED.
 
-## Dashboard (31 items)
+## Dashboard (34 items)
 
 | Status | Count |
 |---|---|
-| DONE | 11 |
+| DONE | 12 |
 | READY | 2 |
 | IN PROGRESS | 0 |
 | WAITING FOR DATA | 3 |
-| WAITING FOR OWNER | 8 |
-| SCHEDULED | 7 |
+| WAITING FOR OWNER | 9 |
+| SCHEDULED | 8 |
 | BLOCKED | 0 |
 
 ## Important dates
 | Date | What |
 |---|---|
-| 2026-11-03 | Ahrefs audit (row limit resets) — R-016 |
+| 2026-11-03 | Ahrefs full-tool audit vs SCLASS (row limit resets) — R-016; owner answer on paid links — R-047 |
 | after 2026-11-04 (plan 2026-11-05) | Glass partitions reassessment — R-012 |
 | 2026-11-07 | TASK 69/70 first check — R-010, R-011; UA article not indexed + EN/DE/ES indexing check — R-044 |
 | 2026-11-10 | IndexNow wait research — R-021 |
 | 2026-11-21 | noindex report monitor (R-042); TASK 69/70 second check; shower trays 4-week review; GA4 contact events review — R-010, R-011, R-014, R-019 |
 | 2026-11-27 | Austria review — R-040 |
 | 2026-12-05 | TASK 69/70 final (42-day) check; shower trays 6-week review |
+| 2027-01-15 | Backlink/SCLASS comparison repeat — R-048 |
 
 ## Protected pages (do not edit without evidence of a critical problem)
 - Until 2026-12-05: TASK 69 pages (RU terrace glazing, RU stair railings, RU pergolas) and TASK 70 pages (aluminium doors UA/RU).
@@ -57,7 +58,7 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 | R-011 | P1 | SCHEDULED | 2026-11-07 | TASK 70 follow-up: aluminium doors UA/RU |
 | R-012 | P1 | SCHEDULED | 2026-11-05 | Glass partitions reassessment (hub + interior sub-pages, UA/RU) |
 | R-014 | P2 | SCHEDULED | 2026-11-21 | Shower trays review 4-6 weeks after TASK 66: category impressions, commercial keywords, CTR, positions, internal-linking |
-| R-016 | P1 | SCHEDULED | 2026-11-03 | Ahrefs audit: Space Glass vs SCLASS (sclass.od.ua) |
+| R-016 | P1 | SCHEDULED | 2026-11-03 | Ahrefs audit: Space Glass vs SCLASS |
 | R-019 | P2 | WAITING FOR DATA | 2026-11-21 | GA4 contact events review on real visitors: contact_method, phone/email/Telegram/WhatsApp clicks, generate_lead |
 | R-020 | P1 | DONE | 2026-10-24 | GSC "Excluded by noindex" = 9,936 URLs audited (TASK 72) |
 | R-021 | P3 | READY | 2026-11-10 | IndexNow reliability: deploy wait is 25 min (--wait 1500) inside a 45 min job; Cloudflare queue once took ~33 min, so th |
@@ -68,7 +69,7 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 | R-030 | P1 | WAITING FOR OWNER | 2026-11-14 | Verified aluminium door prices |
 | R-031 | P1 | WAITING FOR OWNER | 2026-11-30 | Real project cases: aluminium entrance doors (priority) and glass partitions |
 | R-032 | P3 | WAITING FOR OWNER | 2026-12-15 | Shower tray model prices: Product/Offer schema must NOT be added until each of the 4 tray models has a verified price/av |
-| R-033 | P2 | WAITING FOR OWNER | 2026-11-10 | Link building (authority): approved budget/decisions and logins |
+| R-033 | P2 | WAITING FOR OWNER | 2026-11-10 | Link building (authority): TASK 75 produced a 3-month plan (Nov 2026 - Jan 2027), 20 vetted opportunity rows and 3 budge |
 | R-034 | P3 | WAITING FOR OWNER | 2026-12-15 | Knowledge articles: 20 generic articles left (10 merge candidates, 10 need verified facts) |
 | R-035 | P2 | DONE | 2026-10-24 | Private backup of evidence reports (TASK 64-72): 8 zip archives uploaded to a private Google Drive folder "Space Glass / |
 | R-040 | P2 | WAITING FOR DATA | 2026-11-27 | Austria review (separate from Ukraine): GSC AT/DE after the 2026-10-16 launch (DE 72 URLs) |
@@ -77,6 +78,9 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 | R-043 | P2 | DONE | 2026-10-25 | GSC coverage audit (TASK 73): 404 (171), redirects (101), crawled-not-indexed (132) fully exported and checked on produc |
 | R-044 | P2 | SCHEDULED | 2026-11-07 | One UA page is indexable but NOT in Google (TASK 73): /knowledge/vymogy-do-osnovy-pid-sklo/ (article, crawled once on 20 |
 | R-045 | P2 | DONE | 2026-10-25 | Removed the obsolete "Архітектурні системи" page (owner decision, TASK 74): /arkhitekturni-systemy/ (UA) and /ru/arkhite |
+| R-046 | P1 | DONE | 2026-10-25 | Backlink quality audit (TASK 75): GSC export verified (9 domains, 317 linking pages, 144-page sample), donors checked li |
+| R-047 | P2 | WAITING FOR OWNER | 2026-11-03 | Owner to confirm whether the DIPFO article (dofollow, exact-match anchor "скляні перегородки на замовлення") and the uba |
+| R-048 | P2 | SCHEDULED | 2027-01-15 | Repeat the backlink/SCLASS comparison after two months of execution: Ahrefs full tool, GSC Links report, referral traffi |
 
 ## Details per open item
 
@@ -122,11 +126,11 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 
 ### R-016 — Authority (P1, SCHEDULED)
 - **Category:** Authority
-- **Description:** Ahrefs audit: Space Glass vs SCLASS (sclass.od.ua). Verify DR, referring and dofollow domains, backlinks, new/lost RD, organic keywords/traffic, link quality, competitor gap, safe link-building options. Baseline SG: DR ~5, RD ~558, dofollow RD ~61, organic traffic ~19. SCLASS: DR ~10, RD ~681, dofollow ~61.
+- **Description:** Ahrefs audit: Space Glass vs SCLASS. TASK 75 recorded free-tool values on 2026-10-25 (SG: DR 23 [unverified jump from ~5], RD 554, backlinks 2.2K, traffic est. 37; SCLASS: DR 10, RD 677, backlinks 1.5K, traffic est. 191). Full-tool metrics still missing: new/lost RD, organic keywords, SCLASS full donor list, confirmation of DR.
 - **Dependency:** Ahrefs monthly row limit resets 2026-11-03 (free plan; Site Explorer competitor views may stay unavailable)
-- **Next action:** On 2026-11-03 re-open Ahrefs in the owner Chrome; fill TASK-67-AHREFS-COMPARISON.csv equivalent. No link purchases, no disavow without evidence, no outreach without owner authorization.
+- **Next action:** On 2026-11-03 re-open Ahrefs Site Explorer (row limit reset): confirm DR, RD, dofollow RD, new/lost RD, keywords; export SCLASS referring domains and diff against ours. No link purchases, no disavow, no outreach.
 - **Target date:** 2026-11-03
-- **Evidence:** TASK 67: Ahrefs blocked (row limit); earlier audit 2026-10-13/15 verdict B monitor only
+- **Evidence:** TASK 75: GSC 9 linking domains / 317 linking pages (2026-10-25), manual actions none; free Ahrefs checker values; docs/SEO-AUDIT-BACKLINK-SUMMARY.md
 - **Related files:** task-67/TASK-67-AHREFS-COMPARISON.csv (LOCAL (untracked, not in git))
 - **Last updated:** 2026-10-24
 
@@ -222,11 +226,11 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 
 ### R-033 — Authority (P2, WAITING FOR OWNER)
 - **Category:** Authority
-- **Description:** Link building (authority): approved budget/decisions and logins. Open state from 2026-10: buduemo profile live; dverprof and 048.ua cards need owner login/claim; paid article options (DIPFO ~800 UAH, UA-Region, 048.ua) not purchased; drafts prepared. No purchases or outreach without authorization.
+- **Description:** Link building (authority): TASK 75 produced a 3-month plan (Nov 2026 - Jan 2027), 20 vetted opportunity rows and 3 budget scenarios (planning estimates). Nothing bought or contacted. Needs owner decisions: scenario, who contacts suppliers/clients/publishers, approval of paid placements (must be marked rel=sponsored).
 - **Dependency:** R-016 Ahrefs results (2026-11-03); owner budget decision
-- **Next action:** After R-016, present 2-3 safe options with cost; owner decides.
+- **Next action:** Owner picks scenario A/B/C and approves first contacts (supplier dealer/reference pages, client credits, one expert article). Then execute November steps; Claude drafts materials, owner sends.
 - **Target date:** 2026-11-10
-- **Evidence:** Link-building notes of 2026-10-13/15 (backlink audit verdict B: monitor only; no manual action)
+- **Evidence:** TASK 75 plan; verified DIPFO price list 2026-10-25 (article 800/1,600 UAH); UA-Region tiers 2,990-9,990 UAH visible; other prices UNKNOWN
 - **Related files:** seo-audit/ (link-building drafts exist only in a local worktree)
 - **Last updated:** 2026-10-24
 
@@ -280,6 +284,26 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 - **Related files:** docs/SEO-AUDIT-COVERAGE-SUMMARY.md; task-73/TASK-73-FIX-PLAN.md (LOCAL)
 - **Last updated:** 2026-10-24
 
+### R-047 — Authority (P2, WAITING FOR OWNER)
+- **Category:** Authority
+- **Description:** Owner to confirm whether the DIPFO article (dofollow, exact-match anchor "скляні перегородки на замовлення") and the uba.top listing were paid. DIPFO publicly sells dofollow articles; paid links that pass ranking credit should carry rel="sponsored"/"nofollow" under Google policy.
+- **Dependency:** Owner knowledge of past payments
+- **Next action:** Owner answers yes/no for DIPFO and uba.top. If paid: decide whether to ask the publisher (owner contact only) to add rel="sponsored", or accept the risk; never remove/disavow without evidence of harm.
+- **Target date:** 2026-11-03
+- **Evidence:** TASK 75 donor audit: DIPFO price page verified 2026-10-25; link rel = noopener only
+- **Related files:** docs/SEO-AUDIT-BACKLINK-SUMMARY.md; task-75/TASK-75-GSC-DONORS.csv (LOCAL)
+- **Last updated:** 2026-10-24
+
+### R-048 — Authority (P2, SCHEDULED)
+- **Category:** Authority
+- **Description:** Repeat the backlink/SCLASS comparison after two months of execution: Ahrefs full tool, GSC Links report, referral traffic, GSC clicks/impressions on target pages, new relevant referring domains. Adjust or stop tactics.
+- **Dependency:** R-016 baseline (2026-11-03) and R-033 execution
+- **Next action:** Run on 2027-01-15; compare with TASK-75-SCLASS-COMPARISON.csv and R-016 results.
+- **Target date:** 2027-01-15
+- **Evidence:** TASK 75 plan
+- **Related files:** task-75/TASK-75-LINK-BUILDING-PLAN.md (LOCAL)
+- **Last updated:** 2026-10-24
+
 ## Completed (evidence)
 | ID | Summary | Evidence |
 |---|---|---|
@@ -294,6 +318,7 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 | R-035 | Private backup of evidence reports (TASK 64-72): 8 zip archives uploaded to a private Google Drive folder "Space Glass / SEO / Reports / 2026" (owner-only, general access restricted). TASK 66 has no report file. Byte-level read-back was not performed (names, count and privacy verified). | Drive folder created and 8 files verified present 2026-10-24; public repo still holds no GSC/GA4 data |
 | R-043 | GSC coverage audit (TASK 73): 404 (171), redirects (101), crawled-not-indexed (132) fully exported and checked on production. No current commercial page in the 404 list; all 101 redirects valid (no loops, no 404 targets, no language mismatch, 0 internal links to old URLs); crawled-not-indexed = mostly stale historical URLs (73) and recently published EN/DE/ES pages (52, sampled hubs already on Google); 2 UA pages indexable but not in Google (P2). No P0/P1. | TASK 73 audit; GSC data date 2026-10-16; all three lists exported in full (no 1,000 cap hit); URL Inspection on 6 URLs on 2026-10-25 |
 | R-045 | Removed the obsolete "Архітектурні системи" page (owner decision, TASK 74): /arkhitekturni-systemy/ (UA) and /ru/arkhitekturni-systemy/ (RU) deleted (no DE/EN/ES versions existed); both URLs answer HTTP 410 Gone via the Cloudflare Worker (wrangler run_worker_first + GONE_PATHS), no redirects; removed from sitemap, navigation lists, /poslugy/ direction cards, solutions, facade related links, route/project checks and catalog data. | PR #46; build 654 pages, sitemap 639; local Worker test 410/410/410/410, other pages 200; live verification in the task report |
+| R-046 | Backlink quality audit (TASK 75): GSC export verified (9 domains, 317 linking pages, 144-page sample), donors checked live, no manual action, no disavow/removal candidates; 1 INVESTIGATE (DIPFO paid status); comparison with SCLASS from free Ahrefs tools; 20 opportunity rows; 3-month plan. | GSC manual actions 2026-10-25: none; Google link-spam/disavow guidance fetched 2026-10-25; private reports task-75/ (LOCAL) |
 
 ## Evidence location
 The reports `task-64/` … `task-70/` (GSC/GA4 numbers, competitor tables, baselines) are **local, untracked files** in the working folder of the project owner. This repository is public, so performance data is intentionally not committed (see R-035). Committed evidence: `seo-audit/` and commit/PR references above.
