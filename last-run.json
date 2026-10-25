@@ -1,20 +1,28 @@
 {
  "status": "SUBMITTED",
  "reason": "",
- "commit": "fd0c62c018b40ca04db40973023e6ffe2bcce2cf",
+ "commit": "2e4b2735aa20729becb5435784b07e6c94f4015e",
  "verifiedVia": "Workers Builds check-run + production /deploy-version.txt",
  "changed": {
   "added": [],
   "updated": [
-   "/dushovi-kabiny/",
-   "/dzerkala/",
-   "/ru/dushovi-kabiny/",
-   "/ru/dzerkala/"
+   "/de/aluminium-fenster-und-tueren/",
+   "/de/glasduschen/",
+   "/de/glasfassaden/",
+   "/de/glasgelaender/",
+   "/de/glasloesungen-fuer-gewerbe/",
+   "/de/glastrennwaende/",
+   "/de/glastueren/",
+   "/de/glasvordaecher/",
+   "/de/rahmenlose-verglasung/",
+   "/de/spiegel-nach-mass/",
+   "/project/",
+   "/ru/project/"
   ],
   "removed": []
  },
- "submitted": 4,
- "accepted": 4,
+ "submitted": 12,
+ "accepted": 12,
  "failed": 0,
  "dropped": [],
  "removedHandling": [],
