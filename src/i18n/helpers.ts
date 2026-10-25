@@ -143,7 +143,6 @@ const LOCALIZED_ROUTES: Record<'ru', ReadonlySet<string>> = {
     '/dlya-biznesu/bazam-vidpochynku/',
     '/kozyrky-configurator/',
     '/rishennya/dlya-kvartyry/',
-    '/arkhitekturni-systemy/',
     '/terms/',
     '/cookies-policy/'
   ])

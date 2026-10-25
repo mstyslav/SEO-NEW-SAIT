@@ -2457,10 +2457,6 @@ export const aluCategoriesRu: ProfileCategory[] = [
       [
         "Стеклянная крыша: что учесть",
         "/knowledge/sklyanyi-dakh-shcho-vrakhuvaty/"
-      ],
-      [
-        "Архитектурные системы",
-        "/arkhitekturni-systemy/"
       ]
     ],
     "ctaTitle": "Нужен расчёт фасада?",

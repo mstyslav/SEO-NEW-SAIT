@@ -10,7 +10,7 @@ const allowedCategories = new Set([
 const serviceRoutePrefixes = [
   '/dushovi-kabiny/', '/dzerkala/', '/sklyani-perehorodky/', '/sklyani-dveri/',
   '/sklyani-ohorozhi/', '/alyuminiyevi-konstrukcziyi/', '/metaloplastykovi-konstrukcziyi/',
-  '/arkhitekturni-systemy/', '/poslugy/', '/bezramne-sklinnya/', '/sklyani-kozyrky/', '/dlya-biznesu/'
+  '/poslugy/', '/bezramne-sklinnya/', '/sklyani-kozyrky/', '/dlya-biznesu/'
 ];
 const files = fs.readdirSync(contentDir).filter((file) => file.endsWith('.json'));
 const projects = files.map((file) => ({ file, data: JSON.parse(fs.readFileSync(path.join(contentDir, file), 'utf8')) }));
