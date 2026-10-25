@@ -1,39 +1,18 @@
 {
- "status": "SUBMITTED",
- "reason": "",
- "commit": "e41fd4d06e701da4dc4d9a5044c64e32e177ae81",
+ "status": "SKIPPED",
+ "reason": "NO CHANGED URLS",
+ "commit": "851e4935bd906f807abd3377e67467a000cced04",
  "verifiedVia": "Workers Builds check-run + production /deploy-version.txt",
  "changed": {
   "added": [],
-  "updated": [
-   "/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/",
-   "/knowledge/sklyana-pidloga/",
-   "/poslugy/",
-   "/ru/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/",
-   "/ru/knowledge/sklyana-pidloga/",
-   "/ru/poslugy/"
-  ],
-  "removed": [
-   "/arkhitekturni-systemy/",
-   "/ru/arkhitekturni-systemy/"
-  ]
+  "updated": [],
+  "removed": []
  },
- "submitted": 8,
- "accepted": 8,
+ "submitted": 0,
+ "accepted": 0,
  "failed": 0,
  "dropped": [],
- "removedHandling": [
-  {
-   "path": "/arkhitekturni-systemy/",
-   "handling": "404 (gone)"
-  },
-  {
-   "path": "/ru/arkhitekturni-systemy/",
-   "handling": "404 (gone)"
-  }
- ],
- "responses": [
-  200
- ],
+ "removedHandling": [],
+ "responses": [],
  "pending": 0
 }
