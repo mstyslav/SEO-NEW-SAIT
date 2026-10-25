@@ -6,6 +6,8 @@ name: IndexNow after deploy
 # tells which URLs are new / changed / removed since the last run; only those are sent. No request is made to
 # space-glass.com.ua for page content: Cloudflare challenges GitHub runner IPs. State (last manifest, pending URLs,
 # history) lives on branch `indexnow-state`.
+# State commits carry [skip ci]: Cloudflare Workers Builds builds every pushed branch, and this bot-only branch has no
+# package.json, so each state push produced a failed preview build ("Latest build failed" in the dashboard). Production is unaffected.
 # Manual run: Actions → "IndexNow after deploy" → Run workflow. "dry" only reports; "force" lifts the 500-URL
 # automatic limit for a deliberate site-wide change.
 
@@ -72,5 +74,5 @@ jobs:
           [ -f "$RUNNER_TEMP/state/last-run.json" ] && cp "$RUNNER_TEMP/state/last-run.json" .
           git fetch -q --depth=1 origin indexnow-state 2>/dev/null && git reset -q --soft FETCH_HEAD || true
           git add -A
-          git -c user.name="indexnow-bot" -c user.email="indexnow-bot@users.noreply.github.com" commit -q -m "indexnow state for ${GITHUB_SHA::7}" || exit 0
+          git -c user.name="indexnow-bot" -c user.email="indexnow-bot@users.noreply.github.com" commit -q -m "indexnow state for ${GITHUB_SHA::7} [skip ci]" || exit 0
           git push -q origin HEAD:indexnow-state
