@@ -17,7 +17,7 @@ const rows: Array<[string, string]> = [
 ];
 const pending = [...(AT_ENTITY.gewerbebehoerde ? [] : ['Zuständige Gewerbebehörde']), ...(AT_ENTITY.kammer ? [] : ['Kammerzugehörigkeit / Fachgruppe'])];
 ---
-<LegalPage title="Impressum" description="Impressum der Space Glass KG." updated="24.10.2026" locale="de" standalone robots={impressumComplete ? undefined : 'noindex, follow'}>
+<LegalPage title="Impressum" description="Impressum der Space Glass KG: Firmenbuchnummer, Sitz, UID-Nummer, Gewerbeberechtigungen und Kontakt des österreichischen Unternehmens." updated="24.10.2026" locale="de" standalone robots={impressumComplete ? undefined : 'noindex, follow'}>
   <h2>Angaben zum Unternehmen</h2>
   <dl>{rows.map(([k, v]) => <><dt><strong>{k}</strong></dt><dd>{v}</dd></>)}</dl>
   <h2>Gewerbeberechtigungen (GISA)</h2>
