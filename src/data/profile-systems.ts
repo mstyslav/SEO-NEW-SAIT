@@ -1038,8 +1038,7 @@ export const profileCategories: ProfileCategory[] = [
       ['Вітринне скління', '/poslugy/sklyani-fasady/vitrinne-sklinnya/'],
       ['Алюмінієві вікна', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-vikna/'],
       ['Алюмінієві двері', '/alyuminiyevi-konstrukcziyi/alyuminiyevi-dveri/'],
-      ['Скляний дах: що врахувати', '/knowledge/sklyanyi-dakh-shcho-vrakhuvaty/'],
-      ['Архітектурні системи', '/arkhitekturni-systemy/']
+      ['Скляний дах: що врахувати', '/knowledge/sklyanyi-dakh-shcho-vrakhuvaty/']
     ],
     ctaTitle: 'Потрібен розрахунок фасаду?',
     ctaText: 'Ціна фасадного скління залежить від площі, фасадної системи, типу склопакета, висоти будівлі, відкривних елементів і умов монтажу. Надішліть фасади, креслення або орієнтовні розміри — підберемо систему Aluprof і підготуємо попередній розрахунок.'

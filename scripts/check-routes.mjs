@@ -46,7 +46,6 @@ const critical = [
   '/alyuminiyevi-konstrukcziyi/',
   '/metaloplastykovi-konstrukcziyi/',
   '/poslugy/sklyani-fasady/',
-  '/arkhitekturni-systemy/',
   '/ogorozhi-configurator/',
   '/kozyrky-configurator/'
 ];

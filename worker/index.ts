@@ -321,9 +321,20 @@ async function handleLead(request: Request, env: Env): Promise<Response> {
   return json({ ok: true, lead_sent: true, file_sent: fileSent });
 }
 
+// Pages removed on purpose (owner decision, TASK 74): answer 410 Gone instead of the generic 404.
+// The same paths are listed in wrangler.jsonc → assets.run_worker_first, so the static 404 handler never sees them.
+const GONE_PATHS = new Set(['/arkhitekturni-systemy', '/ru/arkhitekturni-systemy']);
+function goneResponse(): Response {
+  return new Response(
+    '<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>410 — сторінку видалено</title></head><body><h1>410 Gone</h1><p>Ця сторінка видалена назавжди. <a href="/">Space Glass</a></p></body></html>',
+    { status: 410, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=3600', 'x-robots-tag': 'noindex' } }
+  );
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const { pathname } = new URL(request.url);
+    if (GONE_PATHS.has(pathname.replace(/\/+$/, ''))) return goneResponse();
     if (/^\/api\/(kommo-lead|lead)\/?$/.test(pathname)) return handleLead(request, env);
     return env.ASSETS.fetch(request);
   }

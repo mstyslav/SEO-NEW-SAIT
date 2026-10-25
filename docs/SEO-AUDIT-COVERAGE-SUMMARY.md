@@ -15,3 +15,5 @@ Public summary without performance data. Raw exports and per-URL tables are priv
 **Priority:** P2 for the two UA pages (R-044, re-check 2026-11-07, then at most two small internal-link additions); everything else P3.
 **Not done on purpose:** no redirects added, no indexing requests, no IndexNow batches, no site changes.
 **Limits:** GSC data is about 9 days old; URL Inspection was run for 6 URLs; reasons for "crawled – not indexed" are not exposed by Google.
+
+**Update 2026-10-25 (TASK 74):** the "architectural systems" hub flagged above was an obsolete page; the owner confirmed it is not needed, so UA/RU versions were removed and now return HTTP 410 (R-045). Only the knowledge article remains under R-044.
