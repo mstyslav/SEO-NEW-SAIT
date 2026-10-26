@@ -1,25 +1,18 @@
 {
- "status": "SUBMITTED",
- "reason": "",
- "commit": "7989d2520117ce7af47b32c71bf9abfa92383a1b",
+ "status": "SKIPPED",
+ "reason": "NO CHANGED URLS",
+ "commit": "990c1a144fc0d7c083845c5b6331efbc071e0f98",
  "verifiedVia": "Workers Builds check-run + production /deploy-version.txt",
  "changed": {
   "added": [],
-  "updated": [
-   "/catalog/",
-   "/knowledge/",
-   "/ru/catalog/",
-   "/ru/knowledge/"
-  ],
+  "updated": [],
   "removed": []
  },
- "submitted": 4,
- "accepted": 4,
+ "submitted": 0,
+ "accepted": 0,
  "failed": 0,
  "dropped": [],
  "removedHandling": [],
- "responses": [
-  200
- ],
+ "responses": [],
  "pending": 0
 }
