@@ -10,6 +10,7 @@ import {
   getKnowledgeArticleRu,
   KNOWLEDGE_ARTICLES_RU,
 } from '../../../content/i18n/knowledge/articles-ru';
+import { knowledgeArticleImage } from '../../../data/knowledge-article-image';
 import { breadcrumbSchema, faqSchema } from '../../../seo/schema';
 import { expandFaq } from '../../../data/expand-faq';
 import { getFullKnowledgeSectionsRu } from '../../../content/i18n/knowledge/expert-sections-ru';
@@ -74,6 +75,7 @@ const localizeHref = (href: string) => {
 
 const serviceHref = localizeHref(sourceArticle.serviceHref);
 
+const articleImage = knowledgeArticleImage(sourceArticle.slug);
 const structuredData = [
   {
     '@type': 'Article',
@@ -83,6 +85,7 @@ const structuredData = [
     datePublished: '2026-08-12',
     dateModified,
     inLanguage: 'ru',
+    ...(articleImage ? { image: [new URL(articleImage, origin).href] } : {}),
     mainEntityOfPage: { '@id': `${url.href}#webpage` },
     author: { '@id': `${new URL('/', origin).href}#organization` },
     publisher: {
@@ -109,6 +112,7 @@ import { localizedPath } from '../../../i18n/helpers';
   schemaType="WebPage"
   mainEntityId={`${url.href}#article`}
   structuredData={structuredData}
+  image={articleImage}
   alternateLocales={['uk', 'ru']}
 >
   <div class="sg-page-shell">

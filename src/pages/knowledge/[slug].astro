@@ -7,6 +7,7 @@ import FAQBlock from '../../components/FAQBlock.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { knowledgeArticles, getKnowledgeArticle } from '../../data/knowledge-articles';
 import { getFullKnowledgeSections } from '../../data/knowledge-expert-sections';
+import { knowledgeArticleImage } from '../../data/knowledge-article-image';
 import { breadcrumbSchema, faqSchema } from '../../seo/schema';
 import { expandFaq } from '../../data/expand-faq';
 import { KNOWLEDGE_ARTICLES_RU } from '../../content/i18n/knowledge/articles-ru';
@@ -25,6 +26,7 @@ const readingTime = article.customContent ? article.readingTime : Math.max(artic
 const expandedFaq = article.customContent ? article.faq : expandFaq(article.faq, article.faqTopic ?? article.title, 'uk', 20);
 const dateModified = article.dateModified ?? '2026-08-12';
 const updatedLabel = `${['січень', 'лютий', 'березень', 'квітень', 'травень', 'червень', 'липень', 'серпень', 'вересень', 'жовтень', 'листопад', 'грудень'][Number(dateModified.slice(5, 7)) - 1]} ${dateModified.slice(0, 4)}`;
+const articleImage = knowledgeArticleImage(article.slug);
 const structuredData = [
   {
     '@type': 'Article',
@@ -34,6 +36,7 @@ const structuredData = [
     datePublished: '2026-08-12',
     dateModified,
     inLanguage: 'uk',
+    ...(articleImage ? { image: [new URL(articleImage, origin).href] } : {}),
     mainEntityOfPage: { '@id': `${url.href}#webpage` },
     author: { '@id': `${new URL('/', origin).href}#organization` },
     publisher: { '@id': `${new URL('/', origin).href}#organization` }
@@ -52,6 +55,7 @@ const structuredData = [
   schemaType="WebPage"
   mainEntityId={`${url.href}#article`}
   structuredData={structuredData}
+  image={articleImage}
   alternateLocales={article.slug in KNOWLEDGE_ARTICLES_RU ? ['uk', 'ru'] : ['uk']}
 >
   <div class="sg-page-shell">
