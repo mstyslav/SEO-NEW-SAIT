@@ -1,18 +1,37 @@
 {
- "status": "SKIPPED",
- "reason": "NO CHANGED URLS",
- "commit": "b65de0311aee4e5af1b9185605e703e9a9b966a6",
+ "status": "SUBMITTED",
+ "reason": "",
+ "commit": "ba0ffb5f1c279b24f755669826b9e2275e4889c8",
  "verifiedVia": "Workers Builds check-run + production /deploy-version.txt",
  "changed": {
   "added": [],
-  "updated": [],
+  "updated": [
+   "/dlya-biznesu/bazam-vidpochynku/",
+   "/dlya-biznesu/dlya-ofisu/",
+   "/dlya-biznesu/goteli/",
+   "/dlya-biznesu/magazynam/",
+   "/dlya-biznesu/restoranam/",
+   "/dlya-biznesu/salonam-krasy/",
+   "/dlya-biznesu/stomatologiyi-ta-kliniky/",
+   "/dlya-biznesu/zhytlovym-kompleksam/",
+   "/ru/dlya-biznesu/bazam-vidpochynku/",
+   "/ru/dlya-biznesu/dlya-ofisu/",
+   "/ru/dlya-biznesu/goteli/",
+   "/ru/dlya-biznesu/magazynam/",
+   "/ru/dlya-biznesu/restoranam/",
+   "/ru/dlya-biznesu/salonam-krasy/",
+   "/ru/dlya-biznesu/stomatologiyi-ta-kliniky/",
+   "/ru/dlya-biznesu/zhytlovym-kompleksam/"
+  ],
   "removed": []
  },
- "submitted": 0,
- "accepted": 0,
+ "submitted": 16,
+ "accepted": 16,
  "failed": 0,
  "dropped": [],
  "removedHandling": [],
- "responses": [],
+ "responses": [
+  200
+ ],
  "pending": 0
 }
