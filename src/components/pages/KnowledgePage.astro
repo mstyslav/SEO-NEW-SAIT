@@ -13,6 +13,7 @@ import Footer from '../Footer.astro';
 import { knowledgeArticles, knowledgeCategories } from '../../data/knowledge-articles';
 import { localizedPath, type Locale } from '../../i18n/helpers';
 import { knowledgeContent } from '../../content/i18n/pages/knowledge';
+import { absoluteUrl, type JsonLdObject } from '../../seo/schema';
 import { KNOWLEDGE_CARDS_RU } from '../../content/i18n/pages/knowledge-cards-ru';
 
 interface Props {
@@ -36,12 +37,29 @@ const localizedCategories = knowledgeCategories.map((category) => {
   return localizedArticles[index]?.category ?? category;
 });
 
+const origin = Astro.site ?? Astro.url.origin;
+const hubUrl = absoluteUrl(lp('/knowledge/'), origin);
+// One ListItem per visible article card, in page order.
+const articleList: JsonLdObject = {
+  '@type': 'ItemList',
+  '@id': `${hubUrl}#articles`,
+  name: t.libraryTitle,
+  numberOfItems: localizedArticles.length,
+  mainEntityOfPage: { '@id': `${hubUrl}#webpage` },
+  itemListElement: localizedArticles.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.title,
+    url: absoluteUrl(lp(`/knowledge/${item.slug}/`), origin)
+  }))
+};
 ---
 <BaseLayout
   title={t.meta.title}
   description={t.meta.description}
   locale={locale}
   schemaType="CollectionPage"
+  structuredData={[articleList]}
   heroPreloadSrc="/images/knowledge/knowledge-hero-desktop.webp"
   heroPreloadSrcset="/images/knowledge/knowledge-hero-desktop-850.webp 850w, /images/knowledge/knowledge-hero-desktop.webp 1536w"
   heroPreloadSizes="(max-width: 1504px) 56vw, 827px"
