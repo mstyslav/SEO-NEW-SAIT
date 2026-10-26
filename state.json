@@ -1,8 +1,8 @@
 {
  "version": 1,
- "lastCommit": "ba0ffb5f1c279b24f755669826b9e2275e4889c8",
+ "lastCommit": "7989d2520117ce7af47b32c71bf9abfa92383a1b",
  "manifest": {
-  "commit": "ba0ffb5f1c279b24f755669826b9e2275e4889c8",
+  "commit": "7989d2520117ce7af47b32c71bf9abfa92383a1b",
   "pages": {
    "/": "94d45be92e58e384",
    "/about/": "2efc909c2ae0fd4e",
@@ -26,7 +26,7 @@
    "/bezramne-sklinnya/sklinnya-teras-ta-altanok/": "49866e7ae96aeed6",
    "/bezramne-sklinnya/sklyani-rozsuvni-systemy/": "ea411784de174bbf",
    "/bezramne-sklinnya/teple-bezramne-sklinnya/": "55f774c90affaf40",
-   "/catalog/": "dc3193250d3cc817",
+   "/catalog/": "c7aead86e9701ec6",
    "/city/kyiv/": "a7dbb3d2f14e3620",
    "/city/lviv/": "5971735e832f8f9b",
    "/city/odesa/": "5009cc48f85b99fb",
@@ -184,7 +184,7 @@
    "/es/ventanas-y-puertas-de-aluminio/": "926b248d5fbc9496",
    "/es/vidrio-para-empresas/": "dcc8028bb4471194",
    "/fasadne-configurator/": "81795ba63694206a",
-   "/knowledge/": "dbb9ab3033ab5a92",
+   "/knowledge/": "942b6da79023b465",
    "/knowledge/bezramne-sklinnya-balkona/": "df1ae26fd3ebae65",
    "/knowledge/bezramne-sklinnya-systemy-yak-obraty/": "f56dbc75a9be8230",
    "/knowledge/bezramni-ogorozhi-profil/": "02a1b18bfaa4374b",
@@ -374,7 +374,7 @@
    "/ru/bezramne-sklinnya/sklinnya-teras-ta-altanok/": "d7fea3ac4a30887c",
    "/ru/bezramne-sklinnya/sklyani-rozsuvni-systemy/": "b46fc884a5e2f8a8",
    "/ru/bezramne-sklinnya/teple-bezramne-sklinnya/": "ba55d5a07ffc6860",
-   "/ru/catalog/": "d7845835503849bc",
+   "/ru/catalog/": "dbed1e6dc51c0421",
    "/ru/city/kyiv/": "ecc68255315863ea",
    "/ru/city/lviv/": "6288eb08d268b984",
    "/ru/city/odesa/": "0a8de85ac68fe12d",
@@ -409,7 +409,7 @@
    "/ru/dzerkala/dzerkalne-panno/": "e2acb58bf378e977",
    "/ru/dzerkala/led-dzerkala/": "4ec09113179dcbb3",
    "/ru/fasadne-configurator/": "55a23561389ab378",
-   "/ru/knowledge/": "e276a50f68a92465",
+   "/ru/knowledge/": "c5637cbd0a2715a2",
    "/ru/knowledge/bezramne-sklinnya-balkona/": "e07004124bd9e0ee",
    "/ru/knowledge/bezramne-sklinnya-systemy-yak-obraty/": "f2b37a95be3b9df4",
    "/ru/knowledge/bezramni-ogorozhi-profil/": "3678c87e1262dcdc",
@@ -647,6 +647,15 @@
  },
  "pending": [],
  "history": [
+  {
+   "at": "2026-10-26T18:51:07.018Z",
+   "commit": "7989d2520117ce7af47b32c71bf9abfa92383a1b",
+   "status": "SUBMITTED",
+   "submitted": 4,
+   "accepted": 4,
+   "failed": 0,
+   "reason": ""
+  },
   {
    "at": "2026-10-26T18:43:14.330Z",
    "commit": "ba0ffb5f1c279b24f755669826b9e2275e4889c8",
