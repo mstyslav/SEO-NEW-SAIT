@@ -82,6 +82,14 @@ const breadcrumbItems = [
 ];
 const structuredData: JsonLdObject[] = [
   breadcrumbSchema(breadcrumbItems.map((item) => ({ label: item.label, href: absoluteUrl(item.href, origin) }))),
+  // ItemList mirrors the visible #zones tile grid 1:1 (same titles, same localized hrefs).
+  p.zones.length > 0 ? {
+    '@type': 'ItemList',
+    '@id': `${absoluteUrl(path, origin)}#zones`,
+    name: p.zonesHeading,
+    numberOfItems: p.zones.length,
+    itemListElement: p.zones.map((zone, index) => ({ '@type': 'ListItem', position: index + 1, name: zone.title, url: absoluteUrl(lp(zone.href), origin) }))
+  } : null,
   faqSchema(p.faq.map(([question, answer]) => ({ question, answer })))
 ].filter(Boolean) as JsonLdObject[];
 ---
