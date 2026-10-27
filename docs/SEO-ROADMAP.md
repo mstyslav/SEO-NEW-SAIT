@@ -126,13 +126,13 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 
 ### R-014 — SEO content (P2, SCHEDULED)
 - **Category:** SEO content
-- **Description:** Shower trays review 4-6 weeks after TASK 66: category impressions, commercial keywords, CTR, positions, internal-linking effect. Keep current URL.
+- **Description:** Shower trays review 4-6 weeks after TASK 66: category impressions, commercial keywords, CTR, positions, internal-linking effect. Keep current URL. 2026-10-27: empty standalone 'Душові піддони' column removed from header mega menu/mobile accordion (link stays in shower category list; URL unchanged) - note as a change factor in the review.
 - **Dependency:** R-006 deployed 2026-10-24 (4 weeks = 2026-11-21, 6 weeks = 2026-12-05)
 - **Next action:** Pull GSC for /dushovi-kabiny/dushovi-piddony/ (+RU) and tray queries; compare with TASK 65 levels (site-wide tray queries, category URL, query level).
 - **Target date:** 2026-11-21
 - **Evidence:** TASK 65 baseline: category 185 impr pos 18.1 (3 months) - task-65/TASK-65-FINAL-REPORT.md (LOCAL (untracked, not in git))
 - **Related files:** /dushovi-kabiny/dushovi-piddony/; /ru/dushovi-kabiny/dushovi-piddony/
-- **Last updated:** 2026-10-24
+- **Last updated:** 2026-10-27
 
 ### R-016 — Authority (P1, SCHEDULED)
 - **Category:** Authority
