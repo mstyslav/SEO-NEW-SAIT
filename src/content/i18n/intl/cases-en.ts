@@ -55,7 +55,7 @@ export const casesEn: Record<string, CaseCopy> = {
   },
   'stair-railing': {
     seo: { title: 'Glass Stair Railing with Titanium Nitride Finish | Space Glass', description: 'Staircase and glass railing in a private house: metal parts with a gold-toned titanium nitride finish, glass along the flight and the upper gallery.' },
-    h1: 'Staircase and glass railing with a titanium nitride finish in a private house',
+    h1: 'Staircase and glass railing with titanium nitride in a private house',
     cardTitle: 'Glass stair railing with titanium nitride finish',
     objectType: 'Private house',
     constructionType: 'Staircase and glass railing',

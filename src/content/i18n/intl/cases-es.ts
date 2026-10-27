@@ -55,7 +55,7 @@ export const casesEs: Record<string, CaseCopy> = {
   },
   'stair-railing': {
     seo: { title: 'Barandilla de vidrio con acabado de nitruro de titanio | Space Glass', description: 'Escalera y barandilla de vidrio en una vivienda: piezas metálicas con acabado dorado de nitruro de titanio y vidrio a lo largo del tramo y de la galería.' },
-    h1: 'Escalera y barandilla de vidrio con acabado de nitruro de titanio en una vivienda',
+    h1: 'Escalera y barandilla de vidrio con nitruro de titanio en una vivienda',
     cardTitle: 'Barandilla de escalera con nitruro de titanio',
     objectType: 'Vivienda unifamiliar',
     constructionType: 'Escalera y barandilla de vidrio',

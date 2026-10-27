@@ -55,7 +55,7 @@ export const casesDe: Record<string, CaseCopy> = {
   },
   'stair-railing': {
     seo: { title: 'Glasgeländer an der Treppe mit Titannitrid-Oberfläche | Space Glass', description: 'Treppe und Glasgeländer in einem Einfamilienhaus: Metallteile mit goldfarbener Titannitrid-Beschichtung, Glas entlang des Laufs und der offenen Galerie.' },
-    h1: 'Treppe und Glasgeländer mit Titannitrid-Beschichtung in einem Einfamilienhaus',
+    h1: 'Treppe und Glasgeländer mit Titannitrid in einem Einfamilienhaus',
     cardTitle: 'Glasgeländer an der Treppe mit Titannitrid',
     objectType: 'Einfamilienhaus',
     constructionType: 'Treppe und Glasgeländer',
