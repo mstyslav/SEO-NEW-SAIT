@@ -317,6 +317,7 @@ const page = lp('/ogorozhi-configurator/');
       $('[data-rc-svg]').innerHTML = `<svg viewBox="0 0 ${W} ${Hh}" role="img">${g}</svg>`;
       const photo = $<HTMLImageElement>('[data-rc-photo]');
       photo.src = `${D.img}/${s.image}-192.webp`;
+      photo.alt = s.name;
       $('[data-rc-sysname]').textContent = s.name;
       $('[data-rc-sysnote]').textContent = s.note;
     };

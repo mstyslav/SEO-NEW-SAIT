@@ -260,7 +260,7 @@ const tableHeads = ['Поддон', 'Форма', 'Размеры, мм', 'То�
                           aria-label={img.alt}
                           aria-current={idx === 0 ? 'true' : 'false'}
                         >
-                          <img src={`${img.base}-480.webp`} alt="" width="80" height="80" loading="lazy" decoding="async" />
+                          <img src={`${img.base}-480.webp`} alt={img.alt} width="80" height="80" loading="lazy" decoding="async" />
                         </button>
                       );
                     })}
