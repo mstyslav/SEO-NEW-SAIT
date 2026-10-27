@@ -10,6 +10,7 @@ import { getFullKnowledgeSections } from '../../data/knowledge-expert-sections';
 import { knowledgeArticleImage } from '../../data/knowledge-article-image';
 import { breadcrumbSchema, faqSchema } from '../../seo/schema';
 import { expandFaq } from '../../data/expand-faq';
+import { KNOWLEDGE_META_TITLES } from '../../data/knowledge-meta-titles';
 import { KNOWLEDGE_ARTICLES_RU } from '../../content/i18n/knowledge/articles-ru';
 
 export function getStaticPaths() {
@@ -50,7 +51,7 @@ const structuredData = [
 ].filter(Boolean);
 ---
 <BaseLayout
-  title={`${article.metaTitle ?? article.title} | Space Glass`}
+  title={`${article.metaTitle ?? KNOWLEDGE_META_TITLES[article.slug]?.[0] ?? article.title} | Space Glass`}
   description={article.metaDescription ?? article.description}
   schemaType="WebPage"
   mainEntityId={`${url.href}#article`}

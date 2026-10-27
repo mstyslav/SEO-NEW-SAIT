@@ -196,7 +196,7 @@ export const casesDe: Record<string, CaseCopy> = {
     requestExample: 'Duschwände und Badewannenaufsätze für 20 Hotelzimmer, Ort'
   },
   nofilters: {
-    seo: { title: 'Spiegel für den Kosmetiksalon Nofilters in Odesa | Space Glass', description: 'Ovale Spiegel nach individuellem Design für die Arbeitsplätze des Kosmetiksalons Nofilters in Odesa: Aufgabe, Lösung und das fertige Interieur.' },
+    seo: { title: 'Ovale Spiegel nach Maß für einen Kosmetiksalon, Odesa | Space Glass', description: 'Ovale Spiegel nach individuellem Design für die Arbeitsplätze des Kosmetiksalons Nofilters in Odesa: Aufgabe, Lösung und das fertige Interieur.' },
     h1: 'Spiegel für den Kosmetiksalon Nofilters in Odesa',
     cardTitle: 'Spiegel für einen Kosmetiksalon in Odesa',
     city: 'Odesa',

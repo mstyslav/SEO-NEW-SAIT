@@ -196,7 +196,7 @@ export const casesEn: Record<string, CaseCopy> = {
     requestExample: 'shower screens and bath screens for 20 hotel rooms, location'
   },
   nofilters: {
-    seo: { title: 'Mirrors for the Nofilters Beauty Salon in Odesa | Space Glass', description: 'Oval mirrors of an individual design for the workstations of the Nofilters beauty salon in Odesa: the task, the solution and the finished interior.' },
+    seo: { title: 'Custom Oval Mirrors for a Beauty Salon, Odesa: Project | Space Glass', description: 'Oval mirrors of an individual design for the workstations of the Nofilters beauty salon in Odesa: the task, the solution and the finished interior.' },
     h1: 'Mirrors for the Nofilters beauty salon in Odesa',
     cardTitle: 'Mirrors for a beauty salon in Odesa',
     city: 'Odesa',

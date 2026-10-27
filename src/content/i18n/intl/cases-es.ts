@@ -196,7 +196,7 @@ export const casesEs: Record<string, CaseCopy> = {
     requestExample: 'mamparas de ducha y de bañera para 20 habitaciones de hotel, ubicación'
   },
   nofilters: {
-    seo: { title: 'Espejos para el salón de belleza Nofilters en Odesa | Space Glass', description: 'Espejos ovalados de diseño individual para los puestos del salón de belleza Nofilters en Odesa: el encargo, la solución y el interior terminado.' },
+    seo: { title: 'Espejos ovalados a medida para salón de belleza, Odesa | Space Glass', description: 'Espejos ovalados de diseño individual para los puestos del salón de belleza Nofilters en Odesa: el encargo, la solución y el interior terminado.' },
     h1: 'Espejos para el salón de belleza Nofilters en Odesa',
     cardTitle: 'Espejos para un salón de belleza en Odesa',
     city: 'Odesa',
