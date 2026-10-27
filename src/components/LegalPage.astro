@@ -4,6 +4,7 @@ import Header from './Header.astro';
 import Footer from './Footer.astro';
 const {
   title,
+  metaTitle,
   description,
   updated = '30 серпня 2026',
   locale = 'uk',
@@ -27,7 +28,7 @@ const updatedLabel =
     ? 'Последнее обновление'
     : 'Останнє оновлення');
 ---
-<BaseLayout title={`${title} | Space Glass`} description={description} robots={robots} standalone={standalone}>
+<BaseLayout title={metaTitle ?? `${title} | Space Glass`} description={description} robots={robots} standalone={standalone}>
   <Header />
   <main id="main" class="legal-page">
     <header class="legal-page__hero">

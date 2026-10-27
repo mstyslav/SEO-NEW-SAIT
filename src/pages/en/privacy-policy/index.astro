@@ -6,4 +6,4 @@ import { assertIntlRoute } from '../../../i18n/intl-routes';
 assertIntlRoute(Astro.url.pathname, 'privacy', 'en');
 const page = legalCopy.en.privacy;
 ---
-<LegalPage title={page.title} description={page.description} updated={page.updated} locale="en"><Fragment set:html={page.html} /></LegalPage>
+<LegalPage metaTitle="Privacy Policy and Personal Data | Space Glass" title={page.title} description={page.description} updated={page.updated} locale="en"><Fragment set:html={page.html} /></LegalPage>
