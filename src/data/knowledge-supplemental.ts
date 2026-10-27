@@ -42,7 +42,11 @@ function sections(seed: Seed): KnowledgeSection[] {
     `Регулярний огляд ущільнень, кріплень і рухомих деталей допомагає помітити проблему до появи пошкоджень. Для очищення використовують неабразивні засоби, сумісні з покриттям фурнітури.`,
     `Перед замовленням визначте задачу, підготуйте фото й розміри, повідомте про приховані мережі, погодьте креслення, комплектацію, монтаж, гарантію та правила подальшого догляду.`,
   ];
-  return sectionPlan.map(([id, title], index) => ({ id, title, paragraphs: [texts[index]] }));
+  // The first two headings are topic-specific so they are not repeated verbatim on every article.
+  const subject = seed.title.split(':')[0].trim();
+  const uniqueTitle = (id: string, title: string) =>
+    id === 'osnovy' ? `${subject}: коли доречно` : id === 'vybir' ? `${subject}: критерії вибору` : title;
+  return sectionPlan.map(([id, title], index) => ({ id, title: uniqueTitle(id, title), paragraphs: [texts[index]] }));
 }
 
 const seeds: Seed[] = [

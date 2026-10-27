@@ -1912,7 +1912,7 @@ h1,
 
 h2,
 .dynamic-configurator__head h2,
-.dyn-summary h2{
+.dyn-summary h3{
   font-size:clamp(30px,3vw,50px)!important;
   line-height:1.08!important;
   letter-spacing:-.025em!important;

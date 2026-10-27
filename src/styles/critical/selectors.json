@@ -30,7 +30,7 @@
      ".dyn-config__intro h2",
      ".dyn-config__intro p:not(.eyebrow)",
      ".dyn-disclaimer",
-     ".dyn-summary h2",
+     ".dyn-summary h3",
      ".eyebrow",
      ".footer-refined",
      ".footer-refined__benefit",
