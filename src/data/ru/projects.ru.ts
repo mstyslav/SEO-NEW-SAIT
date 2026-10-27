@@ -117,7 +117,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "shtorka-dlya-vannoyi-v-m-odesa": {
     "seo": {
-      "title": "Стеклянная шторка для ванны на заказ в Одессе | Space Glass",
+      "title": "Стеклянная шторка для ванны в Одессе: проект на заказ | Space Glass",
       "description": "Реализованный проект Space Glass: стеклянная шторка для ванны с поворотным креплением на заказ в Одессе. Хромированные клипсы, индивидуальный размер."
     },
     "h1": "Стеклянная шторка для ванны на заказ в Одессе",
@@ -377,7 +377,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "choice-osklinya-kabinetu-v-vzhe-diyuchomu-magazyni": {
     "seo": {
-      "title": "Стеклянные перегородки кабинета Choice | Space Glass",
+      "title": "Стеклянные перегородки для кабинета Choice: проект | Space Glass",
       "description": "Стеклянная перегородка кабинета 2,4 × 3,1 м с брендированием Choice в действующем магазине — для подписания дилерских соглашений и переговоров."
     },
     "h1": "Стеклянные перегородки кабинета Choice",
@@ -470,7 +470,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya": {
     "seo": {
-      "title": "Стеклянный фасад кофейни с окном выдачи в Одессе | Space Glass",
+      "title": "Стеклянный фасад кофейни в Одессе: окно выдачи, проект | Space Glass",
       "description": "Реализованный проект Space Glass: фасадное остекление и окно выдачи для кофейни Coffee Ocean в городе Одесса. Фото конструкции, решение и детали монтажа."
     },
     "h1": "Стеклянный фасад кофейни с окном выдачи в Одессе",
@@ -551,7 +551,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "corner-shower-black-hardware-lviv": {
     "seo": {
-      "title": "Угловая душевая с чёрной фурнитурой во Львове | Space Glass",
+      "title": "Угловая стеклянная душевая с чёрной фурнитурой, Львов | Space Glass",
       "description": "Реализованный проект Space Glass: угловая душевая кабина с полностью чёрным профилем и фурнитурой во Львове. Деревянная плитка, индустриальный стиль."
     },
     "h1": "Угловая душевая с чёрной фурнитурой во Львове",
@@ -641,7 +641,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "corner-shower-bronze-hardware-odesa": {
     "seo": {
-      "title": "Угловая душевая кабина с окрашенной фурнитурой в Одессе | Space Glass",
+      "title": "Душевая кабина из стекла с бронзовой фурнитурой, Одесса | Space Glass",
       "description": "Реализованный проект Space Glass: угловая душевая кабина с окрашенной бронзовой фурнитурой на подиуме в Одессе. Оникс-плитка, круглый накладной умывальник."
     },
     "h1": "Угловая душевая кабина с окрашенной фурнитурой в Одессе",
@@ -731,7 +731,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "corner-shower-satin-hardware-odesa": {
     "seo": {
-      "title": "Угловая стеклянная душевая перегородка в Одессе | Space Glass",
+      "title": "Угловая душевая из стекла с сатиновой фурнитурой, Одесса | Space Glass",
       "description": "Реализованный проект Space Glass: угловая душевая перегородка с дверью на сатиновой фурнитуре в Одессе. Мраморная облицовка, хромированный полотенцесушитель."
     },
     "h1": "Угловая стеклянная душевая перегородка в Одессе",
@@ -995,7 +995,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "dzerkalni-dveri-v-garderob-2": {
     "seo": {
-      "title": "Стеклянное ограждение лестницы и балюстрады в Одессе | Space Glass",
+      "title": "Стеклянное ограждение лестницы и балюстрады, Одесса | Space Glass",
       "description": "Реализованный проект Space Glass: стеклянное ограждение лестницы и этажа для ЖК Приморские Сады в городе Одесса. Фото конструкции, решение и детали монтажа."
     },
     "h1": "Стеклянное ограждение лестницы и балюстрады в Одессе",
@@ -1084,7 +1084,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "ogorozha-shodiv-ta-drugogo-poverhu": {
     "seo": {
-      "title": "Стеклянное ограждение лестницы и второго этажа в Одессе | Space Glass",
+      "title": "Стеклянное ограждение лестницы и 2 этажа, Одесса: проект | Space Glass",
       "description": "Реализованный проект Space Glass: стеклянное ограждение лестницы для частного дома в городе Одесса. Фото конструкции, решение и детали монтажа."
     },
     "h1": "Стеклянное ограждение лестницы и второго этажа в Одессе",
@@ -1262,7 +1262,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "dzerkalni-dveri-v-garderob": {
     "seo": {
-      "title": "Стеклянная перегородка между кухней и комнатой в Киеве | Space Glass",
+      "title": "Стеклянная перегородка кухня–комната в Киеве: проект | Space Glass",
       "description": "Реализованный проект Space Glass: межкомнатная стеклянная перегородка для квартиры в ЖК FJORD в городе Киев. Фото конструкции, решение и детали монтажа."
     },
     "h1": "Стеклянная перегородка между кухней и комнатой в Киеве",
@@ -1436,7 +1436,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "dzerkalo-z-pidsvidkoyu-v-m-odesa-2": {
     "seo": {
-      "title": "Зеркало с подсветкой для частного дома в Одессе | Space Glass",
+      "title": "LED-зеркало с подсветкой для дома в Одессе: проект | Space Glass",
       "description": "Реализованный проект Space Glass: зеркало с LED-подсветкой для частного дома в городе Одесса. Фото конструкции, решение и детали монтажа."
     },
     "h1": "Зеркало с подсветкой для частного дома в Одессе",
@@ -1525,7 +1525,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv": {
     "seo": {
-      "title": "Раздвижная Loft-перегородка с матовым стеклом в Киеве | Space Glass",
+      "title": "Раздвижная Loft-перегородка из стекла в Киеве: проект | Space Glass",
       "description": "Реализованный проект двустворчатой раздвижной Loft-перегородки в ЖК Атлант в Киеве: матовое стекло, чёрный профиль, врезные ручки и аккуратное прилегание."
     },
     "h1": "Раздвижная Loft-перегородка с матовым стеклом в Киеве",
@@ -1972,7 +1972,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "zonuvannya-prostoru-odnokimnatnoyi-kvartyry": {
     "seo": {
-      "title": "Зеркала для салона красоты Nofilters в Одессе | Space Glass",
+      "title": "Зеркала для салона красоты в Одессе: проект Nofilters | Space Glass",
       "description": "Овальные зеркала индивидуальной формы для рабочих мест мастеров в салоне красоты Nofilters в Одессе: реализованный проект, фото и детали решения."
     },
     "h1": "Зеркала для салона красоты Nofilters в Одессе",
@@ -2056,7 +2056,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "sklyani-peregorodky-dlya-ofisu-v-m-odesa": {
     "seo": {
-      "title": "Стеклянные офисные перегородки с дверями в Одессе | Space Glass",
+      "title": "Стеклянные перегородки для офиса в Одессе с дверями | Space Glass",
       "description": "Реализованный проект Space Glass: стеклянные офисные перегородки для офиса в БЦ Морской в городе Одесса. Фото конструкции, решение и детали монтажа."
     },
     "h1": "Стеклянные офисные перегородки с дверями в Одессе",
@@ -2234,7 +2234,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat": {
     "seo": {
-      "title": "Тёплое алюминиевое остекление ресторана в Одессе | Space Glass",
+      "title": "Алюминиевое остекление ресторана в Одессе: тёплый вход | Space Glass",
       "description": "Реализованный проект Space Glass: тёплое алюминиевое остекление для ресторана Артшат в городе Одесса. Фото конструкции, решение и детали монтажа."
     },
     "h1": "Тёплое алюминиевое остекление ресторана в Одессе",
@@ -2405,7 +2405,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "shower-door-fixed-glass-kyiv": {
     "seo": {
-      "title": "Стеклянная дверь в душевую с неподвижной секцией в Киеве | Space Glass",
+      "title": "Дверь в душевую с неподвижной секцией стекла, Киев | Space Glass",
       "description": "Реализованный проект Space Glass: распашная стеклянная дверь и неподвижная секция для душевой ниши от пола до потолка в Киеве. Хромированная фурнитура, без порога."
     },
     "h1": "Стеклянная дверь в душевую с неподвижной секцией в Киеве",
@@ -2495,7 +2495,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "shower-door-gold-hardware-kyiv": {
     "seo": {
-      "title": "Душевая дверь с золотой фурнитурой в Киеве | Space Glass",
+      "title": "Стеклянная душевая с золотой фурнитурой в Киеве: проект | Space Glass",
       "description": "Реализованный проект Space Glass: распашная душевая дверь с декоративной золотой фурнитурой в Киеве. Классический интерьер, лепнина, мраморная облицовка."
     },
     "h1": "Душевая дверь с золотой фурнитурой в Киеве",
@@ -2671,7 +2671,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "shower-sloped-ceiling-lviv": {
     "seo": {
-      "title": "Душевая перегородка под скошенный потолок во Львове | Space Glass",
+      "title": "Стеклянная душевая под скошенным потолком, Львов | Space Glass",
       "description": "Реализованный проект Space Glass: душевая перегородка с дверью, раскроенная под скошенный мансардный потолок во Львове. Индивидуальный раскрой стекла по наклону."
     },
     "h1": "Душевая перегородка под скошенный потолок во Львове",
@@ -2851,7 +2851,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "sliding-shower-doors-kyiv": {
     "seo": {
-      "title": "Раздвижные стеклянные двери для душа в Киеве | Space Glass",
+      "title": "Раздвижные двери для душевой из стекла в Киеве: проект | Space Glass",
       "description": "Реализованный проект Space Glass: раздвижные душевые двери на роликовой системе в Киеве. Верхний рельс, ниша с полкой, терракотовая плитка."
     },
     "h1": "Раздвижные стеклянные двери для душа в Киеве",
@@ -2941,7 +2941,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "stationary-glass-partition-lviv": {
     "seo": {
-      "title": "Стационарная стеклянная душевая перегородка во Львове | Space Glass",
+      "title": "Стационарная стеклянная перегородка для душа, Львов | Space Glass",
       "description": "Реализованный проект Space Glass: одна неподвижная стеклянная перегородка с распоркой к потолку во Львове. Каменная плитка, хромированная система душа."
     },
     "h1": "Стационарная стеклянная душевая перегородка во Львове",
@@ -3030,7 +3030,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "stationary-shower-partition-odesa": {
     "seo": {
-      "title": "Стационарная душевая перегородка до потолка в Одессе | Space Glass",
+      "title": "Стационарная душевая перегородка до потолка, Одесса | Space Glass",
       "description": "Реализованный проект Space Glass: две стационарные душевые перегородки до потолка на чёрном профиле в Одессе. Белый мрамор, парные душевые зоны без дверей."
     },
     "h1": "Стационарная душевая перегородка до потолка в Одессе",
@@ -3202,7 +3202,7 @@ export const projectTextsRu: Record<string, ProjectTextsRu> = {
   },
   "trapezoid-shower-lviv": {
     "seo": {
-      "title": "Душевая перегородка трапециевидной формы во Львове | Space Glass",
+      "title": "Трапециевидная стеклянная душевая во Львове: проект | Space Glass",
       "description": "Реализованный проект Space Glass: душевая перегородка трапециевидной формы во Львове. Терраццо-плитка, хромированные клипсы, угол под геометрию стены."
     },
     "h1": "Душевая перегородка трапециевидной формы во Львове",

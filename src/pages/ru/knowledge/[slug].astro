@@ -13,6 +13,7 @@ import {
 import { knowledgeArticleImage } from '../../../data/knowledge-article-image';
 import { breadcrumbSchema, faqSchema } from '../../../seo/schema';
 import { expandFaq } from '../../../data/expand-faq';
+import { KNOWLEDGE_META_TITLES } from '../../../data/knowledge-meta-titles';
 import { getFullKnowledgeSectionsRu } from '../../../content/i18n/knowledge/expert-sections-ru';
 
 export function getStaticPaths() {
@@ -107,7 +108,7 @@ import { localizedPath } from '../../../i18n/helpers';
 
 <BaseLayout
   locale="ru"
-  title={`${article.metaTitle ?? article.title} | Space Glass`}
+  title={`${article.metaTitle ?? KNOWLEDGE_META_TITLES[sourceArticle.slug]?.[1] ?? article.title} | Space Glass`}
   description={article.metaDescription ?? article.description}
   schemaType="WebPage"
   mainEntityId={`${url.href}#article`}
