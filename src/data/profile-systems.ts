@@ -2173,7 +2173,7 @@ export const profileCategories: ProfileCategory[] = [
     path: '/metaloplastykovi-konstrukcziyi/metaloplastykovi-dveri/',
     name: 'Металопластикові двері',
     h1: 'Металопластикові двері на замовлення',
-    metaTitle: 'Металопластикові двері Aluplast — вхідні та балконні | Space Glass',
+    metaTitle: 'Металопластикові двері від виробника — вхідні та балконні | Space Glass',
     metaDescription:
       'Металопластикові вхідні й балконні двері Aluplast 70 і 85 мм: зламостійкість RC2, теплий поріг, склопакет або панель. Монтаж у Києві, Одесі, Львові.',
     eyebrow: 'Металопластикові конструкції / Двері',
@@ -2406,7 +2406,7 @@ export const profileCategories: ProfileCategory[] = [
     path: '/metaloplastykovi-konstrukcziyi/rozsuvni-dveri/',
     name: 'Розсувні двері',
     h1: 'Металопластикові розсувні двері',
-    metaTitle: 'Розсувні металопластикові двері HST, Smart-Slide | Space Glass',
+    metaTitle: 'Металопластикові розсувні двері: ціна, HST, Smart-Slide | Space Glass',
     metaDescription:
       'Металопластикові розсувні двері Aluplast HST і Smart-Slide: прорізи до 6,5×2,8 м для виходу на терасу чи балкон. Замір і монтаж у Києві, Одесі, Львові.',
     eyebrow: 'Металопластикові конструкції / Розсувні двері',
