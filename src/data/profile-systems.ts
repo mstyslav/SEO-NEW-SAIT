@@ -1051,7 +1051,7 @@ export const profileCategories: ProfileCategory[] = [
     path: '/alyuminiyevi-konstrukcziyi/zymovi-sady/',
     name: 'Зимові сади',
     h1: 'Алюмінієві зимові сади під ключ',
-    metaTitle: 'Алюмінієві зимові сади під ключ — Aluprof | Space Glass',
+    metaTitle: 'Зимові сади з алюмінію під ключ: проєкт, ціна, монтаж | Space Glass',
     metaDescription:
       'Алюмінієві зимові сади Aluprof під ключ, теплі й сезонні: скляний дах MB-WG60, розсувне скління, двері-гармошка. Проєкт і монтаж у Києві, Одесі, Львові.',
     eyebrow: 'Алюмінієві конструкції / Зимові сади',

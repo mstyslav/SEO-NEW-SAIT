@@ -13,6 +13,7 @@ Decisions and facts that only the business owner can provide. Updated: 2026-10-2
 | 7 | P3 | WAITING FOR OWNER | **Knowledge-article facts** [R-034] (10 topics) or approval to merge 10 articles | Removes thin generic articles | Knowledge |
 | 8 | P3 | WAITING FOR OWNER | **Austria**: a reference case in Austria; e-mail domain decision (neutral/.at/.eu) [R-041] | Trust for the Austrian market | Austria |
 | 9 | P3 | WAITING FOR OWNER | **Housekeeping** [R-025]: remove stale GSC sitemaps (dyshovi.*); delete saved Keyword Planner plan "План от окт. 24, 2026" in Google Ads | Tidiness only | Technical |
+| 11 | P2 | WAITING FOR OWNER | **Winter garden price** [R-065]: minimum verified price (per m² or per project, VAT, what is included, Aluprof system) for aluminium winter gardens | Queries 'зимовий сад ціна / ціни / ціна під ключ' have no priced answer on the page; no price is published without this | Winter gardens |
 
 ## Checklist A — aluminium door prices (R-030)
 Answer each line; "unknown" is acceptable.
