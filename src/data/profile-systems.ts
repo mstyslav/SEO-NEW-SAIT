@@ -1748,7 +1748,7 @@ export const profileCategories: ProfileCategory[] = [
     path: '/alyuminiyevi-konstrukcziyi/sitky-plise/',
     name: 'Сітки плісе',
     h1: 'Москітні сітки плісе',
-    metaTitle: 'Москітні сітки плісе на двері та вікна | Space Glass',
+    metaTitle: 'Москітні сітки плісе на двері та вікна: ціна, замовлення | Space Glass',
     metaDescription:
       'Москітні сітки плісе в алюмінієвій рамці для дверей, вікон і розсувних систем: низький поріг, складання вбік. Замір і монтаж у Києві, Одесі, Львові.',
     eyebrow: 'Алюмінієві конструкції / Сітки плісе',
