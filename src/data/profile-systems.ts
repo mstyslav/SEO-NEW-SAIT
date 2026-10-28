@@ -110,7 +110,7 @@ export const profileCategories: ProfileCategory[] = [
     priceBlock: 'window-alu',
     name: 'Алюмінієві вікна',
     h1: 'Алюмінієві вікна на замовлення',
-    metaTitle: 'Алюмінієві вікна Aluprof на замовлення | Space Glass',
+    metaTitle: 'Вікна з алюмінієвого профілю: ціна, Aluprof, на замовлення | Space Glass',
     metaDescription:
       'Вікна з алюмінієвого профілю з терморозривом на системах Aluprof MB-79N і MB-86N: Uw від 0,62 W/(m²K), великі стулки, захист від злому до RC4. Монтаж у Києві, Одесі, Львові.',
     eyebrow: 'Алюмінієві конструкції / Вікна',
