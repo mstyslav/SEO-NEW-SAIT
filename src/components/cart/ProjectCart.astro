@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../Header.astro';
 import Footer from '../Footer.astro';
+import { LEAD_DAYS, WARRANTY_MONTHS } from '../../lib/shop-terms.mjs';
 
 const { locale = 'uk' } = Astro.props;
 const ru = locale === 'ru';
@@ -84,6 +85,16 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
               <label>{S.comment}<textarea name="comment" rows="2" maxlength="1500" placeholder={S.commentPh} data-project-note></textarea></label>
               <div class="hp" aria-hidden="true"><label>Website<input name="website" type="text" tabindex="-1" autocomplete="off" /></label></div>
               <p>{S.consent} <a href={S.policyHref}>{S.policy}</a>.</p>
+              <div class="project-cart-buyer-terms" aria-label={ru ? 'Условия заказа зеркал' : 'Умови замовлення дзеркал'}>
+                <strong>{ru ? 'Зеркала изготавливаются под заказ' : 'Дзеркала виготовляються під замовлення'}</strong>
+                <p>{ru ? `Стандартные — до ${LEAD_DAYS.standardMax} рабочих дней, в металлической раме — до ${LEAD_DAYS.metalFrameMax} рабочих дней после согласования и оплаты.` : `Стандартні — до ${LEAD_DAYS.standardMax} робочих днів, у металевій рамі — до ${LEAD_DAYS.metalFrameMax} робочих днів після погодження та оплати.`}</p>
+                <p>{ru ? `Бесплатная доставка Новой почтой по Украине. Гарантия ${WARRANTY_MONTHS} месяцев. После заявки менеджер подтверждает детали, затем 100% предоплата; онлайн-оплаты нет.` : `Безкоштовна доставка Новою поштою по Україні. Гарантія ${WARRANTY_MONTHS} місяців. Після заявки менеджер підтверджує деталі, потім 100% передоплата; онлайн-оплати немає.`}</p>
+                <nav aria-label={ru ? 'Документы магазина' : 'Документи магазину'}>
+                  <a href={`${ru ? '/ru' : ''}/shop/offer/`}>{ru ? 'Публичная оферта' : 'Публічна оферта'}</a>
+                  <a href={`${ru ? '/ru' : ''}/shop/delivery-payment/`}>{ru ? 'Оплата и доставка' : 'Оплата та доставка'}</a>
+                  <a href={`${ru ? '/ru' : ''}/shop/returns/`}>{ru ? 'Обмен и возврат' : 'Обмін та повернення'}</a>
+                </nav>
+              </div>
               <p data-cart-error hidden role="alert"></p>
               <button class="button button--mint" type="submit" data-cart-submit>{S.submit}</button>
             </form>
@@ -350,3 +361,11 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
     }
   </style>
 </BaseLayout>
+
+<style>
+  .project-cart-buyer-terms{padding:14px 16px;border:1px solid #d1e8dc;border-radius:12px;background:#f5fbf7;color:#244739;font-size:13px;line-height:1.55}
+  .project-cart-buyer-terms strong{display:block;color:#176e54;margin-bottom:6px}
+  .project-cart-buyer-terms p{margin:5px 0}
+  .project-cart-buyer-terms nav{display:flex;flex-wrap:wrap;gap:7px 15px;margin-top:10px}
+  .project-cart-buyer-terms a{color:#176e54;text-decoration:underline;text-underline-offset:3px}
+</style>
