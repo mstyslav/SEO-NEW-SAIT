@@ -170,3 +170,29 @@ body .sg-page-shell main .pp-sec h2{margin:0 0 10px;font-size:1.2rem!important;l
 .sf-card__price strong{letter-spacing:-.01em}.sf-card__price span{color:var(--muted,#5f6b64)}
 .sf-card__cta{border-radius:12px;transition:background-color .15s,color .15s}
 @media (prefers-reduced-motion:reduce){.sf-card,.sf-card__media img{transition:none}.sf-card:hover .sf-card__media img{transform:none}}
+
+/* ---- compact product page: price on the first screen, tighter configurator, full-width related models ---- */
+.pp__info .pp__lead{margin:8px 0 4px;font-size:.95rem}.pp__meta{margin:0 0 10px}
+.pp-keys{margin:0 0 12px}.pp-keys>div{padding:8px 12px}
+.pp-pricebar{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin:0 0 14px;padding:12px 16px;border-radius:14px;background:var(--green-soft,#edf8f2)}
+.pp-pricebar .pp-price__label{font-size:.82rem;color:var(--muted,#5f6b64)}
+.pp-pricebar .pp-price__value{font-size:clamp(1.7rem,3vw,2.2rem);line-height:1.1;color:var(--text);white-space:nowrap}
+.pp-pricebar[data-state="loading"] .pp-price__value{opacity:.35}.pp-pricebar .pp-price__state{font-size:.85rem;color:var(--mint-dark,#347a66)}
+.pp-pricebar .pp-price__state[hidden],.pp-pricebar .pp-link[hidden],.pp-pricebar .pp-price__err[hidden]{display:none}.pp-pricebar .pp-price__err,.pp-pricebar .pp-link{flex-basis:100%;margin:0}
+.pp-config{padding:14px 16px}
+body .sg-page-shell main .pp-config>h2{margin:0 0 2px;font-size:1.1rem!important}
+.pp-sub{margin:0 0 8px;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted,#5f6b64)}
+.pp-field{margin:0 0 12px}.pp-field legend{margin:0 0 6px;font-size:.85rem}
+.pp-size span,.pp-opt span{min-height:40px;padding:6px 14px;font-size:.88rem;border-radius:10px}.pp-opt--sm span{min-height:36px}
+.pp-sizes,.pp-opts{gap:6px}.pp-switch{min-height:44px;padding:6px 12px}
+.pp-field--extras{margin-top:6px;padding-top:12px;border-top:1px solid var(--line,#e0e7e2)}
+.pp-buy{margin-top:4px;padding:12px 14px}.pp-price--echo{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}.pp-price--echo .pp-price__value{font-size:1.5rem}
+.pp-price--echo .pp-break{flex-basis:100%;margin:0}.pp-actions{margin-top:10px}
+.lm-related{margin:36px 0 8px;width:100%}
+.lm-related .sf-grid--related{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:1fr;width:100%}
+@media (max-width:1099px){.lm-related .sf-grid--related{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:860px){.lm-related .sf-grid--related{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:359px){.lm-related .sf-grid--related{grid-template-columns:1fr}}
+.sf-hint{margin:6px 0 0;font-size:.76rem;line-height:1.4;color:var(--muted,#5f6b64)}
+body .sg-page-shell main .pp__title{font-size:clamp(1.35rem,2.1vw,1.85rem)!important;line-height:1.2!important}
+.pp-features{margin-top:8px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));padding-left:0;list-style:none}.pp-features li{padding:6px 10px;border-radius:8px;background:var(--green-soft,#edf8f2);font-size:.85rem}

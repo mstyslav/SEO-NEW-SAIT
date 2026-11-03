@@ -14,6 +14,8 @@ import { formatDate } from '../../lib/led-mirror-view.mjs';
 import { shopPath, ledModelPath, SHOP_STR, LED_PRODUCT_TYPE, PRODUCT_TYPES } from '../../lib/shop.mjs';
 import { buildProducts, cardData } from '../../lib/shop-catalog.mjs';
 import { modelFaq } from '../../lib/shop-faq.mjs';
+import { modelContent } from '../../lib/shop-content.mjs';
+import seo from '../../data/led-mirrors/seo.json';
 import '../../styles/category-pages.css';
 import '../../styles/profile-systems.css';
 import '../../styles/led-mirrors.css';
@@ -24,7 +26,7 @@ const T = STR[locale as 'uk' | 'ru'];
 const SS = SHOP_STR[locale as 'uk' | 'ru'];
 const P = ru ? {
   choose: 'Выберите комплектацию', size: 'Размер, мм', custom: 'Свой размер', customHint: (L: any) => `Ширина ${L.width[0]}–${L.width[1]} мм, высота ${L.height[0]}–${L.height[1]} мм, целые числа`,
-  width: 'Ширина', height: 'Высота', basics: 'Основные параметры', extras: 'Дополнительные функции', qty: 'Количество', price: 'Цена комплектации', calculating: 'Считаем цену…',
+  width: 'Ширина', height: 'Высота', basics: 'Основные параметры', extrasT: 'Дополнительные возможности', extras: 'Дополнительные возможности', qty: 'Количество', price: 'Цена комплектации', calculating: 'Считаем цену…',
   retry: 'Повторить', breakdown: 'Состав цены', code: 'Код товара', buyNow: 'Заказать сейчас', add: 'Добавить в корзину', added: 'Добавлено в корзину.', openCart: 'Открыть корзину →',
   specsH: 'Технические характеристики', funcH: 'Доступные функции', descH: 'Описание', delivH: 'Доставка и оплата', waitPrice: 'Покупка станет доступна после подтверждения цены.',
   dp1: 'Доставляем по всей Украине. Условия зависят от города, габаритов и доступа к объекту; стоимость доставки называет менеджер.', dp2: 'Онлайн-оплаты на сайте нет: способ оплаты менеджер согласует после заявки (общие условия — на странице «Оплата и доставка»).', dp3: 'Монтаж не обязателен; при необходимости рассчитывается отдельно.',
@@ -34,7 +36,7 @@ const P = ru ? {
   d2: (std: string, L: any) => `Выберите стандартный размер (${std} мм) с фиксированной ценой или укажите свой в пределах ${L.width[0]}–${L.width[1]} × ${L.height[0]}–${L.height[1]} мм. Дополнительные функции выбираются на странице, цена обновляется сразу.`
 } : {
   choose: 'Оберіть комплектацію', size: 'Розмір, мм', custom: 'Свій розмір', customHint: (L: any) => `Ширина ${L.width[0]}–${L.width[1]} мм, висота ${L.height[0]}–${L.height[1]} мм, цілі числа`,
-  width: 'Ширина', height: 'Висота', basics: 'Основні параметри', extras: 'Додаткові функції', qty: 'Кількість', price: 'Ціна комплектації', calculating: 'Рахуємо ціну…',
+  width: 'Ширина', height: 'Висота', basics: 'Основні параметри', extrasT: 'Додаткові можливості', extras: 'Додаткові можливості', qty: 'Кількість', price: 'Ціна комплектації', calculating: 'Рахуємо ціну…',
   retry: 'Спробувати ще', breakdown: 'Склад ціни', code: 'Код товару', buyNow: 'Купити зараз', add: 'Додати в кошик', added: 'Додано в кошик.', openCart: 'Відкрити кошик →',
   specsH: 'Технічні характеристики', funcH: 'Доступні функції', descH: 'Опис', delivH: 'Доставка та оплата', waitPrice: 'Покупка стане доступна після підтвердження ціни.',
   dp1: 'Доставляємо по всій Україні. Умови залежать від міста, габаритів і доступу до об’єкта; вартість доставки називає менеджер.', dp2: 'Онлайн-оплати на сайті немає: спосіб оплати менеджер погоджує після заявки (загальні умови — на сторінці «Оплата та доставка»).', dp3: 'Монтаж не обов’язковий; за потреби розраховується окремо.',
@@ -49,7 +51,7 @@ const img = (n: number, w: 480 | 900) => `/images/led-mirrors/${slug}-${n}-${w}.
 const gallery = Array.from({ length: count }, (_, i) => i + 1);
 const groupLabels = Object.fromEntries(pub.groups.map((g) => [g.key, g.label]));
 const groups = model.option_groups.map((g: any) => ({ key: g.key, label: groupLabel(locale, g.key, groupLabels[g.key]), options: g.options }));
-const EXTRA = ['heating', 'lens', 'shelf', 'switch', 'clock', 'audio'];
+const EXTRA = ['backlight', 'heating', 'lens', 'shelf', 'switch', 'clock', 'audio'];
 const basics = groups.filter((g: any) => !EXTRA.includes(g.key)), extras = groups.filter((g: any) => EXTRA.includes(g.key));
 // binary function = exactly two options where the first is the free "without" state: rendered as a switch named after the function
 const isToggle = (g: any) => g.options.length === 2 && /^(Без|Сенсорний без)/.test(g.options[0]);
@@ -61,7 +63,12 @@ const code = `SG-LED-${slug.toUpperCase()}`;
 const typeLabel = model.frame === 'Металева' ? P.framed : P.frameless;
 const noLight = model.main_light === 'Без основної підсвітки';
 const shortDesc = P.d1(title, typeLabel, attr(locale, model.shape), P.lightPhrase(attr(locale, model.main_light), noLight), attr(locale, model.mounting));
-const longDesc = [P.d2(model.standard_sizes.map((s: any) => `${s.w}×${s.h}`).join(', '), L)];
+const content = modelContent(locale, model, pub.groups);
+const longDesc = [content.intro, content.config];
+const meta = (seo as Record<string, any>)[slug];
+const pageTitle = meta?.title[ru ? 'ru' : 'uk'] ?? `${title} — ${ru ? 'цена по размеру и опциям' : 'ціна за розміром і опціями'}`;
+const pageDesc = meta?.description[ru ? 'ru' : 'uk'] ?? `${title}: ${caption(locale, model)}.`;
+const h1Text = meta?.h1[ru ? 'ru' : 'uk'] ?? title;
 const specRows: [string, string][] = [
   [P.typeL, typeLabel], [T.specs.shape, attr(locale, model.shape)], [T.specs.light, attr(locale, model.main_light)], [T.specs.mount, attr(locale, model.mounting)],
   [P.series, model.series], [P.sizes, model.standard_sizes.map((s: any) => `${s.w}×${s.h}`).join(', ')], [P.limits, `${L.width[0]}–${L.width[1]} × ${L.height[0]}–${L.height[1]} ${ru ? 'мм' : 'мм'}`]
@@ -89,8 +96,8 @@ const cfg = {
 };
 ---
 <BaseLayout
-  title={`${title} — ${ru ? 'цена по размеру и опциям' : 'ціна за розміром і опціями'}`}
-  description={`${title}: ${caption(locale, model)}. ${T.from} ${formatUah(model.from_uah)}.`}
+  title={pageTitle}
+  description={pageDesc}
   locale={locale}
   alternateLocales={['uk', 'ru']}
   image={count > 0 ? img(1, 900) : undefined}
@@ -129,15 +136,24 @@ const cfg = {
 
         <div class="pp__info">
           <p class="eyebrow">{caption(locale, model)}</p>
-          <h1 class="pp__title">{title}</h1>
+          <h1 class="pp__title">{h1Text}</h1>
           <p class="pp__lead">{shortDesc}</p>
           <p class="pp__meta"><span>{productNote}</span><span>{P.code}: {code}</span></p>
           <dl class="pp-keys">
             {specRows.slice(0, 4).map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
           </dl>
 
+          <div class="pp-pricebar" data-lm-priceblock data-state="ok" aria-busy="false" aria-live="polite">
+            <span class="pp-price__label">{P.price}</span>
+            <strong class="pp-price__value" data-lm-total>{formatUah(model.default_uah)}</strong>
+            <span class="pp-price__state" data-lm-state hidden></span>
+            <p class="lm-error pp-price__err" data-lm-error hidden role="alert"></p>
+            <button type="button" class="pp-link" data-lm-retry hidden>{P.retry}</button>
+          </div>
+
           <section class="pp-config" data-lm-calc data-initial={model.default_uah} aria-labelledby="pp-config-title">
             <h2 id="pp-config-title">{P.choose}</h2>
+            <p class="pp-sub">{P.basics}</p>
 
             <fieldset class="pp-field">
               <legend>{P.size}</legend>
@@ -167,7 +183,7 @@ const cfg = {
 
             {extras.length > 0 && (
               <fieldset class="pp-field pp-field--extras">
-                <legend>{P.extras}</legend>
+                <legend>{P.extrasT}</legend>
                 <div class="pp-extras">
                   {extras.map((g: any) => isToggle(g) ? (
                     <label class="pp-switch" data-group={g.key}><input type="checkbox" name={g.key} data-off={g.options[0]} value={g.options[1]} /><span class="pp-switch__t">{optionLabel(locale, g.options[1])}</span><span class="pp-switch__k" aria-hidden="true"></span></label>
@@ -188,14 +204,8 @@ const cfg = {
             </div>
 
             <div class="pp-buy" aria-live="polite">
-              <div class="pp-price" data-lm-priceblock data-state="ok" aria-busy="false">
-                <span class="pp-price__label">{P.price}</span>
-                <strong class="pp-price__value" data-lm-total>{formatUah(model.default_uah)}</strong>
-                <span class="pp-price__state" data-lm-state hidden></span>
-                <p class="lm-error pp-price__err" data-lm-error hidden role="alert"></p>
-                <button type="button" class="pp-link" data-lm-retry hidden>{P.retry}</button>
-                <details class="pp-break"><summary>{P.breakdown}</summary><ul class="lm-lines" data-lm-lines></ul></details>
-              </div>
+              <div class="pp-price pp-price--echo"><span class="pp-price__label">{P.price}</span><strong class="pp-price__value" data-lm-echo>{formatUah(model.default_uah)}</strong>
+                <details class="pp-break"><summary>{P.breakdown}</summary><ul class="lm-lines" data-lm-lines></ul></details></div>
               <div class="pp-actions">
                 <button class="button button--mint pp-btn" type="button" data-lm-buy disabled>{P.buyNow}</button>
                 <button class="button button--outline pp-btn" type="button" data-lm-add disabled>{P.add}</button>
@@ -210,7 +220,7 @@ const cfg = {
 
     <section class="category-section pp__below">
       <div class="pp-sections">
-        <section class="pp-sec" aria-labelledby="pp-desc"><h2 id="pp-desc">{P.descH}</h2>{longDesc.map((t) => <p>{t}</p>)}</section>
+        <section class="pp-sec" aria-labelledby="pp-desc"><h2 id="pp-desc">{P.descH}</h2>{longDesc.map((t) => <p>{t}</p>)}<ul class="pp-flist pp-features">{content.features.map((f: string) => <li>{f}</li>)}</ul></section>
         <section class="pp-sec" aria-labelledby="pp-spec"><h2 id="pp-spec">{P.specsH}</h2>
           <dl class="pp-table">{specRows.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}</dl>
         </section>
@@ -283,7 +293,7 @@ const cfg = {
     const q = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
     const wIn = q<HTMLInputElement>('input[name=w]'), hIn = q<HTMLInputElement>('input[name=h]'), qIn = q<HTMLInputElement>('input[name=qty]');
     const custom = q('[data-lm-custom]'), block = q('[data-lm-priceblock]'), total = q('[data-lm-total]'), stateEl = q('[data-lm-state]'), err = q('[data-lm-error]'), retry = q<HTMLButtonElement>('[data-lm-retry]');
-    const lines = q('[data-lm-lines]'), added = q('[data-lm-added]'), buy = q<HTMLButtonElement>('[data-lm-buy]'), add = q<HTMLButtonElement>('[data-lm-add]');
+    const echo = q('[data-lm-echo]'), lines = q('[data-lm-lines]'), added = q('[data-lm-added]'), buy = q<HTMLButtonElement>('[data-lm-buy]'), add = q<HTMLButtonElement>('[data-lm-add]');
     const sizeRadios = [...root.querySelectorAll<HTMLInputElement>('input[name=size]')];
     const fmt = (n: number) => `${String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} грн`;
     let current: { unit: number; w: number; h: number; options: Record<string, string> } | null = null;
@@ -310,7 +320,7 @@ const cfg = {
       buy.disabled = add.disabled = !ok;
       buy.title = add.title = ok ? '' : S.wait;
     }
-    function fail(msg: string, canRetry = false) { current = null; total.textContent = '—'; lines.innerHTML = ''; setState('error', msg); retry.hidden = !canRetry; }
+    function fail(msg: string, canRetry = false) { current = null; total.textContent = '—'; echo.textContent = '—'; lines.innerHTML = ''; setState('error', msg); retry.hidden = !canRetry; }
 
     async function update() {
       const { w, h } = size(), opts = options();
@@ -322,7 +332,7 @@ const cfg = {
         const r = await res.json();
         if (mine !== seq) return; // a newer request is in flight
         if (!r.ok) return fail(r.error === 'invalid_size' ? S.badSize : r.error === 'invalid_option' ? S.badOpt : S.netErr, r.error === 'prices_unavailable');
-        total.textContent = fmt(r.total_uah);
+        total.textContent = fmt(r.total_uah); echo.textContent = total.textContent;
         lines.innerHTML = '';
         const row = (a: string, b: string) => { const li = document.createElement('li'); const x = document.createElement('span'), y = document.createElement('span'); x.textContent = a; y.textContent = b; li.append(x, y); lines.append(li); };
         row(`${S.mirror} ${w}×${h} мм${r.standard_size ? '' : ' ' + S.nonstd}`, fmt(r.mirror_uah));

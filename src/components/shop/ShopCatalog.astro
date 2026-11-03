@@ -19,7 +19,7 @@ const schema = buildSchema(locale, pub, products);
 const hasPhoto = (slug: string) => ((photos as Record<string, number>)[slug] ?? 0) > 0;
 const strings = {
   tabAll: S.tabAll, soon: S.soonTab, filtersTitle: S.filtersTitle, filtersBtn: S.filtersBtn, reset: S.reset, close: S.close, priceFrom: S.priceFrom, priceTo: S.priceTo,
-  applyTpl: S.apply(0).replace('0', '{n}'), foundTpl: S.found(0).replace('0', '{n}'), activeTpl: S.active(0).replace('0', '{n}'), sizeHintTpl: S.anySize('{lo}', '{hi}')
+  priceHint: S.priceHint, sizeHint: S.sizeHint, applyTpl: S.apply(0).replace('0', '{n}'), foundTpl: S.found(0).replace('0', '{n}'), activeTpl: S.active(0).replace('0', '{n}'), sizeHintTpl: S.anySize('{lo}', '{hi}')
 };
 const data = { locale, initialCat, strings, schema, products: clientProducts(products) };
 const faqItems = ({ shop: shopFaq, mirrors: mirrorsFaq, led: ledFaq } as Record<string, any>)[faqKind](locale, pub);
@@ -122,11 +122,12 @@ const catalogLabel = (key: string) => (key === 'all' ? S.tabAll : schema.categor
         const input = el('input', { type: 'number', inputMode: 'numeric', min: String(f.min), max: String(f.max), step: '1', id: `sf-${f.key}`, placeholder: S.sizeHintTpl.replace('{lo}', f.min).replace('{hi}', f.max) }) as HTMLInputElement;
         input.dataset.range = f.key;
         box.append(input);
+        if (f.key === 'width') box.append(el('p', { className: 'sf-hint', textContent: S.sizeHint }));
       } else if (f.kind === 'price') {
         const mk = (id: string, label: string, ph: number) => { const i = el('input', { type: 'number', inputMode: 'numeric', min: '0', step: '1', id, placeholder: fmt(ph) }) as HTMLInputElement; return [i, el('label', { className: 'sf-price__f', htmlFor: id }, el('span', { textContent: label }), i)] as const; };
         const [imin, lmin] = mk('sf-pmin', S.priceFrom, f.min); const [imax, lmax] = mk('sf-pmax', S.priceTo, f.max);
         imin.dataset.price = 'min'; imax.dataset.price = 'max';
-        box.append(el('div', { className: 'sf-price' }, lmin, lmax));
+        box.append(el('div', { className: 'sf-price' }, lmin, lmax), el('p', { className: 'sf-hint', textContent: S.priceHint }));
       }
       body.append(box);
     }

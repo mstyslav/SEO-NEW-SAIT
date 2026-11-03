@@ -91,11 +91,11 @@ for (const [loc, pre] of locales) {
   const faqPages = ['/shop/', '/shop/mirrors/', '/shop/mirrors/led/', ...pub.models.map((m) => `/shop/mirrors/led/${m.slug}/`)];
   for (const p of faqPages) {
     const html = read(pre + p); if (!html) continue;
-    const items = (html.match(/<details class="sf-faq__item"/g) ?? []).length;
+    const items = (html.match(/<details class="faq-item"/g) ?? []).length;
     if (items !== 10) fail(`${pre + p}: ${items} FAQ items, expected 10`);
     if ((html.match(/data-shop-faq/g) ?? []).length !== 1) fail(`${pre + p}: FAQ block count`);
     if (/"@type":"FAQPage"/.test(html)) fail(`${pre + p}: FAQPage structured data must not be emitted`);
-    for (const d of html.matchAll(/<details class="sf-faq__item">\s*<summary><span>([^<]+)<\/span><\/summary>\s*<p>([^<]+)<\/p>/g)) if (d[1].length < 8 || d[2].length < 20) fail(`${pre + p}: empty FAQ text`);
+    for (const d of html.matchAll(/<details class="faq-item">\s*<summary>\s*<span>([^<]+)<\/span>\s*<i[^>]*><\/i>\s*<\/summary>\s*<div class="faq-item__answer"><p>([^<]+)<\/p>/g)) if (d[1].length < 8 || d[2].length < 20) fail(`${pre + p}: empty FAQ text`);
     if (loc === 'ru' && /Оберіть|Поширені|Доставка та/.test((html.match(/data-shop-faq[\s\S]*?<\/section>/) ?? [''])[0])) fail(`${pre + p}: UA text inside the RU FAQ`);
   }
   // product page structure
@@ -103,7 +103,7 @@ for (const [loc, pre] of locales) {
     const url = `${pre}/shop/mirrors/led/${m.slug}/`, html = read(url); if (!html) continue;
     const h1s = (html.match(/<h1[\s>]/g) ?? []).length; if (h1s !== 1) fail(`${url}: ${h1s} h1`);
     const order = [...html.matchAll(/<h2[^>]*id="(pp-config-title|pp-desc|pp-spec|pp-func|pp-deliv|model-faq-title|lm-related-title)"/g)].map((x) => x[1]).join();
-    if (order !== 'pp-config-title,pp-desc,pp-spec,pp-func,pp-deliv,model-faq-title,lm-related-title') fail(`${url}: section order ${order}`);
+    if (order !== 'pp-config-title,pp-desc,pp-spec,pp-func,pp-deliv,lm-related-title') fail(`${url}: section order ${order}`);
     const cfgHtml = (html.match(/data-lm-calc[\s\S]*?<\/section>/) ?? [''])[0];
     if (/<select/.test(cfgHtml)) fail(`${url}: dropdown (select) in the selection block`);
     if (!/data-lm-buy[^>]*disabled/.test(html) || !/data-lm-add[^>]*disabled/.test(html)) fail(`${url}: buy buttons must start disabled until the server confirms the price`);
