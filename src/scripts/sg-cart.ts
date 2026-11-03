@@ -6,7 +6,7 @@ export type CartItem = {
   id: string; name: string; category?: string; configuration?: string; price?: number | null; quantity: number; image?: string; url?: string;
   kind?: 'led-mirror'; modelId?: number; slug?: string; w?: number; h?: number; options?: Record<string, string>;
 };
-export type Project = { items: CartItem[]; note?: string; orderId?: string; savedAt?: string };
+export type Project = { items: CartItem[]; note?: string; orderId?: string; orderSig?: string; savedAt?: string };
 
 export function readProject(): Project {
   try {

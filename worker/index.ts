@@ -41,6 +41,9 @@ export interface Env {
   LEAD_EMAIL_TO?: string;
   /** Local rehearsal only (.dev.vars): /api/cart-order validates and logs, sends nothing. Never set in production. */
   CART_ORDER_DRY_RUN?: string;
+  /** Cart orders → Space Glass Control CRM: full URL of POST /website/api/orders and the shared HMAC secret (= CRM's WEBSITE_ORDER_SECRET). */
+  CRM_ORDERS_URL?: string;
+  CRM_ORDERS_SECRET?: string;
 }
 
 type Lead = {
@@ -339,18 +342,35 @@ async function handleLedPrice(request: Request): Promise<Response> {
   return r.ok ? json({ ok: true, ...r.price }) : json({ ok: false, error: r.error }, 400);
 }
 
+/** HMAC-SHA256 hex of "<timestamp>.<body>" — the CRM verifies the same string (cloudflare/src/site-orders.ts). */
+async function signOrder(secret: string, timestamp: number, body: string): Promise<string> {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`${timestamp}.${body}`));
+  return [...new Uint8Array(sig)].map((v) => v.toString(16).padStart(2, '0')).join('');
+}
+
 async function handleCart(request: Request, env: Env): Promise<Response> {
   return handleCartOrder(request, env, {
     json,
     normalisePhone,
     dryRun: env.CART_ORDER_DRY_RUN === '1',
     rateLimited: async (req) => Boolean(env.LEAD_LIMITER) && !(await env.LEAD_LIMITER!.limit({ key: req.headers.get('cf-connecting-ip') ?? 'unknown' })).success,
-    deliver: async (input) => {
-      const lead = parseLead(input);
-      if (!lead) return false;
-      const origin = new URL(request.url).origin;
-      const results = await Promise.allSettled([sendTelegram(lead, env, origin), sendLeadEmail(lead, env, origin)]);
-      return results.some((r) => r.status === 'fulfilled' && r.value);
+    // Cart orders go to the Space Glass Control CRM only (secrets CRM_ORDERS_URL, CRM_ORDERS_SECRET). No Telegram / Kommo fallback.
+    crm: async (payload) => {
+      if (!env.CRM_ORDERS_URL || !env.CRM_ORDERS_SECRET) return null;
+      const body = JSON.stringify(payload);
+      const ts = Math.floor(Date.now() / 1000);
+      try {
+        const res = await fetch(env.CRM_ORDERS_URL, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', 'x-sg-timestamp': String(ts), 'x-sg-signature': await signOrder(env.CRM_ORDERS_SECRET, ts, body) },
+          body,
+          signal: AbortSignal.timeout(10000)
+        });
+        return { status: res.status, body: (await res.json().catch(() => ({}))) as Record<string, unknown> };
+      } catch {
+        return null;
+      }
     }
   });
 }

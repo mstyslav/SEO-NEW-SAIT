@@ -1,4 +1,4 @@
-// Server-side cart order rules (worker/cart-order.ts) with mocked delivery.  Run: npm run test:cart
+// Server-side cart order rules (worker/cart-order.ts) with a mocked CRM.  Run: npm run test:cart
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -13,8 +13,8 @@ const { handleCartOrder } = await import(out);
 const store = new Map();
 globalThis.caches = { default: { match: async (r) => store.get(r.url)?.clone(), put: async (r, res) => void store.set(r.url, res) } };
 const json = (b, s = 200) => new Response(JSON.stringify(b), { status: s, headers: { 'content-type': 'application/json' } });
-let delivered = [], deliverOk = true;
-const deps = () => ({ json, normalisePhone: (p) => (/^0\d{9}$/.test(p) ? `+38${p}` : null), deliver: async (l) => { if (deliverOk) delivered.push(l); return deliverOk; }, rateLimited: async () => false, dryRun: false });
+let delivered = [], crmResult = { status: 201, body: { order_ref: 'WEB-7' } }, crmDown = false;
+const deps = () => ({ json, normalisePhone: (p) => (/^0\d{9}$/.test(p) ? `+38${p}` : null), crm: async (p) => { if (crmDown) return null; if (crmResult.status < 300) delivered.push(p); return crmResult; }, rateLimited: async () => false, dryRun: false });
 const call = async (body, headers = { 'x-sg-form': '1' }) => {
   const res = await handleCartOrder(new Request('https://space-glass.com.ua/api/cart-order', { method: 'POST', headers: { 'content-type': 'application/json', ...headers }, body: JSON.stringify(body) }), {}, deps());
   return { status: res.status, body: await res.json() };
@@ -27,9 +27,14 @@ const t = async (name, fn) => { try { await fn(); console.log('ok   ', name); } 
 await t('valid order is delivered once, with retail line total', async () => {
   const r = await call(base);
   assert.equal(r.status, 200); assert.equal(r.body.subtotal_uah, 10296);
+  assert.equal(r.body.order_ref, 'WEB-7');
   assert.equal(delivered.length, 1);
-  assert.match(delivered[0].configuration, /2 шт\. × 5 148 грн = 10 296 грн/);
-  assert.equal(delivered[0]['Джерело'], 'Space Glass Website Cart');
+  const p = delivered[0], it = p.items[0];
+  assert.equal(p.version, 1); assert.equal(p.source, 'Space Glass Website Cart'); assert.equal(p.order_id, base.orderId); assert.equal(p.locale, 'uk');
+  assert.deepEqual([it.kind, it.product_id, it.name, it.width_mm, it.height_mm, it.quantity, it.unit_price_uah, it.price_status], ['led-mirror', 283, 'Дзеркало AGNES', 700, 700, 2, 5148, 'verified']);
+  assert.deepEqual(p.totals, { currency: 'UAH', subtotal_uah: 10296, unpriced_items: 0, complete: true });
+  assert.equal(p.customer.phone, '+380671234567');
+  assert.ok(!/purchase|markup|base_uah|c0/i.test(JSON.stringify(p)));
 });
 await t('same orderId again: duplicate, nothing sent twice', async () => {
   const r = await call(base);
@@ -40,18 +45,30 @@ await t('wrong / tampered price is rejected with the server price, nothing sent'
   const r = await call({ ...base, orderId: 'order-aaaa-0002', items: [{ ...led, price: 100 }] });
   assert.equal(r.status, 409); assert.deepEqual(r.body.changed, [{ index: 0, unit_uah: 5148 }]); assert.equal(delivered.length, n);
 });
-await t('delivery failure: 502, not remembered, a retry with the same id is delivered', async () => {
-  deliverOk = false;
+await t('CRM unreachable: 503, not remembered, a retry with the same id succeeds; no other channel is used', async () => {
   const id = 'order-aaaa-0003';
-  assert.equal((await call({ ...base, orderId: id })).status, 502);
-  deliverOk = true;
+  crmDown = true;
+  const n = delivered.length;
+  const bad = await call({ ...base, orderId: id });
+  assert.equal(bad.status, 503); assert.equal(bad.body.error, 'crm_unavailable'); assert.equal(delivered.length, n);
+  crmDown = false;
   const r = await call({ ...base, orderId: id });
-  assert.equal(r.status, 200); assert.ok(!r.body.duplicate);
+  assert.equal(r.status, 200); assert.ok(!r.body.duplicate); assert.equal(delivered.length, n + 1);
+});
+await t('CRM answers: 409 conflict, 429, 401/500 hidden as unavailable, 400 invalid', async () => {
+  for (const [crmStatus, status, error] of [[409, 409, 'order_conflict'], [429, 429, 'too_many_requests'], [401, 503, 'crm_unavailable'], [500, 503, 'crm_unavailable'], [400, 400, 'invalid_order']]) {
+    crmResult = { status: crmStatus, body: { error: 'x' } };
+    const r = await call({ ...base, orderId: `order-crm-${crmStatus}00` });
+    assert.equal(r.status, status, String(crmStatus)); assert.equal(r.body.error, error);
+  }
+  crmResult = { status: 201, body: { order_ref: 'WEB-7' } };
 });
 await t('unpriced line: partial subtotal is labelled, not final', async () => {
   const r = await call({ ...base, orderId: 'order-aaaa-0004', items: [led, { kind: 'other', name: 'Душова кабіна', price: 0, quantity: 1 }] });
   assert.equal(r.status, 200); assert.equal(r.body.unpriced, 1);
-  const l = delivered.at(-1); assert.match(l.estimatedPrice, /не остаточна сума/); assert.match(l.configuration, /ціна уточнюється/);
+  const p = delivered.at(-1);
+  assert.equal(p.totals.complete, false); assert.equal(p.totals.unpriced_items, 1); assert.equal(p.totals.subtotal_uah, 10296);
+  assert.deepEqual([p.items[1].price_status, p.items[1].unit_price_uah], ['on_request', null]);
 });
 await t('validation: header, phone, name, quantity, size, option, items, order id', async () => {
   assert.equal((await call(base, {})).status, 403);
@@ -62,6 +79,11 @@ await t('validation: header, phone, name, quantity, size, option, items, order i
   assert.equal((await call({ ...base, orderId: 'order-bbbb-0005', items: [{ ...led, options: { backlight: 'RGB (з пультом)' } }] })).body.error, 'invalid_option');
   assert.equal((await call({ ...base, orderId: 'order-bbbb-0006', items: [] })).body.error, 'invalid_items');
   assert.equal((await call({ ...base, orderId: 'x' })).body.error, 'invalid_order_id');
+});
+await t('configurator line with a price is passed on as an estimate, never as verified', async () => {
+  const r = await call({ ...base, orderId: 'order-dddd-0001', items: [{ kind: 'other', name: 'Дзеркало на замовлення', configuration: 'width: 1000', price: 4430, quantity: 1 }] });
+  assert.equal(r.status, 200);
+  const it = delivered.at(-1).items[0]; assert.deepEqual([it.price_status, it.unit_price_uah, it.options.configuration], ['estimate', 4430, 'width: 1000']);
 });
 await t('honeypot answers ok and delivers nothing', async () => {
   const n = delivered.length;

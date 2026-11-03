@@ -18,7 +18,7 @@ const S = ru ? {
   save: 'Сохранить корзину', share: 'Скопировать ссылку', pdf: 'Скачать PDF', saved: 'Корзина сохранена в этом браузере.', copied: 'Ссылка скопирована.', shared: 'Общая корзина загружена.',
   pricesUpdated: 'Цены в корзине обновлены по актуальному прайсу.',
   doneH: 'Заявка принята', doneP: (id: string) => `Номер заявки: ${id}. Менеджер свяжется с вами для подтверждения стоимости и деталей.`, doneBtn: 'Вернуться в каталог',
-  errors: { invalid_name: 'Укажите имя.', invalid_phone: 'Проверьте номер телефона.', invalid_comment: 'В комментарии нельзя оставлять ссылки.', too_many_requests: 'Слишком много попыток. Подождите минуту.', price_changed: 'Цены обновились — проверьте сумму и отправьте заявку ещё раз.', invalid_items: 'Проверьте состав корзины.', invalid_quantity: 'Проверьте количество.', generic: 'Не удалось отправить заявку. Корзина сохранена — попробуйте ещё раз или позвоните нам.' },
+  errors: { invalid_name: 'Укажите имя.', invalid_phone: 'Проверьте номер телефона.', invalid_comment: 'В комментарии нельзя оставлять ссылки.', too_many_requests: 'Слишком много попыток. Подождите минуту.', order_conflict: 'Заказ изменился — отправьте заявку ещё раз.', price_changed: 'Цены обновились — проверьте сумму и отправьте заявку ещё раз.', invalid_items: 'Проверьте состав корзины.', invalid_quantity: 'Проверьте количество.', generic: 'Не удалось отправить заявку. Корзина сохранена — попробуйте ещё раз или позвоните нам.' },
   mirror: 'Зеркало', category: 'Зеркала', fallbackName: 'Конструкция', fallbackConfig: 'Индивидуальная конфигурация', home: '/ru/'
 } : {
   title: 'Кошик | Space Glass', desc: 'Обрані товари та конфігурації Space Glass, оформлення заявки.',
@@ -33,7 +33,7 @@ const S = ru ? {
   save: 'Зберегти кошик', share: 'Скопіювати посилання', pdf: 'Завантажити PDF', saved: 'Кошик збережено в цьому браузері.', copied: 'Посилання скопійовано.', shared: 'Спільний кошик завантажено.',
   pricesUpdated: 'Ціни в кошику оновлено за актуальним прайсом.',
   doneH: 'Заявку прийнято', doneP: (id: string) => `Номер заявки: ${id}. Менеджер зв’яжеться з вами для підтвердження вартості та деталей.`, doneBtn: 'Повернутися до каталогу',
-  errors: { invalid_name: 'Вкажіть ім’я.', invalid_phone: 'Перевірте номер телефону.', invalid_comment: 'У коментарі не можна залишати посилання.', too_many_requests: 'Забагато спроб. Зачекайте хвилину.', price_changed: 'Ціни оновилися — перевірте суму й надішліть заявку ще раз.', invalid_items: 'Перевірте склад кошика.', invalid_quantity: 'Перевірте кількість.', generic: 'Не вдалося надіслати заявку. Кошик збережено — спробуйте ще раз або зателефонуйте нам.' },
+  errors: { invalid_name: 'Вкажіть ім’я.', invalid_phone: 'Перевірте номер телефону.', invalid_comment: 'У коментарі не можна залишати посилання.', too_many_requests: 'Забагато спроб. Зачекайте хвилину.', order_conflict: 'Замовлення змінилося — надішліть заявку ще раз.', price_changed: 'Ціни оновилися — перевірте суму й надішліть заявку ще раз.', invalid_items: 'Перевірте склад кошика.', invalid_quantity: 'Перевірте кількість.', generic: 'Не вдалося надіслати заявку. Кошик збережено — спробуйте ще раз або зателефонуйте нам.' },
   mirror: 'Дзеркало', category: 'Дзеркала', fallbackName: 'Конструкція', fallbackConfig: 'Індивідуальна конфігурація', home: '/'
 };
 const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
@@ -234,7 +234,9 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
       const p = readProject();
       if (!p.items.length) return;
       const fd = new FormData(form);
-      if (!p.orderId) { p.orderId = newOrderId(); writeProject(p); }
+      // one order id per cart content: it stays the same on retries (server-side duplicate protection) and changes when the cart changes
+      const sig = JSON.stringify(p.items.map((i) => [i.id, i.quantity, i.price]));
+      if (!p.orderId || p.orderSig !== sig) { p.orderId = newOrderId(); p.orderSig = sig; writeProject(p); }
       submitBtn.disabled = true; const label = submitBtn.textContent; submitBtn.textContent = cfg.sending;
       try {
         const res = await fetch('/api/cart-order', {
@@ -249,10 +251,11 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
           writeProject({ items: [], note: '' }); // the server confirmed: only now the cart is cleared (and the order id with it)
           $('[data-cart-main]').hidden = true;
           $('[data-cart-done]').hidden = false;
-          $('[data-cart-done-text]').textContent = fn.doneP.replace('{id}', String(r.order_id || p.orderId).slice(-8).toUpperCase());
+          $('[data-cart-done-text]').textContent = fn.doneP.replace('{id}', r.order_ref || String(r.order_id || p.orderId).slice(-8).toUpperCase());
           render();
           return;
         }
+        if (r.error === 'order_conflict') { const c = readProject(); delete c.orderId; delete c.orderSig; writeProject(c); }
         if (r.error === 'price_changed') { await refreshPrices(); render(); showNotice(cfg.pricesUpdated); }
         errEl.hidden = false; errEl.textContent = cfg.errors[r.error] || cfg.errors.generic;
       } catch { errEl.hidden = false; errEl.textContent = cfg.errors.generic; }
