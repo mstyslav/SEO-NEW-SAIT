@@ -49,8 +49,12 @@ export const CATEGORY_LABEL = { mirrors: t('Дзеркала', 'Зеркала')
 const EXTRA_GROUPS = ['backlight', 'heating', 'lens', 'shelf', 'switch', 'clock', 'audio'];
 
 /** Normalised products of every category. */
+/** Default order: supplier order, except COMO sits at position 8 (end of the second desktop row of 4) — owner decision. */
+const POSITION = { como: 8 };
 export function buildProducts(pub) {
-  return pub.models.map((m, i) => ({
+  const models = [...pub.models];
+  for (const [slug, pos] of Object.entries(POSITION)) { const i = models.findIndex((m) => m.slug === slug); if (i >= 0) models.splice(pos - 1, 0, models.splice(i, 1)[0]); }
+  return models.map((m, i) => ({
     id: `mirrors-led-${m.slug}`, order: i, category: 'mirrors', productType: LED_PRODUCT_TYPE, slug: m.slug, name: m.name_short,
     price: Number.isFinite(m.from_uah) && m.from_uah > 0 ? m.from_uah : null,
     raw: m,
