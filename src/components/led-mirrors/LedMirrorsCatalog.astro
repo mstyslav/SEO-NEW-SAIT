@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import photos from '../../data/led-mirrors/photos.json';
+import pub from '../../data/led-mirrors/public.json';
+import { STR, attr, caption, formatUah, catalogPath } from '../../lib/led-mirror-i18n.mjs';
+import { formatDate } from '../../lib/led-mirror-view.mjs';
+import '../../styles/category-pages.css';
+import '../../styles/profile-systems.css';
+import '../../styles/led-mirrors.css';
+
+const { locale = 'uk' } = Astro.props;
+const T = STR[locale as 'uk' | 'ru'];
+const cards = [...pub.models].sort((a, b) => a.name_short.localeCompare(b.name_short));
+const hasPhoto = (slug: string) => ((photos as Record<string, number>)[slug] ?? 0) > 0;
+const uniq = (key: 'shape' | 'main_light' | 'frame') => [...new Set(pub.models.map((m) => m[key]))].sort() as string[];
+const filters = [['shape', T.shape], ['main_light', T.light], ['frame', T.frame]] as const;
+const title = locale === 'ru' ? 'Каталог LED-зеркал с ценами' : 'Каталог LED-дзеркал із цінами';
+---
+<BaseLayout
+  title={title}
+  description={locale === 'ru' ? 'Каталог зеркал с LED-подсветкой, безрамных и в металлической раме: фильтры по форме, подсветке и раме, цена по размеру и опциям.' : 'Каталог дзеркал з LED-підсвіткою, безрамних і в металевій рамі: фільтри за формою, підсвіткою та рамою, ціна за розміром і опціями.'}
+  locale={locale}
+  schemaType="CollectionPage"
+  robots="noindex,follow"
+>
+<div class="sg-page-shell">
+  <Header locale={locale} />
+  <main id="main">
+    <section class="category-section">
+      <Breadcrumbs items={[{ label: T.home, href: locale === 'ru' ? '/ru/' : '/' }, { label: T.mirrors, href: locale === 'ru' ? '/ru/dzerkala/' : '/dzerkala/' }, { label: T.catalogTitle }]} />
+      <div class="category-heading"><div><p class="eyebrow">{T.catalog}</p><h1>{T.catalogH1}</h1></div>
+        <p>{T.catalogLead(formatDate(pub.collected))}</p></div>
+
+      <form class="lm-filters" data-lm-filters onsubmit="return false">
+        <label>{T.searchLabel}<input type="search" name="q" placeholder={T.searchPh} autocomplete="off" /></label>
+        {filters.map(([key, label]) => (
+          <label>{label}
+            <select name={key}><option value="">{T.all}</option>{uniq(key).map((v) => <option value={v}>{attr(locale, v)}</option>)}</select>
+          </label>
+        ))}
+        <button type="button" class="button button--outline lm-reset" data-lm-reset>{T.reset}</button>
+      </form>
+      <p class="lm-count" aria-live="polite"><span data-lm-count>{cards.length}</span> {T.of} {cards.length} {T.models}</p>
+
+      <div class="profile-grid" data-lm-grid>
+        {cards.map((m) => (
+          <article class="profile-card" data-name={m.name_short.toLowerCase()} data-shape={m.shape} data-main_light={m.main_light} data-frame={m.frame}>
+            <a class="profile-card__media" href={`${catalogPath(locale)}${m.slug}/`} aria-label={`${T.mirror} ${m.name_short}`}>
+              {hasPhoto(m.slug)
+                ? <img src={`/images/led-mirrors/${m.slug}-1-480.webp`} srcset={`/images/led-mirrors/${m.slug}-1-480.webp 480w, /images/led-mirrors/${m.slug}-1-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" alt={`${T.mirror} ${m.name_short}: ${caption(locale, m)}`} width="480" height="480" loading="lazy" decoding="async" />
+                : <div class="lm-placeholder" aria-hidden="true">{m.name_short}</div>}
+            </a>
+            <div class="profile-card__body">
+              <h2 class="h3"><a href={`${catalogPath(locale)}${m.slug}/`}>{m.name_short}</a></h2>
+              <p class="profile-card__blurb">{caption(locale, m)}</p>
+              <p class="profile-card__price"><strong>{T.from} {formatUah(m.from_uah)}</strong></p>
+              <a class="button button--mint profile-card__cta" href={`${catalogPath(locale)}${m.slug}/`}>{T.calc}</a>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="lm-empty" data-lm-empty hidden>{T.empty}</p>
+    </section>
+  </main>
+  <Footer />
+</div>
+</BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-lm-filters]');
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-lm-grid] > article')];
+  const count = document.querySelector('[data-lm-count]');
+  const empty = document.querySelector<HTMLElement>('[data-lm-empty]');
+  function apply() {
+    if (!form) return;
+    const v = (n: string) => (form.elements.namedItem(n) as HTMLInputElement | HTMLSelectElement).value;
+    const q = v('q').trim().toLowerCase();
+    let shown = 0;
+    for (const c of cards) {
+      const ok = (!q || c.dataset.name!.includes(q)) && ['shape', 'main_light', 'frame'].every((k) => !v(k) || c.dataset[k] === v(k));
+      c.hidden = !ok;
+      if (ok) shown++;
+    }
+    if (count) count.textContent = String(shown);
+    if (empty) empty.hidden = shown > 0;
+  }
+  form?.addEventListener('input', apply);
+  document.querySelector('[data-lm-reset]')?.addEventListener('click', () => { form?.reset(); apply(); });
+</script>

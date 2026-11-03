@@ -1,0 +1,196 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import FAQBlock from '../FAQBlock.astro';
+import photos from '../../data/led-mirrors/photos.json';
+import pub from '../../data/led-mirrors/public.json';
+import { STR, attr, optionLabel, groupLabel, modelTitle, catalogPath, caption, formatUah, faqFor } from '../../lib/led-mirror-i18n.mjs';
+import { formatDate } from '../../lib/led-mirror-view.mjs';
+import '../../styles/category-pages.css';
+import '../../styles/profile-systems.css';
+import '../../styles/led-mirrors.css';
+
+const { model, locale = 'uk' } = Astro.props;
+const T = STR[locale as 'uk' | 'ru'];
+const slug = model.slug;
+const count: number = (photos as Record<string, number>)[slug] ?? 0;
+const img = (n: number, w: 480 | 900) => `/images/led-mirrors/${slug}-${n}-${w}.webp`;
+const gallery = Array.from({ length: count }, (_, i) => i + 1);
+const groupLabels = Object.fromEntries(pub.groups.map((g) => [g.key, g.label]));
+const groups = model.option_groups.map((g: any) => ({ key: g.key, label: groupLabel(locale, g.key, groupLabels[g.key]), options: g.options }));
+const clarify = ['lens', 'clock', 'audio'].some((k) => groups.some((g: any) => g.key === k));
+const L = model.size_limits_mm;
+const std = model.standard_sizes[0];
+const title = modelTitle(locale, model.name_short);
+const spec: [string, string][] = [[T.specs.shape, attr(locale, model.shape)], [T.specs.light, attr(locale, model.main_light)], [T.specs.frame, attr(locale, model.frame)], [T.specs.mount, attr(locale, model.mounting)], [T.specs.size, `${L.width[0]}–${L.width[1]} × ${L.height[0]}–${L.height[1]}`]];
+const faq = faqFor(locale, model, L, groups.some((g: any) => g.key === 'heating')) as [string, string][];
+const seoText = locale === 'ru' ? [
+  `${title} — ${attr(locale, model.shape).toLowerCase()}, ${model.frame === 'Металева' ? 'в металлической раме' : 'без рамы'}, основная подсветка: ${model.main_light === 'Без основної підсвітки' ? 'отсутствует' : attr(locale, model.main_light).toLowerCase()}. Монтаж: ${attr(locale, model.mounting).toLowerCase()}.`,
+  `Размер выбирается в пределах ${L.width[0]}–${L.width[1]} мм по ширине и ${L.height[0]}–${L.height[1]} мм по высоте; для стандартных размеров (${model.standard_sizes.map((s: any) => `${s.w}×${s.h}`).join(', ')} мм) действует фиксированная цена. В калькуляторе можно выбрать: ${groups.map((g: any) => g.label.toLowerCase()).join(', ')}.`
+] : [
+  `${title} — ${attr(locale, model.shape).toLowerCase()} форма, ${model.frame === 'Металева' ? 'у металевій рамі' : 'без рами'}, основна підсвітка: ${model.main_light === 'Без основної підсвітки' ? 'відсутня' : attr(locale, model.main_light).toLowerCase()}. Монтаж: ${attr(locale, model.mounting).toLowerCase()}.`,
+  `Розмір обирається у межах ${L.width[0]}–${L.width[1]} мм по ширині та ${L.height[0]}–${L.height[1]} мм по висоті; для стандартних розмірів (${model.standard_sizes.map((s: any) => `${s.w}×${s.h}`).join(', ')} мм) діє фіксована ціна. У калькуляторі можна вибрати: ${groups.map((g: any) => g.label.toLowerCase()).join(', ')}.`
+];
+const cfg = { id: model.id, slug, name: model.name_short, locale, cartHref: T.cartHref, optionLabels: Object.fromEntries(model.option_groups.flatMap((g: any) => g.options).map((o: string) => [o, optionLabel(locale, o)])), groupLabels: Object.fromEntries(groups.map((g: any) => [g.key, g.label])), hasPhoto: count > 0, str: { badSize: T.badSize, badOpt: T.badOpt, netErr: T.netErr, nonstd: T.nonstd, mirror: T.mirror, added: T.added, openCart: T.openCart, total: T.total } };
+---
+<BaseLayout
+  title={`${title} — ${locale === 'ru' ? 'цена по размеру и опциям' : 'ціна за розміром і опціями'}`}
+  description={`${title}: ${caption(locale, model)}. ${T.from} ${formatUah(model.from_uah)}.`}
+  locale={locale}
+  robots="noindex,follow"
+>
+<div class="sg-page-shell">
+  <Header locale={locale} />
+  <main id="main">
+    <section class="category-section">
+      <Breadcrumbs items={[{ label: T.home, href: locale === 'ru' ? '/ru/' : '/' }, { label: T.mirrors, href: locale === 'ru' ? '/ru/dzerkala/' : '/dzerkala/' }, { label: T.catalogTitle, href: catalogPath(locale) }, { label: model.name_short }]} />
+      <div class="category-heading"><div><p class="eyebrow">{caption(locale, model)}</p><h1>{title}</h1></div></div>
+
+      <div class="lm-model">
+        <div>
+          {count > 0 ? (
+            <div class="lm-gallery" data-lm-gallery>
+              <img class="lm-gallery__main" data-lm-main src={img(1, 900)} srcset={`${img(1, 480)} 480w, ${img(1, 900)} 900w`} sizes="(max-width: 800px) 100vw, 50vw" alt={`${title}: ${caption(locale, model)}`} width="900" height="900" fetchpriority="high" decoding="async" />
+              {count > 1 && (
+                <div class="lm-gallery__thumbs">
+                  {gallery.map((n) => (
+                    <button type="button" data-lm-thumb data-src={img(n, 900)} data-srcset={`${img(n, 480)} 480w, ${img(n, 900)} 900w`} aria-label={`${locale === 'ru' ? 'Фото' : 'Фото'} ${n} / ${count}`} aria-pressed={n === 1 ? 'true' : 'false'}>
+                      <img src={img(n, 480)} alt={`${title}, ${locale === 'ru' ? 'фото' : 'фото'} ${n}`} width="96" height="96" loading="lazy" decoding="async" />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : <div class="lm-placeholder lm-placeholder--big" aria-hidden="true">{model.name_short}</div>}
+          <dl class="lm-spec">
+            {spec.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+          </dl>
+        </div>
+
+        <div class="lm-calc" data-lm-calc data-initial={model.default_uah}>
+          <div>
+            <p class="lm-hint">{T.std}</p>
+            <div class="lm-chips">
+              {model.standard_sizes.map((s: any) => (
+                <button type="button" class="lm-chip" data-w={s.w} data-h={s.h} aria-pressed="false">{s.w}×{s.h}</button>
+              ))}
+            </div>
+          </div>
+          <div class="lm-size">
+            <label>{T.width}<input type="number" name="w" inputmode="numeric" min={L.width[0]} max={L.width[1]} step="1" value={std.w} /></label>
+            <label>{T.height}<input type="number" name="h" inputmode="numeric" min={L.height[0]} max={L.height[1]} step="1" value={std.h} /></label>
+          </div>
+          <p class="lm-hint">{T.limits(L)}</p>
+          {groups.map((g: any) => (
+            <label>{g.label}
+              <select name={g.key}>{g.options.map((o: string) => <option value={o}>{optionLabel(locale, o)}</option>)}</select>
+            </label>
+          ))}
+          <label>{T.qty}<input type="number" name="qty" inputmode="numeric" min="1" max="50" step="1" value="1" /></label>
+          <p class="lm-error" data-lm-error hidden role="alert"></p>
+          <div class="lm-total" aria-live="polite">
+            <small>{T.priceLabel}</small>
+            <strong data-lm-total>{formatUah(model.default_uah)}</strong>
+            <ul class="lm-lines" data-lm-lines></ul>
+          </div>
+          <div class="lm-actions">
+            <button class="button button--mint" type="button" data-lm-add>{T.add}</button>
+            <button class="button button--outline" type="button" data-lm-buy>{T.buyNow}</button>
+          </div>
+          <p class="lm-added" data-lm-added hidden role="status"></p>
+          <p class="lm-note">{T.note(formatDate(pub.collected))}{clarify && T.clarify}</p>
+        </div>
+      </div>
+
+      <div class="category-prose lm-info">
+        <h2>{T.about(model.name_short)}</h2>
+        {seoText.map((t) => <p>{t}</p>)}
+        <h3>{T.making}</h3>
+        <p>{T.makingText}</p>
+        <h3>{T.delivery}</h3>
+        <p>{T.deliveryText}<a href={`${locale === 'ru' ? '/ru' : ''}${T.deliveryHref}`}>{T.deliveryLink}</a>.</p>
+      </div>
+      <FAQBlock title={locale === 'ru' ? `FAQ о зеркале ${model.name_short}` : `FAQ про дзеркало ${model.name_short}`} items={faq} visibleCount={faq.length} expandTo={faq.length} />
+      <script type="application/json" id="lm-cfg" set:html={JSON.stringify(cfg)} />
+    </section>
+  </main>
+  <Footer />
+</div>
+</BaseLayout>
+
+<script>
+  import { addItem } from '../../scripts/sg-cart';
+
+  const gal = document.querySelector('[data-lm-gallery]');
+  gal?.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-lm-thumb]');
+    const main = gal.querySelector<HTMLImageElement>('[data-lm-main]');
+    if (!b || !main) return;
+    main.src = b.dataset.src!; main.srcset = b.dataset.srcset!;
+    gal.querySelectorAll('[data-lm-thumb]').forEach((t) => t.setAttribute('aria-pressed', String(t === b)));
+  });
+
+  const root = document.querySelector<HTMLElement>('[data-lm-calc]');
+  if (root) {
+    const cfg = JSON.parse(document.getElementById('lm-cfg')!.textContent!);
+    const S = cfg.str;
+    const el = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const wIn = el<HTMLInputElement>('input[name=w]'), hIn = el<HTMLInputElement>('input[name=h]'), qIn = el<HTMLInputElement>('input[name=qty]');
+    const selects = [...root.querySelectorAll<HTMLSelectElement>('select')];
+    const chips = [...root.querySelectorAll<HTMLButtonElement>('.lm-chip')];
+    const err = el('[data-lm-error]'), total = el('[data-lm-total]'), lines = el('[data-lm-lines]'), added = el('[data-lm-added]');
+    const fmt = (n: number) => `${String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} грн`;
+    let current: { unit: number; w: number; h: number; options: Record<string, string> } | null = null;
+    let seq = 0, timer: number | undefined;
+
+    const config = () => ({ modelId: cfg.id, w: Number(wIn.value), h: Number(hIn.value), options: Object.fromEntries(selects.map((s) => [s.name, s.value])) });
+    function fail(msg: string) { current = null; total.textContent = '—'; lines.innerHTML = ''; err.hidden = false; err.textContent = msg; }
+
+    async function update() {
+      const c = config();
+      chips.forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.w) === c.w && Number(b.dataset.h) === c.h)));
+      const mine = ++seq;
+      try {
+        const res = await fetch('/api/led-mirror-price', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(c) });
+        const r = await res.json();
+        if (mine !== seq) return; // a newer request is in flight
+        if (!r.ok) return fail(r.error === 'invalid_size' ? S.badSize : S.badOpt);
+        err.hidden = true;
+        total.textContent = fmt(r.total_uah);
+        lines.innerHTML = '';
+        const add = (a: string, b: string) => { const li = document.createElement('li'); const x = document.createElement('span'); const y = document.createElement('span'); x.textContent = a; y.textContent = b; li.append(x, y); lines.append(li); };
+        add(`${S.mirror} ${c.w}×${c.h} мм${r.standard_size ? '' : ' ' + S.nonstd}`, fmt(r.mirror_uah));
+        r.options.forEach((o: any) => add(`${cfg.groupLabels[o.group]}: ${cfg.optionLabels[o.name] ?? o.name}`, `+${fmt(o.uah)}`));
+        current = { unit: r.total_uah, ...c };
+      } catch { if (mine === seq) fail(S.netErr); }
+    }
+    const later = () => { current = null; clearTimeout(timer); timer = window.setTimeout(update, 250); };
+
+    chips.forEach((b) => b.addEventListener('click', () => { wIn.value = b.dataset.w!; hIn.value = b.dataset.h!; update(); }));
+    [wIn, hIn, ...selects].forEach((i) => i.addEventListener('input', later));
+
+    // Both buttons use the same step: the server-checked price in `current` goes into the cart; "order now" then opens the cart's checkout.
+    async function toCart(): Promise<boolean> {
+      if (timer) { clearTimeout(timer); timer = undefined; await update(); }
+      if (!current) { if (!err.hidden) return false; await update(); if (!current) return false; }
+      const qty = Math.min(50, Math.max(1, Math.floor(Number(qIn.value) || 1)));
+      qIn.value = String(qty);
+      addItem({
+        kind: 'led-mirror', modelId: cfg.id, slug: cfg.slug, name: `Дзеркало ${cfg.name}`, category: 'Дзеркала', w: current.w, h: current.h, options: current.options, quantity: qty,
+        price: current.unit, image: cfg.hasPhoto ? `/images/led-mirrors/${cfg.slug}-1-480.webp` : undefined, url: `/dzerkala/katalog/${cfg.slug}/`,
+        configuration: `${current.w}×${current.h} мм; ${Object.values(current.options).join(', ')}`
+      });
+      return true;
+    }
+    el('[data-lm-add]').addEventListener('click', async () => {
+      if (!(await toCart())) return;
+      added.hidden = false; added.textContent = '';
+      added.append(`${S.added} `);
+      const a = document.createElement('a'); a.href = cfg.cartHref; a.textContent = S.openCart; added.append(a);
+    });
+    el('[data-lm-buy]').addEventListener('click', async () => { if (await toCart()) location.href = `${cfg.cartHref}?checkout=1`; });
+    update();
+  }
+</script>

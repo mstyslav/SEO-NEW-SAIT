@@ -30,6 +30,7 @@ export function stripLocale(pathname: string): string {
  */
 const LOCALIZED_ROUTES: Record<'ru', ReadonlySet<string>> = {
   ru: new Set([
+    '/cart/',
     '/montazh-vikon/',
     '/',
     '/about/',
@@ -162,6 +163,9 @@ export function hasLocalizedRoute(pathname: string, locale: Locale): boolean {
   // RU project pages /ru/project/{slug}/ exist for every project with RU texts.
   const project = base.match(/^\/project\/([a-z0-9-]+)\/$/);
   if (locale === 'ru' && project) return hasProjectRu(project[1]);
+
+  // Unified cart and the LED mirror catalog exist in UA and RU only (noindex section, not in the sitemap).
+  if (locale === 'ru' && /^\/dzerkala\/katalog\/(?:[a-z0-9-]+\/)?$/.test(base)) return true;
 
   return LOCALIZED_ROUTES[locale].has(base);
 }

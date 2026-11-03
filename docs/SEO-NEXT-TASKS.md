@@ -28,3 +28,10 @@ See [SEO-OWNER-ACTIONS.md](SEO-OWNER-ACTIONS.md): door prices (R-030), real case
 
 ## RESEARCH ONLY (no implementation)
 - R-022 analytics coverage, R-021 IndexNow wait, R-040 Austria evidence review.
+
+## LED mirror catalog go-live (R-071, after owner answers)
+- Add photos (own storage), RU locale (/ru/dzerkala/katalog/), Product/ItemList schema only with owner-confirmed prices, remove noindex, add to sitemap-urls.ts + check-routes, internal link from /dzerkala/ (do not edit protected R-069 page before measurement ends 2026-11-11).
+
+## Unified cart go-live (R-072, after owner answers)
+- Decide the Control CRM intake (see SEO-OWNER-ACTIONS.md), then PR + deploy with worker/private/led-mirrors.json present; verify one real order reaches the lead group / CRM.
+- Optional follow-ups: cart link in the mobile menu, EN/DE/ES decision later (not in scope), order statuses in CRM.

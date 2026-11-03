@@ -25,6 +25,8 @@
  */
 
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
+import { handleCartOrder } from './cart-order';
+import { priceOf } from './led-mirrors';
 import { ATTRIBUTION_KEYS, attributionLines, attributionPlainLines, parseAttribution, type Attribution } from './attribution';
 
 export interface Env {
@@ -37,6 +39,8 @@ export interface Env {
   RESEND_API_KEY?: string;
   LEAD_EMAIL_FROM?: string;
   LEAD_EMAIL_TO?: string;
+  /** Local rehearsal only (.dev.vars): /api/cart-order validates and logs, sends nothing. Never set in production. */
+  CART_ORDER_DRY_RUN?: string;
 }
 
 type Lead = {
@@ -321,6 +325,36 @@ async function handleLead(request: Request, env: Env): Promise<Response> {
   return json({ ok: true, lead_sent: true, file_sent: fileSent });
 }
 
+/** POST /api/led-mirror-price — retail price of one configuration, or a batch ({items:[...]}) for the cart. Retail only. */
+async function handleLedPrice(request: Request): Promise<Response> {
+  if (request.method !== 'POST') return json({ ok: false, error: 'method_not_allowed' }, 405);
+  let body: Record<string, unknown>;
+  try { body = await request.json(); } catch { return json({ ok: false, error: 'invalid_json' }, 400); }
+  const one = (c: Record<string, unknown>) => priceOf({ modelId: Number(c?.modelId), w: Number(c?.w), h: Number(c?.h), options: (c?.options ?? {}) as Record<string, string> });
+  if (Array.isArray(body.items)) {
+    if (body.items.length > 30) return json({ ok: false, error: 'invalid_items' }, 400);
+    return json({ ok: true, items: body.items.map((c) => { const r = one(c as Record<string, unknown>); return r.ok ? { ok: true, ...r.price } : { ok: false, error: r.error }; }) });
+  }
+  const r = one(body);
+  return r.ok ? json({ ok: true, ...r.price }) : json({ ok: false, error: r.error }, 400);
+}
+
+async function handleCart(request: Request, env: Env): Promise<Response> {
+  return handleCartOrder(request, env, {
+    json,
+    normalisePhone,
+    dryRun: env.CART_ORDER_DRY_RUN === '1',
+    rateLimited: async (req) => Boolean(env.LEAD_LIMITER) && !(await env.LEAD_LIMITER!.limit({ key: req.headers.get('cf-connecting-ip') ?? 'unknown' })).success,
+    deliver: async (input) => {
+      const lead = parseLead(input);
+      if (!lead) return false;
+      const origin = new URL(request.url).origin;
+      const results = await Promise.allSettled([sendTelegram(lead, env, origin), sendLeadEmail(lead, env, origin)]);
+      return results.some((r) => r.status === 'fulfilled' && r.value);
+    }
+  });
+}
+
 // Pages removed on purpose (owner decision, TASK 74): answer 410 Gone instead of the generic 404.
 // The same paths are listed in wrangler.jsonc → assets.run_worker_first, so the static 404 handler never sees them.
 const GONE_PATHS = new Set(['/arkhitekturni-systemy', '/ru/arkhitekturni-systemy']);
@@ -336,6 +370,8 @@ export default {
     const { pathname } = new URL(request.url);
     if (GONE_PATHS.has(pathname.replace(/\/+$/, ''))) return goneResponse();
     if (/^\/api\/(kommo-lead|lead)\/?$/.test(pathname)) return handleLead(request, env);
+    if (/^\/api\/led-mirror-price\/?$/.test(pathname)) return handleLedPrice(request);
+    if (/^\/api\/cart-order\/?$/.test(pathname)) return handleCart(request, env);
     return env.ASSETS.fetch(request);
   }
 } satisfies ExportedHandler<Env>;

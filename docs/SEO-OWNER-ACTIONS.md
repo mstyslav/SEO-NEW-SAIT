@@ -34,3 +34,11 @@ For each completed project (priority: aluminium entrance doors, then glass parti
 5. Verified technical details (dimensions, glass, profile, hardware) only if known.
 No project will be invented or filled in from assumptions.
 | 10 | P2 | WAITING FOR OWNER | **Paid-link status** [R-047]: was the DIPFO article (dofollow, anchor "скляні перегородки на замовлення") paid? was the uba.top listing paid? | Paid links that pass ranking credit should carry rel="sponsored"; decides whether to ask the publisher for the attribute | Authority |
+
+## LED mirror catalog and unified cart (R-071, R-072)
+Decided by owner 2026-11-03: supplier photos allowed (stored locally); retail price = purchase price + agreed markup (not stated in this public repo); manual price updates; one unified cart for UA/RU only.
+1. **Control CRM intake (blocking for a real CRM link).** The CRM (repo SpaceGlassControlBot, cloudflare/src/crm.ts) has no endpoint for website orders: every /crm/api/* call needs a Telegram Mini App login of a staff member. Today the site delivers leads (and now cart orders) to the Telegram lead group, which the CRM reads. Decide: (a) keep the group channel for now, or (b) add a CRM endpoint such as a token-protected POST for website orders and give the website its token. Kommo is not used for cart orders.
+2. Review the local preview (catalog, AGNES, cart UA/RU) and approve going live (remove noindex, add to sitemap, link from the /dzerkala/ hub, deploy).
+3. Deployment needs worker/private/led-mirrors.json (gitignored) on the machine that deploys: run `npm run led:build -- <supplier-catalog.json> --markup <factor>` first. `.dev.vars` with CART_ORDER_DRY_RUN=1 is for local rehearsal only and must never be set in production.
+4. The old 'від 3 990 грн' on /dzerkala/led-dzerkala/ (title, R-069 protected until 2026-11-11), src/data/mirror-catalog.ts, ru/mirror-catalog.ru.ts and mirror-types.ts equals the supplier's price; the catalog shows the retail 'від 4 389 грн'. Approve changing those pages.
+5. Price update: re-collect supplier catalog -> `npm run led:build -- <file> --markup <factor>` -> `npm run test:led-mirrors && npm run test:cart` -> build -> deploy.

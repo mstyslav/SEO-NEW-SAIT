@@ -1,0 +1,15 @@
+---
+// LED mirror catalog (UA): /dzerkala/katalog/ and /dzerkala/katalog/{name}/. RU twin: src/pages/ru/dzerkala/katalog/[...slug].astro.
+// One dynamic rest route on purpose: static index files are auto-listed in the sitemap, and this section stays
+// noindex / out of the sitemap until the owner approves it (docs/SEO-OWNER-ACTIONS.md). Public data holds NO purchase prices.
+import LedMirrorsCatalog from '../../../components/led-mirrors/LedMirrorsCatalog.astro';
+import LedMirrorModel from '../../../components/led-mirrors/LedMirrorModel.astro';
+import pub from '../../../data/led-mirrors/public.json';
+
+export function getStaticPaths() {
+  return [{ params: { slug: undefined } }, ...pub.models.map((m) => ({ params: { slug: m.slug } }))];
+}
+const { slug } = Astro.params;
+const model = slug ? pub.models.find((m) => m.slug === slug) : undefined;
+---
+{model ? <LedMirrorModel model={model} locale="uk" /> : <LedMirrorsCatalog locale="uk" />}

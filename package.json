@@ -23,6 +23,9 @@
     "indexnow": "node scripts/indexnow.mjs",
     "indexnow:auto": "node scripts/indexnow-auto.mjs",
     "test:indexnow": "node scripts/test-indexnow-auto.mjs",
+    "test:led-mirrors": "node scripts/test-led-mirror-price.mjs",
+    "test:cart": "node scripts/test-cart-order.mjs",
+    "led:build": "node scripts/build-led-mirrors-catalog.mjs",
     "check:intl": "node scripts/check-intl.mjs"
   },
   "dependencies": {

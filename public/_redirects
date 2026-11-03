@@ -171,8 +171,7 @@
 # Approved 2026-09-27: old «Безрамне скління для квартир» → frameless balcony/loggia glazing (exact path only; /pryvatnyj-sektor/pryvatnyj-sektor/ogorozhy/ stays 200)
 /pryvatnyj-sektor/pryvatnyj-sektor/ /bezramne-sklinnya/sklinnya-balkoniv/ 301
 # Stage 2A (2026-09-28): RU service stubs used to redirect to themselves (refresh loop). Same targets as the
-# Astro.redirect() fallbacks in src/pages/ru/{cart,compare,catalog/piddon}/.
-/ru/cart/ /cart/ 301
+# Astro.redirect() fallbacks in src/pages/ru/{compare,catalog/piddon}/ (/ru/cart/ is now a real RU page).
 /ru/compare/ /compare/ 301
 /ru/catalog/piddon/ /ru/dushovi-kabiny/dushovi-piddony/ 301
 
@@ -360,7 +359,6 @@
 /ru/pryvatnyj-sektor/budynkam /ru/bezramne-sklinnya/sklinnya-budynkiv/ 301
 /ru/pryvatnyj-sektor/taun-hausy /ru/bezramne-sklinnya/sklinnya-budynkiv/ 301
 /pryvatnyj-sektor/pryvatnyj-sektor /bezramne-sklinnya/sklinnya-balkoniv/ 301
-/ru/cart /cart/ 301
 /ru/compare /compare/ 301
 /ru/catalog/piddon /ru/dushovi-kabiny/dushovi-piddony/ 301
 /catalog/piddon /dushovi-kabiny/dushovi-piddony/ 301
