@@ -7,6 +7,7 @@ import Breadcrumbs from '../Breadcrumbs.astro';
 import '../../styles/category-pages.css';
 import '../../styles/profile-systems.css';
 import '../../styles/led-mirrors.css';
+import { LEAD_DAYS, WARRANTY_MONTHS } from '../../lib/shop-terms.mjs';
 
 // `indexable`: the shop catalog pages and product pages are indexed (TASK 113); every other shop page stays noindex.
 const { locale = 'uk', title, description, crumbs, image, indexable = false } = Astro.props;
@@ -17,9 +18,27 @@ const { locale = 'uk', title, description, crumbs, image, indexable = false } = 
   <main id="main">
     <section class="category-section">
       <Breadcrumbs items={crumbs} />
+      {indexable && <aside class="shop-terms-strip" aria-label={locale === 'ru' ? 'Условия заказа' : 'Умови замовлення'}>
+        <strong>{locale === 'ru' ? 'Изготавливаем под заказ' : 'Виготовляємо під замовлення'}</strong>
+        <span>{locale === 'ru' ? `До ${LEAD_DAYS.standardMax} рабочих дней · металлическая рама — до ${LEAD_DAYS.metalFrameMax} дней` : `До ${LEAD_DAYS.standardMax} робочих днів · металева рама — до ${LEAD_DAYS.metalFrameMax} днів`}</span>
+        <span>{locale === 'ru' ? `Бесплатная доставка Новой почтой · гарантия ${WARRANTY_MONTHS} месяцев` : `Безкоштовна доставка Новою поштою · гарантія ${WARRANTY_MONTHS} місяців`}</span>
+        <div class="shop-terms-strip__links">
+          <a href={`${locale === 'ru' ? '/ru' : ''}/shop/delivery-payment/`}>{locale === 'ru' ? 'Оплата и доставка' : 'Оплата та доставка'}</a>
+          <a href={`${locale === 'ru' ? '/ru' : ''}/shop/returns/`}>{locale === 'ru' ? 'Обмен и возврат' : 'Обмін та повернення'}</a>
+          <a href={`${locale === 'ru' ? '/ru' : ''}/shop/offer/`}>{locale === 'ru' ? 'Публичная оферта' : 'Публічна оферта'}</a>
+        </div>
+      </aside>}
       <slot />
     </section>
   </main>
   <Footer hideBenefits />
 </div>
 </BaseLayout>
+
+<style>
+  .shop-terms-strip{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin:18px 0 26px;padding:15px 20px;border:1px solid #d4e9df;border-radius:12px;background:#f6fbf8;color:#253e33;font-size:14px;line-height:1.5}
+  .shop-terms-strip strong{color:#196e54;font-size:15px}
+  .shop-terms-strip__links{display:flex;flex-wrap:wrap;gap:8px 16px;width:100%}
+  .shop-terms-strip__links a{color:#176b54;text-decoration:underline;text-underline-offset:3px}
+  @media(max-width:640px){.shop-terms-strip{padding:14px;gap:8px}.shop-terms-strip>span{width:100%}}
+</style>
