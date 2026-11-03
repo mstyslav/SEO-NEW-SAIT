@@ -54,7 +54,7 @@ for (const [loc, pre] of locales) {
     const bc = ld(html).find((n) => n['@type'] === 'BreadcrumbList');
     if (bc?.itemListElement.length !== 5) fail(`${url}: breadcrumb length ${bc?.itemListElement.length}`);
     if (!html.includes('data-lm-add') || !html.includes('data-lm-buy')) fail(`${url}: buy / add buttons missing`);
-    if ((html.match(/class="profile-card"/g) ?? []).length < 4) fail(`${url}: fewer than 4 similar models`);
+    if ((html.match(/data-related[\s\S]*?<\/section>/)?.[0].match(/class="sf-card"/g) ?? []).length < 4) fail(`${url}: fewer than 4 similar models`);
     const title = meta(html, /<title>([^<]*)</);
     if (!title?.includes(m.name_short)) fail(`${url}: title "${title}"`);
   }
@@ -85,6 +85,34 @@ for (const [loc, pre] of locales) for (const p of ['/shop/', '/shop/mirrors/', '
     for (const pr of data.products) { const m = pub.models.find((x) => `mirrors-led-${x.slug}` === pr.id); if (!m || pr.p !== m.from_uah) fail(`${pre + p}: price of ${pr.id} differs from the retail data`); }
   }
   if (/\?[a-z]+=/.test(html.match(/<link rel="canonical" href="([^"]+)"/)?.[1] ?? '')) fail(`${pre + p}: canonical carries parameters`);
+}
+// ---- FAQ: exactly 10 questions on every catalog and product page, no FAQPage markup anywhere in the shop
+for (const [loc, pre] of locales) {
+  const faqPages = ['/shop/', '/shop/mirrors/', '/shop/mirrors/led/', ...pub.models.map((m) => `/shop/mirrors/led/${m.slug}/`)];
+  for (const p of faqPages) {
+    const html = read(pre + p); if (!html) continue;
+    const items = (html.match(/<details class="sf-faq__item"/g) ?? []).length;
+    if (items !== 10) fail(`${pre + p}: ${items} FAQ items, expected 10`);
+    if ((html.match(/data-shop-faq/g) ?? []).length !== 1) fail(`${pre + p}: FAQ block count`);
+    if (/"@type":"FAQPage"/.test(html)) fail(`${pre + p}: FAQPage structured data must not be emitted`);
+    for (const d of html.matchAll(/<details class="sf-faq__item">\s*<summary><span>([^<]+)<\/span><\/summary>\s*<p>([^<]+)<\/p>/g)) if (d[1].length < 8 || d[2].length < 20) fail(`${pre + p}: empty FAQ text`);
+    if (loc === 'ru' && /Оберіть|Поширені|Доставка та/.test((html.match(/data-shop-faq[\s\S]*?<\/section>/) ?? [''])[0])) fail(`${pre + p}: UA text inside the RU FAQ`);
+  }
+  // product page structure
+  for (const m of pub.models) {
+    const url = `${pre}/shop/mirrors/led/${m.slug}/`, html = read(url); if (!html) continue;
+    const h1s = (html.match(/<h1[\s>]/g) ?? []).length; if (h1s !== 1) fail(`${url}: ${h1s} h1`);
+    const order = [...html.matchAll(/<h2[^>]*id="(pp-config-title|pp-desc|pp-spec|pp-func|pp-deliv|model-faq-title|lm-related-title)"/g)].map((x) => x[1]).join();
+    if (order !== 'pp-config-title,pp-desc,pp-spec,pp-func,pp-deliv,model-faq-title,lm-related-title') fail(`${url}: section order ${order}`);
+    const cfgHtml = (html.match(/data-lm-calc[\s\S]*?<\/section>/) ?? [''])[0];
+    if (/<select/.test(cfgHtml)) fail(`${url}: dropdown (select) in the selection block`);
+    if (!/data-lm-buy[^>]*disabled/.test(html) || !/data-lm-add[^>]*disabled/.test(html)) fail(`${url}: buy buttons must start disabled until the server confirms the price`);
+    if (!/name="size"/.test(cfgHtml) || (cfgHtml.match(/name="size" value="\d+x\d+"/g) ?? []).length !== m.standard_sizes.length) fail(`${url}: standard size buttons do not match the data`);
+    const pr = ld(html).find((n) => n['@type'] === 'Product');
+    if (pr?.sku !== `SG-LED-${m.slug.toUpperCase()}` || !html.includes(pr.sku)) fail(`${url}: sku missing or not visible`);
+    for (const bad of ['brand', 'gtin', 'gtin13', 'mpn', 'aggregateRating', 'review']) if (pr && bad in pr) fail(`${url}: unconfirmed Product field ${bad}`);
+    if (pr && ('availability' in pr.offers || 'itemCondition' in pr.offers)) fail(`${url}: Offer claims availability / condition`);
+  }
 }
 // unique titles / descriptions
 for (const [, pre] of locales) {

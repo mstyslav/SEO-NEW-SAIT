@@ -49,3 +49,8 @@ Decided by owner 2026-11-03: supplier photos allowed (stored locally); retail pr
 3. Decide on the home-page block «Готові вироби Space Glass» (prepared only: /shop/preview-home-block/) — the home page was not changed.
 4. Showers and partitions: send real products (names, sizes, prices, photos) when ready; until then the pages say honestly that there are none.
 5. Warranty and delivery terms per product are not invented: the pages tell the visitor that the manager confirms them. Send the real terms to show them.
+
+## Shop: catalog order and Merchant Center (R-073)
+1. **Default order:** you asked to move the first rectangular mirror (in the current order that is **COMO**, position 2; other rectangles: BUFFALO 3, GARDA 5, MELVIN 7, NESS 8, …) to the end of the second row. Please confirm the model and the layout (3 per row = position 6, 4 per row = position 8, 2 per row = position 4). Not changed until confirmed.
+2. **Merchant Center questions:** see `docs/MERCHANT-CENTER-READINESS.md` §6 (availability/handling time, brand, GTIN/MPN, condition, shipping, returns, payment, photo rights, price/feed owner).
+3. **Launch order:** `docs/SHOP-LAUNCH-CHECKLIST.md`.

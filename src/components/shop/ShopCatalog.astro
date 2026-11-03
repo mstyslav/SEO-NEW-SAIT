@@ -6,11 +6,13 @@
 import ShopPage from './ShopPage.astro';
 import photos from '../../data/led-mirrors/photos.json';
 import pub from '../../data/led-mirrors/public.json';
+import ShopFaq from './ShopFaq.astro';
 import { SHOP_STR } from '../../lib/shop.mjs';
+import { shopFaq, mirrorsFaq, ledFaq } from '../../lib/shop-faq.mjs';
 import { buildProducts, buildSchema, clientProducts, cardData } from '../../lib/shop-catalog.mjs';
 import { modelTitle, caption as _c } from '../../lib/led-mirror-i18n.mjs';
 
-const { locale = 'uk', initialCat = 'all', title, description, h1, crumbs } = Astro.props;
+const { locale = 'uk', initialCat = 'all', title, description, h1, crumbs, faqKind = 'shop' } = Astro.props;
 const S = SHOP_STR[locale as 'uk' | 'ru'];
 const products = buildProducts(pub);
 const schema = buildSchema(locale, pub, products);
@@ -20,6 +22,7 @@ const strings = {
   applyTpl: S.apply(0).replace('0', '{n}'), foundTpl: S.found(0).replace('0', '{n}'), activeTpl: S.active(0).replace('0', '{n}'), sizeHintTpl: S.anySize('{lo}', '{hi}')
 };
 const data = { locale, initialCat, strings, schema, products: clientProducts(products) };
+const faqItems = ({ shop: shopFaq, mirrors: mirrorsFaq, led: ledFaq } as Record<string, any>)[faqKind](locale, pub);
 const catalogLabel = (key: string) => (key === 'all' ? S.tabAll : schema.categories.find((c: any) => c.key === key)?.label);
 ---
 <ShopPage locale={locale} title={title} description={description} crumbs={crumbs}>
@@ -77,6 +80,7 @@ const catalogLabel = (key: string) => (key === 'all' ? S.tabAll : schema.categor
       <div class="sf-empty" data-sf-empty hidden><h3>{S.emptyTitle}</h3><p>{S.emptyText}</p><button type="button" class="button button--mint" data-sf-reset>{S.reset}</button></div>
     </section>
   </div>
+  <ShopFaq locale={locale} items={faqItems} id="shop-faq" />
   <script type="application/json" id="sf-data" set:html={JSON.stringify(data)} />
 </ShopPage>
 

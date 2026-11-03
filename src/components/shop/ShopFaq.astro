@@ -1,0 +1,17 @@
+---
+// Shop FAQ accordion: native <details>/<summary> (keyboard and screen-reader friendly, works without JS), exactly the items given.
+// Deliberately NO FAQPage JSON-LD: Google restricts FAQ rich results, and the shop FAQ must not be marked up for SEO.
+import { faqTitle } from '../../lib/shop-faq.mjs';
+const { locale = 'uk', items, id = 'faq' } = Astro.props;
+---
+<section class="sf-faq" aria-labelledby={`${id}-title`} data-shop-faq data-count={items.length}>
+  <h2 id={`${id}-title`}>{faqTitle(locale)}</h2>
+  <div class="sf-faq__list">
+    {items.map(([q, a]: [string, string]) => (
+      <details class="sf-faq__item">
+        <summary><span>{q}</span></summary>
+        <p>{a}</p>
+      </details>
+    ))}
+  </div>
+</section>
