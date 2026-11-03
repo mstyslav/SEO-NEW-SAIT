@@ -1,5 +1,5 @@
 // Sale terms agreed with the owner (the single source for the shop pages, FAQ and the draft feed).
-// NOT agreed yet, therefore never stated: pickup city, delivery cost, return rules, online payment.
+// Confirmed: free Nova Poshta delivery, 100% prepayment after manager approval, 12-month warranty.\n// Pickup city remains unspecified; online payment is not supported. Returns are governed by the shop policy pages.
 export const LEAD_DAYS = { min: 0, max: 35, standardMax: 15, metalFrameMax: 35 }; // working days after order approval and payment
 export const WARRANTY_MONTHS = 12;
 
