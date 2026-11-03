@@ -176,7 +176,7 @@ const shopLegalPrefix = locale === 'ru' ? '/ru/shop' : '/shop';
   </div>
   )}
 
-  <div class="footer-refined__main">
+  <div class:list={["footer-refined__main", shopLegal && "footer-refined__main--shop"]}>
     <div class="footer-refined__brand">
       <a href={lp("/")} class="footer-refined__logo"><img
         src="/images/space-glass-brand-logo-400.jpg"
@@ -352,5 +352,25 @@ const shopLegalPrefix = locale === 'ru' ? '/ru/shop' : '/shop';
     .footer-refined__product-grid b {
       font-size: 10px !important;
     }
+  }
+</style>
+
+<style>
+  /* Seven shop footer sections on a single desktop row; the global desktop
+     footer grid is fixed at six tracks and otherwise wraps Contacts below. */
+  @media (min-width: 1281px) {
+    .footer-refined__main--shop {
+      grid-template-columns:
+        minmax(165px, 1.05fr)
+        minmax(220px, 1.3fr)
+        minmax(105px, .7fr)
+        minmax(105px, .7fr)
+        minmax(140px, .85fr)
+        minmax(105px, .65fr)
+        minmax(175px, 1fr) !important;
+      column-gap: clamp(12px, 1.35vw, 24px) !important;
+      row-gap: 0 !important;
+    }
+    .footer-refined__main--shop > * { min-width: 0; }
   }
 </style>
