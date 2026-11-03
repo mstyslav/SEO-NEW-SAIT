@@ -71,12 +71,16 @@
 .sf-filters__foot [data-sf-apply]{display:none}
 .sf-backdrop{position:fixed;inset:0;background:rgba(7,21,15,.45);z-index:60}.sf-backdrop[hidden]{display:none}
 .sf-results__head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 0 12px;flex-wrap:wrap}.sf-results__head h2{margin:0;font-size:1.3rem}.sf-count{margin:0;color:var(--muted,#5f6b64);font-size:.9rem}
-.sf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(172px,1fr));gap:16px}.sf-grid[hidden]{display:none}
-.sf-card{display:grid;grid-template-rows:auto 1fr;border:1px solid var(--line,#e0e7e2);border-radius:16px;overflow:hidden;background:#fff}.sf-card[hidden]{display:none}
-.sf-card__media{display:block;background:var(--green-soft,#edf8f2)}.sf-card__media img,.sf-card__media .lm-placeholder{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
-.sf-card__body{display:grid;gap:6px;padding:12px;align-content:start}.sf-card__body h3{margin:0;font-size:1.05rem}.sf-card__body h3 a{color:inherit;text-decoration:none}
-.sf-card__spec{margin:0;font-size:.82rem;color:var(--muted,#5f6b64);line-height:1.35}.sf-card__price{margin:0;font-size:.85rem}.sf-card__price strong{font-size:1.15rem}
-.sf-card__cta{min-height:44px;justify-content:center;text-align:center;padding-inline:8px;font-size:.92rem;line-height:1.2}
+.sf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(172px,1fr));grid-auto-rows:1fr;gap:16px}.sf-grid[hidden]{display:none}
+/* every card has the same structure and height: photo (square) / name (reserved lines) / specs (reserved lines) / price / button; price and button sit at the bottom */
+.sf-card{--sf-name-lines:2;--sf-spec-lines:3;display:flex;flex-direction:column;min-width:0;border:1px solid var(--line,#e0e7e2);border-radius:16px;overflow:hidden;background:#fff}.sf-card[hidden]{display:none}
+.sf-card__media{display:block;flex:none;background:var(--green-soft,#edf8f2)}.sf-card__media img,.sf-card__media .lm-placeholder{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
+.sf-card__body{display:flex;flex:1;flex-direction:column;gap:6px;min-width:0;padding:12px}
+/* the site-wide `main h3` rule is !important (large headings), so the card title needs a matching !important size */
+body .sg-page-shell main .sf-card h3.sf-card__name{margin:0;min-height:calc(var(--sf-name-lines) * 1.25em);font-size:.95rem!important;line-height:1.25!important;font-weight:700;letter-spacing:0;overflow-wrap:anywhere;hyphens:auto}.sf-card h3.sf-card__name a{color:inherit;text-decoration:none;font:inherit}
+.sf-card__spec{margin:0;padding:0;list-style:none;min-height:calc(var(--sf-spec-lines) * 1.35em);font-size:.8rem;line-height:1.35;color:var(--muted,#5f6b64);overflow-wrap:anywhere}
+.sf-card__price{margin:auto 0 0;min-height:1.6em;font-size:.82rem;line-height:1.6}.sf-card__price strong{font-size:1.1rem;white-space:nowrap}
+.sf-card__cta{flex:none;min-height:44px;height:44px;justify-content:center;align-items:center;text-align:center;padding-inline:8px;font-size:.92rem;line-height:1;white-space:nowrap}
 .sf-empty{padding:32px 16px;text-align:center;border:1px dashed var(--green-line,#cfe9da);border-radius:16px;background:var(--green-soft,#edf8f2)}.sf-empty[hidden]{display:none}
 body.sf-lock{overflow:hidden}
 @media (max-width:899px){
@@ -85,7 +89,7 @@ body.sf-lock{overflow:hidden}
   .sf-filters{position:fixed;inset:auto 0 0 0;top:auto;max-height:86vh;z-index:61;border-radius:18px 18px 0 0;transform:translateY(105%);visibility:hidden;transition:transform .2s ease,visibility .2s}
   .sf-filters.is-open{transform:none;visibility:visible}
   .sf-close{display:inline-flex;align-items:center;justify-content:center}.sf-filters__foot{position:sticky;bottom:-16px;margin:16px -16px -16px;padding:12px 16px;background:var(--green-soft,#edf8f2)}.sf-filters__foot [data-sf-apply]{display:inline-flex;justify-content:center}
-  .sf-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sf-card__body{padding:10px}.sf-card__body h3{font-size:.98rem}
+  .sf-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sf-card{--sf-name-lines:2;--sf-spec-lines:3}.sf-card__body{padding:8px 9px 10px}body .sg-page-shell main .sf-card h3.sf-card__name{font-size:.88rem!important}.sf-card__spec{font-size:.72rem}
 }
 @media (max-width:359px){.sf-grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.sf-filters{transition:none}}

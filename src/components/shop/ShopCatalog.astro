@@ -65,9 +65,9 @@ const catalogLabel = (key: string) => (key === 'all' ? S.tabAll : schema.categor
                   : <span class="lm-placeholder" aria-hidden="true">{p.name}</span>}
               </a>
               <div class="sf-card__body">
-                <h3><a href={c.href}>{p.name}</a></h3>
-                <p class="sf-card__spec">{c.caption}</p>
-                {c.price && <p class="sf-card__price"><span>{S.from}</span> <strong>{c.price}</strong></p>}
+                <h3 class="sf-card__name"><a href={c.href}>{p.name}</a></h3>
+                <ul class="sf-card__spec">{c.specs.map((x: string) => <li>{x}</li>)}</ul>
+                <p class="sf-card__price">{c.price ? <><span>{S.from}</span> <strong>{c.price}</strong></> : null}</p>
                 <a class="button button--mint sf-card__cta" href={c.href}>{S.choose}</a>
               </div>
             </article>

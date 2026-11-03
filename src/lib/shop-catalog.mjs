@@ -103,6 +103,11 @@ export function clientProducts(products) {
   return products.map((p) => ({ id: p.id, o: p.order, c: p.category, n: p.name, p: p.price, a: p.attrs }));
 }
 
+/** Card texts. `specs` = the same real attributes as the caption, one short line each (type, shape, lighting): the same structure on every card. */
 export function cardData(locale, p) {
-  return { href: ledModelPath(locale, p.slug), caption: caption(locale, p.raw), price: p.price == null ? null : formatUah(p.price) };
+  const a = p.attrs;
+  return {
+    href: ledModelPath(locale, p.slug), caption: caption(locale, p.raw), price: p.price == null ? null : formatUah(p.price),
+    specs: [TYPE_LABEL[a.type][locale], attr(locale, a.shape), attr(locale, a.light)]
+  };
 }
