@@ -10,6 +10,14 @@ import { mirrorPrice } from '../src/lib/led-mirror-price.mjs';
 import { decodePrices } from '../src/lib/led-prices-codec.mjs';
 import { modelFaq } from '../src/lib/shop-faq.mjs';
 import { attr, optionLabel } from '../src/lib/led-mirror-i18n.mjs';
+import { modelContent } from '../src/lib/shop-content.mjs';
+import { LEAD_DAYS } from '../src/lib/shop-terms.mjs';
+import { hasLedLight } from '../src/lib/shop-catalog.mjs';
+
+// Optional owner decisions, filled ONLY when passed explicitly:  --brand="Space Glass"  --availability=in_stock
+const arg = (k) => process.argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3) ?? '';
+const BRAND = arg('brand'), AVAILABILITY = arg('availability');
+const seo = JSON.parse(fs.readFileSync(new URL('../src/data/led-mirrors/seo.json', import.meta.url), 'utf8'));
 
 const ORIGIN = 'https://space-glass.com.ua';
 const pub = JSON.parse(fs.readFileSync(new URL('../src/data/led-mirrors/public.json', import.meta.url), 'utf8'));
@@ -20,11 +28,12 @@ if (!fs.existsSync(privFile) || !fs.existsSync(secretFile)) { console.error('nee
 const full = JSON.parse(fs.readFileSync(privFile, 'utf8'));
 const decoded = await decodePrices(fs.readFileSync(secretFile, 'utf8').trim(), pub);
 
-const cols = ['id', 'item_group_id', 'title', 'description', 'link', 'image_link', 'additional_image_link', 'price', 'availability', 'condition', 'brand', 'gtin', 'mpn', 'identifier_exists', 'google_product_category', 'product_type', 'size', 'custom_label_0'];
+const cols = ['id', 'item_group_id', 'title', 'description', 'link', 'image_link', 'additional_image_link', 'price', 'availability', 'min_handling_time', 'max_handling_time', 'condition', 'brand', 'gtin', 'mpn', 'identifier_exists', 'google_product_category', 'product_type', 'size', 'custom_label_0'];
 const rows = []; let mismatch = 0;
 for (const m of pub.models) {
   const n = photos[m.slug] ?? 0;
-  const desc = `Дзеркало ${m.name_short}: ${attr('uk', m.shape).toLowerCase()}, ${m.frame === 'Металева' ? 'у металевій рамі' : 'без рами'}, ${m.main_light === 'Без основної підсвітки' ? 'без основної підсвітки' : 'підсвітка — ' + attr('uk', m.main_light).toLowerCase()}. Розмір ${'{size}'} мм; додаткові функції обираються на сторінці товару.`;
+  const mc = modelContent('uk', m, pub.groups, seo[m.slug]?.queries?.uk);
+  const desc = `${mc.intro} ${mc.purpose} Розмір {size} мм.`.slice(0, 4000);
   for (const s of m.standard_sizes) {
     const server = mirrorPrice(full, m.id, s.w, s.h).total_uah, viaSecret = mirrorPrice(decoded, m.id, s.w, s.h).total_uah;
     if (server !== viaSecret) mismatch++;
@@ -33,8 +42,8 @@ for (const m of pub.models) {
       description: desc.replace('{size}', `${s.w}×${s.h}`), link: `${ORIGIN}/shop/mirrors/led/${m.slug}/?size=${s.w}x${s.h}`,
       image_link: n ? `${ORIGIN}/images/led-mirrors/${m.slug}-1-900.webp` : '', additional_image_link: Array.from({ length: Math.max(0, n - 1) }, (_, i) => `${ORIGIN}/images/led-mirrors/${m.slug}-${i + 2}-900.webp`).join(','),
       price: `${server}.00 UAH`,
-      availability: '', condition: '', brand: '', gtin: '', mpn: '', identifier_exists: '', // owner decisions pending: see the report below
-      google_product_category: 'Home & Garden > Decor > Mirrors', product_type: `Дзеркала > LED-дзеркала > ${m.frame === 'Металева' ? 'У металевій рамі' : 'Безрамні'}`,
+      availability: AVAILABILITY, min_handling_time: LEAD_DAYS.min, max_handling_time: LEAD_DAYS.max, condition: '', brand: BRAND, gtin: '', mpn: '', identifier_exists: '', // availability / brand only when passed explicitly; handling time = agreed 3-35 working days
+      google_product_category: 'Home & Garden > Decor > Mirrors', product_type: `Дзеркала > ${hasLedLight(m) ? 'LED-дзеркала' : 'Дзеркала без підсвітки'} > ${m.frame === 'Металева' ? 'У металевій рамі' : 'Безрамні'}`,
       size: `${s.w}x${s.h} mm`, custom_label_0: 'made_to_order'
     });
   }
@@ -46,6 +55,7 @@ const empty = (c) => rows.filter((r) => !r[c]).length;
 console.log(`DRAFT feed: ${rows.length} items from ${pub.models.length} models (${(rows.length / pub.models.length).toFixed(1)} per model) -> worker/private/merchant-feed.draft.tsv (local, gitignored)`);
 console.log(`price check vs decoded Worker secret: ${mismatch === 0 ? 'identical for every item' : mismatch + ' MISMATCHES'}`);
 console.log('items without image_link:', empty('image_link'), '| with additional images:', rows.length - rows.filter((r) => !r.additional_image_link).length);
+console.log('NOT in the feed (not agreed): shipping price / service, return policy (account level), GTIN/MPN. Handling time filled:', LEAD_DAYS.min + '-' + LEAD_DAYS.max, 'working days');
 console.log('MISSING (owner decisions, left empty on purpose): availability', empty('availability'), '| condition', empty('condition'), '| brand', empty('brand'), '| gtin', empty('gtin'), '| mpn', empty('mpn'), '| identifier_exists', empty('identifier_exists'));
 console.log('price range:', Math.min(...rows.map((r) => parseInt(r.price))), '-', Math.max(...rows.map((r) => parseInt(r.price))), 'UAH (retail)');
 if (mismatch) process.exit(1);

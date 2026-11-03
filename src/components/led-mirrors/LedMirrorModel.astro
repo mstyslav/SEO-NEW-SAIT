@@ -15,6 +15,9 @@ import { shopPath, ledModelPath, SHOP_STR, LED_PRODUCT_TYPE, PRODUCT_TYPES } fro
 import { buildProducts, cardData } from '../../lib/shop-catalog.mjs';
 import { modelFaq } from '../../lib/shop-faq.mjs';
 import { modelContent } from '../../lib/shop-content.mjs';
+import { terms } from '../../lib/shop-terms.mjs';
+import { hasLedLight } from '../../lib/shop-catalog.mjs';
+import { isNoneOption } from '../../lib/cart-describe.mjs';
 import seo from '../../data/led-mirrors/seo.json';
 import '../../styles/category-pages.css';
 import '../../styles/profile-systems.css';
@@ -28,21 +31,21 @@ const P = ru ? {
   choose: 'Выберите комплектацию', size: 'Размер, мм', custom: 'Свой размер', customHint: (L: any) => `Ширина ${L.width[0]}–${L.width[1]} мм, высота ${L.height[0]}–${L.height[1]} мм, целые числа`,
   width: 'Ширина', height: 'Высота', basics: 'Основные параметры', extrasT: 'Дополнительные возможности', extras: 'Дополнительные возможности', qty: 'Количество', price: 'Цена комплектации', calculating: 'Считаем цену…',
   retry: 'Повторить', breakdown: 'Состав цены', code: 'Код товара', buyNow: 'Заказать сейчас', add: 'Добавить в корзину', added: 'Добавлено в корзину.', openCart: 'Открыть корзину →',
-  specsH: 'Технические характеристики', funcH: 'Доступные функции', descH: 'Описание', delivH: 'Доставка и оплата', waitPrice: 'Покупка станет доступна после подтверждения цены.',
+  specsH: 'Технические характеристики', funcH: 'Доступные функции', descH: 'Описание', delivH: 'Доставка, оплата и сроки', waitPrice: 'Покупка станет доступна после подтверждения цены.',
   dp1: 'Доставляем по всей Украине. Условия зависят от города, габаритов и доступа к объекту; стоимость доставки называет менеджер.', dp2: 'Онлайн-оплаты на сайте нет: способ оплаты менеджер согласует после заявки (общие условия — на странице «Оплата и доставка»).', dp3: 'Монтаж не обязателен; при необходимости рассчитывается отдельно.',
-  dpLink: 'Оплата и доставка', series: 'Серия', sizes: 'Стандартные размеры', limits: 'Допустимые размеры', glass: 'Полотно', typeL: 'Тип', frameless: 'Безрамное', framed: 'В металлической раме', ledMirror: 'LED-зеркало',
+  dpLink: 'Оплата и доставка', tabsLabel: 'Информация о товаре', specsTab: 'Характеристики', reviewsH: 'Отзывы', reviewsEmpty: 'Отзывов об этой модели пока нет.', reviewsNote: 'Здесь будут отзывы покупателей именно об этой модели. Общие отзывы о компании не выдаются за отзывы о товаре.', warrantyRow: 'Гарантия', leadRow: 'Срок изготовления', optionsH: 'Доступные опции', series: 'Серия', sizes: 'Стандартные размеры', limits: 'Допустимые размеры', glass: 'Полотно', typeL: 'Тип', frameless: 'Безрамное', framed: 'В металлической раме', ledMirror: 'LED-зеркало',
   lightPhrase: (m: string, none: boolean) => (none ? 'без основной подсветки' : `основная подсветка — ${m.toLowerCase()}`), formPhrase: 'форма',
-  d1: (n: string, t: string, sh: string, li: string, mo: string) => `${n} — ${t.toLowerCase()} LED-зеркало, ${sh.toLowerCase()}, ${li}. Размещение: ${mo.toLowerCase()}.`,
+  d1: (n: string, t: string, sh: string, li: string, mo: string, led: boolean) => `${n} — ${t.toLowerCase()} ${led ? 'LED-зеркало' : 'зеркало'}, ${sh.toLowerCase()}, ${li}. Размещение: ${mo.toLowerCase()}.`,
   d2: (std: string, L: any) => `Выберите стандартный размер (${std} мм) с фиксированной ценой или укажите свой в пределах ${L.width[0]}–${L.width[1]} × ${L.height[0]}–${L.height[1]} мм. Дополнительные функции выбираются на странице, цена обновляется сразу.`
 } : {
   choose: 'Оберіть комплектацію', size: 'Розмір, мм', custom: 'Свій розмір', customHint: (L: any) => `Ширина ${L.width[0]}–${L.width[1]} мм, висота ${L.height[0]}–${L.height[1]} мм, цілі числа`,
   width: 'Ширина', height: 'Висота', basics: 'Основні параметри', extrasT: 'Додаткові можливості', extras: 'Додаткові можливості', qty: 'Кількість', price: 'Ціна комплектації', calculating: 'Рахуємо ціну…',
   retry: 'Спробувати ще', breakdown: 'Склад ціни', code: 'Код товару', buyNow: 'Купити зараз', add: 'Додати в кошик', added: 'Додано в кошик.', openCart: 'Відкрити кошик →',
-  specsH: 'Технічні характеристики', funcH: 'Доступні функції', descH: 'Опис', delivH: 'Доставка та оплата', waitPrice: 'Покупка стане доступна після підтвердження ціни.',
+  specsH: 'Технічні характеристики', funcH: 'Доступні функції', descH: 'Опис', delivH: 'Доставка, оплата та строки', waitPrice: 'Покупка стане доступна після підтвердження ціни.',
   dp1: 'Доставляємо по всій Україні. Умови залежать від міста, габаритів і доступу до об’єкта; вартість доставки називає менеджер.', dp2: 'Онлайн-оплати на сайті немає: спосіб оплати менеджер погоджує після заявки (загальні умови — на сторінці «Оплата та доставка»).', dp3: 'Монтаж не обов’язковий; за потреби розраховується окремо.',
-  dpLink: 'Оплата та доставка', series: 'Серія', sizes: 'Стандартні розміри', limits: 'Допустимі розміри', glass: 'Полотно', typeL: 'Тип', frameless: 'Безрамне', framed: 'У металевій рамі', ledMirror: 'LED-дзеркало',
+  dpLink: 'Оплата та доставка', tabsLabel: 'Інформація про товар', specsTab: 'Характеристики', reviewsH: 'Відгуки', reviewsEmpty: 'Відгуків про цю модель поки немає.', reviewsNote: 'Тут будуть відгуки покупців саме про цю модель. Загальні відгуки про компанію не видаються за відгуки про товар.', warrantyRow: 'Гарантія', leadRow: 'Строк виготовлення', optionsH: 'Доступні опції', series: 'Серія', sizes: 'Стандартні розміри', limits: 'Допустимі розміри', glass: 'Полотно', typeL: 'Тип', frameless: 'Безрамне', framed: 'У металевій рамі', ledMirror: 'LED-дзеркало',
   lightPhrase: (m: string, none: boolean) => (none ? 'без основної підсвітки' : `основна підсвітка — ${m.toLowerCase()}`), formPhrase: 'форма',
-  d1: (n: string, t: string, sh: string, li: string, mo: string) => `${n} — ${t.toLowerCase()} LED-дзеркало, ${sh.toLowerCase()}, ${li}. Розміщення: ${mo.toLowerCase()}.`,
+  d1: (n: string, t: string, sh: string, li: string, mo: string, led: boolean) => `${n} — ${t.toLowerCase()} ${led ? 'LED-дзеркало' : 'дзеркало'}, ${sh.toLowerCase()}, ${li}. Розміщення: ${mo.toLowerCase()}.`,
   d2: (std: string, L: any) => `Оберіть стандартний розмір (${std} мм) із фіксованою ціною або вкажіть свій у межах ${L.width[0]}–${L.width[1]} × ${L.height[0]}–${L.height[1]} мм. Додаткові функції обираються на сторінці, ціна оновлюється одразу.`
 };
 const slug = model.slug;
@@ -62,10 +65,11 @@ const title = modelTitle(locale, model.name_short);
 const code = `SG-LED-${slug.toUpperCase()}`;
 const typeLabel = model.frame === 'Металева' ? P.framed : P.frameless;
 const noLight = model.main_light === 'Без основної підсвітки';
-const shortDesc = P.d1(title, typeLabel, attr(locale, model.shape), P.lightPhrase(attr(locale, model.main_light), noLight), attr(locale, model.mounting));
-const content = modelContent(locale, model, pub.groups);
-const longDesc = [content.intro, content.config];
+const shortDesc = P.d1(title, typeLabel, attr(locale, model.shape), P.lightPhrase(attr(locale, model.main_light), noLight), attr(locale, model.mounting), hasLedLight(model));
 const meta = (seo as Record<string, any>)[slug];
+const content = modelContent(locale, model, pub.groups, meta?.queries?.[ru ? 'ru' : 'uk']);
+const longDesc = [content.intro, content.purpose, content.config];
+const TM = terms(locale);
 const pageTitle = meta?.title[ru ? 'ru' : 'uk'] ?? `${title} — ${ru ? 'цена по размеру и опциям' : 'ціна за розміром і опціями'}`;
 const pageDesc = meta?.description[ru ? 'ru' : 'uk'] ?? `${title}: ${caption(locale, model)}.`;
 const h1Text = meta?.h1[ru ? 'ru' : 'uk'] ?? title;
@@ -74,6 +78,7 @@ const specRows: [string, string][] = [
   [P.series, model.series], [P.sizes, model.standard_sizes.map((s: any) => `${s.w}×${s.h}`).join(', ')], [P.limits, `${L.width[0]}–${L.width[1]} × ${L.height[0]}–${L.height[1]} ${ru ? 'мм' : 'мм'}`]
 ];
 const thick = groups.find((g: any) => g.key === 'thickness');
+specRows.push([P.warrantyRow, terms(locale).warrantyShort], [P.leadRow, terms(locale).leadShort]);
 if (thick) specRows.push([P.glass, thick.options.map((o: string) => optionLabel(locale, o)).join('; ')]);
 const faq = modelFaq(locale, model, pub.groups) as [string, string][];
 const origin = (Astro.site ?? new URL(Astro.url.origin)).origin;
@@ -85,7 +90,7 @@ const related = all.filter((p: any) => p.slug !== slug).map((p: any) => ({ p, sc
 // Product structured data mirrors the visible page. No brand (private-label right not confirmed), no availability, rating or review (none shown).
 const productLd = {
   '@context': 'https://schema.org', '@type': 'Product', '@id': `${abs(ledModelPath(locale, slug))}#product`,
-  name: title, description: `${shortDesc} ${longDesc.join(' ')}`, url: abs(ledModelPath(locale, slug)), sku: code,
+  name: title, description: pageDesc, url: abs(ledModelPath(locale, slug)), sku: code,
   ...(count > 0 ? { image: gallery.map((n) => abs(img(n, 900))) } : {}),
   offers: { '@type': 'Offer', url: abs(ledModelPath(locale, slug)), priceCurrency: 'UAH', price: model.default_uah }
 };
@@ -219,19 +224,34 @@ const cfg = {
     </section>
 
     <section class="category-section pp__below">
-      <div class="pp-sections">
-        <section class="pp-sec" aria-labelledby="pp-desc"><h2 id="pp-desc">{P.descH}</h2>{longDesc.map((t) => <p>{t}</p>)}<ul class="pp-flist pp-features">{content.features.map((f: string) => <li>{f}</li>)}</ul></section>
-        <section class="pp-sec" aria-labelledby="pp-spec"><h2 id="pp-spec">{P.specsH}</h2>
+      <div class="pp-tabs" data-pp-tabs>
+        <div class="pp-tabs__list" role="tablist" aria-label={P.tabsLabel}>
+          <button type="button" role="tab" id="pp-tab-desc" aria-controls="pp-panel-desc" aria-selected="true" class="pp-tab">{P.descH}</button>
+          <button type="button" role="tab" id="pp-tab-spec" aria-controls="pp-panel-spec" aria-selected="false" tabindex="-1" class="pp-tab">{P.specsTab}</button>
+          <button type="button" role="tab" id="pp-tab-reviews" aria-controls="pp-panel-reviews" aria-selected="false" tabindex="-1" class="pp-tab">{P.reviewsH}</button>
+        </div>
+        <section class="pp-panel" role="tabpanel" id="pp-panel-desc" aria-labelledby="pp-tab-desc">
+          <h2 id="pp-desc">{P.descH}</h2>
+          {longDesc.map((t) => <p>{t}</p>)}
+          <ul class="pp-flist pp-features">{content.features.map((f: string) => <li>{f}</li>)}</ul>
+        </section>
+        <section class="pp-panel" role="tabpanel" id="pp-panel-spec" aria-labelledby="pp-tab-spec">
+          <h2 id="pp-spec">{P.specsTab}</h2>
           <dl class="pp-table">{specRows.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}</dl>
+          <h3 id="pp-func">{P.optionsH}</h3>
+          <ul class="pp-flist">{groups.filter((g: any) => g.key !== 'thickness' && g.options.some((o: string) => !isNoneOption(o))).map((g: any) => (<li><b>{g.label}:</b> {g.options.filter((o: string) => !isNoneOption(o)).map((o: string) => optionLabel(locale, o)).join('; ')}</li>))}</ul>
         </section>
-        <section class="pp-sec" aria-labelledby="pp-func"><h2 id="pp-func">{P.funcH}</h2>
-          <ul class="pp-flist">{groups.filter((g: any) => g.key !== 'thickness').map((g: any) => (<li><b>{g.label}:</b> {g.options.map((o: string) => optionLabel(locale, o)).join('; ')}</li>))}</ul>
-        </section>
-        <section class="pp-sec" aria-labelledby="pp-deliv"><h2 id="pp-deliv">{P.delivH}</h2>
-          <ul class="pp-dlist"><li>{P.dp1}</li><li>{P.dp2}</li><li>{P.dp3}</li><li>{SS.warrantyText}</li></ul>
-          <p><a href={`${ru ? '/ru' : ''}/delivery-payment/`}>{P.dpLink}</a></p>
+        <section class="pp-panel" role="tabpanel" id="pp-panel-reviews" aria-labelledby="pp-tab-reviews">
+          <h2 id="pp-reviews">{P.reviewsH}</h2>
+          <div class="pp-reviews-empty"><b>{P.reviewsEmpty}</b><p>{P.reviewsNote}</p></div>
         </section>
       </div>
+
+      <section class="pp-sec pp-terms" aria-labelledby="pp-deliv"><h2 id="pp-deliv">{P.delivH}</h2>
+        <ul class="pp-dlist"><li>{TM.geo} {TM.delivery}</li><li>{TM.payment}</li><li>{TM.lead}</li><li>{TM.warranty}</li><li>{P.dp3}</li></ul>
+        <p class="pp-flow">{TM.flow}</p>
+        <p><a href={`${ru ? '/ru' : ''}/delivery-payment/`}>{P.dpLink}</a></p>
+      </section>
 
       <ShopFaq locale={locale} items={faq} id="model-faq" />
 
@@ -377,5 +397,29 @@ const cfg = {
     });
     buy.addEventListener('click', () => { if (toCart()) location.href = `${cfg.cartHref}?checkout=1`; });
     update(); // confirm the preselected configuration with the server; the buttons stay disabled until it answers
+  }
+</script>
+
+<script>
+  // Tabs (Опис | Характеристики | Відгуки). Without JS all three panels stay visible one under another.
+  const tabs = document.querySelector<HTMLElement>('[data-pp-tabs]');
+  if (tabs) {
+    const btns = [...tabs.querySelectorAll<HTMLButtonElement>('[role=tab]')];
+    const panels = btns.map((b) => document.getElementById(b.getAttribute('aria-controls')!)!);
+    const show = (i: number, focus = false) => {
+      btns.forEach((b, n) => { b.setAttribute('aria-selected', String(n === i)); b.tabIndex = n === i ? 0 : -1; panels[n].hidden = n !== i; });
+      if (focus) btns[i].focus();
+    };
+    btns.forEach((b, i) => {
+      b.addEventListener('click', () => show(i));
+      b.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); show((i + 1) % btns.length, true); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); show((i + btns.length - 1) % btns.length, true); }
+        if (e.key === 'Home') { e.preventDefault(); show(0, true); }
+        if (e.key === 'End') { e.preventDefault(); show(btns.length - 1, true); }
+      });
+    });
+    tabs.dataset.enhanced = '';
+    show(0);
   }
 </script>

@@ -6,6 +6,8 @@ import path from 'node:path';
 const dist = path.resolve('dist');
 const ORIGIN = 'https://space-glass.com.ua';
 const pub = JSON.parse(fs.readFileSync('src/data/led-mirrors/public.json', 'utf8'));
+const seoData = JSON.parse(fs.readFileSync('src/data/led-mirrors/seo.json', 'utf8'));
+const descTexts = new Map();
 let errors = 0;
 const fail = (m) => { errors++; console.error('FAIL', m); };
 const read = (p) => { const f = path.join(dist, p, 'index.html'); return fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null; };
@@ -103,8 +105,29 @@ for (const [loc, pre] of locales) {
   for (const m of pub.models) {
     const url = `${pre}/shop/mirrors/led/${m.slug}/`, html = read(url); if (!html) continue;
     const h1s = (html.match(/<h1[\s>]/g) ?? []).length; if (h1s !== 1) fail(`${url}: ${h1s} h1`);
-    const order = [...html.matchAll(/<h2[^>]*id="(pp-config-title|pp-desc|pp-spec|pp-func|pp-deliv|model-faq-title|lm-related-title)"/g)].map((x) => x[1]).join();
-    if (order !== 'pp-config-title,pp-desc,pp-spec,pp-func,pp-deliv,lm-related-title') fail(`${url}: section order ${order}`);
+    const order = [...html.matchAll(/<h2[^>]*id="(pp-config-title|pp-desc|pp-spec|pp-reviews|pp-deliv|model-faq-title|lm-related-title)"/g)].map((x) => x[1]).join();
+    if (order !== 'pp-config-title,pp-desc,pp-spec,pp-reviews,pp-deliv,lm-related-title') fail(`${url}: section order ${order}`);
+    // tabs: Опис | Характеристики | Відгуки; reviews = honest empty state, no rating data
+    const tabIds = [...html.matchAll(/role="tab" id="(pp-tab-[a-z]+)"/g)].map((x) => x[1]).join();
+    if (tabIds !== 'pp-tab-desc,pp-tab-spec,pp-tab-reviews') fail(`${url}: tabs ${tabIds}`);
+    const reviewsPanel = (html.match(/id="pp-panel-reviews"[\s\S]*?<\/section>/) ?? [''])[0];
+    if (!/pp-reviews-empty/.test(reviewsPanel) || /★|aggregateRating|ratingValue|itemprop="review/.test(html)) fail(`${url}: reviews panel must be an empty state without ratings`);
+    // agreed sale terms are shown; unagreed ones (returns, delivery price, pickup city) are not stated
+    const text = html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<[^>]+>/g, ' ');
+    if (!(loc === 'ru' ? /12 месяцев/ : /12 місяців/).test(text) || !/3 до 35 рабочих дней|3 до 35 робочих днів/.test(text) || !/100% (предоплата|передоплата)/.test(text) || !/(Новой почтой|Новою поштою)/.test(text)) fail(`${url}: agreed sale terms missing`);
+    if (/повернен|возврат|Київ.{0,20}самовивіз|самовывоз.{0,20}Киев/i.test(text.replace(/Опрацювання|повернення до/g, ''))) fail(`${url}: states a return rule / pickup city that is not agreed`);
+    // natural search phrase from the research is in the description text; photo alt carries the model name
+    const q = seoData[m.slug]?.queries?.[loc === 'ru' ? 'ru' : 'uk']?.primary;
+    const descText = ((html.match(/id="pp-panel-desc"[\s\S]*?<\/section>/) ?? [''])[0]).replace(/<[^>]+>/g, ' ');
+    if (!q || !descText.toLowerCase().includes(q.toLowerCase())) fail(`${url}: primary query «${q}» missing in the description`);
+    const mainAlt = html.match(/class="pp-gallery__main"[^>]*alt="([^"]*)"/)?.[1] ?? '';
+    if (!mainAlt.includes(m.name_short)) fail(`${url}: main photo alt «${mainAlt}»`);
+    // a model without any LED light is never called an LED mirror in its own texts (H1, lead, description, schema, alt)
+    if (!(m.main_light !== 'Без основної підсвітки' || m.option_groups.some((g) => g.key === 'backlight'))) {
+      const own = [html.match(/<h1[^>]*>([^<]*)/)?.[1], descText, ld(html).find((n) => n['@type'] === 'Product')?.description, mainAlt, html.match(/<title>([^<]*)/)?.[1]].join(' ');
+      if (/LED/.test(own)) fail(`${url}: model without LED light is called LED: ${own.match(/.{0,30}LED.{0,20}/)?.[0]}`);
+    }
+    descTexts.set(`${loc}:${m.slug}`, descText.replace(/\s+/g, ' ').trim());
     const cfgHtml = (html.match(/data-lm-calc[\s\S]*?<\/section>/) ?? [''])[0];
     if (/<select/.test(cfgHtml)) fail(`${url}: dropdown (select) in the selection block`);
     if (!/data-lm-buy[^>]*disabled/.test(html) || !/data-lm-add[^>]*disabled/.test(html)) fail(`${url}: buy buttons must start disabled until the server confirms the price`);
@@ -115,6 +138,8 @@ for (const [loc, pre] of locales) {
     if (pr && ('availability' in pr.offers || 'itemCondition' in pr.offers)) fail(`${url}: Offer claims availability / condition`);
   }
 }
+// the description texts of the 48 models are all different (UA and RU)
+for (const l of ['uk', 'ru']) { const vals = [...descTexts].filter(([k]) => k.startsWith(l + ':')).map(([, v]) => v); if (vals.length && new Set(vals).size !== vals.length) fail(`${l}: identical description texts among models`); }
 // unique titles / descriptions
 for (const [, pre] of locales) {
   const titles = new Map(), descs = new Map();

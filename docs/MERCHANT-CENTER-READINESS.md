@@ -89,3 +89,20 @@ assumed either way.
   secret-backed prices, cached for a short time, so prices can never drift from the site. The local draft generator proves the format and parity.
 - Publish only after sections 5 and 6 are answered. Until then the route must not exist.
 - Merchant Center fetch: scheduled URL fetch of the TSV (HTTPS), UAH, language uk, country UA.
+
+## Update TASK 110 — agreed sale terms and current Merchant status: PARTIAL (do not connect yet)
+Agreed with the owner (single source in code: `src/lib/shop-terms.mjs`; shown on every model page, in the FAQ and as handling time in the draft feed):
+all of Ukraine; Nova Poshta or pickup (pickup city and delivery cost **not agreed**, the pages say they are agreed with the manager); 100% prepayment after the manager approves the order, no online payment; made to order in 3–35 working days after approval AND payment; warranty 12 months; shop brand Space Glass; all 48 models (also those without LED).
+
+| Merchant item | State |
+|---|---|
+| id, title, link, image_link, price (UAH, retail, per standard size), item_group_id | ready (185 items; price identical to the server price and the page) |
+| description | unique factual text per model (same text as the model page) |
+| min/max handling time | filled: 3 / 35 (working days) |
+| product_type | LED / without light × framed / frameless (4 + 20 models without a main light are not called LED where they have no LED light) |
+| brand | empty by default; `--brand="Space Glass"` fills it — only after the owner confirms the marking / commercial documents |
+| availability | empty by default; `--availability=...` — the value for made-to-order goods must be confirmed against Merchant policy when the account is created |
+| shipping (price/service) | **missing** — delivery cost not agreed |
+| return policy (account level) | **missing** — return rules not agreed |
+| GTIN / MPN | not available (identifier_exists stays empty) |
+Full readiness is NOT claimed until shipping, returns, brand marking and availability are agreed. Nothing was created or sent to Merchant Center.

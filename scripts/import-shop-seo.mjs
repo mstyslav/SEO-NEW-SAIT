@@ -16,7 +16,9 @@ const ruOpt = { 'підігрів': 'подогрев', 'косметична л
 for (const m of pub.models) {
   const r = rows.find((x) => x.slug === m.slug);
   if (!r) { problems.push(`${m.slug}: no row`); continue; }
-  const rec = { title: { uk: r.seo_title_uk, ru: r.seo_title_ru }, description: { uk: r.seo_description_uk, ru: r.seo_description_ru }, h1: { uk: r.h1_uk, ru: r.h1_ru } };
+  const rec = { title: { uk: r.seo_title_uk, ru: r.seo_title_ru }, description: { uk: r.seo_description_uk, ru: r.seo_description_ru }, h1: { uk: r.h1_uk, ru: r.h1_ru },
+    // search phrases of the research (autocomplete, NOT demand statistics); used once, naturally, in the model text
+    queries: { uk: { primary: r.primary_keyword_uk.trim(), secondary: r.secondary_keywords_uk.split('|').map((x) => x.trim()).filter(Boolean) }, ru: { primary: r.primary_keyword_ru.trim(), secondary: r.secondary_keywords_ru.split('|').map((x) => x.trim()).filter(Boolean) } } };
   for (const [k, v] of Object.entries(rec)) for (const l of ['uk', 'ru']) if (!v[l]) problems.push(`${m.slug}: empty ${k} ${l}`);
   const all = JSON.stringify(rec);
   if (bad.test(all)) problems.push(`${m.slug}: unconfirmed claim or price word`);

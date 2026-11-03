@@ -131,7 +131,7 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
     </article>
   </template>
 
-  <Footer />
+  <Footer hideBenefits />
   <script type="application/json" id="cart-cfg" set:html={JSON.stringify(clientCfg)} />
   <script type="application/json" id="cart-fn" set:html={JSON.stringify({ doneP: S.doneP('{id}'), unpricedNote: S.unpricedNote(0).replace('0', '{n}') })} />
 
