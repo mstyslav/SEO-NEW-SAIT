@@ -23,6 +23,7 @@ import { facadeCategoriesRu } from '../data/ru/facade-catalog.ru';
 import { businessPagesRu } from '../data/ru/business-pages.ru';
 import { hasProjectRu } from '../data/ru/projects.ru';
 import { INTL_ROUTES, intlLocales } from '../i18n/intl-routes';
+import ledMirrors from '../data/led-mirrors/public.json';
 const pages = import.meta.glob('../pages/**/*.astro');
 // uk/* pages are non-canonical duplicates of the unprefixed root pages (their own
 // canonical tag points at the unprefixed URL), so they must not be submitted separately.
@@ -94,8 +95,13 @@ export async function sitemapPaths(): Promise<string[]> {
   // EN/DE/ES pages — exactly the entries of src/i18n/intl-routes.ts (each one is a real 200 page).
   const intlUrls = INTL_ROUTES.flatMap((route) => intlLocales.flatMap((locale) => (route[locale] ? [route[locale] as string] : [])));
 
+  // Shop product pages (dynamic route, UA + RU): indexable since TASK 113. The shop catalog pages (/shop/, /shop/mirrors/, /shop/mirrors/led/),
+  // the preview pages and the cart stay noindex and are NOT listed.
+  const shopProductUrls = ledMirrors.models.flatMap((m: { slug: string }) => [`/shop/mirrors/led/${m.slug}/`, `/ru/shop/mirrors/led/${m.slug}/`]);
+
   const urls = [...new Set([
     ...fileUrls,
+    ...shopProductUrls,
     ...intlUrls,
     ...(impressumComplete ? ['/de/impressum/'] : []),
     ...projectUrls,
