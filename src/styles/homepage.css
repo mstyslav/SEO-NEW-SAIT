@@ -63,7 +63,9 @@
 
 .sg-product-card__media{position:relative;aspect-ratio:1.15/1;overflow:hidden;background:#eee}
 
-.sg-product-card__media img{width:100%;height:100%;object-fit:cover}
+/* .sg-products prefix: global.css (loaded after this file) sets `height:auto` on
+   .sg-product-card__media img at equal specificity and was winning, leaving grey gaps. */
+.sg-products .sg-product-card__media img{width:100%;height:100%;object-fit:cover}
 
 .sg-product-card__body{display:flex;flex:1;flex-direction:column;padding:14px}
 
