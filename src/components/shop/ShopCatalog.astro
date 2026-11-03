@@ -22,12 +22,26 @@ const strings = {
   tabAll: S.tabAll, soon: S.soonTab, filtersTitle: S.filtersTitle, filtersBtn: S.filtersBtn, reset: S.reset, close: S.close, priceFrom: S.priceFrom, priceTo: S.priceTo,
   priceHint: S.priceHint, sizeHint: S.sizeHint, applyTpl: S.apply(0).replace('0', '{n}'), foundTpl: S.found(0).replace('0', '{n}'), activeTpl: S.active(0).replace('0', '{n}'), sizeHintTpl: S.anySize('{lo}', '{hi}')
 };
-const data = { locale, initialCat, strings, schema, products: clientProducts(products) };
+const data = { locale, initialCat, strings, schema, products: clientProducts(products), categoryCopy: null };
 const faqItems = ({ shop: shopFaq, mirrors: mirrorsFaq, led: ledFaq } as Record<string, any>)[faqKind](locale, pub);
 const catalogLabel = (key: string) => (key === 'all' ? S.tabAll : schema.categories.find((c: any) => c.key === key)?.label);
+const categoryCopy = locale === 'ru' ? {
+  all: { h1: 'Каталог моделей стеклянных конструкций', desc: 'Каталог Space Glass объединяет зеркала, душевые конструкции и стеклянные перегородки. Сейчас для заказа доступны модели зеркал с выбором размера и комплектации; остальные категории пополняются.' },
+  mirrors: { h1: 'Каталог моделей зеркал', desc: 'Зеркала с LED-подсветкой и без неё, в металлической раме и без рамы. Выберите форму, размер и дополнительные функции — изготовим под заказ.' },
+  showers: { h1: 'Каталог душевых конструкций', desc: 'Душевые перегородки, двери и кабины из стекла. Товары этой категории скоро появятся в магазине; индивидуальный расчёт доступен по запросу.' },
+  partitions: { h1: 'Каталог стеклянных перегородок', desc: 'Стеклянные перегородки для дома, офиса и коммерческих помещений. Категория магазина готовится; конструкции рассчитываем индивидуально.' }
+} : {
+  all: { h1: 'Каталог моделей скляних конструкцій', desc: 'Каталог Space Glass об’єднує дзеркала, душові конструкції та скляні перегородки. Зараз для замовлення доступні моделі дзеркал із вибором розміру й комплектації; інші категорії поступово наповнюємо.' },
+  mirrors: { h1: 'Каталог моделей дзеркал', desc: 'Дзеркала з LED-підсвіткою та без неї, у металевій рамі й без рами. Оберіть форму, розмір і додаткові функції — виготовимо під замовлення.' },
+  showers: { h1: 'Каталог душових конструкцій', desc: 'Душові перегородки, двері та кабіни зі скла. Товари цієї категорії незабаром з’являться в магазині; індивідуальний розрахунок доступний за запитом.' },
+  partitions: { h1: 'Каталог скляних перегородок', desc: 'Скляні перегородки для дому, офісу й комерційних приміщень. Категорія магазину готується; конструкції розраховуємо індивідуально.' }
+};
+data.categoryCopy = categoryCopy;
+const initialCopy = faqKind === 'led' ? { h1, desc: locale === 'ru' ? 'Модели LED-зеркал с выбором формы, размера и подсветки. Изготавливаем под заказ.' : 'Моделі LED-дзеркал із вибором форми, розміру й підсвітки. Виготовляємо під замовлення.' } : categoryCopy[initialCat as keyof typeof categoryCopy] ?? categoryCopy.all;
 ---
 <ShopPage locale={locale} title={title} description={description} crumbs={crumbs} indexable>
-  <div class="category-heading"><div><p class="eyebrow">{S.shop}</p><h1>{h1}</h1></div><p>{S.subtitle}</p></div>
+  <div class="category-heading"><div><p class="eyebrow">{S.shop}</p><h1 data-sf-page-title>{initialCopy.h1}</h1></div><p data-sf-location>{locale === 'ru' ? 'Изготовление и доставка: Киев, Львов, Одесса, Днепр, Харьков и вся Украина.' : 'Виготовлення та доставка: Київ, Львів, Одеса, Дніпро, Харків та вся Україна.'}</p></div>
+  <p class="sf-intro" data-sf-page-desc>{initialCopy.desc}</p>
   {intro && <p class="sf-intro">{intro.text} <a href={intro.href}>{intro.label}</a>.</p>}
 
   <div class="sf-tabs" role="group" aria-label={S.catalogNav} data-sf-tabs>
@@ -90,7 +104,7 @@ const catalogLabel = (key: string) => (key === 'all' ? S.tabAll : schema.categor
   import { emptyState, filtersFor, filterProducts, sortProducts, facetCount, switchCategory, activeFilterCount } from '../../lib/shop-filter.mjs';
 
   const data = JSON.parse(document.getElementById('sf-data')!.textContent!);
-  const { schema, products, strings: S, locale } = data;
+  const { schema, products, strings: S, locale, categoryCopy } = data;
   const $ = <T extends HTMLElement>(s: string) => document.querySelector<T>(s)!;
   const grid = $('[data-sf-grid]'), body = $('[data-sf-body]'), countEl = $('[data-sf-count]'), empty = $('[data-sf-empty]'), heading = $('[data-sf-heading]');
   const panel = $('[data-sf-panel]'), backdrop = $('[data-sf-backdrop]'), openBtn = $<HTMLButtonElement>('[data-sf-open]'), btnLabel = $('[data-sf-btn-label]');
@@ -165,6 +179,11 @@ const catalogLabel = (key: string) => (key === 'all' ? S.tabAll : schema.categor
     tabs.forEach((t) => t.setAttribute('aria-pressed', String(t.dataset.cat === state.cat)));
     const label = state.cat === 'all' ? S.tabAll : schema.categories.find((c: any) => c.key === state.cat)?.label;
     heading.textContent = label;
+    const copy = categoryCopy[state.cat] ?? categoryCopy.all;
+    const pageTitle = document.querySelector('[data-sf-page-title]');
+    const pageDesc = document.querySelector('[data-sf-page-desc]');
+    if (pageTitle && copy) pageTitle.textContent = data.initialCat === 'mirrors' && state.cat === 'mirrors' && location.pathname.includes('/mirrors/led/') ? (locale === 'ru' ? 'Каталог моделей LED-зеркал' : 'Каталог моделей LED-дзеркал') : copy.h1;
+    if (pageDesc && copy) pageDesc.textContent = copy.desc;
   }
 
   function setCategory(cat: string) {
