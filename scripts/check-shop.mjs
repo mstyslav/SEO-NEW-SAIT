@@ -134,7 +134,7 @@ for (const c of ['showers', 'partitions']) for (const pre of ['', '/ru']) { cons
 const rules = fs.readFileSync('public/_redirects', 'utf8').split('\n').filter((l) => l && !l.startsWith('#')).map((l) => l.trim().split(/\s+/)).filter((r) => r.length >= 3);
 const resolve = (p) => { for (const [from, to, code] of rules) { if (from.endsWith('/*') ? p.startsWith(from.slice(0, -1)) : p === from) return [to.replace(':splat', from.endsWith('/*') ? p.slice(from.length - 1) : ''), code]; } return null; };
 for (const pre of ['', '/ru']) {
-  const olds = [`${pre}/dzerkala/katalog/`, `${pre}/dzerkala/katalog`, ...pub.models.map((m) => `${pre}/dzerkala/katalog/${m.slug}/`)];
+  const olds = [`${pre}/dzerkala/katalog/`, `${pre}/dzerkala/katalog`, ...pub.models.flatMap((m) => [`${pre}/dzerkala/katalog/${m.slug}/`, `${pre}/dzerkala/katalog/${m.slug}`])];
   for (const o of olds) {
     const r = resolve(o);
     if (!r || r[1] !== '301') { fail(`no 301 for ${o}`); continue; }
