@@ -42,6 +42,14 @@ import '../../styles/project-print.css';
   </main>
 
   <script>
+    import pub from '../../data/led-mirrors/public.json';
+    import photos from '../../data/led-mirrors/photos.json';
+    import { safeImagePath, ledLinks } from '../../lib/cart-safe.mjs';
+
+    // localStorage is user-controlled: every stored text is escaped, the picture of a LED mirror comes from the public model data
+    const esc = (v) => String(v ?? '').replace(/[&<>'"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[c]));
+    const models = new Map(pub.models.map((m) => [m.id, m]));
+    const photoOf = (item) => (item.kind === 'led-mirror' ? ledLinks(item, models, photos).image : (safeImagePath(item.image) ?? '/images/s20/product-main.webp'));
     const money = (value) => `${Math.round(value).toLocaleString('uk-UA')} грн`;
     let project = { items: [], note: '' };
 
@@ -59,19 +67,21 @@ import '../../styles/project-print.css';
     document.querySelector('[data-print-total]').textContent = money(total);
     document.querySelector('[data-print-note]').textContent = project.note || '—';
 
-    document.querySelector('[data-print-items]').innerHTML = items.map((item, index) => `
+    document.querySelector('[data-print-items]').innerHTML = items.map((item, index) => {
+      const photo = photoOf(item);
+      return `
       <article class="print-project-item">
-        <img src="${item.image || '/images/s20/product-main.webp'}" alt="" />
+        ${photo ? `<img src="${esc(photo)}" alt="" />` : '<span></span>'}
         <div>
-          <small>${item.category || 'Space Glass'}</small>
-          <h2>${index + 1}. ${item.name || 'Конструкція'}</h2>
-          <p>${item.configuration || 'Індивідуальна конфігурація'}</p>
+          <small>${esc(item.category || 'Space Glass')}</small>
+          <h2>${index + 1}. ${esc(item.name || 'Конструкція')}</h2>
+          <p>${esc(item.configuration || 'Індивідуальна конфігурація')}</p>
           <dl>
-            <div><dt>Кількість</dt><dd>${item.quantity || 1}</dd></div>
+            <div><dt>Кількість</dt><dd>${esc(item.quantity || 1)}</dd></div>
             <div><dt>Попередня ціна</dt><dd>${money(Number(item.price || 0) * Number(item.quantity || 1))}</dd></div>
           </dl>
         </div>
-      </article>
-    `).join('');
+      </article>`;
+    }).join('');
   </script>
 </BaseLayout>

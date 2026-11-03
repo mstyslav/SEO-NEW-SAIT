@@ -138,7 +138,9 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
   <script>
     import { readProject, writeProject, newOrderId, type CartItem } from '../../scripts/sg-cart';
     import pub from '../../data/led-mirrors/public.json';
+    import photos from '../../data/led-mirrors/photos.json';
     import { optionLabel, groupLabel } from '../../lib/led-mirror-i18n.mjs';
+    import { safeInternalPath, safeImagePath, ledLinks, priceKey, applyPriceUpdates } from '../../lib/cart-safe.mjs';
 
     const cfg = JSON.parse(document.getElementById('cart-cfg')!.textContent!);
     const fn = JSON.parse(document.getElementById('cart-fn')!.textContent!);
@@ -151,6 +153,11 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
     const models = new Map<number, any>(pub.models.map((m: any) => [m.id, m]));
     const labels: Record<string, string> = Object.fromEntries(pub.groups.map((g: any) => [g.key, g.label]));
     const unit = (i: CartItem) => (Number(i.price) > 0 ? Number(i.price) : null);
+    // Link and photo of a line: LED mirrors come from the public model data (by modelId), other lines are validated internal paths.
+    function resolve(i: CartItem): { url: string | null; image: string | null } {
+      if (i.kind === 'led-mirror') return ledLinks(i, models, photos as Record<string, number>, cfg.locale);
+      return { url: safeInternalPath(i.url), image: safeImagePath(i.image) ?? '/images/s20/product-main.webp' };
+    }
 
     const itemName = (i: CartItem) => (i.kind === 'led-mirror' ? `${cfg.mirror} ${(i.name || '').replace(/^(Дзеркало|Зеркало) /, '')}` : i.name || cfg.fallbackName);
     function itemConfig(i: CartItem) {
@@ -175,12 +182,13 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
       project.items.forEach((item, index) => {
         const card = (template.content.cloneNode(true) as DocumentFragment).querySelector<HTMLElement>('.project-cart-item')!;
         const img = card.querySelector('img')!;
-        img.src = item.image || '/images/s20/product-main.webp';
-        img.alt = itemName(item);
+        const res = resolve(item);
+        if (res.image) { img.src = res.image; img.alt = itemName(item); img.addEventListener('error', () => { (img.parentElement as HTMLElement).hidden = true; }, { once: true }); }
+        else (img.parentElement as HTMLElement).hidden = true; // no photo of this model: no picture, never a stand-in
         card.querySelector('small')!.textContent = item.kind === 'led-mirror' ? cfg.category : item.category || 'Space Glass';
         card.querySelector('h3')!.textContent = itemName(item);
         card.querySelector('.project-cart-item__config')!.textContent = itemConfig(item);
-        if (item.url) { const a = card.querySelector<HTMLAnchorElement>('.project-cart-item__link')!; a.hidden = false; a.href = (ru && item.kind === 'led-mirror' ? '/ru' : '') + item.url; a.textContent = cfg.openItem; }
+        if (res.url) { const a = card.querySelector<HTMLAnchorElement>('.project-cart-item__link')!; a.hidden = false; a.href = res.url; a.textContent = cfg.openItem; }
         const u = unit(item), q = Number(item.quantity) || 1;
         const strong = card.querySelector('strong')!;
         strong.textContent = u === null ? cfg.priceTbd : money(u * q);
@@ -203,22 +211,27 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
 
     /** LED mirror lines are re-priced by the server (retail only); stored prices follow. Returns true if any changed. */
     async function refreshPrices(): Promise<boolean> {
-      const p = readProject();
-      const idx = p.items.map((i, n) => (i.kind === 'led-mirror' ? n : -1)).filter((n) => n >= 0);
-      if (!idx.length) return false;
+      const sent = readProject().items.filter((i) => i.kind === 'led-mirror');
+      if (!sent.length) return false;
       try {
-        const res = await fetch('/api/led-mirror-price', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ items: idx.map((n) => ({ modelId: p.items[n].modelId, w: p.items[n].w, h: p.items[n].h, options: p.items[n].options })) }) });
+        const res = await fetch('/api/led-mirror-price', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ items: sent.map((i) => ({ modelId: i.modelId, w: i.w, h: i.h, options: i.options })) }) });
         const r = await res.json();
         if (!r.ok) return false;
-        let changed = false;
-        r.items.forEach((x: any, k: number) => { const it = p.items[idx[k]]; if (x.ok && it.price !== x.total_uah) { it.price = x.total_uah; changed = true; } });
-        if (changed) writeProject(p);
+        // the cart may have changed while the request was running: apply the prices to the LATEST cart, line by line
+        const { project, changed } = applyPriceUpdates(readProject(), sent.map(priceKey), r.items);
+        if (changed) writeProject(project);
         return changed;
       } catch { return false; }
     }
     const showNotice = (msg: string) => { noticeEl.hidden = false; noticeEl.textContent = msg; };
 
-    $('[data-project-clear]').addEventListener('click', () => { writeProject({ items: [], note: '' }); render(); });
+    // the buyer's comment lives in the project (localStorage `note`): it survives reloads and is what /project-print/ shows;
+    // the order sends the same text (form field `comment`)
+    const noteEl = form.querySelector<HTMLTextAreaElement>('[data-project-note]')!;
+    noteEl.value = readProject().note ?? '';
+    noteEl.addEventListener('input', () => { const p = readProject(); p.note = noteEl.value; writeProject(p); });
+
+    $('[data-project-clear]').addEventListener('click', () => { writeProject({ items: [], note: '' }); noteEl.value = ''; render(); });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -235,12 +248,12 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
           method: 'POST', headers: { 'content-type': 'application/json', 'x-sg-form': '1' },
           body: JSON.stringify({
             orderId: p.orderId, locale: cfg.locale, name: fd.get('name'), phone: fd.get('phone'), comment: fd.get('comment'), website: fd.get('website'), _js: 'sg-cart',
-            items: p.items.map((i) => ({ kind: i.kind ?? 'other', modelId: i.modelId, w: i.w, h: i.h, options: i.options, name: itemName(i), configuration: itemConfig(i).replace(/\n/g, '; '), price: unit(i), quantity: i.quantity, url: i.url ? location.origin + i.url : undefined }))
+            items: p.items.map((i) => ({ kind: i.kind ?? 'other', modelId: i.modelId, w: i.w, h: i.h, options: i.options, name: itemName(i), configuration: itemConfig(i).replace(/\n/g, '; '), price: unit(i), quantity: i.quantity, url: resolve(i).url ? location.origin + resolve(i).url : undefined }))
           })
         });
         const r = await res.json().catch(() => ({}));
         if (res.ok && r.ok) {
-          writeProject({ items: [], note: '' }); // the server confirmed: only now the cart is cleared (and the order id with it)
+          noteEl.value = ''; writeProject({ items: [], note: '' }); // the server confirmed: only now the cart is cleared (and the order id with it)
           $('[data-cart-main]').hidden = true;
           $('[data-cart-done]').hidden = false;
           $('[data-cart-done-text]').textContent = fn.doneP.replace('{id}', r.order_ref || String(r.order_id || p.orderId).slice(-8).toUpperCase());

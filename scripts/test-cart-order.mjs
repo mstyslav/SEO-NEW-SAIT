@@ -105,5 +105,12 @@ await t('honeypot answers ok and delivers nothing', async () => {
   const r = await call({ ...base, orderId: 'order-cccc-0001', website: 'http://spam' });
   assert.equal(r.status, 200); assert.equal(delivered.length, n);
 });
+await t('the buyer comment reaches the CRM payload unchanged', async () => {
+  const n = delivered.length;
+  const comment = 'Звонить после 18:00. Доставка в Одессу, 3 этаж.';
+  const r = await call({ ...base, orderId: 'order-comment-0001', comment });
+  assert.equal(r.status, 200); assert.equal(delivered.length, n + 1);
+  assert.equal(delivered[delivered.length - 1].customer.comment, comment);
+});
 if (failed) { console.error(`${failed} failed`); process.exit(1); }
 console.log('all passed');
