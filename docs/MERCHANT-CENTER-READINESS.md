@@ -1,3 +1,7 @@
+## Owner confirmation 2026-11-04 — inventory model
+
+**All 48 current mirror models are manufactured to order; none should be advertised as ready stock.** Separate stocked SKUs may be added later, with independent inventory/availability tracking. The draft generator explicitly rejects `--availability=in_stock` for this current catalog. Do not equate "can be ordered" with physical stock. The Merchant Center availability value for made-to-order products and any required availability date must be verified against current Google rules before publication; the feed remains unpublished. Production handling is 15 working days standard / 35 metal-frame after confirmation and payment; shipping transit time is separate.
+
 
 ## Update 2026-11-04 — legal shop pages merged; feed still NOT live
 
