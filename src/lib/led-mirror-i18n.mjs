@@ -28,13 +28,14 @@ export const optionLabel = (locale, name) => (locale === 'ru' ? RU_OPTION[name] 
 export const groupLabel = (locale, key, ukLabel) => (locale === 'ru' ? RU_GROUP[key] : undefined) ?? ukLabel;
 export const modelTitle = (locale, name) => (locale === 'ru' ? `Зеркало ${name}` : `Дзеркало ${name}`);
 export const base = (locale) => (locale === 'ru' ? '/ru' : '');
-export const catalogPath = (locale) => `${base(locale)}/dzerkala/katalog/`;
+// the model catalog lives in the shop: /shop/mirrors/led/ (old /dzerkala/katalog/* answers 301, see public/_redirects)
+export const catalogPath = (locale) => `${base(locale)}/shop/mirrors/led/`;
 export const formatUah = (n) => `${String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} грн`;
 export const caption = (locale, m) => [attr(locale, m.shape), attr(locale, m.main_light), attr(locale, m.frame)].join(' · ');
 
 export const STR = {
   uk: {
-    catalog: 'Каталог', home: 'Головна', mirrors: 'Дзеркала', ledMirrors: 'LED-дзеркала', modelsCrumb: 'Каталог моделей',
+    catalog: 'Каталог', home: 'Головна', mirrors: 'Дзеркала', ledMirrors: 'LED-дзеркала', modelsCrumb: 'Каталог моделей', shop: 'Магазин',
     pickTitle: 'Обрати LED-дзеркало', pickLead: 'Готові моделі з підсвіткою: оберіть розмір і опції та одразу побачите ціну.', pickAll: 'Переглянути всі моделі', catalogTitle: 'Каталог LED-дзеркал', catalogH1: 'Каталог LED-дзеркал',
     catalogLead: (d) => `Ціна розраховується за розміром і опціями. Вартість — станом на ${d}, без монтажу, доставки та заміру.`,
     searchLabel: 'Пошук за назвою', searchPh: 'Наприклад, AGNES', shape: 'Форма', light: 'Підсвітка', frame: 'Рама', all: 'Усі', reset: 'Скинути фільтри',
@@ -52,7 +53,7 @@ export const STR = {
     deliveryLink: 'доставка й оплата', deliveryHref: '/delivery-payment/'
   },
   ru: {
-    catalog: 'Каталог', home: 'Главная', mirrors: 'Зеркала', ledMirrors: 'LED-зеркала', modelsCrumb: 'Каталог моделей',
+    catalog: 'Каталог', home: 'Главная', mirrors: 'Зеркала', ledMirrors: 'LED-зеркала', modelsCrumb: 'Каталог моделей', shop: 'Магазин',
     pickTitle: 'Выбрать LED-зеркало', pickLead: 'Готовые модели с подсветкой: выберите размер и опции — цена сразу на экране.', pickAll: 'Смотреть все модели', catalogTitle: 'Каталог LED-зеркал', catalogH1: 'Каталог LED-зеркал',
     catalogLead: (d) => `Цена рассчитывается по размеру и опциям. Стоимость — по состоянию на ${d}, без монтажа, доставки и замера.`,
     searchLabel: 'Поиск по названию', searchPh: 'Например, AGNES', shape: 'Форма', light: 'Подсветка', frame: 'Рама', all: 'Все', reset: 'Сбросить фильтры',

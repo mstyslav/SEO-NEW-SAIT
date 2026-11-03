@@ -164,8 +164,8 @@ export function hasLocalizedRoute(pathname: string, locale: Locale): boolean {
   const project = base.match(/^\/project\/([a-z0-9-]+)\/$/);
   if (locale === 'ru' && project) return hasProjectRu(project[1]);
 
-  // Unified cart and the LED mirror catalog exist in UA and RU only (noindex section, not in the sitemap).
-  if (locale === 'ru' && /^\/dzerkala\/katalog\/(?:[a-z0-9-]+\/)?$/.test(base)) return true;
+  // Unified cart and the shop exist in UA and RU only (noindex section, not in the sitemap).
+  if (locale === 'ru' && /^\/shop\/(?:(?:mirrors\/(?:led\/(?:[a-z0-9-]+\/)?)?|showers\/|partitions\/|preview-home-block\/)?)$/.test(base)) return true;
 
   return LOCALIZED_ROUTES[locale].has(base);
 }

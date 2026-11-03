@@ -1,3 +1,9 @@
+# LED mirror model catalog moved into the shop (never indexed, never in the sitemap; kept as 301 anyway). Single hop, no chains.
+/dzerkala/katalog /shop/mirrors/led/ 301
+/dzerkala/katalog/* /shop/mirrors/led/:splat 301
+/ru/dzerkala/katalog /ru/shop/mirrors/led/ 301
+/ru/dzerkala/katalog/* /ru/shop/mirrors/led/:splat 301
+
 # Astro.redirect(target, 301) in that file is the fallback for any path this
 # list does not cover (e.g. if a new page is added before this file is
 # regenerated) — it now also renders an instant (0s) meta-refresh, not the

@@ -7,6 +7,7 @@ import photos from '../../data/led-mirrors/photos.json';
 import pub from '../../data/led-mirrors/public.json';
 import { STR, attr, caption, formatUah, catalogPath } from '../../lib/led-mirror-i18n.mjs';
 import { formatDate } from '../../lib/led-mirror-view.mjs';
+import { shopPath, ledModelPath } from '../../lib/shop.mjs';
 import '../../styles/category-pages.css';
 import '../../styles/profile-systems.css';
 import '../../styles/led-mirrors.css';
@@ -23,6 +24,7 @@ const title = locale === 'ru' ? 'Каталог LED-зеркал с ценами
   title={title}
   description={locale === 'ru' ? 'Каталог зеркал с LED-подсветкой, безрамных и в металлической раме: фильтры по форме, подсветке и раме, цена по размеру и опциям.' : 'Каталог дзеркал з LED-підсвіткою, безрамних і в металевій рамі: фільтри за формою, підсвіткою та рамою, ціна за розміром і опціями.'}
   locale={locale}
+  alternateLocales={['uk', 'ru']}
   schemaType="CollectionPage"
   robots="noindex,follow"
 >
@@ -30,7 +32,7 @@ const title = locale === 'ru' ? 'Каталог LED-зеркал с ценами
   <Header locale={locale} />
   <main id="main">
     <section class="category-section">
-      <Breadcrumbs items={[{ label: T.home, href: locale === 'ru' ? '/ru/' : '/' }, { label: T.mirrors, href: locale === 'ru' ? '/ru/dzerkala/' : '/dzerkala/' }, { label: T.ledMirrors, href: `${locale === 'ru' ? '/ru' : ''}/dzerkala/led-dzerkala/` }, { label: T.modelsCrumb }]} />
+      <Breadcrumbs items={[{ label: T.home, href: locale === 'ru' ? '/ru/' : '/' }, { label: T.shop, href: shopPath(locale) }, { label: T.mirrors, href: shopPath(locale, 'mirrors') }, { label: T.ledMirrors }]} />
       <div class="category-heading"><div><p class="eyebrow">{T.catalog}</p><h1>{T.catalogH1}</h1></div>
         <p>{T.catalogLead(formatDate(pub.collected))}</p></div>
 
@@ -48,16 +50,16 @@ const title = locale === 'ru' ? 'Каталог LED-зеркал с ценами
       <div class="profile-grid" data-lm-grid>
         {cards.map((m) => (
           <article class="profile-card" data-name={m.name_short.toLowerCase()} data-shape={m.shape} data-main_light={m.main_light} data-frame={m.frame}>
-            <a class="profile-card__media" href={`${catalogPath(locale)}${m.slug}/`} aria-label={`${T.mirror} ${m.name_short}`}>
+            <a class="profile-card__media" href={ledModelPath(locale, m.slug)} aria-label={`${T.mirror} ${m.name_short}`}>
               {hasPhoto(m.slug)
                 ? <img src={`/images/led-mirrors/${m.slug}-1-480.webp`} srcset={`/images/led-mirrors/${m.slug}-1-480.webp 480w, /images/led-mirrors/${m.slug}-1-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 30vw" alt={`${T.mirror} ${m.name_short}: ${caption(locale, m)}`} width="480" height="480" loading="lazy" decoding="async" />
                 : <div class="lm-placeholder" aria-hidden="true">{m.name_short}</div>}
             </a>
             <div class="profile-card__body">
-              <h2 class="h3"><a href={`${catalogPath(locale)}${m.slug}/`}>{m.name_short}</a></h2>
+              <h2 class="h3"><a href={ledModelPath(locale, m.slug)}>{m.name_short}</a></h2>
               <p class="profile-card__blurb">{caption(locale, m)}</p>
               <p class="profile-card__price"><strong>{T.from} {formatUah(m.from_uah)}</strong></p>
-              <a class="button button--mint profile-card__cta" href={`${catalogPath(locale)}${m.slug}/`}>{T.calc}</a>
+              <a class="button button--mint profile-card__cta" href={ledModelPath(locale, m.slug)}>{T.calc}</a>
             </div>
           </article>
         ))}

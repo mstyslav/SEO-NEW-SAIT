@@ -1,0 +1,24 @@
+---
+// Common shell of the shop pages (UA/RU): layout, header, breadcrumbs, footer. Every shop page is noindex until approved.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import '../../styles/category-pages.css';
+import '../../styles/profile-systems.css';
+import '../../styles/led-mirrors.css';
+
+const { locale = 'uk', title, description, crumbs, image } = Astro.props;
+---
+<BaseLayout title={title} description={description} locale={locale} alternateLocales={['uk', 'ru']} schemaType="CollectionPage" image={image} robots="noindex,follow">
+<div class="sg-page-shell">
+  <Header locale={locale} />
+  <main id="main">
+    <section class="category-section">
+      <Breadcrumbs items={crumbs} />
+      <slot />
+    </section>
+  </main>
+  <Footer />
+</div>
+</BaseLayout>

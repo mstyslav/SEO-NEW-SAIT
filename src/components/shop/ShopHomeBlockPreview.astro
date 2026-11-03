@@ -1,0 +1,11 @@
+---
+import ShopPage from './ShopPage.astro';
+import ShopHomeBlock from './ShopHomeBlock.astro';
+import { SHOP_STR } from '../../lib/shop.mjs';
+const { locale = 'uk' } = Astro.props;
+const S = SHOP_STR[locale as 'uk' | 'ru'];
+---
+<ShopPage locale={locale} title={`Preview: ${S.homeBlockTitle}`} description="Preview-only block for the home page." crumbs={[{ label: S.home, href: locale === 'ru' ? '/ru/' : '/' }, { label: 'Preview' }]}>
+  <p style="opacity:.7">Preview-only: так блок виглядатиме на головній сторінці. Головна не змінюється без погодження.</p>
+  <ShopHomeBlock locale={locale} />
+</ShopPage>

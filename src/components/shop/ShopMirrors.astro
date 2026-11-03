@@ -1,0 +1,25 @@
+---
+import ShopPage from './ShopPage.astro';
+import pub from '../../data/led-mirrors/public.json';
+import { SHOP_STR, shopPath, LED_PATH } from '../../lib/shop.mjs';
+import { STR, formatUah } from '../../lib/led-mirror-i18n.mjs';
+
+const { locale = 'uk' } = Astro.props;
+const S = SHOP_STR[locale as 'uk' | 'ru'];
+const T = STR[locale as 'uk' | 'ru'];
+const from = Math.min(...pub.models.map((m) => m.from_uah));
+const crumbs = [{ label: S.home, href: locale === 'ru' ? '/ru/' : '/' }, { label: S.shop, href: shopPath(locale) }, { label: S.mirrors }];
+---
+<ShopPage locale={locale} title={S.mirrorsTitle} description={S.mirrorsDesc} crumbs={crumbs}>
+  <div class="category-heading"><div><p class="eyebrow">{S.shop}</p><h1>{S.mirrors}</h1></div><p>{S.mirrorsLead}</p></div>
+  <div class="lm-shop-grid">
+    <a class="lm-shop-card" href={LED_PATH(locale)}>
+      <img src="/images/led-mirrors/agnes-1-900.webp" alt={S.led} width="900" height="900" loading="lazy" decoding="async" />
+      <span class="lm-shop-card__body">
+        <h2>{S.led}</h2>
+        <p>{S.ledCardNote} {S.models48(pub.models.length)} · {T.from} {formatUah(from)}</p>
+        <span class="button button--mint">{S.viewModels}</span>
+      </span>
+    </a>
+  </div>
+</ShopPage>

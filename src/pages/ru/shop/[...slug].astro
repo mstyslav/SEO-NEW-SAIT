@@ -1,0 +1,30 @@
+---
+// Shop (ru): one rest route for every shop URL, so none of them is auto-listed in the sitemap (static index files would be).
+//   /shop/  /shop/mirrors/  /shop/mirrors/led/  /shop/mirrors/led/{model}/  /shop/showers/  /shop/partitions/  + preview pages
+// All noindex until the owner approves indexing. Product data: src/data/led-mirrors/public.json (no purchase prices).
+import ShopHome from '../../../components/shop/ShopHome.astro';
+import ShopMirrors from '../../../components/shop/ShopMirrors.astro';
+import ShopSoon from '../../../components/shop/ShopSoon.astro';
+import ShopHomeBlockPreview from '../../../components/shop/ShopHomeBlockPreview.astro';
+import LedMirrorsCatalog from '../../../components/led-mirrors/LedMirrorsCatalog.astro';
+import LedMirrorModel from '../../../components/led-mirrors/LedMirrorModel.astro';
+import LedCatalogBlockPreview from '../../../components/led-mirrors/LedCatalogBlockPreview.astro';
+import pub from '../../../data/led-mirrors/public.json';
+
+export function getStaticPaths() {
+  return [
+    undefined, 'mirrors', 'mirrors/led', 'showers', 'partitions', 'preview-home-block', 'mirrors/led/preview-led-block',
+    ...pub.models.map((m) => `mirrors/led/${m.slug}`)
+  ].map((slug) => ({ params: { slug } }));
+}
+const locale = 'ru';
+const { slug } = Astro.params;
+const model = slug?.startsWith('mirrors/led/') ? pub.models.find((m) => m.slug === slug.slice('mirrors/led/'.length)) : undefined;
+---
+{!slug ? <ShopHome locale={locale} />
+  : slug === 'mirrors' ? <ShopMirrors locale={locale} />
+  : slug === 'mirrors/led' ? <LedMirrorsCatalog locale={locale} />
+  : slug === 'showers' || slug === 'partitions' ? <ShopSoon locale={locale} category={slug} />
+  : slug === 'preview-home-block' ? <ShopHomeBlockPreview locale={locale} />
+  : slug === 'mirrors/led/preview-led-block' ? <LedCatalogBlockPreview locale={locale} />
+  : model ? <LedMirrorModel model={model} locale={locale} /> : null}

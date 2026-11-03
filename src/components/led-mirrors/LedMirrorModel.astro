@@ -8,6 +8,7 @@ import photos from '../../data/led-mirrors/photos.json';
 import pub from '../../data/led-mirrors/public.json';
 import { STR, attr, optionLabel, groupLabel, modelTitle, catalogPath, caption, formatUah, faqFor } from '../../lib/led-mirror-i18n.mjs';
 import { formatDate } from '../../lib/led-mirror-view.mjs';
+import { shopPath, ledModelPath, SHOP_STR, LED_PRODUCT_TYPE, PRODUCT_TYPES } from '../../lib/shop.mjs';
 import '../../styles/category-pages.css';
 import '../../styles/profile-systems.css';
 import '../../styles/led-mirrors.css';
@@ -33,20 +34,41 @@ const seoText = locale === 'ru' ? [
   `${title} — ${attr(locale, model.shape).toLowerCase()} форма, ${model.frame === 'Металева' ? 'у металевій рамі' : 'без рами'}, основна підсвітка: ${model.main_light === 'Без основної підсвітки' ? 'відсутня' : attr(locale, model.main_light).toLowerCase()}. Монтаж: ${attr(locale, model.mounting).toLowerCase()}.`,
   `Розмір обирається у межах ${L.width[0]}–${L.width[1]} мм по ширині та ${L.height[0]}–${L.height[1]} мм по висоті; для стандартних розмірів (${model.standard_sizes.map((s: any) => `${s.w}×${s.h}`).join(', ')} мм) діє фіксована ціна. У калькуляторі можна вибрати: ${groups.map((g: any) => g.label.toLowerCase()).join(', ')}.`
 ];
+const SS = SHOP_STR[locale as 'uk' | 'ru'];
+const origin = (Astro.site ?? new URL(Astro.url.origin)).origin;
+const abs = (path: string) => `${origin}${path}`;
+const productNote = LED_PRODUCT_TYPE === PRODUCT_TYPES.READY ? SS.readyProduct : SS.madeToOrder;
+// similar models: same frame first, then same main light; never the model itself
+const related = pub.models
+  .filter((m) => m.id !== model.id)
+  .map((m) => ({ m, score: (m.frame === model.frame ? 2 : 0) + (m.main_light === model.main_light ? 1 : 0) + (m.shape === model.shape ? 1 : 0) }))
+  .sort((a, b) => b.score - a.score || a.m.name_short.localeCompare(b.m.name_short))
+  .slice(0, 4).map((x) => x.m);
+// Product structured data mirrors the visible page: name, photos, description text and the price shown on load.
+// No availability, delivery time, rating or review is claimed because none is shown.
+const productLd = {
+  '@context': 'https://schema.org', '@type': 'Product', '@id': `${abs(ledModelPath(locale, slug))}#product`,
+  name: title, description: seoText.join(' '), url: abs(ledModelPath(locale, slug)),
+  ...(count > 0 ? { image: gallery.map((n) => abs(img(n, 900))) } : {}),
+  offers: { '@type': 'Offer', url: abs(ledModelPath(locale, slug)), priceCurrency: 'UAH', price: model.default_uah }
+};
 const cfg = { id: model.id, slug, name: model.name_short, locale, cartHref: T.cartHref, optionLabels: Object.fromEntries(model.option_groups.flatMap((g: any) => g.options).map((o: string) => [o, optionLabel(locale, o)])), groupLabels: Object.fromEntries(groups.map((g: any) => [g.key, g.label])), hasPhoto: count > 0, str: { badSize: T.badSize, badOpt: T.badOpt, netErr: T.netErr, nonstd: T.nonstd, mirror: T.mirror, added: T.added, openCart: T.openCart, total: T.total } };
 ---
 <BaseLayout
   title={`${title} — ${locale === 'ru' ? 'цена по размеру и опциям' : 'ціна за розміром і опціями'}`}
   description={`${title}: ${caption(locale, model)}. ${T.from} ${formatUah(model.from_uah)}.`}
   locale={locale}
+  alternateLocales={['uk', 'ru']}
+  image={count > 0 ? img(1, 900) : undefined}
+  structuredData={[productLd]}
   robots="noindex,follow"
 >
 <div class="sg-page-shell">
   <Header locale={locale} />
   <main id="main">
     <section class="category-section">
-      <Breadcrumbs items={[{ label: T.home, href: locale === 'ru' ? '/ru/' : '/' }, { label: T.mirrors, href: locale === 'ru' ? '/ru/dzerkala/' : '/dzerkala/' }, { label: T.ledMirrors, href: `${locale === 'ru' ? '/ru' : ''}/dzerkala/led-dzerkala/` }, { label: T.modelsCrumb, href: catalogPath(locale) }, { label: model.name_short }]} />
-      <div class="category-heading"><div><p class="eyebrow">{caption(locale, model)}</p><h1>{title}</h1></div></div>
+      <Breadcrumbs items={[{ label: T.home, href: locale === 'ru' ? '/ru/' : '/' }, { label: T.shop, href: shopPath(locale) }, { label: T.mirrors, href: shopPath(locale, 'mirrors') }, { label: T.ledMirrors, href: catalogPath(locale) }, { label: model.name_short }]} />
+      <div class="category-heading"><div><p class="eyebrow">{caption(locale, model)}</p><h1>{title}</h1><p class="lm-type">{productNote}</p></div></div>
 
       <div class="lm-model">
         <div>
@@ -112,6 +134,26 @@ const cfg = { id: model.id, slug, name: model.name_short, locale, cartHref: T.ca
         <h3>{T.delivery}</h3>
         <p>{T.deliveryText}<a href={`${locale === 'ru' ? '/ru' : ''}${T.deliveryHref}`}>{T.deliveryLink}</a>.</p>
       </div>
+      <h3 class="lm-info__h">{SS.warrantyH}</h3><p class="lm-info__p">{SS.warrantyText}</p>
+      <section class="lm-related" aria-labelledby="lm-related-title">
+        <h2 id="lm-related-title">{SS.related}</h2>
+        <div class="profile-grid lm-pick__grid">
+          {related.map((m) => (
+            <article class="profile-card">
+              <a class="profile-card__media" href={ledModelPath(locale, m.slug)} aria-label={modelTitle(locale, m.name_short)}>
+                {((photos as Record<string, number>)[m.slug] ?? 0) > 0
+                  ? <img src={`/images/led-mirrors/${m.slug}-1-480.webp`} alt={`${modelTitle(locale, m.name_short)}: ${caption(locale, m)}`} width="480" height="480" loading="lazy" decoding="async" />
+                  : <div class="lm-placeholder" aria-hidden="true">{m.name_short}</div>}
+              </a>
+              <div class="profile-card__body">
+                <h3 class="h3"><a href={ledModelPath(locale, m.slug)}>{m.name_short}</a></h3>
+                <p class="profile-card__blurb">{caption(locale, m)}</p>
+                <p class="profile-card__price"><strong>{T.from} {formatUah(m.from_uah)}</strong></p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
       <FAQBlock title={locale === 'ru' ? `FAQ о зеркале ${model.name_short}` : `FAQ про дзеркало ${model.name_short}`} items={faq} visibleCount={faq.length} expandTo={faq.length} />
       <script type="application/json" id="lm-cfg" set:html={JSON.stringify(cfg)} />
     </section>
@@ -179,7 +221,7 @@ const cfg = { id: model.id, slug, name: model.name_short, locale, cartHref: T.ca
       qIn.value = String(qty);
       addItem({
         kind: 'led-mirror', modelId: cfg.id, slug: cfg.slug, name: `Дзеркало ${cfg.name}`, category: 'Дзеркала', w: current.w, h: current.h, options: current.options, quantity: qty,
-        price: current.unit, image: cfg.hasPhoto ? `/images/led-mirrors/${cfg.slug}-1-480.webp` : undefined, url: `/dzerkala/katalog/${cfg.slug}/`,
+        price: current.unit, image: cfg.hasPhoto ? `/images/led-mirrors/${cfg.slug}-1-480.webp` : undefined, url: `/shop/mirrors/led/${cfg.slug}/`,
         configuration: `${current.w}×${current.h} мм; ${Object.values(current.options).join(', ')}`
       });
       return true;
