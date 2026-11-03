@@ -17,6 +17,12 @@ import { hasLedLight } from '../src/lib/shop-catalog.mjs';
 // Optional owner decisions, filled ONLY when passed explicitly:  --brand="Space Glass"  --availability=in_stock
 const arg = (k) => process.argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3) ?? '';
 const BRAND = arg('brand'), AVAILABILITY = arg('availability');
+// All current 48 catalog models are made to order; never default them to in_stock.
+// Future stocked products require an explicit per-SKU inventory source and separate feed handling.
+if (AVAILABILITY === 'in_stock') {
+  console.error('Refusing --availability=in_stock: current catalog is made to order, with no verified stock.');
+  process.exit(1);
+}
 const seo = JSON.parse(fs.readFileSync(new URL('../src/data/led-mirrors/seo.json', import.meta.url), 'utf8'));
 
 const ORIGIN = 'https://space-glass.com.ua';
@@ -56,6 +62,7 @@ console.log(`DRAFT feed: ${rows.length} items from ${pub.models.length} models (
 console.log(`price check vs decoded Worker secret: ${mismatch === 0 ? 'identical for every item' : mismatch + ' MISMATCHES'}`);
 console.log('items without image_link:', empty('image_link'), '| with additional images:', rows.length - rows.filter((r) => !r.additional_image_link).length);
 console.log('NOT in the feed (not agreed): shipping price / service, return policy (account level), GTIN/MPN. Handling time filled:', 'up to ' + LEAD_DAYS.standardMax + '/' + LEAD_DAYS.metalFrameMax, 'working days');
+console.log('Current catalog: MADE TO ORDER (48 models); stock products will be modeled separately.');
 console.log('MISSING (owner decisions, left empty on purpose): availability', empty('availability'), '| condition', empty('condition'), '| brand', empty('brand'), '| gtin', empty('gtin'), '| mpn', empty('mpn'), '| identifier_exists', empty('identifier_exists'));
 console.log('price range:', Math.min(...rows.map((r) => parseInt(r.price))), '-', Math.max(...rows.map((r) => parseInt(r.price))), 'UAH (retail)');
 if (mismatch) process.exit(1);
