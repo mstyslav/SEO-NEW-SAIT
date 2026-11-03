@@ -49,6 +49,6 @@ See [SEO-OWNER-ACTIONS.md](SEO-OWNER-ACTIONS.md): door prices (R-030), real case
 - Add the category's real products in `buildProducts()` (src/lib/shop-catalog.mjs) with `category`, `attrs`, `price`; its filter scheme (showers / partitions) is already declared. The tab turns active by itself, filters with fewer than two real values stay hidden. Add a product page template for that category before listing it.
 
 ## After the shop product pages were opened for indexing (TASK 113, 2026-11-03)
-- 2026-11-11 and 2026-11-25: export Search Console for /dzerkala/led-dzerkala/, /dzerkala/ and the shop product pages; compare with the private baseline (R-069). Watch cannibalisation for «дзеркало з підсвіткою» / «led дзеркало».
-- Search Console → Indexing: check that the 96 product URLs are discovered and the 4 models without LED are not flagged (soft 404 / duplicate).
-- Not done on purpose: category pages stay noindex; brand / availability / shipping / returns are not in the Product markup (Merchant Center is not connected).
+- 2026-11-11 and 2026-11-25: export Search Console for /dzerkala/led-dzerkala/, /dzerkala/ and the shop product pages; compare with the private baseline (R-069). Watch cannibalisation for «дзеркало з підсвіткою» / «led дзеркало»: /shop/mirrors/led/ must not replace /dzerkala/led-dzerkala/ in the results.
+- Search Console → Indexing: check that the 102 shop URLs are discovered and the 4 models without LED are not flagged (soft 404 / duplicate).
+- Not done on purpose: brand / availability / shipping / returns are not in the Product markup (Merchant Center is not connected).

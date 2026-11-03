@@ -23,8 +23,8 @@ const home = { label: S.home, href: locale === 'ru' ? '/ru/' : '/' };
 const META = shopMeta(locale, pub);
 const catalogs: Record<string, any> = {
   '': { faqKind: 'shop', initialCat: 'all', title: META[''].title, description: META[''].description, h1: S.h1, crumbs: [home, { label: S.shop }] },
-  'mirrors': { faqKind: 'mirrors', initialCat: 'mirrors', title: META.mirrors.title, description: META.mirrors.description, h1: S.mirrors, crumbs: [home, { label: S.shop, href: shopPath(locale) }, { label: S.mirrors }] },
-  'mirrors/led': { faqKind: 'led', initialCat: 'mirrors', title: META['mirrors/led'].title, description: META['mirrors/led'].description, h1: S.led, crumbs: [home, { label: S.shop, href: shopPath(locale) }, { label: S.mirrors, href: shopPath(locale, 'mirrors') }, { label: S.led }] }
+  'mirrors': { faqKind: 'mirrors', initialCat: 'mirrors', title: META.mirrors.title, description: META.mirrors.description, h1: META.mirrors.h1, intro: META.mirrors.intro, crumbs: [home, { label: S.shop, href: shopPath(locale) }, { label: S.mirrors }] },
+  'mirrors/led': { faqKind: 'led', initialCat: 'mirrors', title: META['mirrors/led'].title, description: META['mirrors/led'].description, h1: META['mirrors/led'].h1, intro: META['mirrors/led'].intro, crumbs: [home, { label: S.shop, href: shopPath(locale) }, { label: S.mirrors, href: shopPath(locale, 'mirrors') }, { label: S.led }] }
 };
 const { slug } = Astro.params;
 const model = slug?.startsWith('mirrors/led/') ? pub.models.find((m) => m.slug === slug.slice('mirrors/led/'.length)) : undefined;

@@ -215,3 +215,5 @@ body .sg-page-shell main .pp-panel>h2{font-size:1.25rem!important}
 body .sg-page-shell main .pp-panel>h3{font-size:1.05rem!important;margin:20px 0 8px}
 .pp-reviews-empty{padding:22px;border:1px dashed var(--green-line,#cfe9da);border-radius:14px;background:var(--green-soft,#edf8f2)}.pp-reviews-empty p{margin:6px 0 0;color:var(--muted,#51625a)}
 .pp-terms{margin-top:26px}.pp-flow{font-weight:600;color:var(--green-dark,#0f5a40)}
+
+.sf-intro{max-width:880px;margin:0 0 18px;color:var(--muted,#51625a);line-height:1.55}.sf-intro a{color:var(--green-dark,#0f5a40);font-weight:600}

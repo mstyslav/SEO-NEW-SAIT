@@ -25,9 +25,9 @@ for (const [loc, pre] of locales) {
     const url = pre + p, html = read(url);
     if (!html) { fail(`missing page ${url}`); continue; }
     // indexing policy (TASK 113): the 48 product pages (UA + RU) are indexable; catalog pages and everything else under /shop/ stay noindex
-    const isProduct = p.startsWith('/shop/mirrors/led/') && p !== '/shop/mirrors/led/' && pub.models.some((m) => p === `/shop/mirrors/led/${m.slug}/`);
+    const isProduct = ['/shop/', '/shop/mirrors/', '/shop/mirrors/led/'].includes(p) || pub.models.some((m) => p === `/shop/mirrors/led/${m.slug}/`); // catalog pages + product pages
     const robotsTag = html.match(/<meta name="robots" content="([^"]*)"/)?.[1];
-    if (isProduct ? /noindex|nofollow/.test(robotsTag ?? '') : !/^noindex/.test(robotsTag ?? '')) fail(`${url}: robots «${robotsTag}» (${isProduct ? 'product pages must be indexable' : 'must be noindex'})`);
+    if (isProduct ? /noindex|nofollow/.test(robotsTag ?? '') : !/^noindex/.test(robotsTag ?? '')) fail(`${url}: robots «${robotsTag}» (${isProduct ? 'catalog and product pages must be indexable' : 'must be noindex'})`);
     const canonical = meta(html, /<link rel="canonical" href="([^"]+)"/);
     if (canonical !== ORIGIN + url) fail(`${url}: canonical ${canonical}`);
     const alts = Object.fromEntries([...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)].map((m) => [m[1], m[2]]));
@@ -150,8 +150,8 @@ for (const [, pre] of locales) {
   for (const [k, v] of [...titles, ...descs]) if (v > 1) fail(`duplicate title/description: ${k}`);
 }
 
-// ---- the sitemap lists exactly the 96 product pages of the shop (48 UA + 48 RU) and nothing else of the shop / cart / old catalog
-const productPaths = pub.models.flatMap((m) => [`/shop/mirrors/led/${m.slug}/`, `/ru/shop/mirrors/led/${m.slug}/`]);
+// ---- the sitemap lists exactly the 102 indexable shop URLs (48 product pages + 3 catalog pages, UA + RU) and nothing else of the shop / cart / old catalog
+const productPaths = [...['/shop/', '/shop/mirrors/', '/shop/mirrors/led/'].flatMap((p) => [p, `/ru${p}`]), ...pub.models.flatMap((m) => [`/shop/mirrors/led/${m.slug}/`, `/ru/shop/mirrors/led/${m.slug}/`])];
 for (const f of ['sitemap.xml', 'sitemap-uk.xml', 'sitemap-ru.xml']) {
   const x = fs.existsSync(path.join(dist, f)) ? fs.readFileSync(path.join(dist, f), 'utf8') : '';
   const locs = [...x.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].replace(ORIGIN, ''));
