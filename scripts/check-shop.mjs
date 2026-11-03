@@ -24,7 +24,10 @@ for (const [loc, pre] of locales) {
   for (const p of pages) {
     const url = pre + p, html = read(url);
     if (!html) { fail(`missing page ${url}`); continue; }
-    if (!/<meta name="robots" content="noindex[^"]*"/.test(html)) fail(`${url}: not noindex`);
+    // indexing policy (TASK 113): the 48 product pages (UA + RU) are indexable; catalog pages and everything else under /shop/ stay noindex
+    const isProduct = ['/shop/', '/shop/mirrors/', '/shop/mirrors/led/'].includes(p) || pub.models.some((m) => p === `/shop/mirrors/led/${m.slug}/`); // catalog pages + product pages
+    const robotsTag = html.match(/<meta name="robots" content="([^"]*)"/)?.[1];
+    if (isProduct ? /noindex|nofollow/.test(robotsTag ?? '') : !/^noindex/.test(robotsTag ?? '')) fail(`${url}: robots «${robotsTag}» (${isProduct ? 'catalog and product pages must be indexable' : 'must be noindex'})`);
     const canonical = meta(html, /<link rel="canonical" href="([^"]+)"/);
     if (canonical !== ORIGIN + url) fail(`${url}: canonical ${canonical}`);
     const alts = Object.fromEntries([...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)].map((m) => [m[1], m[2]]));
@@ -147,10 +150,15 @@ for (const [, pre] of locales) {
   for (const [k, v] of [...titles, ...descs]) if (v > 1) fail(`duplicate title/description: ${k}`);
 }
 
-// ---- the sitemap stays clean
+// ---- the sitemap lists exactly the 102 indexable shop URLs (48 product pages + 3 catalog pages, UA + RU) and nothing else of the shop / cart / old catalog
+const productPaths = [...['/shop/', '/shop/mirrors/', '/shop/mirrors/led/'].flatMap((p) => [p, `/ru${p}`]), ...pub.models.flatMap((m) => [`/shop/mirrors/led/${m.slug}/`, `/ru/shop/mirrors/led/${m.slug}/`])];
 for (const f of ['sitemap.xml', 'sitemap-uk.xml', 'sitemap-ru.xml']) {
   const x = fs.existsSync(path.join(dist, f)) ? fs.readFileSync(path.join(dist, f), 'utf8') : '';
-  if (/\/shop\/|\/cart\/|dzerkala\/katalog/.test(x)) fail(`${f} lists shop / cart / old catalog URLs`);
+  const locs = [...x.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].replace(ORIGIN, ''));
+  const shopLocs = locs.filter((u) => /\/shop\/|\/cart\/|\/project-print\/|dzerkala\/katalog/.test(u));
+  const expected = f === 'sitemap-uk.xml' ? productPaths.filter((u) => !u.startsWith('/ru/')) : f === 'sitemap-ru.xml' ? productPaths.filter((u) => u.startsWith('/ru/')) : productPaths;
+  if (shopLocs.slice().sort().join() !== expected.slice().sort().join()) fail(`${f}: shop URLs in the sitemap are not exactly the product pages (${shopLocs.length} vs ${expected.length}); extra: ${shopLocs.filter((u) => !expected.includes(u)).slice(0, 3)}`);
+  if (new Set(locs).size !== locs.length) fail(`${f}: duplicate URLs`);
 }
 // ---- inactive categories are information pages only
 for (const c of ['showers', 'partitions']) for (const pre of ['', '/ru']) { const h = read(`${pre}/shop/${c}/`); if (h && (/"@type":"Product"|"@type":"Offer"|data-lm-add/.test(h))) fail(`${pre}/shop/${c}/: shows products although the category has none`); }

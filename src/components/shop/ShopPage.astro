@@ -1,5 +1,5 @@
 ---
-// Common shell of the shop pages (UA/RU): layout, header, breadcrumbs, footer. Every shop page is noindex until approved.
+// Common shell of the shop pages (UA/RU): layout, header, breadcrumbs, footer. Catalog pages are indexable (TASK 113); other shop pages stay noindex.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../Header.astro';
 import Footer from '../Footer.astro';
@@ -8,9 +8,10 @@ import '../../styles/category-pages.css';
 import '../../styles/profile-systems.css';
 import '../../styles/led-mirrors.css';
 
-const { locale = 'uk', title, description, crumbs, image } = Astro.props;
+// `indexable`: the shop catalog pages and product pages are indexed (TASK 113); every other shop page stays noindex.
+const { locale = 'uk', title, description, crumbs, image, indexable = false } = Astro.props;
 ---
-<BaseLayout title={title} description={description} locale={locale} alternateLocales={['uk', 'ru']} schemaType="CollectionPage" image={image} robots="noindex,follow">
+<BaseLayout title={title} description={description} locale={locale} alternateLocales={['uk', 'ru']} schemaType="CollectionPage" image={image} robots={indexable ? undefined : 'noindex,follow'}>
 <div class="sg-page-shell">
   <Header locale={locale} />
   <main id="main">

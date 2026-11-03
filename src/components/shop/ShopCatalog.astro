@@ -12,7 +12,7 @@ import { shopFaq, mirrorsFaq, ledFaq } from '../../lib/shop-faq.mjs';
 import { buildProducts, hasLedLight, buildSchema, clientProducts, cardData } from '../../lib/shop-catalog.mjs';
 import { modelTitle, caption as _c } from '../../lib/led-mirror-i18n.mjs';
 
-const { locale = 'uk', initialCat = 'all', title, description, h1, crumbs, faqKind = 'shop' } = Astro.props;
+const { locale = 'uk', initialCat = 'all', title, description, h1, crumbs, faqKind = 'shop', intro } = Astro.props;
 const S = SHOP_STR[locale as 'uk' | 'ru'];
 // the LED listing shows only models that really have LED light; the models without any light stay in /shop/ and /shop/mirrors/
 const products = buildProducts(pub).filter((p: any) => faqKind !== 'led' || hasLedLight(p.raw));
@@ -26,8 +26,9 @@ const data = { locale, initialCat, strings, schema, products: clientProducts(pro
 const faqItems = ({ shop: shopFaq, mirrors: mirrorsFaq, led: ledFaq } as Record<string, any>)[faqKind](locale, pub);
 const catalogLabel = (key: string) => (key === 'all' ? S.tabAll : schema.categories.find((c: any) => c.key === key)?.label);
 ---
-<ShopPage locale={locale} title={title} description={description} crumbs={crumbs}>
+<ShopPage locale={locale} title={title} description={description} crumbs={crumbs} indexable>
   <div class="category-heading"><div><p class="eyebrow">{S.shop}</p><h1>{h1}</h1></div><p>{S.subtitle}</p></div>
+  {intro && <p class="sf-intro">{intro.text} <a href={intro.href}>{intro.label}</a>.</p>}
 
   <div class="sf-tabs" role="group" aria-label={S.catalogNav} data-sf-tabs>
     <button type="button" class="sf-tab" data-cat="all" aria-pressed="false">{S.tabAll}</button>
