@@ -161,8 +161,16 @@ const whatsappTel = marketContact?.whatsapp ? `https://wa.me/${marketContact.wha
 const contactEmail = marketContact?.email ?? 'info@space-glass.com.ua';
 const phoneLabel = contactPhone && !marketContact?.phoneIsCompany ? contactPhone.display : intl ? '+380 73 425 14 00' : '+38 (073) 425 14 00';
 const currentYear = new Date().getFullYear();
+const shopLegal = !intl && /^\/(?:ru\/)?shop(?:\/|$)/.test(Astro.url.pathname);
+const shopLegalPrefix = locale === 'ru' ? '/ru/shop' : '/shop';
 ---
 <footer class="site-footer footer-refined">
+  {shopLegal && <nav aria-label={locale === 'ru' ? 'Документы магазина' : 'Документи магазину'} style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;padding:1rem;">
+    <a href={`${shopLegalPrefix}/offer/`}>{locale === 'ru' ? 'Публичная оферта' : 'Публічна оферта'}</a>
+    <a href={`${shopLegalPrefix}/delivery-payment/`}>{locale === 'ru' ? 'Оплата и доставка' : 'Оплата та доставка'}</a>
+    <a href={`${shopLegalPrefix}/returns/`}>{locale === 'ru' ? 'Обмен и возврат' : 'Обмін та повернення'}</a>
+  </nav>}
+
   {!hideBenefits && (
   <div class="footer-refined__benefits">
     <div class="footer-refined__benefit"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 39 10v12c0 9.5-6.2 17.5-15 22-8.8-4.5-15-12.5-15-22V10l15-6Z"/><path d="m17 23 5 5 10-11"/></svg><div><b>{ft.benefits[0][0]}</b><small>{ft.benefits[0][1]}</small></div></div>

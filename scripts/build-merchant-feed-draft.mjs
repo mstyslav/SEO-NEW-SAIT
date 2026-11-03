@@ -42,7 +42,7 @@ for (const m of pub.models) {
       description: desc.replace('{size}', `${s.w}×${s.h}`), link: `${ORIGIN}/shop/mirrors/led/${m.slug}/?size=${s.w}x${s.h}`,
       image_link: n ? `${ORIGIN}/images/led-mirrors/${m.slug}-1-900.webp` : '', additional_image_link: Array.from({ length: Math.max(0, n - 1) }, (_, i) => `${ORIGIN}/images/led-mirrors/${m.slug}-${i + 2}-900.webp`).join(','),
       price: `${server}.00 UAH`,
-      availability: AVAILABILITY, min_handling_time: LEAD_DAYS.min, max_handling_time: LEAD_DAYS.max, condition: '', brand: BRAND, gtin: '', mpn: '', identifier_exists: '', // availability / brand only when passed explicitly; handling time = agreed 3-35 working days
+      availability: AVAILABILITY, min_handling_time: LEAD_DAYS.min, max_handling_time: m.frame === 'Металева' ? LEAD_DAYS.metalFrameMax : LEAD_DAYS.standardMax, condition: '', brand: BRAND, gtin: '', mpn: '', identifier_exists: '', // availability / brand only when passed explicitly; handling time = agreed up to 15/35 working days
       google_product_category: 'Home & Garden > Decor > Mirrors', product_type: `Дзеркала > ${hasLedLight(m) ? 'LED-дзеркала' : 'Дзеркала без підсвітки'} > ${m.frame === 'Металева' ? 'У металевій рамі' : 'Безрамні'}`,
       size: `${s.w}x${s.h} mm`, custom_label_0: 'made_to_order'
     });
@@ -55,7 +55,7 @@ const empty = (c) => rows.filter((r) => !r[c]).length;
 console.log(`DRAFT feed: ${rows.length} items from ${pub.models.length} models (${(rows.length / pub.models.length).toFixed(1)} per model) -> worker/private/merchant-feed.draft.tsv (local, gitignored)`);
 console.log(`price check vs decoded Worker secret: ${mismatch === 0 ? 'identical for every item' : mismatch + ' MISMATCHES'}`);
 console.log('items without image_link:', empty('image_link'), '| with additional images:', rows.length - rows.filter((r) => !r.additional_image_link).length);
-console.log('NOT in the feed (not agreed): shipping price / service, return policy (account level), GTIN/MPN. Handling time filled:', LEAD_DAYS.min + '-' + LEAD_DAYS.max, 'working days');
+console.log('NOT in the feed (not agreed): shipping price / service, return policy (account level), GTIN/MPN. Handling time filled:', 'up to ' + LEAD_DAYS.standardMax + '/' + LEAD_DAYS.metalFrameMax, 'working days');
 console.log('MISSING (owner decisions, left empty on purpose): availability', empty('availability'), '| condition', empty('condition'), '| brand', empty('brand'), '| gtin', empty('gtin'), '| mpn', empty('mpn'), '| identifier_exists', empty('identifier_exists'));
 console.log('price range:', Math.min(...rows.map((r) => parseInt(r.price))), '-', Math.max(...rows.map((r) => parseInt(r.price))), 'UAH (retail)');
 if (mismatch) process.exit(1);
