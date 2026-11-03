@@ -48,6 +48,9 @@ export const CATEGORY_LABEL = { mirrors: t('Дзеркала', 'Зеркала')
 // functions the customer can pick on a mirror (option groups present in the data; thickness / colour / main light are not "functions")
 const EXTRA_GROUPS = ['backlight', 'heating', 'lens', 'shelf', 'switch', 'clock', 'audio'];
 
+/** LED category = the model has LED light in an available configuration: a main light, or a backlight option. Models with neither (e.g. TURMALINE) stay in the general catalog only. */
+export const hasLedLight = (m) => m.main_light !== 'Без основної підсвітки' || m.option_groups.some((g) => g.key === 'backlight');
+
 /** Normalised products of every category. */
 /** Default order: supplier order, except COMO sits at position 8 (end of the second desktop row of 4) — owner decision. */
 const POSITION = { como: 8 };

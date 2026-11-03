@@ -65,7 +65,8 @@ const TAB_ALL = { uk: 'Усі товари', ru: 'Все товары' };
 for (const [loc, pre] of locales) for (const p of ['/shop/', '/shop/mirrors/', '/shop/mirrors/led/']) {
   const html = read(pre + p); if (!html) continue;
   const cards = (html.match(/class="sf-card"/g) ?? []).length;
-  if (cards !== pub.models.length) fail(`${pre + p}: ${cards} product cards, expected ${pub.models.length}`);
+  const expectN = p === '/shop/mirrors/led/' ? pub.models.filter((m) => m.main_light !== 'Без основної підсвітки' || m.option_groups.some((g) => g.key === 'backlight')).length : pub.models.length; // the LED listing hides models without any light
+  if (cards !== expectN) fail(`${pre + p}: ${cards} product cards, expected ${expectN}`);
   if (!html.includes(SUB[loc])) fail(`${pre + p}: subtitle text missing`);
   if (p === '/shop/' && !/<h1[^>]*>Магазин Space Glass</.test(html)) fail(`${pre + p}: h1`);
   if (!html.includes(`>${TAB_ALL[loc]}<`)) fail(`${pre + p}: "all products" tab missing`);
@@ -73,7 +74,7 @@ for (const [loc, pre] of locales) for (const p of ['/shop/', '/shop/mirrors/', '
   for (const c of ['showers', 'partitions']) if (!tabs.some((t) => t.includes(`data-cat="${c}"`) && /\sdisabled[\s>=]/.test(t))) fail(`${pre + p}: ${c} tab must be disabled while it has no products`);
   if (tabs.some((t) => t.includes('data-cat="mirrors"') && /\sdisabled[\s>=]/.test(t))) fail(`${pre + p}: mirrors tab disabled`);
   const data = JSON.parse((html.match(/<script type="application\/json" id="sf-data">([\s\S]*?)<\/script>/) ?? [])[1] ?? 'null');
-  if (!data || data.products.length !== pub.models.length) fail(`${pre + p}: sf-data missing / incomplete`);
+  if (!data || data.products.length !== expectN) fail(`${pre + p}: sf-data missing / incomplete`);
   else {
     const expected = p === '/shop/' ? 'all' : 'mirrors';
     if (data.initialCat !== expected) fail(`${pre + p}: initial category ${data.initialCat}`);

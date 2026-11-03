@@ -54,3 +54,8 @@ Decided by owner 2026-11-03: supplier photos allowed (stored locally); retail pr
 1. **Default order:** you asked to move the first rectangular mirror (in the current order that is **COMO**, position 2; other rectangles: BUFFALO 3, GARDA 5, MELVIN 7, NESS 8, …) to the end of the second row. Please confirm the model and the layout (3 per row = position 6, 4 per row = position 8, 2 per row = position 4). Not changed until confirmed.
 2. **Merchant Center questions:** see `docs/MERCHANT-CENTER-READINESS.md` §6 (availability/handling time, brand, GTIN/MPN, condition, shipping, returns, payment, photo rights, price/feed owner).
 3. **Launch order:** `docs/SHOP-LAUNCH-CHECKLIST.md`.
+
+## Shop — questions from final QA (TASK 101)
+- GALAXY NGC 4567 vs GALAXY NGC 4567 SINGLE and GALAXY FNGC 4567-8 vs ...-8 SINGLE: the supplier data is identical apart from the name and photo count. What does SINGLE mean (one panel? different product)? Until answered both stay as separate products.
+- The 4 models without any light (TURMALINE, BRITANNIC, ARK ROYAL, DREADNOUGHT) live under /shop/mirrors/led/{slug}/. Keep the URLs, or move them to a neutral URL with 301 before any indexing?
+- Brand/own-production wording, availability, shipping, returns, warranty: still needed before a Merchant feed (see docs/MERCHANT-CENTER-READINESS.md).

@@ -292,7 +292,9 @@ const cfg = {
     const S = cfg.str;
     const q = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
     const wIn = q<HTMLInputElement>('input[name=w]'), hIn = q<HTMLInputElement>('input[name=h]'), qIn = q<HTMLInputElement>('input[name=qty]');
-    const custom = q('[data-lm-custom]'), block = q('[data-lm-priceblock]'), total = q('[data-lm-total]'), stateEl = q('[data-lm-state]'), err = q('[data-lm-error]'), retry = q<HTMLButtonElement>('[data-lm-retry]');
+    // the price bar sits above the configurator (outside [data-lm-calc]), so it is looked up on the whole page
+    const pg = <T extends HTMLElement>(sel: string) => document.querySelector<T>(sel)!;
+    const custom = q('[data-lm-custom]'), block = pg('[data-lm-priceblock]'), total = pg('[data-lm-total]'), stateEl = pg('[data-lm-state]'), err = pg('[data-lm-error]'), retry = pg<HTMLButtonElement>('[data-lm-retry]');
     const echo = q('[data-lm-echo]'), lines = q('[data-lm-lines]'), added = q('[data-lm-added]'), buy = q<HTMLButtonElement>('[data-lm-buy]'), add = q<HTMLButtonElement>('[data-lm-add]');
     const sizeRadios = [...root.querySelectorAll<HTMLInputElement>('input[name=size]')];
     const fmt = (n: number) => `${String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} грн`;

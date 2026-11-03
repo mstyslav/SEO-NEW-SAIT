@@ -9,6 +9,7 @@ import ShopHomeBlockPreview from '../../components/shop/ShopHomeBlockPreview.ast
 import LedMirrorModel from '../../components/led-mirrors/LedMirrorModel.astro';
 import LedCatalogBlockPreview from '../../components/led-mirrors/LedCatalogBlockPreview.astro';
 import pub from '../../data/led-mirrors/public.json';
+import { shopMeta } from '../../lib/shop-meta.mjs';
 
 export function getStaticPaths() {
   return [
@@ -19,10 +20,11 @@ export function getStaticPaths() {
 const locale = 'uk';
 const S = SHOP_STR[locale];
 const home = { label: S.home, href: locale === 'ru' ? '/ru/' : '/' };
+const META = shopMeta(locale, pub);
 const catalogs: Record<string, any> = {
-  '': { faqKind: 'shop', initialCat: 'all', title: S.shopTitle, description: S.subtitle, h1: S.h1, crumbs: [home, { label: S.shop }] },
-  'mirrors': { faqKind: 'mirrors', initialCat: 'mirrors', title: S.mirrorsTitle, description: S.mirrorsDesc, h1: S.mirrors, crumbs: [home, { label: S.shop, href: shopPath(locale) }, { label: S.mirrors }] },
-  'mirrors/led': { faqKind: 'led', initialCat: 'mirrors', title: S.ledTitle, description: S.ledDesc, h1: S.led, crumbs: [home, { label: S.shop, href: shopPath(locale) }, { label: S.mirrors, href: shopPath(locale, 'mirrors') }, { label: S.led }] }
+  '': { faqKind: 'shop', initialCat: 'all', title: META[''].title, description: META[''].description, h1: S.h1, crumbs: [home, { label: S.shop }] },
+  'mirrors': { faqKind: 'mirrors', initialCat: 'mirrors', title: META.mirrors.title, description: META.mirrors.description, h1: S.mirrors, crumbs: [home, { label: S.shop, href: shopPath(locale) }, { label: S.mirrors }] },
+  'mirrors/led': { faqKind: 'led', initialCat: 'mirrors', title: META['mirrors/led'].title, description: META['mirrors/led'].description, h1: S.led, crumbs: [home, { label: S.shop, href: shopPath(locale) }, { label: S.mirrors, href: shopPath(locale, 'mirrors') }, { label: S.led }] }
 };
 const { slug } = Astro.params;
 const model = slug?.startsWith('mirrors/led/') ? pub.models.find((m) => m.slug === slug.slice('mirrors/led/'.length)) : undefined;

@@ -196,3 +196,7 @@ body .sg-page-shell main .pp-config>h2{margin:0 0 2px;font-size:1.1rem!important
 .sf-hint{margin:6px 0 0;font-size:.76rem;line-height:1.4;color:var(--muted,#5f6b64)}
 body .sg-page-shell main .pp__title{font-size:clamp(1.35rem,2.1vw,1.85rem)!important;line-height:1.2!important}
 .pp-features{margin-top:8px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));padding-left:0;list-style:none}.pp-features li{padding:6px 10px;border-radius:8px;background:var(--green-soft,#edf8f2);font-size:.85rem}
+/* catalog columns: desktop 4, tablet 3, mobile 2 (1 below 360px) */
+@media (min-width:900px){.sf-grid:not(.sf-grid--related){grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1100px){.sf-grid:not(.sf-grid--related){grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (min-width:600px) and (max-width:899px){.sf-grid:not(.sf-grid--related){grid-template-columns:repeat(3,minmax(0,1fr))}}

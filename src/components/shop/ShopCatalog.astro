@@ -9,12 +9,13 @@ import pub from '../../data/led-mirrors/public.json';
 import ShopFaq from './ShopFaq.astro';
 import { SHOP_STR } from '../../lib/shop.mjs';
 import { shopFaq, mirrorsFaq, ledFaq } from '../../lib/shop-faq.mjs';
-import { buildProducts, buildSchema, clientProducts, cardData } from '../../lib/shop-catalog.mjs';
+import { buildProducts, hasLedLight, buildSchema, clientProducts, cardData } from '../../lib/shop-catalog.mjs';
 import { modelTitle, caption as _c } from '../../lib/led-mirror-i18n.mjs';
 
 const { locale = 'uk', initialCat = 'all', title, description, h1, crumbs, faqKind = 'shop' } = Astro.props;
 const S = SHOP_STR[locale as 'uk' | 'ru'];
-const products = buildProducts(pub);
+// the LED listing shows only models that really have LED light; the models without any light stay in /shop/ and /shop/mirrors/
+const products = buildProducts(pub).filter((p: any) => faqKind !== 'led' || hasLedLight(p.raw));
 const schema = buildSchema(locale, pub, products);
 const hasPhoto = (slug: string) => ((photos as Record<string, number>)[slug] ?? 0) > 0;
 const strings = {
