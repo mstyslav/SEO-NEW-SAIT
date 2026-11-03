@@ -1,0 +1,19 @@
+---
+// «Готові вироби Space Glass»: compact entry block for the corporate home page (UA/RU).
+// PREPARED, NOT PUBLISHED on the home page (it is a protected commercial page). Preview: /shop/preview-home-block/ (noindex).
+import { CATEGORIES, SHOP_STR, shopPath } from '../../lib/shop.mjs';
+const { locale = 'uk' } = Astro.props;
+const S = SHOP_STR[locale as 'uk' | 'ru'];
+---
+<section class="category-section lm-homeblock" aria-labelledby="lm-homeblock-title">
+  <div class="category-heading"><div><h2 id="lm-homeblock-title">{S.homeBlockTitle}</h2></div><p>{S.homeBlockLead}</p></div>
+  <div class="lm-shop-grid">
+    {CATEGORIES.map((c) => (
+      <a class={`lm-shop-card${c.active ? '' : ' lm-shop-card--soon'}`} href={shopPath(locale, c.path)}>
+        <img src={c.image} alt={c.imageAlt[locale as 'uk' | 'ru']} width="900" height="675" loading="lazy" decoding="async" />
+        <span class="lm-shop-card__body"><h3>{S[c.key as 'mirrors' | 'showers' | 'partitions']}</h3>{!c.active && <span class="lm-shop-card__tag">{S.inPrep}</span>}</span>
+      </a>
+    ))}
+  </div>
+  <p class="lm-pick__all"><a class="button button--mint" href={shopPath(locale)}>{S.toShop}</a></p>
+</section>

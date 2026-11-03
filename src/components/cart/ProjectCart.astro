@@ -1,0 +1,352 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+
+const { locale = 'uk' } = Astro.props;
+const ru = locale === 'ru';
+const S = ru ? {
+  title: 'Корзина | Space Glass', desc: 'Выбранные товары и конфигурации Space Glass, оформление заявки.',
+  eyebrow: 'Корзина', h1: 'Все товары в одном месте', lead: 'Добавляйте зеркала и другие конструкции, затем отправьте одну заявку на весь заказ. Менеджер подтвердит стоимость и свяжется с вами.',
+  positions: 'позиций', sub: 'предварительно', composition: 'Состав заказа', chosen: 'Выбранные товары', clear: 'Очистить корзину',
+  emptyH: 'Корзина пуста', emptyP: 'Перейдите в каталог, настройте товар и добавьте его в корзину.', emptyBtn: 'Перейти в каталог', emptyHref: '/ru/catalog/',
+  summary: 'Итог', yourOrder: 'Ваш заказ', count: 'Количество позиций', totalAll: 'Итого', totalPart: 'Промежуточная сумма (только позиции с известной ценой)',
+  unpricedNote: (n: number) => `${n} поз. — цена уточняется. Это не окончательная сумма заказа.`, priceTbd: 'Цена уточняется', unit: 'за шт.',
+  name: 'Имя', phone: 'Телефон', comment: 'Комментарий (необязательно)', commentPh: 'Например: нужна доставка и монтаж в Киеве', submit: 'Отправить заявку', sending: 'Отправляем…',
+  notice: 'Сумма предварительная и не является офертой. Окончательную стоимость, сроки, доставку и монтаж подтверждает менеджер. Онлайн-оплаты нет.',
+  qty: 'Количество', remove: 'Удалить', consent: 'Отправляя заявку, вы соглашаетесь с', policy: 'политикой конфиденциальности', policyHref: '/ru/privacy-policy/',
+  save: 'Сохранить корзину', pdf: 'Скачать PDF', saved: 'Корзина сохранена в этом браузере.',
+  pricesUpdated: 'Цены в корзине обновлены по актуальному прайсу.',
+  doneH: 'Заявка принята', doneP: (id: string) => `Номер заявки: ${id}. Менеджер свяжется с вами для подтверждения стоимости и деталей.`, doneBtn: 'Вернуться в каталог',
+  errors: { invalid_name: 'Укажите имя.', invalid_phone: 'Проверьте номер телефона.', invalid_comment: 'В комментарии нельзя оставлять ссылки.', too_many_requests: 'Слишком много попыток. Подождите минуту.', order_conflict: 'Заказ изменился — отправьте заявку ещё раз.', price_changed: 'Цены обновились — проверьте сумму и отправьте заявку ещё раз.', invalid_items: 'Проверьте состав корзины.', invalid_quantity: 'Проверьте количество.', generic: 'Не удалось отправить заявку. Корзина сохранена — попробуйте ещё раз или позвоните нам.' },
+  openItem: 'Открыть товар', mirror: 'Зеркало', category: 'Зеркала', fallbackName: 'Конструкция', fallbackConfig: 'Индивидуальная конфигурация', home: '/ru/'
+} : {
+  title: 'Кошик | Space Glass', desc: 'Обрані товари та конфігурації Space Glass, оформлення заявки.',
+  eyebrow: 'Кошик', h1: 'Усі товари в одному місці', lead: 'Додавайте дзеркала та інші конструкції, потім надішліть одну заявку на все замовлення. Менеджер підтвердить вартість і зв’яжеться з вами.',
+  positions: 'позицій', sub: 'попередньо', composition: 'Склад замовлення', chosen: 'Обрані товари', clear: 'Очистити кошик',
+  emptyH: 'Кошик порожній', emptyP: 'Перейдіть у каталог, налаштуйте товар і додайте його в кошик.', emptyBtn: 'Перейти до каталогу', emptyHref: '/catalog/',
+  summary: 'Підсумок', yourOrder: 'Ваше замовлення', count: 'Кількість позицій', totalAll: 'Разом', totalPart: 'Проміжна сума (лише позиції з відомою ціною)',
+  unpricedNote: (n: number) => `${n} поз. — ціна уточнюється. Це не остаточна сума замовлення.`, priceTbd: 'Ціна уточнюється', unit: 'за шт.',
+  name: 'Ім’я', phone: 'Телефон', comment: 'Коментар (необов’язково)', commentPh: 'Наприклад: потрібна доставка й монтаж у Києві', submit: 'Надіслати заявку', sending: 'Надсилаємо…',
+  notice: 'Сума попередня й не є офертою. Остаточну вартість, строки, доставку та монтаж підтверджує менеджер. Онлайн-оплати немає.',
+  qty: 'Кількість', remove: 'Видалити', consent: 'Надсилаючи заявку, ви погоджуєтесь із', policy: 'політикою конфіденційності', policyHref: '/privacy-policy/',
+  save: 'Зберегти кошик', pdf: 'Завантажити PDF', saved: 'Кошик збережено в цьому браузері.',
+  pricesUpdated: 'Ціни в кошику оновлено за актуальним прайсом.',
+  doneH: 'Заявку прийнято', doneP: (id: string) => `Номер заявки: ${id}. Менеджер зв’яжеться з вами для підтвердження вартості та деталей.`, doneBtn: 'Повернутися до каталогу',
+  errors: { invalid_name: 'Вкажіть ім’я.', invalid_phone: 'Перевірте номер телефону.', invalid_comment: 'У коментарі не можна залишати посилання.', too_many_requests: 'Забагато спроб. Зачекайте хвилину.', order_conflict: 'Замовлення змінилося — надішліть заявку ще раз.', price_changed: 'Ціни оновилися — перевірте суму й надішліть заявку ще раз.', invalid_items: 'Перевірте склад кошика.', invalid_quantity: 'Перевірте кількість.', generic: 'Не вдалося надіслати заявку. Кошик збережено — спробуйте ще раз або зателефонуйте нам.' },
+  openItem: 'Відкрити товар', mirror: 'Дзеркало', category: 'Дзеркала', fallbackName: 'Конструкція', fallbackConfig: 'Індивідуальна конфігурація', home: '/'
+};
+const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
+---
+<BaseLayout title={S.title} description={S.desc} locale={locale} robots="noindex, follow">
+  <Header locale={locale} />
+
+  <main class="project-cart-page">
+    <section class="pc-head">
+      <div class="container">
+        <h1>{S.eyebrow}</h1>
+        <p class="pc-head__sub"><span data-project-count>0</span> {S.positions}</p>
+      </div>
+    </section>
+
+    <section class="section project-cart-section">
+      <div class="container project-cart-layout">
+        <div class="project-cart-list-wrap">
+          <div class="project-cart-head">
+            <h2>{S.chosen}</h2>
+            <button class="project-cart-clear" type="button" data-project-clear>{S.clear}</button>
+          </div>
+          <p class="project-cart-notice" data-cart-notice hidden role="status"></p>
+
+          <div class="project-cart-empty" data-project-empty>
+            <div class="project-cart-empty__icon">＋</div>
+            <h3>{S.emptyH}</h3>
+            <p>{S.emptyP}</p>
+            <a class="button button--mint" href={S.emptyHref}>{S.emptyBtn}</a>
+          </div>
+
+          <div class="project-cart-list" data-project-list></div>
+        </div>
+
+        <aside class="project-cart-summary" id="checkout">
+          <div data-cart-main>
+            <h2>{S.yourOrder}</h2>
+
+            <div class="project-cart-summary__rows">
+              <div><span>{S.count}</span><b data-summary-count>0</b></div>
+              <div><span data-summary-total-label>{S.totalAll}</span><b data-summary-total>0 грн</b></div>
+            </div>
+            <p class="project-cart-notice" data-summary-unpriced hidden></p>
+
+            <form class="project-cart-form" data-cart-form novalidate>
+              <label>{S.name}<input name="name" type="text" autocomplete="name" required minlength="2" maxlength="120" /></label>
+              <label>{S.phone}<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
+              <label>{S.comment}<textarea name="comment" rows="2" maxlength="1500" placeholder={S.commentPh} data-project-note></textarea></label>
+              <div class="hp" aria-hidden="true"><label>Website<input name="website" type="text" tabindex="-1" autocomplete="off" /></label></div>
+              <p>{S.consent} <a href={S.policyHref}>{S.policy}</a>.</p>
+              <p data-cart-error hidden role="alert"></p>
+              <button class="button button--mint" type="submit" data-cart-submit>{S.submit}</button>
+            </form>
+
+            <div class="project-cart-extras">
+              <button class="button button--outline project-cart-save" type="button" data-project-save>{S.save}</button>
+              <button class="button button--outline project-cart-download" type="button" data-project-download>{S.pdf}</button>
+            </div>
+            <p class="project-cart-action-status" data-project-action-status hidden role="status"></p>
+            <p class="project-cart-summary__notice">{S.notice}</p>
+          </div>
+          <div class="project-cart-done" data-cart-done hidden>
+            <h2>{S.doneH}</h2>
+            <p data-cart-done-text></p>
+            <a class="button button--mint" href={S.emptyHref}>{S.doneBtn}</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <template id="project-item-template">
+    <article class="project-cart-item">
+      <div class="project-cart-item__image">
+        <img src="" alt="" width="320" height="250" />
+      </div>
+      <div class="project-cart-item__body">
+        <div class="project-cart-item__top">
+          <div>
+            <small></small>
+            <h3></h3>
+          </div>
+          <button type="button" aria-label={S.remove}>×</button>
+        </div>
+        <p class="project-cart-item__config"></p>
+        <a class="project-cart-item__link" href="#" hidden></a>
+        <div class="project-cart-item__bottom">
+          <label>
+            <span>{S.qty}</span>
+            <input type="number" min="1" max="50" value="1" />
+          </label>
+          <strong></strong>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <Footer hideBenefits />
+  <script type="application/json" id="cart-cfg" set:html={JSON.stringify(clientCfg)} />
+  <script type="application/json" id="cart-fn" set:html={JSON.stringify({ doneP: S.doneP('{id}'), unpricedNote: S.unpricedNote(0).replace('0', '{n}') })} />
+
+  <script>
+    import { readProject, writeProject, newOrderId, type CartItem } from '../../scripts/sg-cart';
+    import pub from '../../data/led-mirrors/public.json';
+    import photos from '../../data/led-mirrors/photos.json';
+    import { optionLabel, groupLabel } from '../../lib/led-mirror-i18n.mjs';
+    import { safeInternalPath, safeImagePath, ledLinks, priceKey, applyPriceUpdates } from '../../lib/cart-safe.mjs';
+    import { ledConfigLines } from '../../lib/cart-describe.mjs';
+
+    const cfg = JSON.parse(document.getElementById('cart-cfg')!.textContent!);
+    const fn = JSON.parse(document.getElementById('cart-fn')!.textContent!);
+    const ru = cfg.locale === 'ru';
+    const $ = <T extends HTMLElement>(s: string) => document.querySelector<T>(s)!;
+    const list = $('[data-project-list]'), empty = $('[data-project-empty]'), template = $<HTMLTemplateElement>('#project-item-template');
+    const form = $<HTMLFormElement>('[data-cart-form]'), errEl = $('[data-cart-error]'), submitBtn = $<HTMLButtonElement>('[data-cart-submit]');
+    const noticeEl = $('[data-cart-notice]'), unpricedEl = $('[data-summary-unpriced]');
+    const money = (v: number) => `${String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} грн`;
+    const models = new Map<number, any>(pub.models.map((m: any) => [m.id, m]));
+    const labels: Record<string, string> = Object.fromEntries(pub.groups.map((g: any) => [g.key, g.label]));
+    const unit = (i: CartItem) => (Number(i.price) > 0 ? Number(i.price) : null);
+    // Link and photo of a line: LED mirrors come from the public model data (by modelId), other lines are validated internal paths.
+    function resolve(i: CartItem): { url: string | null; image: string | null } {
+      if (i.kind === 'led-mirror') return ledLinks(i, models, photos as Record<string, number>, cfg.locale);
+      return { url: safeInternalPath(i.url), image: safeImagePath(i.image) ?? '/images/s20/product-main.webp' };
+    }
+
+    const itemName = (i: CartItem) => (i.kind === 'led-mirror' ? `${cfg.mirror} ${(i.name || '').replace(/^(Дзеркало|Зеркало) /, '')}` : i.name || cfg.fallbackName);
+    function itemConfig(i: CartItem) {
+      if (i.kind !== 'led-mirror') return i.configuration || cfg.fallbackConfig;
+      return ledConfigLines(i, labels, cfg.locale).join('\n'); // size + characteristics + the options really chosen (no «Без …»)
+    }
+    function totals(items: CartItem[]) {
+      const count = items.reduce((n, i) => n + (Number(i.quantity) || 1), 0);
+      const known = items.filter((i) => unit(i) !== null);
+      const total = known.reduce((s, i) => s + unit(i)! * (Number(i.quantity) || 1), 0);
+      return { count, total, unpriced: items.length - known.length, any: known.length > 0 };
+    }
+
+    function render() {
+      const project = readProject();
+      list.innerHTML = '';
+      empty.hidden = project.items.length > 0;
+      $('[data-project-clear]').hidden = project.items.length === 0;
+      project.items.forEach((item, index) => {
+        const card = (template.content.cloneNode(true) as DocumentFragment).querySelector<HTMLElement>('.project-cart-item')!;
+        const img = card.querySelector('img')!;
+        const res = resolve(item);
+        if (res.image) { img.src = res.image; img.alt = itemName(item); img.addEventListener('error', () => { (img.parentElement as HTMLElement).hidden = true; }, { once: true }); }
+        else (img.parentElement as HTMLElement).hidden = true; // no photo of this model: no picture, never a stand-in
+        card.querySelector('small')!.textContent = item.kind === 'led-mirror' ? cfg.category : item.category || 'Space Glass';
+        card.querySelector('h3')!.textContent = itemName(item);
+        card.querySelector('.project-cart-item__config')!.textContent = itemConfig(item);
+        if (res.url) { const a = card.querySelector<HTMLAnchorElement>('.project-cart-item__link')!; a.hidden = false; a.href = res.url; a.textContent = cfg.openItem; }
+        const u = unit(item), q = Number(item.quantity) || 1;
+        const strong = card.querySelector('strong')!;
+        strong.textContent = u === null ? cfg.priceTbd : money(u * q);
+        strong.classList.toggle('is-tbd', u === null);
+        if (u !== null) { const s = document.createElement('span'); s.className = 'project-cart-item__unit'; s.textContent = `${money(u)} ${cfg.unit}`; strong.append(s); }
+        const qty = card.querySelector('input')!;
+        qty.value = String(q);
+        qty.addEventListener('change', () => { const p = readProject(); p.items[index].quantity = Math.min(50, Math.max(1, Math.floor(Number(qty.value) || 1))); writeProject(p); render(); });
+        card.querySelector('.project-cart-item__top button')!.addEventListener('click', () => { const p = readProject(); p.items.splice(index, 1); writeProject(p); render(); });
+        list.appendChild(card);
+      });
+      const t = totals(project.items);
+      document.querySelectorAll('[data-project-count],[data-summary-count]').forEach((el) => (el.textContent = String(t.count)));
+      document.querySelectorAll('[data-project-total],[data-summary-total]').forEach((el) => (el.textContent = t.any ? money(t.total) : project.items.length ? cfg.priceTbd : money(0)));
+      $('[data-summary-total-label]').textContent = t.unpriced > 0 ? cfg.totalPart : cfg.totalAll;
+      unpricedEl.hidden = t.unpriced === 0;
+      unpricedEl.textContent = fn.unpricedNote.replace('{n}', String(t.unpriced));
+      submitBtn.disabled = project.items.length === 0;
+    }
+
+    /** LED mirror lines are re-priced by the server (retail only); stored prices follow. Returns true if any changed. */
+    async function refreshPrices(): Promise<boolean> {
+      const sent = readProject().items.filter((i) => i.kind === 'led-mirror');
+      if (!sent.length) return false;
+      try {
+        const res = await fetch('/api/led-mirror-price', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ items: sent.map((i) => ({ modelId: i.modelId, w: i.w, h: i.h, options: i.options })) }) });
+        const r = await res.json();
+        if (!r.ok) return false;
+        // the cart may have changed while the request was running: apply the prices to the LATEST cart, line by line
+        const { project, changed } = applyPriceUpdates(readProject(), sent.map(priceKey), r.items);
+        if (changed) writeProject(project);
+        return changed;
+      } catch { return false; }
+    }
+    const showNotice = (msg: string) => { noticeEl.hidden = false; noticeEl.textContent = msg; };
+
+    // the buyer's comment lives in the project (localStorage `note`): it survives reloads and is what /project-print/ shows;
+    // the order sends the same text (form field `comment`)
+    const noteEl = form.querySelector<HTMLTextAreaElement>('[data-project-note]')!;
+    noteEl.value = readProject().note ?? '';
+    noteEl.addEventListener('input', () => { const p = readProject(); p.note = noteEl.value; writeProject(p); });
+
+    $('[data-project-clear]').addEventListener('click', () => { writeProject({ items: [], note: '' }); noteEl.value = ''; render(); });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errEl.hidden = true;
+      const p = readProject();
+      if (!p.items.length) return;
+      const fd = new FormData(form);
+      // one order id per cart content: it stays the same on retries (server-side duplicate protection) and changes when the cart changes
+      const sig = JSON.stringify(p.items.map((i) => [i.id, i.quantity, i.price]));
+      if (!p.orderId || p.orderSig !== sig) { p.orderId = newOrderId(); p.orderSig = sig; writeProject(p); }
+      submitBtn.disabled = true; const label = submitBtn.textContent; submitBtn.textContent = cfg.sending;
+      try {
+        const res = await fetch('/api/cart-order', {
+          method: 'POST', headers: { 'content-type': 'application/json', 'x-sg-form': '1' },
+          body: JSON.stringify({
+            orderId: p.orderId, locale: cfg.locale, name: fd.get('name'), phone: fd.get('phone'), comment: fd.get('comment'), website: fd.get('website'), _js: 'sg-cart',
+            items: p.items.map((i) => ({ kind: i.kind ?? 'other', modelId: i.modelId, w: i.w, h: i.h, options: i.options, name: itemName(i), configuration: itemConfig(i).replace(/\n/g, '; '), price: unit(i), quantity: i.quantity, url: resolve(i).url ? location.origin + resolve(i).url : undefined }))
+          })
+        });
+        const r = await res.json().catch(() => ({}));
+        if (res.ok && r.ok) {
+          noteEl.value = ''; writeProject({ items: [], note: '' }); // the server confirmed: only now the cart is cleared (and the order id with it)
+          $('[data-cart-main]').hidden = true;
+          $('[data-cart-done]').hidden = false;
+          $('[data-cart-done-text]').textContent = fn.doneP.replace('{id}', r.order_ref || String(r.order_id || p.orderId).slice(-8).toUpperCase());
+          render();
+          return;
+        }
+        if (r.error === 'order_conflict') { const c = readProject(); delete c.orderId; delete c.orderSig; writeProject(c); }
+        if (r.error === 'price_changed') { await refreshPrices(); render(); showNotice(cfg.pricesUpdated); }
+        errEl.hidden = false; errEl.textContent = cfg.errors[r.error] || cfg.errors.generic;
+      } catch { errEl.hidden = false; errEl.textContent = cfg.errors.generic; }
+      finally { submitBtn.textContent = label; render(); }
+    });
+
+    const status = $('[data-project-action-status]');
+    const showStatus = (m: string) => { status.hidden = false; status.textContent = m; setTimeout(() => (status.hidden = true), 2600); };
+    $('[data-project-save]').addEventListener('click', () => { const p = readProject(); p.savedAt = new Date().toISOString(); writeProject(p); showStatus(cfg.saved); });
+    $('[data-project-download]').addEventListener('click', () => window.open(cfg.locale === 'ru' ? '/ru/project-print/' : '/project-print/', '_blank', 'noopener,noreferrer'));
+
+    const q = new URLSearchParams(location.search);
+    render();
+    refreshPrices().then((changed) => { if (changed) { render(); showNotice(cfg.pricesUpdated); } });
+    if (q.get('checkout') === '1') { $('#checkout').scrollIntoView({ block: 'start' }); form.querySelector<HTMLInputElement>('input[name=name]')?.focus({ preventScroll: true }); }
+  </script>
+
+  <style is:global>
+    /* Unified cart: light Space Glass style (tokens from global.css) */
+    .project-cart-page{background:#fff;color:var(--text);padding-bottom:56px}
+    .pc-head{padding:22px 0 6px}
+    .pc-head h1{margin:0;font-size:clamp(26px,3vw,36px);line-height:1.15;color:var(--text)}
+    .pc-head__sub{margin:4px 0 0;color:var(--muted,#5f6b64);font-size:.95rem}
+    .project-cart-section{padding:12px 0 0}
+    .project-cart-layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start}
+    .project-cart-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 12px}
+    .project-cart-page .project-cart-head h2,.project-cart-page .project-cart-summary h2,.project-cart-page .project-cart-empty h3{font-size:1.1rem!important;line-height:1.25!important;margin:0}
+    .project-cart-page .project-cart-item__top h3{font-size:1.05rem!important;line-height:1.25!important}
+    .project-cart-page .pc-head h1{font-size:clamp(24px,3vw,34px)!important;line-height:1.15!important}
+    .project-cart-clear{background:none;border:0;padding:8px 0;color:var(--muted,#5f6b64);font:inherit;font-size:.9rem;text-decoration:underline;cursor:pointer;min-height:44px}
+    .project-cart-clear:hover{color:var(--text)}
+    .project-cart-list{display:grid;gap:12px}
+    .project-cart-item{display:grid;grid-template-columns:104px minmax(0,1fr);gap:14px;padding:12px;border:1px solid var(--line,#e0e7e2);border-radius:14px;background:#fff}
+    .project-cart-item__image{width:104px;height:104px;border-radius:10px;overflow:hidden;background:var(--green-soft,#edf8f2)}
+    .project-cart-item__image img{display:block;width:100%;height:100%;object-fit:cover}
+    .project-cart-item__body{min-width:0;display:grid;gap:6px;align-content:start}
+    .project-cart-item__top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+    .project-cart-item__top small{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mint-dark,#347a66)}
+    .project-cart-item__top h3{margin:2px 0 0;font-size:1.05rem;line-height:1.25}
+    .project-cart-item__top button{flex:none;width:44px;height:44px;margin:-8px -8px 0 0;border:0;border-radius:50%;background:none;font-size:1.4rem;line-height:1;color:var(--muted,#5f6b64);cursor:pointer}
+    .project-cart-item__top button:hover{background:var(--green-soft,#edf8f2);color:var(--text)}
+    .project-cart-item__config{margin:0;font-size:.85rem;line-height:1.45;color:var(--muted,#5f6b64);white-space:pre-line}
+    .project-cart-item__link{font-size:.8rem;color:var(--mint-dark,#347a66)}
+    .project-cart-item__bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:4px}
+    .project-cart-item__bottom label{display:grid;gap:2px;font-size:.75rem;color:var(--muted,#5f6b64)}
+    .project-cart-item__bottom input{width:76px;min-height:44px;padding:6px 10px;border:1px solid var(--line,#e0e7e2);border-radius:10px;font:inherit;font-size:1rem;color:var(--text)}
+    .project-cart-item__bottom strong{min-width:0;max-width:62%;font-size:1.25rem;line-height:1.15;text-align:right;color:var(--text);overflow-wrap:anywhere}
+    .project-cart-item__bottom strong.is-tbd{font-size:1rem;color:var(--mint-dark,#347a66)}
+    .project-cart-item__unit{display:block;font-size:.75rem;font-weight:400;color:var(--muted,#5f6b64);margin-top:2px}
+    .project-cart-empty{padding:28px 20px;border:1px dashed var(--green-line,#cfe9da);border-radius:14px;text-align:center;background:var(--green-soft,#edf8f2)}
+    .project-cart-empty[hidden]{display:none}
+    .project-cart-empty__icon{font-size:1.6rem;color:var(--mint-dark,#347a66)}
+    .project-cart-page .project-cart-empty h3{margin:6px 0}.project-cart-empty p{margin:0 0 14px;color:var(--muted,#5f6b64)}
+    .project-cart-summary{position:sticky;top:96px;padding:16px;border:1px solid var(--green-line,#cfe9da);border-radius:16px;background:var(--green-soft,#edf8f2)}
+    .project-cart-page .project-cart-summary h2{margin:0 0 8px}
+    .project-cart-summary__rows{display:grid;gap:4px;margin-bottom:8px}
+    .project-cart-summary__rows div{display:flex;justify-content:space-between;gap:12px;align-items:baseline;font-size:.9rem}
+    .project-cart-summary__rows div:last-child b{font-size:1.5rem}
+    .project-cart-summary__rows span{color:var(--muted,#5f6b64)}
+    .project-cart-notice{margin:0 0 8px;padding:8px 10px;border-radius:8px;background:#fff7e0;font-size:.85rem}
+    .project-cart-notice[hidden]{display:none}
+    .project-cart-form{display:grid;gap:8px;margin:0}
+    .project-cart-form label{display:grid;gap:3px;font-size:.85rem;color:var(--muted,#5f6b64)}
+    .project-cart-form input,.project-cart-form textarea{width:100%;min-height:44px;padding:9px 12px;border:1px solid var(--line,#e0e7e2);border-radius:10px;background:#fff;font:inherit;color:var(--text)}
+    .project-cart-form textarea{min-height:64px;resize:vertical}
+    .project-cart-form input:focus-visible,.project-cart-form textarea:focus-visible,.project-cart-item__bottom input:focus-visible{outline:2px solid var(--mint,#7bc2a8);outline-offset:1px}
+    .project-cart-form p{margin:0;font-size:.78rem;color:var(--muted,#5f6b64)}
+    .project-cart-form [data-cart-error]{color:#b3261e;font-size:.9rem}
+    .project-cart-form [data-cart-error][hidden]{display:none}
+    .project-cart-form .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+    .project-cart-form button[disabled]{opacity:.6;cursor:wait}
+    /* the main call to action: full width, clearly above the secondary actions */
+    .project-cart-form [data-cart-submit]{width:100%;min-height:52px;margin-top:2px;font-size:1rem;font-weight:700}
+    /* secondary actions: one compact row, equal buttons, centred; they wrap only when the width is really too small */
+    .project-cart-extras{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--green-line,#cfe9da)}
+    .project-cart-extras{flex-wrap:nowrap}
+    .project-cart-extras .button{flex:1 1 0;min-width:0;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:44px;margin:0;padding:6px 8px;font-size:.85rem;line-height:1.15;text-align:center;white-space:normal}
+    .project-cart-action-status{margin:8px 0 0;font-size:.85rem;text-align:center}
+    .project-cart-action-status[hidden]{display:none}
+    .project-cart-summary__notice{margin:10px 0 0;font-size:.76rem;line-height:1.4;color:var(--muted,#5f6b64)}
+    .project-cart-done{padding:8px 0}.project-cart-done h2{margin-top:0}
+    @media (max-width:400px){.project-cart-item__bottom{flex-wrap:wrap}.project-cart-item__bottom strong{max-width:100%;text-align:left;overflow-wrap:normal}.project-cart-item__unit{overflow-wrap:normal}}
+    @media (max-width:860px){
+      .project-cart-layout{grid-template-columns:1fr;gap:16px}
+      .project-cart-summary{position:static}
+      .pc-head{padding:14px 0 2px}
+      .project-cart-item{grid-template-columns:84px minmax(0,1fr);gap:10px;padding:10px}
+      .project-cart-item__image{width:84px;height:84px}
+    }
+  </style>
+</BaseLayout>

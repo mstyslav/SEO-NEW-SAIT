@@ -43,6 +43,7 @@ const links = intl
       [t.contacts, '/contacts/'],
     ]
   : [
+      [locale === 'ru' ? 'Магазин' : 'Магазин', '/shop/'],
       [t.solutions, '/rishennya/'],
       [t.services, '/poslugy/'],
       [t.projects, '/project/'],
@@ -68,8 +69,10 @@ const INTL_INLINE_CSS = '.sg-nav-actions>.nav-icon--phone{order:5}@media(max-wid
   + 'main :is(h1,h2,h3,h4,dt,dd,small),.about-stat span{overflow-wrap:break-word!important;-webkit-hyphens:auto!important;hyphens:auto!important}'
   + 'main :is(p,li){overflow-wrap:break-word}'
   + '.about-main-hero .sg-hero__copy h1>span{white-space:normal!important}';
+// UA/RU cart icon: plain by default, mint (site token --mint) when the cart is not empty; visible focus ring.
+const CART_ICON_CSS = 'html body .sg-header .sg-nav-actions a.nav-icon.nav-icon--cart{display:inline-flex;align-items:center;justify-content:center}html body .sg-header .sg-nav-actions a.nav-icon.nav-icon--cart.is-filled{color:var(--mint,#7bc2a8)!important;border-color:var(--mint,#7bc2a8)!important;background:rgba(123,194,168,.16)!important}html body .sg-header .sg-nav-actions a.nav-icon.nav-icon--cart.is-filled svg{stroke:var(--mint,#7bc2a8)!important;color:var(--mint,#7bc2a8)!important}html body .sg-header .sg-nav-actions a.nav-icon.nav-icon--cart:focus-visible{outline:2px solid var(--mint,#7bc2a8)!important;outline-offset:3px}';
 ---
-{intl && <style is:inline set:html={INTL_INLINE_CSS}></style>}
+{intl && <style is:inline set:html={INTL_INLINE_CSS}></style>}{!intl && <style is:inline set:html={CART_ICON_CSS}></style>}
 <header class="site-header sg-header">
   <div class="container nav sg-nav">
     <a class="brand-logo" href={lp("/")} aria-label={t.brandLogoAria}><img
@@ -87,7 +90,7 @@ const INTL_INLINE_CSS = '.sg-nav-actions>.nav-icon--phone{order:5}@media(max-wid
     <div class="nav__actions sg-nav-actions">
       <div class="language-switcher" data-language-switcher><button class="language-switcher__button language-switcher__button--direct" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sg-language-menu" aria-label={`${languageMenuLabel}: ${localeInfo.label}`} title={languageMenuLabel} data-language-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 12h17M12 3c2.4 2.5 3.6 5.5 3.6 9S14.4 18.5 12 21M12 3C9.6 5.5 8.4 8.5 8.4 12S9.6 18.5 12 21" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span>{localeInfo.short}</span></button><ul class="language-switcher__menu" id="sg-language-menu" aria-label={languageMenuLabel} hidden data-language-menu>{languageOptions.map((option) => <li><a class:list={['language-switcher__option', option.current && 'is-active']} href={option.href} hreflang={option.htmlLang} lang={option.htmlLang} aria-current={option.current ? 'true' : undefined} data-target-locale={option.code} data-language-button><b>{option.short}</b><span>{option.label}</span></a></li>)}</ul></div>
       <a class:list={['nav-icon', 'nav-icon--search', 'nav-icon--search-ua-desktop']} href={catalogHref} aria-label={t.searchAria}>⌕</a>
-      <a class="nav-icon nav-icon--phone" href={phoneTel} aria-label={t.phoneAria}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      {!intl && <a class="nav-icon nav-icon--cart" href={lp('/cart/')} aria-label={locale === 'ru' ? 'Корзина' : 'Кошик'} data-cart-link data-label={locale === 'ru' ? 'Корзина' : 'Кошик'} data-filled={locale === 'ru' ? 'есть товары' : 'є товари'}><svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 11h10.6L20 7H6.2"/><circle cx="9" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/></svg></a>}<a class="nav-icon nav-icon--phone" href={phoneTel} aria-label={t.phoneAria}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a class="button button--mint sg-header-cta" href={lp("/contacts/")}>{t.quote}</a>
       <button class="sg-mobile-toggle" type="button" aria-controls="sg-mobile-menu" aria-expanded="false" aria-label={t.menu} data-mobile-menu-button><span></span><span></span><span></span></button>
     </div>
@@ -111,7 +114,22 @@ const INTL_INLINE_CSS = '.sg-nav-actions>.nav-icon--phone{order:5}@media(max-wid
     </div>
   </section>
   <div class="sg-mobile-menu" id="sg-mobile-menu" data-mobile-menu hidden><div class="sg-mobile-menu__panel"><div class="simple-catalog simple-catalog--mobile"><div class="simple-catalog__mobile-row"><a class="sg-mobile-menu__primary" href={catalogHref}>{t.catalog}</a><button class="simple-catalog__toggle" type="button" aria-label={t.expandCatalogMenu} aria-controls="sg-mobile-catalog-categories" aria-expanded="false" data-mobile-catalog-toggle data-expand-label={t.expandCatalogMenu} data-collapse-label={t.collapseCatalogMenu}><i aria-hidden="true"></i></button></div><div class="simple-catalog__menu" id="sg-mobile-catalog-categories" data-mobile-catalog-menu hidden>{catalogNavigation.map((category, index) => { const services = category.services.filter((service, serviceIndex, allServices) => allServices.findIndex(({ shortName, path }) => path === service.path && shortName === service.shortName) === serviceIndex); const servicesId = `sg-mobile-catalog-services-${index + 1}`; if (services.length === 0) return <section><div class="simple-catalog__category-row simple-catalog__category-row--single"><a class="simple-catalog__category" href={lp(category.href)}>{category.name}</a></div></section>; return <section><div class="simple-catalog__category-row"><a class="simple-catalog__category" href={lp(category.href)}>{category.name}</a><button class="simple-catalog__service-toggle" type="button" aria-label={`${t.expandSubcategoriesPrefix}: ${category.name}`} aria-controls={servicesId} aria-expanded="false" data-mobile-category-toggle data-category-name={category.name} data-expand-prefix={t.expandSubcategoriesPrefix} data-collapse-prefix={t.collapseSubcategoriesPrefix}><i aria-hidden="true"></i></button></div><div class="simple-catalog__services" id={servicesId} data-mobile-category-menu hidden>{services.map((service) => <a href={lp(service.path)}>{service.shortName}</a>)}</div></section>})}</div></div>{links.map(([label, href]) => <a href={lp(href)}>{label}</a>)}<a href={phoneTel}>{phoneLabel}</a>{whatsappTel && <a href={whatsappTel} target="_blank" rel="noopener noreferrer">WhatsApp</a>}<a class="button button--mint" href={lp("/contacts/")}>{t.quote}</a></div></div>
-</header>
+</header>{!intl && <script>
+  // Cart icon: mint when the unified cart (localStorage «spaceGlassProject», shared by UA and RU) is not empty. No number.
+  const cartLink = document.querySelector<HTMLElement>('[data-cart-link]');
+  const refresh = () => {
+    if (!cartLink) return;
+    let n = 0;
+    try { n = (JSON.parse(localStorage.getItem('spaceGlassProject') || '{}').items ?? []).length; } catch { n = 0; }
+    cartLink.classList.toggle('is-filled', n > 0);
+    const base = cartLink.dataset.label || '';
+    cartLink.setAttribute('aria-label', n > 0 ? `${base} (${cartLink.dataset.filled})` : base);
+  };
+  refresh();
+  window.addEventListener('space-glass-project-updated', refresh);
+  window.addEventListener('storage', refresh);
+  window.addEventListener('pageshow', refresh);
+</script>}
 <style is:inline>
   .simple-catalog summary{display:inline-flex;align-items:center;gap:6px;min-height:48px;color:#fff;cursor:pointer;list-style:none}.simple-catalog summary::-webkit-details-marker{display:none}.simple-catalog--mobile summary{min-height:44px}
   @media(max-width:1120px){.sg-header .sg-mobile-menu:not([hidden]){display:block!important}}

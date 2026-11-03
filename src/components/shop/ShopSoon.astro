@@ -1,0 +1,16 @@
+---
+// Honest information page for a category without shop products yet: no invented products, prices or availability.
+import ShopPage from './ShopPage.astro';
+import { CATEGORIES, SHOP_STR, shopPath } from '../../lib/shop.mjs';
+
+const { locale = 'uk', category } = Astro.props;
+const S = SHOP_STR[locale as 'uk' | 'ru'];
+const c = CATEGORIES.find((x) => x.key === category)!;
+const name = S[category as 'showers' | 'partitions'];
+const crumbs = [{ label: S.home, href: locale === 'ru' ? '/ru/' : '/' }, { label: S.shop, href: shopPath(locale) }, { label: name }];
+---
+<ShopPage locale={locale} title={`${name} — ${S.shop}`} description={S.soonText} crumbs={crumbs}>
+  <div class="category-heading"><div><p class="eyebrow">{S.shop}</p><h1>{name}</h1></div><p>{S.soonText}</p></div>
+  <p class="lm-soon"><span class="lm-shop-card__tag">{S.inPrep}</span></p>
+  <p><a class="button button--mint" href={`${locale === 'ru' ? '/ru' : ''}${c.legacy}`}>{S.soonLink}</a></p>
+</ShopPage>

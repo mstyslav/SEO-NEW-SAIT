@@ -28,3 +28,22 @@ See [SEO-OWNER-ACTIONS.md](SEO-OWNER-ACTIONS.md): door prices (R-030), real case
 
 ## RESEARCH ONLY (no implementation)
 - R-022 analytics coverage, R-021 IndexNow wait, R-040 Austria evidence review.
+
+## LED mirror catalog go-live (R-071, after owner answers)
+- Add photos (own storage), RU locale (/ru/dzerkala/katalog/), Product/ItemList schema only with owner-confirmed prices, remove noindex, add to sitemap-urls.ts + check-routes, internal link from /dzerkala/ (do not edit protected R-069 page before measurement ends 2026-11-11).
+
+## Unified cart go-live (R-072, after owner answers)
+- Decide the Control CRM intake (see SEO-OWNER-ACTIONS.md), then PR + deploy with worker/private/led-mirrors.json present; verify one real order reaches the lead group / CRM.
+- Optional follow-ups: cart link in the mobile menu, EN/DE/ES decision later (not in scope), order statuses in CRM.
+
+## «Обрати LED-дзеркало» block on /dzerkala/led-dzerkala/ (R-069, not before 2026-11-11)
+- Prepared component `src/components/led-mirrors/LedCatalogBlock.astro` (UA/RU, 4 models with photos and retail "від" prices, button to /dzerkala/katalog/). Not imported anywhere; preview at /dzerkala/katalog/preview-led-block/ (noindex, remove the preview route when wiring).
+- After the protection period ends and the owner approves: render it in the LED page template (UA and RU), check title/H1/schema unchanged, then update R-069/R-071.
+
+## Shop go-live (R-073, after owner approval)
+- Merge PR #59 only after the Cloudflare build is green; deploy order: CRM PR #2 first, then the website.
+- Add the shop to the sitemap and remove noindex only on the owner's word; then Search Console: submit the sitemap, watch coverage.
+- Publish the prepared blocks (home «Готові вироби», LED page «Обрати LED-дзеркало») only after approval / after R-069.
+
+## Shop catalog: adding a new category (R-073)
+- Add the category's real products in `buildProducts()` (src/lib/shop-catalog.mjs) with `category`, `attrs`, `price`; its filter scheme (showers / partitions) is already declared. The tab turns active by itself, filters with fewer than two real values stay hidden. Add a product page template for that category before listing it.

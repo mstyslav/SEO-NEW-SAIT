@@ -4,3 +4,7 @@ dist/
 .DS_Store
 *.log
 .dev.vars
+
+# Purchase prices of the LED mirror catalog: server only, never public (npm run led:build, see scripts/build-led-mirrors-catalog.mjs)
+worker/private/
+.wrangler/

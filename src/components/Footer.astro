@@ -6,6 +6,8 @@ import { intlFooterText } from '../content/i18n/intl/footer';
 
 const locale = normalizeLocale(Astro.props.locale ?? Astro.url.searchParams.get('lang') ?? localeFromPath(Astro.url.pathname));
 const intl = isIntlLocale(locale);
+// The shop / cart pages hide the generic benefits strip (own production, 5-year glass warranty, Europe delivery): the shop states its own agreed terms.
+const hideBenefits = Boolean(Astro.props.hideBenefits);
 const lp = (path: string) => localizedPath(path, locale);
 
 const categoryLabelsByLocale = {
@@ -161,6 +163,7 @@ const phoneLabel = contactPhone && !marketContact?.phoneIsCompany ? contactPhone
 const currentYear = new Date().getFullYear();
 ---
 <footer class="site-footer footer-refined">
+  {!hideBenefits && (
   <div class="footer-refined__benefits">
     <div class="footer-refined__benefit"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 39 10v12c0 9.5-6.2 17.5-15 22-8.8-4.5-15-12.5-15-22V10l15-6Z"/><path d="m17 23 5 5 10-11"/></svg><div><b>{ft.benefits[0][0]}</b><small>{ft.benefits[0][1]}</small></div></div>
     <div class="footer-refined__benefit"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="18" r="10"/><path d="m18 30-3 14 9-5 9 5-3-14"/><path d="m19 18 3 3 7-7"/></svg><div><b>{ft.benefits[1][0]}</b><small>{ft.benefits[1][1]}</small></div></div>
@@ -168,6 +171,7 @@ const currentYear = new Date().getFullYear();
     <div class="footer-refined__benefit"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="14" r="8"/><path d="M11 42c1-10 7-16 13-16s12 6 13 16"/></svg><div><b>{ft.benefits[3][0]}</b><small>{ft.benefits[3][1]}</small></div></div>
     <a class="footer-refined__quote" href={lp("/contacts/")}><svg viewBox="0 0 48 48" aria-hidden="true"><path d="m5 24 37-17-12 34-8-13-17-4Z"/><path d="m22 28 20-21"/></svg><div><b>{ft.quoteCta[0]}</b><small>{ft.quoteCta[1]}</small></div></a>
   </div>
+  )}
 
   <div class="footer-refined__main">
     <div class="footer-refined__brand">

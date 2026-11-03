@@ -25,6 +25,8 @@
  */
 
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
+import { handleCartOrder } from './cart-order';
+import { priceOf, modelName, catalogDate } from './led-mirrors';
 import { ATTRIBUTION_KEYS, attributionLines, attributionPlainLines, parseAttribution, type Attribution } from './attribution';
 
 export interface Env {
@@ -37,6 +39,13 @@ export interface Env {
   RESEND_API_KEY?: string;
   LEAD_EMAIL_FROM?: string;
   LEAD_EMAIL_TO?: string;
+  /** Local rehearsal only (.dev.vars): /api/cart-order validates and logs, sends nothing. Never set in production. */
+  CART_ORDER_DRY_RUN?: string;
+  /** Cart orders → Space Glass Control CRM: full URL of POST /website/api/orders and the shared HMAC secret (= CRM's WEBSITE_ORDER_SECRET). */
+  CRM_ORDERS_URL?: string;
+  CRM_ORDERS_SECRET?: string;
+  /** Purchase-price table for the LED mirror calculator (gzip+base64 numbers; src/lib/led-prices-codec.mjs). Secret, never in Git. */
+  LED_MIRRORS_PRICES?: string;
 }
 
 type Lead = {
@@ -321,6 +330,58 @@ async function handleLead(request: Request, env: Env): Promise<Response> {
   return json({ ok: true, lead_sent: true, file_sent: fileSent });
 }
 
+/** POST /api/led-mirror-price — retail price of one configuration, or a batch ({items:[...]}) for the cart. Retail only. */
+async function handleLedPrice(request: Request, env: Env): Promise<Response> {
+  if (request.method !== 'POST') return json({ ok: false, error: 'method_not_allowed' }, 405);
+  let body: Record<string, unknown>;
+  try { body = await request.json(); } catch { return json({ ok: false, error: 'invalid_json' }, 400); }
+  const one = (c: Record<string, unknown>) => priceOf(env, { modelId: Number(c?.modelId), w: Number(c?.w), h: Number(c?.h), options: (c?.options ?? {}) as Record<string, string> });
+  if (Array.isArray(body.items)) {
+    if (body.items.length > 30) return json({ ok: false, error: 'invalid_items' }, 400);
+    const rs = await Promise.all(body.items.map((c) => one(c as Record<string, unknown>)));
+    if (rs.some((r) => !r.ok && r.error === 'prices_unavailable')) return json({ ok: false, error: 'prices_unavailable' }, 503);
+    return json({ ok: true, items: rs.map((r) => (r.ok ? { ok: true, ...r.price } : { ok: false, error: r.error })) });
+  }
+  const r = await one(body);
+  return r.ok ? json({ ok: true, ...r.price }) : json({ ok: false, error: r.error }, r.error === 'prices_unavailable' ? 503 : 400);
+}
+
+/** HMAC-SHA256 hex of "<timestamp>.<body>" — the CRM verifies the same string (cloudflare/src/site-orders.ts). */
+async function signOrder(secret: string, timestamp: number, body: string): Promise<string> {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`${timestamp}.${body}`));
+  return [...new Uint8Array(sig)].map((v) => v.toString(16).padStart(2, '0')).join('');
+}
+
+async function handleCart(request: Request, env: Env): Promise<Response> {
+  return handleCartOrder(request, env, {
+    json,
+    normalisePhone,
+    dryRun: env.CART_ORDER_DRY_RUN === '1',
+    ledPrice: (cfg) => priceOf(env, cfg),
+    modelName,
+    catalogDate,
+    rateLimited: async (req) => Boolean(env.LEAD_LIMITER) && !(await env.LEAD_LIMITER!.limit({ key: req.headers.get('cf-connecting-ip') ?? 'unknown' })).success,
+    // Cart orders go to the Space Glass Control CRM only (secrets CRM_ORDERS_URL, CRM_ORDERS_SECRET). No Telegram / Kommo fallback.
+    crm: async (payload) => {
+      if (!env.CRM_ORDERS_URL || !env.CRM_ORDERS_SECRET) return null;
+      const body = JSON.stringify(payload);
+      const ts = Math.floor(Date.now() / 1000);
+      try {
+        const res = await fetch(env.CRM_ORDERS_URL, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', 'x-sg-timestamp': String(ts), 'x-sg-signature': await signOrder(env.CRM_ORDERS_SECRET, ts, body) },
+          body,
+          signal: AbortSignal.timeout(10000)
+        });
+        return { status: res.status, body: (await res.json().catch(() => ({}))) as Record<string, unknown> };
+      } catch {
+        return null;
+      }
+    }
+  });
+}
+
 // Pages removed on purpose (owner decision, TASK 74): answer 410 Gone instead of the generic 404.
 // The same paths are listed in wrangler.jsonc → assets.run_worker_first, so the static 404 handler never sees them.
 const GONE_PATHS = new Set(['/arkhitekturni-systemy', '/ru/arkhitekturni-systemy']);
@@ -336,6 +397,8 @@ export default {
     const { pathname } = new URL(request.url);
     if (GONE_PATHS.has(pathname.replace(/\/+$/, ''))) return goneResponse();
     if (/^\/api\/(kommo-lead|lead)\/?$/.test(pathname)) return handleLead(request, env);
+    if (/^\/api\/led-mirror-price\/?$/.test(pathname)) return handleLedPrice(request, env);
+    if (/^\/api\/cart-order\/?$/.test(pathname)) return handleCart(request, env);
     return env.ASSETS.fetch(request);
   }
 } satisfies ExportedHandler<Env>;

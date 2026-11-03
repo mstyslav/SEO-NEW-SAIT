@@ -225,7 +225,7 @@ document.querySelectorAll('[data-dyn-config]').forEach(root => {
 
     const st=root.querySelector('[data-status]');
     st.hidden=false;
-    st.innerHTML=(root.dataset.tAdded||'Added')+' <a href="/cart/">'+(root.dataset.tOpen||'Open')+' →</a>';
+    st.innerHTML=(root.dataset.tAdded||'Added')+' <a href="'+(document.documentElement.lang==='ru'?'/ru/cart/':'/cart/')+'">'+(root.dataset.tOpen||'Open')+' →</a>';
   });
 
   calc();

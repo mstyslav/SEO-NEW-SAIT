@@ -1,0 +1,425 @@
+---
+// LED mirror product page (UA/RU) — premium two-column layout: gallery (≈55%) + selection and buy block (≈45%).
+// Prices are NEVER computed in the browser: every price comes from POST /api/led-mirror-price (retail only, see worker/led-mirrors.ts);
+// the SSR price shown on load is the retail price of the preselected default configuration.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import ShopFaq from '../shop/ShopFaq.astro';
+import photos from '../../data/led-mirrors/photos.json';
+import pub from '../../data/led-mirrors/public.json';
+import { STR, attr, optionLabel, groupLabel, modelTitle, catalogPath, caption, formatUah } from '../../lib/led-mirror-i18n.mjs';
+import { formatDate } from '../../lib/led-mirror-view.mjs';
+import { shopPath, ledModelPath, SHOP_STR, LED_PRODUCT_TYPE, PRODUCT_TYPES } from '../../lib/shop.mjs';
+import { buildProducts, cardData } from '../../lib/shop-catalog.mjs';
+import { modelFaq } from '../../lib/shop-faq.mjs';
+import { modelContent } from '../../lib/shop-content.mjs';
+import { terms } from '../../lib/shop-terms.mjs';
+import { hasLedLight } from '../../lib/shop-catalog.mjs';
+import { isNoneOption } from '../../lib/cart-describe.mjs';
+import seo from '../../data/led-mirrors/seo.json';
+import '../../styles/category-pages.css';
+import '../../styles/profile-systems.css';
+import '../../styles/led-mirrors.css';
+
+const { model, locale = 'uk' } = Astro.props;
+const ru = locale === 'ru';
+const T = STR[locale as 'uk' | 'ru'];
+const SS = SHOP_STR[locale as 'uk' | 'ru'];
+const P = ru ? {
+  choose: 'Выберите комплектацию', size: 'Размер, мм', custom: 'Свой размер', customHint: (L: any) => `Ширина ${L.width[0]}–${L.width[1]} мм, высота ${L.height[0]}–${L.height[1]} мм, целые числа`,
+  width: 'Ширина', height: 'Высота', basics: 'Основные параметры', extrasT: 'Дополнительные возможности', extras: 'Дополнительные возможности', qty: 'Количество', price: 'Цена комплектации', calculating: 'Считаем цену…',
+  retry: 'Повторить', breakdown: 'Состав цены', code: 'Код товара', buyNow: 'Заказать сейчас', add: 'Добавить в корзину', added: 'Добавлено в корзину.', openCart: 'Открыть корзину →',
+  specsH: 'Технические характеристики', funcH: 'Доступные функции', descH: 'Описание', delivH: 'Доставка, оплата и сроки', waitPrice: 'Покупка станет доступна после подтверждения цены.',
+  dp1: 'Доставляем по всей Украине. Условия зависят от города, габаритов и доступа к объекту; стоимость доставки называет менеджер.', dp2: 'Онлайн-оплаты на сайте нет: способ оплаты менеджер согласует после заявки (общие условия — на странице «Оплата и доставка»).', dp3: 'Монтаж не обязателен; при необходимости рассчитывается отдельно.',
+  dpLink: 'Оплата и доставка', tabsLabel: 'Информация о товаре', specsTab: 'Характеристики', reviewsH: 'Отзывы', reviewsEmpty: 'Отзывов об этой модели пока нет.', reviewsNote: 'Здесь будут отзывы покупателей именно об этой модели. Общие отзывы о компании не выдаются за отзывы о товаре.', warrantyRow: 'Гарантия', leadRow: 'Срок изготовления', optionsH: 'Доступные опции', series: 'Серия', sizes: 'Стандартные размеры', limits: 'Допустимые размеры', glass: 'Полотно', typeL: 'Тип', frameless: 'Безрамное', framed: 'В металлической раме', ledMirror: 'LED-зеркало',
+  lightPhrase: (m: string, none: boolean) => (none ? 'без основной подсветки' : `основная подсветка — ${m.toLowerCase()}`), formPhrase: 'форма',
+  d1: (n: string, t: string, sh: string, li: string, mo: string, led: boolean) => `${n} — ${t.toLowerCase()} ${led ? 'LED-зеркало' : 'зеркало'}, ${sh.toLowerCase()}, ${li}. Размещение: ${mo.toLowerCase()}.`,
+  d2: (std: string, L: any) => `Выберите стандартный размер (${std} мм) с фиксированной ценой или укажите свой в пределах ${L.width[0]}–${L.width[1]} × ${L.height[0]}–${L.height[1]} мм. Дополнительные функции выбираются на странице, цена обновляется сразу.`
+} : {
+  choose: 'Оберіть комплектацію', size: 'Розмір, мм', custom: 'Свій розмір', customHint: (L: any) => `Ширина ${L.width[0]}–${L.width[1]} мм, висота ${L.height[0]}–${L.height[1]} мм, цілі числа`,
+  width: 'Ширина', height: 'Висота', basics: 'Основні параметри', extrasT: 'Додаткові можливості', extras: 'Додаткові можливості', qty: 'Кількість', price: 'Ціна комплектації', calculating: 'Рахуємо ціну…',
+  retry: 'Спробувати ще', breakdown: 'Склад ціни', code: 'Код товару', buyNow: 'Купити зараз', add: 'Додати в кошик', added: 'Додано в кошик.', openCart: 'Відкрити кошик →',
+  specsH: 'Технічні характеристики', funcH: 'Доступні функції', descH: 'Опис', delivH: 'Доставка, оплата та строки', waitPrice: 'Покупка стане доступна після підтвердження ціни.',
+  dp1: 'Доставляємо по всій Україні. Умови залежать від міста, габаритів і доступу до об’єкта; вартість доставки називає менеджер.', dp2: 'Онлайн-оплати на сайті немає: спосіб оплати менеджер погоджує після заявки (загальні умови — на сторінці «Оплата та доставка»).', dp3: 'Монтаж не обов’язковий; за потреби розраховується окремо.',
+  dpLink: 'Оплата та доставка', tabsLabel: 'Інформація про товар', specsTab: 'Характеристики', reviewsH: 'Відгуки', reviewsEmpty: 'Відгуків про цю модель поки немає.', reviewsNote: 'Тут будуть відгуки покупців саме про цю модель. Загальні відгуки про компанію не видаються за відгуки про товар.', warrantyRow: 'Гарантія', leadRow: 'Строк виготовлення', optionsH: 'Доступні опції', series: 'Серія', sizes: 'Стандартні розміри', limits: 'Допустимі розміри', glass: 'Полотно', typeL: 'Тип', frameless: 'Безрамне', framed: 'У металевій рамі', ledMirror: 'LED-дзеркало',
+  lightPhrase: (m: string, none: boolean) => (none ? 'без основної підсвітки' : `основна підсвітка — ${m.toLowerCase()}`), formPhrase: 'форма',
+  d1: (n: string, t: string, sh: string, li: string, mo: string, led: boolean) => `${n} — ${t.toLowerCase()} ${led ? 'LED-дзеркало' : 'дзеркало'}, ${sh.toLowerCase()}, ${li}. Розміщення: ${mo.toLowerCase()}.`,
+  d2: (std: string, L: any) => `Оберіть стандартний розмір (${std} мм) із фіксованою ціною або вкажіть свій у межах ${L.width[0]}–${L.width[1]} × ${L.height[0]}–${L.height[1]} мм. Додаткові функції обираються на сторінці, ціна оновлюється одразу.`
+};
+const slug = model.slug;
+const count: number = (photos as Record<string, number>)[slug] ?? 0;
+const img = (n: number, w: 480 | 900) => `/images/led-mirrors/${slug}-${n}-${w}.webp`;
+const gallery = Array.from({ length: count }, (_, i) => i + 1);
+const groupLabels = Object.fromEntries(pub.groups.map((g) => [g.key, g.label]));
+const groups = model.option_groups.map((g: any) => ({ key: g.key, label: groupLabel(locale, g.key, groupLabels[g.key]), options: g.options }));
+const EXTRA = ['backlight', 'heating', 'lens', 'shelf', 'switch', 'clock', 'audio'];
+const basics = groups.filter((g: any) => !EXTRA.includes(g.key)), extras = groups.filter((g: any) => EXTRA.includes(g.key));
+// binary function = exactly two options where the first is the free "without" state: rendered as a switch named after the function
+const isToggle = (g: any) => g.options.length === 2 && /^(Без|Сенсорний без)/.test(g.options[0]);
+const clarify = ['lens', 'clock', 'audio'].some((k) => groups.some((g: any) => g.key === k));
+const L = model.size_limits_mm;
+const std = model.standard_sizes[0];
+const title = modelTitle(locale, model.name_short);
+const code = `SG-LED-${slug.toUpperCase()}`;
+const typeLabel = model.frame === 'Металева' ? P.framed : P.frameless;
+const noLight = model.main_light === 'Без основної підсвітки';
+const shortDesc = P.d1(title, typeLabel, attr(locale, model.shape), P.lightPhrase(attr(locale, model.main_light), noLight), attr(locale, model.mounting), hasLedLight(model));
+const meta = (seo as Record<string, any>)[slug];
+const content = modelContent(locale, model, pub.groups, meta?.queries?.[ru ? 'ru' : 'uk']);
+const longDesc = [content.intro, content.purpose, content.config];
+const TM = terms(locale);
+const pageTitle = meta?.title[ru ? 'ru' : 'uk'] ?? `${title} — ${ru ? 'цена по размеру и опциям' : 'ціна за розміром і опціями'}`;
+const pageDesc = meta?.description[ru ? 'ru' : 'uk'] ?? `${title}: ${caption(locale, model)}.`;
+const h1Text = meta?.h1[ru ? 'ru' : 'uk'] ?? title;
+const specRows: [string, string][] = [
+  [P.typeL, typeLabel], [T.specs.shape, attr(locale, model.shape)], [T.specs.light, attr(locale, model.main_light)], [T.specs.mount, attr(locale, model.mounting)],
+  [P.series, model.series], [P.sizes, model.standard_sizes.map((s: any) => `${s.w}×${s.h}`).join(', ')], [P.limits, `${L.width[0]}–${L.width[1]} × ${L.height[0]}–${L.height[1]} ${ru ? 'мм' : 'мм'}`]
+];
+const thick = groups.find((g: any) => g.key === 'thickness');
+specRows.push([P.warrantyRow, terms(locale).warrantyShort], [P.leadRow, terms(locale).leadShort]);
+if (thick) specRows.push([P.glass, thick.options.map((o: string) => optionLabel(locale, o)).join('; ')]);
+const faq = modelFaq(locale, model, pub.groups) as [string, string][];
+const origin = (Astro.site ?? new URL(Astro.url.origin)).origin;
+const abs = (path: string) => `${origin}${path}`;
+const productNote = LED_PRODUCT_TYPE === PRODUCT_TYPES.READY ? SS.readyProduct : SS.madeToOrder;
+const all = buildProducts(pub);
+const related = all.filter((p: any) => p.slug !== slug).map((p: any) => ({ p, score: (p.raw.frame === model.frame ? 2 : 0) + (p.raw.main_light === model.main_light ? 1 : 0) + (p.raw.shape === model.shape ? 1 : 0) }))
+  .sort((a: any, b: any) => b.score - a.score || a.p.name.localeCompare(b.p.name)).slice(0, 4).map((x: any) => x.p);
+// Product structured data mirrors the visible page. No brand (private-label right not confirmed), no availability, rating or review (none shown).
+const productLd = {
+  '@context': 'https://schema.org', '@type': 'Product', '@id': `${abs(ledModelPath(locale, slug))}#product`,
+  name: title, description: pageDesc, url: abs(ledModelPath(locale, slug)), sku: code,
+  ...(count > 0 ? { image: gallery.map((n) => abs(img(n, 900))) } : {}),
+  offers: { '@type': 'Offer', url: abs(ledModelPath(locale, slug)), priceCurrency: 'UAH', price: model.default_uah }
+};
+const cfg = {
+  id: model.id, slug, name: model.name_short, locale, cartHref: T.cartHref, limits: L, std: model.standard_sizes, defaultStd: `${std.w}x${std.h}`, hasPhoto: count > 0,
+  optionLabels: Object.fromEntries(model.option_groups.flatMap((g: any) => g.options).map((o: string) => [o, optionLabel(locale, o)])), groupLabels: Object.fromEntries(groups.map((g: any) => [g.key, g.label])),
+  str: { badSize: T.badSize, badOpt: T.badOpt, netErr: T.netErr, nonstd: T.nonstd, mirror: T.mirror, added: P.added, openCart: P.openCart, calc: P.calculating, wait: P.waitPrice, int: ru ? 'Введите целые числа.' : 'Вкажіть цілі числа.' }
+};
+---
+<BaseLayout
+  title={pageTitle}
+  description={pageDesc}
+  locale={locale}
+  alternateLocales={['uk', 'ru']}
+  image={count > 0 ? img(1, 900) : undefined}
+  structuredData={[productLd]}
+  robots="noindex,follow"
+>
+<div class="sg-page-shell">
+  <Header locale={locale} />
+  <main id="main" class="pp">
+    <section class="category-section pp__top">
+      <Breadcrumbs items={[{ label: T.home, href: ru ? '/ru/' : '/' }, { label: T.shop, href: shopPath(locale) }, { label: T.mirrors, href: shopPath(locale, 'mirrors') }, { label: T.ledMirrors, href: catalogPath(locale) }, { label: model.name_short }]} />
+
+      <div class="pp__grid">
+        <div class="pp__media">
+          {count > 0 ? (
+            <div class="pp-gallery" data-lm-gallery>
+              <div class="pp-gallery__stage">
+                <img class="pp-gallery__main" data-lm-main src={img(1, 900)} srcset={`${img(1, 480)} 480w, ${img(1, 900)} 900w`} sizes="(max-width: 900px) 100vw, 55vw" alt={`${title}: ${caption(locale, model)}`} width="900" height="900" fetchpriority="high" decoding="async" />
+                {count > 1 && (<>
+                  <button type="button" class="pp-gallery__nav pp-gallery__nav--prev" data-lm-prev aria-label={ru ? 'Предыдущее фото' : 'Попереднє фото'}>‹</button>
+                  <button type="button" class="pp-gallery__nav pp-gallery__nav--next" data-lm-next aria-label={ru ? 'Следующее фото' : 'Наступне фото'}>›</button>
+                </>)}
+              </div>
+              {count > 1 && (
+                <div class="pp-gallery__thumbs" role="group" aria-label={ru ? 'Фотографии' : 'Фотографії'}>
+                  {gallery.map((n) => (
+                    <button type="button" data-lm-thumb data-src={img(n, 900)} data-srcset={`${img(n, 480)} 480w, ${img(n, 900)} 900w`} aria-label={`${ru ? 'Фото' : 'Фото'} ${n} / ${count}`} aria-pressed={n === 1 ? 'true' : 'false'}>
+                      <img src={img(n, 480)} alt="" width="96" height="96" loading="lazy" decoding="async" />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : <div class="lm-placeholder lm-placeholder--big" aria-hidden="true">{model.name_short}</div>}
+        </div>
+
+        <div class="pp__info">
+          <p class="eyebrow">{caption(locale, model)}</p>
+          <h1 class="pp__title">{h1Text}</h1>
+          <p class="pp__lead">{shortDesc}</p>
+          <p class="pp__meta"><span>{productNote}</span><span>{P.code}: {code}</span></p>
+          <dl class="pp-keys">
+            {specRows.slice(0, 4).map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+          </dl>
+
+          <div class="pp-pricebar" data-lm-priceblock data-state="ok" aria-busy="false" aria-live="polite">
+            <span class="pp-price__label">{P.price}</span>
+            <strong class="pp-price__value" data-lm-total>{formatUah(model.default_uah)}</strong>
+            <span class="pp-price__state" data-lm-state hidden></span>
+            <p class="lm-error pp-price__err" data-lm-error hidden role="alert"></p>
+            <button type="button" class="pp-link" data-lm-retry hidden>{P.retry}</button>
+          </div>
+
+          <section class="pp-config" data-lm-calc data-initial={model.default_uah} aria-labelledby="pp-config-title">
+            <h2 id="pp-config-title">{P.choose}</h2>
+            <p class="pp-sub">{P.basics}</p>
+
+            <fieldset class="pp-field">
+              <legend>{P.size}</legend>
+              <div class="pp-sizes" role="radiogroup" aria-label={P.size}>
+                {model.standard_sizes.map((s: any, i: number) => (
+                  <label class="pp-size"><input type="radio" name="size" value={`${s.w}x${s.h}`} data-w={s.w} data-h={s.h} checked={i === 0} /><span>{s.w}×{s.h}</span></label>
+                ))}
+                <label class="pp-size pp-size--custom"><input type="radio" name="size" value="custom" data-custom /><span>{P.custom}</span></label>
+              </div>
+              <div class="pp-custom" data-lm-custom hidden>
+                <label>{P.width}, мм<input type="number" name="w" inputmode="numeric" min={L.width[0]} max={L.width[1]} step="1" value={std.w} /></label>
+                <label>{P.height}, мм<input type="number" name="h" inputmode="numeric" min={L.height[0]} max={L.height[1]} step="1" value={std.h} /></label>
+                <p class="pp-hint">{P.customHint(L)}</p>
+              </div>
+            </fieldset>
+
+            {basics.map((g: any) => (
+              <fieldset class="pp-field" data-group={g.key}>
+                <legend>{g.label}</legend>
+                <div class="pp-opts" role="radiogroup" aria-label={g.label}>
+                  {g.options.map((o: string, i: number) => (
+                    <label class="pp-opt"><input type="radio" name={g.key} value={o} checked={i === 0} /><span>{optionLabel(locale, o)}</span></label>
+                  ))}
+                </div>
+              </fieldset>
+            ))}
+
+            {extras.length > 0 && (
+              <fieldset class="pp-field pp-field--extras">
+                <legend>{P.extrasT}</legend>
+                <div class="pp-extras">
+                  {extras.map((g: any) => isToggle(g) ? (
+                    <label class="pp-switch" data-group={g.key}><input type="checkbox" name={g.key} data-off={g.options[0]} value={g.options[1]} /><span class="pp-switch__t">{optionLabel(locale, g.options[1])}</span><span class="pp-switch__k" aria-hidden="true"></span></label>
+                  ) : (
+                    <div class="pp-multi" data-group={g.key}>
+                      <span class="pp-multi__l">{g.label}</span>
+                      <div class="pp-opts" role="radiogroup" aria-label={g.label}>
+                        {g.options.map((o: string, i: number) => (<label class="pp-opt pp-opt--sm"><input type="radio" name={g.key} value={o} checked={i === 0} /><span>{optionLabel(locale, o)}</span></label>))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </fieldset>
+            )}
+
+            <div class="pp-field pp-field--qty"><label for="pp-qty">{P.qty}</label>
+              <div class="pp-qty"><button type="button" data-qty="-1" aria-label={ru ? 'Меньше' : 'Менше'}>−</button><input id="pp-qty" type="number" name="qty" inputmode="numeric" min="1" max="50" step="1" value="1" /><button type="button" data-qty="1" aria-label={ru ? 'Больше' : 'Більше'}>+</button></div>
+            </div>
+
+            <div class="pp-buy" aria-live="polite">
+              <div class="pp-price pp-price--echo"><span class="pp-price__label">{P.price}</span><strong class="pp-price__value" data-lm-echo>{formatUah(model.default_uah)}</strong>
+                <details class="pp-break"><summary>{P.breakdown}</summary><ul class="lm-lines" data-lm-lines></ul></details></div>
+              <div class="pp-actions">
+                <button class="button button--mint pp-btn" type="button" data-lm-buy disabled>{P.buyNow}</button>
+                <button class="button button--outline pp-btn" type="button" data-lm-add disabled>{P.add}</button>
+              </div>
+              <p class="lm-added" data-lm-added hidden role="status"></p>
+            </div>
+            <p class="lm-note">{T.note(formatDate(pub.collected))}{clarify && T.clarify}</p>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-section pp__below">
+      <div class="pp-tabs" data-pp-tabs>
+        <div class="pp-tabs__list" role="tablist" aria-label={P.tabsLabel}>
+          <button type="button" role="tab" id="pp-tab-desc" aria-controls="pp-panel-desc" aria-selected="true" class="pp-tab">{P.descH}</button>
+          <button type="button" role="tab" id="pp-tab-spec" aria-controls="pp-panel-spec" aria-selected="false" tabindex="-1" class="pp-tab">{P.specsTab}</button>
+          <button type="button" role="tab" id="pp-tab-reviews" aria-controls="pp-panel-reviews" aria-selected="false" tabindex="-1" class="pp-tab">{P.reviewsH}</button>
+        </div>
+        <section class="pp-panel" role="tabpanel" id="pp-panel-desc" aria-labelledby="pp-tab-desc">
+          <h2 id="pp-desc">{P.descH}</h2>
+          {longDesc.map((t) => <p>{t}</p>)}
+          <ul class="pp-flist pp-features">{content.features.map((f: string) => <li>{f}</li>)}</ul>
+        </section>
+        <section class="pp-panel" role="tabpanel" id="pp-panel-spec" aria-labelledby="pp-tab-spec">
+          <h2 id="pp-spec">{P.specsTab}</h2>
+          <dl class="pp-table">{specRows.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}</dl>
+          <h3 id="pp-func">{P.optionsH}</h3>
+          <ul class="pp-flist">{groups.filter((g: any) => g.key !== 'thickness' && g.options.some((o: string) => !isNoneOption(o))).map((g: any) => (<li><b>{g.label}:</b> {g.options.filter((o: string) => !isNoneOption(o)).map((o: string) => optionLabel(locale, o)).join('; ')}</li>))}</ul>
+        </section>
+        <section class="pp-panel" role="tabpanel" id="pp-panel-reviews" aria-labelledby="pp-tab-reviews">
+          <h2 id="pp-reviews">{P.reviewsH}</h2>
+          <div class="pp-reviews-empty"><b>{P.reviewsEmpty}</b><p>{P.reviewsNote}</p></div>
+        </section>
+      </div>
+
+      <section class="pp-sec pp-terms" aria-labelledby="pp-deliv"><h2 id="pp-deliv">{P.delivH}</h2>
+        <ul class="pp-dlist"><li>{TM.geo} {TM.delivery}</li><li>{TM.payment}</li><li>{TM.lead}</li><li>{TM.warranty}</li><li>{P.dp3}</li></ul>
+        <p class="pp-flow">{TM.flow}</p>
+        <p><a href={`${ru ? '/ru' : ''}/delivery-payment/`}>{P.dpLink}</a></p>
+      </section>
+
+      <ShopFaq locale={locale} items={faq} id="model-faq" />
+
+      <section class="lm-related" aria-labelledby="lm-related-title">
+        <h2 id="lm-related-title">{SS.related}</h2>
+        <div class="sf-grid sf-grid--related" data-related>
+          {related.map((p: any) => { const c = cardData(locale, p); return (
+            <article class="sf-card">
+              <a class="sf-card__media" href={c.href} aria-label={modelTitle(locale, p.name)}>
+                {((photos as Record<string, number>)[p.slug] ?? 0) > 0
+                  ? <img src={`/images/led-mirrors/${p.slug}-1-480.webp`} alt={`${modelTitle(locale, p.name)}: ${c.caption}`} width="480" height="480" loading="lazy" decoding="async" />
+                  : <span class="lm-placeholder" aria-hidden="true">{p.name}</span>}
+              </a>
+              <div class="sf-card__body">
+                <h3 class="sf-card__name"><a href={c.href}>{p.name}</a></h3>
+                <ul class="sf-card__spec">{c.specs.map((x: string) => <li>{x}</li>)}</ul>
+                <p class="sf-card__price">{c.price ? <><span>{T.from}</span> <strong>{c.price}</strong></> : null}</p>
+                <a class="button button--mint sf-card__cta" href={c.href}>{SS.choose}</a>
+              </div>
+            </article>); })}
+        </div>
+      </section>
+      <script type="application/json" id="lm-cfg" set:html={JSON.stringify(cfg)} />
+    </section>
+  </main>
+  <Footer />
+</div>
+</BaseLayout>
+
+<script>
+  import { addItem } from '../../scripts/sg-cart';
+  import { chosenOptions } from '../../lib/cart-describe.mjs';
+
+  // ---- gallery: thumbnails, arrows, keyboard
+  const gal = document.querySelector<HTMLElement>('[data-lm-gallery]');
+  if (gal) {
+    const main = gal.querySelector<HTMLImageElement>('[data-lm-main]')!;
+    const thumbs = [...gal.querySelectorAll<HTMLButtonElement>('[data-lm-thumb]')];
+    let cur = 0;
+    const show = (i: number) => {
+      if (!thumbs.length) return;
+      cur = (i + thumbs.length) % thumbs.length;
+      main.src = thumbs[cur].dataset.src!; main.srcset = thumbs[cur].dataset.srcset!;
+      thumbs.forEach((t, k) => t.setAttribute('aria-pressed', String(k === cur)));
+    };
+    thumbs.forEach((t, i) => t.addEventListener('click', () => show(i)));
+    gal.querySelector('[data-lm-prev]')?.addEventListener('click', () => show(cur - 1));
+    gal.querySelector('[data-lm-next]')?.addEventListener('click', () => show(cur + 1));
+    gal.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+    let x0 = 0; // swipe on touch screens
+    main.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+    main.addEventListener('touchend', (e) => { const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1)); });
+  }
+
+  // ---- selection, server price, buy block
+  const root = document.querySelector<HTMLElement>('[data-lm-calc]');
+  if (root) {
+    const cfg = JSON.parse(document.getElementById('lm-cfg')!.textContent!);
+    const S = cfg.str;
+    const q = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const wIn = q<HTMLInputElement>('input[name=w]'), hIn = q<HTMLInputElement>('input[name=h]'), qIn = q<HTMLInputElement>('input[name=qty]');
+    // the price bar sits above the configurator (outside [data-lm-calc]), so it is looked up on the whole page
+    const pg = <T extends HTMLElement>(sel: string) => document.querySelector<T>(sel)!;
+    const custom = q('[data-lm-custom]'), block = pg('[data-lm-priceblock]'), total = pg('[data-lm-total]'), stateEl = pg('[data-lm-state]'), err = pg('[data-lm-error]'), retry = pg<HTMLButtonElement>('[data-lm-retry]');
+    const echo = q('[data-lm-echo]'), lines = q('[data-lm-lines]'), added = q('[data-lm-added]'), buy = q<HTMLButtonElement>('[data-lm-buy]'), add = q<HTMLButtonElement>('[data-lm-add]');
+    const sizeRadios = [...root.querySelectorAll<HTMLInputElement>('input[name=size]')];
+    const fmt = (n: number) => `${String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} грн`;
+    let current: { unit: number; w: number; h: number; options: Record<string, string> } | null = null;
+    let seq = 0, timer: number | undefined;
+
+    const optionInputs = () => [...root.querySelectorAll<HTMLInputElement>('input[type=radio]:not([name=size]), input[type=checkbox]')];
+    function options(): Record<string, string> {
+      const o: Record<string, string> = {};
+      for (const i of optionInputs()) {
+        if (i.type === 'checkbox') o[i.name] = i.checked ? i.value : i.dataset.off!;
+        else if (i.checked) o[i.name] = i.value;
+      }
+      return o;
+    }
+    function size(): { w: number; h: number } {
+      const r = sizeRadios.find((x) => x.checked)!;
+      return r.dataset.custom !== undefined ? { w: Number(wIn.value), h: Number(hIn.value) } : { w: Number(r.dataset.w), h: Number(r.dataset.h) };
+    }
+    function setState(state: 'ok' | 'loading' | 'error', msg = '') {
+      block.dataset.state = state; block.setAttribute('aria-busy', String(state === 'loading'));
+      stateEl.hidden = state !== 'loading'; stateEl.textContent = state === 'loading' ? S.calc : '';
+      err.hidden = state !== 'error'; err.textContent = msg; retry.hidden = state !== 'error';
+      const ok = state === 'ok' && current !== null;
+      buy.disabled = add.disabled = !ok;
+      buy.title = add.title = ok ? '' : S.wait;
+    }
+    function fail(msg: string, canRetry = false) { current = null; total.textContent = '—'; echo.textContent = '—'; lines.innerHTML = ''; setState('error', msg); retry.hidden = !canRetry; }
+
+    async function update() {
+      const { w, h } = size(), opts = options();
+      current = null; setState('loading');
+      if (!Number.isInteger(w) || !Number.isInteger(h)) return fail(S.int);
+      const mine = ++seq;
+      try {
+        const res = await fetch('/api/led-mirror-price', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ modelId: cfg.id, w, h, options: opts }) });
+        const r = await res.json();
+        if (mine !== seq) return; // a newer request is in flight
+        if (!r.ok) return fail(r.error === 'invalid_size' ? S.badSize : r.error === 'invalid_option' ? S.badOpt : S.netErr, r.error === 'prices_unavailable');
+        total.textContent = fmt(r.total_uah); echo.textContent = total.textContent;
+        lines.innerHTML = '';
+        const row = (a: string, b: string) => { const li = document.createElement('li'); const x = document.createElement('span'), y = document.createElement('span'); x.textContent = a; y.textContent = b; li.append(x, y); lines.append(li); };
+        row(`${S.mirror} ${w}×${h} мм${r.standard_size ? '' : ' ' + S.nonstd}`, fmt(r.mirror_uah));
+        r.options.forEach((o: any) => row(`${cfg.groupLabels[o.group]}: ${cfg.optionLabels[o.name] ?? o.name}`, `+${fmt(o.uah)}`));
+        current = { unit: r.total_uah, w, h, options: opts };
+        setState('ok');
+      } catch { if (mine === seq) fail(S.netErr, true); }
+    }
+    const later = () => { current = null; setState('loading'); clearTimeout(timer); timer = window.setTimeout(update, 220); };
+
+    // size: standard sizes update at once; custom fields show up and are validated against the model's limits
+    sizeRadios.forEach((r) => r.addEventListener('change', () => { custom.hidden = r.dataset.custom === undefined; if (r.dataset.custom !== undefined) { const s = size(); wIn.value = String(s.w || wIn.value); } update(); }));
+    [wIn, hIn].forEach((i) => i.addEventListener('input', later));
+    optionInputs().forEach((i) => i.addEventListener('change', update));
+    retry.addEventListener('click', update);
+    root.querySelectorAll<HTMLButtonElement>('[data-qty]').forEach((b) => b.addEventListener('click', () => { qIn.value = String(Math.min(50, Math.max(1, (Number(qIn.value) || 1) + Number(b.dataset.qty)))); }));
+
+    // ?size=WxH preselects a standard size (feed / ad landing links); anything else is ignored
+    const want = new URLSearchParams(location.search).get('size');
+    const match = want && sizeRadios.find((r) => r.value === want && r.dataset.custom === undefined);
+    if (match) match.checked = true;
+
+    // Both buttons share one step: the server-confirmed price in `current` goes into the cart; "buy now" then opens the cart checkout.
+    function toCart(): boolean {
+      if (!current || block.dataset.state !== 'ok') return false;
+      const qty = Math.min(50, Math.max(1, Math.floor(Number(qIn.value) || 1)));
+      qIn.value = String(qty);
+      addItem({
+        kind: 'led-mirror', modelId: cfg.id, slug: cfg.slug, name: `Дзеркало ${cfg.name}`, category: 'Дзеркала', w: current.w, h: current.h, options: current.options, quantity: qty,
+        price: current.unit, image: cfg.hasPhoto ? `/images/led-mirrors/${cfg.slug}-1-480.webp` : undefined, url: `/shop/mirrors/led/${cfg.slug}/`,
+        configuration: [`${current.w}×${current.h} мм`, ...Object.values(chosenOptions(current.options))].join('; ')
+      });
+      return true;
+    }
+    add.addEventListener('click', () => {
+      if (!toCart()) return;
+      added.hidden = false; added.textContent = `${S.added} `;
+      const a = document.createElement('a'); a.href = cfg.cartHref; a.textContent = S.openCart; added.append(a);
+    });
+    buy.addEventListener('click', () => { if (toCart()) location.href = `${cfg.cartHref}?checkout=1`; });
+    update(); // confirm the preselected configuration with the server; the buttons stay disabled until it answers
+  }
+</script>
+
+<script>
+  // Tabs (Опис | Характеристики | Відгуки). Without JS all three panels stay visible one under another.
+  const tabs = document.querySelector<HTMLElement>('[data-pp-tabs]');
+  if (tabs) {
+    const btns = [...tabs.querySelectorAll<HTMLButtonElement>('[role=tab]')];
+    const panels = btns.map((b) => document.getElementById(b.getAttribute('aria-controls')!)!);
+    const show = (i: number, focus = false) => {
+      btns.forEach((b, n) => { b.setAttribute('aria-selected', String(n === i)); b.tabIndex = n === i ? 0 : -1; panels[n].hidden = n !== i; });
+      if (focus) btns[i].focus();
+    };
+    btns.forEach((b, i) => {
+      b.addEventListener('click', () => show(i));
+      b.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); show((i + 1) % btns.length, true); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); show((i + btns.length - 1) % btns.length, true); }
+        if (e.key === 'Home') { e.preventDefault(); show(0, true); }
+        if (e.key === 'End') { e.preventDefault(); show(btns.length - 1, true); }
+      });
+    });
+    tabs.dataset.enhanced = '';
+    show(0);
+  }
+</script>

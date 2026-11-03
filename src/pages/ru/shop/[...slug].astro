@@ -1,0 +1,36 @@
+---
+// Shop (ru): one rest route for every shop URL, so none of them is auto-listed in the sitemap (static index files would be).
+//   /shop/  /shop/mirrors/  /shop/mirrors/led/  /shop/mirrors/led/{model}/  /shop/showers/  /shop/partitions/  + preview pages
+// All noindex until the owner approves indexing. Product data: src/data/led-mirrors/public.json (no purchase prices).
+import ShopCatalog from '../../../components/shop/ShopCatalog.astro';
+import { SHOP_STR, shopPath } from '../../../lib/shop.mjs';
+import ShopSoon from '../../../components/shop/ShopSoon.astro';
+import ShopHomeBlockPreview from '../../../components/shop/ShopHomeBlockPreview.astro';
+import LedMirrorModel from '../../../components/led-mirrors/LedMirrorModel.astro';
+import LedCatalogBlockPreview from '../../../components/led-mirrors/LedCatalogBlockPreview.astro';
+import pub from '../../../data/led-mirrors/public.json';
+import { shopMeta } from '../../../lib/shop-meta.mjs';
+
+export function getStaticPaths() {
+  return [
+    undefined, 'mirrors', 'mirrors/led', 'showers', 'partitions', 'preview-home-block', 'mirrors/led/preview-led-block',
+    ...pub.models.map((m) => `mirrors/led/${m.slug}`)
+  ].map((slug) => ({ params: { slug } }));
+}
+const locale = 'ru';
+const S = SHOP_STR[locale];
+const home = { label: S.home, href: locale === 'ru' ? '/ru/' : '/' };
+const META = shopMeta(locale, pub);
+const catalogs: Record<string, any> = {
+  '': { faqKind: 'shop', initialCat: 'all', title: META[''].title, description: META[''].description, h1: S.h1, crumbs: [home, { label: S.shop }] },
+  'mirrors': { faqKind: 'mirrors', initialCat: 'mirrors', title: META.mirrors.title, description: META.mirrors.description, h1: S.mirrors, crumbs: [home, { label: S.shop, href: shopPath(locale) }, { label: S.mirrors }] },
+  'mirrors/led': { faqKind: 'led', initialCat: 'mirrors', title: META['mirrors/led'].title, description: META['mirrors/led'].description, h1: S.led, crumbs: [home, { label: S.shop, href: shopPath(locale) }, { label: S.mirrors, href: shopPath(locale, 'mirrors') }, { label: S.led }] }
+};
+const { slug } = Astro.params;
+const model = slug?.startsWith('mirrors/led/') ? pub.models.find((m) => m.slug === slug.slice('mirrors/led/'.length)) : undefined;
+---
+{catalogs[slug ?? ''] ? <ShopCatalog locale={locale} {...catalogs[slug ?? '']} />
+  : slug === 'showers' || slug === 'partitions' ? <ShopSoon locale={locale} category={slug} />
+  : slug === 'preview-home-block' ? <ShopHomeBlockPreview locale={locale} />
+  : slug === 'mirrors/led/preview-led-block' ? <LedCatalogBlockPreview locale={locale} />
+  : model ? <LedMirrorModel model={model} locale={locale} /> : null}

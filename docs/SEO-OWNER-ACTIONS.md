@@ -34,3 +34,28 @@ For each completed project (priority: aluminium entrance doors, then glass parti
 5. Verified technical details (dimensions, glass, profile, hardware) only if known.
 No project will be invented or filled in from assumptions.
 | 10 | P2 | WAITING FOR OWNER | **Paid-link status** [R-047]: was the DIPFO article (dofollow, anchor "скляні перегородки на замовлення") paid? was the uba.top listing paid? | Paid links that pass ranking credit should carry rel="sponsored"; decides whether to ask the publisher for the attribute | Authority |
+
+## LED mirror catalog and unified cart (R-071, R-072)
+Decided by owner 2026-11-03: supplier photos allowed (stored locally); retail price = purchase price + agreed markup (not stated in this public repo); manual price updates; one unified cart for UA/RU only.
+1. **Control CRM website-order endpoint (decided: add it).** Implemented in the CRM repo (SpaceGlassControlBot, local branch `feat/website-order-intake`, not pushed): signed `POST /website/api/orders`, migration 063. Before deploy set Cloudflare secrets: CRM worker `WEBSITE_ORDER_SECRET` (new random string; optional `SITE_ORDERS_CHAT_ID` = the lead group id, otherwise the first ALLOWED_CHAT_IDS group is used) and the website Worker `CRM_ORDERS_URL` (https://<crm-domain>/website/api/orders) + `CRM_ORDERS_SECRET` (the same string). Deploy the CRM first (its workflow applies migration 063), then the site. No test order was sent to production: do one real order together and check the deal, the note and the Telegram message.
+2. Review the local preview (catalog, AGNES, cart UA/RU) and approve going live (remove noindex, add to sitemap, link from the /dzerkala/ hub, deploy).
+3. Purchase prices reach the Worker only through the secret `LED_MIRRORS_PRICES` (set on 2026-11-03; compact numeric table, never in Git or in the build). To update prices: `npm run led:build -- <supplier-catalog.json> --markup <factor>` then `npm run led:publish` (needs the local, gitignored worker/private files). If the secret is missing the calculator and orders answer a controlled error (no fake prices). `.dev.vars` is local only; CART_ORDER_DRY_RUN must never be set in production.
+4. The old 'від 3 990 грн' on /dzerkala/led-dzerkala/ (title, R-069 protected until 2026-11-11), src/data/mirror-catalog.ts, ru/mirror-catalog.ru.ts and mirror-types.ts equals the supplier's price; the catalog shows the retail 'від 4 389 грн'. Approve changing those pages.
+5. Price update: re-collect supplier catalog -> `npm run led:build -- <file> --markup <factor>` -> `npm run test:led-mirrors && npm run test:cart` -> build -> deploy.
+
+## Shop (R-073)
+1. Review the local preview (/shop/, /shop/mirrors/led/, a model page, UA and RU, mobile) and approve. Nothing is indexed: all /shop/ pages are noindex and outside the sitemap.
+2. Decide when to index the shop (remove noindex, add to the sitemap, add hreflang to the sitemap files) — a separate approval; R-069 freeze ends 2026-11-11.
+3. Decide on the home-page block «Готові вироби Space Glass» (prepared only: /shop/preview-home-block/) — the home page was not changed.
+4. Showers and partitions: send real products (names, sizes, prices, photos) when ready; until then the pages say honestly that there are none.
+5. Warranty and delivery terms per product are not invented: the pages tell the visitor that the manager confirms them. Send the real terms to show them.
+
+## Shop: catalog order and Merchant Center (R-073)
+1. **Default order:** you asked to move the first rectangular mirror (in the current order that is **COMO**, position 2; other rectangles: BUFFALO 3, GARDA 5, MELVIN 7, NESS 8, …) to the end of the second row. Please confirm the model and the layout (3 per row = position 6, 4 per row = position 8, 2 per row = position 4). Not changed until confirmed.
+2. **Merchant Center questions:** see `docs/MERCHANT-CENTER-READINESS.md` §6 (availability/handling time, brand, GTIN/MPN, condition, shipping, returns, payment, photo rights, price/feed owner).
+3. **Launch order:** `docs/SHOP-LAUNCH-CHECKLIST.md`.
+
+## Shop — questions from final QA (TASK 101)
+- GALAXY NGC 4567 vs GALAXY NGC 4567 SINGLE and GALAXY FNGC 4567-8 vs ...-8 SINGLE: the supplier data is identical apart from the name and photo count. What does SINGLE mean (one panel? different product)? Until answered both stay as separate products.
+- The 4 models without any light (TURMALINE, BRITANNIC, ARK ROYAL, DREADNOUGHT) live under /shop/mirrors/led/{slug}/. Keep the URLs, or move them to a neutral URL with 301 before any indexing?
+- Brand/own-production wording, availability, shipping, returns, warranty: still needed before a Merchant feed (see docs/MERCHANT-CENTER-READINESS.md).

@@ -10,6 +10,7 @@
     "check:routes": "node scripts/check-routes.mjs",
     "check:links": "node scripts/check-links.mjs && node scripts/check-locale-links.mjs",
     "check:images": "node scripts/check-images.mjs",
+    "check:shop": "node scripts/check-shop.mjs",
     "check:seo": "node scripts/check-seo-pages.mjs",
     "check:itemlist": "node scripts/check-itemlist.mjs",
     "check:faq-hreflang": "node scripts/check-faq-hreflang.mjs",
@@ -23,6 +24,14 @@
     "indexnow": "node scripts/indexnow.mjs",
     "indexnow:auto": "node scripts/indexnow-auto.mjs",
     "test:indexnow": "node scripts/test-indexnow-auto.mjs",
+    "test:led-mirrors": "node scripts/test-led-mirror-price.mjs",
+    "test:cart": "node scripts/test-cart-order.mjs",
+    "test:cart-safety": "node scripts/test-cart-safety.mjs",
+    "test:shop-catalog": "node scripts/test-shop-catalog.mjs",
+    "test:led-secret": "node scripts/test-led-prices-secret.mjs",
+    "feed:draft": "node scripts/build-merchant-feed-draft.mjs",
+    "led:build": "node scripts/build-led-mirrors-catalog.mjs",
+    "led:publish": "node scripts/publish-led-prices.mjs",
     "check:intl": "node scripts/check-intl.mjs"
   },
   "dependencies": {
