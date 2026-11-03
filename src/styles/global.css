@@ -3137,3 +3137,24 @@ html { touch-action: manipulation; }
 .language-switcher__button{font:inherit}
 .sg-ua-catalog-menu__note{margin:7px 0 0;color:#aeb9b4;font-size:12px;line-height:1.4}
 .sg-header .simple-catalog__category-row--single{grid-template-columns:minmax(0,1fr)}
+
+/* SHOP FOOTER — keep all seven sections, including Contacts, on one desktop row.
+   This override belongs in global.css: earlier 6-track rules use !important. */
+@media (min-width: 1281px) {
+  .footer-refined .footer-refined__main.footer-refined__main--shop {
+    display: grid !important;
+    grid-template-columns: minmax(155px, 1.1fr) minmax(205px, 1.45fr)
+      minmax(95px, .7fr) minmax(95px, .7fr) minmax(120px, .85fr)
+      minmax(85px, .6fr) minmax(170px, 1.1fr) !important;
+    column-gap: clamp(8px, 1vw, 18px) !important;
+    row-gap: 0 !important;
+    grid-template-areas: none !important;
+    align-items: start !important;
+  }
+  .footer-refined .footer-refined__main--shop > * {
+    min-width: 0 !important;
+    grid-column: auto !important;
+    grid-row: 1 !important;
+    grid-area: auto !important;
+  }
+}
