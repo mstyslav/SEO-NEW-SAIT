@@ -1,26 +1,26 @@
 // Sale terms agreed with the owner (the single source for the shop pages, FAQ and the draft feed).
 // NOT agreed yet, therefore never stated: pickup city, delivery cost, return rules, online payment.
-export const LEAD_DAYS = { min: 3, max: 35 }; // working days, after the order is approved AND paid
+export const LEAD_DAYS = { min: 0, max: 35, standardMax: 15, metalFrameMax: 35 }; // working days after order approval and payment
 export const WARRANTY_MONTHS = 12;
 
 const T = {
   uk: {
     geo: 'Доставка по всій Україні.',
-    delivery: 'Доставка — «Новою поштою» або самовивіз. Вартість доставки та місце самовивозу менеджер узгоджує із замовником.',
+    delivery: 'Доставка — «Новою поштою» або самовивіз. Доставка Новою поштою безкоштовна для покупця. Місце самовивозу уточнюйте у менеджера.',
     payment: 'Оплата — 100% передоплата після погодження замовлення менеджером. Онлайн-оплати на сайті немає.',
-    lead: `Строк виготовлення — від ${LEAD_DAYS.min} до ${LEAD_DAYS.max} робочих днів залежно від моделі та комплектації. Відлік починається після погодження замовлення та надходження оплати.`,
+    lead: `Строк виготовлення — до ${LEAD_DAYS.standardMax} робочих днів для стандартних дзеркал або до ${LEAD_DAYS.metalFrameMax} робочих днів для дзеркал із металевою рамою. Відлік починається після погодження замовлення та надходження оплати.`,
     warranty: `Гарантія — ${WARRANTY_MONTHS} місяців.`,
     flow: 'Кошик → заявка → менеджер → погодження → оплата → виготовлення.',
-    leadShort: `${LEAD_DAYS.min}–${LEAD_DAYS.max} робочих днів після погодження та оплати`, warrantyShort: `${WARRANTY_MONTHS} місяців`
+    leadShort: `до ${LEAD_DAYS.standardMax} робочих днів; з металевою рамою — до ${LEAD_DAYS.metalFrameMax} робочих днів після погодження та оплати`, warrantyShort: `${WARRANTY_MONTHS} місяців`
   },
   ru: {
     geo: 'Доставка по всей Украине.',
-    delivery: 'Доставка — «Новой почтой» или самовывоз. Стоимость доставки и место самовывоза менеджер согласует с заказчиком.',
+    delivery: 'Доставка — «Новой почтой» или самовывоз. Доставка Новой почтой бесплатна для покупателя. Место самовывоза уточняйте у менеджера.',
     payment: 'Оплата — 100% предоплата после согласования заказа менеджером. Онлайн-оплаты на сайте нет.',
-    lead: `Срок изготовления — от ${LEAD_DAYS.min} до ${LEAD_DAYS.max} рабочих дней в зависимости от модели и комплектации. Отсчёт начинается после согласования заказа и поступления оплаты.`,
+    lead: `Срок изготовления — до ${LEAD_DAYS.standardMax} рабочих дней для стандартных зеркал или до ${LEAD_DAYS.metalFrameMax} рабочих дней для зеркал с металлической рамой. Отсчёт начинается после согласования заказа и поступления оплаты.`,
     warranty: `Гарантия — ${WARRANTY_MONTHS} месяцев.`,
     flow: 'Корзина → заявка → менеджер → согласование → оплата → изготовление.',
-    leadShort: `${LEAD_DAYS.min}–${LEAD_DAYS.max} рабочих дней после согласования и оплаты`, warrantyShort: `${WARRANTY_MONTHS} месяцев`
+    leadShort: `до ${LEAD_DAYS.standardMax} рабочих дней; с металлической рамой — до ${LEAD_DAYS.metalFrameMax} рабочих дней после согласования и оплаты`, warrantyShort: `${WARRANTY_MONTHS} месяцев`
   }
 };
 export const terms = (locale) => T[locale === 'ru' ? 'ru' : 'uk'];
