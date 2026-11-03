@@ -59,6 +59,33 @@ for (const [loc, pre] of locales) {
     if (!title?.includes(m.name_short)) fail(`${url}: title "${title}"`);
   }
 }
+// ---- unified catalog pages (/shop/, /shop/mirrors/, /shop/mirrors/led/): all 48 products in the HTML, tabs, filters data, exact texts
+const SUB = { uk: 'Готові скляні вироби та конструкції на замовлення з доставкою по Україні.', ru: 'Готовые стеклянные изделия и конструкции на заказ с доставкой по Украине.' };
+const TAB_ALL = { uk: 'Усі товари', ru: 'Все товары' };
+for (const [loc, pre] of locales) for (const p of ['/shop/', '/shop/mirrors/', '/shop/mirrors/led/']) {
+  const html = read(pre + p); if (!html) continue;
+  const cards = (html.match(/class="sf-card"/g) ?? []).length;
+  if (cards !== pub.models.length) fail(`${pre + p}: ${cards} product cards, expected ${pub.models.length}`);
+  if (!html.includes(SUB[loc])) fail(`${pre + p}: subtitle text missing`);
+  if (p === '/shop/' && !/<h1[^>]*>Магазин Space Glass</.test(html)) fail(`${pre + p}: h1`);
+  if (!html.includes(`>${TAB_ALL[loc]}<`)) fail(`${pre + p}: "all products" tab missing`);
+  const tabs = [...html.matchAll(/<button[^>]*class="sf-tab"[^>]*data-cat="(\w+)"[^>]*>/g)].map((m) => m[0]);
+  for (const c of ['showers', 'partitions']) if (!tabs.some((t) => t.includes(`data-cat="${c}"`) && /\sdisabled[\s>=]/.test(t))) fail(`${pre + p}: ${c} tab must be disabled while it has no products`);
+  if (tabs.some((t) => t.includes('data-cat="mirrors"') && /\sdisabled[\s>=]/.test(t))) fail(`${pre + p}: mirrors tab disabled`);
+  const data = JSON.parse((html.match(/<script type="application\/json" id="sf-data">([\s\S]*?)<\/script>/) ?? [])[1] ?? 'null');
+  if (!data || data.products.length !== pub.models.length) fail(`${pre + p}: sf-data missing / incomplete`);
+  else {
+    const expected = p === '/shop/' ? 'all' : 'mirrors';
+    if (data.initialCat !== expected) fail(`${pre + p}: initial category ${data.initialCat}`);
+    const active = data.schema.categories.filter((c) => c.active).map((c) => c.key);
+    if (active.join() !== 'mirrors') fail(`${pre + p}: active categories ${active}`);
+    for (const c of data.schema.categories.filter((c) => !c.active)) if (c.filters.length) fail(`${pre + p}: inactive category ${c.key} has filters`);
+    for (const f of data.schema.categories[0].filters) if (f.options && f.options.length < 2) fail(`${pre + p}: filter ${f.key} has <2 options`);
+    const mp = new Map(pub.models.map((m) => [m.id, m.from_uah]));
+    for (const pr of data.products) { const m = pub.models.find((x) => `mirrors-led-${x.slug}` === pr.id); if (!m || pr.p !== m.from_uah) fail(`${pre + p}: price of ${pr.id} differs from the retail data`); }
+  }
+  if (/\?[a-z]+=/.test(html.match(/<link rel="canonical" href="([^"]+)"/)?.[1] ?? '')) fail(`${pre + p}: canonical carries parameters`);
+}
 // unique titles / descriptions
 for (const [, pre] of locales) {
   const titles = new Map(), descs = new Map();

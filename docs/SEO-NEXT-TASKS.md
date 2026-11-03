@@ -44,3 +44,6 @@ See [SEO-OWNER-ACTIONS.md](SEO-OWNER-ACTIONS.md): door prices (R-030), real case
 - Merge PR #59 only after the Cloudflare build is green; deploy order: CRM PR #2 first, then the website.
 - Add the shop to the sitemap and remove noindex only on the owner's word; then Search Console: submit the sitemap, watch coverage.
 - Publish the prepared blocks (home «Готові вироби», LED page «Обрати LED-дзеркало») only after approval / after R-069.
+
+## Shop catalog: adding a new category (R-073)
+- Add the category's real products in `buildProducts()` (src/lib/shop-catalog.mjs) with `category`, `attrs`, `price`; its filter scheme (showers / partitions) is already declared. The tab turns active by itself, filters with fewer than two real values stay hidden. Add a product page template for that category before listing it.

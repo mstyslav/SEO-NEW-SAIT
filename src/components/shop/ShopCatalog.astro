@@ -1,0 +1,197 @@
+---
+// Unified shop catalog (UA/RU): category tabs, search, dynamic filters, sorting and the product grid on ONE page.
+// Used by /shop/ (all products) and by the category routes (/shop/mirrors/, /shop/mirrors/led/) with a preselected category.
+// All products are rendered into the HTML; the script only shows / hides / reorders them. No filter ever changes the URL,
+// so no indexable URL exists per filter combination. Filtering uses the retail "from" prices of src/data/led-mirrors/public.json.
+import ShopPage from './ShopPage.astro';
+import photos from '../../data/led-mirrors/photos.json';
+import pub from '../../data/led-mirrors/public.json';
+import { SHOP_STR } from '../../lib/shop.mjs';
+import { buildProducts, buildSchema, clientProducts, cardData } from '../../lib/shop-catalog.mjs';
+import { modelTitle, caption as _c } from '../../lib/led-mirror-i18n.mjs';
+
+const { locale = 'uk', initialCat = 'all', title, description, h1, crumbs } = Astro.props;
+const S = SHOP_STR[locale as 'uk' | 'ru'];
+const products = buildProducts(pub);
+const schema = buildSchema(locale, pub, products);
+const hasPhoto = (slug: string) => ((photos as Record<string, number>)[slug] ?? 0) > 0;
+const strings = {
+  tabAll: S.tabAll, soon: S.soonTab, filtersTitle: S.filtersTitle, filtersBtn: S.filtersBtn, reset: S.reset, close: S.close, priceFrom: S.priceFrom, priceTo: S.priceTo,
+  applyTpl: S.apply(0).replace('0', '{n}'), foundTpl: S.found(0).replace('0', '{n}'), activeTpl: S.active(0).replace('0', '{n}'), sizeHintTpl: S.anySize('{lo}', '{hi}')
+};
+const data = { locale, initialCat, strings, schema, products: clientProducts(products) };
+const catalogLabel = (key: string) => (key === 'all' ? S.tabAll : schema.categories.find((c: any) => c.key === key)?.label);
+---
+<ShopPage locale={locale} title={title} description={description} crumbs={crumbs}>
+  <div class="category-heading"><div><p class="eyebrow">{S.shop}</p><h1>{h1}</h1></div><p>{S.subtitle}</p></div>
+
+  <div class="sf-tabs" role="group" aria-label={S.catalogNav} data-sf-tabs>
+    <button type="button" class="sf-tab" data-cat="all" aria-pressed="false">{S.tabAll}</button>
+    {schema.categories.map((c: any) => (
+      <button type="button" class="sf-tab" data-cat={c.key} aria-pressed="false" disabled={!c.active} aria-disabled={c.active ? 'false' : 'true'}>
+        {c.label}{!c.active && <span class="sf-tab__soon">{S.soonTab}</span>}
+      </button>
+    ))}
+  </div>
+
+  <div class="sf-toolbar">
+    <label class="sf-search"><span class="sf-sr">{S.searchLabel}</span><input type="search" data-sf-search placeholder={S.searchPh} autocomplete="off" aria-label={S.searchLabel} /></label>
+    <button type="button" class="button button--outline sf-filters-btn" data-sf-open aria-haspopup="dialog" aria-controls="sf-filters"><span data-sf-btn-label>{S.filtersBtn}</span></button>
+    <label class="sf-sort"><span class="sf-sr">{S.sortLabel}</span>
+      <select data-sf-sort aria-label={S.sortLabel}>
+        <option value="default">{S.sortDefault}</option><option value="price-asc">{S.sortAsc}</option><option value="price-desc">{S.sortDesc}</option><option value="name">{S.sortName}</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="sf-layout">
+    <aside class="sf-filters" id="sf-filters" data-sf-panel aria-label={S.filtersTitle}>
+      <div class="sf-filters__head"><h2>{S.filtersTitle}</h2><button type="button" class="sf-close" data-sf-close aria-label={S.close}>×</button></div>
+      <div class="sf-filters__body" data-sf-body></div>
+      <div class="sf-filters__foot"><button type="button" class="button button--outline" data-sf-reset>{S.reset}</button><button type="button" class="button button--mint" data-sf-apply>{S.apply(products.length)}</button></div>
+    </aside>
+    <div class="sf-backdrop" data-sf-backdrop hidden></div>
+
+    <section class="sf-results" aria-live="polite">
+      <div class="sf-results__head"><h2 data-sf-heading>{catalogLabel(initialCat)}</h2><p class="sf-count" data-sf-count>{S.found(products.length)}</p></div>
+      <div class="sf-grid" data-sf-grid>
+        {products.map((p: any) => {
+          const c = cardData(locale, p);
+          return (
+            <article class="sf-card" data-id={p.id}>
+              <a class="sf-card__media" href={c.href} aria-label={modelTitle(locale, p.name)}>
+                {hasPhoto(p.slug)
+                  ? <img src={`/images/led-mirrors/${p.slug}-1-480.webp`} srcset={`/images/led-mirrors/${p.slug}-1-480.webp 480w, /images/led-mirrors/${p.slug}-1-900.webp 900w`} sizes="(max-width: 600px) 46vw, (max-width: 1100px) 30vw, 22vw" alt={`${modelTitle(locale, p.name)}: ${c.caption}`} width="480" height="480" loading="lazy" decoding="async" />
+                  : <span class="lm-placeholder" aria-hidden="true">{p.name}</span>}
+              </a>
+              <div class="sf-card__body">
+                <h3><a href={c.href}>{p.name}</a></h3>
+                <p class="sf-card__spec">{c.caption}</p>
+                {c.price && <p class="sf-card__price"><span>{S.from}</span> <strong>{c.price}</strong></p>}
+                <a class="button button--mint sf-card__cta" href={c.href}>{S.choose}</a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+      <div class="sf-empty" data-sf-empty hidden><h3>{S.emptyTitle}</h3><p>{S.emptyText}</p><button type="button" class="button button--mint" data-sf-reset>{S.reset}</button></div>
+    </section>
+  </div>
+  <script type="application/json" id="sf-data" set:html={JSON.stringify(data)} />
+</ShopPage>
+
+<script>
+  import { emptyState, filtersFor, filterProducts, sortProducts, facetCount, switchCategory, activeFilterCount } from '../../lib/shop-filter.mjs';
+
+  const data = JSON.parse(document.getElementById('sf-data')!.textContent!);
+  const { schema, products, strings: S, locale } = data;
+  const $ = <T extends HTMLElement>(s: string) => document.querySelector<T>(s)!;
+  const grid = $('[data-sf-grid]'), body = $('[data-sf-body]'), countEl = $('[data-sf-count]'), empty = $('[data-sf-empty]'), heading = $('[data-sf-heading]');
+  const panel = $('[data-sf-panel]'), backdrop = $('[data-sf-backdrop]'), openBtn = $<HTMLButtonElement>('[data-sf-open]'), btnLabel = $('[data-sf-btn-label]');
+  const search = $<HTMLInputElement>('[data-sf-search]'), sortSel = $<HTMLSelectElement>('[data-sf-sort]'), applyBtn = $('[data-sf-apply]');
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>('.sf-tab')];
+  const cards = new Map<string, HTMLElement>([...grid.querySelectorAll<HTMLElement>('.sf-card')].map((c) => [c.dataset.id!, c]));
+  const fmt = (n: number) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const tpl = (s: string, n: number) => s.replace('{n}', String(n));
+  let state = emptyState(data.initialCat);
+  const mq = window.matchMedia('(max-width: 899px)');
+  let lastFocus: HTMLElement | null = null;
+
+  const el = (tag: string, props: Record<string, any> = {}, ...kids: (Node | string)[]) => { const e = Object.assign(document.createElement(tag), props); kids.forEach((k) => e.append(k)); return e; };
+
+  /** Builds the filter controls for the current category (called when the category changes). */
+  function buildPanel() {
+    body.replaceChildren();
+    for (const f of filtersFor(schema, state.cat)) {
+      const box = el('fieldset', { className: 'sf-group' }, el('legend', { textContent: f.label }));
+      box.dataset.key = f.key;
+      if (f.options) {
+        const list = el('div', { className: 'sf-options' });
+        for (const o of f.options) {
+          const input = el('input', { type: 'checkbox', value: o.value, id: `sf-${f.key}-${o.value}` }) as HTMLInputElement;
+          input.dataset.key = f.key;
+          const n = el('span', { className: 'sf-opt__n' });
+          list.append(el('label', { className: 'sf-opt', htmlFor: input.id }, input, el('span', { className: 'sf-opt__t', textContent: o.label }), n));
+        }
+        box.append(list);
+      } else if (f.kind === 'range') {
+        const input = el('input', { type: 'number', inputMode: 'numeric', min: String(f.min), max: String(f.max), step: '1', id: `sf-${f.key}`, placeholder: S.sizeHintTpl.replace('{lo}', f.min).replace('{hi}', f.max) }) as HTMLInputElement;
+        input.dataset.range = f.key;
+        box.append(input);
+      } else if (f.kind === 'price') {
+        const mk = (id: string, label: string, ph: number) => { const i = el('input', { type: 'number', inputMode: 'numeric', min: '0', step: '1', id, placeholder: fmt(ph) }) as HTMLInputElement; return [i, el('label', { className: 'sf-price__f', htmlFor: id }, el('span', { textContent: label }), i)] as const; };
+        const [imin, lmin] = mk('sf-pmin', S.priceFrom, f.min); const [imax, lmax] = mk('sf-pmax', S.priceTo, f.max);
+        imin.dataset.price = 'min'; imax.dataset.price = 'max';
+        box.append(el('div', { className: 'sf-price' }, lmin, lmax));
+      }
+      body.append(box);
+    }
+  }
+
+  /** Writes the state into the controls (used after reset / category switch). */
+  function syncControls() {
+    search.value = state.q;
+    sortSel.value = state.sort;
+    body.querySelectorAll<HTMLInputElement>('input[type=checkbox]').forEach((i) => (i.checked = !!state.sel[i.dataset.key!]?.includes(i.value)));
+    body.querySelectorAll<HTMLInputElement>('input[data-range]').forEach((i) => (i.value = state.range[i.dataset.range!] ?? ''));
+    const pmin = body.querySelector<HTMLInputElement>('input[data-price=min]'), pmax = body.querySelector<HTMLInputElement>('input[data-price=max]');
+    if (pmin) pmin.value = state.pmin ?? ''; if (pmax) pmax.value = state.pmax ?? '';
+  }
+
+  function render() {
+    const result = sortProducts(filterProducts(products, schema, state), state.sort, locale);
+    const ids = new Set(result.map((p: any) => p.id));
+    for (const [id, card] of cards) card.hidden = !ids.has(id);
+    result.forEach((p: any) => grid.append(cards.get(p.id)!)); // reorder (hidden cards keep their place)
+    countEl.textContent = tpl(S.foundTpl, result.length);
+    applyBtn.textContent = tpl(S.applyTpl, result.length);
+    empty.hidden = result.length > 0; grid.hidden = result.length === 0;
+    // facet counts: how many products an option would give with the other filters kept
+    body.querySelectorAll<HTMLInputElement>('input[type=checkbox]').forEach((i) => {
+      const n = facetCount(products, schema, state, i.dataset.key, i.value);
+      const badge = i.parentElement!.querySelector('.sf-opt__n')!; badge.textContent = String(n);
+      i.disabled = n === 0 && !i.checked;
+      i.parentElement!.classList.toggle('is-off', i.disabled);
+    });
+    const active = activeFilterCount(state);
+    btnLabel.textContent = active ? tpl(S.activeTpl, active) : S.filtersBtn;
+    tabs.forEach((t) => t.setAttribute('aria-pressed', String(t.dataset.cat === state.cat)));
+    const label = state.cat === 'all' ? S.tabAll : schema.categories.find((c: any) => c.key === state.cat)?.label;
+    heading.textContent = label;
+  }
+
+  function setCategory(cat: string) {
+    state = switchCategory(state, schema, cat);
+    buildPanel(); syncControls(); render();
+  }
+  const reset = () => { state = { ...emptyState(state.cat), sort: state.sort }; syncControls(); render(); };
+
+  // ---- events
+  tabs.forEach((t) => t.addEventListener('click', () => { if (!t.disabled) setCategory(t.dataset.cat!); }));
+  search.addEventListener('input', () => { state = { ...state, q: search.value }; render(); });
+  sortSel.addEventListener('change', () => { state = { ...state, sort: sortSel.value }; render(); });
+  body.addEventListener('change', (e) => {
+    const i = e.target as HTMLInputElement;
+    if (i.type === 'checkbox') {
+      const k = i.dataset.key!; const cur = new Set(state.sel[k] ?? []); i.checked ? cur.add(i.value) : cur.delete(i.value);
+      state = { ...state, sel: { ...state.sel, [k]: [...cur] } };
+    }
+    render();
+  });
+  body.addEventListener('input', (e) => {
+    const i = e.target as HTMLInputElement; const v = i.value === '' ? null : Number(i.value);
+    if (i.dataset.range) { const r = { ...state.range }; if (v == null || !Number.isFinite(v)) delete r[i.dataset.range]; else r[i.dataset.range] = v; state = { ...state, range: r }; render(); }
+    else if (i.dataset.price) { state = { ...state, [i.dataset.price === 'min' ? 'pmin' : 'pmax']: v != null && Number.isFinite(v) ? v : null }; render(); }
+  });
+  document.querySelectorAll('[data-sf-reset]').forEach((b) => b.addEventListener('click', reset));
+
+  // ---- mobile drawer: open / apply / close / reset, Escape, focus returns to the button
+  function openDrawer() { lastFocus = document.activeElement as HTMLElement; panel.classList.add('is-open'); backdrop.hidden = false; document.body.classList.add('sf-lock'); panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'true'); setTimeout(() => panel.querySelector<HTMLElement>('.sf-close')?.focus(), 60); }
+  function closeDrawer() { if (!panel.classList.contains('is-open')) return; panel.classList.remove('is-open'); backdrop.hidden = true; document.body.classList.remove('sf-lock'); panel.removeAttribute('role'); panel.removeAttribute('aria-modal'); (lastFocus ?? openBtn).focus(); }
+  openBtn.addEventListener('click', openDrawer);
+  $('[data-sf-close]').addEventListener('click', closeDrawer); applyBtn.addEventListener('click', closeDrawer); backdrop.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
+  mq.addEventListener('change', () => { if (!mq.matches) closeDrawer(); });
+
+  setCategory(data.initialCat);
+</script>
