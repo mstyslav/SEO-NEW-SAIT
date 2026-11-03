@@ -11,7 +11,7 @@
  *    error and the cart stays (a lead sent around the CRM would be a parallel, unmanaged order).
  *  - The Cache API below only short-circuits repeated clicks; it is not the duplicate protection.
  */
-import { priceOf, modelName, catalogDate } from './led-mirrors';
+import type { LedConfig, PriceResult } from './led-mirrors';
 
 type Json = (body: unknown, status?: number) => Response;
 export type CartDeps = {
@@ -19,6 +19,10 @@ export type CartDeps = {
   normalisePhone: (raw: string) => string | null;
   /** Sends the order to the CRM; null = CRM not configured / unreachable. */
   crm: (payload: Record<string, unknown>) => Promise<{ status: number; body: Record<string, unknown> } | null>;
+  /** Server-side retail price of one LED mirror configuration (secret-backed, see worker/led-mirrors.ts). */
+  ledPrice: (cfg: LedConfig) => Promise<PriceResult>;
+  modelName: (id: number) => string | undefined;
+  catalogDate: () => string;
   rateLimited: (request: Request) => Promise<boolean>;
   /** Local rehearsal only (.dev.vars): validate and log, send nothing. Never set in production. */
   dryRun: boolean;
@@ -69,12 +73,12 @@ export async function handleCartOrder(request: Request, env: unknown, d: CartDep
     const qty = Number(it.quantity);
     if (!Number.isInteger(qty) || qty < 1 || qty > MAX_QTY) return json({ ok: false, error: 'invalid_quantity', index }, 400);
     if (it.kind === 'led-mirror') {
-      const r = priceOf({ modelId: Number(it.modelId), w: Number(it.w), h: Number(it.h), options: (it.options ?? {}) as Record<string, string> });
-      if (!r.ok) return json({ ok: false, error: r.error, index }, 400);
+      const r = await d.ledPrice({ modelId: Number(it.modelId), w: Number(it.w), h: Number(it.h), options: (it.options ?? {}) as Record<string, string> });
+      if (!r.ok) return r.error === 'prices_unavailable' ? json({ ok: false, error: 'prices_unavailable' }, 503) : json({ ok: false, error: r.error, index }, 400);
       const unit = r.price.total_uah;
       if (Number(it.price) !== unit) changed.push({ index, unit_uah: unit });
       lines.push({
-        kind: 'led-mirror', name: `Дзеркало ${modelName(Number(it.modelId))}`,
+        kind: 'led-mirror', name: `Дзеркало ${d.modelName(Number(it.modelId))}`,
         qty, unit, total: unit * qty, url: text(it.url, 200), verified: true, model_id: Number(it.modelId), w: Number(it.w), h: Number(it.h), options: it.options as Record<string, string>
       });
     } else {
@@ -91,7 +95,7 @@ export async function handleCartOrder(request: Request, env: unknown, d: CartDep
   const subtotal = known.reduce((a, l) => a + (l.total as number), 0);
   const unpriced = lines.length - known.length;
   const payload = {
-    version: 1, order_id: orderId, source: SOURCE, locale: locale === 'ru' ? 'ru' : 'uk', ordered_at: new Date().toISOString(), price_list_date: catalogDate(),
+    version: 1, order_id: orderId, source: SOURCE, locale: locale === 'ru' ? 'ru' : 'uk', ordered_at: new Date().toISOString(), price_list_date: d.catalogDate(),
     customer: { name, phone, comment },
     items: lines.map((l) => ({
       kind: l.kind, product_id: l.model_id ?? null, name: l.name, url: l.url || null, width_mm: l.w ?? null, height_mm: l.h ?? null, options: l.options ?? {},

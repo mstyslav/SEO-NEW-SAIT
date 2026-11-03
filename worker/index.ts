@@ -26,7 +26,7 @@
 
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 import { handleCartOrder } from './cart-order';
-import { priceOf } from './led-mirrors';
+import { priceOf, modelName, catalogDate } from './led-mirrors';
 import { ATTRIBUTION_KEYS, attributionLines, attributionPlainLines, parseAttribution, type Attribution } from './attribution';
 
 export interface Env {
@@ -44,6 +44,8 @@ export interface Env {
   /** Cart orders → Space Glass Control CRM: full URL of POST /website/api/orders and the shared HMAC secret (= CRM's WEBSITE_ORDER_SECRET). */
   CRM_ORDERS_URL?: string;
   CRM_ORDERS_SECRET?: string;
+  /** Purchase-price table for the LED mirror calculator (gzip+base64 numbers; src/lib/led-prices-codec.mjs). Secret, never in Git. */
+  LED_MIRRORS_PRICES?: string;
 }
 
 type Lead = {
@@ -329,17 +331,19 @@ async function handleLead(request: Request, env: Env): Promise<Response> {
 }
 
 /** POST /api/led-mirror-price — retail price of one configuration, or a batch ({items:[...]}) for the cart. Retail only. */
-async function handleLedPrice(request: Request): Promise<Response> {
+async function handleLedPrice(request: Request, env: Env): Promise<Response> {
   if (request.method !== 'POST') return json({ ok: false, error: 'method_not_allowed' }, 405);
   let body: Record<string, unknown>;
   try { body = await request.json(); } catch { return json({ ok: false, error: 'invalid_json' }, 400); }
-  const one = (c: Record<string, unknown>) => priceOf({ modelId: Number(c?.modelId), w: Number(c?.w), h: Number(c?.h), options: (c?.options ?? {}) as Record<string, string> });
+  const one = (c: Record<string, unknown>) => priceOf(env, { modelId: Number(c?.modelId), w: Number(c?.w), h: Number(c?.h), options: (c?.options ?? {}) as Record<string, string> });
   if (Array.isArray(body.items)) {
     if (body.items.length > 30) return json({ ok: false, error: 'invalid_items' }, 400);
-    return json({ ok: true, items: body.items.map((c) => { const r = one(c as Record<string, unknown>); return r.ok ? { ok: true, ...r.price } : { ok: false, error: r.error }; }) });
+    const rs = await Promise.all(body.items.map((c) => one(c as Record<string, unknown>)));
+    if (rs.some((r) => !r.ok && r.error === 'prices_unavailable')) return json({ ok: false, error: 'prices_unavailable' }, 503);
+    return json({ ok: true, items: rs.map((r) => (r.ok ? { ok: true, ...r.price } : { ok: false, error: r.error })) });
   }
-  const r = one(body);
-  return r.ok ? json({ ok: true, ...r.price }) : json({ ok: false, error: r.error }, 400);
+  const r = await one(body);
+  return r.ok ? json({ ok: true, ...r.price }) : json({ ok: false, error: r.error }, r.error === 'prices_unavailable' ? 503 : 400);
 }
 
 /** HMAC-SHA256 hex of "<timestamp>.<body>" — the CRM verifies the same string (cloudflare/src/site-orders.ts). */
@@ -354,6 +358,9 @@ async function handleCart(request: Request, env: Env): Promise<Response> {
     json,
     normalisePhone,
     dryRun: env.CART_ORDER_DRY_RUN === '1',
+    ledPrice: (cfg) => priceOf(env, cfg),
+    modelName,
+    catalogDate,
     rateLimited: async (req) => Boolean(env.LEAD_LIMITER) && !(await env.LEAD_LIMITER!.limit({ key: req.headers.get('cf-connecting-ip') ?? 'unknown' })).success,
     // Cart orders go to the Space Glass Control CRM only (secrets CRM_ORDERS_URL, CRM_ORDERS_SECRET). No Telegram / Kommo fallback.
     crm: async (payload) => {
@@ -390,7 +397,7 @@ export default {
     const { pathname } = new URL(request.url);
     if (GONE_PATHS.has(pathname.replace(/\/+$/, ''))) return goneResponse();
     if (/^\/api\/(kommo-lead|lead)\/?$/.test(pathname)) return handleLead(request, env);
-    if (/^\/api\/led-mirror-price\/?$/.test(pathname)) return handleLedPrice(request);
+    if (/^\/api\/led-mirror-price\/?$/.test(pathname)) return handleLedPrice(request, env);
     if (/^\/api\/cart-order\/?$/.test(pathname)) return handleCart(request, env);
     return env.ASSETS.fetch(request);
   }

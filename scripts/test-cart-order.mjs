@@ -5,16 +5,22 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import { build } from 'esbuild';
 
-if (!fs.existsSync(new URL('../worker/private/led-mirrors.json', import.meta.url))) { console.warn('SKIPPED: worker/private/led-mirrors.json is missing'); process.exit(0); }
+const secretFile = new URL('../worker/private/led-mirrors.secret.txt', import.meta.url);
+if (!fs.existsSync(secretFile)) { console.warn('SKIPPED: worker/private/led-mirrors.secret.txt is missing'); process.exit(0); }
+const SECRET = fs.readFileSync(secretFile, 'utf8').trim();
 const out = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'cart-test-')), 'cart-order.mjs');
 await build({ entryPoints: [new URL('../worker/cart-order.ts', import.meta.url).pathname], bundle: true, format: 'esm', platform: 'node', outfile: out, logLevel: 'error' });
 const { handleCartOrder } = await import(out);
+const out2 = path.join(path.dirname(out), 'led-mirrors.mjs');
+await build({ entryPoints: [new URL('../worker/led-mirrors.ts', import.meta.url).pathname], bundle: true, format: 'esm', platform: 'node', outfile: out2, logLevel: 'error' });
+const ledMod = await import(out2);
+let pricesSecret = SECRET;
 
 const store = new Map();
 globalThis.caches = { default: { match: async (r) => store.get(r.url)?.clone(), put: async (r, res) => void store.set(r.url, res) } };
 const json = (b, s = 200) => new Response(JSON.stringify(b), { status: s, headers: { 'content-type': 'application/json' } });
 let delivered = [], crmResult = { status: 201, body: { order_ref: 'WEB-7' } }, crmDown = false;
-const deps = () => ({ json, normalisePhone: (p) => (/^0\d{9}$/.test(p) ? `+38${p}` : null), crm: async (p) => { if (crmDown) return null; if (crmResult.status < 300) delivered.push(p); return crmResult; }, rateLimited: async () => false, dryRun: false });
+const deps = () => ({ json, normalisePhone: (p) => (/^0\d{9}$/.test(p) ? `+38${p}` : null), ledPrice: (cfg) => ledMod.priceOf({ LED_MIRRORS_PRICES: pricesSecret }, cfg), modelName: ledMod.modelName, catalogDate: ledMod.catalogDate, crm: async (p) => { if (crmDown) return null; if (crmResult.status < 300) delivered.push(p); return crmResult; }, rateLimited: async () => false, dryRun: false });
 const call = async (body, headers = { 'x-sg-form': '1' }) => {
   const res = await handleCartOrder(new Request('https://space-glass.com.ua/api/cart-order', { method: 'POST', headers: { 'content-type': 'application/json', ...headers }, body: JSON.stringify(body) }), {}, deps());
   return { status: res.status, body: await res.json() };
@@ -79,6 +85,15 @@ await t('validation: header, phone, name, quantity, size, option, items, order i
   assert.equal((await call({ ...base, orderId: 'order-bbbb-0005', items: [{ ...led, options: { backlight: 'RGB (з пультом)' } }] })).body.error, 'invalid_option');
   assert.equal((await call({ ...base, orderId: 'order-bbbb-0006', items: [] })).body.error, 'invalid_items');
   assert.equal((await call({ ...base, orderId: 'x' })).body.error, 'invalid_order_id');
+});
+await t('prices secret missing or damaged: 503 prices_unavailable, nothing sent, no fake price', async () => {
+  const n = delivered.length;
+  for (const bad of ['', 'garbage']) {
+    pricesSecret = bad;
+    const r = await call({ ...base, orderId: 'order-eeee-000' + bad.length });
+    assert.equal(r.status, 503); assert.equal(r.body.error, 'prices_unavailable'); assert.equal(delivered.length, n);
+  }
+  pricesSecret = SECRET;
 });
 await t('configurator line with a price is passed on as an estimate, never as verified', async () => {
   const r = await call({ ...base, orderId: 'order-dddd-0001', items: [{ kind: 'other', name: 'Дзеркало на замовлення', configuration: 'width: 1000', price: 4430, quantity: 1 }] });

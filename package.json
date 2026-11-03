@@ -25,7 +25,9 @@
     "test:indexnow": "node scripts/test-indexnow-auto.mjs",
     "test:led-mirrors": "node scripts/test-led-mirror-price.mjs",
     "test:cart": "node scripts/test-cart-order.mjs",
+    "test:led-secret": "node scripts/test-led-prices-secret.mjs",
     "led:build": "node scripts/build-led-mirrors-catalog.mjs",
+    "led:publish": "node scripts/publish-led-prices.mjs",
     "check:intl": "node scripts/check-intl.mjs"
   },
   "dependencies": {

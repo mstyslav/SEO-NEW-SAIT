@@ -1,11 +1,13 @@
-// MANUAL price update: turns the supplier price list into the two catalog files the site uses.
+// MANUAL price update: turns the supplier price list into the files the site uses.
 //   node scripts/build-led-mirrors-catalog.mjs <supplier-catalog.json> --markup <factor>
-// 1. worker/private/led-mirrors.json  (gitignored, server only): purchase prices + markup. The Worker uses it
-//    to calculate and verify every retail price; it is bundled into the Worker, never served as a static file.
-// 2. src/data/led-mirrors/public.json (public): model list, sizes, option NAMES and the retail "from" price.
-//    No purchase prices, no formula coefficients, no markup, no supplier name / URLs.
-// Then run: npm run test:led-mirrors && npm run build.  There is no automatic sync with the supplier site, by design.
+// 1. src/data/led-mirrors/public.json (public): model list, sizes, option NAMES, retail "from" prices. No purchase prices,
+//    no coefficients, no markup, no supplier name / URLs.
+// 2. worker/private/led-mirrors.json (gitignored, LOCAL ONLY): the full purchase-price catalog, used by tests and to build the secret.
+// 3. worker/private/led-mirrors.secret.txt (gitignored, LOCAL ONLY): the same numbers in the compact transport format
+//    (gzip+base64, src/lib/led-prices-codec.mjs). `npm run led:publish` sends it to the Worker secret LED_MIRRORS_PRICES.
+// Then: npm run led:publish && npm run test:led-mirrors && npm run build.  No automatic sync with the supplier site, by design.
 import fs from 'node:fs';
+import { gzipSync } from 'node:zlib';
 import { mirrorPrice, modelOptionGroups, fromPrice } from '../src/lib/led-mirror-price.mjs';
 import { slugOf } from '../src/lib/led-mirror-view.mjs';
 
@@ -46,7 +48,14 @@ const pub = {
 };
 const ptext = JSON.stringify(pub);
 if (/studio\s*glass|"markup"|"c0"|"mat_uah|"base_uah/i.test(ptext)) { console.error('private data leaked into the public catalog'); process.exit(1); }
+// compact numeric table for the Worker secret (names / groups / limits stay public)
+const compact = {
+  v: 1, k: priv.markup,
+  m: priv.models.map((m) => [m.id, m.base_uah, m.mat_uah_per_m2, m.standard_sizes.map((x) => [x.w, x.h, x.price_uah]),
+    modelOptionGroups(priv, m).map((g) => g.options.map((o) => [o.c0, o.ca, o.cp, o.cw]))])
+};
 fs.mkdirSync(new URL('../worker/private/', import.meta.url), { recursive: true });
+fs.writeFileSync(new URL('../worker/private/led-mirrors.secret.txt', import.meta.url), gzipSync(JSON.stringify(compact), { level: 9 }).toString('base64'));
 fs.writeFileSync(new URL('../worker/private/led-mirrors.json', import.meta.url), JSON.stringify(priv) + '\n');
 fs.writeFileSync(new URL('../src/data/led-mirrors/public.json', import.meta.url), ptext + '\n');
 console.log(`models: ${pub.models.length}, collected: ${pub.collected}, markup: x${MARKUP}`);
