@@ -1,3 +1,17 @@
+
+## Update 2026-11-04 — legal shop pages merged; feed still NOT live
+
+The older readiness tables above describe the state **before** shop legal pages were published. Current source of truth:
+
+- UA shop policies: `/shop/offer/`, `/shop/delivery-payment/`, `/shop/returns/`.
+- RU shop policies: `/ru/shop/offer/`, `/ru/shop/delivery-payment/`, `/ru/shop/returns/`.
+- Seller: ФОП Гожда Марія Олегівна (not the Austrian Space Glass KG).
+- Nova Poshta delivery is **free across Ukraine**; 100% prepayment **after manager confirmation**; no online payment.
+- Manufacturing lead time: up to **15 working days** for standard mirrors, **35 working days** for metal-frame mirrors, counted after confirmation and payment; warranty **12 months**.
+- The legal links are now in a dedicated Buyer footer column on shop routes. Desktop layout is seven columns (PR #65).
+- The feed remains a **private local draft** and must not be exposed until availability, brand attribution, product identifiers, product condition, image advertising rights, shipping transit times and Merchant return settings are validated. **Do not assume `in_stock` simply because products can be ordered.**
+- Next technical audit: verify product cards and cart display these same terms and link to shop policies before order submission; confirm the feed landing-page price matches the chosen size. This update does not assert that audit has been completed.
+
 # Google Merchant Center readiness — Space Glass shop (UA/RU, UAH)
 
 Status 2026-11-03: **PARTIAL — not ready to connect.** Site-side data model, schema and a draft feed generator exist; several owner decisions and
