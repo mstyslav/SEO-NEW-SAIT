@@ -22,7 +22,7 @@ const strings = {
   tabAll: S.tabAll, soon: S.soonTab, filtersTitle: S.filtersTitle, filtersBtn: S.filtersBtn, reset: S.reset, close: S.close, priceFrom: S.priceFrom, priceTo: S.priceTo,
   priceHint: S.priceHint, sizeHint: S.sizeHint, applyTpl: S.apply(0).replace('0', '{n}'), foundTpl: S.found(0).replace('0', '{n}'), activeTpl: S.active(0).replace('0', '{n}'), sizeHintTpl: S.anySize('{lo}', '{hi}')
 };
-const data = { locale, initialCat, strings, schema, products: clientProducts(products), categoryCopy: null };
+const data = { locale, initialCat, strings, schema, products: clientProducts(products), categoryCopy: null as any, initialFaqKind: faqKind };
 const faqItems = ({ shop: shopFaq, mirrors: mirrorsFaq, led: ledFaq } as Record<string, any>)[faqKind](locale, pub);
 const catalogLabel = (key: string) => (key === 'all' ? S.tabAll : schema.categories.find((c: any) => c.key === key)?.label);
 const categoryCopy = locale === 'ru' ? {
@@ -183,7 +183,7 @@ const initialCopy = faqKind === 'led' ? { h1, desc: locale === 'ru' ? 'Моде�
     const pageTitle = document.querySelector('[data-sf-page-title]');
     const pageDesc = document.querySelector('[data-sf-page-desc]');
     if (pageTitle && copy) pageTitle.textContent = data.initialCat === 'mirrors' && state.cat === 'mirrors' && location.pathname.includes('/mirrors/led/') ? (locale === 'ru' ? 'Каталог моделей LED-зеркал' : 'Каталог моделей LED-дзеркал') : copy.h1;
-    if (pageDesc && copy) pageDesc.textContent = copy.desc;
+    if (pageDesc && copy) pageDesc.textContent = data.initialFaqKind === 'led' && state.cat === 'mirrors' ? (locale === 'ru' ? 'Модели LED-зеркал с выбором формы, размера и подсветки. Изготавливаем под заказ.' : 'Моделі LED-дзеркал із вибором форми, розміру й підсвітки. Виготовляємо під замовлення.') : copy.desc;
   }
 
   function setCategory(cat: string) {
