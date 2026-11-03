@@ -4,12 +4,13 @@
 // noindex / out of the sitemap until the owner approves it (docs/SEO-OWNER-ACTIONS.md). Public data holds NO purchase prices.
 import LedMirrorsCatalog from '../../../components/led-mirrors/LedMirrorsCatalog.astro';
 import LedMirrorModel from '../../../components/led-mirrors/LedMirrorModel.astro';
+import LedCatalogBlockPreview from '../../../components/led-mirrors/LedCatalogBlockPreview.astro';
 import pub from '../../../data/led-mirrors/public.json';
 
 export function getStaticPaths() {
-  return [{ params: { slug: undefined } }, ...pub.models.map((m) => ({ params: { slug: m.slug } }))];
+  return [{ params: { slug: undefined } }, { params: { slug: 'preview-led-block' } }, ...pub.models.map((m) => ({ params: { slug: m.slug } }))];
 }
 const { slug } = Astro.params;
 const model = slug ? pub.models.find((m) => m.slug === slug) : undefined;
 ---
-{model ? <LedMirrorModel model={model} locale="uk" /> : <LedMirrorsCatalog locale="uk" />}
+{slug === 'preview-led-block' ? <LedCatalogBlockPreview locale="uk" /> : model ? <LedMirrorModel model={model} locale="uk" /> : <LedMirrorsCatalog locale="uk" />}

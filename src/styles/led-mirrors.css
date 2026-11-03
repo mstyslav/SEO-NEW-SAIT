@@ -35,3 +35,5 @@
 .lm-actions{display:flex;flex-wrap:wrap;gap:12px}
 .lm-actions .button{flex:1 1 180px}
 .lm-added{margin:0;font-size:.95rem}
+.lm-pick__all{margin:20px 0 0}
+.lm-pick__grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}

@@ -30,7 +30,7 @@ const title = locale === 'ru' ? 'Каталог LED-зеркал с ценами
   <Header locale={locale} />
   <main id="main">
     <section class="category-section">
-      <Breadcrumbs items={[{ label: T.home, href: locale === 'ru' ? '/ru/' : '/' }, { label: T.mirrors, href: locale === 'ru' ? '/ru/dzerkala/' : '/dzerkala/' }, { label: T.catalogTitle }]} />
+      <Breadcrumbs items={[{ label: T.home, href: locale === 'ru' ? '/ru/' : '/' }, { label: T.mirrors, href: locale === 'ru' ? '/ru/dzerkala/' : '/dzerkala/' }, { label: T.ledMirrors, href: `${locale === 'ru' ? '/ru' : ''}/dzerkala/led-dzerkala/` }, { label: T.modelsCrumb }]} />
       <div class="category-heading"><div><p class="eyebrow">{T.catalog}</p><h1>{T.catalogH1}</h1></div>
         <p>{T.catalogLead(formatDate(pub.collected))}</p></div>
 

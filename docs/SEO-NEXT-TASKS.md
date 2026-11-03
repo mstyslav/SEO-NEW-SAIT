@@ -35,3 +35,7 @@ See [SEO-OWNER-ACTIONS.md](SEO-OWNER-ACTIONS.md): door prices (R-030), real case
 ## Unified cart go-live (R-072, after owner answers)
 - Decide the Control CRM intake (see SEO-OWNER-ACTIONS.md), then PR + deploy with worker/private/led-mirrors.json present; verify one real order reaches the lead group / CRM.
 - Optional follow-ups: cart link in the mobile menu, EN/DE/ES decision later (not in scope), order statuses in CRM.
+
+## «Обрати LED-дзеркало» block on /dzerkala/led-dzerkala/ (R-069, not before 2026-11-11)
+- Prepared component `src/components/led-mirrors/LedCatalogBlock.astro` (UA/RU, 4 models with photos and retail "від" prices, button to /dzerkala/katalog/). Not imported anywhere; preview at /dzerkala/katalog/preview-led-block/ (noindex, remove the preview route when wiring).
+- After the protection period ends and the owner approves: render it in the LED page template (UA and RU), check title/H1/schema unchanged, then update R-069/R-071.

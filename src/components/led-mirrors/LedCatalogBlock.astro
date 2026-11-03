@@ -1,0 +1,36 @@
+---
+// «Обрати LED-дзеркало»: entry block from /dzerkala/led-dzerkala/ to the model catalog (/dzerkala/katalog/).
+// PREPARED, NOT PUBLISHED: that page is protected by SEO roadmap R-069 until 2026-11-11, so this block is not
+// imported anywhere yet. Preview: /dzerkala/katalog/preview-led-block/ (noindex). After the protection period:
+// import it in the LED page template and render <LedCatalogBlock locale="uk|ru" />.
+import photos from '../../data/led-mirrors/photos.json';
+import pub from '../../data/led-mirrors/public.json';
+import { STR, caption, formatUah, catalogPath, modelTitle } from '../../lib/led-mirror-i18n.mjs';
+import '../../styles/profile-systems.css';
+import '../../styles/led-mirrors.css';
+
+const { locale = 'uk' } = Astro.props;
+const T = STR[locale as 'uk' | 'ru'];
+const picks = ['agnes', 'como', 'moon', 'king'].map((s) => pub.models.find((m) => m.slug === s)).filter(Boolean) as typeof pub.models;
+const has = (slug: string) => ((photos as Record<string, number>)[slug] ?? 0) > 0;
+---
+<section class="category-section lm-pick" aria-labelledby="lm-pick-title">
+  <div class="category-heading"><div><h2 id="lm-pick-title">{T.pickTitle}</h2></div><p>{T.pickLead}</p></div>
+  <div class="profile-grid lm-pick__grid">
+    {picks.map((m) => (
+      <article class="profile-card">
+        <a class="profile-card__media" href={`${catalogPath(locale)}${m.slug}/`} aria-label={modelTitle(locale, m.name_short)}>
+          {has(m.slug)
+            ? <img src={`/images/led-mirrors/${m.slug}-1-480.webp`} srcset={`/images/led-mirrors/${m.slug}-1-480.webp 480w, /images/led-mirrors/${m.slug}-1-900.webp 900w`} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 44vw, 24vw" alt={`${modelTitle(locale, m.name_short)}: ${caption(locale, m)}`} width="480" height="480" loading="lazy" decoding="async" />
+            : <div class="lm-placeholder" aria-hidden="true">{m.name_short}</div>}
+        </a>
+        <div class="profile-card__body">
+          <h3 class="h3"><a href={`${catalogPath(locale)}${m.slug}/`}>{m.name_short}</a></h3>
+          <p class="profile-card__blurb">{caption(locale, m)}</p>
+          <p class="profile-card__price"><strong>{T.from} {formatUah(m.from_uah)}</strong></p>
+        </div>
+      </article>
+    ))}
+  </div>
+  <p class="lm-pick__all"><a class="button button--mint" href={catalogPath(locale)}>{T.pickAll}</a></p>
+</section>

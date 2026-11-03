@@ -19,7 +19,7 @@ const S = ru ? {
   pricesUpdated: 'Цены в корзине обновлены по актуальному прайсу.',
   doneH: 'Заявка принята', doneP: (id: string) => `Номер заявки: ${id}. Менеджер свяжется с вами для подтверждения стоимости и деталей.`, doneBtn: 'Вернуться в каталог',
   errors: { invalid_name: 'Укажите имя.', invalid_phone: 'Проверьте номер телефона.', invalid_comment: 'В комментарии нельзя оставлять ссылки.', too_many_requests: 'Слишком много попыток. Подождите минуту.', order_conflict: 'Заказ изменился — отправьте заявку ещё раз.', price_changed: 'Цены обновились — проверьте сумму и отправьте заявку ещё раз.', invalid_items: 'Проверьте состав корзины.', invalid_quantity: 'Проверьте количество.', generic: 'Не удалось отправить заявку. Корзина сохранена — попробуйте ещё раз или позвоните нам.' },
-  mirror: 'Зеркало', category: 'Зеркала', fallbackName: 'Конструкция', fallbackConfig: 'Индивидуальная конфигурация', home: '/ru/'
+  openItem: 'Открыть товар', mirror: 'Зеркало', category: 'Зеркала', fallbackName: 'Конструкция', fallbackConfig: 'Индивидуальная конфигурация', home: '/ru/'
 } : {
   title: 'Кошик | Space Glass', desc: 'Обрані товари та конфігурації Space Glass, оформлення заявки.',
   eyebrow: 'Кошик', h1: 'Усі товари в одному місці', lead: 'Додавайте дзеркала та інші конструкції, потім надішліть одну заявку на все замовлення. Менеджер підтвердить вартість і зв’яжеться з вами.',
@@ -34,7 +34,7 @@ const S = ru ? {
   pricesUpdated: 'Ціни в кошику оновлено за актуальним прайсом.',
   doneH: 'Заявку прийнято', doneP: (id: string) => `Номер заявки: ${id}. Менеджер зв’яжеться з вами для підтвердження вартості та деталей.`, doneBtn: 'Повернутися до каталогу',
   errors: { invalid_name: 'Вкажіть ім’я.', invalid_phone: 'Перевірте номер телефону.', invalid_comment: 'У коментарі не можна залишати посилання.', too_many_requests: 'Забагато спроб. Зачекайте хвилину.', order_conflict: 'Замовлення змінилося — надішліть заявку ще раз.', price_changed: 'Ціни оновилися — перевірте суму й надішліть заявку ще раз.', invalid_items: 'Перевірте склад кошика.', invalid_quantity: 'Перевірте кількість.', generic: 'Не вдалося надіслати заявку. Кошик збережено — спробуйте ще раз або зателефонуйте нам.' },
-  mirror: 'Дзеркало', category: 'Дзеркала', fallbackName: 'Конструкція', fallbackConfig: 'Індивідуальна конфігурація', home: '/'
+  openItem: 'Відкрити товар', mirror: 'Дзеркало', category: 'Дзеркала', fallbackName: 'Конструкція', fallbackConfig: 'Індивідуальна конфігурація', home: '/'
 };
 const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
 ---
@@ -42,17 +42,10 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
   <Header locale={locale} />
 
   <main class="project-cart-page">
-    <section class="project-cart-hero">
-      <div class="container project-cart-hero__grid">
-        <div>
-          <p class="eyebrow">{S.eyebrow}</p>
-          <h1>{S.h1}</h1>
-          <p>{S.lead}</p>
-        </div>
-        <div class="project-cart-hero__stats">
-          <div><span data-project-count>0</span><small>{S.positions}</small></div>
-          <div><span data-project-total>0 грн</span><small>{S.sub}</small></div>
-        </div>
+    <section class="pc-head">
+      <div class="container">
+        <h1>{S.eyebrow}</h1>
+        <p class="pc-head__sub"><span data-project-count>0</span> {S.positions}</p>
       </div>
     </section>
 
@@ -60,10 +53,7 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
       <div class="container project-cart-layout">
         <div class="project-cart-list-wrap">
           <div class="project-cart-head">
-            <div>
-              <p class="eyebrow">{S.composition}</p>
-              <h2>{S.chosen}</h2>
-            </div>
+            <h2>{S.chosen}</h2>
             <button class="project-cart-clear" type="button" data-project-clear>{S.clear}</button>
           </div>
           <p class="project-cart-notice" data-cart-notice hidden role="status"></p>
@@ -80,7 +70,6 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
 
         <aside class="project-cart-summary" id="checkout">
           <div data-cart-main>
-            <p class="eyebrow">{S.summary}</p>
             <h2>{S.yourOrder}</h2>
 
             <div class="project-cart-summary__rows">
@@ -181,6 +170,7 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
       const project = readProject();
       list.innerHTML = '';
       empty.hidden = project.items.length > 0;
+      $('[data-project-clear]').hidden = project.items.length === 0;
       project.items.forEach((item, index) => {
         const card = (template.content.cloneNode(true) as DocumentFragment).querySelector<HTMLElement>('.project-cart-item')!;
         const img = card.querySelector('img')!;
@@ -189,10 +179,11 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
         card.querySelector('small')!.textContent = item.kind === 'led-mirror' ? cfg.category : item.category || 'Space Glass';
         card.querySelector('h3')!.textContent = itemName(item);
         card.querySelector('.project-cart-item__config')!.textContent = itemConfig(item);
-        if (item.url) { const a = card.querySelector<HTMLAnchorElement>('.project-cart-item__link')!; a.hidden = false; a.href = (ru && item.kind === 'led-mirror' ? '/ru' : '') + item.url; a.textContent = itemName(item); }
+        if (item.url) { const a = card.querySelector<HTMLAnchorElement>('.project-cart-item__link')!; a.hidden = false; a.href = (ru && item.kind === 'led-mirror' ? '/ru' : '') + item.url; a.textContent = cfg.openItem; }
         const u = unit(item), q = Number(item.quantity) || 1;
         const strong = card.querySelector('strong')!;
         strong.textContent = u === null ? cfg.priceTbd : money(u * q);
+        strong.classList.toggle('is-tbd', u === null);
         if (u !== null) { const s = document.createElement('span'); s.className = 'project-cart-item__unit'; s.textContent = `${money(u)} ${cfg.unit}`; strong.append(s); }
         const qty = card.querySelector('input')!;
         qty.value = String(q);
@@ -283,308 +274,67 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
   </script>
 
   <style is:global>
-    /* Sprint 26 — Project Cart */
-    .project-cart-page{
-      background:#fff;
-    }
-    .project-cart-hero{
-      padding:72px 0 58px;
-      background:#07150f;
-      color:#fff;
-    }
-    .project-cart-hero__grid{
-      display:grid;
-      grid-template-columns:1.25fr .75fr;
-      gap:60px;
-      align-items:end;
-    }
-    .project-cart-hero h1{
-      max-width:850px;
-      margin:12px 0 18px;
-      font-size:clamp(48px,6vw,88px);
-      line-height:.94;
-    }
-    .project-cart-hero p:not(.eyebrow){
-      max-width:760px;
-      color:#aab5af;
-      font-size:17px;
-      line-height:1.6;
-    }
-    .project-cart-hero__stats{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-    .project-cart-hero__stats div{
-      padding:22px;
-      border:1px solid #294037;
-      border-radius:14px;
-    }
-    .project-cart-hero__stats span,
-    .project-cart-hero__stats small{
-      display:block;
-    }
-    .project-cart-hero__stats span{
-      color:var(--mint);
-      font-size:34px;
-      font-weight:800;
-    }
-    .project-cart-hero__stats small{
-      margin-top:5px;
-      color:#8f9b95;
-      text-transform:uppercase;
-      letter-spacing:.07em;
-    }
-
-    .project-cart-layout{
-      display:grid;
-      grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);
-      gap:28px;
-      align-items:start;
-    }
-    .project-cart-head{
-      display:flex;
-      justify-content:space-between;
-      gap:20px;
-      align-items:end;
-      margin-bottom:24px;
-    }
-    .project-cart-head h2{
-      margin:8px 0 0;
-    }
-    .project-cart-clear{
-      border:0;
-      background:transparent;
-      color:#8b4b37;
-      cursor:pointer;
-      font-size:12px;
-    }
-    .project-cart-empty{
-      display:grid;
-      place-items:center;
-      min-height:430px;
-      padding:40px;
-      border:1px dashed var(--green-line);
-      border-radius:18px;
-      background:#f8fcfa;
-      text-align:center;
-    }
-    .project-cart-empty__icon{
-      display:grid;
-      place-items:center;
-      width:70px;
-      height:70px;
-      border-radius:50%;
-      background:#e7f5ef;
-      color:var(--mint-dark);
-      font-size:34px;
-    }
-    .project-cart-empty h3{
-      margin:14px 0 0;
-      font-size:27px;
-    }
-    .project-cart-empty p{
-      max-width:440px;
-      margin:8px 0 18px;
-      color:var(--muted);
-    }
-    .project-cart-list{
-      display:grid;
-      gap:14px;
-    }
-    .project-cart-item{
-      display:grid;
-      grid-template-columns:200px minmax(0,1fr);
-      overflow:hidden;
-      border:1px solid var(--green-line);
-      border-radius:16px;
-      background:#fff;
-    }
-    .project-cart-item__image{
-      min-height:190px;
-      background:#edf3f0;
-    }
-    .project-cart-item__image img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-    .project-cart-item__body{
-      padding:20px;
-    }
-    .project-cart-item__top{
-      display:flex;
-      justify-content:space-between;
-      gap:18px;
-    }
-    .project-cart-item__top small{
-      color:var(--mint-dark);
-      font-size:10px;
-      text-transform:uppercase;
-      letter-spacing:.07em;
-    }
-    .project-cart-item__top h3{
-      margin:5px 0 0;
-      font-size:24px;
-    }
-    .project-cart-item__top button{
-      width:34px;
-      height:34px;
-      border:1px solid var(--green-line);
-      border-radius:50%;
-      background:#fff;
-      cursor:pointer;
-    }
-    .project-cart-item__config{
-      margin:14px 0 18px;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.55;
-    }
-    .project-cart-item__bottom{
-      display:flex;
-      justify-content:space-between;
-      gap:18px;
-      align-items:end;
-    }
-    .project-cart-item__bottom label{
-      display:grid;
-      gap:6px;
-    }
-    .project-cart-item__bottom label span{
-      color:var(--muted);
-      font-size:10px;
-      text-transform:uppercase;
-    }
-    .project-cart-item__bottom input{
-      width:90px;
-      min-height:42px;
-      padding:0 10px;
-      border:1px solid var(--green-line);
-      border-radius:8px;
-    }
-    .project-cart-item__bottom strong{
-      font-size:22px;
-    }
-
-    .project-cart-summary{
-      position:sticky;
-      top:112px;
-      padding:28px;
-      border:1px solid var(--green-line);
-      border-radius:18px;
-      background:#fff;
-      box-shadow:0 18px 60px rgba(16,40,29,.06);
-    }
-    .project-cart-summary h2{
-      margin:8px 0 24px;
-    }
-    .project-cart-summary__rows{
-      display:grid;
-      gap:12px;
-      margin-bottom:20px;
-    }
-    .project-cart-summary__rows div{
-      display:flex;
-      justify-content:space-between;
-      gap:20px;
-      padding-bottom:12px;
-      border-bottom:1px solid #e7ece9;
-    }
-    .project-cart-summary__rows span{
-      color:var(--muted);
-      font-size:11px;
-    }
-    .project-cart-summary__rows b{
-      font-size:14px;
-    }
-    .project-cart-note{
-      display:grid;
-      gap:8px;
-      margin-bottom:18px;
-    }
-    .project-cart-note span{
-      font-size:11px;
-      font-weight:750;
-      text-transform:uppercase;
-    }
-    .project-cart-note textarea{
-      resize:none;
-      padding:13px;
-      border:1px solid var(--green-line);
-      border-radius:9px;
-      font:inherit;
-    }
-    .project-cart-quote,
-    .project-cart-download{
-      width:100%;
-      justify-content:center;
-      min-height:52px;
-      margin-top:10px;
-    }
-    .project-cart-quote.is-disabled{
-      pointer-events:none;
-      opacity:.45;
-    }
-    .project-cart-summary__notice{
-      margin:16px 0 0;
-      color:var(--muted);
-      font-size:10px;
-      line-height:1.5;
-    }
-
-    .project-cart-save,
-    .project-cart-share,
-    .project-cart-download{
-      width:100%;
-      justify-content:center;
-      min-height:50px;
-      margin-top:10px;
-    }
-    .project-cart-action-status{
-      margin:12px 0 0;
-      padding:10px 12px;
-      border-radius:8px;
-      background:#edf8f3;
-      color:#0b6b4a;
-      font-size:11px;
-    }
-
-    @media(max-width:950px){
-      .project-cart-hero__grid,
-      .project-cart-layout{
-        grid-template-columns:1fr;
-      }
-      .project-cart-summary{
-        position:static;
-      }
-    }
-    @media(max-width:620px){
-      .project-cart-hero__stats,
-      .project-cart-item{
-        grid-template-columns:1fr;
-      }
-      .project-cart-item__image{
-        height:220px;
-      }
-      .project-cart-item__bottom{
-        align-items:flex-start;
-        flex-direction:column;
-      }
-    }
-
-    /* Unified cart (LED mirrors + configurators) */
-    .project-cart-item__config{white-space:pre-line}
-    .project-cart-item__unit{display:block;font-size:.8rem;font-weight:400;opacity:.7}
-    .project-cart-item__link{font-size:.85rem}
-    .project-cart-notice{margin:0 0 12px;padding:10px 12px;border-radius:8px;background:#fff7e0;font-size:.9rem}
-    .project-cart-form{display:grid;gap:12px;margin-top:16px}
-    .project-cart-form label{display:grid;gap:4px;font-size:.9rem}
-    .project-cart-form input,.project-cart-form textarea{width:100%;min-height:44px;padding:8px 12px;border:1px solid #cfd8dc;border-radius:8px;font:inherit}
-    .project-cart-form [data-cart-error]{color:#b3261e;margin:0;font-size:.9rem}
+    /* Unified cart: light Space Glass style (tokens from global.css) */
+    .project-cart-page{background:#fff;color:var(--text);padding-bottom:56px}
+    .pc-head{padding:22px 0 6px}
+    .pc-head h1{margin:0;font-size:clamp(26px,3vw,36px);line-height:1.15;color:var(--text)}
+    .pc-head__sub{margin:4px 0 0;color:var(--muted,#5f6b64);font-size:.95rem}
+    .project-cart-section{padding:12px 0 0}
+    .project-cart-layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start}
+    .project-cart-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 12px}
+    .project-cart-page .project-cart-head h2,.project-cart-page .project-cart-summary h2,.project-cart-page .project-cart-empty h3{font-size:1.1rem!important;line-height:1.25!important;margin:0}
+    .project-cart-page .project-cart-item__top h3{font-size:1.05rem!important;line-height:1.25!important}
+    .project-cart-page .pc-head h1{font-size:clamp(24px,3vw,34px)!important;line-height:1.15!important}
+    .project-cart-clear{background:none;border:0;padding:8px 0;color:var(--muted,#5f6b64);font:inherit;font-size:.9rem;text-decoration:underline;cursor:pointer;min-height:44px}
+    .project-cart-clear:hover{color:var(--text)}
+    .project-cart-list{display:grid;gap:12px}
+    .project-cart-item{display:grid;grid-template-columns:104px minmax(0,1fr);gap:14px;padding:12px;border:1px solid var(--line,#e0e7e2);border-radius:14px;background:#fff}
+    .project-cart-item__image{width:104px;height:104px;border-radius:10px;overflow:hidden;background:var(--green-soft,#edf8f2)}
+    .project-cart-item__image img{display:block;width:100%;height:100%;object-fit:cover}
+    .project-cart-item__body{min-width:0;display:grid;gap:6px;align-content:start}
+    .project-cart-item__top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+    .project-cart-item__top small{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mint-dark,#347a66)}
+    .project-cart-item__top h3{margin:2px 0 0;font-size:1.05rem;line-height:1.25}
+    .project-cart-item__top button{flex:none;width:44px;height:44px;margin:-8px -8px 0 0;border:0;border-radius:50%;background:none;font-size:1.4rem;line-height:1;color:var(--muted,#5f6b64);cursor:pointer}
+    .project-cart-item__top button:hover{background:var(--green-soft,#edf8f2);color:var(--text)}
+    .project-cart-item__config{margin:0;font-size:.85rem;line-height:1.45;color:var(--muted,#5f6b64);white-space:pre-line}
+    .project-cart-item__link{font-size:.8rem;color:var(--mint-dark,#347a66)}
+    .project-cart-item__bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:4px}
+    .project-cart-item__bottom label{display:grid;gap:2px;font-size:.75rem;color:var(--muted,#5f6b64)}
+    .project-cart-item__bottom input{width:76px;min-height:44px;padding:6px 10px;border:1px solid var(--line,#e0e7e2);border-radius:10px;font:inherit;font-size:1rem;color:var(--text)}
+    .project-cart-item__bottom strong{min-width:0;max-width:62%;font-size:1.25rem;line-height:1.15;text-align:right;color:var(--text);overflow-wrap:anywhere}
+    .project-cart-item__bottom strong.is-tbd{font-size:1rem;color:var(--mint-dark,#347a66)}
+    .project-cart-item__unit{display:block;font-size:.75rem;font-weight:400;color:var(--muted,#5f6b64);margin-top:2px}
+    .project-cart-empty{padding:28px 20px;border:1px dashed var(--green-line,#cfe9da);border-radius:14px;text-align:center;background:var(--green-soft,#edf8f2)}
+    .project-cart-empty[hidden]{display:none}
+    .project-cart-empty__icon{font-size:1.6rem;color:var(--mint-dark,#347a66)}
+    .project-cart-page .project-cart-empty h3{margin:6px 0}.project-cart-empty p{margin:0 0 14px;color:var(--muted,#5f6b64)}
+    .project-cart-summary{position:sticky;top:96px;padding:18px;border:1px solid var(--green-line,#cfe9da);border-radius:16px;background:var(--green-soft,#edf8f2)}
+    .project-cart-page .project-cart-summary h2{margin:0 0 10px}
+    .project-cart-summary__rows{display:grid;gap:6px;margin-bottom:10px}
+    .project-cart-summary__rows div{display:flex;justify-content:space-between;gap:12px;align-items:baseline;font-size:.9rem}
+    .project-cart-summary__rows div:last-child b{font-size:1.5rem}
+    .project-cart-summary__rows span{color:var(--muted,#5f6b64)}
+    .project-cart-notice{margin:0 0 10px;padding:8px 10px;border-radius:8px;background:#fff7e0;font-size:.85rem}
+    .project-cart-form{display:grid;gap:10px;margin-top:8px}
+    .project-cart-form label{display:grid;gap:4px;font-size:.85rem;color:var(--muted,#5f6b64)}
+    .project-cart-form input,.project-cart-form textarea{width:100%;min-height:44px;padding:9px 12px;border:1px solid var(--line,#e0e7e2);border-radius:10px;background:#fff;font:inherit;color:var(--text)}
+    .project-cart-form input:focus-visible,.project-cart-form textarea:focus-visible,.project-cart-item__bottom input:focus-visible{outline:2px solid var(--mint,#7bc2a8);outline-offset:1px}
+    .project-cart-form p{margin:0;font-size:.8rem;color:var(--muted,#5f6b64)}
+    .project-cart-form [data-cart-error]{color:#b3261e;font-size:.9rem}
     .project-cart-form .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
     .project-cart-form button[disabled]{opacity:.6;cursor:wait}
-    .project-cart-done{padding:32px;border-radius:12px;background:#eef6f5}
-    .project-cart-done h2{margin-top:0}
+    .project-cart-form .button{width:100%;min-height:48px}
+    .project-cart-save,.project-cart-share,.project-cart-download{display:inline-flex;margin:10px 8px 0 0;min-height:40px;padding:6px 12px;font-size:.8rem}
+    .project-cart-action-status{margin:8px 0 0;font-size:.85rem}
+    .project-cart-summary__notice{margin:12px 0 0;font-size:.78rem;color:var(--muted,#5f6b64)}
+    .project-cart-done{padding:8px 0}.project-cart-done h2{margin-top:0}
+    @media (max-width:860px){
+      .project-cart-layout{grid-template-columns:1fr;gap:16px}
+      .project-cart-summary{position:static}
+      .pc-head{padding:14px 0 2px}
+      .project-cart-item{grid-template-columns:84px minmax(0,1fr);gap:10px;padding:10px}
+      .project-cart-item__image{width:84px;height:84px}
+    }
   </style>
 </BaseLayout>

@@ -45,7 +45,7 @@ const cfg = { id: model.id, slug, name: model.name_short, locale, cartHref: T.ca
   <Header locale={locale} />
   <main id="main">
     <section class="category-section">
-      <Breadcrumbs items={[{ label: T.home, href: locale === 'ru' ? '/ru/' : '/' }, { label: T.mirrors, href: locale === 'ru' ? '/ru/dzerkala/' : '/dzerkala/' }, { label: T.catalogTitle, href: catalogPath(locale) }, { label: model.name_short }]} />
+      <Breadcrumbs items={[{ label: T.home, href: locale === 'ru' ? '/ru/' : '/' }, { label: T.mirrors, href: locale === 'ru' ? '/ru/dzerkala/' : '/dzerkala/' }, { label: T.ledMirrors, href: `${locale === 'ru' ? '/ru' : ''}/dzerkala/led-dzerkala/` }, { label: T.modelsCrumb, href: catalogPath(locale) }, { label: model.name_short }]} />
       <div class="category-heading"><div><p class="eyebrow">{caption(locale, model)}</p><h1>{title}</h1></div></div>
 
       <div class="lm-model">

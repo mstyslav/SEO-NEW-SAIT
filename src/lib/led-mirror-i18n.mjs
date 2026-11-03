@@ -34,7 +34,8 @@ export const caption = (locale, m) => [attr(locale, m.shape), attr(locale, m.mai
 
 export const STR = {
   uk: {
-    catalog: 'Каталог', home: 'Головна', mirrors: 'Дзеркала', catalogTitle: 'Каталог LED-дзеркал', catalogH1: 'Каталог LED-дзеркал',
+    catalog: 'Каталог', home: 'Головна', mirrors: 'Дзеркала', ledMirrors: 'LED-дзеркала', modelsCrumb: 'Каталог моделей',
+    pickTitle: 'Обрати LED-дзеркало', pickLead: 'Готові моделі з підсвіткою: оберіть розмір і опції та одразу побачите ціну.', pickAll: 'Переглянути всі моделі', catalogTitle: 'Каталог LED-дзеркал', catalogH1: 'Каталог LED-дзеркал',
     catalogLead: (d) => `Ціна розраховується за розміром і опціями. Вартість — станом на ${d}, без монтажу, доставки та заміру.`,
     searchLabel: 'Пошук за назвою', searchPh: 'Наприклад, AGNES', shape: 'Форма', light: 'Підсвітка', frame: 'Рама', all: 'Усі', reset: 'Скинути фільтри',
     of: 'з', models: 'моделей', empty: 'Нічого не знайдено — змініть фільтри.', from: 'від', calc: 'Розрахувати →',
@@ -51,7 +52,8 @@ export const STR = {
     deliveryLink: 'доставка й оплата', deliveryHref: '/delivery-payment/'
   },
   ru: {
-    catalog: 'Каталог', home: 'Главная', mirrors: 'Зеркала', catalogTitle: 'Каталог LED-зеркал', catalogH1: 'Каталог LED-зеркал',
+    catalog: 'Каталог', home: 'Главная', mirrors: 'Зеркала', ledMirrors: 'LED-зеркала', modelsCrumb: 'Каталог моделей',
+    pickTitle: 'Выбрать LED-зеркало', pickLead: 'Готовые модели с подсветкой: выберите размер и опции — цена сразу на экране.', pickAll: 'Смотреть все модели', catalogTitle: 'Каталог LED-зеркал', catalogH1: 'Каталог LED-зеркал',
     catalogLead: (d) => `Цена рассчитывается по размеру и опциям. Стоимость — по состоянию на ${d}, без монтажа, доставки и замера.`,
     searchLabel: 'Поиск по названию', searchPh: 'Например, AGNES', shape: 'Форма', light: 'Подсветка', frame: 'Рама', all: 'Все', reset: 'Сбросить фильтры',
     of: 'из', models: 'моделей', empty: 'Ничего не найдено — измените фильтры.', from: 'от', calc: 'Рассчитать →',
