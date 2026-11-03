@@ -15,7 +15,7 @@ import { shopPath, ledModelPath, SHOP_STR, LED_PRODUCT_TYPE, PRODUCT_TYPES } fro
 import { buildProducts, cardData } from '../../lib/shop-catalog.mjs';
 import { modelFaq } from '../../lib/shop-faq.mjs';
 import { modelContent } from '../../lib/shop-content.mjs';
-import { terms } from '../../lib/shop-terms.mjs';
+import { terms, LEAD_DAYS } from '../../lib/shop-terms.mjs';
 import { hasLedLight } from '../../lib/shop-catalog.mjs';
 import { isNoneOption } from '../../lib/cart-describe.mjs';
 import seo from '../../data/led-mirrors/seo.json';
@@ -142,7 +142,7 @@ const cfg = {
           <p class="eyebrow">{caption(locale, model)}</p>
           <h1 class="pp__title">{h1Text}</h1>
           <p class="pp__lead">{shortDesc}</p>
-          <p class="pp__meta"><span>{productNote}</span><span>{P.code}: {code}</span></p>
+          <p class="pp__meta"><span>{productNote}</span><span>{ru ? `Изготовление до ${model.frame === 'Металева' ? LEAD_DAYS.metalFrameMax : LEAD_DAYS.standardMax} рабочих дней` : `Виготовлення до ${model.frame === 'Металева' ? LEAD_DAYS.metalFrameMax : LEAD_DAYS.standardMax} робочих днів`}</span><span>{P.code}: {code}</span></p>
           <dl class="pp-keys">
             {specRows.slice(0, 4).map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
           </dl>
@@ -249,7 +249,7 @@ const cfg = {
       <section class="pp-sec pp-terms" aria-labelledby="pp-deliv"><h2 id="pp-deliv">{P.delivH}</h2>
         <ul class="pp-dlist"><li>{TM.geo} {TM.delivery}</li><li>{TM.payment}</li><li>{TM.lead}</li><li>{TM.warranty}</li><li>{P.dp3}</li></ul>
         <p class="pp-flow">{TM.flow}</p>
-        <p><a href={`${ru ? '/ru' : ''}/delivery-payment/`}>{P.dpLink}</a></p>
+        <p><a href={`${ru ? '/ru' : ''}/shop/delivery-payment/`}>{P.dpLink}</a></p>
       </section>
 
       <ShopFaq locale={locale} items={faq} id="model-faq" />
