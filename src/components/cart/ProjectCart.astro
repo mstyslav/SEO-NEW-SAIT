@@ -15,7 +15,7 @@ const S = ru ? {
   name: 'Имя', phone: 'Телефон', comment: 'Комментарий (необязательно)', commentPh: 'Например: нужна доставка и монтаж в Киеве', submit: 'Отправить заявку', sending: 'Отправляем…',
   notice: 'Сумма предварительная и не является офертой. Окончательную стоимость, сроки, доставку и монтаж подтверждает менеджер. Онлайн-оплаты нет.',
   qty: 'Количество', remove: 'Удалить', consent: 'Отправляя заявку, вы соглашаетесь с', policy: 'политикой конфиденциальности', policyHref: '/ru/privacy-policy/',
-  save: 'Сохранить корзину', share: 'Скопировать ссылку', pdf: 'Скачать PDF', saved: 'Корзина сохранена в этом браузере.', copied: 'Ссылка скопирована.', shared: 'Общая корзина загружена.',
+  save: 'Сохранить корзину', pdf: 'Скачать PDF', saved: 'Корзина сохранена в этом браузере.',
   pricesUpdated: 'Цены в корзине обновлены по актуальному прайсу.',
   doneH: 'Заявка принята', doneP: (id: string) => `Номер заявки: ${id}. Менеджер свяжется с вами для подтверждения стоимости и деталей.`, doneBtn: 'Вернуться в каталог',
   errors: { invalid_name: 'Укажите имя.', invalid_phone: 'Проверьте номер телефона.', invalid_comment: 'В комментарии нельзя оставлять ссылки.', too_many_requests: 'Слишком много попыток. Подождите минуту.', order_conflict: 'Заказ изменился — отправьте заявку ещё раз.', price_changed: 'Цены обновились — проверьте сумму и отправьте заявку ещё раз.', invalid_items: 'Проверьте состав корзины.', invalid_quantity: 'Проверьте количество.', generic: 'Не удалось отправить заявку. Корзина сохранена — попробуйте ещё раз или позвоните нам.' },
@@ -30,7 +30,7 @@ const S = ru ? {
   name: 'Ім’я', phone: 'Телефон', comment: 'Коментар (необов’язково)', commentPh: 'Наприклад: потрібна доставка й монтаж у Києві', submit: 'Надіслати заявку', sending: 'Надсилаємо…',
   notice: 'Сума попередня й не є офертою. Остаточну вартість, строки, доставку та монтаж підтверджує менеджер. Онлайн-оплати немає.',
   qty: 'Кількість', remove: 'Видалити', consent: 'Надсилаючи заявку, ви погоджуєтесь із', policy: 'політикою конфіденційності', policyHref: '/privacy-policy/',
-  save: 'Зберегти кошик', share: 'Скопіювати посилання', pdf: 'Завантажити PDF', saved: 'Кошик збережено в цьому браузері.', copied: 'Посилання скопійовано.', shared: 'Спільний кошик завантажено.',
+  save: 'Зберегти кошик', pdf: 'Завантажити PDF', saved: 'Кошик збережено в цьому браузері.',
   pricesUpdated: 'Ціни в кошику оновлено за актуальним прайсом.',
   doneH: 'Заявку прийнято', doneP: (id: string) => `Номер заявки: ${id}. Менеджер зв’яжеться з вами для підтвердження вартості та деталей.`, doneBtn: 'Повернутися до каталогу',
   errors: { invalid_name: 'Вкажіть ім’я.', invalid_phone: 'Перевірте номер телефону.', invalid_comment: 'У коментарі не можна залишати посилання.', too_many_requests: 'Забагато спроб. Зачекайте хвилину.', order_conflict: 'Замовлення змінилося — надішліть заявку ще раз.', price_changed: 'Ціни оновилися — перевірте суму й надішліть заявку ще раз.', invalid_items: 'Перевірте склад кошика.', invalid_quantity: 'Перевірте кількість.', generic: 'Не вдалося надіслати заявку. Кошик збережено — спробуйте ще раз або зателефонуйте нам.' },
@@ -81,17 +81,18 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
             <form class="project-cart-form" data-cart-form novalidate>
               <label>{S.name}<input name="name" type="text" autocomplete="name" required minlength="2" maxlength="120" /></label>
               <label>{S.phone}<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+38" required /></label>
-              <label>{S.comment}<textarea name="comment" rows="3" maxlength="1500" placeholder={S.commentPh} data-project-note></textarea></label>
+              <label>{S.comment}<textarea name="comment" rows="2" maxlength="1500" placeholder={S.commentPh} data-project-note></textarea></label>
               <div class="hp" aria-hidden="true"><label>Website<input name="website" type="text" tabindex="-1" autocomplete="off" /></label></div>
               <p>{S.consent} <a href={S.policyHref}>{S.policy}</a>.</p>
               <p data-cart-error hidden role="alert"></p>
               <button class="button button--mint" type="submit" data-cart-submit>{S.submit}</button>
             </form>
 
-            <button class="button button--outline project-cart-save" type="button" data-project-save>{S.save}</button>
-            <button class="button button--outline project-cart-share" type="button" data-project-share>{S.share}</button>
-            <button class="button button--outline project-cart-download" type="button" data-project-download>{S.pdf}</button>
-            <p class="project-cart-action-status" data-project-action-status hidden></p>
+            <div class="project-cart-extras">
+              <button class="button button--outline project-cart-save" type="button" data-project-save>{S.save}</button>
+              <button class="button button--outline project-cart-download" type="button" data-project-download>{S.pdf}</button>
+            </div>
+            <p class="project-cart-action-status" data-project-action-status hidden role="status"></p>
             <p class="project-cart-summary__notice">{S.notice}</p>
           </div>
           <div class="project-cart-done" data-cart-done hidden>
@@ -256,18 +257,9 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
     const status = $('[data-project-action-status]');
     const showStatus = (m: string) => { status.hidden = false; status.textContent = m; setTimeout(() => (status.hidden = true), 2600); };
     $('[data-project-save]').addEventListener('click', () => { const p = readProject(); p.savedAt = new Date().toISOString(); writeProject(p); showStatus(cfg.saved); });
-    $('[data-project-share]').addEventListener('click', async () => {
-      const payload = btoa(unescape(encodeURIComponent(JSON.stringify(readProject()))));
-      const url = `${location.origin}${location.pathname}?project=${encodeURIComponent(payload)}`;
-      try { await navigator.clipboard.writeText(url); showStatus(cfg.copied); } catch { window.prompt('', url); }
-    });
     $('[data-project-download]').addEventListener('click', () => window.open('/project-print/', '_blank', 'noopener,noreferrer'));
 
     const q = new URLSearchParams(location.search);
-    const shared = q.get('project');
-    if (shared) {
-      try { const imp = JSON.parse(decodeURIComponent(escape(atob(shared)))); if (Array.isArray(imp.items)) { writeProject({ items: imp.items, note: '' }); history.replaceState({}, '', location.pathname); showStatus(cfg.shared); } } catch { /* ignore */ }
-    }
     render();
     refreshPrices().then((changed) => { if (changed) { render(); showNotice(cfg.pricesUpdated); } });
     if (q.get('checkout') === '1') { $('#checkout').scrollIntoView({ block: 'start' }); form.querySelector<HTMLInputElement>('input[name=name]')?.focus({ preventScroll: true }); }
@@ -309,26 +301,35 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
     .project-cart-empty[hidden]{display:none}
     .project-cart-empty__icon{font-size:1.6rem;color:var(--mint-dark,#347a66)}
     .project-cart-page .project-cart-empty h3{margin:6px 0}.project-cart-empty p{margin:0 0 14px;color:var(--muted,#5f6b64)}
-    .project-cart-summary{position:sticky;top:96px;padding:18px;border:1px solid var(--green-line,#cfe9da);border-radius:16px;background:var(--green-soft,#edf8f2)}
-    .project-cart-page .project-cart-summary h2{margin:0 0 10px}
-    .project-cart-summary__rows{display:grid;gap:6px;margin-bottom:10px}
+    .project-cart-summary{position:sticky;top:96px;padding:16px;border:1px solid var(--green-line,#cfe9da);border-radius:16px;background:var(--green-soft,#edf8f2)}
+    .project-cart-page .project-cart-summary h2{margin:0 0 8px}
+    .project-cart-summary__rows{display:grid;gap:4px;margin-bottom:8px}
     .project-cart-summary__rows div{display:flex;justify-content:space-between;gap:12px;align-items:baseline;font-size:.9rem}
     .project-cart-summary__rows div:last-child b{font-size:1.5rem}
     .project-cart-summary__rows span{color:var(--muted,#5f6b64)}
-    .project-cart-notice{margin:0 0 10px;padding:8px 10px;border-radius:8px;background:#fff7e0;font-size:.85rem}
-    .project-cart-form{display:grid;gap:10px;margin-top:8px}
-    .project-cart-form label{display:grid;gap:4px;font-size:.85rem;color:var(--muted,#5f6b64)}
+    .project-cart-notice{margin:0 0 8px;padding:8px 10px;border-radius:8px;background:#fff7e0;font-size:.85rem}
+    .project-cart-notice[hidden]{display:none}
+    .project-cart-form{display:grid;gap:8px;margin:0}
+    .project-cart-form label{display:grid;gap:3px;font-size:.85rem;color:var(--muted,#5f6b64)}
     .project-cart-form input,.project-cart-form textarea{width:100%;min-height:44px;padding:9px 12px;border:1px solid var(--line,#e0e7e2);border-radius:10px;background:#fff;font:inherit;color:var(--text)}
+    .project-cart-form textarea{min-height:64px;resize:vertical}
     .project-cart-form input:focus-visible,.project-cart-form textarea:focus-visible,.project-cart-item__bottom input:focus-visible{outline:2px solid var(--mint,#7bc2a8);outline-offset:1px}
-    .project-cart-form p{margin:0;font-size:.8rem;color:var(--muted,#5f6b64)}
+    .project-cart-form p{margin:0;font-size:.78rem;color:var(--muted,#5f6b64)}
     .project-cart-form [data-cart-error]{color:#b3261e;font-size:.9rem}
+    .project-cart-form [data-cart-error][hidden]{display:none}
     .project-cart-form .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
     .project-cart-form button[disabled]{opacity:.6;cursor:wait}
-    .project-cart-form .button{width:100%;min-height:48px}
-    .project-cart-save,.project-cart-share,.project-cart-download{display:inline-flex;margin:10px 8px 0 0;min-height:40px;padding:6px 12px;font-size:.8rem}
-    .project-cart-action-status{margin:8px 0 0;font-size:.85rem}
-    .project-cart-summary__notice{margin:12px 0 0;font-size:.78rem;color:var(--muted,#5f6b64)}
+    /* the main call to action: full width, clearly above the secondary actions */
+    .project-cart-form [data-cart-submit]{width:100%;min-height:52px;margin-top:2px;font-size:1rem;font-weight:700}
+    /* secondary actions: one compact row, equal buttons, centred; they wrap only when the width is really too small */
+    .project-cart-extras{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--green-line,#cfe9da)}
+    .project-cart-extras{flex-wrap:nowrap}
+    .project-cart-extras .button{flex:1 1 0;min-width:0;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:44px;margin:0;padding:6px 8px;font-size:.85rem;line-height:1.15;text-align:center;white-space:normal}
+    .project-cart-action-status{margin:8px 0 0;font-size:.85rem;text-align:center}
+    .project-cart-action-status[hidden]{display:none}
+    .project-cart-summary__notice{margin:10px 0 0;font-size:.76rem;line-height:1.4;color:var(--muted,#5f6b64)}
     .project-cart-done{padding:8px 0}.project-cart-done h2{margin-top:0}
+    @media (max-width:400px){.project-cart-item__bottom{flex-wrap:wrap}.project-cart-item__bottom strong{max-width:100%;text-align:left;overflow-wrap:normal}.project-cart-item__unit{overflow-wrap:normal}}
     @media (max-width:860px){
       .project-cart-layout{grid-template-columns:1fr;gap:16px}
       .project-cart-summary{position:static}
