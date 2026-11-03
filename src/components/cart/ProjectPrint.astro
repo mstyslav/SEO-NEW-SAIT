@@ -1,0 +1,102 @@
+---
+// Print / "save as PDF" summary of the cart (UA + RU). noindex. The data comes from the visitor's localStorage (same key as the cart).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/project-print.css';
+
+const { locale = 'uk' } = Astro.props;
+const ru = locale === 'ru';
+const S = ru ? {
+  title: 'Проект Space Glass', desc: 'Резюме проекта Space Glass для печати или сохранения в PDF.', h1: 'Резюме проекта', count: 'Количество позиций', total: 'Предварительная сумма',
+  comment: 'Комментарий', footer: 'Предварительная сумма не является офертой. Окончательная стоимость подтверждается менеджером Space Glass после проверки размеров, материалов, доставки и условий монтажа.',
+  button: 'Сохранить как PDF / Печать', qty: 'Количество', price: 'Предварительная цена', fallbackName: 'Конструкция', fallbackConfig: 'Индивидуальная конфигурация', category: 'Зеркала', dateLocale: 'ru-RU'
+} : {
+  title: 'Проєкт Space Glass', desc: 'Резюме проєкту Space Glass для друку або збереження у PDF.', h1: 'Резюме проєкту', count: 'Кількість позицій', total: 'Попередня сума',
+  comment: 'Коментар', footer: 'Попередня сума не є офертою. Фінальна вартість підтверджується менеджером Space Glass після перевірки розмірів, матеріалів, доставки та монтажних умов.',
+  button: 'Зберегти як PDF / Друк', qty: 'Кількість', price: 'Попередня ціна', fallbackName: 'Конструкція', fallbackConfig: 'Індивідуальна конфігурація', category: 'Дзеркала', dateLocale: 'uk-UA'
+};
+---
+<BaseLayout title={S.title} description={S.desc} locale={locale} robots="noindex, nofollow">
+  <main class="print-project" data-print-locale={locale}>
+    <header class="print-project__header">
+      <img src="/images/space-glass-brand-logo.jpg" alt="Space Glass" width="180" height="140" />
+      <div>
+        <p>SPACE GLASS</p>
+        <h1>{S.h1}</h1>
+        <span data-print-date></span>
+      </div>
+    </header>
+
+    <section class="print-project__summary">
+      <div><span>{S.count}</span><b data-print-count>0</b></div>
+      <div><span>{S.total}</span><b data-print-total>0 грн</b></div>
+    </section>
+
+    <section class="print-project__items" data-print-items></section>
+
+    <section class="print-project__note">
+      <h2>{S.comment}</h2>
+      <p data-print-note>—</p>
+    </section>
+
+    <footer class="print-project__footer">
+      <p>{S.footer}</p>
+      <div>
+        <span>space-glass.com.ua</span>
+        <span>info@space-glass.com.ua</span>
+        <span>+38 (073) 425 14 00</span>
+      </div>
+    </footer>
+
+    <button class="print-project__button" type="button" onclick="window.print()">{S.button}</button>
+  </main>
+
+  <script id="print-cfg" type="application/json" set:html={JSON.stringify({ locale, ...S })} />
+
+  <script>
+    import pub from '../../data/led-mirrors/public.json';
+    import photos from '../../data/led-mirrors/photos.json';
+    import { safeImagePath, ledLinks } from '../../lib/cart-safe.mjs';
+    import { ledConfigLines } from '../../lib/cart-describe.mjs';
+
+    const cfg = JSON.parse(document.getElementById('print-cfg')!.textContent!);
+    // localStorage is user-controlled: every stored text is escaped, the picture of a LED mirror comes from the public model data
+    const esc = (v: unknown) => String(v ?? '').replace(/[&<>'"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[c] as string));
+    const models = new Map<number, any>(pub.models.map((m: any) => [m.id, m]));
+    const labels: Record<string, string> = Object.fromEntries(pub.groups.map((g: any) => [g.key, g.label]));
+    const photoOf = (item: any) => (item.kind === 'led-mirror' ? ledLinks(item, models, photos as Record<string, number>).image : (safeImagePath(item.image) ?? '/images/s20/product-main.webp'));
+    const nameOf = (item: any) => (item.kind === 'led-mirror' ? `${cfg.locale === 'ru' ? 'Зеркало' : 'Дзеркало'} ${String(item.name ?? '').replace(/^(Дзеркало|Зеркало) /, '')}` : item.name || cfg.fallbackName);
+    const configOf = (item: any) => (item.kind === 'led-mirror' ? ledConfigLines(item, labels, cfg.locale).join('; ') : item.configuration || cfg.fallbackConfig);
+    const money = (value: number) => `${Math.round(value).toLocaleString(cfg.dateLocale)} грн`;
+    let project: any = { items: [], note: '' };
+
+    try {
+      project = JSON.parse(localStorage.getItem('spaceGlassProject') || '{"items":[],"note":""}');
+    } catch {}
+
+    const items: any[] = Array.isArray(project.items) ? project.items : [];
+    const count = items.reduce((sum, item) => sum + Number(item.quantity || 1), 0);
+    const total = items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.quantity || 1), 0);
+
+    document.querySelector('[data-print-date]')!.textContent = new Date().toLocaleDateString(cfg.dateLocale);
+    document.querySelector('[data-print-count]')!.textContent = String(count);
+    document.querySelector('[data-print-total]')!.textContent = money(total);
+    document.querySelector('[data-print-note]')!.textContent = project.note || '—';
+
+    document.querySelector('[data-print-items]')!.innerHTML = items.map((item, index) => {
+      const photo = photoOf(item);
+      return `
+      <article class="print-project-item">
+        ${photo ? `<img src="${esc(photo)}" alt="" />` : '<span></span>'}
+        <div>
+          <small>${esc(item.kind === 'led-mirror' ? cfg.category : item.category || 'Space Glass')}</small>
+          <h2>${index + 1}. ${esc(nameOf(item))}</h2>
+          <p>${esc(configOf(item))}</p>
+          <dl>
+            <div><dt>${esc(cfg.qty)}</dt><dd>${esc(item.quantity || 1)}</dd></div>
+            <div><dt>${esc(cfg.price)}</dt><dd>${money(Number(item.price || 0) * Number(item.quantity || 1))}</dd></div>
+          </dl>
+        </div>
+      </article>`;
+    }).join('');
+  </script>
+</BaseLayout>

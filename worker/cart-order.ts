@@ -3,8 +3,11 @@
  *
  *  - LED mirror lines are re-priced here from the private catalog; a price the browser reports that differs from the
  *    server's answers 409 price_changed (nothing is sent) with the current prices.
- *  - Other cart lines (configurators) carry the browser's own estimate; they are passed on marked "estimate", and a line
- *    without a price is passed on as "on_request" (price to be confirmed).
+ *  - Only kinds that have a SERVER-SIDE price are ever sent as verified (today: 'led-mirror'). Every other line (configurators,
+ *    and any future shop category until it gets its own server price) is accepted but passed on WITHOUT a price (on_request:
+ *    "price to be confirmed"); the browser's estimate is only written into the line text, labelled as unconfirmed. A new
+ *    category therefore keeps working at once and becomes "verified" only when a server price check is added for its kind.
+ *  - Product links are validated here (own origin + safe internal path, model page for LED lines); anything else is dropped.
  *  - The order is created DIRECTLY in the Space Glass Control CRM (signed server-to-server request, see crmPayload /
  *    worker/index.ts). The CRM stores it with a UNIQUE order id (the real idempotency) and sends the Telegram
  *    notification itself. Kommo is not used and there is NO Telegram fallback: if the CRM is down the visitor gets an
@@ -12,6 +15,8 @@
  *  - The Cache API below only short-circuits repeated clicks; it is not the duplicate protection.
  */
 import type { LedConfig, PriceResult } from './led-mirrors';
+import { normalizeItemUrl } from '../src/lib/cart-safe.mjs';
+import { chosenOptions } from '../src/lib/cart-describe.mjs';
 
 type Json = (body: unknown, status?: number) => Response;
 export type CartDeps = {
@@ -66,6 +71,7 @@ export async function handleCartOrder(request: Request, env: unknown, d: CartDep
   const rawItems = Array.isArray(body.items) ? body.items : [];
   if (rawItems.length < 1 || rawItems.length > MAX_ITEMS) return json({ ok: false, error: 'invalid_items' }, 400);
 
+  const origins = [new URL(request.url).origin, 'https://space-glass.com.ua'];
   const lines: Line[] = [];
   const changed: { index: number; unit_uah: number }[] = [];
   for (const [index, raw] of rawItems.entries()) {
@@ -79,12 +85,13 @@ export async function handleCartOrder(request: Request, env: unknown, d: CartDep
       if (Number(it.price) !== unit) changed.push({ index, unit_uah: unit });
       lines.push({
         kind: 'led-mirror', name: `Дзеркало ${d.modelName(Number(it.modelId))}`,
-        qty, unit, total: unit * qty, url: text(it.url, 200), verified: true, model_id: Number(it.modelId), w: Number(it.w), h: Number(it.h), options: it.options as Record<string, string>
+        qty, unit, total: unit * qty, url: normalizeItemUrl(it.url, origins, 'led-mirror') ?? undefined, verified: true, model_id: Number(it.modelId), w: Number(it.w), h: Number(it.h), options: chosenOptions(it.options as Record<string, string>)
       });
     } else {
-      const p = Number(it.price);
-      const unit = Number.isFinite(p) && p > 0 && p < 1e8 ? Math.round(p) : null;
-      lines.push({ kind: 'other', name: text(it.name, 160) || 'Конструкція', options: text(it.configuration, 600) ? { configuration: text(it.configuration, 190) } : {}, qty, unit, total: unit === null ? null : unit * qty, url: text(it.url, 200), verified: false });
+      const est = Number(it.price);
+      const estimate = Number.isFinite(est) && est > 0 && est < 1e8 ? Math.round(est) : null;
+      const cfg = [estimate ? `Орієнтовна ціна з сайту: ${String(estimate).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} грн/шт, не підтверджена` : '', text(it.configuration, 400)].filter(Boolean).join('; ').slice(0, 190);
+      lines.push({ kind: 'other', name: text(it.name, 160) || 'Конструкція', options: cfg ? { configuration: cfg } : {}, qty, unit: null, total: null, url: normalizeItemUrl(it.url, origins, 'other') ?? undefined, verified: false });
     }
   }
   if (changed.length) return json({ ok: false, error: 'price_changed', changed }, 409);

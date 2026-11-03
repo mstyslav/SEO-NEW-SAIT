@@ -141,6 +141,7 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
     import photos from '../../data/led-mirrors/photos.json';
     import { optionLabel, groupLabel } from '../../lib/led-mirror-i18n.mjs';
     import { safeInternalPath, safeImagePath, ledLinks, priceKey, applyPriceUpdates } from '../../lib/cart-safe.mjs';
+    import { ledConfigLines } from '../../lib/cart-describe.mjs';
 
     const cfg = JSON.parse(document.getElementById('cart-cfg')!.textContent!);
     const fn = JSON.parse(document.getElementById('cart-fn')!.textContent!);
@@ -162,10 +163,7 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
     const itemName = (i: CartItem) => (i.kind === 'led-mirror' ? `${cfg.mirror} ${(i.name || '').replace(/^(Дзеркало|Зеркало) /, '')}` : i.name || cfg.fallbackName);
     function itemConfig(i: CartItem) {
       if (i.kind !== 'led-mirror') return i.configuration || cfg.fallbackConfig;
-      const m = models.get(Number(i.modelId));
-      const parts = Object.entries(i.options ?? {}).filter(([g, v]) => !m || m.option_groups.find((x: any) => x.key === g)?.options[0] !== v)
-        .map(([g, v]) => `${groupLabel(cfg.locale, g, labels[g])}: ${optionLabel(cfg.locale, v)}`);
-      return [`${i.w}×${i.h} мм`, ...parts].join('\n');
+      return ledConfigLines(i, labels, cfg.locale).join('\n'); // size + characteristics + the options really chosen (no «Без …»)
     }
     function totals(items: CartItem[]) {
       const count = items.reduce((n, i) => n + (Number(i.quantity) || 1), 0);
@@ -270,7 +268,7 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
     const status = $('[data-project-action-status]');
     const showStatus = (m: string) => { status.hidden = false; status.textContent = m; setTimeout(() => (status.hidden = true), 2600); };
     $('[data-project-save]').addEventListener('click', () => { const p = readProject(); p.savedAt = new Date().toISOString(); writeProject(p); showStatus(cfg.saved); });
-    $('[data-project-download]').addEventListener('click', () => window.open('/project-print/', '_blank', 'noopener,noreferrer'));
+    $('[data-project-download]').addEventListener('click', () => window.open(cfg.locale === 'ru' ? '/ru/project-print/' : '/project-print/', '_blank', 'noopener,noreferrer'));
 
     const q = new URLSearchParams(location.search);
     render();

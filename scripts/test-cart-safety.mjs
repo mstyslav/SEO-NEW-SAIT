@@ -1,7 +1,8 @@
 // Regression tests of the cart helpers (src/lib/cart-safe.mjs) and of the cart wiring.  Run: npm run test:cart-safety
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
-import { safeInternalPath, safeImagePath, ledLinks, priceKey, applyPriceUpdates } from '../src/lib/cart-safe.mjs';
+import { safeInternalPath, safeImagePath, ledLinks, priceKey, applyPriceUpdates, normalizeItemUrl } from '../src/lib/cart-safe.mjs';
+import { isNoneOption, chosenOptions, ledConfigLines } from '../src/lib/cart-describe.mjs';
 
 const pub = JSON.parse(fs.readFileSync('src/data/led-mirrors/public.json', 'utf8'));
 const photos = JSON.parse(fs.readFileSync('src/data/led-mirrors/photos.json', 'utf8'));
@@ -66,7 +67,7 @@ t('failed price answers change nothing', () => {
 });
 
 const cart = fs.readFileSync('src/components/cart/ProjectCart.astro', 'utf8');
-const print = fs.readFileSync('src/pages/project-print/index.astro', 'utf8');
+const print = fs.readFileSync('src/components/cart/ProjectPrint.astro', 'utf8');
 t('comment wiring: textarea hydrated from and saved to project.note, sent to the order, shown in print', () => {
   assert.match(cart, /data-project-note/); assert.match(cart, /noteEl\.value = readProject\(\)\.note/);
   assert.match(cart, /noteEl\.addEventListener\('input'[\s\S]*p\.note = noteEl\.value/);
@@ -77,6 +78,40 @@ t('cart and print never trust stored links/images', () => {
   assert.doesNotMatch(cart, /a\.href = [^;]*item\.url/); assert.doesNotMatch(cart, /img\.src = item\.image/);
   assert.match(cart, /safeInternalPath/); assert.match(cart, /ledLinks/);
   assert.doesNotMatch(print, /src="\$\{item\.image/); assert.match(print, /esc\(/);
+});
+
+t('«Без …» options: every one in the data is the first (= not selected) value of its group and is dropped; nothing else is', () => {
+  let none = 0;
+  for (const m of pub.models) for (const g of m.option_groups) g.options.forEach((o, i) => { if (isNoneOption(o)) { none++; assert.equal(i, 0, `${m.slug}.${g.key}`); } });
+  assert.ok(none > 0);
+  const o = { thickness: '4мм', color: 'Чорний', heating: 'Без підігріву', clock: 'Без годинника', lens: 'Підсвічена лінза' };
+  assert.deepEqual(chosenOptions(o), { thickness: '4мм', color: 'Чорний', lens: 'Підсвічена лінза' });
+});
+t('description of a LED line: size + characteristics + chosen add-ons only, UA and RU', () => {
+  const labels = Object.fromEntries(pub.groups.map((g) => [g.key, g.label]));
+  const m = pub.models.find((x) => x.slug === 'agnes');
+  const options = Object.fromEntries(m.option_groups.map((g) => [g.key, g.options[0]])); options.heating = m.option_groups.find((g) => g.key === 'heating').options[1];
+  for (const loc of ['uk', 'ru']) {
+    const lines = ledConfigLines({ w: 700, h: 700, options }, labels, loc);
+    assert.equal(lines[0], '700×700 мм'); assert.ok(lines.length >= 2);
+    assert.ok(!lines.join(' ').match(/Без |Без\s/), lines.join(' | '));
+    assert.ok(lines.some((l) => /(Підігрів|Подогрев)/.test(l)), lines.join(' | '));
+    if (loc === 'ru') assert.ok(!lines.join(' ').match(/Підігрів|Колір/), 'RU labels expected: ' + lines.join(' | '));
+  }
+});
+t('server link check: own origin + safe path, model page for LED lines, everything else null', () => {
+  const o = ['https://space-glass.com.ua'];
+  for (const bad of ['javascript:alert(1)', 'data:text/html,x', 'https://evil.example/shop/mirrors/led/a/', 'https://space-glass.com.ua.evil.example/x/', '//evil.example', 'https://user:p@space-glass.com.ua/shop/mirrors/led/a/', 'https://space-glass.com.ua/shop/mirrors/led/../x/', null, 5, 'x'.repeat(400)])
+    assert.equal(normalizeItemUrl(bad, o, 'led-mirror'), null);
+  assert.equal(normalizeItemUrl('https://space-glass.com.ua/catalog/', o, 'led-mirror'), null);
+  assert.equal(normalizeItemUrl('https://space-glass.com.ua/ru/shop/mirrors/led/agnes/', o, 'led-mirror'), 'https://space-glass.com.ua/ru/shop/mirrors/led/agnes/');
+  assert.equal(normalizeItemUrl('https://space-glass.com.ua/catalog/', o, 'other'), 'https://space-glass.com.ua/catalog/');
+});
+t('RU print page: separate route, Russian texts, opened by the RU cart', () => {
+  assert.ok(fs.existsSync('src/pages/ru/project-print/index.astro'));
+  assert.match(fs.readFileSync('src/pages/ru/project-print/index.astro', 'utf8'), /locale="ru"/);
+  assert.match(print, /Сохранить как PDF \/ Печать/); assert.match(print, /Предварительная сумма/); assert.match(print, /Комментарий/);
+  assert.match(cart, /\/ru\/project-print\//);
 });
 if (failed) { console.error(`${failed} failed`); process.exit(1); }
 console.log('all passed');

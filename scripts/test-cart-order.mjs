@@ -95,10 +95,43 @@ await t('prices secret missing or damaged: 503 prices_unavailable, nothing sent,
   }
   pricesSecret = SECRET;
 });
-await t('configurator line with a price is passed on as an estimate, never as verified', async () => {
+await t('kind=other: the browser price is NEVER passed on as a price (on_request); the estimate is only text, labelled unconfirmed', async () => {
   const r = await call({ ...base, orderId: 'order-dddd-0001', items: [{ kind: 'other', name: 'Дзеркало на замовлення', configuration: 'width: 1000', price: 4430, quantity: 1 }] });
+  assert.equal(r.status, 200); assert.equal(r.body.subtotal_uah, 0); assert.equal(r.body.unpriced, 1);
+  const p = delivered.at(-1), it = p.items[0];
+  assert.deepEqual([it.price_status, it.unit_price_uah], ['on_request', null]);
+  assert.match(it.options.configuration, /Орієнтовна ціна з сайту: 4 430 грн\/шт, не підтверджена; width: 1000/);
+  assert.deepEqual([p.totals.subtotal_uah, p.totals.unpriced_items, p.totals.complete], [0, 1, false]);
+});
+await t('kind=other with an absurd or fake price cannot create a verified or priced line (also a LED mirror posted as "other")', async () => {
+  const r = await call({ ...base, orderId: 'order-dddd-0002', items: [{ kind: 'other', name: 'Дзеркало AGNES', modelId: 283, price: 1, quantity: 1 }, { kind: 'other', name: 'X', price: 99999999999, quantity: 2 }, { kind: 'future-category', name: 'Нова категорія', price: 777, quantity: 1 }] });
+  assert.equal(r.status, 200); assert.equal(r.body.unpriced, 3);
+  for (const it of delivered.at(-1).items) assert.deepEqual([it.price_status, it.unit_price_uah], ['on_request', null]);
+});
+await t('only chosen options reach the CRM: every «Без …» value is dropped, characteristics and chosen add-ons stay', async () => {
+  const pub = JSON.parse(fs.readFileSync(new URL('../src/data/led-mirrors/public.json', import.meta.url), 'utf8'));
+  const opts = Object.fromEntries(pub.models.find((m) => m.id === 283).option_groups.map((g) => [g.key, g.options[0]])); // defaults: all «Без …» + characteristics
+  opts.heating = pub.models.find((m) => m.id === 283).option_groups.find((g) => g.key === 'heating').options[1];
+  const price = await ledMod.priceOf({ LED_MIRRORS_PRICES: pricesSecret }, { modelId: 283, w: 700, h: 700, options: opts });
+  assert.ok(price.ok, 'the option set must be valid for the model');
+  assert.ok(Object.values(opts).some((v) => /^Без /.test(v)), 'the test needs unchosen add-ons');
+  const r = await call({ ...base, orderId: 'order-dddd-0003', items: [{ ...led, options: opts, price: price.price.total_uah }] });
   assert.equal(r.status, 200);
-  const it = delivered.at(-1).items[0]; assert.deepEqual([it.price_status, it.unit_price_uah, it.options.configuration], ['estimate', 4430, 'width: 1000']);
+  const o = delivered.at(-1).items[0].options;
+  assert.ok(!Object.values(o).some((v) => /^Без /.test(v)), JSON.stringify(o)); assert.equal(o.heating, opts.heating); assert.equal(o.color, opts.color); assert.equal(o.thickness, opts.thickness);
+});
+await t('product links are validated on the server: own origin + model page only, anything else is dropped (order still accepted)', async () => {
+  const bad = ['javascript:alert(1)', 'data:text/html,x', 'https://evil.example/shop/mirrors/led/agnes/', 'https://space-glass.com.ua.evil.example/shop/mirrors/led/agnes/', '//evil.example/x', 'https://space-glass.com.ua/catalog/', 'https://space-glass.com.ua/shop/mirrors/led/../../x/', 'https://user:p@space-glass.com.ua/shop/mirrors/led/agnes/'];
+  for (const [i, url] of bad.entries()) {
+    const r = await call({ ...base, orderId: `order-url-bad-${i}`, items: [{ ...led, url }] });
+    assert.equal(r.status, 200, url); assert.equal(delivered.at(-1).items[0].url, null, `kept ${url}`);
+  }
+  const ok = ['https://space-glass.com.ua/shop/mirrors/led/agnes/', 'https://space-glass.com.ua/ru/shop/mirrors/led/agnes/'];
+  for (const [i, url] of ok.entries()) { await call({ ...base, orderId: `order-url-ok-${i}`, items: [{ ...led, url }] }); assert.equal(delivered.at(-1).items[0].url, url); }
+  await call({ ...base, orderId: 'order-url-oth-1', items: [{ kind: 'other', name: 'Кабіна', price: 100, quantity: 1, url: 'javascript:alert(1)' }] });
+  assert.equal(delivered.at(-1).items[0].url, null);
+  await call({ ...base, orderId: 'order-url-oth-2', items: [{ kind: 'other', name: 'Кабіна', price: 100, quantity: 1, url: 'https://space-glass.com.ua/dushovi-kabiny/' }] });
+  assert.equal(delivered.at(-1).items[0].url, 'https://space-glass.com.ua/dushovi-kabiny/');
 });
 await t('honeypot answers ok and delivers nothing', async () => {
   const n = delivered.length;

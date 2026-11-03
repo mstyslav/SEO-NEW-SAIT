@@ -44,3 +44,19 @@ export function applyPriceUpdates(latest, sentKeys, results) {
   }
   return { project: latest, changed };
 }
+
+/**
+ * Product link of an order line, checked on the SERVER before it reaches the CRM: an absolute https URL on one of our own
+ * origins with a safe internal path. LED mirrors must point to a model page (/shop/mirrors/led/{slug}/ or the /ru/ twin).
+ * Anything else becomes null (the order is still accepted, only the link is dropped).
+ */
+export function normalizeItemUrl(raw, allowedOrigins, kind) {
+  if (typeof raw !== 'string' || raw.length > 300) return null;
+  let u;
+  try { u = new URL(raw); } catch { return null; }
+  if (!allowedOrigins.includes(u.origin) || u.username || u.password) return null;
+  const path = safeInternalPath(u.pathname + u.search);
+  if (!path) return null;
+  if (kind === 'led-mirror' && !/^\/(ru\/)?shop\/mirrors\/led\/[a-z0-9-]+\/$/.test(u.pathname)) return null;
+  return u.origin + path;
+}

@@ -263,6 +263,7 @@ const cfg = {
 
 <script>
   import { addItem } from '../../scripts/sg-cart';
+  import { chosenOptions } from '../../lib/cart-describe.mjs';
 
   // ---- gallery: thumbnails, arrows, keyboard
   const gal = document.querySelector<HTMLElement>('[data-lm-gallery]');
@@ -365,7 +366,7 @@ const cfg = {
       addItem({
         kind: 'led-mirror', modelId: cfg.id, slug: cfg.slug, name: `Дзеркало ${cfg.name}`, category: 'Дзеркала', w: current.w, h: current.h, options: current.options, quantity: qty,
         price: current.unit, image: cfg.hasPhoto ? `/images/led-mirrors/${cfg.slug}-1-480.webp` : undefined, url: `/shop/mirrors/led/${cfg.slug}/`,
-        configuration: `${current.w}×${current.h} мм; ${Object.values(current.options).join(', ')}`
+        configuration: [`${current.w}×${current.h} мм`, ...Object.values(chosenOptions(current.options))].join('; ')
       });
       return true;
     }

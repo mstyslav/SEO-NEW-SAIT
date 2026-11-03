@@ -31,6 +31,7 @@ export function stripLocale(pathname: string): string {
 const LOCALIZED_ROUTES: Record<'ru', ReadonlySet<string>> = {
   ru: new Set([
     '/cart/',
+    '/project-print/',
     '/montazh-vikon/',
     '/',
     '/about/',
