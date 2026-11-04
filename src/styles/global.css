@@ -3105,8 +3105,10 @@ body main .config-demo-hero~.section h2{
    background — black like the header/footer instead of the grey #202020 desktop frame.
    Only <html> (the canvas past the page edge) — <body> keeps its own background.
    (Keep overscroll enabled: `overscroll-behavior: none` would kill pull-to-refresh.) */
-@media (max-width: 900px) {
-  html { background: #020302; }
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+  /* body too: its desktop frame colour (#202020) must not show as a grey band under the footer
+     whenever Safari exposes it (overscroll bounce, dynamic toolbar, landscape width > 900px). */
+  html, body { background: #020302; }
 }
 
 /* Touch: no double-tap-to-zoom wait on links/buttons, and visible press feedback so a tap
