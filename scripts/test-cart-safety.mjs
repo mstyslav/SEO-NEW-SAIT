@@ -68,6 +68,13 @@ t('failed price answers change nothing', () => {
 
 const cart = fs.readFileSync('src/components/cart/ProjectCart.astro', 'utf8');
 const print = fs.readFileSync('src/components/cart/ProjectPrint.astro', 'utf8');
+t('mirror-only checkout is distinguished from unpriced request and shows CRM order reference', () => {
+  assert.match(cart, /project\.items\.every\(\(i\) => i\.kind === 'led-mirror'/);
+  assert.match(cart, /cfg\.checkoutOrder : cfg\.checkoutRequest/);
+  assert.match(cart, /Number\(r\.unpriced\) === 0/);
+  assert.match(cart, /cfg\.confirmedDoneP : cfg\.requestDoneP/);
+  assert.match(cart, /data-cart-checkout-notice/);
+});
 t('comment wiring: textarea hydrated from and saved to project.note, sent to the order, shown in print', () => {
   assert.match(cart, /data-project-note/); assert.match(cart, /noteEl\.value = readProject\(\)\.note/);
   assert.match(cart, /noteEl\.addEventListener\('input'[\s\S]*p\.note = noteEl\.value/);
