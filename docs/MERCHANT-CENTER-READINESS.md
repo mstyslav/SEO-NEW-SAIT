@@ -1,3 +1,9 @@
+## 2026-11-04 — Verification audit
+
+Confirmed from repository data: **48 models, 185 distinct standard-size variants**, and 48/48 model slugs have a primary image entry. Frame classification: **16 frameless (15 working days)** and **32 metal-frame (35 working days)**. These are structural checks, **not a claim that 185 live retail prices were checked**.
+
+Added `node scripts/audit-merchant-production.mjs`: read-only audit calls the live Worker pricing API for all 185 variants in batches, validates all 48 primary images and landing pages, then compares all 185 feed prices/URLs/handling times when feed is active. Returns FAIL if feed remains gated or any check fails. Does not send CRM orders. **Not executed in this environment** (no working external runtime access). Do not enable the feed or submit Merchant Center until this command returns PASS and Merchant policies are approved.
+
 ## 2026-11-04 — Runtime feed implementation (NOT activated)
 
 Added `GET /api/merchant-feed.tsv` (Cloudflare Worker) using the **same secret-backed `priceOf()`** as the site price API and checkout. It enumerates the 48 public models / 185 standard-size SKUs, returning a single UTF-8 TSV, only if **all** prices are valid, all primary images are registered, and the row count is exactly 185. No supplier cost data is exposed. A price-secret failure returns HTTP 503 rather than a feed with invented/stale prices.
