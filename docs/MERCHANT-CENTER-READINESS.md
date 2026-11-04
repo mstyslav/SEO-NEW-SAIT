@@ -1,3 +1,18 @@
+## Policy check 2026-11-04 — do not publish feed yet
+
+Google's official availability specification (https://support.google.com/merchants/answer/6324448?hl=en) defines:
+- `in_stock`: accepting orders and able to fulfil/dispatch in a timely manner; **does not automatically mean physically stocked**, but must match landing page and checkout, and we must validate Google's acceptance for manufactured-to-order products with 15/35 working-day handling.
+- `preorder`: not-yet-released product, requires `availability_date` visible on the product page; not a generic synonym for custom manufacturing.
+- `backorder`: temporarily unavailable product to be restocked, requires `availability_date` visible on the product page; not a generic synonym for made to order.
+- `out_of_stock`: not accepting orders; not consistent with our live made-to-order cart.
+- `build_to_order`: vehicle ads only.
+
+**Decision pending:** validate whether `in_stock` with explicit manufacturing handling time, truthful made-to-order labels and purchase/fulfilment commitment qualifies for these models. Do not fabricate stock or an availability date. The draft generator blocks `in_stock`, `preorder` and `backorder` pending review. Merchant data must match the live landing page, Product schema and checkout.
+
+**Checkout gate:** cart currently submits an order request, then a manager approves price/terms and collects 100% advance payment offline. Review against Google's checkout requirements (https://support.google.com/merchants/answer/9158778?hl=en) before feed submission. Do not assert eligibility or change payment terms silently.
+
+**Other checks before publication:** ensure 185 variant URLs actually preselect matching sizes and display exact current prices; run the local secret-backed feed generator and test price parity; verify all images, URLs, no overlays, Merchant shipping transit settings and return policy. Supplier permission for photos and product data is owner-confirmed. No live feed URL exists.
+
 ## Owner confirmation 2026-11-04 — supplier image and product-content rights
 
 The owner confirms Space Glass is an authorized dealer of the supplier and **has supplier permission to use the product photographs and product information**, including for Google Shopping and Google advertising. This resolves the owner-permission question for the current 48 mirror models. This is an owner attestation, not an independent review of a written license; retain supplier confirmation for possible Merchant reviews. Product images still require technical/policy checks (e.g., watermarks, promotional overlays, correct product depiction).
