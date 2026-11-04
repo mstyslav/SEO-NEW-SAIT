@@ -40,7 +40,7 @@ data.categoryCopy = categoryCopy;
 const initialCopy = faqKind === 'led' ? { h1, desc: locale === 'ru' ? 'Модели LED-зеркал с выбором формы, размера и подсветки. Изготавливаем под заказ.' : 'Моделі LED-дзеркал із вибором форми, розміру й підсвітки. Виготовляємо під замовлення.' } : categoryCopy[initialCat as keyof typeof categoryCopy] ?? categoryCopy.all;
 ---
 <ShopPage locale={locale} title={title} description={description} crumbs={crumbs} indexable>
-  <div class="category-heading"><div><p class="eyebrow">{S.shop}</p><h1 data-sf-page-title>{initialCopy.h1}</h1></div><p data-sf-location>{locale === 'ru' ? 'Киев · Львов · Одесса · Днепр · Харьков · вся Украина' : 'Київ · Львів · Одеса · Дніпро · Харків · вся Україна'}</p></div>
+  <div class="category-heading"><div><p class="eyebrow">{S.shop}</p><h1 data-sf-page-title>{initialCopy.h1}</h1></div><p data-sf-location>{locale === 'ru' ? 'Готовые стеклянные изделия и конструкции на заказ с доставкой в Киев, Львов, Одессу, Днепр, Харьков и по всей Украине.' : 'Готові скляні вироби та конструкції на замовлення з доставкою до Києва, Львова, Одеси, Дніпра, Харкова та по всій Україні.'}</p></div>
   <p class="sf-intro" data-sf-page-desc>{initialCopy.desc}</p>
   {intro && <p class="sf-intro">{intro.text} <a href={intro.href}>{intro.label}</a>.</p>}
 
