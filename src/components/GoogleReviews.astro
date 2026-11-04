@@ -89,7 +89,7 @@ const copy = ru ? {
     more.textContent = expanded ? copy.less : copy.more;
   };
   more.addEventListener('click', () => { expanded = !expanded; render(); });
-  fetch(section.dataset.endpoint, {headers:{Accept:'application/json'}})
+  fetch(section.dataset.endpoint, {cache:'no-cache', headers:{Accept:'application/json'}})
     .then(async response => {
       if (!response.ok) throw new Error('Reviews API ' + response.status);
       return response.json();
