@@ -3160,3 +3160,18 @@ html { touch-action: manipulation; }
     grid-area: auto !important;
   }
 }
+
+/* SHOP FOOTER on phones/narrow tablets — Company, Cities and Buyer info share one row
+   (6 equal tracks: brand/contacts take 3+3, each link column takes 2) with the same gaps. */
+@media (max-width: 760px) {
+  .footer-refined .footer-refined__main.footer-refined__main--shop {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    grid-template-rows: auto auto !important;
+    column-gap: 16px !important;
+  }
+  .footer-refined .footer-refined__main--shop > .footer-refined__brand { grid-column: 1 / span 3 !important; grid-row: 1 !important; }
+  .footer-refined .footer-refined__main--shop > .footer-refined__contacts { grid-column: 4 / span 3 !important; grid-row: 1 !important; }
+  .footer-refined .footer-refined__main--shop > .footer-refined__col:nth-of-type(4) { grid-column: 1 / span 2 !important; grid-row: 2 !important; }
+  .footer-refined .footer-refined__main--shop > .footer-refined__cities { grid-column: 3 / span 2 !important; grid-row: 2 !important; }
+  .footer-refined .footer-refined__main--shop > .footer-refined__shop-legal { grid-column: 5 / span 2 !important; grid-row: 2 !important; min-width: 0; overflow-wrap: anywhere; }
+}
