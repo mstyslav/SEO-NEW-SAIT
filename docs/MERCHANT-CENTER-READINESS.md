@@ -1,3 +1,13 @@
+## 2026-11-04 — Runtime feed implementation (NOT activated)
+
+Added `GET /api/merchant-feed.tsv` (Cloudflare Worker) using the **same secret-backed `priceOf()`** as the site price API and checkout. It enumerates the 48 public models / 185 standard-size SKUs, returning a single UTF-8 TSV, only if **all** prices are valid, all primary images are registered, and the row count is exactly 185. No supplier cost data is exposed. A price-secret failure returns HTTP 503 rather than a feed with invented/stale prices.
+
+**Safety:** `MERCHANT_FEED_ENABLED` defaults OFF; until set to `1`, URL returns HTTP 503. This is deliberate: production parity (185 price/landing page combinations), the made-to-order availability choice (`in_stock` here means orderable, not physically stocked), the 35-working-day handling policy, checkout acceptance, Merchant shipping/returns and image compliance still need independent verification. Do not add the URL to Merchant Center while gated. The feed includes free shipping within UA and 0–15/35 working-day handling, not transit days. Merchant Center account-level shipping settings must reflect real delivery transit time.
+
+**Price parity test:** Compare all 185 feed rows against production `/api/led-mirror-price` with each row's model ID, standard width/height and empty options. Check each landing URL selects the same dimensions and displays the same UAH retail price. The runtime feed and price API share the price engine, so internal parity is guaranteed *by construction* if the code is deployed consistently; an independent production check is still needed before marking PASS. No live test was performed in this commit.
+
+**Activation after passing checks:** set Worker secret/variable `MERCHANT_FEED_ENABLED=1`, deploy, GET the TSV and validate exactly 185 rows and all landing pages; then enter `https://space-glass.com.ua/api/merchant-feed.tsv` as scheduled URL in Merchant Center 144992585 (Ukraine, Ukrainian, UAH). Keep disabled if Google availability or 35-day handling is not approved. Never store the price secret in Git.
+
 ## Policy check 2026-11-04 — do not publish feed yet
 
 Google's official availability specification (https://support.google.com/merchants/answer/6324448?hl=en) defines:
