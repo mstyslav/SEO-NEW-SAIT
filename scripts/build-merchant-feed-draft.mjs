@@ -14,9 +14,10 @@ import { modelContent } from '../src/lib/shop-content.mjs';
 import { LEAD_DAYS } from '../src/lib/shop-terms.mjs';
 import { hasLedLight } from '../src/lib/shop-catalog.mjs';
 
-// Optional owner decisions, filled ONLY when passed explicitly:  --brand="Space Glass"  --availability=in_stock
+// Owner-confirmed for all current models: Space Glass brand, new condition, only internal product codes (no manufacturer GTIN/MPN).
+// Availability remains deliberately unresolved until Google made-to-order requirements are validated.
 const arg = (k) => process.argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3) ?? '';
-const BRAND = arg('brand'), AVAILABILITY = arg('availability');
+const BRAND = 'Space Glass', AVAILABILITY = arg('availability');
 // All current 48 catalog models are made to order; never default them to in_stock.
 // Future stocked products require an explicit per-SKU inventory source and separate feed handling.
 if (AVAILABILITY === 'in_stock') {
@@ -48,7 +49,7 @@ for (const m of pub.models) {
       description: desc.replace('{size}', `${s.w}×${s.h}`), link: `${ORIGIN}/shop/mirrors/led/${m.slug}/?size=${s.w}x${s.h}`,
       image_link: n ? `${ORIGIN}/images/led-mirrors/${m.slug}-1-900.webp` : '', additional_image_link: Array.from({ length: Math.max(0, n - 1) }, (_, i) => `${ORIGIN}/images/led-mirrors/${m.slug}-${i + 2}-900.webp`).join(','),
       price: `${server}.00 UAH`,
-      availability: AVAILABILITY, min_handling_time: LEAD_DAYS.min, max_handling_time: m.frame === 'Металева' ? LEAD_DAYS.metalFrameMax : LEAD_DAYS.standardMax, condition: '', brand: BRAND, gtin: '', mpn: '', identifier_exists: '', // availability / brand only when passed explicitly; handling time = agreed up to 15/35 working days
+      availability: AVAILABILITY, min_handling_time: LEAD_DAYS.min, max_handling_time: m.frame === 'Металева' ? LEAD_DAYS.metalFrameMax : LEAD_DAYS.standardMax, condition: 'new', brand: BRAND, gtin: '', mpn: '', identifier_exists: 'no', // availability / brand only when passed explicitly; handling time = agreed up to 15/35 working days
       google_product_category: 'Home & Garden > Decor > Mirrors', product_type: `Дзеркала > ${hasLedLight(m) ? 'LED-дзеркала' : 'Дзеркала без підсвітки'} > ${m.frame === 'Металева' ? 'У металевій рамі' : 'Безрамні'}`,
       size: `${s.w}x${s.h} mm`, custom_label_0: 'made_to_order'
     });
@@ -63,6 +64,6 @@ console.log(`price check vs decoded Worker secret: ${mismatch === 0 ? 'identical
 console.log('items without image_link:', empty('image_link'), '| with additional images:', rows.length - rows.filter((r) => !r.additional_image_link).length);
 console.log('NOT in the feed (not agreed): shipping price / service, return policy (account level), GTIN/MPN. Handling time filled:', 'up to ' + LEAD_DAYS.standardMax + '/' + LEAD_DAYS.metalFrameMax, 'working days');
 console.log('Current catalog: MADE TO ORDER (48 models); stock products will be modeled separately.');
-console.log('MISSING (owner decisions, left empty on purpose): availability', empty('availability'), '| condition', empty('condition'), '| brand', empty('brand'), '| gtin', empty('gtin'), '| mpn', empty('mpn'), '| identifier_exists', empty('identifier_exists'));
+console.log('MISSING (must resolve before publication): availability', empty('availability'), '| manufacturer GTIN/MPN absent by owner confirmation; identifier_exists=no');
 console.log('price range:', Math.min(...rows.map((r) => parseInt(r.price))), '-', Math.max(...rows.map((r) => parseInt(r.price))), 'UAH (retail)');
 if (mismatch) process.exit(1);
