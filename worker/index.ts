@@ -27,6 +27,7 @@
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 import { handleCartOrder } from './cart-order';
 import { merchantFeed } from './merchant-feed';
+import { googleReviews } from './google-reviews';
 import { priceOf, modelName, catalogDate } from './led-mirrors';
 import { ATTRIBUTION_KEYS, attributionLines, attributionPlainLines, parseAttribution, type Attribution } from './attribution';
 
@@ -396,12 +397,13 @@ function goneResponse(): Response {
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const { pathname } = new URL(request.url);
     if (GONE_PATHS.has(pathname.replace(/\/+$/, ''))) return goneResponse();
     if (/^\/api\/(kommo-lead|lead)\/?$/.test(pathname)) return handleLead(request, env);
     if (/^\/api\/led-mirror-price\/?$/.test(pathname)) return handleLedPrice(request, env);
     if (/^\/api\/cart-order\/?$/.test(pathname)) return handleCart(request, env);
+    if (pathname === '/api/google-reviews') return googleReviews(request, ctx);
     if (pathname === '/api/merchant-feed.tsv') return merchantFeed(env, request);
     return env.ASSETS.fetch(request);
   }

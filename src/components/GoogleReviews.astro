@@ -1,52 +1,122 @@
 ---
 import type { Locale } from '../i18n/helpers';
-
-interface Props {
-  locale?: Locale;
-}
-
+interface Props { locale?: Locale; }
 const { locale = 'uk' } = Astro.props;
 const ru = locale === 'ru';
-
-// Real Google review quotes, kept in the language the customer actually
-// wrote them in (Ukrainian) rather than machine-translating attributed
-// third-party text — only the surrounding chrome is localized below.
-const reviews = [
-  { name: 'nanaborchenko', rating: 5, text: 'Ми залишилися дуже задоволені виконанням і якістю роботи Space Glass.' },
-  { name: 'olersiyustymenko', rating: 5, text: 'Душова супер. Дякуємо за сервіс, якість і акуратну реалізацію.' },
-  { name: 'kolychevahelen', rating: 5, text: 'Дякую команді Space Glass за якісно виконану роботу. Ціна відповідає якості, а роботи виконали у погоджений строк.' },
-  { name: 'Клієнт Space Glass', rating: 5, text: 'Задоволені комунікацією, підходом до деталей та результатом. Конструкція виглядає саме так, як планували.' },
-];
-// The anonymous author label is site text, not part of the quote — localized on RU pages.
-const authorName = (name: string) => (ru && name === 'Клієнт Space Glass' ? 'Клиент Space Glass' : name);
 const googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=Space%20Glass%20Odesa&query_place_id=ChIJZ-tkEoszxkARAgMhHIePeAg';
 const googleReviewUrl = 'https://search.google.com/local/writereview?placeid=ChIJZ-tkEoszxkARAgMhHIePeAg';
-
-const copy = ru
-  ? {
-      eyebrow: 'Отзывы клиентов',
-      title: 'Что говорят о Space Glass',
-      intro: 'Реальный опыт клиентов после изготовления и монтажа стеклянных конструкций.',
-      source: 'Отзыв клиента',
-      ratingLabel: (rating: number) => `${rating} из 5`,
-      allReviews: 'Все отзывы в Google →',
-      leaveReview: 'Оставить отзыв →'
-    }
-  : {
-      eyebrow: 'Відгуки клієнтів',
-      title: 'Що говорять про Space Glass',
-      intro: 'Реальний досвід клієнтів після виготовлення та монтажу скляних конструкцій.',
-      source: 'Відгук клієнта',
-      ratingLabel: (rating: number) => `${rating} з 5`,
-      allReviews: 'Усі відгуки в Google →',
-      leaveReview: 'Залишити відгук →'
-    };
+const copy = ru ? {
+ eyebrow:'Отзывы клиентов', title:'Что говорят о Space Glass', intro:'Отзывы клиентов из Google Business Profile.',
+ source:'Отзыв Google', allReviews:'Все отзывы в Google →', leaveReview:'Оставить отзыв →',
+ loading:'Загружаем отзывы Google…', unavailable:'Отзывы временно недоступны. Посмотреть их можно в Google.',
+ more:'Показать все отзывы', less:'Свернуть отзывы', rating:'из 5', reply:'Ответ Space Glass', reviewsWord:'отзывов', original:'Оригинал'
+} : {
+ eyebrow:'Відгуки клієнтів', title:'Що говорять про Space Glass', intro:'Відгуки клієнтів із Google Business Profile.',
+ source:'Відгук Google', allReviews:'Усі відгуки в Google →', leaveReview:'Залишити відгук →',
+ loading:'Завантажуємо відгуки Google…', unavailable:'Відгуки тимчасово недоступні. Переглянути їх можна в Google.',
+ more:'Показати всі відгуки', less:'Згорнути відгуки', rating:'з 5', reply:'Відповідь Space Glass', reviewsWord:'відгуків', original:'Оригінал'
+};
 ---
-<section class="sg-google-reviews" data-google-reviews aria-labelledby="google-reviews-title">
+<section class="sg-google-reviews" data-google-reviews data-endpoint="/api/google-reviews" data-locale={ru ? 'ru' : 'uk'} aria-labelledby="google-reviews-title">
   <div class="sg-google-reviews__head"><div><p class="eyebrow">{copy.eyebrow}</p><h2 id="google-reviews-title">{copy.title}</h2></div><p>{copy.intro}</p></div>
-  <div class="sg-google-reviews__grid">{reviews.map((review) => (<article class="sg-google-review-card"><div class="sg-google-review-card__top"><span class="sg-google-review-card__avatar" aria-hidden="true">{review.name.slice(0,1).toUpperCase()}</span><div><strong>{authorName(review.name)}</strong><span class="sg-google-review-card__source">{copy.source}</span></div></div><div class="sg-google-review-card__stars" aria-label={copy.ratingLabel(review.rating)}>{'★★★★★'}</div><p>{review.text}</p></article>))}</div>
-  <div class="sg-google-reviews__actions"><a class="sg-google-reviews__button" href={googleMapsUrl} target="_blank" rel="noopener noreferrer">{copy.allReviews}</a><a class="sg-google-reviews__button sg-google-reviews__button--mint" href={googleReviewUrl} target="_blank" rel="noopener noreferrer">{copy.leaveReview}</a></div>
+  <p class="sg-google-reviews__summary" data-review-summary hidden></p>
+  <p class="sg-google-reviews__status" data-review-status role="status">{copy.loading}</p>
+  <div class="sg-google-reviews__grid" data-review-grid aria-live="polite"></div>
+  <div class="sg-google-reviews__actions">
+    <button type="button" class="sg-google-reviews__button" data-review-more hidden>{copy.more}</button>
+    <a class="sg-google-reviews__button" href={googleMapsUrl} target="_blank" rel="noopener noreferrer">{copy.allReviews}</a>
+    <a class="sg-google-reviews__button sg-google-reviews__button--mint" href={googleReviewUrl} target="_blank" rel="noopener noreferrer">{copy.leaveReview}</a>
+  </div>
 </section>
+<script is:inline define:vars={{copy}}>
+(() => {
+  const section = document.querySelector('[data-google-reviews]');
+  if (!section || section.dataset.initialized) return;
+  section.dataset.initialized = 'true';
+  const grid = section.querySelector('[data-review-grid]');
+  const status = section.querySelector('[data-review-status]');
+  const more = section.querySelector('[data-review-more]');
+  let all = [], expanded = false;
+  // Google adds an auto-translation either before ("(Translated by Google) … (Original) …") or after the text ("… (Translated by Google) …"). Show only the author's original.
+  const original = (t) => { t = String(t || ''); const i = t.indexOf('(Original)'); if (t.startsWith('(Translated by Google)') && i >= 0) return t.slice(i + 10).trim(); const j = t.indexOf('(Translated by Google)'); return (j >= 0 ? t.slice(0, j) : t).trim(); };
+  const render = () => {
+    grid.replaceChildren();
+    for (const review of (expanded ? all : all.slice(0, 4))) {
+      const article = document.createElement('article');
+      article.className = 'sg-google-review-card';
+      const top = document.createElement('div');
+      top.className = 'sg-google-review-card__top';
+      const avatar = document.createElement('span');
+      avatar.className = 'sg-google-review-card__avatar';
+      avatar.setAttribute('aria-hidden','true');
+      const name = String(review.author || 'Google User');
+      avatar.textContent = name.slice(0, 1).toUpperCase();
+      if (review.photo && /^https:\/\/[a-z0-9.-]*googleusercontent\.com\//.test(review.photo)) {
+        const img = document.createElement('img');
+        img.src = review.photo; img.alt = ''; img.width = 42; img.height = 42; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer';
+        img.addEventListener('error', () => img.remove());
+        avatar.textContent = ''; avatar.append(img);
+      }
+      const info = document.createElement('div');
+      const strong = document.createElement('strong');
+      strong.textContent = name;
+      const source = document.createElement('span');
+      source.className = 'sg-google-review-card__source';
+      const when = Date.parse(review.date || '');
+      source.textContent = copy.source + (when ? ' · ' + new Date(when).toLocaleDateString(section.dataset.locale === 'ru' ? 'ru-RU' : 'uk-UA', {year:'numeric', month:'long'}) : '');
+      info.append(strong, source);
+      top.append(avatar, info);
+      const stars = document.createElement('div');
+      stars.className = 'sg-google-review-card__stars';
+      const rating = Math.max(0, Math.min(5, Number(review.rating) || 0));
+      stars.textContent = '★'.repeat(rating) + '☆'.repeat(5-rating);
+      stars.setAttribute('aria-label', rating + ' ' + copy.rating);
+      const body = document.createElement('p');
+      body.textContent = original(review.text);
+      article.append(top, stars);
+      if (body.textContent) article.append(body);
+      if (review.reply) {
+        const reply = document.createElement('p');
+        reply.className = 'sg-google-review-card__reply';
+        const label = document.createElement('strong');
+        label.textContent = copy.reply + ': ';
+        reply.append(label, String(review.reply));
+        article.append(reply);
+      }
+      grid.append(article);
+    }
+    more.hidden = all.length <= 4;
+    more.textContent = expanded ? copy.less : copy.more;
+  };
+  more.addEventListener('click', () => { expanded = !expanded; render(); });
+  fetch(section.dataset.endpoint, {headers:{Accept:'application/json'}})
+    .then(async response => {
+      if (!response.ok) throw new Error('Reviews API ' + response.status);
+      return response.json();
+    })
+    .then(data => {
+      if (!Array.isArray(data.reviews)) throw new Error('Invalid reviews response');
+      all = data.reviews.filter(r => r && Number(r.rating) >= 1 && Number(r.rating) <= 5)
+        .sort((a,b) => Date.parse(b.date || b.updated || 0) - Date.parse(a.date || a.updated || 0));
+      status.textContent = all.length ? '' : copy.unavailable;
+      if (all.length) {
+        const avg = all.reduce((a, r) => a + Number(r.rating), 0) / all.length;
+        const summary = section.querySelector('[data-review-summary]');
+        summary.textContent = '★ ' + avg.toFixed(1).replace('.', ',') + ' · ' + all.length + ' ' + copy.reviewsWord + ' Google';
+        summary.hidden = false;
+      }
+      render();
+    })
+    .catch(err => { console.error('Google reviews:', err); status.textContent = copy.unavailable; });
+})();
+</script>
+<style>
+.sg-google-review-card__avatar{overflow:hidden}.sg-google-review-card__avatar img{width:100%;height:100%;object-fit:cover}.sg-google-review-card__reply{margin-top:14px!important;padding-top:12px;border-top:1px solid rgba(20,103,91,.14);font-size:14px!important;white-space:pre-line}.sg-google-reviews__summary{max-width:1440px;margin:0 auto 16px;font-weight:800;color:#14211e}.sg-google-reviews__summary[hidden]{display:none}.sg-google-review-card p{white-space:pre-line}
+.sg-google-reviews__status{max-width:1440px;margin:0 auto 16px;color:#5f6e69}
+.sg-google-reviews__grid{min-height:270px}
+.sg-google-reviews__actions button{cursor:pointer;font:inherit}
+.sg-google-reviews__actions [hidden]{display:none}
+</style>
 <style>
 .sg-google-reviews{--brand:var(--mint,#93d1ba);background:#fff;padding:clamp(58px,7vw,92px) clamp(24px,4.2vw,58px);border-top:1px solid rgba(20,103,91,.12);border-bottom:1px solid rgba(20,103,91,.12)}.sg-google-reviews__head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.6fr);gap:36px;align-items:end;max-width:1440px;margin:0 auto 34px}.sg-google-reviews__head h2{margin:8px 0 0;font-size:clamp(32px,3.4vw,54px);line-height:1.02;letter-spacing:-.045em;color:#14211e}.sg-google-reviews__head>p{margin:0;color:#5f6e69;font-size:16px;line-height:1.6;max-width:44ch}.sg-google-reviews__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;max-width:1440px;margin:0 auto}.sg-google-review-card{min-width:0;min-height:270px;padding:24px;border:1px solid rgba(20,103,91,.16);border-radius:16px;overflow:hidden;background:#fbfdfc;display:flex;flex-direction:column}.sg-google-review-card__top{display:flex;gap:12px;align-items:center}.sg-google-review-card__avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#e9f7f2;color:#175f4e;font-weight:800}.sg-google-review-card__top strong,.sg-google-review-card__source{display:block}.sg-google-review-card__top strong{font-size:15px;color:#15231f}.sg-google-review-card__source{margin-top:3px;font-size:12px;color:#5f6e69}.sg-google-review-card__stars{margin:22px 0 14px;color:#8a6800;letter-spacing:.12em;font-size:16px}.sg-google-review-card p{margin:0;color:#40504b;font-size:15px;line-height:1.65}.sg-google-reviews__actions{display:grid;grid-template-columns:minmax(0,max-content);justify-content:center;gap:14px;max-width:1440px;margin:30px auto 0}.sg-google-reviews__button{min-height:58px;padding:0 30px;border:1px solid #d8dfdc;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;color:#111b18;font-weight:800;text-decoration:none;background:#fff;transition:transform .18s ease}.sg-google-reviews__button:hover{transform:translateY(-1px);border-color:var(--brand)}.sg-google-reviews__button--mint{background:var(--brand);border-color:var(--brand)}@media(max-width:1100px){.sg-google-reviews__grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sg-google-reviews__head{grid-template-columns:1fr}}@media(max-width:640px){.sg-google-reviews{padding-inline:18px}.sg-google-reviews__grid{grid-template-columns:1fr;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.sg-google-review-card{min-width:86vw;scroll-snap-align:start}.sg-google-reviews__actions{display:grid}.sg-google-reviews__button{width:100%}}
 </style>

@@ -160,7 +160,7 @@ const schema = jsonLdGraph([
   ...(serviceNode ? [serviceNode] : []),
   ...extraStructuredData
 ]);
-const showHomeReviews = basePath === '/' && resolvedLocale === 'uk';
+const showHomeReviews = basePath === '/' && (resolvedLocale === 'uk' || resolvedLocale === 'ru');
 // hreflang only for language versions that really exist: a UA-only page must not declare
 // hreflang="ru" pointing at its own UA URL (localizedPath falls back to the UA path).
 // EN/DE/ES alternates always come from the route map (src/i18n/intl-routes.ts), also on pages that
@@ -260,7 +260,7 @@ import ScrollProgress from '../components/ScrollProgress.astro';
   <body>
     <a class="skip-link" href="#main">{skipLinks[resolvedLocale]}</a>
     <slot />
-    {showHomeReviews && <GoogleReviews />}
+    {showHomeReviews && <GoogleReviews locale={resolvedLocale as 'uk' | 'ru'} />}
     <SiteEnhancements />
     <HeaderFixes />
     <script is:inline define:vars={{ menuLabel: menuLabels[resolvedLocale], moveReviews: showHomeReviews, heroAlt: heroAlts[resolvedLocale] }}>
