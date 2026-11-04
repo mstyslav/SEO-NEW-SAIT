@@ -6,6 +6,7 @@ Disallow: /compare/
 Disallow: /proposal/
 Disallow: /project-print/
 Disallow: /thank-you/
+Allow: /shop/mirrors/led/*?size=
 Disallow: /*?*
 
 User-agent: GPTBot
