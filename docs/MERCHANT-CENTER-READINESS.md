@@ -1,3 +1,7 @@
+## Owner confirmation 2026-11-04 — supplier image and product-content rights
+
+The owner confirms Space Glass is an authorized dealer of the supplier and **has supplier permission to use the product photographs and product information**, including for Google Shopping and Google advertising. This resolves the owner-permission question for the current 48 mirror models. This is an owner attestation, not an independent review of a written license; retain supplier confirmation for possible Merchant reviews. Product images still require technical/policy checks (e.g., watermarks, promotional overlays, correct product depiction).
+
 ## Owner confirmation 2026-11-04 — Merchant product attributes
 
 - All 48 mirror models are sold under the **Space Glass** brand.
