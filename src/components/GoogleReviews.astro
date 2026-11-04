@@ -37,8 +37,8 @@ const copy = ru ? {
   const status = section.querySelector('[data-review-status]');
   const more = section.querySelector('[data-review-more]');
   let all = [], expanded = false;
-  // Google may prepend an auto-translation: "(Translated by Google) … (Original) …". Show the author's original text.
-  const original = (t) => { t = String(t || ''); const i = t.indexOf('(Original)'); return (t.startsWith('(Translated by Google)') && i >= 0 ? t.slice(i + 10) : t).trim(); };
+  // Google adds an auto-translation either before ("(Translated by Google) … (Original) …") or after the text ("… (Translated by Google) …"). Show only the author's original.
+  const original = (t) => { t = String(t || ''); const i = t.indexOf('(Original)'); if (t.startsWith('(Translated by Google)') && i >= 0) return t.slice(i + 10).trim(); const j = t.indexOf('(Translated by Google)'); return (j >= 0 ? t.slice(0, j) : t).trim(); };
   const render = () => {
     grid.replaceChildren();
     for (const review of (expanded ? all : all.slice(0, 4))) {
@@ -113,6 +113,7 @@ const copy = ru ? {
 <style>
 .sg-google-review-card__avatar{overflow:hidden}.sg-google-review-card__avatar img{width:100%;height:100%;object-fit:cover}.sg-google-review-card__reply{margin-top:14px!important;padding-top:12px;border-top:1px solid rgba(20,103,91,.14);font-size:14px!important;white-space:pre-line}.sg-google-reviews__summary{max-width:1440px;margin:0 auto 16px;font-weight:800;color:#14211e}.sg-google-reviews__summary[hidden]{display:none}.sg-google-review-card p{white-space:pre-line}
 .sg-google-reviews__status{max-width:1440px;margin:0 auto 16px;color:#5f6e69}
+.sg-google-reviews__grid{min-height:270px}
 .sg-google-reviews__actions button{cursor:pointer;font:inherit}
 .sg-google-reviews__actions [hidden]{display:none}
 </style>
