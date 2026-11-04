@@ -1,3 +1,10 @@
+## Owner confirmation 2026-11-04 — Merchant product attributes
+
+- All 48 mirror models are sold under the **Space Glass** brand.
+- Every item is **new**, **manufactured to order**, and not physically in stock.
+- Products have **only Space Glass internal codes**; no manufacturer GTIN or MPN was reported. Feed: `brand=Space Glass`, `condition=new`, `identifier_exists=no`, `gtin`/`mpn` blank. Recheck identifier policy if supplier later provides manufacturer identifiers.
+- **Availability is still unresolved**; do not publish or claim Merchant approval until made-to-order availability and any required availability date, checkout eligibility, image advertising rights, shipping transit settings, and landing-price parity have been checked.
+
 ## Owner confirmation 2026-11-04 — inventory model
 
 **All 48 current mirror models are manufactured to order; none should be advertised as ready stock.** Separate stocked SKUs may be added later, with independent inventory/availability tracking. The draft generator explicitly rejects `--availability=in_stock` for this current catalog. Do not equate "can be ordered" with physical stock. The Merchant Center availability value for made-to-order products and any required availability date must be verified against current Google rules before publication; the feed remains unpublished. Production handling is 15 working days standard / 35 metal-frame after confirmation and payment; shipping transit time is separate.
