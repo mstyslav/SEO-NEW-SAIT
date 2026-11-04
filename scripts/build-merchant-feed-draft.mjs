@@ -28,6 +28,10 @@ if (AVAILABILITY === 'preorder' || AVAILABILITY === 'backorder') {
   console.error('Refusing preorder/backorder: a real availability_date, displayed on the product landing page, is required; manufactured-to-order is not automatically preorder/backorder.');
   process.exit(1);
 }
+if (AVAILABILITY === 'out_of_stock') {
+  console.error('Refusing out_of_stock for products currently accepting orders.');
+  process.exit(1);
+}
 if (AVAILABILITY === 'in_stock') {
   console.error('Refusing --availability=in_stock: current catalog is made to order, with no verified stock.');
   process.exit(1);
