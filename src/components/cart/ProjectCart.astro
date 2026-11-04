@@ -221,6 +221,8 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
       unpricedEl.textContent = fn.unpricedNote.replace('{n}', String(t.unpriced));
       const orderOnly = project.items.length > 0 && project.items.every((i) => i.kind === 'led-mirror' && unit(i) !== null);
       submitBtn.textContent = orderOnly ? cfg.checkoutOrder : cfg.checkoutRequest;
+      const footerNotice = document.querySelector<HTMLElement>('.project-cart-summary__notice');
+      if (footerNotice) footerNotice.hidden = orderOnly;
       const checkoutNotice = $('[data-cart-checkout-notice]');
       checkoutNotice.hidden = !orderOnly;
       checkoutNotice.textContent = orderOnly ? cfg.confirmedNotice : '';
