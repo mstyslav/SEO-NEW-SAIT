@@ -9,16 +9,17 @@ const copy = ru ? {
  eyebrow:'Отзывы клиентов', title:'Что говорят о Space Glass', intro:'Отзывы клиентов из Google Business Profile.',
  source:'Отзыв Google', allReviews:'Все отзывы в Google →', leaveReview:'Оставить отзыв →',
  loading:'Загружаем отзывы Google…', unavailable:'Отзывы временно недоступны. Посмотреть их можно в Google.',
- more:'Показать все отзывы', less:'Свернуть отзывы', rating:'из 5'
+ more:'Показать все отзывы', less:'Свернуть отзывы', rating:'из 5', reply:'Ответ Space Glass', reviewsWord:'отзывов', original:'Оригинал'
 } : {
  eyebrow:'Відгуки клієнтів', title:'Що говорять про Space Glass', intro:'Відгуки клієнтів із Google Business Profile.',
  source:'Відгук Google', allReviews:'Усі відгуки в Google →', leaveReview:'Залишити відгук →',
  loading:'Завантажуємо відгуки Google…', unavailable:'Відгуки тимчасово недоступні. Переглянути їх можна в Google.',
- more:'Показати всі відгуки', less:'Згорнути відгуки', rating:'з 5'
+ more:'Показати всі відгуки', less:'Згорнути відгуки', rating:'з 5', reply:'Відповідь Space Glass', reviewsWord:'відгуків', original:'Оригінал'
 };
 ---
-<section class="sg-google-reviews" data-google-reviews data-endpoint="https://space-glass-google-reviews.shakal-slavko.workers.dev/reviews" aria-labelledby="google-reviews-title">
+<section class="sg-google-reviews" data-google-reviews data-endpoint="/api/google-reviews" data-locale={ru ? 'ru' : 'uk'} aria-labelledby="google-reviews-title">
   <div class="sg-google-reviews__head"><div><p class="eyebrow">{copy.eyebrow}</p><h2 id="google-reviews-title">{copy.title}</h2></div><p>{copy.intro}</p></div>
+  <p class="sg-google-reviews__summary" data-review-summary hidden></p>
   <p class="sg-google-reviews__status" data-review-status role="status">{copy.loading}</p>
   <div class="sg-google-reviews__grid" data-review-grid aria-live="polite"></div>
   <div class="sg-google-reviews__actions">
@@ -36,6 +37,8 @@ const copy = ru ? {
   const status = section.querySelector('[data-review-status]');
   const more = section.querySelector('[data-review-more]');
   let all = [], expanded = false;
+  // Google may prepend an auto-translation: "(Translated by Google) … (Original) …". Show the author's original text.
+  const original = (t) => { t = String(t || ''); const i = t.indexOf('(Original)'); return (t.startsWith('(Translated by Google)') && i >= 0 ? t.slice(i + 10) : t).trim(); };
   const render = () => {
     grid.replaceChildren();
     for (const review of (expanded ? all : all.slice(0, 4))) {
@@ -48,12 +51,19 @@ const copy = ru ? {
       avatar.setAttribute('aria-hidden','true');
       const name = String(review.author || 'Google User');
       avatar.textContent = name.slice(0, 1).toUpperCase();
+      if (review.photo && /^https:\/\/[a-z0-9.-]*googleusercontent\.com\//.test(review.photo)) {
+        const img = document.createElement('img');
+        img.src = review.photo; img.alt = ''; img.width = 42; img.height = 42; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer';
+        img.addEventListener('error', () => img.remove());
+        avatar.textContent = ''; avatar.append(img);
+      }
       const info = document.createElement('div');
       const strong = document.createElement('strong');
       strong.textContent = name;
       const source = document.createElement('span');
       source.className = 'sg-google-review-card__source';
-      source.textContent = copy.source;
+      const when = Date.parse(review.date || '');
+      source.textContent = copy.source + (when ? ' · ' + new Date(when).toLocaleDateString(section.dataset.locale === 'ru' ? 'ru-RU' : 'uk-UA', {year:'numeric', month:'long'}) : '');
       info.append(strong, source);
       top.append(avatar, info);
       const stars = document.createElement('div');
@@ -62,8 +72,17 @@ const copy = ru ? {
       stars.textContent = '★'.repeat(rating) + '☆'.repeat(5-rating);
       stars.setAttribute('aria-label', rating + ' ' + copy.rating);
       const body = document.createElement('p');
-      body.textContent = String(review.text || '');
-      article.append(top, stars, body);
+      body.textContent = original(review.text);
+      article.append(top, stars);
+      if (body.textContent) article.append(body);
+      if (review.reply) {
+        const reply = document.createElement('p');
+        reply.className = 'sg-google-review-card__reply';
+        const label = document.createElement('strong');
+        label.textContent = copy.reply + ': ';
+        reply.append(label, String(review.reply));
+        article.append(reply);
+      }
       grid.append(article);
     }
     more.hidden = all.length <= 4;
@@ -80,12 +99,19 @@ const copy = ru ? {
       all = data.reviews.filter(r => r && Number(r.rating) >= 1 && Number(r.rating) <= 5)
         .sort((a,b) => Date.parse(b.date || b.updated || 0) - Date.parse(a.date || a.updated || 0));
       status.textContent = all.length ? '' : copy.unavailable;
+      if (all.length) {
+        const avg = all.reduce((a, r) => a + Number(r.rating), 0) / all.length;
+        const summary = section.querySelector('[data-review-summary]');
+        summary.textContent = '★ ' + avg.toFixed(1).replace('.', ',') + ' · ' + all.length + ' ' + copy.reviewsWord + ' Google';
+        summary.hidden = false;
+      }
       render();
     })
     .catch(err => { console.error('Google reviews:', err); status.textContent = copy.unavailable; });
 })();
 </script>
 <style>
+.sg-google-review-card__avatar{overflow:hidden}.sg-google-review-card__avatar img{width:100%;height:100%;object-fit:cover}.sg-google-review-card__reply{margin-top:14px!important;padding-top:12px;border-top:1px solid rgba(20,103,91,.14);font-size:14px!important;white-space:pre-line}.sg-google-reviews__summary{max-width:1440px;margin:0 auto 16px;font-weight:800;color:#14211e}.sg-google-reviews__summary[hidden]{display:none}.sg-google-review-card p{white-space:pre-line}
 .sg-google-reviews__status{max-width:1440px;margin:0 auto 16px;color:#5f6e69}
 .sg-google-reviews__actions button{cursor:pointer;font:inherit}
 .sg-google-reviews__actions [hidden]{display:none}
