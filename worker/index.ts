@@ -26,6 +26,7 @@
 
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 import { handleCartOrder } from './cart-order';
+import { merchantFeed } from './merchant-feed';
 import { priceOf, modelName, catalogDate } from './led-mirrors';
 import { ATTRIBUTION_KEYS, attributionLines, attributionPlainLines, parseAttribution, type Attribution } from './attribution';
 
@@ -46,6 +47,8 @@ export interface Env {
   CRM_ORDERS_SECRET?: string;
   /** Purchase-price table for the LED mirror calculator (gzip+base64 numbers; src/lib/led-prices-codec.mjs). Secret, never in Git. */
   LED_MIRRORS_PRICES?: string;
+  /** Explicit activation after Merchant policy/price parity approval. Defaults OFF. */
+  MERCHANT_FEED_ENABLED?: string;
 }
 
 type Lead = {
@@ -399,6 +402,7 @@ export default {
     if (/^\/api\/(kommo-lead|lead)\/?$/.test(pathname)) return handleLead(request, env);
     if (/^\/api\/led-mirror-price\/?$/.test(pathname)) return handleLedPrice(request, env);
     if (/^\/api\/cart-order\/?$/.test(pathname)) return handleCart(request, env);
+    if (pathname === '/api/merchant-feed.tsv') return merchantFeed(env, request);
     return env.ASSETS.fetch(request);
   }
 } satisfies ExportedHandler<Env>;
