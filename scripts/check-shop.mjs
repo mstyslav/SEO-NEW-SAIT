@@ -65,7 +65,7 @@ for (const [loc, pre] of locales) {
   }
 }
 // ---- unified catalog pages (/shop/, /shop/mirrors/, /shop/mirrors/led/): all 48 products in the HTML, tabs, filters data, exact texts
-const SUB = { uk: 'Готові скляні вироби та конструкції на замовлення з доставкою по Україні.', ru: 'Готовые стеклянные изделия и конструкции на заказ с доставкой по Украине.' };
+const SUB = { uk: 'Готові скляні вироби та конструкції на замовлення з доставкою до Києва, Львова, Одеси, Дніпра, Харкова та по всій Україні.', ru: 'Готовые стеклянные изделия и конструкции на заказ с доставкой в Киев, Львов, Одессу, Днепр, Харьков и по всей Украине.' };
 const TAB_ALL = { uk: 'Усі товари', ru: 'Все товары' };
 for (const [loc, pre] of locales) for (const p of ['/shop/', '/shop/mirrors/', '/shop/mirrors/led/']) {
   const html = read(pre + p); if (!html) continue;
@@ -73,7 +73,7 @@ for (const [loc, pre] of locales) for (const p of ['/shop/', '/shop/mirrors/', '
   const expectN = p === '/shop/mirrors/led/' ? pub.models.filter((m) => m.main_light !== 'Без основної підсвітки' || m.option_groups.some((g) => g.key === 'backlight')).length : pub.models.length; // the LED listing hides models without any light
   if (cards !== expectN) fail(`${pre + p}: ${cards} product cards, expected ${expectN}`);
   if (!html.includes(SUB[loc])) fail(`${pre + p}: subtitle text missing`);
-  if (p === '/shop/' && !/<h1[^>]*>Магазин Space Glass</.test(html)) fail(`${pre + p}: h1`);
+  if (p === '/shop/' && !new RegExp('<h1[^>]*>' + (loc === 'ru' ? 'Стеклянные конструкции' : 'Скляні конструкції') + ' — каталог моделей<').test(html)) fail(`${pre + p}: h1`);
   if (!html.includes(`>${TAB_ALL[loc]}<`)) fail(`${pre + p}: "all products" tab missing`);
   const tabs = [...html.matchAll(/<button[^>]*class="sf-tab"[^>]*data-cat="(\w+)"[^>]*>/g)].map((m) => m[0]);
   for (const c of ['showers', 'partitions']) if (!tabs.some((t) => t.includes(`data-cat="${c}"`) && /\sdisabled[\s>=]/.test(t))) fail(`${pre + p}: ${c} tab must be disabled while it has no products`);
@@ -117,8 +117,8 @@ for (const [loc, pre] of locales) {
     if (!/pp-reviews-empty/.test(reviewsPanel) || /★|aggregateRating|ratingValue|itemprop="review/.test(html)) fail(`${url}: reviews panel must be an empty state without ratings`);
     // agreed sale terms are shown; unagreed ones (returns, delivery price, pickup city) are not stated
     const text = html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<[^>]+>/g, ' ');
-    if (!(loc === 'ru' ? /12 месяцев/ : /12 місяців/).test(text) || !/3 до 35 рабочих дней|3 до 35 робочих днів/.test(text) || !/100% (предоплата|передоплата)/.test(text) || !/(Новой почтой|Новою поштою)/.test(text)) fail(`${url}: agreed sale terms missing`);
-    if (/повернен|возврат|Київ.{0,20}самовивіз|самовывоз.{0,20}Киев/i.test(text.replace(/Опрацювання|повернення до/g, ''))) fail(`${url}: states a return rule / pickup city that is not agreed`);
+    if (!(loc === 'ru' ? /12 месяцев/ : /12 місяців/).test(text) || !/до 35 рабочих дней|до 35 робочих днів/.test(text) || !/100% (предоплата|передоплата)/.test(text) || !/(Новой почтой|Новою поштою)/.test(text)) fail(`${url}: agreed sale terms missing`);
+    if (/Київ.{0,20}самовивіз|самовывоз.{0,20}Киев/i.test(text)) fail(`${url}: states a return rule / pickup city that is not agreed`);
     // natural search phrase from the research is in the description text; photo alt carries the model name
     const q = seoData[m.slug]?.queries?.[loc === 'ru' ? 'ru' : 'uk']?.primary;
     const descText = ((html.match(/id="pp-panel-desc"[\s\S]*?<\/section>/) ?? [''])[0]).replace(/<[^>]+>/g, ' ');
@@ -151,7 +151,8 @@ for (const [, pre] of locales) {
 }
 
 // ---- the sitemap lists exactly the 102 indexable shop URLs (48 product pages + 3 catalog pages, UA + RU) and nothing else of the shop / cart / old catalog
-const productPaths = [...['/shop/', '/shop/mirrors/', '/shop/mirrors/led/'].flatMap((p) => [p, `/ru${p}`]), ...pub.models.flatMap((m) => [`/shop/mirrors/led/${m.slug}/`, `/ru/shop/mirrors/led/${m.slug}/`])];
+const policyPaths = ['/shop/offer/', '/shop/delivery-payment/', '/shop/returns/']; // indexable shop policy pages (offer, delivery and payment, returns)
+const productPaths = [...policyPaths.flatMap((p) => [p, `/ru${p}`]), ...['/shop/', '/shop/mirrors/', '/shop/mirrors/led/'].flatMap((p) => [p, `/ru${p}`]), ...pub.models.flatMap((m) => [`/shop/mirrors/led/${m.slug}/`, `/ru/shop/mirrors/led/${m.slug}/`])];
 for (const f of ['sitemap.xml', 'sitemap-uk.xml', 'sitemap-ru.xml']) {
   const x = fs.existsSync(path.join(dist, f)) ? fs.readFileSync(path.join(dist, f), 'utf8') : '';
   const locs = [...x.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].replace(ORIGIN, ''));
