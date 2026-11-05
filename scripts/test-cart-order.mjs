@@ -25,20 +25,20 @@ const call = async (body, headers = { 'x-sg-form': '1' }) => {
   const res = await handleCartOrder(new Request('https://space-glass.com.ua/api/cart-order', { method: 'POST', headers: { 'content-type': 'application/json', ...headers }, body: JSON.stringify(body) }), {}, deps());
   return { status: res.status, body: await res.json() };
 };
-const led = { kind: 'led-mirror', modelId: 283, w: 700, h: 700, options: {}, price: 5148, quantity: 2 };
+const led = { kind: 'led-mirror', modelId: 283, w: 700, h: 700, options: {}, price: 5616, quantity: 2 };
 const base = { orderId: 'order-aaaa-0001', locale: 'uk', name: 'Тест', phone: '0671234567', _js: 'sg-x', items: [led] };
 let failed = 0;
 const t = async (name, fn) => { try { await fn(); console.log('ok   ', name); } catch (e) { failed++; console.error('FAIL ', name, '-', e.message); } };
 
 await t('valid order is delivered once, with retail line total', async () => {
   const r = await call(base);
-  assert.equal(r.status, 200); assert.equal(r.body.subtotal_uah, 10296);
+  assert.equal(r.status, 200); assert.equal(r.body.subtotal_uah, 11232);
   assert.equal(r.body.order_ref, 'WEB-7');
   assert.equal(delivered.length, 1);
   const p = delivered[0], it = p.items[0];
   assert.equal(p.version, 1); assert.equal(p.source, 'Space Glass Website Cart'); assert.equal(p.order_id, base.orderId); assert.equal(p.locale, 'uk');
-  assert.deepEqual([it.kind, it.product_id, it.name, it.width_mm, it.height_mm, it.quantity, it.unit_price_uah, it.price_status], ['led-mirror', 283, 'Дзеркало AGNES', 700, 700, 2, 5148, 'verified']);
-  assert.deepEqual(p.totals, { currency: 'UAH', subtotal_uah: 10296, unpriced_items: 0, complete: true });
+  assert.deepEqual([it.kind, it.product_id, it.name, it.width_mm, it.height_mm, it.quantity, it.unit_price_uah, it.price_status], ['led-mirror', 283, 'Дзеркало AGNES', 700, 700, 2, 5616, 'verified']);
+  assert.deepEqual(p.totals, { currency: 'UAH', subtotal_uah: 11232, unpriced_items: 0, complete: true });
   assert.equal(p.customer.phone, '+380671234567');
   assert.ok(!/purchase|markup|base_uah|c0/i.test(JSON.stringify(p)));
 });
@@ -49,7 +49,7 @@ await t('same orderId again: duplicate, nothing sent twice', async () => {
 await t('wrong / tampered price is rejected with the server price, nothing sent', async () => {
   const n = delivered.length;
   const r = await call({ ...base, orderId: 'order-aaaa-0002', items: [{ ...led, price: 100 }] });
-  assert.equal(r.status, 409); assert.deepEqual(r.body.changed, [{ index: 0, unit_uah: 5148 }]); assert.equal(delivered.length, n);
+  assert.equal(r.status, 409); assert.deepEqual(r.body.changed, [{ index: 0, unit_uah: 5616 }]); assert.equal(delivered.length, n);
 });
 await t('CRM unreachable: 503, not remembered, a retry with the same id succeeds; no other channel is used', async () => {
   const id = 'order-aaaa-0003';
@@ -73,7 +73,7 @@ await t('unpriced line: partial subtotal is labelled, not final', async () => {
   const r = await call({ ...base, orderId: 'order-aaaa-0004', items: [led, { kind: 'other', name: 'Душова кабіна', price: 0, quantity: 1 }] });
   assert.equal(r.status, 200); assert.equal(r.body.unpriced, 1);
   const p = delivered.at(-1);
-  assert.equal(p.totals.complete, false); assert.equal(p.totals.unpriced_items, 1); assert.equal(p.totals.subtotal_uah, 10296);
+  assert.equal(p.totals.complete, false); assert.equal(p.totals.unpriced_items, 1); assert.equal(p.totals.subtotal_uah, 11232);
   assert.deepEqual([p.items[1].price_status, p.items[1].unit_price_uah], ['on_request', null]);
 });
 await t('validation: header, phone, name, quantity, size, option, items, order id', async () => {
