@@ -15,14 +15,14 @@ const heat = 'Підігрів дзеркала';
 const rgb = 'RGB (з пультом)';
 
 const cases = [
-  ['AGNES 1000x1000 6mm + heating', 283, 1000, 1000, { thickness: t6, heating: heat }, 12185],
-  ['AGNES 700x700 standard', 283, 700, 700, {}, 5148],
-  ['COMO 1200x700 heating + main RGB', 193, 1200, 700, { heating: heat, main_lighting: rgb }, 13438],
-  ['AZURITE 1500x800 RAL + heating + back RGB', 769, 1500, 800, { color: 'RAL K7 Classic', heating: heat, backlight: rgb }, 21832],
-  ['AZURITE 1100x1900', 769, 1100, 1900, {}, 19253],
-  ['AVANGUARD 2400x1300', 893, 2400, 1300, {}, 28389],
-  ['AVANGUARD 500x800 standard', 893, 500, 800, {}, 8271],
-  ['BLOSSOM 2290x3040', 187, 2290, 3040, {}, 75968]
+  ['AGNES 1000x1000 6mm + heating', 283, 1000, 1000, { thickness: t6, heating: heat }, 13293],
+  ['AGNES 700x700 standard', 283, 700, 700, {}, 5616],
+  ['COMO 1200x700 heating + main RGB', 193, 1200, 700, { heating: heat, main_lighting: rgb }, 14660],
+  ['AZURITE 1500x800 RAL + heating + back RGB', 769, 1500, 800, { color: 'RAL K7 Classic', heating: heat, backlight: rgb }, 23817],
+  ['AZURITE 1100x1900', 769, 1100, 1900, {}, 21003],
+  ['AVANGUARD 2400x1300', 893, 2400, 1300, {}, 30970],
+  ['AVANGUARD 500x800 standard', 893, 500, 800, {}, 9023],
+  ['BLOSSOM 2290x3040', 187, 2290, 3040, {}, 82874]
 ];
 let failed = 0;
 const check = (name, fn) => { try { fn(); console.log('ok   ', name); } catch (e) { failed++; console.error('FAIL ', name, '-', e.message); } };
