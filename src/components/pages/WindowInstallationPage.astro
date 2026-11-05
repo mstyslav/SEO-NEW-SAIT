@@ -199,7 +199,20 @@ const service: JsonLdObject = {
   url: pageUrl,
   description: t.description
 };
-const structuredData: JsonLdObject[] = [service, ...(faqStructuredData ? [faqStructuredData] : [])];
+// The page is also a long how-to guide on installation: Article node with the page's real dates (first/last commit 2026-10-07).
+const article: JsonLdObject = {
+  '@type': 'Article',
+  '@id': `${pageUrl}#article`,
+  headline: t.h1,
+  description: t.description,
+  datePublished: '2026-10-07',
+  dateModified: '2026-10-07',
+  inLanguage: ru ? 'ru' : 'uk',
+  mainEntityOfPage: { '@id': `${pageUrl}#webpage` },
+  author: { '@id': `${absoluteUrl('/', origin)}#organization` },
+  publisher: { '@id': `${absoluteUrl('/', origin)}#organization` }
+};
+const structuredData: JsonLdObject[] = [service, article, ...(faqStructuredData ? [faqStructuredData] : [])];
 ---
 <BaseLayout
   title={t.title}
