@@ -17,6 +17,12 @@ const S = SHOP_STR[locale as 'uk' | 'ru'];
 // the LED listing shows only models that really have LED light; the models without any light stay in /shop/ and /shop/mirrors/
 const products = buildProducts(pub).filter((p: any) => faqKind !== 'led' || hasLedLight(p.raw));
 const schema = buildSchema(locale, pub, products);
+// ItemList of the product cards rendered in the grid (same order, same names, absolute URLs): helps crawlers and AI assistants read the catalog.
+const itemList = {
+  '@type': 'ItemList',
+  numberOfItems: products.length,
+  itemListElement: products.map((p: any, i: number) => ({ '@type': 'ListItem', position: i + 1, name: p.name, url: new URL(cardData(locale, p).href, Astro.site ?? Astro.url.origin).href }))
+};
 const hasPhoto = (slug: string) => ((photos as Record<string, number>)[slug] ?? 0) > 0;
 const strings = {
   tabAll: S.tabAll, soon: S.soonTab, filtersTitle: S.filtersTitle, filtersBtn: S.filtersBtn, reset: S.reset, close: S.close, priceFrom: S.priceFrom, priceTo: S.priceTo,
@@ -39,7 +45,7 @@ const categoryCopy = locale === 'ru' ? {
 data.categoryCopy = categoryCopy;
 const initialCopy = faqKind === 'led' ? { h1, desc: locale === 'ru' ? 'Модели LED-зеркал с выбором формы, размера и подсветки. Изготавливаем под заказ.' : 'Моделі LED-дзеркал із вибором форми, розміру й підсвітки. Виготовляємо під замовлення.' } : categoryCopy[initialCat as keyof typeof categoryCopy] ?? categoryCopy.all;
 ---
-<ShopPage locale={locale} title={title} description={description} crumbs={crumbs} indexable>
+<ShopPage locale={locale} title={title} description={description} crumbs={crumbs} structuredData={itemList} indexable>
   <div class="category-heading"><div><p class="eyebrow">{S.shop}</p><h1 data-sf-page-title>{initialCopy.h1}</h1></div><p data-sf-location>{locale === 'ru' ? 'Готовые стеклянные изделия и конструкции на заказ с доставкой в Киев, Львов, Одессу, Днепр, Харьков и по всей Украине.' : 'Готові скляні вироби та конструкції на замовлення з доставкою до Києва, Львова, Одеси, Дніпра, Харкова та по всій Україні.'}</p></div>
   <p class="sf-intro" data-sf-page-desc>{initialCopy.desc}</p>
   {intro && <p class="sf-intro">{intro.text} <a href={intro.href}>{intro.label}</a>.</p>}

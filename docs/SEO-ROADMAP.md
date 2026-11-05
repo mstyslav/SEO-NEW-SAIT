@@ -15,11 +15,11 @@ IDs are stable; numbering is grouped (R-00x done, R-01x scheduled/measurement, R
 
 Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER · SCHEDULED · BLOCKED.
 
-## Dashboard (36 items)
+## Dashboard (37 items)
 
 | Status | Count |
 |---|---|
-| DONE | 13 |
+| DONE | 14 |
 | READY | 2 |
 | IN PROGRESS | 0 |
 | WAITING FOR DATA | 3 |
@@ -346,6 +346,7 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 | R-045 | Removed the obsolete "Архітектурні системи" page (owner decision, TASK 74): /arkhitekturni-systemy/ (UA) and /ru/arkhitekturni-systemy/ (RU) deleted (no DE/EN/ES versions existed); both URLs answer HTTP 410 Gone via the Cloudflare Worker (wrangler run_worker_first + GONE_PATHS), no redirects; removed from sitemap, navigation lists, /poslugy/ direction cards, solutions, facade related links, route/project checks and catalog data. | PR #46; build 654 pages, sitemap 639; local Worker test 410/410/410/410, other pages 200; live verification in the task report |
 | R-046 | Backlink quality audit (TASK 75): GSC export verified (9 domains, 317 linking pages, 144-page sample), donors checked live, no manual action, no disavow/removal candidates; 1 INVESTIGATE (DIPFO paid status); comparison with SCLASS from free Ahrefs tools; 20 opportunity rows; 3-month plan. | GSC manual actions 2026-10-25: none; Google link-spam/disavow guidance fetched 2026-10-25; private reports task-75/ (LOCAL) |
 | R-074 | P2 | DONE | 2026-11-05 | Ahrefs audit fixes: RU shop legal pages self-canonical (were canonical to UA but in sitemap) + 6 short meta descriptions lengthened |
+| R-075 | P2 | DONE | 2026-11-05 | AI visibility: ItemList on shop catalogs, explicit AI-crawler rules in robots.txt, /llms.txt |
 
 ## Evidence location
 The reports `task-64/` … `task-70/` (GSC/GA4 numbers, competitor tables, baselines) are **local, untracked files** in the working folder of the project owner. This repository is public, so performance data is intentionally not committed (see R-035). Committed evidence: `seo-audit/` and commit/PR references above.

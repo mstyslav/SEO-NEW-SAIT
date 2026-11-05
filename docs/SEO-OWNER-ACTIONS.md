@@ -59,3 +59,6 @@ Decided by owner 2026-11-03: supplier photos allowed (stored locally); retail pr
 - GALAXY NGC 4567 vs GALAXY NGC 4567 SINGLE and GALAXY FNGC 4567-8 vs ...-8 SINGLE: the supplier data is identical apart from the name and photo count. What does SINGLE mean (one panel? different product)? Until answered both stay as separate products.
 - The 4 models without any light (TURMALINE, BRITANNIC, ARK ROYAL, DREADNOUGHT) live under /shop/mirrors/led/{slug}/. Keep the URLs, or move them to a neutral URL with 301 before any indexing?
 - Brand/own-production wording, availability, shipping, returns, warranty: still needed before a Merchant feed (see docs/MERCHANT-CENTER-READINESS.md).
+
+## 2026-11-05 — AI crawlers (R-075)
+Check in the Cloudflare dashboard (Security → Bots / AI Crawl Control) that GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot and ClaudeBot are NOT blocked: a Cloudflare block overrides robots.txt and would stop ChatGPT from seeing the site.
