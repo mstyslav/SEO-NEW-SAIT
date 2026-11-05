@@ -224,7 +224,7 @@ export const mirrorCategoriesRu: ProfileCategory[] = [
         "image": "sg-feather",
         "imageAlt": "Аморфное ростовое зеркало Space Glass FEATHER с фоновой подсветкой",
         "blurb": "Ростовое зеркало асимметричной формы из серии AMO: плавные природные линии и фоновая подсветка.",
-        "priceFrom": "ориентировочно от 9 701 грн",
+        "priceFrom": "ориентировочно от 10 180 грн",
         "priceNote": "за минимальный размер",
         "specs": [
           [
@@ -328,7 +328,7 @@ export const mirrorCategoriesRu: ProfileCategory[] = [
         "аморфная",
         "фоновая",
         "620×1500",
-        "от 9 701 грн"
+        "от 10 180 грн"
       ],
       [
         "BLOSSOM",
