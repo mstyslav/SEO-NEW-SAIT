@@ -9,9 +9,9 @@ import '../../styles/profile-systems.css';
 import '../../styles/led-mirrors.css';
 
 // `indexable`: the shop catalog pages and product pages are indexed (TASK 113); every other shop page stays noindex.
-const { locale = 'uk', title, description, crumbs, image, indexable = false } = Astro.props;
+const { locale = 'uk', title, description, crumbs, image, indexable = false, structuredData } = Astro.props;
 ---
-<BaseLayout title={title} description={description} locale={locale} alternateLocales={['uk', 'ru']} schemaType="CollectionPage" image={image} robots={indexable ? undefined : 'noindex,follow'}>
+<BaseLayout title={title} description={description} locale={locale} alternateLocales={['uk', 'ru']} schemaType="CollectionPage" image={image} structuredData={structuredData} robots={indexable ? undefined : 'noindex,follow'}>
 <div class="sg-page-shell">
   <Header locale={locale} />
   <main id="main">

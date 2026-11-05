@@ -9,8 +9,24 @@ Disallow: /thank-you/
 Allow: /shop/mirrors/led/*?size=
 Disallow: /*?*
 
+# AI search / assistant crawlers: explicitly welcome (so they can cite and recommend the site), with the same private-area rules as everyone else.
 User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
 Allow: /
+Disallow: /api/
+Disallow: /cart/
+Disallow: /compare/
+Disallow: /proposal/
+Disallow: /project-print/
+Disallow: /thank-you/
 
 Sitemap: https://space-glass.com.ua/sitemap.xml
 Host: https://space-glass.com.ua

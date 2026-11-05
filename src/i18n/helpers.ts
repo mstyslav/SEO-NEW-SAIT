@@ -166,7 +166,7 @@ export function hasLocalizedRoute(pathname: string, locale: Locale): boolean {
   if (locale === 'ru' && project) return hasProjectRu(project[1]);
 
   // Unified cart and the shop exist in UA and RU only (noindex section, not in the sitemap).
-  if (locale === 'ru' && /^\/shop\/(?:(?:mirrors\/(?:led\/(?:[a-z0-9-]+\/)?)?|showers\/|partitions\/|preview-home-block\/)?)$/.test(base)) return true;
+  if (locale === 'ru' && /^\/shop\/(?:(?:mirrors\/(?:led\/(?:[a-z0-9-]+\/)?)?|showers\/|partitions\/|preview-home-block\/|returns\/|offer\/|delivery-payment\/)?)$/.test(base)) return true;
 
   return LOCALIZED_ROUTES[locale].has(base);
 }

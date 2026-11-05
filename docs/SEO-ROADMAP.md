@@ -1,6 +1,6 @@
 # Space Glass — SEO Roadmap
 
-Last updated: 2026-10-24 · Source of truth for SEO work. The structured register is [SEO-ROADMAP.csv](SEO-ROADMAP.csv) (same items, full detail). Owner decisions: [SEO-OWNER-ACTIONS.md](SEO-OWNER-ACTIONS.md). Next tasks: [SEO-NEXT-TASKS.md](SEO-NEXT-TASKS.md).
+Last updated: 2026-11-05 · Source of truth for SEO work. The structured register is [SEO-ROADMAP.csv](SEO-ROADMAP.csv) (same items, full detail). Owner decisions: [SEO-OWNER-ACTIONS.md](SEO-OWNER-ACTIONS.md). Next tasks: [SEO-NEXT-TASKS.md](SEO-NEXT-TASKS.md).
 
 ## How future SEO tasks must use this file
 1. Read this roadmap first and check the item status.
@@ -15,11 +15,11 @@ IDs are stable; numbering is grouped (R-00x done, R-01x scheduled/measurement, R
 
 Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER · SCHEDULED · BLOCKED.
 
-## Dashboard (35 items)
+## Dashboard (37 items)
 
 | Status | Count |
 |---|---|
-| DONE | 12 |
+| DONE | 14 |
 | READY | 2 |
 | IN PROGRESS | 0 |
 | WAITING FOR DATA | 3 |
@@ -345,6 +345,8 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 | R-043 | GSC coverage audit (TASK 73): 404 (171), redirects (101), crawled-not-indexed (132) fully exported and checked on production. No current commercial page in the 404 list; all 101 redirects valid (no loops, no 404 targets, no language mismatch, 0 internal links to old URLs); crawled-not-indexed = mostly stale historical URLs (73) and recently published EN/DE/ES pages (52, sampled hubs already on Google); 2 UA pages indexable but not in Google (P2). No P0/P1. | TASK 73 audit; GSC data date 2026-10-16; all three lists exported in full (no 1,000 cap hit); URL Inspection on 6 URLs on 2026-10-25 |
 | R-045 | Removed the obsolete "Архітектурні системи" page (owner decision, TASK 74): /arkhitekturni-systemy/ (UA) and /ru/arkhitekturni-systemy/ (RU) deleted (no DE/EN/ES versions existed); both URLs answer HTTP 410 Gone via the Cloudflare Worker (wrangler run_worker_first + GONE_PATHS), no redirects; removed from sitemap, navigation lists, /poslugy/ direction cards, solutions, facade related links, route/project checks and catalog data. | PR #46; build 654 pages, sitemap 639; local Worker test 410/410/410/410, other pages 200; live verification in the task report |
 | R-046 | Backlink quality audit (TASK 75): GSC export verified (9 domains, 317 linking pages, 144-page sample), donors checked live, no manual action, no disavow/removal candidates; 1 INVESTIGATE (DIPFO paid status); comparison with SCLASS from free Ahrefs tools; 20 opportunity rows; 3-month plan. | GSC manual actions 2026-10-25: none; Google link-spam/disavow guidance fetched 2026-10-25; private reports task-75/ (LOCAL) |
+| R-074 | P2 | DONE | 2026-11-05 | Ahrefs audit fixes: RU shop legal pages self-canonical (were canonical to UA but in sitemap) + 6 short meta descriptions lengthened |
+| R-075 | P2 | DONE | 2026-11-05 | AI visibility: ItemList on shop catalogs, explicit AI-crawler rules in robots.txt, /llms.txt |
 
 ## Evidence location
 The reports `task-64/` … `task-70/` (GSC/GA4 numbers, competitor tables, baselines) are **local, untracked files** in the working folder of the project owner. This repository is public, so performance data is intentionally not committed (see R-035). Committed evidence: `seo-audit/` and commit/PR references above.
