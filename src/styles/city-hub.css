@@ -550,3 +550,7 @@ body .sg-page-shell main .city-hub__cat h3{
     font-size:21px!important;
   }
 }
+
+/* City NAP: office address in the contact block */
+.city-hub__contact-address{font-style:normal}
+.city-hub__contact-address span{color:var(--muted)}

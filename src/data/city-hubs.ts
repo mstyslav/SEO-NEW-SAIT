@@ -13,7 +13,7 @@
 //  * project proof is pulled live from the `projects` content collection by the
 //    real `city` field — never a hardcoded card list;
 //  * stats/facts reuse the numbers already published on /rishennya/ and /about/;
-//  * no invented office address, no invented service districts, no invented
+//  * office address only from src/data/markets.ts (owner-confirmed), never invented, no invented service districts, no invented
 //    testimonials or figures.
 
 import type { Locale } from '../i18n/helpers';
@@ -200,7 +200,7 @@ const CONTACTS = '/contacts/';
 const PHONE_DISPLAY = '+38 (073) 425 14 00';
 const PHONE_HREF = 'tel:+380734251400';
 const TELEGRAM_HREF = 'https://t.me/spaceglass';
-const HOURS = 'Пн–Пт: 09:00–19:00';
+const HOURS = 'Пн–Пт: 10:00–18:00';
 
 // Shared hero image geometry (alt is locale-specific and set on each hero).
 const kyivImageBase = {

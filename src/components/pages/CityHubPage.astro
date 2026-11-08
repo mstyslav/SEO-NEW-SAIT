@@ -20,11 +20,13 @@ import TrustBar from '../TrustBar.astro';
 import FAQBlock from '../FAQBlock.astro';
 import ProjectCard from '../projects/ProjectCard.astro';
 import ProfileRequestForm from '../profile/ProfileRequestForm.astro';
+import GoogleReviews from '../GoogleReviews.astro';
 import { getCollection } from 'astro:content';
 import { getCityHub, type CityHubLocale } from '../../data/city-hubs';
 import { homeContent } from '../../content/i18n/pages/home';
 import { localizedPath } from '../../i18n/helpers';
-import { absoluteUrl, breadcrumbSchema, faqSchema, type JsonLdObject } from '../../seo/schema';
+import { MARKETS } from '../../data/markets';
+import { absoluteUrl, breadcrumbSchema, faqSchema, officeSchema, type JsonLdObject } from '../../seo/schema';
 import '../../styles/projects-common.css';
 import '../../styles/city-hub.css';
 
@@ -85,6 +87,15 @@ const serviceType =
   locale === 'ru'
     ? 'Замер, изготовление и монтаж стеклянных и алюминиевых конструкций'
     : 'Замір, виготовлення та монтаж скляних і алюмінієвих конструкцій';
+// Office of this city: address confirmed by the owner (src/data/markets.ts, same source as /contacts/).
+// Shown as NAP in the contact block and marked up with the SAME @id as on /contacts/ (identical node).
+const uaMarket = MARKETS.UA;
+const office = uaMarket.offices.find((item) => item.id === hub.slug);
+const officeAddress = office ? `${office.street[locale]}, ${office.city[locale]}` : null;
+const officeMapUrl = office ? office.gbpUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.mapQuery)}` : null;
+const officeText = locale === 'ru'
+  ? { label: 'Адрес офиса:', map: 'Открыть на карте' }
+  : { label: 'Адреса офісу:', map: 'Відкрити на карті' };
 const structuredData: JsonLdObject[] = [
   breadcrumbSchema([
     { label: locale === 'ru' ? 'Главная' : 'Головна', href: new URL(lp('/'), origin) },
@@ -119,6 +130,9 @@ const structuredData: JsonLdObject[] = [
       url: absoluteUrl(localizeHref(href), origin)
     }))
   },
+  ...(office
+    ? [officeSchema(origin, { id: office.id, city: office.city.uk, streetAddress: office.street.uk, url: office.page, countryCode: uaMarket.countryCode, mapUrl: office.gbpUrl })]
+    : []),
   ...(faqStructuredData ? [faqStructuredData] : [])
 ];
 ---
@@ -369,6 +383,12 @@ const structuredData: JsonLdObject[] = [
             <a class="button button--outline" href={hub.contact.telegramHref} target="_blank" rel="noopener noreferrer">{hub.contact.telegramLabel}</a>
           </div>
           <div class="city-hub__contact-note">
+            {officeAddress && (
+              <address class="city-hub__contact-address">
+                <span>{officeText.label} {officeAddress}</span>{' '}
+                <a href={officeMapUrl!} target="_blank" rel="noopener noreferrer">{officeText.map}</a>
+              </address>
+            )}
             <a class="city-hub__contact-phone" href={hub.contact.phoneHref}>{hub.contact.phone}</a>
             <span class="city-hub__contact-hours">{hub.contact.hours}</span>
             <a class="city-hub__contact-office" href={localizeHref(hub.contact.officesHref)}>{hub.contact.officesLabel}</a>
@@ -388,6 +408,9 @@ const structuredData: JsonLdObject[] = [
             commentPlaceholder={hub.requestForm.commentPlaceholder}
           />
         )}
+
+        {/* Company-wide Google reviews (one verified profile, Odesa). Shown as general reviews on every city page. */}
+        <GoogleReviews locale={locale} />
 
         <section class="city-hub__section city-hub__faq">
           <FAQBlock title={hub.faq.title} intro={hub.faq.intro} items={hub.faq.items} visibleCount={6} variant="compact" locale={locale} />

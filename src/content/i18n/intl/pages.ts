@@ -1,5 +1,5 @@
 // Contact page and projects page copy for EN/DE/ES. Contact data are the site's own: one phone and
-// e-mail, three offices in Ukraine (addresses as on /contacts/, written in Latin script), Mon–Fri 9–19.
+// e-mail, three offices in Ukraine (addresses as on /contacts/, written in Latin script), Mon–Fri 10–18.
 import type { IntlLocale } from '../../../i18n/intl-routes';
 import type { Pair, ProjectsPageCopy } from './types';
 
@@ -43,7 +43,7 @@ export const contactsCopy: Record<IntlLocale, ContactsCopy> = {
       { id: 'kyiv', city: 'Kyiv', address: '8 Laureatska Street' },
       { id: 'lviv', city: 'Lviv', address: '144 Kulparkivska Street' }
     ],
-    schedule: 'Opening hours', hours: 'Mon–Fri: 09:00–19:00 (Kyiv time)', route: 'Get directions', map: 'Open map',
+    schedule: 'Opening hours', hours: 'Mon–Fri: 10:00–18:00 (Kyiv time)', route: 'Get directions', map: 'Open map',
     socialAria: 'Space Glass on social media', mapTitle: 'Map of the Space Glass office',
     geoEyebrow: 'Where we work',
     geoTitle: 'Based in Ukraine, open to projects abroad',
@@ -102,7 +102,7 @@ export const contactsCopy: Record<IntlLocale, ContactsCopy> = {
       { id: 'kyiv', city: 'Kyjiw', address: 'Laureatska-Straße 8' },
       { id: 'lviv', city: 'Lwiw', address: 'Kulparkivska-Straße 144' }
     ],
-    schedule: 'Öffnungszeiten', hours: 'Mo–Fr: 09:00–19:00 (Kyjiwer Zeit)', route: 'Route planen', map: 'Karte öffnen',
+    schedule: 'Öffnungszeiten', hours: 'Mo–Fr: 10:00–18:00 (Kyjiwer Zeit)', route: 'Route planen', map: 'Karte öffnen',
     socialAria: 'Space Glass in sozialen Netzwerken', mapTitle: 'Karte des Büros von Space Glass',
     geoEyebrow: 'Einsatzgebiet',
     geoTitle: 'Projekte in Wien und Österreich',
@@ -161,7 +161,7 @@ export const contactsCopy: Record<IntlLocale, ContactsCopy> = {
       { id: 'kyiv', city: 'Kyiv', address: 'Calle Laureatska, 8' },
       { id: 'lviv', city: 'Lviv', address: 'Calle Kulparkivska, 144' }
     ],
-    schedule: 'Horario', hours: 'Lun–Vie: 09:00–19:00 (hora de Kyiv)', route: 'Cómo llegar', map: 'Abrir mapa',
+    schedule: 'Horario', hours: 'Lun–Vie: 10:00–18:00 (hora de Kyiv)', route: 'Cómo llegar', map: 'Abrir mapa',
     socialAria: 'Space Glass en redes sociales', mapTitle: 'Mapa de la oficina de Space Glass',
     geoEyebrow: 'Dónde trabajamos',
     geoTitle: 'Con sede en Ucrania y abiertos a proyectos en el extranjero',
