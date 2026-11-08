@@ -19,5 +19,5 @@ export function cleanAdAttribution(raw: unknown): AdAttribution | null {
   if (!gclid && !gbraid && !wbraid) return null;
   const at = typeof a.captured_at === 'string' && Number.isFinite(Date.parse(a.captured_at)) ? new Date(Date.parse(a.captured_at)).toISOString() : null;
   const landing = typeof a.landing === 'string' && /^\/[A-Za-z0-9/_\-.~%]{0,198}$/.test(a.landing) ? a.landing : null;
-  return { gclid, gbraid, wbraid, captured_at: at, landing, consent: { ad_user_data: 'granted', ad_personalization: c.ad_personalization === 'granted' ? 'granted' : 'denied' } };
+  return { gclid, gbraid, wbraid, captured_at: at, landing, consent: { ad_user_data: 'granted', ad_personalization: c.ad_personalization === 'granted' ? 'granted' : 'denied' } };      // the site sends both as 'granted' (one advertising choice)
 }
