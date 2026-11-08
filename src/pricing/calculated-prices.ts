@@ -264,3 +264,9 @@ export const doorPriceBlock = (slug: string) =>
  */
 export type ShowerVariant = 'shower-hub';
 export const isShowerVariant = (variant: PriceVariant): variant is ShowerVariant => variant.startsWith('shower-');
+
+/**
+ * Owner-confirmed «від» price per 1 m², UAH (2026-11-08). Shown as a visible line in the price block and used as the
+ * Product/Offer price for these pages. Owner: installation is NOT included (text says «без монтажу»); delivery not stated, not claimed.
+ */
+export const OWNER_FROM_PER_M2_UAH = { railing: 7500, canopy: 9800, door: 9800, shower: 6900 } as const;

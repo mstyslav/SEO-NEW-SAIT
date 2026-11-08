@@ -4,12 +4,13 @@
  * glass railings, windows, glass doors, showers). Numbers come from src/pricing/calculated-prices.ts (the calculators' own
  * tariffs and formulas, working rate from src/pricing/currency.ts); only wording lives here. Uses the PriceBlock layout/styles (card + factors column).
  */
-import { systemPricePerM2, doorPrice, examplePrice, railingGuide, isRailingVariant, RAILING_PAGES, canopyGuide, isCanopyVariant, CANOPY_PAGES, windowMarket, isWindowVariant, isDoorVariant, DOOR_PAGES, isShowerVariant, type PriceVariant, type RailingVariant, type CanopyVariant, type WindowVariant, type DoorVariant, type ShowerVariant, type SystemKey, type DoorKind, type DoorSet } from '../../pricing/calculated-prices';
+import { systemPricePerM2, doorPrice, examplePrice, railingGuide, isRailingVariant, RAILING_PAGES, canopyGuide, isCanopyVariant, CANOPY_PAGES, windowMarket, isWindowVariant, isDoorVariant, DOOR_PAGES, isShowerVariant, OWNER_FROM_PER_M2_UAH, type PriceVariant, type RailingVariant, type CanopyVariant, type WindowVariant, type DoorVariant, type ShowerVariant, type SystemKey, type DoorKind, type DoorSet } from '../../pricing/calculated-prices';
 import { SYSTEMS as RAILING_SYSTEMS } from '../../data/railing-pricing';
 import { WINDOW_INSTALL_FROM_UAH_PER_M2, type Sash } from '../../pricing/window-pricing';
 import { DOOR_MARKET, type DoorType } from '../../pricing/door-pricing';
 import { SHOWER_TYPICAL, SHOWER_HUB_FROM_UAH, type ShowerTypicalKey } from '../../pricing/shower-pricing';
 import { localizedPath, type Locale } from '../../i18n/helpers';
+import { brandId, absoluteUrl, DEFAULT_IMAGE } from '../../seo/schema';
 // Styles: .price-block* in category-pages.css, which every page using this block already loads.
 
 interface Props { variant: PriceVariant; locale?: Locale }
@@ -64,7 +65,37 @@ const t = ru
   : { eyebrow: 'Вартість', kicker: 'Орієнтовна вартість від · за 1 м² з монтажем', example: 'Приклад розрахунку', cta: 'Розрахувати свій розмір', note: '*Орієнтовна вартість. Точна ціна залежить від комплектації та актуального курсу. Розрахуйте свій розмір у калькуляторі.', factorsTitle: 'Від чого залежить ціна' };
 
 type Block = { heading: string; kicker: string; rows: (readonly [string, string] | readonly [string, string, string])[]; doorsLine: string | null; notes?: string[]; noteLink?: [string, string, string]; ctaLabel?: string; exampleText?: string; examplePrice?: string; cta: string; note: string; factors: [string, string][] };
+// Product + Offer (UnitPriceSpecification, 1 m², UAH): price = the visible «від … грн/м²» figure, no availability/rating/review (not confirmed).
+// Owner decision 2026-11-08: also on the pages that were under measurement (R-010, R-012) - the measurement is confounded from this date.
+const makeProduct = (name: string, fromPriceUah: number): Record<string, unknown> | null => {
+  const path = Astro.url.pathname;
+  const origin = Astro.site ?? Astro.url.origin;
+  const url = absoluteUrl(path, origin);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    '@id': `${url}#product`,
+    name,
+    image: absoluteUrl(DEFAULT_IMAGE, origin),
+    brand: { '@id': brandId(origin) },
+    url,
+    offers: {
+      '@type': 'Offer',
+      url,
+      priceCurrency: 'UAH',
+      price: fromPriceUah,
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: fromPriceUah,
+        priceCurrency: 'UAH',
+        referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MTK' }
+      }
+    }
+  };
+};
 let block: Block;
+// Product JSON-LD: only on variants whose page shows a «від … грн/м²» price (partitions, frameless glazing, windows).
+let productLd: Record<string, unknown> | null = null;
 
 if (isRailingVariant(variant)) {
   // Glass railings: a per-metre guide for one stated size (the price per metre depends on length).
@@ -179,6 +210,7 @@ if (isRailingVariant(variant)) {
         ? [['Система', 'Класс тёплой системы, глубина профиля, теплоизоляция и взломостойкость.'], ['Габариты', 'Большие глухие поля дешевле за м², маленькие окна — дороже.'], ['Створки, вес и фурнитура', 'Большие и тяжёлые створки могут потребовать усиленной фурнитуры — это меняет цену.'], ['Стеклопакет', 'Трёхкамерный, акустический, солнцезащитный или противовзломный.'], ['Цвет', 'Двухцветная, структурная или «под дерево» покраска профиля.']]
         : [['Система', 'Клас теплої системи, глибина профілю, теплоізоляція й протизламність.'], ['Габарити', 'Великі глухі поля дешевші за м², малі вікна — дорожчі.'], ['Стулки, вага й фурнітура', 'Великі та важкі стулки можуть потребувати посиленої фурнітури — це змінює ціну.'], ['Склопакет', 'Трикамерний, акустичний, сонцезахисний чи протизламний.'], ['Колір', 'Двоколірне, структурне чи «під дерево» фарбування профілю.']])
   };
+  productLd = makeProduct(pvc ? P('Металопластикові вікна на замовлення', 'Металлопластиковые окна на заказ') : P('Алюмінієві вікна на замовлення', 'Алюминиевые окна на заказ'), market.perM2Uah[0]);
 } else if (isDoorVariant(variant)) {
   // Glass doors: market-orientation ranges for typical configurations (no calculator), product without installation and delivery.
   const range = ([lo, hi]: readonly [number, number]) => `≈ ${fmt(lo)}–${fmt(hi)} грн`;
@@ -257,8 +289,44 @@ if (isRailingVariant(variant)) {
     note: t.note,
     factors: v.factors
   };
+
+  // Product + Offer only where the page really shows a «від … грн/м²» price. Price = the lowest visible row
+  // (same function as the row), unit = 1 m², no availability/rating/review (not confirmed). Pages under
+  // measurement (R-010, R-012) are excluded: no on-page change until their check is done.
+  const PRODUCT_NAME: Record<keyof typeof V, [string, string]> = {
+    'partition-hub': ['Скляні перегородки на замовлення', 'Стеклянные перегородки на заказ'],
+    'partition-loft': ['Loft-перегородки зі скла на замовлення', 'Лофт-перегородки из стекла на заказ'],
+    'partition-frameless': ['Цільноскляні перегородки на замовлення', 'Цельностеклянные перегородки на заказ'],
+    'partition-office': ['Офісні скляні перегородки на замовлення', 'Офисные стеклянные перегородки на заказ'],
+    'partition-interior': ['Міжкімнатні скляні перегородки на замовлення', 'Межкомнатные стеклянные перегородки на заказ'],
+    'partition-doors': ['Скляні перегородки з дверима на замовлення', 'Стеклянные перегородки с дверьми на заказ'],
+    'glazing-hub': ['Безрамне скління на замовлення', 'Безрамное остекление на заказ'],
+    'glazing-folding': ['Поворотно-складне безрамне скління на замовлення', 'Поворотно-складное безрамное остекление на заказ'],
+    'glazing-sliding': ['Розсувне безрамне скління на замовлення', 'Раздвижное безрамное остекление на заказ'],
+    'glazing-terrace': ['Безрамне скління тераси на замовлення', 'Безрамное остекление террасы на заказ'],
+    'glazing-gazebo': ['Безрамне скління альтанки на замовлення', 'Безрамное остекление беседки на заказ'],
+    'glazing-balcony': ['Безрамне скління балкона на замовлення', 'Безрамное остекление балкона на заказ']
+  };
+  productLd = makeProduct(P(...PRODUCT_NAME[variant as keyof typeof V]), Math.min(...v.rows.map(([, key]) => systemPricePerM2(key))));
+}
+
+// Owner-confirmed «від … грн/м²» for railings, canopies, doors and showers: one visible line + the Product price (identical number).
+{
+  const kind = isRailingVariant(variant) ? 'railing' : isCanopyVariant(variant) ? 'canopy' : isDoorVariant(variant) ? 'door' : isShowerVariant(variant) ? 'shower' : null;
+  if (kind) {
+    const price = OWNER_FROM_PER_M2_UAH[kind];
+    const names = {
+      railing: P('Скляні огорожі та перила на замовлення', 'Стеклянные ограждения и перила на заказ'),
+      canopy: P('Скляні козирки на замовлення', 'Стеклянные козырьки на заказ'),
+      door: P('Скляні двері на замовлення', 'Стеклянные двери на заказ'),
+      shower: P('Скляні душові конструкції на замовлення', 'Стеклянные душевые конструкции на заказ')
+    };
+    block.notes = [P(`Орієнтовна ціна — ${from(price, true)}, без монтажу.`, `Ориентировочная цена — ${from(price, true)}, без монтажа.`), ...(block.notes ?? [])];
+    productLd = makeProduct(names[kind], price);
+  }
 }
 ---
+{productLd && <script type="application/ld+json" set:html={JSON.stringify(productLd)} />}
 <section id="price" class="price-block price-block--calc">
   <div class="price-block__card">
     <p class="eyebrow">{t.eyebrow}</p>

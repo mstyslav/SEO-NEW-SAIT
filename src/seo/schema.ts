@@ -188,9 +188,10 @@ export function jsonLdGraph(nodes: Array<JsonLdObject | null | undefined>): Json
 /** Office (branch) of the organization as shown on the contacts page: same business, one node per address. */
 export function officeSchema(
   origin: string | URL,
-  office: { id: string; city: string; streetAddress: string; url: string; countryCode?: string }
+  office: { id: string; city: string; streetAddress: string; url: string; countryCode?: string; mapUrl?: string }
 ): JsonLdObject {
   return {
+    ...(office.mapUrl ? { hasMap: office.mapUrl } : {}),
     '@type': 'HomeAndConstructionBusiness',
     '@id': `${absoluteUrl('/contacts/', origin)}#office-${office.id}`,
     name: `${SITE_NAME} — ${office.city}`,
@@ -209,8 +210,8 @@ export function officeSchema(
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '09:00',
-      closes: '19:00'
+      opens: '10:00',
+      closes: '18:00'
     }
   };
 }

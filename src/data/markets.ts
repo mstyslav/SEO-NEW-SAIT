@@ -33,6 +33,8 @@ export interface MarketOffice {
   street: MarketText;
   /** Google Maps query (route / open map buttons). */
   mapQuery: string;
+  /** Verified Google Business Profile / Maps place link (owner-confirmed). Absent = no verified profile yet. */
+  gbpUrl?: string;
   hours: string;
   /** City page of this office (unprefixed UA path). */
   page: string;
@@ -91,7 +93,7 @@ export interface Market {
 const COMPANY_PHONE: MarketPhone = { e164: '+380734251400', display: '+38 (073) 425 14 00' };
 const COMPANY_EMAIL = 'info@space-glass.com.ua';
 const COMPANY_TELEGRAM = 'https://t.me/spaceglass';
-const OFFICE_HOURS = 'Пн–Пт: 09:00–19:00';
+const OFFICE_HOURS = 'Пн–Пт: 10:00–18:00';
 
 export const MARKETS: Record<MarketCode, Market> = {
   UA: {
@@ -107,7 +109,7 @@ export const MARKETS: Record<MarketCode, Market> = {
     serviceArea: { uk: 'Вся Україна', ru: 'Вся Украина', en: 'All of Ukraine', de: 'Ganze Ukraine', es: 'Toda Ucrania' },
     // Addresses confirmed by the owner (contacts page since 2026-10); order = tab order on /contacts/.
     offices: [
-      { id: 'odesa', city: { uk: 'Одеса', ru: 'Одесса' }, street: { uk: 'вул. Глиняна, 5', ru: 'ул. Глиняная, 5' }, mapQuery: 'Одеса, вул. Глиняна, 5', hours: OFFICE_HOURS, page: '/city/odesa/' },
+      { id: 'odesa', city: { uk: 'Одеса', ru: 'Одесса' }, street: { uk: 'вул. Глиняна, 5', ru: 'ул. Глиняная, 5' }, mapQuery: 'Одеса, вул. Глиняна, 5', gbpUrl: 'https://maps.app.goo.gl/S3w2vf8rvyhseDXP8', hours: OFFICE_HOURS, page: '/city/odesa/' },
       { id: 'kyiv', city: { uk: 'Київ', ru: 'Киев' }, street: { uk: 'вул. Лауреатська, 8', ru: 'ул. Лауреатская, 8' }, mapQuery: 'Київ, вул. Лауреатська, 8', hours: OFFICE_HOURS, page: '/city/kyiv/' },
       { id: 'lviv', city: { uk: 'Львів', ru: 'Львов' }, street: { uk: 'вул. Кульпарківська, 144', ru: 'ул. Кульпарковская, 144' }, mapQuery: 'Львів, вул. Кульпарківська, 144', hours: OFFICE_HOURS, page: '/city/lviv/' }
     ],

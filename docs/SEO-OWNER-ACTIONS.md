@@ -62,3 +62,13 @@ Decided by owner 2026-11-03: supplier photos allowed (stored locally); retail pr
 
 ## 2026-11-05 — AI crawlers (R-075)
 Check in the Cloudflare dashboard (Security → Bots / AI Crawl Control) that GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot and ClaudeBot are NOT blocked: a Cloudflare block overrides robots.txt and would stop ChatGPT from seeing the site.
+
+## R-077 — Google Business Profile and local NAP
+Answered 2026-11-08: Odesa GBP exists (https://maps.app.goo.gl/S3w2vf8rvyhseDXP8); Kyiv and Lviv profiles are not created yet; hours 10:00-18:00 for all offices; one company phone; general Google reviews are shown on city pages.
+Open owner actions:
+1. Create and verify Google Business Profiles for Kyiv (вул. Лауреатська, 8) and Lviv (вул. Кульпарківська, 144), then send the profile links so they can be added to the site (field `gbpUrl` in src/data/markets.ts).
+2. Confirm the working days for 10:00-18:00 (the site assumes Mon-Fri).
+
+## Project data to verify (found while preparing R-078)
+- Project `sklyani-peregorodky-u-garderobnu-v-m-odesa` has city "Київ" but "odesa" in its slug: confirm the real city. It was not used on the Kyiv page.
+- Lviv has only one interior partition project (wardrobe) and three shower partitions. Real Lviv office/interior partition cases (R-031) would strengthen the page.
