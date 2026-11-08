@@ -65,8 +65,38 @@ const t = ru
   : { eyebrow: 'Вартість', kicker: 'Орієнтовна вартість від · за 1 м² з монтажем', example: 'Приклад розрахунку', cta: 'Розрахувати свій розмір', note: '*Орієнтовна вартість. Точна ціна залежить від комплектації та актуального курсу. Розрахуйте свій розмір у калькуляторі.', factorsTitle: 'Від чого залежить ціна' };
 
 type Block = { heading: string; kicker: string; rows: (readonly [string, string] | readonly [string, string, string])[]; doorsLine: string | null; notes?: string[]; noteLink?: [string, string, string]; ctaLabel?: string; exampleText?: string; examplePrice?: string; cta: string; note: string; factors: [string, string][] };
+// Product + Offer (UnitPriceSpecification, 1 m², UAH): price = the lowest visible «від … грн/м²» figure, no
+// availability/rating/review (not confirmed). Pages under measurement (R-010, R-012) are excluded: no on-page change until their check is done.
+const PROTECTED = [/^\/(ru\/)?sklyani-perehorodky\/(mizhkimnatni\/)?$/, /^\/ru\/bezramne-sklinnya\/sklinnya-teras-ta-altanok\/$/];
+const makeProduct = (name: string, fromPriceUah: number): Record<string, unknown> | null => {
+  const path = Astro.url.pathname;
+  if (PROTECTED.some((re) => re.test(path))) return null;
+  const origin = Astro.site ?? Astro.url.origin;
+  const url = absoluteUrl(path, origin);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    '@id': `${url}#product`,
+    name,
+    image: absoluteUrl(DEFAULT_IMAGE, origin),
+    brand: { '@id': brandId(origin) },
+    url,
+    offers: {
+      '@type': 'Offer',
+      url,
+      priceCurrency: 'UAH',
+      price: fromPriceUah,
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: fromPriceUah,
+        priceCurrency: 'UAH',
+        referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MTK' }
+      }
+    }
+  };
+};
 let block: Block;
-// Product JSON-LD (per-m² branch only): mirrors the visible «від … грн/м²» rows 1:1, see productLd below.
+// Product JSON-LD: only on variants whose page shows a «від … грн/м²» price (partitions, frameless glazing, windows).
 let productLd: Record<string, unknown> | null = null;
 
 if (isRailingVariant(variant)) {
@@ -182,6 +212,7 @@ if (isRailingVariant(variant)) {
         ? [['Система', 'Класс тёплой системы, глубина профиля, теплоизоляция и взломостойкость.'], ['Габариты', 'Большие глухие поля дешевле за м², маленькие окна — дороже.'], ['Створки, вес и фурнитура', 'Большие и тяжёлые створки могут потребовать усиленной фурнитуры — это меняет цену.'], ['Стеклопакет', 'Трёхкамерный, акустический, солнцезащитный или противовзломный.'], ['Цвет', 'Двухцветная, структурная или «под дерево» покраска профиля.']]
         : [['Система', 'Клас теплої системи, глибина профілю, теплоізоляція й протизламність.'], ['Габарити', 'Великі глухі поля дешевші за м², малі вікна — дорожчі.'], ['Стулки, вага й фурнітура', 'Великі та важкі стулки можуть потребувати посиленої фурнітури — це змінює ціну.'], ['Склопакет', 'Трикамерний, акустичний, сонцезахисний чи протизламний.'], ['Колір', 'Двоколірне, структурне чи «під дерево» фарбування профілю.']])
   };
+  productLd = makeProduct(pvc ? P('Металопластикові вікна на замовлення', 'Металлопластиковые окна на заказ') : P('Алюмінієві вікна на замовлення', 'Алюминиевые окна на заказ'), market.perM2Uah[0]);
 } else if (isDoorVariant(variant)) {
   // Glass doors: market-orientation ranges for typical configurations (no calculator), product without installation and delivery.
   const range = ([lo, hi]: readonly [number, number]) => `≈ ${fmt(lo)}–${fmt(hi)} грн`;
@@ -278,34 +309,7 @@ if (isRailingVariant(variant)) {
     'glazing-gazebo': ['Безрамне скління альтанки на замовлення', 'Безрамное остекление беседки на заказ'],
     'glazing-balcony': ['Безрамне скління балкона на замовлення', 'Безрамное остекление балкона на заказ']
   };
-  const PROTECTED = [/^\/(ru\/)?sklyani-perehorodky\/(mizhkimnatni\/)?$/, /^\/ru\/bezramne-sklinnya\/sklinnya-teras-ta-altanok\/$/];
-  const path = Astro.url.pathname;
-  if (!PROTECTED.some((re) => re.test(path))) {
-    const origin = Astro.site ?? Astro.url.origin;
-    const fromPrice = Math.min(...v.rows.map(([, key]) => systemPricePerM2(key)));
-    const url = absoluteUrl(path, origin);
-    productLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Product',
-      '@id': `${url}#product`,
-      name: P(...PRODUCT_NAME[variant as keyof typeof V]),
-      image: absoluteUrl(DEFAULT_IMAGE, origin),
-      brand: { '@id': brandId(origin) },
-      url,
-      offers: {
-        '@type': 'Offer',
-        url,
-        priceCurrency: 'UAH',
-        price: fromPrice,
-        priceSpecification: {
-          '@type': 'UnitPriceSpecification',
-          price: fromPrice,
-          priceCurrency: 'UAH',
-          referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MTK' }
-        }
-      }
-    };
-  }
+  productLd = makeProduct(P(...PRODUCT_NAME[variant as keyof typeof V]), Math.min(...v.rows.map(([, key]) => systemPricePerM2(key))));
 }
 ---
 {productLd && <script type="application/ld+json" set:html={JSON.stringify(productLd)} />}
