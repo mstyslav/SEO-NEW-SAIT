@@ -267,7 +267,7 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
         const res = await fetch('/api/cart-order', {
           method: 'POST', headers: { 'content-type': 'application/json', 'x-sg-form': '1' },
           body: JSON.stringify({
-            orderId: p.orderId, locale: cfg.locale, name: fd.get('name'), phone: fd.get('phone'), comment: fd.get('comment'), website: fd.get('website'), _js: 'sg-cart',
+            orderId: p.orderId, locale: cfg.locale, attribution: (window as unknown as { sgAdAttribution?: () => unknown }).sgAdAttribution?.() ?? undefined, name: fd.get('name'), phone: fd.get('phone'), comment: fd.get('comment'), website: fd.get('website'), _js: 'sg-cart',
             items: p.items.map((i) => ({ kind: i.kind ?? 'other', modelId: i.modelId, w: i.w, h: i.h, options: i.options, name: itemName(i), configuration: itemConfig(i).replace(/\n/g, '; '), price: unit(i), quantity: i.quantity, url: resolve(i).url ? location.origin + resolve(i).url : undefined }))
           })
         });
