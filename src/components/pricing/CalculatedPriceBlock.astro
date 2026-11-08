@@ -65,12 +65,10 @@ const t = ru
   : { eyebrow: 'Вартість', kicker: 'Орієнтовна вартість від · за 1 м² з монтажем', example: 'Приклад розрахунку', cta: 'Розрахувати свій розмір', note: '*Орієнтовна вартість. Точна ціна залежить від комплектації та актуального курсу. Розрахуйте свій розмір у калькуляторі.', factorsTitle: 'Від чого залежить ціна' };
 
 type Block = { heading: string; kicker: string; rows: (readonly [string, string] | readonly [string, string, string])[]; doorsLine: string | null; notes?: string[]; noteLink?: [string, string, string]; ctaLabel?: string; exampleText?: string; examplePrice?: string; cta: string; note: string; factors: [string, string][] };
-// Product + Offer (UnitPriceSpecification, 1 m², UAH): price = the lowest visible «від … грн/м²» figure, no
-// availability/rating/review (not confirmed). Pages under measurement (R-010, R-012) are excluded: no on-page change until their check is done.
-const PROTECTED = [/^\/(ru\/)?sklyani-perehorodky\/(mizhkimnatni\/)?$/, /^\/ru\/bezramne-sklinnya\/sklinnya-teras-ta-altanok\/$/];
+// Product + Offer (UnitPriceSpecification, 1 m², UAH): price = the visible «від … грн/м²» figure, no availability/rating/review (not confirmed).
+// Owner decision 2026-11-08: also on the pages that were under measurement (R-010, R-012) - the measurement is confounded from this date.
 const makeProduct = (name: string, fromPriceUah: number): Record<string, unknown> | null => {
   const path = Astro.url.pathname;
-  if (PROTECTED.some((re) => re.test(path))) return null;
   const origin = Astro.site ?? Astro.url.origin;
   const url = absoluteUrl(path, origin);
   return {
