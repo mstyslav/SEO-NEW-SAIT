@@ -354,3 +354,5 @@ The reports `task-64/` … `task-70/` (GSC/GA4 numbers, competitor tables, basel
 ## Known documentation gaps
 - No standalone TASK 66 report file was found; evidence is commit 9c1b1c1 and the TASK 65 report.
 - Weekly GSC history older than ~3 months is not available in the GSC UI; baselines are stored in the task folders.
+
+| R-076 | P1 | READY FOR OWNER REVIEW | 2026-11-08 | TASK 103: Odesa glass/LOFT partitions conversion. /city/odesa/ + /ru/city/odesa/ only: new 'partitions' block (5 verified Odesa project links, LOFT + all-partitions category links, LOFT configurator link) and inline request form (existing ProfileRequestForm -> data-lead-form -> /api/kommo-lead). Hub /sklyani-perehorodky/ and /mizhkimnatni/ NOT touched (R-012 protected); LOFT page already links the KSELENA Odesa project and the configurator. Title/H1/meta/canonical/hreflang/schema unchanged. Next: Owner review of PR; after deploy verify GA4 generate_lead on Odesa form and re-check GSC for Odesa partition queries in 4 weeks. |
