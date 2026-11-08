@@ -274,6 +274,18 @@ const clientCfg = { locale, ...S, doneP: undefined, unpricedNote: undefined };
         const r = await res.json().catch(() => ({}));
         if (res.ok && r.ok) {
           noteEl.value = ''; writeProject({ items: [], note: '' }); // the server confirmed: only now the cart is cleared (and the order id with it)
+          // GA4 / Google Ads conversion: one `generate_lead` per server-confirmed order (consent-gated like every site event; no name, phone or comment is sent).
+          // `transaction_id` = the order id, so a repeated send of the same order is not counted twice. A value is sent only when every line has a verified server price.
+          try {
+            if (!r.duplicate && window.sgAnalytics && window.sgAnalytics.enabled() && typeof window.gtag === 'function') {
+              const priced = Number(r.unpriced) === 0 && Number(r.subtotal_uah) > 0;
+              window.gtag('event', 'generate_lead', {
+                form_id: 'cart', form_location: 'cart', lead_type: 'cart_order', lead_id: r.order_ref || undefined, transaction_id: r.order_id || p.orderId,
+                items_count: p.items.length, page_path: location.pathname, page_language: ru ? 'ru' : 'ua',
+                ...(priced ? { currency: 'UAH', value: Number(r.subtotal_uah) } : {})
+              });
+            }
+          } catch { /* analytics must never block an order */ }
           $('[data-cart-main]').hidden = true;
           $('[data-cart-done]').hidden = false;
           const complete = Number(r.unpriced) === 0 && p.items.every((i) => i.kind === 'led-mirror');
