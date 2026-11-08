@@ -16,88 +16,93 @@ const t = {
   uk: {
     aria: 'Налаштування cookies',
     title: 'Ваші налаштування приватності',
-    text: 'Необхідні cookies потрібні для роботи сайту. Аналітичні та рекламні cookies вмикаються лише за вашою окремою згодою, яку можна змінити або відкликати в будь-який момент.',
+    text: 'Ми використовуємо необхідні cookies та, лише за вашою згодою, аналітику й рекламні cookies. Згоди незалежні, їх можна обрати окремо.',
     more: 'Докладніше',
     policy: '/cookies-policy/',
     analyticsTitle: 'Аналітичні cookies',
     analyticsText: 'допомагають зрозуміти, як використовується сайт (Google Analytics).',
     adsTitle: 'Рекламні cookies',
     adsText: 'зберігають ідентифікатор рекламного кліку Google Ads, щоб оцінити ефективність реклами та передати оплачене замовлення в Google Ads. Без цієї згоди ідентифікатори не зберігаються.',
-    reject: 'Відхилити все',
+    reject: 'Лише необхідні',
     save: 'Зберегти вибір',
-    accept: 'Прийняти все'
+    settings: 'Налаштувати',
+    accept: 'Прийняти'
   },
   ru: {
     aria: 'Настройки cookies',
     title: 'Ваши настройки приватности',
-    text: 'Необходимые cookies нужны для работы сайта. Аналитические и рекламные cookies включаются только по вашему отдельному согласию, которое можно изменить или отозвать в любой момент.',
+    text: 'Мы используем необходимые cookies и, только с вашего согласия, аналитику и рекламные cookies. Согласия независимы, их можно выбрать отдельно.',
     more: 'Подробнее',
     policy: '/ru/cookies-policy/',
     analyticsTitle: 'Аналитические cookies',
     analyticsText: 'помогают понять, как используется сайт (Google Analytics).',
     adsTitle: 'Рекламные cookies',
     adsText: 'сохраняют идентификатор рекламного клика Google Ads, чтобы оценить эффективность рекламы и передать оплаченный заказ в Google Ads. Без этого согласия идентификаторы не сохраняются.',
-    reject: 'Отклонить все',
+    reject: 'Только необходимые',
     save: 'Сохранить выбор',
-    accept: 'Принять все'
+    settings: 'Настроить',
+    accept: 'Принять'
   },
   en: {
     aria: 'Cookie settings',
     title: 'Your privacy settings',
-    text: 'Necessary cookies keep the website working. Analytics and advertising cookies are switched on only with your separate consent, which you can change or withdraw at any time.',
+    text: 'We use necessary cookies and, only with your consent, analytics and advertising cookies. The consents are independent: you can choose them separately.',
     more: 'Learn more',
     policy: intlHref('cookies', 'en'),
     analyticsTitle: 'Analytics cookies',
     analyticsText: 'help us understand how the website is used (Google Analytics).',
     adsTitle: 'Advertising cookies',
     adsText: 'store the Google Ads click identifier so that we can measure advertising and report a paid order to Google Ads. Without this consent no identifier is stored.',
-    reject: 'Reject all',
+    reject: 'Necessary only',
     save: 'Save my choice',
-    accept: 'Accept all'
+    settings: 'Customize',
+    accept: 'Accept'
   },
   de: {
     aria: 'Cookie-Einstellungen',
     title: 'Ihre Datenschutzeinstellungen',
-    text: 'Notwendige Cookies sorgen für den Betrieb der Website. Analyse- und Werbe-Cookies werden nur mit Ihrer jeweils separaten Einwilligung aktiviert, die Sie jederzeit ändern oder widerrufen können.',
+    text: 'Wir verwenden notwendige Cookies und – nur mit Ihrer Einwilligung – Analyse- und Werbe-Cookies. Die Einwilligungen sind unabhängig und können getrennt gewählt werden.',
     more: 'Mehr erfahren',
     policy: intlHref('cookies', 'de'),
     analyticsTitle: 'Analyse-Cookies',
     analyticsText: 'helfen uns zu verstehen, wie die Website genutzt wird (Google Analytics).',
     adsTitle: 'Werbe-Cookies',
     adsText: 'speichern die Google-Ads-Klick-ID, damit wir Werbung messen und eine bezahlte Bestellung an Google Ads melden können. Ohne diese Einwilligung wird keine Kennung gespeichert.',
-    reject: 'Alle ablehnen',
+    reject: 'Nur notwendige',
     save: 'Auswahl speichern',
-    accept: 'Alle akzeptieren'
+    settings: 'Anpassen',
+    accept: 'Akzeptieren'
   },
   es: {
     aria: 'Configuración de cookies',
     title: 'Su configuración de privacidad',
-    text: 'Las cookies necesarias mantienen el sitio web en funcionamiento. Las cookies de analítica y de publicidad solo se activan con su consentimiento por separado, que puede cambiar o retirar en cualquier momento.',
+    text: 'Usamos cookies necesarias y, solo con su consentimiento, cookies de analítica y de publicidad. Los consentimientos son independientes: puede elegirlos por separado.',
     more: 'Política de cookies',
     policy: intlHref('cookies', 'es'),
     analyticsTitle: 'Cookies de analítica',
     analyticsText: 'nos ayudan a entender cómo se usa el sitio web (Google Analytics).',
     adsTitle: 'Cookies de publicidad',
     adsText: 'guardan el identificador de clic de Google Ads para medir la publicidad e informar de un pedido pagado a Google Ads. Sin este consentimiento no se guarda ningún identificador.',
-    reject: 'Rechazar todo',
+    reject: 'Solo necesarias',
     save: 'Guardar mi elección',
-    accept: 'Aceptar todo'
+    settings: 'Personalizar',
+    accept: 'Aceptar'
   }
 }[locale];
 ---
 <aside class="cookie-consent" data-cookie-consent hidden role="dialog" aria-modal="false" aria-label={t.aria}>
   <div class="cookie-consent__text">
     <strong>{t.title}</strong>
-    <p>{t.text} <a href={t.policy}>{t.more}</a></p>
-    <div class="cookie-consent__opts">
+    <p>{t.text} <a href={t.policy}>{t.more}</a> · <button type="button" class="cookie-consent__more" data-cookie-more aria-expanded="false">{t.settings}</button></p>
+    <div class="cookie-consent__opts" data-cookie-opts hidden>
       <label class="cookie-consent__opt"><input type="checkbox" data-cc-analytics /><span><b>{t.analyticsTitle}</b> {t.analyticsText}</span></label>
       <label class="cookie-consent__opt"><input type="checkbox" data-cc-ads /><span><b>{t.adsTitle}</b> {t.adsText}</span></label>
     </div>
   </div>
   <div class="cookie-consent__actions">
     <button type="button" class="button button--outline" data-cookie-reject>{t.reject}</button>
-    <button type="button" class="button button--outline" data-cookie-save>{t.save}</button>
-    <button type="button" class="button button--outline" data-cookie-accept>{t.accept}</button>
+    <button type="button" class="button button--outline" data-cookie-save hidden>{t.save}</button>
+    <button type="button" class="button button--mint" data-cookie-accept>{t.accept}</button>
   </div>
 </aside>
 <script is:inline>
@@ -109,14 +114,23 @@ const t = {
     const write = (k, v) => { try { localStorage.setItem(k, v); } catch {} };
     const cbAn = box.querySelector('[data-cc-analytics]'), cbAd = box.querySelector('[data-cc-ads]');
     // The checkboxes always show the CURRENT decision; nothing is pre-ticked for a visitor who has not decided yet.
-    const open = () => {
+    const opts = box.querySelector('[data-cookie-opts]'), moreBtn = box.querySelector('[data-cookie-more]'), saveBtn = box.querySelector('[data-cookie-save]');
+    // The compact view (text + «Лише необхідні» / «Прийняти») is what a new visitor sees; «Налаштувати» (and the footer button, for a
+    // visitor who already decided) expands the two independent choices with «Зберегти вибір».
+    const expand = (on) => {
+      if (opts) opts.hidden = !on;
+      if (saveBtn) saveBtn.hidden = !on;
+      if (moreBtn) moreBtn.setAttribute('aria-expanded', on ? 'true' : 'false');
+    };
+    const open = (expanded) => {
       if (cbAn) cbAn.checked = read(AN) === 'all';
       if (cbAd) cbAd.checked = read(AD) === 'granted';
+      expand(!!expanded);
       box.hidden = false;
     };
     // First visit, or a returning visitor who decided before the advertising choice existed: ask (again).
     const known = (v, a, b) => v === a || v === b;
-    if (!known(read(AN), 'all', 'necessary') || !known(read(AD), 'granted', 'denied')) open();
+    if (!known(read(AN), 'all', 'necessary') || !known(read(AD), 'granted', 'denied')) open(false);
     // The two choices are applied independently: analytics is handled as before, advertising never needs analytics.
     const apply = (analytics, ads) => {
       const a = window.sgAnalytics;
@@ -137,10 +151,11 @@ const t = {
     document.addEventListener('click', (e) => {
       const opener = e.target instanceof Element ? e.target.closest('[data-cookie-settings]') : null;
       if (!opener) return;
-      open();
+      open(true);      // a visitor who comes back to change or withdraw a decision sees the current choices at once
       box.setAttribute('tabindex', '-1');
       box.focus({ preventScroll: true });
     });
+    moreBtn?.addEventListener('click', () => expand(!!opts && opts.hidden));
     box.querySelector('[data-cookie-accept]')?.addEventListener('click', () => apply(true, true));
     box.querySelector('[data-cookie-reject]')?.addEventListener('click', () => apply(false, false));
     box.querySelector('[data-cookie-save]')?.addEventListener('click', () => apply(!!(cbAn && cbAn.checked), !!(cbAd && cbAd.checked)));
@@ -152,7 +167,9 @@ const t = {
   .cookie-consent strong{display:block;margin-bottom:2px;font-size:15px}
   .cookie-consent p{margin:0;color:#56625c}
   .cookie-consent a{color:#176b55}
+  .cookie-consent__more{display:inline;padding:0;border:0;background:none;color:#176b55;font:inherit;text-decoration:underline;cursor:pointer}
   .cookie-consent__opts{display:grid;gap:8px;margin-top:10px}
+  .cookie-consent__opts[hidden],.cookie-consent__actions [hidden]{display:none}
   .cookie-consent__opt{display:flex;gap:10px;align-items:flex-start;color:#2c3a33;cursor:pointer}
   .cookie-consent__opt input{flex:0 0 18px;width:18px;height:18px;margin:2px 0 0;accent-color:#176b55}
   .cookie-consent__opt b{font-weight:600}
