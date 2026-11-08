@@ -54,9 +54,9 @@ Statuses: DONE · READY · IN PROGRESS · WAITING FOR DATA · WAITING FOR OWNER 
 | R-005 | P1 | DONE | 2026-10-24 | Aluminium doors UA/RU title+description aligned to head queries; 2 contextual links (vitrine glazing -> doors) (TASK 70) |
 | R-006 | P1 | DONE | 2026-10-24 | Shower trays: research (TASK 64/65) and implementation (TASK 66): URL unchanged, catalog direction, mega-menu H2s remove |
 | R-007 | P2 | DONE | 2026-10-24 | Earlier completed milestones (verified in git): domain switch to Astro 2026-09-27; RU parity and redirects; knowledge re |
-| R-010 | P1 | SCHEDULED | 2026-11-07 | TASK 69 follow-up: RU terrace glazing, RU glass stair railings, RU aluminium pergolas |
+| R-010 | P1 | SCHEDULED | 2026-11-07 | TASK 69 follow-up: RU terrace glazing, RU glass stair railings, RU aluminium pergolas | NOTE 2026-11-08: Product + Offer JSON-LD (R-080) live on these pages by owner decision; measurements continue to 2026-12-05 but read them with this change as a confounder. |
 | R-011 | P1 | SCHEDULED | 2026-11-07 | TASK 70 follow-up: aluminium doors UA/RU |
-| R-012 | P1 | SCHEDULED | 2026-11-05 | Glass partitions reassessment (hub + interior sub-pages, UA/RU) |
+| R-012 | P1 | SCHEDULED | 2026-11-05 | Glass partitions reassessment (hub + interior sub-pages, UA/RU) | NOTE 2026-11-08: Product + Offer JSON-LD (R-080) live on these pages by owner decision; measurements continue to 2026-12-05 but read them with this change as a confounder. |
 | R-014 | P2 | SCHEDULED | 2026-11-21 | Shower trays review 4-6 weeks after TASK 66: category impressions, commercial keywords, CTR, positions, internal-linking |
 | R-016 | P1 | SCHEDULED | 2026-11-03 | Ahrefs audit: Space Glass vs SCLASS |
 | R-019 | P2 | WAITING FOR DATA | 2026-11-21 | GA4 contact events review on real visitors: contact_method, phone/email/Telegram/WhatsApp clicks, generate_lead |
