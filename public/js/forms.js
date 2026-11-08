@@ -129,6 +129,42 @@ const attributionFields=()=>{
 window.addEventListener('sg-consent-change',event=>{ const c=event&&event.detail&&event.detail.choice; if(c==='all') captureAttribution(); else clearAttribution(); });
 window.addEventListener('storage',event=>{ if(event.key===null||event.key==='sg-cookie-consent'){ if(attrConsent()) captureAttribution(); else clearAttribution(); } });
 // </sg-attribution>
+// <sg-ad-click>
+// Advertising click ids (gclid / gbraid / wbraid) for the CRM's «paid order» offline conversion in Google Ads.
+// They are captured, stored and sent ONLY after the visitor's separate ADVERTISING choice «Рекламні cookies» (localStorage
+// sg-ad-consent === 'granted', set by CookieConsent.astro). Analytics consent (sg-cookie-consent === 'all') is NOT enough and
+// advertising consent does not need analytics. Without it nothing is stored and nothing is sent with an order. The id is kept for
+// at most 90 days (the Google Ads limit for an offline conversion) and is removed at once when the choice is withdrawn.
+// The advertising choice covers ad_user_data AND ad_personalization together (one purpose in the banner).
+const AD_CLICK_KEY='sg-ad-click';
+const AD_CLICK_RE=/^[A-Za-z0-9_-]{10,512}$/;
+const adConsent=()=>{ try{ return localStorage.getItem('sg-ad-consent')==='granted'; }catch{ return false; } };
+const clearAdClick=()=>{ try{ localStorage.removeItem(AD_CLICK_KEY); }catch{} };
+const readAdClick=()=>{
+  if(!adConsent()){ clearAdClick(); return null; }
+  try{ const v=JSON.parse(localStorage.getItem(AD_CLICK_KEY)||'null'); if(v&&typeof v==='object'&&Date.now()-Number(v.t)<90*864e5) return v; }catch{}
+  clearAdClick(); return null;
+};
+const captureAdClick=()=>{
+  if(!adConsent()){ clearAdClick(); return null; }
+  let q; try{ q=new URLSearchParams(location.search); }catch{ return readAdClick(); }
+  const ids={}; ['gclid','gbraid','wbraid'].forEach(k=>{ const v=q.get(k); if(v&&AD_CLICK_RE.test(v)) ids[k]=v; });
+  if(!Object.keys(ids).length) return readAdClick();
+  const rec={...ids,t:Date.now(),landing:location.pathname};      // the latest click replaces the stored one
+  try{ localStorage.setItem(AD_CLICK_KEY,JSON.stringify(rec)); }catch{}
+  return rec;
+};
+// Read by the cart when an order is sent: null without advertising consent or without a click.
+window.sgAdAttribution=()=>{
+  const r=captureAdClick()||readAdClick(); if(!r) return null;
+  return {gclid:r.gclid||null,gbraid:r.gbraid||null,wbraid:r.wbraid||null,captured_at:new Date(Number(r.t)).toISOString(),landing:r.landing||null,consent:{ad_user_data:'granted',ad_personalization:'granted'}};
+};
+captureAdClick();
+window.addEventListener('storage',event=>{ if(event.key===null||event.key==='sg-ad-consent'){ if(adConsent()) captureAdClick(); else clearAdClick(); } });
+// The banner announces the decision in this tab: accepting on the landing page captures the click id of the current URL at once;
+// withdrawing (or rejecting) removes the stored id immediately. Nothing was stored before the decision.
+window.addEventListener('sg-ad-consent-change',event=>{ const g=event&&event.detail&&event.detail.granted; if(g&&adConsent()) captureAdClick(); else clearAdClick(); });
+// </sg-ad-click>
 const FORM_TYPES=[['contacts-form','contacts','contacts_page'],['profile-request__form','profile_request','page_bottom'],['project-request-form__form','project_request','project_page'],['quote-form--home-final','home_quote','home_final'],['tray-order__form','tray_order','tray_configurator'],['rc__request','configurator_request','configurator'],['career__form','job_application','about_career']];
 const formInfo=form=>{const hit=FORM_TYPES.find(([cls])=>form.classList.contains(cls));return{form_id:form.dataset.formId||(hit?hit[1]:'lead_form'),form_location:form.dataset.formLocation||(hit?hit[2]:'content')};};
 const productCategory=form=>{const field=form.querySelector('input[type="hidden"][name="product"], select[name="product"]');const v=field&&String(field.value||'').trim();return v?v.slice(0,100):undefined;};

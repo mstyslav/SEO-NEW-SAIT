@@ -26,6 +26,8 @@
     "test:indexnow": "node scripts/test-indexnow-auto.mjs",
     "test:led-mirrors": "node scripts/test-led-mirror-price.mjs",
     "test:cart": "node scripts/test-cart-order.mjs",
+    "test:ad-attribution": "node scripts/test-ad-attribution.mjs",
+    "test:cookie-consent": "node scripts/test-cookie-consent.mjs",
     "test:cart-safety": "node scripts/test-cart-safety.mjs",
     "test:shop-catalog": "node scripts/test-shop-catalog.mjs",
     "test:led-secret": "node scripts/test-led-prices-secret.mjs",

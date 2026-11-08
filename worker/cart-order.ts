@@ -17,6 +17,7 @@
 import type { LedConfig, PriceResult } from './led-mirrors';
 import { normalizeItemUrl } from '../src/lib/cart-safe.mjs';
 import { chosenOptions } from '../src/lib/cart-describe.mjs';
+import { cleanAdAttribution } from './ad-attribution';
 
 type Json = (body: unknown, status?: number) => Response;
 export type CartDeps = {
@@ -98,6 +99,7 @@ export async function handleCartOrder(request: Request, env: unknown, d: CartDep
 
   if (await d.rateLimited(request)) return json({ ok: false, error: 'too_many_requests' }, 429);
 
+  const ad = cleanAdAttribution(body.attribution);
   const known = lines.filter((l) => l.total !== null);
   const subtotal = known.reduce((a, l) => a + (l.total as number), 0);
   const unpriced = lines.length - known.length;
@@ -108,7 +110,9 @@ export async function handleCartOrder(request: Request, env: unknown, d: CartDep
       kind: l.kind, product_id: l.model_id ?? null, name: l.name, url: l.url || null, width_mm: l.w ?? null, height_mm: l.h ?? null, options: l.options ?? {},
       quantity: l.qty, unit_price_uah: l.unit, price_status: l.unit === null ? 'on_request' : l.verified ? 'verified' : 'estimate'
     })),
-    totals: { currency: 'UAH', subtotal_uah: subtotal, unpriced_items: unpriced, complete: unpriced === 0 }
+    totals: { currency: 'UAH', subtotal_uah: subtotal, unpriced_items: unpriced, complete: unpriced === 0 },
+    // Google Ads click ids for the CRM's «paid order» conversion: present only with the visitor's advertising consent (re-checked here)
+    ...(ad ? { attribution: ad } : {})
   };
   const result = { ok: true, order_id: orderId, items: lines.length, subtotal_uah: subtotal, unpriced };
   if (d.dryRun) {

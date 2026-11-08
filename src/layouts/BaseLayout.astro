@@ -187,17 +187,24 @@ import ScrollProgress from '../components/ScrollProgress.astro';
       // GA4 is loaded ONLY after the visitor accepts analytics in the cookie banner (components/CookieConsent.astro):
       // before that no gtag.js, no Google request, no _ga cookie. Withdrawal removes the first-party _ga cookies and,
       // when the tag was already running, reloads the page once (see CookieConsent) so the tag is gone.
+      // Consent Mode v2 ("basic" mode: no Google tag runs before consent): when the tag starts, its default state is the
+      // visitor's ACTUAL, independent choices: analytics_storage from the analytics choice, and ad_storage / ad_user_data /
+      // ad_personalization from the separate advertising choice (sg-ad-consent). A later change is sent with consent 'update'.
+      // Withdrawing the advertising choice also removes the Google Ads cookies this site can see (_gcl_*, _gac_*).
       (function () {
         var KEY = 'sg-cookie-consent';
         var loaded = false;
         function consent() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+        function adsGranted() { try { return localStorage.getItem('sg-ad-consent') === 'granted'; } catch (e) { return false; } }
+        function adState(g) { var v = g ? 'granted' : 'denied'; return { ad_storage: v, ad_user_data: v, ad_personalization: v }; }
         function enabled() { return loaded && consent() === 'all'; }
         function load() {
           if (loaded || consent() !== 'all') return;
           loaded = true;
           window.dataLayer = window.dataLayer || [];
           window.gtag = function () { window.dataLayer.push(arguments); };
-          window.gtag('consent', 'default', { analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+          var def = adState(adsGranted()); def.analytics_storage = 'granted';
+          window.gtag('consent', 'default', def);
           window.gtag('js', new Date());
           window.gtag('config', gaId);
           var s = document.createElement('script');
@@ -217,8 +224,26 @@ import ScrollProgress from '../components/ScrollProgress.astro';
             });
           } catch (e) {}
         }
-        window.sgAnalytics = { load: load, enabled: enabled, clearCookies: clearCookies, wasLoaded: function () { return loaded; }, disable: function () { window['ga-disable-' + gaId] = true; } };
+        // Removes the Google Ads first-party cookies (_gcl_aw, _gcl_au, _gac_<id>, …) for the host and its parent domains.
+        function clearAdCookies() {
+          try {
+            var host = location.hostname.split('.'), domains = [''];
+            for (var i = 0; i < host.length - 1; i++) domains.push('; domain=' + host.slice(i).join('.'), '; domain=.' + host.slice(i).join('.'));
+            document.cookie.split(';').forEach(function (c) {
+              var name = c.split('=')[0].trim();
+              if (!/^(_gcl_[A-Za-z0-9]+|_gac_[A-Za-z0-9_]+|FPAU|FPGCLAW)$/.test(name)) return;
+              domains.forEach(function (d) { document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + d; });
+            });
+          } catch (e) {}
+        }
+        // Called by the banner after every decision: Consent Mode update when the tag is running; cookie cleanup on withdrawal.
+        function setAds(g) {
+          if (loaded && typeof window.gtag === 'function') window.gtag('consent', 'update', adState(!!g));
+          if (!g) clearAdCookies();
+        }
+        window.sgAnalytics = { setAds: setAds, load: load, enabled: enabled, clearCookies: clearCookies, wasLoaded: function () { return loaded; }, disable: function () { window['ga-disable-' + gaId] = true; } };
         if (consent() === 'all') load(); else clearCookies();
+        if (!adsGranted()) clearAdCookies();
       })();
     </script>
     <meta name="viewport" content="width=device-width" />
@@ -282,7 +307,7 @@ import ScrollProgress from '../components/ScrollProgress.astro';
     </script>
     <CookieConsent locale={resolvedLocale} />
     <script src="/js/i18n-client.js?v=langs-20261016" defer></script>
-    <script src="/js/forms.js?v=contact-method-20261024" defer></script>
+    <script src="/js/forms.js?v=ad-consent-20261108" defer></script>
       <ScrollProgress />
   </body>
 </html>
