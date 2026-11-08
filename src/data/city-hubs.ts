@@ -103,6 +103,25 @@ export interface CityHub {
     gridAriaLabel: string;
   };
 
+  /** Optional: verified local partition projects + category/configurator links (Odesa only, TASK 103). */
+  partitions?: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    projects: CityHubLink[];
+    categoryLinks: CityHubLink[];
+    configurator: CityHubLink;
+  };
+
+  /** Optional inline request form (reuses ProfileRequestForm → data-lead-form → /api/kommo-lead). */
+  requestForm?: {
+    title: string;
+    text: string;
+    options: string[];
+    optionsLabel: string;
+    commentPlaceholder: string;
+  };
+
   processSection: { eyebrow: string; title: string; steps: [string, string][] };
 
   geography: {
@@ -548,6 +567,32 @@ const odesaUk: CityHub = {
     viewAllHref: '/project/',
     emptyText: 'Проєкти для цього міста готуються до публікації.',
     gridAriaLabel: 'Реалізовані проєкти в Одесі'
+  },
+
+  partitions: {
+    eyebrow: 'Перегородки',
+    title: 'Скляні та Loft-перегородки в Одесі',
+    intro: 'Реалізовані в Одесі перегородки різних типів — приклади перед тим, як надсилати власні розміри.',
+    projects: [
+      { label: 'Loft-перегородки для салону краси', href: '/project/sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2/' },
+      { label: 'Скляні офісні перегородки з дверима', href: '/project/sklyani-peregorodky-dlya-ofisu-v-m-odesa/' },
+      { label: 'Офісна перегородка з білим матовим заповненням', href: '/project/office-glass-partition-white-odesa/' },
+      { label: 'Розсувна перегородка в кухню квартири', href: '/project/kitchen-glass-partition-apartment-odesa/' },
+      { label: 'Зонуюча перегородка для клініки ZDRAVA', href: '/project/rozdilennya-zony-pryjomu-kliyenta-mizh-pidgotovchoyu-zonoyu-v-kliniczi-zdrava/' }
+    ],
+    categoryLinks: [
+      { label: 'Loft-перегородки: системи та варіанти', href: '/sklyani-perehorodky/loft-sklyani-peregorodku/' },
+      { label: 'Усі скляні перегородки', href: '/sklyani-perehorodky/' }
+    ],
+    configurator: { label: 'Орієнтовний розрахунок Loft-перегородки в конфігураторі →', href: '/loft-configurator/' }
+  },
+
+  requestForm: {
+    title: 'Заявка на розрахунок в Одесі',
+    text: 'Вкажіть тип конструкції, місто та орієнтовні розміри — підготуємо попередній розрахунок і узгодимо замір.',
+    options: ['Loft-перегородки', 'Офісні перегородки', 'Міжкімнатні перегородки', 'Розсувні перегородки', 'Душові кабіни', 'Огорожі', 'Дзеркала', 'Вітрини та фасади', 'Інше'],
+    optionsLabel: 'Що потрібно',
+    commentPlaceholder: 'Приміщення, розміри, тип скла, адреса в Одесі чи області'
   },
 
   processSection: {
@@ -1166,6 +1211,32 @@ const odesaRu: CityHub = {
     viewAllHref: '/project/',
     emptyText: 'Проекты для этого города готовятся к публикации.',
     gridAriaLabel: 'Реализованные проекты в Одессе'
+  },
+
+  partitions: {
+    eyebrow: 'Перегородки',
+    title: 'Стеклянные и Loft-перегородки в Одессе',
+    intro: 'Реализованные в Одессе перегородки разных типов — примеры перед тем, как присылать свои размеры.',
+    projects: [
+      { label: 'Loft-перегородки для салона красоты', href: '/project/sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2/' },
+      { label: 'Стеклянные офисные перегородки с дверями', href: '/project/sklyani-peregorodky-dlya-ofisu-v-m-odesa/' },
+      { label: 'Офисная перегородка с белым матовым заполнением', href: '/project/office-glass-partition-white-odesa/' },
+      { label: 'Раздвижная перегородка на кухню в квартире', href: '/project/kitchen-glass-partition-apartment-odesa/' },
+      { label: 'Зонирующая перегородка для клиники ZDRAVA', href: '/project/rozdilennya-zony-pryjomu-kliyenta-mizh-pidgotovchoyu-zonoyu-v-kliniczi-zdrava/' }
+    ],
+    categoryLinks: [
+      { label: 'Loft-перегородки: системы и варианты', href: '/sklyani-perehorodky/loft-sklyani-peregorodku/' },
+      { label: 'Все стеклянные перегородки', href: '/sklyani-perehorodky/' }
+    ],
+    configurator: { label: 'Ориентировочный расчёт Loft-перегородки в конфигураторе →', href: '/loft-configurator/' }
+  },
+
+  requestForm: {
+    title: 'Заявка на расчёт в Одессе',
+    text: 'Укажите тип конструкции, город и ориентировочные размеры — подготовим предварительный расчёт и согласуем замер.',
+    options: ['Loft-перегородки', 'Офисные перегородки', 'Межкомнатные перегородки', 'Раздвижные перегородки', 'Душевые кабины', 'Ограждения', 'Зеркала', 'Витрины и фасады', 'Другое'],
+    optionsLabel: 'Что нужно',
+    commentPlaceholder: 'Помещение, размеры, тип стекла, адрес в Одессе или области'
   },
 
   processSection: {

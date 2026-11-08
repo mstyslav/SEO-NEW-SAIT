@@ -19,6 +19,7 @@ import Footer from '../Footer.astro';
 import TrustBar from '../TrustBar.astro';
 import FAQBlock from '../FAQBlock.astro';
 import ProjectCard from '../projects/ProjectCard.astro';
+import ProfileRequestForm from '../profile/ProfileRequestForm.astro';
 import { getCollection } from 'astro:content';
 import { getCityHub, type CityHubLocale } from '../../data/city-hubs';
 import { homeContent } from '../../content/i18n/pages/home';
@@ -261,6 +262,23 @@ const structuredData: JsonLdObject[] = [
           )}
         </section>
 
+        {hub.partitions && (
+          <section class="city-hub__section city-hub__partitions" aria-labelledby="city-partitions-title">
+            <div class="city-hub__head">
+              <p class="eyebrow">{hub.partitions.eyebrow}</p>
+              <h2 id="city-partitions-title">{hub.partitions.title}</h2>
+              <p>{hub.partitions.intro}</p>
+            </div>
+            <p class="city-hub__featured">
+              {hub.partitions.projects.map((link) => <a href={localizeHref(link.href)}>{link.label}</a>)}
+            </p>
+            <p class="city-hub__featured">
+              {hub.partitions.categoryLinks.map((link) => <a href={localizeHref(link.href)}>{link.label}</a>)}
+            </p>
+            <a class="city-hub__link" href={localizeHref(hub.partitions.configurator.href)}>{hub.partitions.configurator.label}</a>
+          </section>
+        )}
+
         <section class="city-hub__section city-hub__process" aria-labelledby="city-process-title">
           <div class="city-hub__head">
             <p class="eyebrow">{hub.processSection.eyebrow}</p>
@@ -356,6 +374,20 @@ const structuredData: JsonLdObject[] = [
             <a class="city-hub__contact-office" href={localizeHref(hub.contact.officesHref)}>{hub.contact.officesLabel}</a>
           </div>
         </section>
+
+        {hub.requestForm && (
+          <ProfileRequestForm
+            id="request"
+            page={lp(`/city/${hub.slug}/`)}
+            locale={locale}
+            product={hub.requestForm.title}
+            title={hub.requestForm.title}
+            text={hub.requestForm.text}
+            options={hub.requestForm.options}
+            optionsLabel={hub.requestForm.optionsLabel}
+            commentPlaceholder={hub.requestForm.commentPlaceholder}
+          />
+        )}
 
         <section class="city-hub__section city-hub__faq">
           <FAQBlock title={hub.faq.title} intro={hub.faq.intro} items={hub.faq.items} visibleCount={6} variant="compact" locale={locale} />
