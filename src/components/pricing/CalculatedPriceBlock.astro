@@ -4,7 +4,7 @@
  * glass railings, windows, glass doors, showers). Numbers come from src/pricing/calculated-prices.ts (the calculators' own
  * tariffs and formulas, working rate from src/pricing/currency.ts); only wording lives here. Uses the PriceBlock layout/styles (card + factors column).
  */
-import { systemPricePerM2, doorPrice, examplePrice, railingGuide, isRailingVariant, RAILING_PAGES, canopyGuide, isCanopyVariant, CANOPY_PAGES, windowMarket, isWindowVariant, isDoorVariant, DOOR_PAGES, isShowerVariant, type PriceVariant, type RailingVariant, type CanopyVariant, type WindowVariant, type DoorVariant, type ShowerVariant, type SystemKey, type DoorKind, type DoorSet } from '../../pricing/calculated-prices';
+import { systemPricePerM2, doorPrice, examplePrice, railingGuide, isRailingVariant, RAILING_PAGES, canopyGuide, isCanopyVariant, CANOPY_PAGES, windowMarket, isWindowVariant, isDoorVariant, DOOR_PAGES, isShowerVariant, OWNER_FROM_PER_M2_UAH, type PriceVariant, type RailingVariant, type CanopyVariant, type WindowVariant, type DoorVariant, type ShowerVariant, type SystemKey, type DoorKind, type DoorSet } from '../../pricing/calculated-prices';
 import { SYSTEMS as RAILING_SYSTEMS } from '../../data/railing-pricing';
 import { WINDOW_INSTALL_FROM_UAH_PER_M2, type Sash } from '../../pricing/window-pricing';
 import { DOOR_MARKET, type DoorType } from '../../pricing/door-pricing';
@@ -310,6 +310,22 @@ if (isRailingVariant(variant)) {
     'glazing-balcony': ['Безрамне скління балкона на замовлення', 'Безрамное остекление балкона на заказ']
   };
   productLd = makeProduct(P(...PRODUCT_NAME[variant as keyof typeof V]), Math.min(...v.rows.map(([, key]) => systemPricePerM2(key))));
+}
+
+// Owner-confirmed «від … грн/м²» for railings, canopies, doors and showers: one visible line + the Product price (identical number).
+{
+  const kind = isRailingVariant(variant) ? 'railing' : isCanopyVariant(variant) ? 'canopy' : isDoorVariant(variant) ? 'door' : isShowerVariant(variant) ? 'shower' : null;
+  if (kind) {
+    const price = OWNER_FROM_PER_M2_UAH[kind];
+    const names = {
+      railing: P('Скляні огорожі та перила на замовлення', 'Стеклянные ограждения и перила на заказ'),
+      canopy: P('Скляні козирки на замовлення', 'Стеклянные козырьки на заказ'),
+      door: P('Скляні двері на замовлення', 'Стеклянные двери на заказ'),
+      shower: P('Скляні душові конструкції на замовлення', 'Стеклянные душевые конструкции на заказ')
+    };
+    block.notes = [P(`Орієнтовна ціна — ${from(price, true)}, без монтажу.`, `Ориентировочная цена — ${from(price, true)}, без монтажа.`), ...(block.notes ?? [])];
+    productLd = makeProduct(names[kind], price);
+  }
 }
 ---
 {productLd && <script type="application/ld+json" set:html={JSON.stringify(productLd)} />}
