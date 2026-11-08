@@ -10,6 +10,7 @@ import { WINDOW_INSTALL_FROM_UAH_PER_M2, type Sash } from '../../pricing/window-
 import { DOOR_MARKET, type DoorType } from '../../pricing/door-pricing';
 import { SHOWER_TYPICAL, SHOWER_HUB_FROM_UAH, type ShowerTypicalKey } from '../../pricing/shower-pricing';
 import { localizedPath, type Locale } from '../../i18n/helpers';
+import { brandId, absoluteUrl, DEFAULT_IMAGE } from '../../seo/schema';
 // Styles: .price-block* in category-pages.css, which every page using this block already loads.
 
 interface Props { variant: PriceVariant; locale?: Locale }
@@ -65,6 +66,8 @@ const t = ru
 
 type Block = { heading: string; kicker: string; rows: (readonly [string, string] | readonly [string, string, string])[]; doorsLine: string | null; notes?: string[]; noteLink?: [string, string, string]; ctaLabel?: string; exampleText?: string; examplePrice?: string; cta: string; note: string; factors: [string, string][] };
 let block: Block;
+// Product JSON-LD (per-m² branch only): mirrors the visible «від … грн/м²» rows 1:1, see productLd below.
+let productLd: Record<string, unknown> | null = null;
 
 if (isRailingVariant(variant)) {
   // Glass railings: a per-metre guide for one stated size (the price per metre depends on length).
@@ -257,8 +260,55 @@ if (isRailingVariant(variant)) {
     note: t.note,
     factors: v.factors
   };
+
+  // Product + Offer only where the page really shows a «від … грн/м²» price. Price = the lowest visible row
+  // (same function as the row), unit = 1 m², no availability/rating/review (not confirmed). Pages under
+  // measurement (R-010, R-012) are excluded: no on-page change until their check is done.
+  const PRODUCT_NAME: Record<keyof typeof V, [string, string]> = {
+    'partition-hub': ['Скляні перегородки на замовлення', 'Стеклянные перегородки на заказ'],
+    'partition-loft': ['Loft-перегородки зі скла на замовлення', 'Лофт-перегородки из стекла на заказ'],
+    'partition-frameless': ['Цільноскляні перегородки на замовлення', 'Цельностеклянные перегородки на заказ'],
+    'partition-office': ['Офісні скляні перегородки на замовлення', 'Офисные стеклянные перегородки на заказ'],
+    'partition-interior': ['Міжкімнатні скляні перегородки на замовлення', 'Межкомнатные стеклянные перегородки на заказ'],
+    'partition-doors': ['Скляні перегородки з дверима на замовлення', 'Стеклянные перегородки с дверьми на заказ'],
+    'glazing-hub': ['Безрамне скління на замовлення', 'Безрамное остекление на заказ'],
+    'glazing-folding': ['Поворотно-складне безрамне скління на замовлення', 'Поворотно-складное безрамное остекление на заказ'],
+    'glazing-sliding': ['Розсувне безрамне скління на замовлення', 'Раздвижное безрамное остекление на заказ'],
+    'glazing-terrace': ['Безрамне скління тераси на замовлення', 'Безрамное остекление террасы на заказ'],
+    'glazing-gazebo': ['Безрамне скління альтанки на замовлення', 'Безрамное остекление беседки на заказ'],
+    'glazing-balcony': ['Безрамне скління балкона на замовлення', 'Безрамное остекление балкона на заказ']
+  };
+  const PROTECTED = [/^\/(ru\/)?sklyani-perehorodky\/(mizhkimnatni\/)?$/, /^\/ru\/bezramne-sklinnya\/sklinnya-teras-ta-altanok\/$/];
+  const path = Astro.url.pathname;
+  if (!PROTECTED.some((re) => re.test(path))) {
+    const origin = Astro.site ?? Astro.url.origin;
+    const fromPrice = Math.min(...v.rows.map(([, key]) => systemPricePerM2(key)));
+    const url = absoluteUrl(path, origin);
+    productLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      '@id': `${url}#product`,
+      name: P(...PRODUCT_NAME[variant as keyof typeof V]),
+      image: absoluteUrl(DEFAULT_IMAGE, origin),
+      brand: { '@id': brandId(origin) },
+      url,
+      offers: {
+        '@type': 'Offer',
+        url,
+        priceCurrency: 'UAH',
+        price: fromPrice,
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: fromPrice,
+          priceCurrency: 'UAH',
+          referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MTK' }
+        }
+      }
+    };
+  }
 }
 ---
+{productLd && <script type="application/ld+json" set:html={JSON.stringify(productLd)} />}
 <section id="price" class="price-block price-block--calc">
   <div class="price-block__card">
     <p class="eyebrow">{t.eyebrow}</p>
