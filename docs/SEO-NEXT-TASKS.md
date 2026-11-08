@@ -52,3 +52,6 @@ See [SEO-OWNER-ACTIONS.md](SEO-OWNER-ACTIONS.md): door prices (R-030), real case
 - 2026-11-11 and 2026-11-25: export Search Console for /dzerkala/led-dzerkala/, /dzerkala/ and the shop product pages; compare with the private baseline (R-069). Watch cannibalisation for «дзеркало з підсвіткою» / «led дзеркало»: /shop/mirrors/led/ must not replace /dzerkala/led-dzerkala/ in the results.
 - Search Console → Indexing: check that the 102 shop URLs are discovered and the 4 models without LED are not flagged (soft 404 / duplicate).
 - Not done on purpose: brand / availability / shipping / returns are not in the Product markup (Merchant Center is not connected).
+
+## Glazing and windows demand by city (from GSC 28 days to 2026-11-06)
+City queries outside partitions have real impressions: Kyiv 'скління будинків', 'алюмінієві слайдингові системи', 'фасадне скління'; Odesa 'панорамне скління котеджів', 'фасадне скління'; Lviv 'алюмінієві вікна', 'скляні фасади'. Before creating any page, check in GSC which existing URL ranks (R-068 cannibalization) and never create doorway city pages (R-041). Also check Language of /ru/city/lviv/ ranking for a Ukrainian query (page is fully Russian; likely Google's choice).

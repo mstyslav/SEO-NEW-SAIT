@@ -103,7 +103,7 @@ export interface CityHub {
     gridAriaLabel: string;
   };
 
-  /** Optional: verified local partition projects + category/configurator links (Odesa only, TASK 103). */
+  /** Optional: verified local partition projects + category/configurator links (Odesa TASK 103; Kyiv and Lviv from real city projects). */
   partitions?: {
     eyebrow: string;
     title: string;
@@ -361,6 +361,32 @@ const kyivUk: CityHub = {
     viewAllHref: '/project/',
     emptyText: 'Проєкти для цього міста готуються до публікації.',
     gridAriaLabel: 'Реалізовані проєкти в Києві'
+  },
+
+  partitions: {
+    eyebrow: 'Перегородки',
+    title: 'Скляні та Loft-перегородки в Києві',
+    intro: 'Реалізовані в Києві міжкімнатні та Loft-перегородки — приклади перед тим, як надсилати власні розміри.',
+    projects: [
+      { label: 'Перегородка в кабінет у квартирі', href: '/project/apartment-study-glass-partition-kyiv/' },
+      { label: 'Кутова лофт-перегородка для гардеробної', href: '/project/corner-loft-wardrobe-glass-partition-kyiv/' },
+      { label: 'Loft-перегородка з матовим склом', href: '/project/mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv/' },
+      { label: 'Лофт-перегородки, ЖК Молодість', href: '/project/mizhkimnatni-peregorodku-v-stuli-loft/' },
+      { label: 'Loft-перегородка дитячої кімнати', href: '/project/mizhkimnatni-peregorodky-v-dytyachu/' }
+    ],
+    categoryLinks: [
+      { label: 'Loft-перегородки: системи та варіанти', href: '/sklyani-perehorodky/loft-sklyani-peregorodku/' },
+      { label: 'Усі скляні перегородки', href: '/sklyani-perehorodky/' }
+    ],
+    configurator: { label: 'Орієнтовний розрахунок Loft-перегородки в конфігураторі →', href: '/loft-configurator/' }
+  },
+
+  requestForm: {
+    title: 'Заявка на розрахунок у Києві',
+    text: 'Вкажіть тип конструкції, місто та орієнтовні розміри — підготуємо попередній розрахунок і узгодимо замір.',
+    options: ['Loft-перегородки', 'Офісні перегородки', 'Міжкімнатні перегородки', 'Розсувні перегородки', 'Душові кабіни', 'Огорожі', 'Дзеркала', 'Вітрини та фасади', 'Інше'],
+    optionsLabel: 'Що потрібно',
+    commentPlaceholder: 'Приміщення, розміри, тип скла, адреса в Києві чи області'
   },
 
   processSection: {
@@ -801,6 +827,32 @@ const lvivUk: CityHub = {
     gridAriaLabel: 'Реалізовані проєкти у Львові'
   },
 
+  partitions: {
+    eyebrow: 'Перегородки',
+    title: 'Скляні перегородки у Львові',
+    intro: 'Реалізовані у Львові перегородки: гардероб у стилі легкого лофту та душові перегородки різної форми — приклади перед тим, як надсилати власні розміри.',
+    projects: [
+      { label: 'Перегородка в гардероб, легкий лофт', href: '/project/wardrobe-glass-partition-light-loft-lviv/' },
+      { label: 'Стаціонарна душова перегородка', href: '/project/stationary-glass-partition-lviv/' },
+      { label: 'Трапецієподібна душова перегородка', href: '/project/trapezoid-shower-lviv/' },
+      { label: 'Душова перегородка під скошену стелю', href: '/project/shower-sloped-ceiling-lviv/' }
+    ],
+    categoryLinks: [
+      { label: 'Loft-перегородки: системи та варіанти', href: '/sklyani-perehorodky/loft-sklyani-peregorodku/' },
+      { label: 'Офісні скляні перегородки: варіанти', href: '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/' },
+      { label: 'Усі скляні перегородки', href: '/sklyani-perehorodky/' }
+    ],
+    configurator: { label: 'Орієнтовний розрахунок Loft-перегородки в конфігураторі →', href: '/loft-configurator/' }
+  },
+
+  requestForm: {
+    title: 'Заявка на розрахунок у Львові',
+    text: 'Вкажіть тип конструкції, місто та орієнтовні розміри — підготуємо попередній розрахунок і узгодимо замір.',
+    options: ['Loft-перегородки', 'Офісні перегородки', 'Міжкімнатні перегородки', 'Розсувні перегородки', 'Душові кабіни', 'Огорожі', 'Дзеркала', 'Вітрини та фасади', 'Інше'],
+    optionsLabel: 'Що потрібно',
+    commentPlaceholder: 'Приміщення, розміри, тип скла, адреса у Львові чи області'
+  },
+
   processSection: {
     eyebrow: 'Як це працює',
     title: 'Як проходить замір і монтаж у Львові',
@@ -1005,6 +1057,32 @@ const kyivRu: CityHub = {
     viewAllHref: '/project/',
     emptyText: 'Проекты для этого города готовятся к публикации.',
     gridAriaLabel: 'Реализованные проекты в Киеве'
+  },
+
+  partitions: {
+    eyebrow: 'Перегородки',
+    title: 'Стеклянные и Loft-перегородки в Киеве',
+    intro: 'Реализованные в Киеве межкомнатные и Loft-перегородки — примеры перед тем, как присылать свои размеры.',
+    projects: [
+      { label: 'Перегородка в кабинет в квартире', href: '/project/apartment-study-glass-partition-kyiv/' },
+      { label: 'Угловая лофт-перегородка для гардеробной', href: '/project/corner-loft-wardrobe-glass-partition-kyiv/' },
+      { label: 'Loft-перегородка с матовым стеклом', href: '/project/mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv/' },
+      { label: 'Лофт-перегородки, ЖК Молодость', href: '/project/mizhkimnatni-peregorodku-v-stuli-loft/' },
+      { label: 'Loft-перегородка детской комнаты', href: '/project/mizhkimnatni-peregorodky-v-dytyachu/' }
+    ],
+    categoryLinks: [
+      { label: 'Loft-перегородки: системы и варианты', href: '/sklyani-perehorodky/loft-sklyani-peregorodku/' },
+      { label: 'Все стеклянные перегородки', href: '/sklyani-perehorodky/' }
+    ],
+    configurator: { label: 'Ориентировочный расчёт Loft-перегородки в конфигураторе →', href: '/loft-configurator/' }
+  },
+
+  requestForm: {
+    title: 'Заявка на расчёт в Киеве',
+    text: 'Укажите тип конструкции, город и ориентировочные размеры — подготовим предварительный расчёт и согласуем замер.',
+    options: ['Loft-перегородки', 'Офисные перегородки', 'Межкомнатные перегородки', 'Раздвижные перегородки', 'Душевые кабины', 'Ограждения', 'Зеркала', 'Витрины и фасады', 'Другое'],
+    optionsLabel: 'Что нужно',
+    commentPlaceholder: 'Помещение, размеры, тип стекла, адрес в Киеве или области'
   },
 
   processSection: {
@@ -1443,6 +1521,32 @@ const lvivRu: CityHub = {
     viewAllHref: '/project/',
     emptyText: 'Проекты для этого города готовятся к публикации.',
     gridAriaLabel: 'Реализованные проекты во Львове'
+  },
+
+  partitions: {
+    eyebrow: 'Перегородки',
+    title: 'Стеклянные перегородки во Львове',
+    intro: 'Реализованные во Львове перегородки: гардероб в стиле лёгкого лофта и душевые перегородки разной формы — примеры перед тем, как присылать свои размеры.',
+    projects: [
+      { label: 'Перегородка в гардероб, лёгкий лофт', href: '/project/wardrobe-glass-partition-light-loft-lviv/' },
+      { label: 'Стационарная душевая перегородка', href: '/project/stationary-glass-partition-lviv/' },
+      { label: 'Трапециевидная душевая перегородка', href: '/project/trapezoid-shower-lviv/' },
+      { label: 'Душевая перегородка под скошенный потолок', href: '/project/shower-sloped-ceiling-lviv/' }
+    ],
+    categoryLinks: [
+      { label: 'Loft-перегородки: системы и варианты', href: '/sklyani-perehorodky/loft-sklyani-peregorodku/' },
+      { label: 'Офисные стеклянные перегородки: варианты', href: '/metaloplastykovi-konstrukcziyi/ofisni-sklyani-peregorodky/' },
+      { label: 'Все стеклянные перегородки', href: '/sklyani-perehorodky/' }
+    ],
+    configurator: { label: 'Ориентировочный расчёт Loft-перегородки в конфигураторе →', href: '/loft-configurator/' }
+  },
+
+  requestForm: {
+    title: 'Заявка на расчёт во Львове',
+    text: 'Укажите тип конструкции, город и ориентировочные размеры — подготовим предварительный расчёт и согласуем замер.',
+    options: ['Loft-перегородки', 'Офисные перегородки', 'Межкомнатные перегородки', 'Раздвижные перегородки', 'Душевые кабины', 'Ограждения', 'Зеркала', 'Витрины и фасады', 'Другое'],
+    optionsLabel: 'Что нужно',
+    commentPlaceholder: 'Помещение, размеры, тип стекла, адрес во Львове или области'
   },
 
   processSection: {
