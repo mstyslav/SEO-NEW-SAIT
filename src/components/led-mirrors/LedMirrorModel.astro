@@ -87,12 +87,31 @@ const productNote = LED_PRODUCT_TYPE === PRODUCT_TYPES.READY ? SS.readyProduct :
 const all = buildProducts(pub);
 const related = all.filter((p: any) => p.slug !== slug).map((p: any) => ({ p, score: (p.raw.frame === model.frame ? 2 : 0) + (p.raw.main_light === model.main_light ? 1 : 0) + (p.raw.shape === model.shape ? 1 : 0) }))
   .sort((a: any, b: any) => b.score - a.score || a.p.name.localeCompare(b.p.name)).slice(0, 4).map((x: any) => x.p);
-// Product structured data mirrors the visible page. No brand (private-label right not confirmed), no availability, rating or review (none shown).
+// Product structured data mirrors the visible page and the Merchant feed (in_stock, free NP delivery in UA, handling = visible lead time, defect-only returns). No brand (private-label right not confirmed), no rating or review (none shown).
 const productLd = {
   '@context': 'https://schema.org', '@type': 'Product', '@id': `${abs(ledModelPath(locale, slug))}#product`,
   name: title, description: pageDesc, url: abs(ledModelPath(locale, slug)), sku: code,
   ...(count > 0 ? { image: gallery.map((n) => abs(img(n, 900))) } : {}),
-  offers: { '@type': 'Offer', url: abs(ledModelPath(locale, slug)), priceCurrency: 'UAH', price: model.default_uah }
+  offers: {
+    '@type': 'Offer', url: abs(ledModelPath(locale, slug)), priceCurrency: 'UAH', price: model.default_uah,
+    availability: 'https://schema.org/InStock', itemCondition: 'https://schema.org/NewCondition',
+    shippingDetails: {
+      '@type': 'OfferShippingDetails',
+      shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'UA' },
+      shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'UAH' },
+      deliveryTime: {
+        '@type': 'ShippingDeliveryTime',
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: model.frame === 'Металева' ? LEAD_DAYS.metalFrameMax : LEAD_DAYS.standardMax, unitCode: 'DAY' },
+        transitTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 3, unitCode: 'DAY' }
+      }
+    },
+    hasMerchantReturnPolicy: {
+      '@type': 'MerchantReturnPolicy', applicableCountry: 'UA',
+      returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+      itemDefectReturnFees: 'https://schema.org/FreeReturn',
+      merchantReturnLink: abs(ru ? '/ru/shop/returns/' : '/shop/returns/')
+    }
+  }
 };
 const cfg = {
   id: model.id, slug, name: model.name_short, locale, cartHref: T.cartHref, limits: L, std: model.standard_sizes, defaultStd: `${std.w}x${std.h}`, hasPhoto: count > 0,
