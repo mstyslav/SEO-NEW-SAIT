@@ -65,7 +65,7 @@ const t = ru
   : { eyebrow: 'Вартість', kicker: 'Орієнтовна вартість від · за 1 м² з монтажем', example: 'Приклад розрахунку', cta: 'Розрахувати свій розмір', note: '*Орієнтовна вартість. Точна ціна залежить від комплектації та актуального курсу. Розрахуйте свій розмір у калькуляторі.', factorsTitle: 'Від чого залежить ціна' };
 
 type Block = { heading: string; kicker: string; rows: (readonly [string, string] | readonly [string, string, string])[]; doorsLine: string | null; notes?: string[]; noteLink?: [string, string, string]; ctaLabel?: string; exampleText?: string; examplePrice?: string; cta: string; note: string; factors: [string, string][] };
-// Product + Offer (UnitPriceSpecification, 1 m², UAH): price = the visible «від … грн/м²» figure, no availability/rating/review (not confirmed).
+// Product + Offer (UnitPriceSpecification, 1 m², UAH): price = the visible «від … грн/м²» figure; availability = MadeToOrder (every structure is custom-made, pages say «на замовлення»); no rating/review (no real product reviews - never invent).
 // Owner decision 2026-11-08: also on the pages that were under measurement (R-010, R-012) - the measurement is confounded from this date.
 const makeProduct = (name: string, fromPriceUah: number): Record<string, unknown> | null => {
   const path = Astro.url.pathname;
@@ -76,6 +76,10 @@ const makeProduct = (name: string, fromPriceUah: number): Record<string, unknown
     '@type': 'Product',
     '@id': `${url}#product`,
     name,
+    // Factual and generic: the same process the site describes everywhere (measurement, custom-size production, installation).
+    description: ru
+      ? `${name}: замер, изготовление по индивидуальным размерам и монтаж от Space Glass.`
+      : `${name}: замір, виготовлення за індивідуальними розмірами та монтаж від Space Glass.`,
     image: absoluteUrl(DEFAULT_IMAGE, origin),
     brand: { '@id': brandId(origin) },
     url,
@@ -84,6 +88,7 @@ const makeProduct = (name: string, fromPriceUah: number): Record<string, unknown
       url,
       priceCurrency: 'UAH',
       price: fromPriceUah,
+      availability: 'https://schema.org/MadeToOrder',
       priceSpecification: {
         '@type': 'UnitPriceSpecification',
         price: fromPriceUah,
