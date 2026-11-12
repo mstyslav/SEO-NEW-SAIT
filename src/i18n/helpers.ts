@@ -53,6 +53,7 @@ const LOCALIZED_ROUTES: Record<'ru', ReadonlySet<string>> = {
     '/knowledge/',
     '/delivery-payment/',
     '/privacy-policy/',
+    '/sitemap/',
     '/poslugy/',
     '/project/',
     '/rishennya/',

@@ -252,11 +252,14 @@ const shopLegalPrefix = locale === 'ru' ? '/ru/shop' : '/shop';
 
   <div class="footer-refined__bottom">
     <span>{ft.copyright}</span>
+    {!intl && <a class="footer-refined__sitemap" href={lp('/sitemap/')}>{ft.sitemap}</a>}
     <button type="button" class="footer-refined__cookie-settings" data-cookie-settings>{cookieSettingsLabel}</button>
   </div>
 </footer>
 
 <style>
+  .footer-refined__sitemap{margin-left:14px;white-space:nowrap;color:#a3aaa6;text-decoration:underline}
+  .footer-refined__sitemap:hover,.footer-refined__sitemap:focus-visible{opacity:1}
   .footer-refined__cookie-settings{margin-left:14px;padding:8px 4px;min-height:44px;background:none;border:0;color:#a3aaa6;font:inherit;text-decoration:underline;cursor:pointer}
   .footer-refined__cookie-settings:hover,.footer-refined__cookie-settings:focus-visible{opacity:1}
   /* Shop policies use the same column typography and rhythm as the rest of the footer. */

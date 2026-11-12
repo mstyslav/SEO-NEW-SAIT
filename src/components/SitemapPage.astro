@@ -1,0 +1,84 @@
+---
+// HTML sitemap (UA/RU): a human-readable map of the indexable sections, built from the same
+// navigation data as the header menu (src/data/catalog-navigation.ts) so it cannot drift from the real URLs.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { getCatalogNavigation } from '../data/catalog-navigation';
+import { localizedPath } from '../i18n/helpers';
+
+const { locale = 'uk' } = Astro.props as { locale?: 'uk' | 'ru' };
+const ru = locale === 'ru';
+const lp = (path: string) => localizedPath(path, locale);
+
+const copy = ru
+  ? {
+      title: 'Карта сайта | Space Glass',
+      description: 'Карта сайта Space Glass: все разделы и страницы стеклянных конструкций, зеркал, душевых, перегородок, дверей, ограждений и остекления в одном месте.',
+      h1: 'Карта сайта',
+      lead: 'Все основные разделы Space Glass: продукция, проекты, полезные статьи и контакты.',
+      company: 'Компания и информация',
+      cities: 'Города'
+    }
+  : {
+      title: 'Карта сайту | Space Glass',
+      description: 'Карта сайту Space Glass: усі розділи та сторінки скляних конструкцій, дзеркал, душових, перегородок, дверей, огорож і скління в одному місці.',
+      h1: 'Карта сайту',
+      lead: 'Усі основні розділи Space Glass: продукція, проєкти, корисні статті та контакти.',
+      company: 'Компанія та інформація',
+      cities: 'Міста'
+    };
+
+const categories = getCatalogNavigation(locale);
+const companyLinks: Array<[string, string]> = ru
+  ? [['О компании', '/about/'], ['Проекты', '/project/'], ['База знаний', '/knowledge/'], ['Магазин', '/shop/'], ['Оплата и доставка', '/delivery-payment/'], ['Контакты', '/contacts/'], ['Политика конфиденциальности', '/privacy-policy/'], ['Cookies', '/cookies-policy/']]
+  : [['Про компанію', '/about/'], ['Проєкти', '/project/'], ['База знань', '/knowledge/'], ['Магазин', '/shop/'], ['Оплата та доставка', '/delivery-payment/'], ['Контакти', '/contacts/'], ['Політика конфіденційності', '/privacy-policy/'], ['Cookies', '/cookies-policy/']];
+const cityLinks: Array<[string, string]> = ru
+  ? [['Киев', '/city/kyiv/'], ['Одесса', '/city/odesa/'], ['Львов', '/city/lviv/']]
+  : [['Київ', '/city/kyiv/'], ['Одеса', '/city/odesa/'], ['Львів', '/city/lviv/']];
+---
+<BaseLayout title={copy.title} description={copy.description} locale={locale} alternateLocales={['uk', 'ru']}>
+  <Header />
+  <main id="main" class="html-sitemap">
+    <header class="html-sitemap__hero">
+      <div class="container">
+        <h1>{copy.h1}</h1>
+        <p>{copy.lead}</p>
+      </div>
+    </header>
+    <div class="container html-sitemap__grid">
+      {categories.map((category) => (
+        <section>
+          <h2><a href={lp(category.href)}>{category.name}</a></h2>
+          <ul>
+            {category.services.map((service) => <li><a href={lp(service.path)}>{service.shortName}</a></li>)}
+          </ul>
+        </section>
+      ))}
+      <section>
+        <h2>{copy.company}</h2>
+        <ul>{companyLinks.map(([label, href]) => <li><a href={lp(href)}>{label}</a></li>)}</ul>
+      </section>
+      <section>
+        <h2>{copy.cities}</h2>
+        <ul>{cityLinks.map(([label, href]) => <li><a href={lp(href)}>{label}</a></li>)}</ul>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .html-sitemap { background: #fff; color: #17211d; color-scheme: light; }
+  .html-sitemap__hero { padding: 72px 0 42px; background: #f5f8f7; border-bottom: 1px solid #dce5e2; }
+  .html-sitemap__hero h1 { margin: 0 0 12px; color: #111814 !important; font-size: clamp(2.15rem, 4vw, 3.25rem); line-height: 1.08; letter-spacing: -0.025em; }
+  .html-sitemap__hero p { margin: 0; color: #4f5a55 !important; }
+  .html-sitemap__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 36px 32px; padding-top: 48px; padding-bottom: 88px; }
+  .html-sitemap h2 { margin: 0 0 12px; font-size: 1.15rem !important; line-height: 1.3 !important; letter-spacing: 0 !important; overflow-wrap: anywhere; color: #111814 !important; }
+  .html-sitemap h2 a { color: #064b32 !important; }
+  .html-sitemap section { min-width: 0; }
+  .html-sitemap ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+  .html-sitemap a { color: #064b32; text-decoration: none; }
+  .html-sitemap a:hover, .html-sitemap a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+  .html-sitemap li a { color: #26332d; }
+</style>
