@@ -72,3 +72,8 @@ Open owner actions:
 ## Project data to verify (found while preparing R-078)
 - Project `sklyani-peregorodky-u-garderobnu-v-m-odesa` has city "Київ" but "odesa" in its slug: confirm the real city. It was not used on the Kyiv page.
 - Lviv has only one interior partition project (wardrobe) and three shower partitions. Real Lviv office/interior partition cases (R-031) would strengthen the page.
+
+## udigital audit (R-084, 2026-11-12) — what we need from the owner
+1. Ask the agency (udigital) for: (a) the list of missed queries with frequency (CSV), (b) screenshots/links behind "links not configured" on /ru/contacts/, (c) the list of bad-anchor links.
+2. Export the Ahrefs backlink anchors (last 12 months) for the toxic-anchor review; any disavow only on your explicit decision.
+3. After deploy: submit /sitemap/ and /ru/sitemap/ in Google Search Console (we do not touch GSC ourselves).

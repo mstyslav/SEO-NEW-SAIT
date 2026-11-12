@@ -55,3 +55,11 @@ See [SEO-OWNER-ACTIONS.md](SEO-OWNER-ACTIONS.md): door prices (R-030), real case
 
 ## Glazing and windows demand by city (from GSC 28 days to 2026-11-06)
 City queries outside partitions have real impressions: Kyiv 'скління будинків', 'алюмінієві слайдингові системи', 'фасадне скління'; Odesa 'панорамне скління котеджів', 'фасадне скління'; Lviv 'алюмінієві вікна', 'скляні фасади'. Before creating any page, check in GSC which existing URL ranks (R-068 cannibalization) and never create doorway city pages (R-041). Also check Language of /ru/city/lviv/ ranking for a Ukrainian query (page is fully Russian; likely Google's choice).
+
+## udigital audit follow-up: items that need data (R-084, 2026-11-12)
+Done and merged: HTML sitemap UA/RU, longer titles for mirror frame/panel. The items below were NOT done because the data is missing. Do them step by step, together with the owner.
+1. Missed semantics (P2). Needs: the list of "missed queries" with frequency from the agency (its Google Doc has screenshots only; text export has no list). Step 1: owner asks the agency for the list (CSV). Step 2: match against GSC (impressions/position) and R-023 / R-069. Step 3: create a new landing page ONLY if there is real demand and no cannibalisation with an existing page; never touch protected pages.
+2. Bad anchors (SEO-advertising anchors in the backlink profile) (P2). Needs: Ahrefs backlinks export (anchors, referring domains) or GSC Links. Step 1: owner exports (Ahrefs → Backlinks → Anchors, last 12 months). Step 2: classify toxic vs harmless. Step 3: disavow only on the owner's explicit decision. Related: R-033, R-047, R-016.
+3. /ru/contacts/ "links not configured" (P3). Not reproducible (295 links, 0 empty, checked 2026-11-12). Needs: the agency's screenshot or exact link location. Close the item if none is provided.
+4. H1 of guillotine glazing (P3). Current H1 is acceptable. Revisit only with GSC data for the query "гільйотинне скління".
+5. After deploy (P1): submit /sitemap/ and /ru/sitemap/ in Search Console (owner action); ~4 weeks later compare CTR of /dzerkala/dzerkala-v-rami/ and /dzerkala/dzerkalne-panno/ (UA+RU) in GSC.
