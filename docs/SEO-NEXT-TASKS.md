@@ -67,3 +67,7 @@ Done and merged: HTML sitemap UA/RU, longer titles for mirror frame/panel. The i
 ### Update 2026-11-18 (R-084)
 - DONE: HTML sitemap and mirror titles are live and verified. /contacts/ and /ru/contacts/ links re-checked (116 internal each, all 200): the audit item is closed unless the agency provides a screenshot. Guillotine H1 stays.
 - OPEN: bad anchors. The Ahrefs free checker is behind a robot check, so an owner export is required (Ahrefs → Site Explorer → space-glass.com.ua → Anchors, CSV; plus GSC → Links → Top linking sites). Public repo: keep the files out of git.
+
+### Update 2026-11-18 — bad anchors reviewed (R-084)
+- GSC Links exports reviewed (private files, not in git): 7 linking domains, 114 unique anchors, none are SEO-advertising or spam. No disavow. Do not file a disavow unless GSC shows a manual action or a clearly unnatural paid-link pattern.
+- Still open: R-047 (were DIPFO / uba.top paid? if yes, optionally ask the publisher for rel="sponsored"). Re-run this review with the 2027-01-15 backlink comparison (R-048).
