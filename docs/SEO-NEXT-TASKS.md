@@ -63,3 +63,7 @@ Done and merged: HTML sitemap UA/RU, longer titles for mirror frame/panel. The i
 3. /ru/contacts/ "links not configured" (P3). Not reproducible (295 links, 0 empty, checked 2026-11-12). Needs: the agency's screenshot or exact link location. Close the item if none is provided.
 4. H1 of guillotine glazing (P3). Current H1 is acceptable. Revisit only with GSC data for the query "гільйотинне скління".
 5. After deploy (P1): submit /sitemap/ and /ru/sitemap/ in Search Console (owner action); ~4 weeks later compare CTR of /dzerkala/dzerkala-v-rami/ and /dzerkala/dzerkalne-panno/ (UA+RU) in GSC.
+
+### Update 2026-11-18 (R-084)
+- DONE: HTML sitemap and mirror titles are live and verified. /contacts/ and /ru/contacts/ links re-checked (116 internal each, all 200): the audit item is closed unless the agency provides a screenshot. Guillotine H1 stays.
+- OPEN: bad anchors. The Ahrefs free checker is behind a robot check, so an owner export is required (Ahrefs → Site Explorer → space-glass.com.ua → Anchors, CSV; plus GSC → Links → Top linking sites). Public repo: keep the files out of git.
