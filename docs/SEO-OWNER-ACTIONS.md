@@ -14,6 +14,8 @@ Decisions and facts that only the business owner can provide. Updated: 2026-10-2
 | 8 | P3 | WAITING FOR OWNER | **Austria**: a reference case in Austria; e-mail domain decision (neutral/.at/.eu) [R-041] | Trust for the Austrian market | Austria |
 | 9 | P3 | WAITING FOR OWNER | **Housekeeping** [R-025]: remove stale GSC sitemaps (dyshovi.*); delete saved Keyword Planner plan "План от окт. 24, 2026" in Google Ads | Tidiness only | Technical |
 | 11 | P2 | DONE (partial) | **Winter garden price** [R-065]: minimum verified price (per m² or per project, VAT, what is included, Aluprof system) for aluminium winter gardens | Queries 'зимовий сад ціна / ціни / ціна під ключ' have no priced answer on the page; no price is published without this | Winter gardens | Owner stated "from 25,000 UAH/m²" on 2026-10-28; VAT/inclusions still unknown.
+| 12 | P1 | WAITING FOR OWNER | **CRM for website form leads** [R-086]: forms go only to Telegram/e-mail today; decide whether to write them to the Space Glass Control CRM (same signed contract as cart orders) and give CRM access/aggregates to reconcile GA4 generate_lead | Without it form leads cannot be matched to confirmed requests | Analytics |
+| 13 | P2 | WAITING FOR OWNER | **HTTP -> HTTPS check in Cloudflare** [R-087]: confirm http:// and www. each give one 301 to https://space-glass.com.ua/ | Repo has no http:// own links; the redirect itself is a Cloudflare setting | Technical SEO |
 
 ## Checklist A — aluminium door prices (R-030)
 Answer each line; "unknown" is acceptable.

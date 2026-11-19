@@ -18,7 +18,8 @@ export const PROJECT_LINKS: Record<string, string[]> = {
   // Partitions
   '/sklyani-perehorodky/ofisni/': ['sklyani-peregorodky-dlya-ofisu-v-m-odesa', 'choice-osklinya-kabinetu-v-vzhe-diyuchomu-magazyni', 'rozdilennya-peregorodkomu-prostoru-ta-obklejka-lakobelem-dvernyh-portaliv-dlya-stomatalogii-m-odesa', 'rozdilennya-zony-pryjomu-kliyenta-mizh-pidgotovchoyu-zonoyu-v-kliniczi-zdrava'],
   '/sklyani-perehorodky/loft-sklyani-peregorodku/': ['mizhkimnatni-peregorodky-v-styli-loft-zhk-atlant-m-kyyiv', 'mizhkimnatni-peregorodku-v-stuli-loft', 'sklinni-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-2', 'mizhkimnatni-peregorodky-v-dytyachu'],
-  '/sklyani-perehorodky/mizhkimnatni/': ['dzerkalni-dveri-v-garderob', 'sklyani-peregorodky-u-garderobnu-v-m-odesa', 'mizhkimnatni-peregorodky-v-dytyachu', 'corner-wardrobe-glass-partition-bronze-glass'],
+  // Stage 1 (2026-11-19): kitchen, bedroom and two wardrobe cases (object type / room checked in each project's characteristics).
+  '/sklyani-perehorodky/mizhkimnatni/': ['kitchen-glass-partition-apartment-odesa', 'bedroom-glass-partition-stopsol-synchro', 'wardrobe-glass-partition-light-loft-lviv', 'dzerkalni-dveri-v-garderob'],
   // Glass doors
   '/sklyani-dveri/': ['chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'mirrored-wardrobe-doors-milos-odesa', 'sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
   '/sklyani-dveri/mayatnykovi-sklyani-dveri/': ['chastne-zamovlennya-odesa-dushova-ta-peregorodka'],
@@ -28,12 +29,14 @@ export const PROJECT_LINKS: Record<string, string[]> = {
   // Frameless glazing
   '/bezramne-sklinnya/': ['sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
   '/bezramne-sklinnya/sklinnya-teras-ta-altanok/': ['sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
+  '/bezramne-sklinnya/sklyani-rozsuvni-systemy/': ['sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
   // Aluminium
   // Task 58: real aluminium projects only (materials checked in src/content/projects).
   '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/': ['zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat'],
   '/alyuminiyevi-konstrukcziyi/': ['teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat', 'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya'],
   // Facades
   '/poslugy/sklyani-fasady/': ['zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya', 'chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat'],
+  '/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/': ['zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya'],
   '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/': ['chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat'],
   // Wave 2 (P2/P3, 2026-09-30): matched by construction type, never by slug or broad category.
   '/dushovi-kabiny/skladni/': ['dushovi-garmoshka-zhk'],

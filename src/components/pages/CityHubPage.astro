@@ -23,6 +23,7 @@ import ProfileRequestForm from '../profile/ProfileRequestForm.astro';
 import GoogleReviews from '../GoogleReviews.astro';
 import { getCollection } from 'astro:content';
 import { getCityHub, type CityHubLocale } from '../../data/city-hubs';
+import { hasProjectRu, projectTextsRu } from '../../data/ru/projects.ru';
 import { homeContent } from '../../content/i18n/pages/home';
 import { localizedPath } from '../../i18n/helpers';
 import { MARKETS } from '../../data/markets';
@@ -73,6 +74,19 @@ const assignedProjects = (
 const assignedText = locale === 'ru'
   ? { title: 'Другие реализованные решения Space Glass', intro: 'Примеры наших работ на других объектах. Такие конструкции изготавливаем и монтируем и для заказчиков в этом городе.', aria: 'Другие реализованные решения Space Glass' }
   : { title: 'Інші реалізовані рішення Space Glass', intro: 'Приклади наших робіт на інших об’єктах. Такі конструкції виготовляємо й монтуємо і для замовників у цьому місті.', aria: 'Інші реалізовані рішення Space Glass' };
+
+// Route «local case → profile service → calculation»: the service link of each real project shown above
+// (project.serviceLink, the same one its own page uses), de-duplicated. RU label comes from the RU project text.
+const serviceRoutes = [...localProjects, ...assignedProjects]
+  .map((project) => ({
+    href: project.serviceLink.href,
+    label: locale === 'ru' && hasProjectRu(project.slug) ? projectTextsRu[project.slug].serviceLinkLabel : project.serviceLink.label
+  }))
+  .filter((link, index, all) => all.findIndex((other) => other.href === link.href) === index)
+  .slice(0, 6);
+const routeText = locale === 'ru'
+  ? { label: 'Профильные услуги по этим проектам:', cta: 'Получить расчёт' }
+  : { label: 'Профільні послуги за цими проєктами:', cta: 'Отримати розрахунок' };
 
 const origin = Astro.site ?? Astro.url.origin;
 const pagePath = `/city/${hub.slug}/`;
@@ -272,6 +286,15 @@ const structuredData: JsonLdObject[] = [
                   <ProjectCard project={project} href={localizeHref(`/project/${project.slug}/`)} locale={locale} />
                 ))}
               </div>
+            </>
+          )}
+          {serviceRoutes.length > 0 && (
+            <>
+              <p class="city-hub__featured">
+                <span>{routeText.label}</span>
+                {serviceRoutes.map((link) => <a href={localizeHref(link.href)}>{link.label}</a>)}
+              </p>
+              <a class="button button--mint" style="margin-top:18px" href="#request">{routeText.cta}</a>
             </>
           )}
         </section>
