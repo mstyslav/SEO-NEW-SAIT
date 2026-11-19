@@ -29,14 +29,12 @@ export const PROJECT_LINKS: Record<string, string[]> = {
   // Frameless glazing
   '/bezramne-sklinnya/': ['sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
   '/bezramne-sklinnya/sklinnya-teras-ta-altanok/': ['sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
-  '/bezramne-sklinnya/sklyani-rozsuvni-systemy/': ['sklinnya-riznogo-typu-dlya-gotelno-restorannogo-kompleksu-osocor-residence-m-kyyiv'],
   // Aluminium
   // Task 58: real aluminium projects only (materials checked in src/content/projects).
   '/alyuminiyevi-konstrukcziyi/fasadne-sklinnya/': ['zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat'],
   '/alyuminiyevi-konstrukcziyi/': ['teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat', 'zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya'],
   // Facades
   '/poslugy/sklyani-fasady/': ['zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya', 'chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat'],
-  '/poslugy/sklyani-fasady/stiykovo-ryhelne-sklinnya/': ['zasklinnya-fasadiv-ta-okno-vydachi-v-coffee-ocean-m-odesa-arkadijska-aleya'],
   '/poslugy/sklyani-fasady/sklyani-vkhidni-hrupy/': ['chastne-zamovlennya-odesa-dushova-ta-peregorodka', 'teple-osklinnya-vhidnoyi-grupy-restoranu-art-shat'],
   // Wave 2 (P2/P3, 2026-09-30): matched by construction type, never by slug or broad category.
   '/dushovi-kabiny/skladni/': ['dushovi-garmoshka-zhk'],
