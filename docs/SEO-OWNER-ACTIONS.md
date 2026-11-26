@@ -77,3 +77,6 @@ Open owner actions:
 1. Ask the agency (udigital) for: (a) the list of missed queries with frequency (CSV), (b) screenshots/links behind "links not configured" on /ru/contacts/, (c) the list of bad-anchor links.
 2. Export the Ahrefs backlink anchors (last 12 months) for the toxic-anchor review; any disavow only on your explicit decision.
 3. After deploy: submit /sitemap/ and /ru/sitemap/ in Google Search Console (we do not touch GSC ourselves).
+
+## R-085 Google reviews OAuth (2026-11-26)
+The space-glass-google-reviews Worker returns 'Google authorization failed'. In Google Cloud set the OAuth consent screen to In production, re-run the Business Profile OAuth flow, and save the new refresh token as the Worker secret. Then confirm https://space-glass.com.ua/api/google-reviews returns 200.
