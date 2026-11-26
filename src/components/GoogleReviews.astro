@@ -5,6 +5,14 @@ const { locale = 'uk' } = Astro.props;
 const ru = locale === 'ru';
 const googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=Space%20Glass%20Odesa&query_place_id=ChIJZ-tkEoszxkARAgMhHIePeAg';
 const googleReviewUrl = 'https://search.google.com/local/writereview?placeid=ChIJZ-tkEoszxkARAgMhHIePeAg';
+// Fallback shown when the live Google API is unavailable: the three real Google review quotes
+// from the original static block (77d21a6f), in the language the customers wrote them.
+// The unattributed fourth quote of that block is left out (origin not verifiable).
+const fallbackReviews = [
+  { author: 'nanaborchenko', rating: 5, text: 'Ми залишилися дуже задоволені виконанням і якістю роботи Space Glass.' },
+  { author: 'olersiyustymenko', rating: 5, text: 'Душова супер. Дякуємо за сервіс, якість і акуратну реалізацію.' },
+  { author: 'kolychevahelen', rating: 5, text: 'Дякую команді Space Glass за якісно виконану роботу. Ціна відповідає якості, а роботи виконали у погоджений строк.' },
+];
 const copy = ru ? {
  eyebrow:'Отзывы клиентов', title:'Что говорят о Space Glass', intro:'Отзывы клиентов из Google Business Profile.',
  source:'Отзыв Google', allReviews:'Все отзывы в Google →', leaveReview:'Оставить отзыв →',
@@ -20,10 +28,18 @@ const copy = ru ? {
 <section class="sg-google-reviews" data-google-reviews data-endpoint="/api/google-reviews" data-locale={ru ? 'ru' : 'uk'} aria-labelledby="google-reviews-title">
   <div class="sg-google-reviews__head"><div><p class="eyebrow">{copy.eyebrow}</p><h2 id="google-reviews-title">{copy.title}</h2></div><p>{copy.intro}</p></div>
   <p class="sg-google-reviews__summary" data-review-summary hidden></p>
-  <p class="sg-google-reviews__status" data-review-status role="status">{copy.loading}</p>
+  <p class="sg-google-reviews__status" data-review-status role="status" hidden></p>
   <div class="sg-google-reviews__carousel">
     <button type="button" class="sg-google-reviews__arrow sg-google-reviews__arrow--prev" data-review-prev aria-label={copy.prev} hidden>‹</button>
-    <div class="sg-google-reviews__grid" data-review-grid role="region" aria-label={copy.carousel} tabindex="0"></div>
+    <div class="sg-google-reviews__grid" data-review-grid role="region" aria-label={copy.carousel} tabindex="0">
+      {fallbackReviews.map((r) => (
+        <article class="sg-google-review-card">
+          <div class="sg-google-review-card__top"><span class="sg-google-review-card__avatar" aria-hidden="true">{r.author.slice(0, 1).toUpperCase()}</span><div><strong>{r.author}</strong><span class="sg-google-review-card__source">{copy.source}</span></div></div>
+          <div class="sg-google-review-card__stars" aria-label={`${r.rating} ${copy.rating}`}>{'★'.repeat(r.rating)}</div>
+          <p>{r.text}</p>
+        </article>
+      ))}
+    </div>
     <button type="button" class="sg-google-reviews__arrow sg-google-reviews__arrow--next" data-review-next aria-label={copy.next} hidden>›</button>
   </div>
   <div class="sg-google-reviews__actions">
@@ -114,8 +130,8 @@ const copy = ru ? {
       if (!Array.isArray(data.reviews)) throw new Error('Invalid reviews response');
       all = data.reviews.filter(r => r && Number(r.rating) >= 1 && Number(r.rating) <= 5)
         .sort((a,b) => Date.parse(b.date || b.updated || 0) - Date.parse(a.date || a.updated || 0));
-      status.textContent = all.length ? '' : copy.unavailable;
-      if (all.length) {
+      if (!all.length) return; // keep the static fallback cards
+      {
         const avg = all.reduce((a, r) => a + Number(r.rating), 0) / all.length;
         const summary = section.querySelector('[data-review-summary]');
         summary.textContent = '★ ' + avg.toFixed(1).replace('.', ',') + ' · ' + all.length + ' ' + copy.reviewsWord + ' Google';
@@ -123,12 +139,12 @@ const copy = ru ? {
       }
       render();
     })
-    .catch(err => { console.error('Google reviews:', err); status.textContent = copy.unavailable; });
+    .catch(err => { console.warn('Google reviews: live API unavailable, showing saved reviews.', err); sync(); });
 })();
 </script>
 <style is:global>
 .sg-google-review-card__avatar{overflow:hidden;flex:none}.sg-google-review-card__avatar img{width:100%;height:100%;object-fit:cover}.sg-google-review-card__reply{margin-top:14px!important;padding-top:12px;border-top:1px solid rgba(20,103,91,.14);font-size:14px!important;white-space:pre-line}.sg-google-reviews__summary{max-width:1440px;margin:0 auto 16px;font-weight:800;color:#14211e}.sg-google-reviews__summary[hidden]{display:none}.sg-google-review-card p{white-space:pre-line}
-.sg-google-reviews__status{max-width:1440px;margin:0 auto 16px;color:#5f6e69}
+.sg-google-reviews__status[hidden]{display:none}.sg-google-reviews__status{max-width:1440px;margin:0 auto 16px;color:#5f6e69}
 .sg-google-reviews__grid{min-height:270px}
 .sg-google-reviews__actions button{cursor:pointer;font:inherit}
 .sg-google-reviews__actions [hidden]{display:none}
